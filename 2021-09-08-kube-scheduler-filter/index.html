@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 Predicates Policies就是提供给Scheduler用来过滤出满足所定义条件的Nodes，并发的(最多16个goroutine)对每个Node启动所有Predicates Policies的遍历Filter，看其是否都满足配置的Predicates Policies，若有一个Policy不满足，则直接被淘汰。  核心代码&#x2F;&#x2F; Filters the nodes to find">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="kube-scheduler笔记之filter">
+<meta property="og:url" content="https://davyjones2010.github.io/2021-09-08-kube-scheduler-filter/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="概述 Predicates Policies就是提供给Scheduler用来过滤出满足所定义条件的Nodes，并发的(最多16个goroutine)对每个Node启动所有Predicates Policies的遍历Filter，看其是否都满足配置的Predicates Policies，若有一个Policy不满足，则直接被淘汰。  核心代码&#x2F;&#x2F; Filters the nodes to find">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-09-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.327Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="scheduler">
+<meta property="article:tag" content="kube-scheduler">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-filter/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"https://davyjones2010.github.io/2021-09-08-kube-scheduler-filter/","path":"/2021-09-08-kube-scheduler-filter/","title":"kube-scheduler笔记之filter"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>kube-scheduler笔记之filter | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">核心代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PodFitsOnNode"><span class="nav-number">2.1.</span> <span class="nav-text">PodFitsOnNode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NominatedPods"><span class="nav-number">3.1.</span> <span class="nav-text">NominatedPods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CriticalPod-amp-NonCriticalPod"><span class="nav-number">3.2.</span> <span class="nav-text">CriticalPod&amp;NonCriticalPod</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">核心流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E9%87%8FFilter-x2F-Predicates"><span class="nav-number">4.1.</span> <span class="nav-text">资源量Filter&#x2F;Predicates</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NonCriticalPredicates"><span class="nav-number">4.1.1.</span> <span class="nav-text">NonCriticalPredicates</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CriticalPredicates"><span class="nav-number">4.1.2.</span> <span class="nav-text">CriticalPredicates</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Label%E5%8C%B9%E9%85%8D"><span class="nav-number">4.2.</span> <span class="nav-text">Label匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-filter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="kube-scheduler笔记之filter | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          kube-scheduler笔记之filter
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li>Predicates Policies就是提供给Scheduler用来过滤出满足所定义条件的Nodes，<strong>并发的</strong>(最多16个goroutine)对每个Node启动所有Predicates Policies的遍历Filter，看其是否都满足配置的Predicates Policies，若有一个Policy不满足，则直接被淘汰。</li>
+</ul>
+<h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Filters the nodes to find the ones that fit based on the given predicate functions</span>
+<span class="token comment">// Each node is passed through the predicate functions to determine if it is a fit</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>g <span class="token operator">*</span>genericScheduler<span class="token punctuation">)</span> <span class="token function">findNodesThatFit</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> nodes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">,</span> FailedPredicateMap<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> filtered <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node
+	failedPredicateMap <span class="token operator">:=</span> FailedPredicateMap<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span>predicates<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+		filtered <span class="token operator">=</span> nodes
+	<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+		allNodes <span class="token operator">:=</span> <span class="token function">int32</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span>cache<span class="token punctuation">.</span><span class="token function">NodeTree</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">NumNodes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		numNodesToFind <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">numFeasibleNodesToFind</span><span class="token punctuation">(</span>allNodes<span class="token punctuation">)</span>
+
+		<span class="token comment">// Create filtered list with enough space to avoid growing it</span>
+		<span class="token comment">// and allow assigning.</span>
+		filtered <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">,</span> numNodesToFind<span class="token punctuation">)</span>
+		errs <span class="token operator">:=</span> errors<span class="token punctuation">.</span>MessageCountMap<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+		<span class="token keyword">var</span> <span class="token punctuation">(</span>
+			predicateResultLock sync<span class="token punctuation">.</span>Mutex
+			filteredLen         <span class="token builtin">int32</span>
+		<span class="token punctuation">)</span>
+
+		ctx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+		<span class="token comment">// We can use the same metadata producer for all nodes.</span>
+		meta <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">predicateMetaProducer</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">)</span>
+
+		checkNode <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			nodeName <span class="token operator">:=</span> g<span class="token punctuation">.</span>cache<span class="token punctuation">.</span><span class="token function">NodeTree</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			fits<span class="token punctuation">,</span> failedPredicates<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">podFitsOnNode</span><span class="token punctuation">(</span>
+				pod<span class="token punctuation">,</span>
+				meta<span class="token punctuation">,</span>
+				g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">[</span>nodeName<span class="token punctuation">]</span><span class="token punctuation">,</span>
+				g<span class="token punctuation">.</span>predicates<span class="token punctuation">,</span>
+				g<span class="token punctuation">.</span>schedulingQueue<span class="token punctuation">,</span>
+				g<span class="token punctuation">.</span>alwaysCheckAllPredicates<span class="token punctuation">,</span>
+			<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+				predicateResultLock<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				errs<span class="token punctuation">[</span>err<span class="token punctuation">.</span><span class="token function">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">++</span>
+				predicateResultLock<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token keyword">return</span>
+			<span class="token punctuation">&#125;</span>
+			<span class="token keyword">if</span> fits <span class="token punctuation">&#123;</span>
+				length <span class="token operator">:=</span> atomic<span class="token punctuation">.</span><span class="token function">AddInt32</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>filteredLen<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+				<span class="token keyword">if</span> length <span class="token operator">></span> numNodesToFind <span class="token punctuation">&#123;</span>
+					<span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+					atomic<span class="token punctuation">.</span><span class="token function">AddInt32</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>filteredLen<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+				<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+					filtered<span class="token punctuation">[</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">[</span>nodeName<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token punctuation">&#125;</span>
+			<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+				predicateResultLock<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				failedPredicateMap<span class="token punctuation">[</span>nodeName<span class="token punctuation">]</span> <span class="token operator">=</span> failedPredicates
+				predicateResultLock<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+
+		<span class="token comment">// Stops searching for more nodes once the configured number of feasible nodes</span>
+		<span class="token comment">// are found.</span>
+		workqueue<span class="token punctuation">.</span><span class="token function">ParallelizeUntil</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token function">int</span><span class="token punctuation">(</span>allNodes<span class="token punctuation">)</span><span class="token punctuation">,</span> checkNode<span class="token punctuation">)</span>
+
+		filtered <span class="token operator">=</span> filtered<span class="token punctuation">[</span><span class="token punctuation">:</span>filteredLen<span class="token punctuation">]</span>
+		<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>errs<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> FailedPredicateMap<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> errors<span class="token punctuation">.</span><span class="token function">CreateAggregateFromMessageCountMap</span><span class="token punctuation">(</span>errs<span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>filtered<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token function">len</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span>extenders<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> extender <span class="token operator">:=</span> <span class="token keyword">range</span> g<span class="token punctuation">.</span>extenders <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> <span class="token operator">!</span>extender<span class="token punctuation">.</span><span class="token function">IsInterested</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				<span class="token keyword">continue</span>
+			<span class="token punctuation">&#125;</span>
+			filteredList<span class="token punctuation">,</span> failedMap<span class="token punctuation">,</span> err <span class="token operator">:=</span> extender<span class="token punctuation">.</span><span class="token function">Filter</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> filtered<span class="token punctuation">,</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+				<span class="token keyword">if</span> extender<span class="token punctuation">.</span><span class="token function">IsIgnorable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+					klog<span class="token punctuation">.</span><span class="token function">Warningf</span><span class="token punctuation">(</span><span class="token string">"Skipping extender %v as it returned error %v and has ignorable flag set"</span><span class="token punctuation">,</span>
+						extender<span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+					<span class="token keyword">continue</span>
+				<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+					<span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> FailedPredicateMap<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> err
+				<span class="token punctuation">&#125;</span>
+			<span class="token punctuation">&#125;</span>
+
+			<span class="token keyword">for</span> failedNodeName<span class="token punctuation">,</span> failedMsg <span class="token operator">:=</span> <span class="token keyword">range</span> failedMap <span class="token punctuation">&#123;</span>
+				<span class="token keyword">if</span> <span class="token boolean">_</span><span class="token punctuation">,</span> found <span class="token operator">:=</span> failedPredicateMap<span class="token punctuation">[</span>failedNodeName<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">!</span>found <span class="token punctuation">&#123;</span>
+					failedPredicateMap<span class="token punctuation">[</span>failedNodeName<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+				<span class="token punctuation">&#125;</span>
+				failedPredicateMap<span class="token punctuation">[</span>failedNodeName<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>failedPredicateMap<span class="token punctuation">[</span>failedNodeName<span class="token punctuation">]</span><span class="token punctuation">,</span> predicates<span class="token punctuation">.</span><span class="token function">NewFailureReason</span><span class="token punctuation">(</span>failedMsg<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token punctuation">&#125;</span>
+			filtered <span class="token operator">=</span> filteredList
+			<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>filtered<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+				<span class="token keyword">break</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> filtered<span class="token punctuation">,</span> failedPredicateMap<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h3 id="PodFitsOnNode"><a href="#PodFitsOnNode" class="headerlink" title="PodFitsOnNode"></a>PodFitsOnNode</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">podFitsOnNode</span><span class="token punctuation">(</span>
+	pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span>
+	meta predicates<span class="token punctuation">.</span>PredicateMetadata<span class="token punctuation">,</span>
+	info <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>NodeInfo<span class="token punctuation">,</span>
+	predicateFuncs <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>FitPredicate<span class="token punctuation">,</span>
+	queue internalqueue<span class="token punctuation">.</span>SchedulingQueue<span class="token punctuation">,</span>
+	alwaysCheckAllPredicates <span class="token builtin">bool</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> failedPredicates <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason
+
+	podsAdded <span class="token operator">:=</span> <span class="token boolean">false</span>
+
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+		metaToUse <span class="token operator">:=</span> meta
+		nodeInfoToUse <span class="token operator">:=</span> info
+		<span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+			podsAdded<span class="token punctuation">,</span> metaToUse<span class="token punctuation">,</span> nodeInfoToUse <span class="token operator">=</span> <span class="token function">addNominatedPods</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> meta<span class="token punctuation">,</span> info<span class="token punctuation">,</span> queue<span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token operator">!</span>podsAdded <span class="token operator">||</span> <span class="token function">len</span><span class="token punctuation">(</span>failedPredicates<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">break</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> predicateKey <span class="token operator">:=</span> <span class="token keyword">range</span> predicates<span class="token punctuation">.</span><span class="token function">Ordering</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">var</span> <span class="token punctuation">(</span>
+				fit     <span class="token builtin">bool</span>
+				reasons <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason
+				err     <span class="token builtin">error</span>
+			<span class="token punctuation">)</span>
+			
+			<span class="token keyword">if</span> predicate<span class="token punctuation">,</span> exist <span class="token operator">:=</span> predicateFuncs<span class="token punctuation">[</span>predicateKey<span class="token punctuation">]</span><span class="token punctuation">;</span> exist <span class="token punctuation">&#123;</span>
+				fit<span class="token punctuation">,</span> reasons<span class="token punctuation">,</span> err <span class="token operator">=</span> <span class="token function">predicate</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> metaToUse<span class="token punctuation">,</span> nodeInfoToUse<span class="token punctuation">)</span>
+				<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+					<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> err
+				<span class="token punctuation">&#125;</span>
+
+				<span class="token keyword">if</span> <span class="token operator">!</span>fit <span class="token punctuation">&#123;</span>
+					<span class="token comment">// eCache is available and valid, and predicates result is unfit, record the fail reasons</span>
+					failedPredicates <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>failedPredicates<span class="token punctuation">,</span> reasons<span class="token operator">...</span><span class="token punctuation">)</span>
+					<span class="token comment">// if alwaysCheckAllPredicates is false, short circuit all predicates when one predicate fails.</span>
+					<span class="token keyword">if</span> <span class="token operator">!</span>alwaysCheckAllPredicates <span class="token punctuation">&#123;</span>
+						klog<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Infoln</span><span class="token punctuation">(</span><span class="token string">"since alwaysCheckAllPredicates has not been set, the predicate "</span> <span class="token operator">+</span>
+							<span class="token string">"evaluation is short circuited and there are chances "</span> <span class="token operator">+</span>
+							<span class="token string">"of other predicates failing as well."</span><span class="token punctuation">)</span>
+						<span class="token keyword">break</span>
+					<span class="token punctuation">&#125;</span>
+				<span class="token punctuation">&#125;</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>failedPredicates<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> failedPredicates<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="NominatedPods"><a href="#NominatedPods" class="headerlink" title="NominatedPods"></a>NominatedPods</h3><p>当enable PodPriority feature gate后，scheduler会在集群资源资源不足时为preemptor抢占低优先级的Pods（成为victims）的资源，然后preemptor会再次入调度队列，等待下次victims的优雅终止并进行下一次调度。</p>
+<p>为了尽量避免从preemptor抢占资源到真正再次执行调度这个时间段的scheduler能感知到那些资源已经被抢占，在scheduler调度其他更低优先级的Pods时考虑这些资源已经被抢占，因此在抢占阶段，为给preemptor设置<code>pod.Status.NominatedNodeName</code>，表示在NominatedNodeName上发生了抢占，preemptor期望调度在该node上。</p>
+<p>PriorityQueue中缓存了每个node上的NominatedPods，这些NominatedPods表示已经被该node提名的，期望调度在该node上的，但是又还没最终成功调度过来的Pods。</p>
+<h3 id="CriticalPod-amp-NonCriticalPod"><a href="#CriticalPod-amp-NonCriticalPod" class="headerlink" title="CriticalPod&amp;NonCriticalPod"></a>CriticalPod&amp;NonCriticalPod</h3><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1402111">https://cloud.tencent.com/developer/article/1402111</a></p>
+<p>CriticalPod, 用来部署关键组件, 希望能够: </p>
+<ol>
+<li>调度时, 即使资源不足, 仍然能够调度上去. </li>
+<li>不能被抢占</li>
+</ol>
+<h2 id="核心流程"><a href="#核心流程" class="headerlink" title="核心流程"></a>核心流程</h2><ol>
+<li>根据NodeSize, 确定Filter之后能参与后续Weighter的Node个数</li>
+<li>g.cache.NodeTree().Next(): <ol>
+<li>从cache的NodeTree中依次获取NodeName, 便于Node打散. </li>
+<li>从snapshot的中根据NodeName获取到Node对象.</li>
+</ol>
+</li>
+<li>podFitsOnNode(): 后续调度的</li>
+<li></li>
+</ol>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">var (
+	predicatesOrdering &#x3D; []string&#123;CheckNodeConditionPred, CheckNodeUnschedulablePred,
+		GeneralPred, HostNamePred, PodFitsHostPortsPred,
+		MatchNodeSelectorPred, PodFitsResourcesPred, NoDiskConflictPred,
+		PodToleratesNodeTaintsPred, PodToleratesNodeNoExecuteTaintsPred, CheckNodeLabelPresencePred,
+		CheckServiceAffinityPred, MaxEBSVolumeCountPred, MaxGCEPDVolumeCountPred, MaxCSIVolumeCountPred,
+		MaxAzureDiskVolumeCountPred, MaxCinderVolumeCountPred, CheckVolumeBindingPred, NoVolumeZoneConflictPred,
+		CheckNodeMemoryPressurePred, CheckNodePIDPressurePred, CheckNodeDiskPressurePred, MatchInterPodAffinityPred&#125;
+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="资源量Filter-x2F-Predicates"><a href="#资源量Filter-x2F-Predicates" class="headerlink" title="资源量Filter&#x2F;Predicates"></a>资源量Filter&#x2F;Predicates</h3><h4 id="NonCriticalPredicates"><a href="#NonCriticalPredicates" class="headerlink" title="NonCriticalPredicates"></a>NonCriticalPredicates</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>predicates<span class="token operator">/</span>predicates<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">1114</span> GeneralPredicates
+pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>predicates<span class="token operator">/</span>predicates<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">1136</span> noncriticalPredicates
+pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>predicates<span class="token operator">/</span>predicates<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">769</span> PodFitsResources
+
+<span class="token keyword">func</span> <span class="token function">PodFitsResources</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> meta PredicateMetadata<span class="token punctuation">,</span> nodeInfo <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>NodeInfo<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>PredicateFailureReason<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	node <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">var</span> predicateFails <span class="token punctuation">[</span><span class="token punctuation">]</span>PredicateFailureReason
+	allowedPodNumber <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">AllowedPodNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">// Pod数量校验</span>
+	<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>nodeInfo<span class="token punctuation">.</span><span class="token function">Pods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span> <span class="token operator">></span> allowedPodNumber <span class="token punctuation">&#123;</span>
+		predicateFails <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">,</span> <span class="token function">NewInsufficientResourceError</span><span class="token punctuation">(</span>v1<span class="token punctuation">.</span>ResourcePods<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token function">int64</span><span class="token punctuation">(</span><span class="token function">len</span><span class="token punctuation">(</span>nodeInfo<span class="token punctuation">.</span><span class="token function">Pods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">int64</span><span class="token punctuation">(</span>allowedPodNumber<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">var</span> podRequest <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>Resource
+	podRequest <span class="token operator">=</span> <span class="token function">GetResourceRequest</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span>
+	allocatable <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">AllocatableResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">// CPU量校验</span>
+	<span class="token keyword">if</span> allocatable<span class="token punctuation">.</span>MilliCPU <span class="token operator">&lt;</span> podRequest<span class="token punctuation">.</span>MilliCPU<span class="token operator">+</span>nodeInfo<span class="token punctuation">.</span><span class="token function">RequestedResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>MilliCPU <span class="token punctuation">&#123;</span>
+		predicateFails <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">,</span> <span class="token function">NewInsufficientResourceError</span><span class="token punctuation">(</span>v1<span class="token punctuation">.</span>ResourceCPU<span class="token punctuation">,</span> podRequest<span class="token punctuation">.</span>MilliCPU<span class="token punctuation">,</span> nodeInfo<span class="token punctuation">.</span><span class="token function">RequestedResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>MilliCPU<span class="token punctuation">,</span> allocatable<span class="token punctuation">.</span>MilliCPU<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+  <span class="token comment">// MEM量校验</span>
+	<span class="token keyword">if</span> allocatable<span class="token punctuation">.</span>Memory <span class="token operator">&lt;</span> podRequest<span class="token punctuation">.</span>Memory<span class="token operator">+</span>nodeInfo<span class="token punctuation">.</span><span class="token function">RequestedResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Memory <span class="token punctuation">&#123;</span>
+		predicateFails <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">,</span> <span class="token function">NewInsufficientResourceError</span><span class="token punctuation">(</span>v1<span class="token punctuation">.</span>ResourceMemory<span class="token punctuation">,</span> podRequest<span class="token punctuation">.</span>Memory<span class="token punctuation">,</span> nodeInfo<span class="token punctuation">.</span><span class="token function">RequestedResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Memory<span class="token punctuation">,</span> allocatable<span class="token punctuation">.</span>Memory<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> predicateFails<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="CriticalPredicates"><a href="#CriticalPredicates" class="headerlink" title="CriticalPredicates"></a>CriticalPredicates</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>predicates<span class="token operator">/</span>predicates<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">1150</span> EssentialPredicates
+<span class="token keyword">func</span> <span class="token function">EssentialPredicates</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> meta PredicateMetadata<span class="token punctuation">,</span> nodeInfo <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>NodeInfo<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>PredicateFailureReason<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> predicateFails <span class="token punctuation">[</span><span class="token punctuation">]</span>PredicateFailureReason
+  <span class="token comment">// 1. PodFitsHost校验: (pod.Spec.NodeName == node.Name)</span>
+	fit<span class="token punctuation">,</span> reasons<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">PodFitsHost</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> meta<span class="token punctuation">,</span> nodeInfo<span class="token punctuation">)</span>
+  <span class="token comment">// 2. PodFitsHostPorts校验: 端口量是否充足</span>
+	fit<span class="token punctuation">,</span> reasons<span class="token punctuation">,</span> err <span class="token operator">=</span> <span class="token function">PodFitsHostPorts</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> meta<span class="token punctuation">,</span> nodeInfo<span class="token punctuation">)</span>
+  <span class="token comment">// 3. PodMatchNodeSelector校验: </span>
+	fit<span class="token punctuation">,</span> reasons<span class="token punctuation">,</span> err <span class="token operator">=</span> <span class="token function">PodMatchNodeSelector</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> meta<span class="token punctuation">,</span> nodeInfo<span class="token punctuation">)</span>
+
+	<span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> predicateFails<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="Label匹配"><a href="#Label匹配" class="headerlink" title="Label匹配"></a>Label匹配</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>predicates<span class="token operator">/</span>predicates<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">948</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>n <span class="token operator">*</span>NodeLabelChecker<span class="token punctuation">)</span> <span class="token function">CheckNodeLabelPresence</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> meta PredicateMetadata<span class="token punctuation">,</span> nodeInfo <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>NodeInfo<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>PredicateFailureReason<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	node <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  
+	<span class="token keyword">var</span> exists <span class="token builtin">bool</span>
+  <span class="token comment">// 获取Node上的所有Label</span>
+	nodeLabels <span class="token operator">:=</span> labels<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>Labels<span class="token punctuation">)</span>
+  <span class="token comment">// 遍历pod请求里的所有Label</span>
+	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> label <span class="token operator">:=</span> <span class="token keyword">range</span> n<span class="token punctuation">.</span>labels <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 如果Node的Label没有包含pod请求里的Label, 那么证明该Node不合法(缺少对应的Label), 则筛除掉</span>
+		exists <span class="token operator">=</span> nodeLabels<span class="token punctuation">.</span><span class="token function">Has</span><span class="token punctuation">(</span>label<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>exists <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>n<span class="token punctuation">.</span>presence<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span><span class="token operator">!</span>exists <span class="token operator">&amp;&amp;</span> n<span class="token punctuation">.</span>presence<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>PredicateFailureReason<span class="token punctuation">&#123;</span>ErrNodeLabelPresenceViolated<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://my.oschina.net/jxcdwangtao/blog/1818975">https://my.oschina.net/jxcdwangtao/blog/1818975</a></p>
+<p><a target="_blank" rel="noopener" href="https://my.oschina.net/jxcdwangtao/blog/826741">https://my.oschina.net/jxcdwangtao/blog/826741</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/scheduler/" rel="tag"># scheduler</a>
+              <a href="/tags/kube-scheduler/" rel="tag"># kube-scheduler</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021-09-08-kube-scheduler-overview/" rel="prev" title="kube-scheduler笔记">
+                  <i class="fa fa-chevron-left"></i> kube-scheduler笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021-09-08-kube-scheduler-cache/" rel="next" title="kube-scheduler笔记之SchedulerCache研究">
+                  kube-scheduler笔记之SchedulerCache研究 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景在使用apache的HttpClient时(获取其他常用的httpclient), 经常会发现初始化时可以配置http proxy. 但有些疑问:  在什么场景下需要使用http proxy? 具体http proxy怎么配置? 具体http proxy的实现原理是啥? 包括 httpClient 如何使用这个proxy? 具体的httpProxy怎么处理这种包?  实践环境 docker u">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Linux网络之HTTP Proxy原理与实现分析">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-07-10-linux-network-http-proxy/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景在使用apache的HttpClient时(获取其他常用的httpclient), 经常会发现初始化时可以配置http proxy. 但有些疑问:  在什么场景下需要使用http proxy? 具体http proxy怎么配置? 具体http proxy的实现原理是啥? 包括 httpClient 如何使用这个proxy? 具体的httpProxy怎么处理这种包?  实践环境 docker u">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="iaas">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="cloud-computing">
+<meta property="article:tag" content="http-proxy">
+<meta property="article:tag" content="proxy">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-07-10-linux-network-http-proxy/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-07-10-linux-network-http-proxy/","path":"/2022-07-10-linux-network-http-proxy/","title":"Linux网络之HTTP Proxy原理与实现分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux网络之HTTP Proxy原理与实现分析 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-proxy-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2"><span class="nav-number">2.2.</span> <span class="nav-text">http proxy 服务端部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-proxy-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">http proxy 客户端配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82%E5%88%86%E6%9E%90"><span class="nav-number">2.4.</span> <span class="nav-text">客户端请求分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E8%BF%9E%E6%8E%A5%E5%88%86%E6%9E%90"><span class="nav-number">2.5.</span> <span class="nav-text">实际连接分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#host%E4%B8%8A%EF%BC%8C-LISTEN%E4%BA%869999%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.5.1.</span> <span class="nav-text">host上， LISTEN了9999端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%EF%BC%8C-LISTEN%E4%BA%868888%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.5.2.</span> <span class="nav-text">容器内部， LISTEN了8888端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Host%E4%B8%8A%E6%9F%90%E4%B8%AAjava%E8%BF%9B%E7%A8%8B%E5%8F%91%E8%B5%B7%E4%B8%80%E4%B8%AAHTTP%E8%AF%B7%E6%B1%82%E4%B9%8B%E5%90%8E"><span class="nav-number">2.5.3.</span> <span class="nav-text">在Host上某个java进程发起一个HTTP请求之后</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%8D%E5%9B%9E%E5%88%B0%E5%AE%9E%E8%B7%B5%E4%B8%AD"><span class="nav-number">4.</span> <span class="nav-text">再回到实践中</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B51%EF%BC%9A-DNS%E5%8A%AB%E6%8C%81-%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E8%BF%87%E6%BB%A4%E5%9F%9F%E5%90%8D"><span class="nav-number">4.1.</span> <span class="nav-text">实践1： DNS劫持+正向代理过滤域名</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-10-linux-network-http-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux网络之HTTP Proxy原理与实现分析 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux网络之HTTP Proxy原理与实现分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-11 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-11T00:00:00+08:00">2022-07-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用apache的HttpClient时(获取其他常用的httpclient), 经常会发现初始化时可以配置http proxy. 但有些疑问:</p>
+<ol>
+<li>在什么场景下需要使用http proxy?</li>
+<li>具体http proxy怎么配置?</li>
+<li>具体http proxy的实现原理是啥? 包括 httpClient 如何使用这个proxy? 具体的httpProxy怎么处理这种包?</li>
+</ol>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>docker</li>
+<li>ubuntu</li>
+</ul>
+<h2 id="http-proxy-服务端部署"><a href="#http-proxy-服务端部署" class="headerlink" title="http proxy 服务端部署"></a>http proxy 服务端部署</h2><p>Nginx通常是作为反向代理, 但其实也可以作为正向代理使用:  <a target="_blank" rel="noopener" href="https://github.com/reiz/nginx_proxy">nginx_proxy</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run -d -p <span class="token number">9999</span>:8888 -v <span class="token variable">$&#123;<span class="token environment constant">PWD</span>&#125;</span>/nginx_allowlist.conf:/usr/local/nginx/conf/nginx.conf reiz/nginx_proxy:0.0.3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="http-proxy-客户端配置"><a href="#http-proxy-客户端配置" class="headerlink" title="http proxy 客户端配置"></a>http proxy 客户端配置</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span><span class="token class-name">HostConfiguration</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span><span class="token class-name">HttpClient</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span>methods<span class="token punctuation">.</span></span><span class="token class-name">GetMethod</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span>params<span class="token punctuation">.</span></span><span class="token class-name">HttpMethodParams</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span><span class="token class-name">Test</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HttpClientTest</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> ENCODING <span class="token operator">=</span> <span class="token string">"UTF-8"</span><span class="token punctuation">;</span>
+    
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">"https://www.google.com"</span><span class="token punctuation">;</span>
+        
+        <span class="token class-name">HttpClient</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">HostConfiguration</span> hostConfiguration <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HostConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        hostConfiguration<span class="token punctuation">.</span><span class="token function">setProxy</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span> <span class="token number">9999</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        client<span class="token punctuation">.</span><span class="token function">setHostConfiguration</span><span class="token punctuation">(</span>hostConfiguration<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        client<span class="token punctuation">.</span><span class="token function">getParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setParameter</span><span class="token punctuation">(</span>
+            <span class="token class-name">HttpMethodParams</span><span class="token punctuation">.</span>HTTP_CONTENT_CHARSET<span class="token punctuation">,</span> ENCODING<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">GetMethod</span> method <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GetMethod</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> i <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">executeMethod</span><span class="token punctuation">(</span>method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Code: "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">String</span> response <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">getResponseBodyAsString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="客户端请求分析"><a href="#客户端请求分析" class="headerlink" title="客户端请求分析"></a>客户端请求分析</h2><p>不配置proxy:</p>
+<ul>
+<li>client —http get—&gt; <a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a></li>
+</ul>
+<p>配置了proxy:</p>
+<ul>
+<li>client — tcp —&gt; proxy — http get —&gt;  <a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a></li>
+</ul>
+<p>可以看到, client.executeMethod实质上是:</p>
+<ol>
+<li>client先与proxy建立了TCP连接.</li>
+<li>然后将HTTP报文, 包括目标域名(即GET <a target="_blank" rel="noopener" href="http://www.google.com/">http://www.google.com</a>), 作为TCP的output stream传给proxy</li>
+<li>proxy解析tcp报文, 获取到真正的目标域名, 查找DNS获取到google.com的ip地址.</li>
+<li>proxy与google.com建立TCP连接, 发送报文body等.</li>
+</ol>
+<p>这种也叫: relay, 即中继.</p>
+<h2 id="实际连接分析"><a href="#实际连接分析" class="headerlink" title="实际连接分析"></a>实际连接分析</h2><h3 id="host上，-LISTEN了9999端口"><a href="#host上，-LISTEN了9999端口" class="headerlink" title="host上， LISTEN了9999端口"></a>host上， LISTEN了9999端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/PlayGround/docker/nginx-forward-proxy$ <span class="token function">netstat</span> -natp <span class="token operator">|</span> <span class="token function">fgrep</span> <span class="token number">9999</span>
+<span class="token punctuation">(</span>Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.<span class="token punctuation">)</span>
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:9999            <span class="token number">0.0</span>.0.0:*               LISTEN      -                   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="容器内部，-LISTEN了8888端口"><a href="#容器内部，-LISTEN了8888端口" class="headerlink" title="容器内部， LISTEN了8888端口"></a>容器内部， LISTEN了8888端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@84129a407795:/app<span class="token comment"># netstat -nat | fgrep 8888</span>
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:8888            <span class="token number">0.0</span>.0.0:*               LISTEN     <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="在Host上某个java进程发起一个HTTP请求之后"><a href="#在Host上某个java进程发起一个HTTP请求之后" class="headerlink" title="在Host上某个java进程发起一个HTTP请求之后"></a>在Host上某个java进程发起一个HTTP请求之后</h3><ul>
+<li><p>HOST上 Java 进程</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/Downloads/Clash-Linux$ <span class="token function">netstat</span> -natp <span class="token operator">|</span> <span class="token function">fgrep</span> <span class="token number">9999</span>
+<span class="token punctuation">(</span>Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.<span class="token punctuation">)</span>
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:9999            <span class="token number">0.0</span>.0.0:*               LISTEN      -                   
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">127.0</span>.0.1:9999          <span class="token number">127.0</span>.0.1:42261         TIME_WAIT   -                   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>容器内部</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@84129a407795:/app<span class="token comment"># netstat -nat | fgrep 8888</span>
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:8888            <span class="token number">0.0</span>.0.0:*               LISTEN     
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">172.17</span>.0.4:8888         <span class="token number">172.17</span>.0.1:51960        TIME_WAIT  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<p>TODO:</p>
+<ul>
+<li>在访问<code>http://www.google.com</code>时，Java测试代码正常返回结果。</li>
+<li>在访问<code>http://www.baidu.com</code>时， Java会出现如下异常，理论上由于不在nginx的白名单里应该被block的，但为啥会抛出异常？<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>IOException</span><span class="token operator">:</span> <span class="token class-name">Stream</span> closed
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>BufferedInputStream</span><span class="token punctuation">.</span><span class="token function">getBufIfOpen</span><span class="token punctuation">(</span><span class="token class-name">BufferedInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">170</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>BufferedInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">BufferedInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">336</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>WireLogInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">WireLogInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">69</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>ContentLengthInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">ContentLengthInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">170</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>FilterInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">FilterInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">133</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>AutoCloseInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">AutoCloseInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">108</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>FilterInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">FilterInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">107</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>AutoCloseInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">AutoCloseInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">127</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpMethodBase</span><span class="token punctuation">.</span><span class="token function">getResponseBody</span><span class="token punctuation">(</span><span class="token class-name">HttpMethodBase</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">690</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpMethodBase</span><span class="token punctuation">.</span><span class="token function">getResponseBodyAsString</span><span class="token punctuation">(</span><span class="token class-name">HttpMethodBase</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">803</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>test<span class="token punctuation">.</span>javaweb<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpClientProxyTest</span><span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token class-name">HttpClientProxyTest</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><h1 id="再回到实践中"><a href="#再回到实践中" class="headerlink" title="再回到实践中"></a>再回到实践中</h1><h2 id="实践1：-DNS劫持-正向代理过滤域名"><a href="#实践1：-DNS劫持-正向代理过滤域名" class="headerlink" title="实践1： DNS劫持+正向代理过滤域名"></a>实践1： DNS劫持+正向代理过滤域名</h2><p>通过DNS劫持，将所有HTTP请求都定位到正向代理中，在正向代理里进行代理域名的黑白名单控制。</p>
+<ul>
+<li>缺点：<ul>
+<li>DNS劫持可以被手动禁用，也可以手动指定<code>8.8.8.8</code>绕过DNS服务器（当然如果DNS请求直接都被劫持，）。</li>
+<li>只针对HTTP请求有效，如果知道目标的IP, 可以通过IP直连上。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/iaas/" rel="tag"># iaas</a>
+              <a href="/tags/network/" rel="tag"># network</a>
+              <a href="/tags/cloud-computing/" rel="tag"># cloud-computing</a>
+              <a href="/tags/http-proxy/" rel="tag"># http-proxy</a>
+              <a href="/tags/proxy/" rel="tag"># proxy</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-07-06-state-machine-in-distributed-system/" rel="prev" title="记一次分布式场景下状态机设计缺陷导致的问题">
+                  <i class="fa fa-chevron-left"></i> 记一次分布式场景下状态机设计缺陷导致的问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-07-11-zk-uuid-gen/" rel="next" title="由ZK的SID/ZXID与snowflake算法引发的ID生成算法探讨">
+                  由ZK的SID/ZXID与snowflake算法引发的ID生成算法探讨 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,4163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="Coders@Work">
+<meta property="og:url" content="https://davyjones2010.github.io/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Davy Walker">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coders@Work</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-23-github-token-login/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-23-github-token-login/" class="post-title-link" itemprop="url">从GitHub CLI禁止用户名密码登录引发的思考与总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-24T00:00:00+08:00">2022-07-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在本地CLI中push github代码时, 要求输入用户名密码, 但输入密码之后, 提示禁止使用密码登录.</p>
+<ul>
+<li>根据提示配置了半天SSH免登, 结果发现并不生效, push时仍然让输入账号名密码.</li>
+<li>后续根据提示, 在<a target="_blank" rel="noopener" href="https://github.com/settings/tokens">GitHub页面新申请了Token</a>, 然后使用 用户名+Token 登录就可以了.<br>从而引发了诸多疑问与思考.</li>
+</ul>
+<h1 id="GitHub访问几种方式"><a href="#GitHub访问几种方式" class="headerlink" title="GitHub访问几种方式"></a>GitHub访问几种方式</h1><h2 id="方案1-SSH方式"><a href="#方案1-SSH方式" class="headerlink" title="方案1: SSH方式"></a>方案1: SSH方式</h2><h3 id="配置方式"><a href="#配置方式" class="headerlink" title="配置方式"></a>配置方式</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242155452.png"></p>
+<p>这种方式, 可以通过配置SSH免登即可.</p>
+<h3 id="如何支持不同Host采用不同SSHKey"><a href="#如何支持不同Host采用不同SSHKey" class="headerlink" title="如何支持不同Host采用不同SSHKey?"></a>如何支持不同Host采用不同SSHKey?</h3><p>如果在本地, 既需要配置gitee的SSH免登, 又需要配置github的SSH免登, 有需要配置其他Host的SSH免登, 怎么能让不同的Host使用不同的公私钥对?</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-23-github-token-login/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-11-zk-uuid-gen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-11-zk-uuid-gen/" class="post-title-link" itemprop="url">由ZK的SID/ZXID与snowflake算法引发的ID生成算法探讨</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-12 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-12T00:00:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="几种生成算法"><a href="#几种生成算法" class="headerlink" title="几种生成算法"></a>几种生成算法</h1><h2 id="zk里的sid生成算法"><a href="#zk里的sid生成算法" class="headerlink" title="zk里的sid生成算法"></a>zk里的sid生成算法</h2><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
+<li>一个long类型, 占用64位</li>
+<li>由ZK服务端生成的.</li>
+<li>当客户端与ZK服务端建立好TCP连接(或者说应用层连接)之后, 生成.</li>
+</ul>
+<h3 id="生成规则"><a href="#生成规则" class="headerlink" title="生成规则"></a>生成规则</h3><ol>
+<li>获取当前时间(2013-10-04 21:59:42)的毫秒表示：1380895182327 用二进制表示为：</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122157745.png"></p>
+<ol start="2">
+<li>将步骤1中的数值左移24位，得到：</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122157302.png"></p>
+<ol start="3">
+<li>右移8位：</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-11-zk-uuid-gen/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-10-linux-network-http-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-10-linux-network-http-proxy/" class="post-title-link" itemprop="url">Linux网络之HTTP Proxy原理与实现分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-11 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-11T00:00:00+08:00">2022-07-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用apache的HttpClient时(获取其他常用的httpclient), 经常会发现初始化时可以配置http proxy. 但有些疑问:</p>
+<ol>
+<li>在什么场景下需要使用http proxy?</li>
+<li>具体http proxy怎么配置?</li>
+<li>具体http proxy的实现原理是啥? 包括 httpClient 如何使用这个proxy? 具体的httpProxy怎么处理这种包?</li>
+</ol>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>docker</li>
+<li>ubuntu</li>
+</ul>
+<h2 id="http-proxy-服务端部署"><a href="#http-proxy-服务端部署" class="headerlink" title="http proxy 服务端部署"></a>http proxy 服务端部署</h2><p>Nginx通常是作为反向代理, 但其实也可以作为正向代理使用:  <a target="_blank" rel="noopener" href="https://github.com/reiz/nginx_proxy">nginx_proxy</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run -d -p <span class="token number">9999</span>:8888 -v <span class="token variable">$&#123;<span class="token environment constant">PWD</span>&#125;</span>/nginx_allowlist.conf:/usr/local/nginx/conf/nginx.conf reiz/nginx_proxy:0.0.3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="http-proxy-客户端配置"><a href="#http-proxy-客户端配置" class="headerlink" title="http proxy 客户端配置"></a>http proxy 客户端配置</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-10-linux-network-http-proxy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-06-state-machine-in-distributed-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-06-state-machine-in-distributed-system/" class="post-title-link" itemprop="url">记一次分布式场景下状态机设计缺陷导致的问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-07T00:00:00+08:00">2022-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
+<li><p>为某个对象item建模, 有如下几种状态变迁, 在数据库中state字段记录:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072308671.png"></p>
+</li>
+<li><p>其中processing过程可能会持续时间较久, 10min左右</p>
+</li>
+<li><p>在服务端某个线程响应请求, 该对象处于processing过程中时, 服务器发布重启, 导致item状态一直卡在processing </p>
+</li>
+<li><p>而processing状态, <strong>本身是中间状态, 无法进行任何人肉干预&#x2F;操作</strong>, 从而导致只能临时提交数据订正, 将状态字段修改回”init”, 然后再执行一次process.</p>
+</li>
+</ul>
+<h1 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h1><p>仔细思考了下, 发现设计的时候, 根本原因是对于中间状态没有做好处理, 如背景中介绍的服务重启的处理.<br>而<mark>在分布式场景下, 服务重启是by design需要被接受的.</mark><br>这里思考了下可能的几种处理方式:</p>
+<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><ul>
+<li>如何区分状态机的中间状态与终态? </li>
+<li>一条原则: <mark>终态-&gt;终态之间, 必须是可以人肉有入口触发的(而不是系统自动触发的); 必须是可重入的.</mark></li>
+</ul>
+<h2 id="方案1-状态机设计修改-把processing作为纯粹的中间状态"><a href="#方案1-状态机设计修改-把processing作为纯粹的中间状态" class="headerlink" title="方案1: 状态机设计修改: 把processing作为纯粹的中间状态"></a>方案1: 状态机设计修改: 把processing作为纯粹的中间状态</h2><ol>
+<li><p>将processing从状态机中删除掉, 如下: <br><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072351350.png"></p>
+</li>
+<li><p>使用 分布式锁&#x2F;db字段锁 来实现排他功能(即item同时只能被一个线程处理, 防止多个线程同时处理一个item导致死锁&#x2F;重复计算等问题).</p>
+<ol>
+<li>在item执行前, 加上锁+锁超时时间(如例子中的10min); 其他线程要执行时, 无法抢到该item的锁. </li>
+<li>item执行完成之后, 状态修改为finished之后, 再释放掉item锁.</li>
+<li>item执行异常中断(例如服务器重启, 线程crash等): 等待锁超时. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+<li>item执行失败: 线程里catch住异常, 主动释放掉该item锁. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+</ol>
+</li>
+<li><p>或者使用事务:(不过本例子中不适合, 因为10min太久了, 其他执行耗时较短30s以内的可以使用该方案)  </p>
+<ol>
+<li>item执行前开启事务;</li>
+<li>执行后修改状态为finished, commit事务.</li>
+<li>item执行异常中断(例如服务器重启, 线程crash等): 事务自动回滚. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+<li>item执行失败: 主动回滚事务. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+</ol>
+</li>
+</ol>
+<h2 id="方案2-状态机设计修改-把processing作为纯粹的终态"><a href="#方案2-状态机设计修改-把processing作为纯粹的终态" class="headerlink" title="方案2: 状态机设计修改: 把processing作为纯粹的终态"></a>方案2: 状态机设计修改: 把processing作为纯粹的终态</h2><ol>
+<li><p>需要设计从processing-&gt;finished&#x2F;init的人肉触发入口.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072354738.png"></p>
+</li>
+<li><p>如何防止多个线程同时触发该item从processing-&gt;finished&#x2F;init的变迁? 参见方案1中锁&#x2F;事务的方式</p>
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-06-state-machine-in-distributed-system/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-03-random-snippets/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-03-random-snippets/" class="post-title-link" itemprop="url">一些有意思的记录-4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-04 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-04T00:00:00+08:00">2022-07-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>23</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>五看: 看趋势, 看市场, 看客户, 看竞争, 看自己.</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-03-random-snippets/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-02-dubbo-app-perf-tunning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-02-dubbo-app-perf-tunning/" class="post-title-link" itemprop="url">记一次Dubbo应用性能优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-03 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-03T00:00:00+08:00">2022-07-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>新的应用以dubbo接口对外暴露调度能力。<br>在上线前需要整体压测，确认下系统能力与瓶颈。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>目标QPS: 500+<br>目标RT: 100ms-</p>
+<h2 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216549.png"></p>
+<h2 id="应用框架"><a href="#应用框架" class="headerlink" title="应用框架"></a>应用框架</h2><ul>
+<li>SpringBoot 2.5.6</li>
+<li>Druid 1.1.22</li>
+</ul>
+<h2 id="机器配置清单"><a href="#机器配置清单" class="headerlink" title="机器配置清单"></a>机器配置清单</h2><ul>
+<li>ECS规格： ecs.n4.2xlarge</li>
+<li>2台8C16G 独享型</li>
+<li>CPU: 2.5 GHz主频的Intel ® Xeon ®处理器</li>
+<li>JDK 1.8</li>
+<li>网络： 1.2Gbps，即至少支持100MB&#x2F;s的内网带宽</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-02-dubbo-app-perf-tunning/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-01-java-jvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-01-java-jvm/" class="post-title-link" itemprop="url">Java&JVM&OQL 常用命令与脚本总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-02 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-02T00:00:00+08:00">2022-07-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Java-amp-JVM"><a href="#Java-amp-JVM" class="headerlink" title="Java&amp;JVM"></a>Java&amp;JVM</h1><h2 id="打-HeapDump"><a href="#打-HeapDump" class="headerlink" title="打 HeapDump"></a>打 HeapDump</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jmap -dump:live,file<span class="token operator">=</span>heapdump.phrof <span class="token variable">$pid</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>或者</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jmap -dump:live,file<span class="token operator">=</span>heapdump.phrof -F <span class="token variable">$pid</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>一般情况下，<mark>尽量不要使用-F参数。</mark> 因为-F使用的是Linux操作系统层面的实现，而不是JVM层面的实现，会导致 打印堆信息很慢。<br><br>如果提示第一种方式打印不出来堆的信息，需要增加-F，那么可以先检查下：</p>
+<ol>
+<li>Java应用进程的user_name是否与当前的user_name相同？ 如果不同，需要切换为同一个账号。</li>
+<li>Java应用进程的Java路径是否与当前jmap命令的路径相同？ 如果不同，需要切换为同一个路径。</li>
+</ol>
+</blockquote>
+<h2 id="打-ThreadDump"><a href="#打-ThreadDump" class="headerlink" title="打 ThreadDump"></a>打 ThreadDump</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jstack <span class="token variable">$pid</span> <span class="token operator">></span> tmp.jstack<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>注意: 当CPU利用率高或者想看下线程卡在哪里时，<mark>最好隔几秒就打一个线程栈，每个线程栈都保留下来</mark> <br><br>多个线程栈对比起来看，会更能更好地发现问题。</p>
+</blockquote>
+<h2 id="查看消耗CPU时间片最多的线程信息"><a href="#查看消耗CPU时间片最多的线程信息" class="headerlink" title="查看消耗CPU时间片最多的线程信息"></a>查看消耗CPU时间片最多的线程信息</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-01-java-jvm/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-29-linux-network-faq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-29-linux-network-faq/" class="post-title-link" itemprop="url">Linux网络之原理探讨与疑问总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-30 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-30T00:00:00+08:00">2022-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="网卡混杂模式"><a href="#网卡混杂模式" class="headerlink" title="网卡混杂模式"></a>网卡混杂模式</h2><ul>
+<li><p>啥是网卡混杂模式？</p>
+</li>
+<li><p>正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。</p>
+</li>
+<li><p>开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。</p>
+</li>
+<li><p>啥时候需要开启？</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO:</p>
+</li>
+<li><p>如何开启？</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 开启混杂模式
+<span class="token function">ifconfig</span> eth0 promisc
+// 取消混杂模式
+<span class="token function">ifconfig</span> eth0 -promisc
+// 内核判断网卡是否处于混杂模式是看如下标识，如果置位了0x100，则处于混杂模式
+<span class="token function">cat</span> /sys/class/net/eth0/flags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>是否开启了混杂模式，就能嗅探局域网（二层网）内的所有数据包了？</p>
+</li>
+<li><p>不一定。</p>
+</li>
+<li><p>针对二层如果是集线器模式，可以嗅探到。</p>
+</li>
+<li><p>但现在大部分二层都是交换机模式。即交换机会根据CAM表，往对应的端口转发，不会无脑地全部端口都转发，因此嗅探不到。</p>
+</li>
+<li><p>开启混杂模式的例子</p>
+</li>
+<li><p>如下，docker0网桥就开启了混杂模式。</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO: 为啥docker0网桥开启混杂模式？具体怎么用的？</p>
+</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">cat</span> /sys/class/net/docker0/flags 
+0x1003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="路由器与NAT设备的关联与区别"><a href="#路由器与NAT设备的关联与区别" class="headerlink" title="路由器与NAT设备的关联与区别"></a>路由器与NAT设备的关联与区别</h2><h3 id="路由器工作原理："><a href="#路由器工作原理：" class="headerlink" title="路由器工作原理："></a>路由器工作原理：</h3><p>主要用来联通连个不同的网段，<mark>只修改sourceMac与targetMac，不修改sourceIp与targetIp</mark></p>
+<ol>
+<li>根据传入包指定的targetIp（传入包的MAC地址是路由器当前网卡的MAC地址，IP地址是真正的IP地址）</li>
+<li>查询自身路由表，查找到最近的下一跳的IP地址。<code>route -n</code></li>
+<li>再根据下一跳的IP地址，查找到对应的MAC地址。arp缓存表</li>
+<li>修改数据包的targetMAC地址为下一跳的MAC地址，sourceMAC为当前网卡出口的mac地址</li>
+<li>将数据包从对应网卡送出去。</li>
+</ol>
+<blockquote>
+<p>路由器的核心是路由表的维护，能生成最短最优路径。<br><br>从sourceIp到targetIp的路由路径，很可能与回包，即从targetIp返回到sourceIp的路由路径不一样。<br>取决于当时的路径中路由器的路由表情况。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-29-linux-network-faq/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-25-linux-network-scripts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-25-linux-network-scripts/" class="post-title-link" itemprop="url">常用的Linux命令之网络相关命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-26 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-26T00:00:00+08:00">2022-06-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="ARP协议"><a href="#ARP协议" class="headerlink" title="ARP协议"></a>ARP协议</h1><h2 id="查看ARP缓存表"><a href="#查看ARP缓存表" class="headerlink" title="查看ARP缓存表"></a>查看ARP缓存表</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/PlayGround/nat$ arp -v
+Address                  HWtype  HWaddress           Flags Mask            Iface
+_gateway                 ether   c0:b4:7d:69:d6:c3   C                     wlp4s0
+<span class="token number">172.17</span>.0.3               ether   02:42:ac:11:00:03   C                     docker0
+<span class="token number">192.168</span>.3.2              ether   00:11:32:b2:b7:04   C                     wlp4s0
+<span class="token number">172.17</span>.0.2               ether   02:42:ac:11:00:02   C                     docker0
+Entries: <span class="token number">4</span>	Skipped: <span class="token number">0</span>	Found: <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="查看某个网卡的arp缓存"><a href="#查看某个网卡的arp缓存" class="headerlink" title="查看某个网卡的arp缓存"></a>查看某个网卡的arp缓存</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/PlayGround/nat$ arp -i wlp4s0
+Address                  HWtype  HWaddress           Flags Mask            Iface
+_gateway                 ether   c0:b4:7d:69:d6:c3   C                     wlp4s0
+<span class="token number">192.168</span>.3.2              ether   00:11:32:b2:b7:04   C                     wlp4s0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="参数详解"><a href="#参数详解" class="headerlink" title="参数详解"></a>参数详解</h2><ul>
+<li>flags:<ul>
+<li>C: complete, each complete entry in the ARP cache will be marked with the C flag.</li>
+<li>M: 手动增加的，Permanent entries are marked  with  M</li>
+<li>P: TODO: 不太明白具体啥意思，published entries have the P flag.</li>
+</ul>
+</li>
+</ul>
+<h1 id="网桥"><a href="#网桥" class="headerlink" title="网桥"></a>网桥</h1><h2 id="查看网桥"><a href="#查看网桥" class="headerlink" title="查看网桥"></a>查看网桥</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/Downloads$ brctl show
+bridge name	bridge <span class="token function">id</span>		STP enabled	interfaces
+docker0		<span class="token number">8000</span>.0242cee53ddd	no		veth9aec769
+							            vethe466b6b
+virbr0		<span class="token number">8000</span>.525400245c90	<span class="token function">yes</span>		virbr0-nic<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-25-linux-network-scripts/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-24-dubbo-invoke-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-24-dubbo-invoke-error/" class="post-title-link" itemprop="url">记一次Dubbo服务调用异常排查</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-25 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-25T00:00:00+08:00">2022-06-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><ul>
+<li>应用拓扑: systemA —- dubbo 调用 —-&gt; systemB</li>
+<li>systemB应用在已有的dubbo接口类里, 新增加了一个方法methodA.</li>
+<li>systemA在调用该methodA时, 抛错. 错误信息如下:</li>
+</ul>
+<h1 id="排查步骤"><a href="#排查步骤" class="headerlink" title="排查步骤"></a>排查步骤</h1><h2 id="0x00-排查provider侧"><a href="#0x00-排查provider侧" class="headerlink" title="0x00 排查provider侧"></a>0x00 排查provider侧</h2><p>确认provider侧:</p>
+<ol>
+<li>服务是否正常可以执行? &gt; 通过telnet localhost, 手动invoke确定是OK的.</li>
+<li>接口类&amp;接口方法是否正常注册在registry上? &gt; 通过查看dubbo registry, 发现接口类与接口方法是正常注册的.</li>
+</ol>
+<h2 id="0x01-排查consumer侧"><a href="#0x01-排查consumer侧" class="headerlink" title="0x01 排查consumer侧"></a>0x01 排查consumer侧</h2><p>确认consumer侧:</p>
+<ol>
+<li>是否正确依赖到了provider?<ol>
+<li>通过查看 tcp ESTABLISHED 连接确定长连接已经建立.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122201347.png"></li>
+<li>or 查看registry下发的 dubbo config 文件?  –&gt; TODO: 暂时没找到, 待分析.</li>
+</ol>
+</li>
+<li>请求是否正确路由到了provider的host?  &#x2F;&#x2F; 由于systemB有多套环境, 怀疑是请求路由到了非目标环境.<ol>
+<li>动态分析: 查看 dubbo 请求日志 –&gt; 没找到, 待进一步查看.</li>
+<li>静态分析: 查看 diamond 配置 + 相关代码, 是不是路由代码有误?</li>
+</ol>
+</li>
+</ol>
+<h2 id="0x02-真实错误原因"><a href="#0x02-真实错误原因" class="headerlink" title="0x02 真实错误原因"></a>0x02 真实错误原因</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-24-dubbo-invoke-error/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-22-linux-network-nat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-22-linux-network-nat/" class="post-title-link" itemprop="url">NAT之端口映射(PAT)原理总结&实践</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-23 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-23T00:00:00+08:00">2022-06-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常在家用路由器中, 看到有端口映射(PAT)选项, 但不明所以.<br>最近刚好在研究NAT, 知道了<mark>PAT本质是NAT的一种实现方式, 更确切地说是DNAT的一种实现方式</mark>.<br>因此借此机会好好研究下.</p>
+<h1 id="DNAT总结"><a href="#DNAT总结" class="headerlink" title="DNAT总结"></a>DNAT总结</h1><h2 id="PAT作用概述"><a href="#PAT作用概述" class="headerlink" title="PAT作用概述"></a>PAT作用概述</h2><p>家用路由器中配置PAT, 本质上还是一种<code>内网穿透</code>的实现方式，或者DNAT的一种方式。<br>即需要把家里内网某台主机的某个服务, 暴露到公网上, 以便能在公网环境下访问该服务.<br>例如</p>
+<ul>
+<li>家庭内网网段是<code>192.168.3.0/24</code></li>
+<li>家用路由器, 电信运营商分配的对外公网IP是<code>115.192.71.187</code></li>
+<li>某台主机IP是<code>192.168.3.213</code>: <ul>
+<li>暴露了8080的某个tomcat服务, 想要把这个服务暴露在公网上, 以便其他人能够访问.</li>
+<li>暴露了远程桌面RDP端口服务, 以便在公司或者咖啡厅, 能访问到该远程桌面.</li>
+<li>等等</li>
+</ul>
+</li>
+<li>此时可以在路由器上开启端口映射(PAT), 将路由器上某个端口(如8888)与内网主机的端口(如8080)如进行映射, 所有访问{路由器IP, 8888端口}的请求, 就会被自动路由到{内网IP, 8080端口}上:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206232339615.png"></p>
+<p>&#x2F;&#x2F; TODO: 这里挖个坑, 内网穿透除了PAT外, 还有其他方案, 例如 <code>花生壳</code>, 后边新开篇章讲下原理.</p>
+<h2 id="原理概述"><a href="#原理概述" class="headerlink" title="原理概述"></a>原理概述</h2><p>本质上是家用路由器保存了这么一张NAT表:<br><code>&#123;publicIp, publicPort&#125;</code> —映射到—&gt; <code>&#123;localIp, localPort&#125;</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-22-linux-network-nat/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-19-linux-virtual-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-19-linux-virtual-network/" class="post-title-link" itemprop="url">Linux虚拟网络与网络设备</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-20 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-20T00:00:00+08:00">2022-06-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>672</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>使用VMWare或者KVM设置VM网络时, 通常会有几种网络模式: </p>
+<ul>
+<li>网桥模式(Bridge模式)</li>
+<li>NAT模式</li>
+</ul>
+<p>之前一直比较迷惑, 不是特别清楚区别, 最近研究终于搞懂了, 总结如下: </p>
+<h1 id="网桥模式"><a href="#网桥模式" class="headerlink" title="网桥模式"></a>网桥模式</h1><h2 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h2><ol>
+<li>本质上把Linux网桥看做一个二层的交换机.</li>
+<li>VM连接到该网桥, 获取访问外网能力.</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206202216042.png" alt="linux-bridge"></p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>因此</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-19-linux-virtual-network/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-17-university-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-17-university-summary/" class="post-title-link" itemprop="url">大学对我的影响</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-18 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-18T00:00:00+08:00">2022-06-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>一年一度如火如荼的高考季结束. 蓦然回首, 自己已然高中毕业13年, 大学也毕业9年了.<br>9年时间, 改变了很多, 足以把一个鲜衣怒马, 意气风发, 唇红齿白的少年, 变成而今房贷和车贷缠身, 视力与体力俱下, 惶惶不可终日的油腻中年.</p>
+<p>但最近也一直在酝酿与反思, 这短短四年的大学生活, 究竟带给了我什么?<br>当我在收到外卖, 外卖员说都怪自己没上大学, 才落得今天下苦力.<br>当我在坐网约车, 司机说要不是自己没上大学, 也不至于现在每天被公司压榨.</p>
+<p>四年的生活, 有什么样的魔力, 真的足以把人群完成阶级划分么?<br>现在把杂乱的思绪总结成文, 聊以慰藉.</p>
+<h1 id="一-让我看到了一个更大的世界"><a href="#一-让我看到了一个更大的世界" class="headerlink" title="一: 让我看到了一个更大的世界"></a>一: 让我看到了一个更大的世界</h1><hr>
+<p>这个话说得可能有点儿大, 有点儿虚, 但确实上大学, 让我这个小镇青年, 有机会第一次离开了那个只有60万人口的小城市,<br>进入到一个二三线城市, 看到了一个更大的世界.</p>
+<h2 id="地理上的冲击"><a href="#地理上的冲击" class="headerlink" title="地理上的冲击"></a>地理上的冲击</h2><p>家乡处于豫西北一个不起眼的角落, 三面环山的盆地, 剩余一面被黄河阻隔.<br>伟大的太行山与王屋山交汇于此. <br>而我从小生活在太行山脚下, 听着愚公移山的故事长大. <br>18岁前从来没有离开过那片大山. <br>年少的我一直很好奇山的后边是什么? 会不会是一片蔚蓝色的大海呢? 会不会是一个喧嚣繁华, 高楼林立, 霓虹闪烁的都市呢?<br>曾经跟随奶奶上坟, 翻越了眼前那座大山, 发现在山的后边, 仍然是山, 是无穷无尽绵延不绝的山, 是目之所及毫无颓势的山脉.<br>沮丧至极.  </p>
+<blockquote>
+<p>没有人知道为什么 <br><br>太阳总下到山的那一边 <br><br>没有人能够告诉我  <br><br>山里面有没有住着神仙 <br><br>多少的日子里总是 <br><br>一个人面对着天空发呆 <br><br>就这么好奇就这么幻想 <br><br>这么孤单的童年 <br></p>
+</blockquote>
+<p>而上大学给了我一次机会,<br>能光明正大理直气壮地彻底逃离这片群山,<br>毅然决然地选择离家2000公里外的厦门.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-17-university-summary/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-11-docker-summary-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-11-docker-summary-2/" class="post-title-link" itemprop="url">Docker的一些总结II</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-12 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-12T00:00:00+08:00">2022-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="exec到容器的原理"><a href="#exec到容器的原理" class="headerlink" title="exec到容器的原理"></a>exec到容器的原理</h1><p>本质是在host上新创建一个进程, 加入到已存在的docker容器的Linux Namespace中.</p>
+<h2 id="1-查看已有docker容器的namespace信息"><a href="#1-查看已有docker容器的namespace信息" class="headerlink" title="1. 查看已有docker容器的namespace信息"></a>1. 查看已有docker容器的namespace信息</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206122047763.svg"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span>
+<span class="token function">docker</span> inspect --format <span class="token string">'&#123;&#123; .State.Pid &#125;&#125;'</span> dockerContainerId
+<span class="token function">sudo</span> <span class="token function">ls</span> -l /proc/<span class="token variable">$pid</span>/ns<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2-通过setns-系统调用-将新进程加入到已有docker容器的namespace中"><a href="#2-通过setns-系统调用-将新进程加入到已有docker容器的namespace中" class="headerlink" title="2. 通过setns()系统调用, 将新进程加入到已有docker容器的namespace中"></a>2. 通过setns()系统调用, 将新进程加入到已有docker容器的namespace中</h2><p>核心代码如下: </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">int main<span class="token punctuation">(</span>int argc, char *argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	int fd<span class="token punctuation">;</span>
+	fd <span class="token operator">=</span> open<span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>, O_RDONLY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	if<span class="token punctuation">(</span>setns<span class="token punctuation">(</span>fd, <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">==</span>-1<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+		errExit<span class="token punctuation">(</span><span class="token string">"setns"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	execvp<span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>, <span class="token operator">&amp;</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	errExit<span class="token punctuation">(</span><span class="token string">"execvp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./set_ns /proc/<span class="token variable">$pid</span>/ns/net /bin/sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>argv[1]: 即当前新进程要加入的Namesapce文件路径</li>
+<li>argv[2]: 即新进程要在Namesapce里运行的程序</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-11-docker-summary-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-11-k8s-deep-dive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-11-k8s-deep-dive/" class="post-title-link" itemprop="url">深入剖析Kubernetes笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-12 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-12T00:00:00+08:00">2022-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>379</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>很久没有看到这么一本书了, 虽然刚拿到手感觉很薄, 只有不到400页, 价格也贵, 99元.<br>比起<a target="_blank" rel="noopener" href="https://book.douban.com/subject/33444476/">k8s权威指南</a>这种大部头, 略显单薄.<br>但实际翻看前两章之后, 欣喜万分. 越往后看, 愈发觉得鞭辟入里.<br>从底层原理出发, 没有废话, 深入且细致地讲解出docker&#x2F;k8s实现的各种细节.<br>有效地解释了自己心中的诸多疑惑. 物有所值. </p>
+<hr>
+<h1 id="一些疑惑解释"><a href="#一些疑惑解释" class="headerlink" title="一些疑惑解释"></a>一些疑惑解释</h1><h2 id="多进程-x2F-富容器"><a href="#多进程-x2F-富容器" class="headerlink" title="多进程&#x2F;富容器"></a>多进程&#x2F;富容器</h2><ul>
+<li>Q: 如果docker中起了多个进程, 那么在宿主机上是怎样的? 是多个进程 or docker进程中的多个线程?</li>
+<li>A: 在宿主机上是多个进程. 本质上是通过新建进程, 将新进程加入到已经存在的Namespace中实现.</li>
+</ul>
+<hr>
+<ul>
+<li>Q: 富容器是如何实现的?</li>
+<li>A:</li>
+</ul>
+<hr>
+<ul>
+<li><p>Q: docker exec 到容器中执行命令, 理论上容器也新开了个进程执行该命令(也就类似富容器了), 是如何实现的? </p>
+</li>
+<li><p>A: </p>
+</li>
+<li><p>Q: 富容器模式有什么缺点? 为啥不推荐使用富容器? </p>
+<ul>
+<li>A:</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-11-k8s-deep-dive/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-10-asciinema/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-10-asciinema/" class="post-title-link" itemprop="url">asciinema使用笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-11 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-11T00:00:00+08:00">2022-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>270</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/asciinema/asciinema">asciinema</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> nodejs
+<span class="token function">npm</span> <span class="token function">install</span> -g svg-term-cli<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+<h1 id="生成录屏文件-cast"><a href="#生成录屏文件-cast" class="headerlink" title="生成录屏文件.cast"></a>生成录屏文件.cast</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema rec a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>Ctrl + D 结束录屏</code></p>
+<h1 id="本地播放录屏文件"><a href="#本地播放录屏文件" class="headerlink" title="本地播放录屏文件"></a>本地播放录屏文件</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema play a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="cast文件转成-svg文件"><a href="#cast文件转成-svg文件" class="headerlink" title=".cast文件转成.svg文件"></a>.cast文件转成.svg文件</h1><p>需要先安装 <a target="_blank" rel="noopener" href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-10-asciinema/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-06-spring-tx-annonation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-06-spring-tx-annonation/" class="post-title-link" itemprop="url">SpringBoot Transactional AOP 实现原理研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-07T00:00:00+08:00">2022-06-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>书接上回 <a href="https://davyjones2010.github.io/2022-06-03-spring-annotation-on-interface/">SpringBoot基于Interface的Annotation在AOP中如何生效I</a>,<br>里边只是简略地说明了Spring中 @Transactional 只能在jdk proxy场景下生效, 在cglib场景下不生效, 但没有研究具体代码实现.<br>本文详细探究下.</p>
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="0-Spring-AOP整体流程"><a href="#0-Spring-AOP整体流程" class="headerlink" title="0. Spring AOP整体流程"></a>0. Spring AOP整体流程</h2><p>Spring把所有Bean初始化完成, 容器启动前, 会遍历容器中的每个bean, 执行方法, 尝试找到可用的advisor, 生成新的增强bean, 方法入口: <code>org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator#findEligibleAdvisors</code><br>详细步骤: </p>
+<ol>
+<li>从Spring Context里找到所有Advisors: <code>org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator#findCandidateAdvisors</code></li>
+<li>根据Advisors里的PointCuts&#x2F;JoinPoints定义, 判断该bean是否可以被该Advisor增强. <code>org.springframework.aop.support.AopUtils#canApply(org.springframework.aop.Advisor, java.lang.Class&lt;?&gt;, boolean)</code></li>
+<li>获取到该bean可以被增强的advisors列表</li>
+<li>根据配置<code>spring.aop.proxy-target-class=true/false</code>, 使用Cglib或者JDK生成代理bean. <code>org.springframework.aop.framework.DefaultAopProxyFactory#createAopProxy</code></li>
+<li>之后从Spring容器中获取bean(getBean或者通过@Autowired等自动注入), 实际上获取到的是代理bean.</li>
+</ol>
+<h2 id="1-Transactional-的JoinPoint-x2F-PointCut定义"><a href="#1-Transactional-的JoinPoint-x2F-PointCut定义" class="headerlink" title="1. @Transactional 的JoinPoint&#x2F;PointCut定义"></a>1. @Transactional 的JoinPoint&#x2F;PointCut定义</h2><ul>
+<li>JoinPoint or PointCut, 在AOP里即是类似SQL中where的条件, 即哪些符合条件的class&#x2F;bean&#x2F;method需要被增强.</li>
+<li>JoinPoint标准接口定义如下: 核心是<code>matches</code>方法.</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">StaticMethodMatcher</span> <span class="token keyword">implements</span> <span class="token class-name">MethodMatcher</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">matches</span><span class="token punctuation">(</span><span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> targetClass<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token comment">// should never be invoked because isRuntime() returns false</span>
+		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">UnsupportedOperationException</span><span class="token punctuation">(</span><span class="token string">"Illegal MethodMatcher usage"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>@Transactional</code> 使用的是: <code>org.springframework.transaction.interceptor.TransactionAttributeSourcePointcut</code>, 而<mark>该pointcut, 会按照类继承关系向上寻找, 找到接口层面定义的annotation.</mark> </li>
+<li>详细测试代码参见: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/test/java/edu/xmu/kunlun/headfirst/spring/tx/aop/BeanFactoryTransactionAttributeSourceAdvisorTest.java">edu.xmu.kunlun.headfirst.spring.tx.aop.BeanFactoryTransactionAttributeSourceAdvisorTest#matchesTest</a></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-06-spring-tx-annonation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-05-mysql-conn-params/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-05-mysql-conn-params/" class="post-title-link" itemprop="url">MySQL连接池重要参数配置原理研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-06 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-06T00:00:00+08:00">2022-06-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
+<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
+<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
+<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
+<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
+<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
+<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
+<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
+<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
+</ul>
+<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
+<li>参数释义: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
+</ul>
+<ol>
+<li>即客户端从连接池中获取connection的最大等待时长</li>
+<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
+<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
+    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
+    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
+    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<ul>
+<li>maxWait参数的坑: <a target="_blank" rel="noopener" href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
+<li>扩展阅读: Druid锁的公平模式, <a target="_blank" rel="noopener" href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
+</ul>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
+<li>initialSize: 100</li>
+<li>maxActive: 200</li>
+<li>minIdle: 100</li>
+<li>maxWait: 6000</li>
+</ul>
+<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-05-mysql-conn-params/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-04-love-death-robots/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-04-love-death-robots/" class="post-title-link" itemprop="url">爱死机第三季观后感</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-05 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-05T00:00:00+08:00">2022-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>144</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
+<hr>
+<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
+<hr>
+<p>最负盛誉的第九集, Jibaro</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-04-love-death-robots/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-02-spring-annotation-on-interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-06-02-spring-annotation-on-interface/" class="post-title-link" itemprop="url">SpringBoot基于Interface的Annotation在AOP中如何生效</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-03 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-03T00:00:00+08:00">2022-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>SpringBoot项目代码里, 新增了一个 <code>@Perf</code> 的annotation, 希望增加该annotation的方法, 能自动打印出方法的执行耗时.<br>实际代码结构中, 使用了FilterChain模式, 会有多个Filter(例如10+个)实现同一个接口.<br>因此想着把 <code>@Perf</code> 打在接口层面, 希望所有实现类都能继承该annotation, 从而不用在每个子类的Filter方法里重复打上annotation.<br>但发现实际没有生效.</p>
+<h1 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h1><p>在stackoverflow里, 类似的问题也是一堆,<br>总结下来原因是如下两个:  </p>
+<ol>
+<li>method 上的 annotation 没有被继承下来. 参见如下继承原则详解. </li>
+<li>spring 在对类&#x2F;对象进行进行增强(weaving)时, 校验bean是否需要被增强 <code>@Around(&quot;@annotation(Perf)&quot;)</code>, 只会校验bean对应的class上的annotation, 而不会向上回溯父类&#x2F;接口上是否被打了该annotation.</li>
+</ol>
+<h2 id="1-Java-Annotation的继承原则"><a href="#1-Java-Annotation的继承原则" class="headerlink" title="1. Java Annotation的继承原则"></a>1. Java Annotation的继承原则</h2><h3 id="1-1-Annotation继承原则"><a href="#1-1-Annotation继承原则" class="headerlink" title="1.1 Annotation继承原则:"></a>1.1 Annotation继承原则:</h3><blockquote>
+<p>Java中作用在方法层面的annotation不能被继承<br>Java中作用在interface层面的annotation不能被继承<br>Java中打在class层面的annotation默认不能被继承, 但如果annotation被打上@Inherited标签, 则可以被子类继承</p>
+</blockquote>
+<ul>
+<li>原则参见: <a target="_blank" rel="noopener" href="http://www.eclipse.org/aspectj/doc/released/adk15notebook/annotations.html#annotation-inheritance">annotation-inheritance</a></li>
+<li>详细演示测试代码参见: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/test/java/edu/xmu/kunlun/headfirst/spring/annotation/AnnotationTest.java">edu.xmu.kunlun.headfirst.spring.annotation.AnnotationTest</a></li>
+</ul>
+<h3 id="1-2-为啥会有这种继承原则"><a href="#1-2-为啥会有这种继承原则" class="headerlink" title="1.2 为啥会有这种继承原则?"></a>1.2 为啥会有这种继承原则?</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-06-02-spring-annotation-on-interface/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-31-blacklist-or-attribute/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-31-blacklist-or-attribute/" class="post-title-link" itemprop="url">记一次黑名单方案设计引发的设计思考</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-01 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-01T00:00:00+08:00">2022-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>接到需求: 某些ECS规格族天然不具备宕机迁移的能力, 例如某些软件License与硬件ID绑定, 或者加密信息与硬件绑定, 宕机迁移会导致License失效或者加密信息无法解密.<br>而在正常宕机迁移流程里默认所有规格族都会无差别执行.<br>因此需要代码改造下, 识别这些规格族, 然后跳过执行流程. </p>
+<h1 id="解决方案1-黑名单模式"><a href="#解决方案1-黑名单模式" class="headerlink" title="解决方案1: 黑名单模式"></a>解决方案1: 黑名单模式</h1><p>即在配置项里维护一个黑名单List, 伪代码如下: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">blackList <span class="token operator">=</span> <span class="token function">getFromConf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>flavorFamily in blackList<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">down_migration_execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>优点: 开发起来简便, 灵活. 也是第一反应想到的方案.</li>
+<li>缺点: 使用该方案, 后续发现问题很多: <ul>
+<li>代码容易踩坑: <ul>
+<li>如果配置项是用数据库字段存储, 那么一定要注意字段的类型&amp;size, 如果太小会导致后续如果名单扩容, 字段溢出, 从而无法实现效果.</li>
+</ul>
+</li>
+<li>运维成本过高: <ul>
+<li>因为黑名单与实例规格族本身属性是分散开来的. </li>
+<li>如果后续新增规格族, 需要有个地方来通知产品的同学, <code>规格族需要有是否宕机迁移这个属性</code>, 然后需要他们跑到另外一个地方去维护下这个黑名单. </li>
+<li>尤其是在不同类别的规格族由不同产品同学负责且人员流动性大时, 没办法通知到每位同学. </li>
+<li>但一旦遗漏, 可能会导致线上问题.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="解决方案2-属性模式"><a href="#解决方案2-属性模式" class="headerlink" title="解决方案2: 属性模式"></a>解决方案2: 属性模式</h1><p>即</p>
+<ol>
+<li>是否宕机迁移作为一个天然属性&#x2F;字段, 添加在规格族&#x2F;规格表上.</li>
+<li>该属性作为必填属性, 在新规格族上线时, 对应产品在填写其他属性时(例如cpu&#x2F;mem配比等), 该属性也需要一并填写.</li>
+</ol>
+<p>伪代码如下:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-31-blacklist-or-attribute/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-24-java-spring-spi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-24-java-spring-spi/" class="post-title-link" itemprop="url">Java与Spring中SPI机制的探讨与思考</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-25 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-25T00:00:00+08:00">2022-05-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>477</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中用到了SPI机制, 使用过程也走了一些弯路. 这里记录下来. </p>
+<h2 id="几种SPI方式"><a href="#几种SPI方式" class="headerlink" title="几种SPI方式"></a>几种SPI方式</h2><h2 id="Java中SPI机制"><a href="#Java中SPI机制" class="headerlink" title="Java中SPI机制"></a>Java中SPI机制</h2><h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><ul>
+<li>jdbc驱动, 例如mysql-connector-java.jar中, 就在META-INF&#x2F;services&#x2F;java.sql.Driver</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>比较严重的一个问题是, 这些SPI的Bean游离于Spring容器外.<br>SPI中引入的对象(Bean)没有被Spring容器管理起来.<br>从而这些Bean如果依赖到了Spring容器中其他Bean, 就只能手动从Spring容器中拿出来复制, 即手动注入.<br>太麻烦了. </p>
+<h2 id="Service-Loader-Spring-integration"><a href="#Service-Loader-Spring-integration" class="headerlink" title="Service Loader Spring integration"></a>Service Loader Spring integration</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-24-java-spring-spi/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-23-java-db-connection-transaction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-23-java-db-connection-transaction/" class="post-title-link" itemprop="url">Java中常用的数据库连接池以及事务框架的原理探究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-24T00:00:00+08:00">2022-05-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="思考1-Spring里各种事务隔离级别-本质上是如何实现的"><a href="#思考1-Spring里各种事务隔离级别-本质上是如何实现的" class="headerlink" title="思考1: Spring里各种事务隔离级别, 本质上是如何实现的?"></a>思考1: Spring里各种事务隔离级别, 本质上是如何实现的?</h1><p>很有意思的一个问题. 单个connection或者DB原生是无法实现的, 本质上是通过不同的connection来实现的.</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/19526604/how-does-transaction-suspension-work-in-spring">https://stackoverflow.com/questions/19526604/how-does-transaction-suspension-work-in-spring</a></p>
+<blockquote>
+<p>The point of suspending a transaction is to change the current transaction for a thread to a new one. This would NOT line up with the semantics of nested transactions because the new and suspended transactions are completely independent of each other. There is no connection-level API to support suspending transactions so this has to be done by using a different connection. If you are using JTA with Spring, this is done by the JTA transaction manager. If you are using DataSourceTransactionManager, you can look in the code and see that it will be saving off the current connection as a “suspended resource” and grabbing a new connection from the data source for the new transaction.</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://wiyi.org/physical-and-logical-transactions.html">https://wiyi.org/physical-and-logical-transactions.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiyi.org/how-does-transaction-suspension-in-spring.html">https://wiyi.org/how-does-transaction-suspension-in-spring.html</a></li>
+</ul>
+<h2 id="简化后的样例"><a href="#简化后的样例" class="headerlink" title="简化后的样例"></a>简化后的样例</h2><h3 id="REQUIRES-NEW"><a href="#REQUIRES-NEW" class="headerlink" title="REQUIRES_NEW"></a>REQUIRES_NEW</h3><ul>
+<li>新建事务，如果当前存在事务，则把当前事务挂起</li>
+<li>这个方法会独立提交事务，不受调用者的事务影响，父级异常，它也是正常提交</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; 假定为REQUIRE_NEW传播类型
+&#x2F;&#x2F; 1. 外部事务执行
+Connection conn &#x3D; getConnection(); &#x2F;&#x2F; 这里是新建connection
+Statement stmt &#x3D; conn.createStatement();
+stmt.execute(&quot;update xxx set xxx &#x3D; xxx&quot;);
+
+&#x2F;&#x2F; 2. 到这里, 内部事务开始, 需要执行方法2, REQUIRE_NEW传播级别, 那本质上是新建了个connection. 在Spring里, 其实就是suspend(), 即将上一个conn从ThreadLocal里移除; 然后把conn2放入ThreadLocal里.
+Connection conn2 &#x3D; getConnection(); &#x2F;&#x2F; 这个conn2与上边的conn是不同的连接
+Statement stmt2 &#x3D; conn.createStatement();
+stmt2.execute(&quot;update xxx set xxx &#x3D; xxx&quot;);
+conn2.commit(); &#x2F;&#x2F; 这里内部事务执行commit();
+stmt2.close();
+conn2.close();
+
+&#x2F;&#x2F; 3. 外部事务继续执行
+stmt.execute(&quot;update xxx set xxx&#x3D;xxx&quot;);
+conn.commit();  &#x2F;&#x2F; 这里外部事务执行commit();
+stmt.close();
+conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="PROPAGATION-REQUIRED"><a href="#PROPAGATION-REQUIRED" class="headerlink" title="PROPAGATION_REQUIRED"></a>PROPAGATION_REQUIRED</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-23-java-db-connection-transaction/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-23-scheduler-api-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-23-scheduler-api-design/" class="post-title-link" itemprop="url">资源调度API设计的思考</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-24T00:00:00+08:00">2022-05-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>722</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀.</p>
+<h1 id="批量调度"><a href="#批量调度" class="headerlink" title="批量调度"></a>批量调度</h1><h2 id="amount-amp-minAmount-模式"><a href="#amount-amp-minAmount-模式" class="headerlink" title="amount &amp; minAmount 模式:"></a>amount &amp; minAmount 模式:</h2><h3 id="模式解释"><a href="#模式解释" class="headerlink" title="模式解释"></a>模式解释</h3><p>样例请求如下:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">BatchParam</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Integer</span> minAmount<span class="token punctuation">;</span>
+    <span class="token class-name">Integer</span> amount<span class="token punctuation">;</span>    
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>语义解释: </p>
+<ul>
+<li>minAmount: 代表请求方需求的最小的资源量. </li>
+<li>amount: 代表请求方需要的最大资源量.</li>
+</ul>
+<p>有点儿抽象, 我们站在scheduler的角度看.<br>批量调度资源, 资源不一定总会满足用户需求的资源, 此时就需要做个妥协,<br>如果能调度出来的资源量(realAmount)范围:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-23-scheduler-api-design/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-22-k8s-promethus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-22-k8s-promethus/" class="post-title-link" itemprop="url">k8s生态中promethus的架构与原理研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-23 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-23T00:00:00+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><p><a target="_blank" rel="noopener" href="https://prometheus.io/docs/introduction/faq/">https://prometheus.io/docs/introduction/faq/</a></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122209641.png"></p>
+<p>本质上是类似alimonitor的系统.</p>
+<h1 id="几个细节"><a href="#几个细节" class="headerlink" title="几个细节:"></a>几个细节:</h1><ul>
+<li><p>使用pull模式, 而不是push模式. 即promethus server主动去各个业务方捞取数据, 而不是各个业务方主动往promethus server推送数据.</p>
+<ul>
+<li>为啥使用pull模式? <a target="_blank" rel="noopener" href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push</a><ul>
+<li>You can run your monitoring on your laptop when developing changes.</li>
+<li>You can more easily tell if a target is down.</li>
+<li>You can manually go to a target and inspect its health with a web browser.</li>
+</ul>
+</li>
+<li>针对现存的已经有的push模式, 提供了pushgateway方案来兼容. (可以参见上图架构)<ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/instrumenting/pushing/">https://prometheus.io/docs/instrumenting/pushing/</a></li>
+<li>pushgateway类似于</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>由于使用了pull模式, 因此会有各种<a target="_blank" rel="noopener" href="https://prometheus.io/docs/instrumenting/exporters/">exporter组件</a>, 来适配各个常用监控源, 例如 casandra exporter, ECS Exporter等. 本质上这种exporter是类似一个http服务器, 可以让promethus server来捞取数据.</p>
+</li>
+<li><p>服务发现: 由于使用的是pull模式, 因此promethus需要知道要从哪里捞取各个业务方的metrics, 因此需要一个服务发现机制. 有如下两种:</p>
+<ul>
+<li>静态文件配置(File-Based SD): ip:port</li>
+<li>DNS: nameserver:port <a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config">https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config</a></li>
+<li>HTTP_SD:</li>
+</ul>
+</li>
+<li><p>存储:</p>
+<ul>
+<li>存储介质:<ul>
+<li>默认使用的localstorage, 本地存储</li>
+<li>可以支持remote storage, 但由于各个remote storage的接口&amp;对原生的promethus SQL支持度的不同, 分为read&amp;write能力<ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage">remote storage支持列表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据格式:<ul>
+<li>自定义的, 支持压缩的本地存储格式.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HA:</p>
+<ul>
+<li>服务HA:<ul>
+<li><a target="_blank" rel="noopener" href="https://www.robustperception.io/scaling-and-federating-prometheus">https://www.robustperception.io/scaling-and-federating-prometheus</a></li>
+<li>默认: 单台server足以支撑1000台server的metrics量.</li>
+<li>方案1: Initial Deployment<ul>
+<li>2个global Prometheus , N个local Promethus, global负责汇聚local数据</li>
+<li>保持2个global, 防止单台宕机.</li>
+</ul>
+</li>
+<li>方案2: Splitting By Use, 按用途垂直拆分<ul>
+<li>promethus前后端分离部署</li>
+<li>按业务域分别部署, 例如为Cassandra服务单独部署一套, 为MySQL服务单独部署一套</li>
+</ul>
+</li>
+<li>方案3: Horizontal Sharding, 水平拆分<ul>
+<li>不推荐多机器部署,</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据HA:<ul>
+<li>localstorage: 无法HA, 因此promethus是推荐使用RAID, 或者定期打快照.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>限制:</p>
+<ul>
+<li>不要用promethus来进行tracing&#x2F;logging, 只能用来做metrics</li>
+</ul>
+</li>
+</ul>
+<h1 id="核心术语-x2F-指标"><a href="#核心术语-x2F-指标" class="headerlink" title="核心术语&#x2F;指标"></a>核心术语&#x2F;指标</h1><p>定义了很好的几种通用指标, 来覆盖metrics各个方面:</p>
+<ol>
+<li><p>counter: <a target="_blank" rel="noopener" href="https://www.robustperception.io/how-does-a-prometheus-counter-work">https://www.robustperception.io/how-does-a-prometheus-counter-work</a></p>
+<ol>
+<li>rate</li>
+</ol>
+</li>
+<li><p>gauge</p>
+</li>
+<li><p>histogram, 如下, 按照le&#x3D;”xxx”, le即”less than”, 将latency分成了10个bucket</p>
+<pre class="line-numbers language-none"><code class="language-none">prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.1&quot;&#125; 25547
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.2&quot;&#125; 26688
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.4&quot;&#125; 27760
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;1&quot;&#125; 28641
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;3&quot;&#125; 28782
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;8&quot;&#125; 28844
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;20&quot;&#125; 28855
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;60&quot;&#125; 28860
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;120&quot;&#125; 28860
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;+Inf&quot;&#125; 28860<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>summary</p>
+</li>
+</ol>
+<h1 id="核心组件研究"><a href="#核心组件研究" class="headerlink" title="核心组件研究"></a>核心组件研究</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-22-k8s-promethus/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-18-rpc-exception-handling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-18-rpc-exception-handling/" class="post-title-link" itemprop="url">RPC调用异常行为与处理方案总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-19 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-19T00:00:00+08:00">2022-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用IAcsClient或者dubbo进行rpc调用时, 异常情况总是不可避免的.<br>这里总结下各种异常, 以及对应的表现形式与处理方式.</p>
+<h1 id="异常总结"><a href="#异常总结" class="headerlink" title="异常总结"></a>异常总结</h1><table>
+<thead>
+<tr>
+<th>错误分类</th>
+<th>错误细分</th>
+<th>IAcsClient</th>
+<th>Dubbo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>客户端异常</td>
+<td>客户端网络无连接, 闪断等</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>IAcsClient 抛出ClientException异常<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>aliyuncs<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span></span>ClientException</span><span class="token operator">:</span> <span class="token class-name">SDK<span class="token punctuation">.</span>ServerUnreachable</span> <span class="token operator">:</span> <span class="token class-name">Server</span> unreachable<span class="token operator">:</span> connection<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+| </li>
+<li>抛出RpcException异常:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122208285.png"> |<br>|  | SDK参数缺失错误等 |</p>
+<ul>
+<li>IAcsClient 抛出ClientException异常<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>aliyuncs<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span></span>ClientException</span><span class="token operator">:</span> <span class="token class-name">SDK<span class="token punctuation">.</span>InvalidProfile</span> <span class="token operator">:</span> <span class="token class-name">No</span> active profile found<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+| </li>
+<li>不会有该场景, 因为dubbo调用没有SDK<br>|<br>| 服务端异常 | 服务端限流, 处理超时 | </li>
+<li>IAcsClient 抛出ServerException异常<br>|  |<br>|  | 业务异常, 例如请求参数错误, SPOT价格设置过低等 |</li>
+<li>IAcsClient 抛出ClientException异常</li>
+<li>注意ServerException是ClientException的子类<br>|</li>
+<li>不抛异常, 返回 PlainResult<object> isSuccess&#x3D;false; data&#x3D;null; message !&#x3D; null</object></li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122209444.png"> |<br>|  | 服务端未提供该服务 |</p>
+<ul>
+<li>IAcsClient抛出ClientException异常<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>aliyuncs<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span></span>ClientException</span><span class="token operator">:</span> <span class="token class-name">InvalidVersion</span> <span class="token operator">:</span> <span class="token class-name">Specified</span> parameter <span class="token class-name">Version</span> is not <span class="token class-name"><span class="token namespace">valid<span class="token punctuation">.</span></span>
+RequestId</span> <span class="token operator">:</span> xxx
+
+<span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>aliyuncs<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span></span>ClientException</span><span class="token operator">:</span> <span class="token class-name">InvalidAction<span class="token punctuation">.</span>NotFound</span> <span class="token operator">:</span> <span class="token class-name">Specified</span> api is not found<span class="token punctuation">,</span> please check your url and <span class="token class-name"><span class="token namespace">method<span class="token punctuation">.</span></span>
+RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+| </li>
+<li>抛出RpcException异常: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>rpc<span class="token punctuation">.</span></span>RpcException</span><span class="token operator">:</span> <span class="token class-name">Failed</span> <span class="token keyword">to</span> <span class="token namespace">invoke</span> the method xxx in the service <span class="token class-name"><span class="token namespace">xxx<span class="token punctuation">.</span></span> No</span> provider available <span class="token keyword">for</span> the service xxx from registry xxx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+|<br>| 其他异常 |  | IAcsClient正常返回. 返回对象里:<br>AcsResponse有requestId, 但返回结果为空, success&#x3D;false<br>啥时候会有这种异常?  |  |</li>
+</ul>
+<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-18-rpc-exception-handling/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-18-springboot-cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-18-springboot-cache/" class="post-title-link" itemprop="url">记SpringBootCache使用的问题总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-19 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-19T00:00:00+08:00">2022-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>729</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Cacheable-无参方法"><a href="#Cacheable-无参方法" class="headerlink" title="@Cacheable 无参方法"></a>@Cacheable 无参方法</h1><p>有些无参方法, 也需要被SpringBoot @Cacheable 进行cache, 如下代码样例:  </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">listAllUids</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有如下需要注意的点:</p>
+<ul>
+<li>可以不写 <code>key=xxx</code>, 这样默认的key就是<code>SimpleType []</code></li>
+<li>SpringBoot官方建议<a target="_blank" rel="noopener" href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/cache.html">使用方法名作为key</a>, 如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key <span class="token operator">=</span> <span class="token string">"#root.method.name"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>也可以hardcode一个key, 这样更易于查找, 如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token string">"'my_key'"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>要注意key里的常量, <font color="red">一定要用单引号括起来</font>, 否则会<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/33383366/cacheble-annotation-on-no-parameter-method">报错如下</a>: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>expression<span class="token punctuation">.</span>spel<span class="token punctuation">.</span></span>SpelEvaluationException</span><span class="token operator">:</span> EL1008E<span class="token operator">:</span><span class="token punctuation">(</span>pos <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Property</span> or field my_key cannot be found on object of type '<span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>interceptor<span class="token punctuation">.</span></span>CacheExpressionRootObject</span>' <span class="token operator">-</span> maybe not <span class="token keyword">public</span><span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-18-springboot-cache/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-15-cruise-framework-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-15-cruise-framework-design/" class="post-title-link" itemprop="url">一个通用数据巡检框架的设计</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-16 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-16T00:00:00+08:00">2022-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>650</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在实际项目中, 有许多业务场景, 会存在多张表数据不一致或者脏数据残留的问题,<br>需要定期执行一些SQL来进行数据一致性的巡检与订正, 以实现数据的最终一致性.<br>例如下表, 需要定期查询&amp;统计出’deleted’状态的用户数量, 报警, 并清理这些数据.</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- user表</span>
+user_id<span class="token operator">|</span> age<span class="token operator">|</span> <span class="token keyword">status</span><span class="token operator">|</span>
+<span class="token number">1</span><span class="token operator">|</span> <span class="token number">18</span><span class="token operator">|</span> deleted<span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="初步方案"><a href="#初步方案" class="headerlink" title="初步方案:"></a>初步方案:</h1><p>方案1: 可以针对每个需求, 单独写SQL-&gt;DAO-&gt;Service等, 但带来的问题是: </p>
+<ol>
+<li>开发量大, 每次新的需求, 都需要撸一遍, 重复工作量大.</li>
+<li>SQL-&gt;Service整体功能分散, 不便于维护.<br>方案2: 可以基于此, 抽象出一个面向SQL的通用巡检框架, 便于统一接入与维护.</li>
+</ol>
+<h1 id="架构设计思考"><a href="#架构设计思考" class="headerlink" title="架构设计思考"></a>架构设计思考</h1><p>从用户角度, 可以:<br>定时任务框架: </p>
+<ol>
+<li>创建巡检任务, 与输入自定义的SQL绑定</li>
+<li>定义巡检周期</li>
+<li>手动触发运行(便于首次配置之后调试)</li>
+<li>查看运行记录(便于)</li>
+</ol>
+<p>报警与订正框架: </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-15-cruise-framework-design/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-15-software-enginnering-best-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-15-software-enginnering-best-practice/" class="post-title-link" itemprop="url">软件工程中的一些最佳实践沉淀</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-16 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-16T00:00:00+08:00">2022-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>371</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="jar-x2F-maven版本号定义"><a href="#jar-x2F-maven版本号定义" class="headerlink" title="jar&#x2F;maven版本号定义"></a>jar&#x2F;maven版本号定义</h1><p>一般推荐使用 <a target="_blank" rel="noopener" href="https://chronver.org/">chronVer</a></p>
+<h2 id="semVer"><a href="#semVer" class="headerlink" title="semVer"></a><a target="_blank" rel="noopener" href="https://semver.org/">semVer</a></h2><ul>
+<li>格式: MAJOR.MINOR.PATCH</li>
+<li>语义: <ul>
+<li>MAJOR version when you make incompatible API changes</li>
+<li>MINOR version when you add functionality in a backwards compatible manner</li>
+<li>PATCH version when you make backwards compatible bug fixes.</li>
+</ul>
+</li>
+<li>优缺点: <ul>
+<li>优点: 较为简单, 也是大家常用的方式.</li>
+<li>缺点: 不直观</li>
+</ul>
+</li>
+</ul>
+<h2 id="chronVer"><a href="#chronVer" class="headerlink" title="chronVer"></a><a target="_blank" rel="noopener" href="https://chronver.org/">chronVer</a></h2><ul>
+<li>格式: YEAR.MONTH.DAY.CHANGESET_IDENTIFIER</li>
+<li>语义: CHANGESET_IDENTIFIER</li>
+<li>优缺点:<ul>
+<li>优点: 直接用时间戳来标识, 较为直观. 适用较为频繁发版的系统. </li>
+<li>缺点: 比较难以标识版本之间的兼容情况.</li>
+</ul>
+</li>
+</ul>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-15-software-enginnering-best-practice/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-13-java-property-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-13-java-property-config/" class="post-title-link" itemprop="url">Java中配置文件占位符替换的几种模式探讨与分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-14 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-14T00:00:00+08:00">2022-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在Java&#x2F;Maven项目中, 经常会有配置文件中配置项, 需要根据环境进行不同的参数变量替换, 如果搞不清楚, 经常会混淆.<br>当前有如下几种方式: </p>
+<ul>
+<li>编译期替换<ul>
+<li>Maven Profile</li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903962240352263">autoconfig</a></li>
+</ul>
+</li>
+<li>运行期替换<ul>
+<li>SpringBoot Profile</li>
+</ul>
+</li>
+<li>其他替换<ul>
+<li>Docker Java应用启动参数</li>
+</ul>
+</li>
+</ul>
+<p>各有优缺点. </p>
+<h1 id="1-编译期替换"><a href="#1-编译期替换" class="headerlink" title="1. 编译期替换"></a>1. 编译期替换</h1><h2 id="1-1-Maven-Profile"><a href="#1-1-Maven-Profile" class="headerlink" title="1.1 Maven Profile"></a>1.1 Maven Profile</h2><h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><ul>
+<li>参见<a target="_blank" rel="noopener" href="https://www.cnblogs.com/davenkin/p/advanced-maven-use-profile.html">Maven Profile使用方式</a></li>
+</ul>
+<h4 id="方式1-默认激活"><a href="#方式1-默认激活" class="headerlink" title="方式1: 默认激活"></a>方式1: 默认激活</h4><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>profiles</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>profile</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>apple<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activation</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activeByDefault</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>activeByDefault</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>activation</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>fruit</span><span class="token punctuation">></span></span>APPLE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>fruit</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>profile</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>profile</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>banana<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>fruit</span><span class="token punctuation">></span></span>BANANA<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>fruit</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>profile</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>profiles</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-13-java-property-config/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-07-ubuntu-kvm-init/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-07-ubuntu-kvm-init/" class="post-title-link" itemprop="url">ubuntu kvm虚拟化配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-08T00:00:00+08:00">2022-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h1><ul>
+<li>OS: Ubuntu 20.04.4 LTS </li>
+<li>OS Type： 64-bit</li>
+<li>硬件： ThinkPad-X1-Carbon-4th</li>
+<li>CPU：Intel® Core™ i5-6200U CPU @ 2.30GHz × 4</li>
+<li>MEM：</li>
+<li>Graphics：Mesa Intel® HD Graphics 520 (SKL GT2)</li>
+<li>Disk：</li>
+</ul>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="1-BIOS开启CPU虚拟化"><a href="#1-BIOS开启CPU虚拟化" class="headerlink" title="1. BIOS开启CPU虚拟化"></a>1. BIOS开启CPU虚拟化</h2><h3 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h3><ul>
+<li>开机之后按下F1键</li>
+<li>进入Security选项</li>
+<li>进入Virtualization子选项</li>
+<li>Intel(R) Virtualization Technology 选项修改成 Enable</li>
+<li>Intel(R) VT-d Feature 选项修改成 Enable</li>
+</ul>
+<h3 id="确认"><a href="#确认" class="headerlink" title="确认"></a>确认</h3><h4 id="方案一："><a href="#方案一：" class="headerlink" title="方案一："></a>方案一：</h4><p>执行如下命令，查找到 <code>Virtualization:                  VT-x</code> 项目即证明已经开启</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/Downloads/Clash-Linux$ lscpu
+Architecture:                    x86_64
+CPU op-mode<span class="token punctuation">(</span>s<span class="token punctuation">)</span>:                  <span class="token number">32</span>-bit, <span class="token number">64</span>-bit
+Byte Order:                      Little Endian
+Address sizes:                   <span class="token number">39</span> bits physical, <span class="token number">48</span> bits virtual
+CPU<span class="token punctuation">(</span>s<span class="token punctuation">)</span>:                          <span class="token number">4</span>
+On-line CPU<span class="token punctuation">(</span>s<span class="token punctuation">)</span> list:             <span class="token number">0</span>-3
+Thread<span class="token punctuation">(</span>s<span class="token punctuation">)</span> per core:              <span class="token number">2</span>
+Core<span class="token punctuation">(</span>s<span class="token punctuation">)</span> per socket:              <span class="token number">2</span>
+Socket<span class="token punctuation">(</span>s<span class="token punctuation">)</span>:                       <span class="token number">1</span>
+NUMA node<span class="token punctuation">(</span>s<span class="token punctuation">)</span>:                    <span class="token number">1</span>
+Vendor ID:                       GenuineIntel
+CPU family:                      <span class="token number">6</span>
+Model:                           <span class="token number">78</span>
+Model name:                      Intel<span class="token punctuation">(</span>R<span class="token punctuation">)</span> Core<span class="token punctuation">(</span>TM<span class="token punctuation">)</span> i5-6200U CPU @ <span class="token number">2</span>.30GHz
+Stepping:                        <span class="token number">3</span>
+CPU MHz:                         <span class="token number">499.999</span>
+CPU max MHz:                     <span class="token number">2800.0000</span>
+CPU min MHz:                     <span class="token number">400.0000</span>
+BogoMIPS:                        <span class="token number">4800.00</span>
+Virtualization:                  VT-x
+L1d cache:                       <span class="token number">64</span> KiB
+L1i cache:                       <span class="token number">64</span> KiB
+L2 cache:                        <span class="token number">512</span> KiB
+L3 cache:                        <span class="token number">3</span> MiB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-07-ubuntu-kvm-init/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-03-Beyond-the-Label/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-03-Beyond-the-Label/" class="post-title-link" itemprop="url">深度思考：不断逼近问题的本质 读后感</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-04 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-04T00:00:00+08:00">2022-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>848</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>总体来说，鸡汤不少，但没啥干货，说的都是一些虚无缥缈且人尽皆知的大道理。</p>
+<hr>
+<p>读的过程，也感觉很鸡肋，感觉像是有些自恋的人的自传，愈发读不下去，但又为了完整读完一本书，硬着头皮读了下去，期待着后边说不定会由有不同的收获。<br>但结果令人失望，甚至都不想做笔记。<br>首先，书名非常具有迷惑性，实在没看出跟深度思考，以及探究问题的本质有任何关系。直到看了英文名称，才恍然大悟。<br>《Beyond the Label: Women, Leadership, and Success on Our Own Terms》，<br>直译过来就是：《拒绝标签：女性，领导力与成功》，压根跟深度思考没任何关系，也不知道书名的中文翻译人员咋想的。<br>如果早看了英文名，尤其是几个雷区词“Women”，“Leadership”，“Success”等这些，就一定不会读的。</p>
+<p>其次，内容更像是作者自己的经历自传。最开始当个推销员，莫名奇妙就推销成功了，然后还获得了贵人的帮助。<br>如果说是因为真诚，那么我相信世界上比她真诚的人要多得多，为什么其他人没有？<br>莫名其妙就结婚了，莫名其妙被派到香港，莫名其妙又掌管了GAP，把old navy做了起来，然后GAP莫名其妙就不行了，莫名其妙就成了香奈儿的CEO了。<br>最后由莫名其妙离婚，还美其名曰“打破规则”。<br>总体来说这些转变读者我是一头雾水。<br>我相信成为一个优秀的CEO，把一个公司与品牌做起来，需要的绝对不仅是书中她提到的这些软素质，还有巨大的一块，应该就是硬素质。<br>如何理解管理，毕竟也是一门工程与科学；如何理解财务报表，处理财务危机；如何品牌营销与形象树立？<br>等等。<br>文中提到的这些软素质，都太普通了，太没有专业门槛了。</p>
+<p>最后就是讲到的一些关于女性职场特有的问题，例如“当人们只注意你的外貌而非工作时，该怎么办？”，并无法引发丝毫我这位直男癌患者的共鸣。</p>
+<p>吸取几点教训吧：</p>
+<ol>
+<li>看英文翻译书之前，一定要看下原先的英文名称是啥，千万不能被忽悠了。</li>
+<li>相信自己的判断，一旦看不下去，觉得没意思没价值没收获，就果断弃坑，不要为了完成读书而读书，否则沉没成本太高。</li>
+</ol>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-03-Beyond-the-Label/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

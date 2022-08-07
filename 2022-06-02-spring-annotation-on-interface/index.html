@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景SpringBoot项目代码里, 新增了一个 @Perf 的annotation, 希望增加该annotation的方法, 能自动打印出方法的执行耗时.实际代码结构中, 使用了FilterChain模式, 会有多个Filter(例如10+个)实现同一个接口.因此想着把 @Perf 打在接口层面, 希望所有实现类都能继承该annotation, 从而不用在每个子类的Filter方法里重复打上an">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SpringBoot基于Interface的Annotation在AOP中如何生效">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-06-02-spring-annotation-on-interface/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景SpringBoot项目代码里, 新增了一个 @Perf 的annotation, 希望增加该annotation的方法, 能自动打印出方法的执行耗时.实际代码结构中, 使用了FilterChain模式, 会有多个Filter(例如10+个)实现同一个接口.因此想着把 @Perf 打在接口层面, 希望所有实现类都能继承该annotation, 从而不用在每个子类的Filter方法里重复打上an">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051422714.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051424707.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051438400.png">
+<meta property="article:published_time" content="2022-06-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="spring-boot">
+<meta property="article:tag" content="aop">
+<meta property="article:tag" content="interface">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051422714.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-06-02-spring-annotation-on-interface/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-06-02-spring-annotation-on-interface/","path":"/2022-06-02-spring-annotation-on-interface/","title":"SpringBoot基于Interface的Annotation在AOP中如何生效"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SpringBoot基于Interface的Annotation在AOP中如何生效 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">原因分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Java-Annotation%E7%9A%84%E7%BB%A7%E6%89%BF%E5%8E%9F%E5%88%99"><span class="nav-number">2.1.</span> <span class="nav-text">1. Java Annotation的继承原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Annotation%E7%BB%A7%E6%89%BF%E5%8E%9F%E5%88%99"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1 Annotation继承原则:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%BA%E5%95%A5%E4%BC%9A%E6%9C%89%E8%BF%99%E7%A7%8D%E7%BB%A7%E6%89%BF%E5%8E%9F%E5%88%99"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.2 为啥会有这种继承原则?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">2.1.3.</span> <span class="nav-text">1.3 问题总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-AOP-%E5%A2%9E%E5%BC%BA%E5%8E%9F%E7%90%86%E4%B8%8E%E5%8E%9F%E5%88%99"><span class="nav-number">2.2.</span> <span class="nav-text">2. Spring AOP 增强原理与原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Spring-AOP-%E4%B8%AD%E5%87%A0%E4%B8%AA%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 Spring AOP 中几个重要概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Spring-AOP-Weaving-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2 Spring AOP Weaving 核心代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Spring-AOP-Weaving-%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3 Spring AOP Weaving 核心逻辑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%881-%E6%89%93%E5%9C%A8%E5%AD%90%E7%B1%BB%E6%96%B9%E6%B3%95%E4%B8%8A"><span class="nav-number">3.1.</span> <span class="nav-text">方案1: 打在子类方法上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%882-%E4%BF%AE%E6%94%B9pointcut%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">方案2: 修改pointcut条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%883-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%9E%E7%8E%B0pointcut"><span class="nav-number">3.3.</span> <span class="nav-text">方案3: 自定义实现pointcut</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E6%96%B9%E6%A1%88"><span class="nav-number">3.4.</span> <span class="nav-text">最终方案:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%80%9D%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">扩展思考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring%E6%8E%A5%E5%8F%A3%E5%B1%82%E9%9D%A2%E6%94%AF%E6%8C%81%E7%9A%84-Transactional-annotation"><span class="nav-number">4.1.</span> <span class="nav-text">Spring接口层面支持的 @Transactional annotation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot%E4%B8%AD%E9%BB%98%E8%AE%A4%E4%BB%A3%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-number">4.2.</span> <span class="nav-text">SpringBoot中默认代理方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring%E9%BB%98%E8%AE%A4AOP-Proxy"><span class="nav-number">4.2.1.</span> <span class="nav-text">Spring默认AOP Proxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringBoot%E9%BB%98%E8%AE%A4AOP-Proxy"><span class="nav-number">4.2.2.</span> <span class="nav-text">SpringBoot默认AOP Proxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%A5%BD%E7%8E%A9%E5%84%BF%E7%9A%84"><span class="nav-number">4.2.3.</span> <span class="nav-text">其他好玩儿的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">4.3.</span> <span class="nav-text">最佳实践</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Samples"><span class="nav-number">5.</span> <span class="nav-text">Code Samples</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">6.</span> <span class="nav-text">Refs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-02-spring-annotation-on-interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SpringBoot基于Interface的Annotation在AOP中如何生效 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot基于Interface的Annotation在AOP中如何生效
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-03 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-03T00:00:00+08:00">2022-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>SpringBoot项目代码里, 新增了一个 <code>@Perf</code> 的annotation, 希望增加该annotation的方法, 能自动打印出方法的执行耗时.<br>实际代码结构中, 使用了FilterChain模式, 会有多个Filter(例如10+个)实现同一个接口.<br>因此想着把 <code>@Perf</code> 打在接口层面, 希望所有实现类都能继承该annotation, 从而不用在每个子类的Filter方法里重复打上annotation.<br>但发现实际没有生效.</p>
+<h1 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h1><p>在stackoverflow里, 类似的问题也是一堆,<br>总结下来原因是如下两个:  </p>
+<ol>
+<li>method 上的 annotation 没有被继承下来. 参见如下继承原则详解. </li>
+<li>spring 在对类&#x2F;对象进行进行增强(weaving)时, 校验bean是否需要被增强 <code>@Around(&quot;@annotation(Perf)&quot;)</code>, 只会校验bean对应的class上的annotation, 而不会向上回溯父类&#x2F;接口上是否被打了该annotation.</li>
+</ol>
+<h2 id="1-Java-Annotation的继承原则"><a href="#1-Java-Annotation的继承原则" class="headerlink" title="1. Java Annotation的继承原则"></a>1. Java Annotation的继承原则</h2><h3 id="1-1-Annotation继承原则"><a href="#1-1-Annotation继承原则" class="headerlink" title="1.1 Annotation继承原则:"></a>1.1 Annotation继承原则:</h3><blockquote>
+<p>Java中作用在方法层面的annotation不能被继承<br>Java中作用在interface层面的annotation不能被继承<br>Java中打在class层面的annotation默认不能被继承, 但如果annotation被打上@Inherited标签, 则可以被子类继承</p>
+</blockquote>
+<ul>
+<li>原则参见: <a target="_blank" rel="noopener" href="http://www.eclipse.org/aspectj/doc/released/adk15notebook/annotations.html#annotation-inheritance">annotation-inheritance</a></li>
+<li>详细演示测试代码参见: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/test/java/edu/xmu/kunlun/headfirst/spring/annotation/AnnotationTest.java">edu.xmu.kunlun.headfirst.spring.annotation.AnnotationTest</a></li>
+</ul>
+<h3 id="1-2-为啥会有这种继承原则"><a href="#1-2-为啥会有这种继承原则" class="headerlink" title="1.2 为啥会有这种继承原则?"></a>1.2 为啥会有这种继承原则?</h3><p>上述原则看起来比较复杂, 且不可思议. 如果死记硬背, 效率太低. 需要从设计者角度来考虑下为啥不直接都能继承就好?<br>想清楚原因, 这些原则自然就明白了. 自己查询了stackoverflow, 根本原因是<font color='red'>为了避免歧义</font>. 详细场景分析如下: </p>
+<ol>
+<li><p>为啥作用在方法层面的annotation不能被继承?<br>因为java interface是多继承的<br>原因样例参见: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/main/java/edu/xmu/kunlun/headfirst/spring/annotation2/Sub2.java">edu.xmu.kunlun.headfirst.spring.annotation2.Sub2</a> </p>
+</li>
+<li><p>为啥作用在interface层面的annotation不能被继承?<br>因为java interface是多实现的.<br>如果class同时实现了多个interface, 每个interface都实现同一个annotation(但对应annotation的参数不同), 那么当前class使用的该是哪个annotation(with参数)?<br>这种场景下, 在OOP中术语叫做 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem">diamond inheritance</a></p>
+</li>
+<li><p>为啥作用在class层面的annotation可以被继承?<br>因为java class是单继承的. 所以不会有interface的问题.</p>
+</li>
+</ol>
+<h3 id="1-3-问题总结"><a href="#1-3-问题总结" class="headerlink" title="1.3 问题总结"></a>1.3 问题总结</h3><p>因此可以得知, Filter接口的 filter() 方法上的 annotation 没有被继承下来.</p>
+<h2 id="2-Spring-AOP-增强原理与原则"><a href="#2-Spring-AOP-增强原理与原则" class="headerlink" title="2. Spring AOP 增强原理与原则"></a>2. Spring AOP 增强原理与原则</h2><h3 id="2-1-Spring-AOP-中几个重要概念"><a href="#2-1-Spring-AOP-中几个重要概念" class="headerlink" title="2.1 Spring AOP 中几个重要概念"></a>2.1 Spring AOP 中几个重要概念</h3><ul>
+<li>AOP proxy: an object created by the AOP framework in order to implement the aspect contracts (advise method executions and so on). In the Spring Framework, an AOP proxy will be a JDK dynamic proxy or a CGLIB proxy.</li>
+<li>Weaving: linking aspects with other application types or objects to create an advised object. This can be done at compile time (using the AspectJ compiler, for example), load time, or at runtime. Spring AOP, like other pure Java AOP frameworks, performs weaving at runtime.<br>所以, 最关键问题是由于 Spring Boot Weaving 时根据annotation没有weave上去, 而跟使用何种类型的 AOP Proxy 无关!</li>
+</ul>
+<h3 id="2-2-Spring-AOP-Weaving-核心代码"><a href="#2-2-Spring-AOP-Weaving-核心代码" class="headerlink" title="2.2 Spring AOP Weaving 核心代码"></a>2.2 Spring AOP Weaving 核心代码</h3><p>weaving的几种类型:</p>
+<ul>
+<li>compile time weaving: 在编译期生成增强类, 例如使用 AspectJ compiler  </li>
+<li>run time (or load time) weaving: 在运行期, 实时地校验是否符合条件,</li>
+</ul>
+<h3 id="2-3-Spring-AOP-Weaving-核心逻辑"><a href="#2-3-Spring-AOP-Weaving-核心逻辑" class="headerlink" title="2.3 Spring AOP Weaving 核心逻辑"></a>2.3 Spring AOP Weaving 核心逻辑</h3><p>Spring AOP Weaving是load time weaving, 即在Spring容器构建完所有的bean之后, 完成容器启动前执行的, 使用的是aspectj weaver</p>
+<ul>
+<li><p>核心代码参见: <code>org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator#getAdvicesAndAdvisorsForBean</code></p>
+</li>
+<li><p>而针对该问题, 即判断该Aspect能否应用在该类型上, 核心逻辑如下:<br><code>org.springframework.aop.support.AopUtils#canApply(org.springframework.aop.Pointcut, java.lang.Class&lt;?&gt;, boolean)</code><br>即判断 <code>@Perf</code> 能否应用在 <code>edu.xmu.kunlun.headfirst.spring.service.impl.FilterA</code> 对象上:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051422714.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051424707.png"></p>
+</li>
+<li><p>而看实际实现如下, 是直接根据targetClass来判断, 确实没有向上继续寻找父类&#x2F;接口层面是否有声明 <code>@Perf</code>, 因此返回是false:<br><code>org.springframework.aop.aspectj.AspectJExpressionPointcut#matches(java.lang.reflect.Method, java.lang.Class&lt;?&gt;, boolean)</code><br> <img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051438400.png"></p>
+</li>
+<li><p>再来思考下, 为啥不向上继续寻找? 这个就又回到了 第一个问题, Java Annotation的继承原则; 如果向上寻找, 有可能在同一层次找到多个同样的annotation, 但with不同的参数. 在这种情况下, Spring根本就不知道该以哪个为准了! 如下述例子:</p>
+</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">Perf</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">boolean</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token annotation punctuation">@Perf</span><span class="token punctuation">(</span>print <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Filter</span> <span class="token punctuation">&#123;</span>
+    
+<span class="token punctuation">&#125;</span>
+
+<span class="token annotation punctuation">@Perf</span><span class="token punctuation">(</span>print <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">AnotherFilter</span> <span class="token punctuation">&#123;</span>
+
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 如果Spring Weaving会向上(父类/接口)寻找, 那么到底以哪个为准? print=false or print=true??</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FilterA</span> <span class="token keyword">implements</span> <span class="token class-name">Filter</span><span class="token punctuation">,</span> <span class="token class-name">AnotherFilter</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>再回到最初的问题, 如何能解决该问题?</p>
+<h2 id="方案1-打在子类方法上"><a href="#方案1-打在子类方法上" class="headerlink" title="方案1: 打在子类方法上"></a>方案1: 打在子类方法上</h2><p>将<code>@Perf</code>打在各个子类的实现里, 缺点是: 非常麻烦, 后续有其他子类, 都需要记得打上annotation.</p>
+<h2 id="方案2-修改pointcut条件"><a href="#方案2-修改pointcut条件" class="headerlink" title="方案2: 修改pointcut条件"></a>方案2: 修改pointcut条件</h2><p>不使用annotation作为pointcut的匹配条件, 而采用如下表达式:<br><code>@Around(&quot;execution(public * edu.xmu.kunlun.headfirst.spring.service.Filter+.doFilter(..))&quot;)</code></p>
+<ul>
+<li>优点: <code>edu.xmu.kunlun.headfirst.spring.service.Filter</code>的所有子类的<code>doFilter</code>都会被自动增强.</li>
+<li>缺点: 如果有其他接口例如<code>edu.xmu.kunlun.headfirst.spring.service.Weighter</code>的所有实现需要被增强, 则需要修改pointcut表达式, 不方便. </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/main/java/edu/xmu/kunlun/headfirst/spring/aspect/PerfAspect2.java">代码样例 edu.xmu.kunlun.headfirst.spring.aspect.PerfAspect2</a></li>
+</ul>
+<h2 id="方案3-自定义实现pointcut"><a href="#方案3-自定义实现pointcut" class="headerlink" title="方案3: 自定义实现pointcut"></a>方案3: 自定义实现pointcut</h2><p>参照Spring Transactional能力, 自己实现新的Advisor, 其中最主要是修改pointcut</p>
+<ul>
+<li>第一步: 创建自定义pointcut: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/main/java/edu/xmu/kunlun/headfirst/spring/aspect2/PerfAdvisor.java">edu.xmu.kunlun.headfirst.spring.aspect2.PerfAdvisor#pointcut</a></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">StaticMethodMatcherPointcut</span> pointcut <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StaticMethodMatcherPointcut</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">matches</span><span class="token punctuation">(</span><span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> targetClass<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 直接使用spring工具包，来获取method上的注解（会找父类上的注解）</span>
+        <span class="token keyword">return</span> <span class="token class-name">AnnotatedElementUtils</span><span class="token punctuation">.</span><span class="token function">hasAnnotation</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> <span class="token class-name">Perf2</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>第二步: 创建自定义advice: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/main/java/edu/xmu/kunlun/headfirst/spring/aspect2/PerfInterceptor.java">edu.xmu.kunlun.headfirst.spring.aspect2.PerfInterceptor</a></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PerfInterceptor</span> <span class="token keyword">implements</span> <span class="token class-name">MethodInterceptor</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">MethodInvocation</span> invocation<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">long</span> start <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> className <span class="token operator">=</span> invocation<span class="token punctuation">.</span><span class="token function">getThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> methodName <span class="token operator">=</span> invocation<span class="token punctuation">.</span><span class="token function">getMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>className <span class="token operator">+</span> <span class="token string">"."</span> <span class="token operator">+</span> methodName <span class="token operator">+</span> <span class="token string">" start on PerfInterceptor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Object</span> o <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            o <span class="token operator">=</span> invocation<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>className <span class="token operator">+</span> <span class="token string">"."</span> <span class="token operator">+</span> methodName <span class="token operator">+</span> <span class="token string">" on PerfInterceptor"</span> <span class="token operator">+</span> <span class="token string">" finished cost: "</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> o<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>第三步: 创建自定义advisor, 并且以bean形式暴露给Spring容器: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/main/java/edu/xmu/kunlun/headfirst/spring/aspect2/PerfAdvisor.java">edu.xmu.kunlun.headfirst.spring.aspect2.PerfAdvisor</a></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PerfAdvisor</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractBeanFactoryPointcutAdvisor</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">StaticMethodMatcherPointcut</span> pointcut <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StaticMethodMatcherPointcut</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">matches</span><span class="token punctuation">(</span><span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> targetClass<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 直接使用spring工具包，来获取method上的注解（会找父类上的注解）</span>
+            <span class="token keyword">return</span> <span class="token class-name">AnnotatedElementUtils</span><span class="token punctuation">.</span><span class="token function">hasAnnotation</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> <span class="token class-name">Perf2</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Advice</span> advice <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PerfInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Pointcut</span> <span class="token function">getPointcut</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> pointcut<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Advice</span> <span class="token function">getAdvice</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> advice<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<ul>
+<li>第四步: 测试: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/test/java/edu/xmu/kunlun/headfirst/spring/aspect2/Perf2Test.java">edu.xmu.kunlun.headfirst.spring.aspect2.Perf2Test</a></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootTest</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Perf2Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token class-name">FilterChain</span> chain<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">void</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        chain<span class="token punctuation">.</span><span class="token function">filterAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案:"></a>最终方案:</h2><p>如上分析Spring AOP相关源码</p>
+<ul>
+<li><code>方案3: 自定义实现pointcut</code> 虽然可以满足要求, 但存在两个问题: <ul>
+<li>性能问题: 核心使用的<code>AnnotatedElementUtils.hasAnnotation(method, Perf2.class);</code>, 性能可能不佳</li>
+<li>逻辑问题: 针对<code>Diamond Inheritance</code>场景, 结果会很奇怪, 不符合预期</li>
+</ul>
+</li>
+<li>这也是避免后续踩坑的最佳实践了. </li>
+<li>个人使用 <code>方案1</code> 作为了最终方案.</li>
+</ul>
+<h1 id="扩展思考"><a href="#扩展思考" class="headerlink" title="扩展思考"></a>扩展思考</h1><h2 id="Spring接口层面支持的-Transactional-annotation"><a href="#Spring接口层面支持的-Transactional-annotation" class="headerlink" title="Spring接口层面支持的 @Transactional annotation"></a>Spring接口层面支持的 @Transactional annotation</h2><p>如<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1832305">接口上注解 AOP 拦截不到场景兼容实例演示</a> 文中所言:<br>Spring本身支持的 <code>@Transactional</code> annotation, 是可以打在interface上, 然后子类就自动实现了transaction相关增强的功能.<br>那么Spring具体是怎么实现的呢?</p>
+<ul>
+<li>Spring官方的解答如下:</li>
+</ul>
+<blockquote>
+<p>The Spring team recommends that you annotate only concrete classes (and methods of concrete classes) with the @Transactional annotation, as opposed to annotating interfaces.<br>You certainly can place the @Transactional annotation on an interface (or an interface method),<br>but this works only as you would expect it to if you use interface-based proxies.<br>The fact that Java annotations are not inherited from interfaces means that,<br>if you use class-based proxies (proxy-target-class&#x3D;”true”) or the weaving-based aspect (mode&#x3D;”aspectj”),<br>the transaction settings are not recognized by the proxying and weaving infrastructure,<br>and the object is not wrapped in a transactional proxy.</p>
+</blockquote>
+<p>实际上, 也引发了很多讨论: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3120143/where-should-i-put-transactional-annotation-at-an-interface-definition-or-at-a">Where should I put @Transactional annotation: at an interface definition or at an implementing class?</a></li>
+<li>文中推荐或者说Spring团队推荐 <code>@Transactional</code> 最好要打在<code>concrete classes</code>上, 而不要打在interface上.</li>
+<li>因为 <mark><font color='red'>如果使用的如果不是JDK Based Proxy(or interface-based proxy), 则该annotation是不生效的!!!</font></mark></li>
+<li>所以<mark>如果要用在interface上, 一定要知道当前使用的proxy是哪种.</mark> </li>
+<li>而在实际上, 本身Spring&#x2F;SpringBoot的默认proxy方式一直在变, 我们很难弄明确清楚(或者要弄清楚需要费很大劲儿). 下文会详细说明.</li>
+</ul>
+<h2 id="SpringBoot中默认代理方式"><a href="#SpringBoot中默认代理方式" class="headerlink" title="SpringBoot中默认代理方式"></a>SpringBoot中默认代理方式</h2><p>根据 <a target="_blank" rel="noopener" href="https://www.springcloud.io/post/2022-01/springboot-aop/#gsc.tab=0">AOP in Spring Boot, is it a JDK dynamic proxy or a Cglib dynamic proxy?</a> 文中说明,<br>Spring默认的AOP Proxy与SpringBoot默认的是有区别的 </p>
+<h3 id="Spring默认AOP-Proxy"><a href="#Spring默认AOP-Proxy" class="headerlink" title="Spring默认AOP Proxy"></a>Spring默认AOP Proxy</h3><ul>
+<li>If the proxy object implements the interface, then use the JDK dynamic proxy, otherwise it is the Cglib dynamic proxy.</li>
+<li>If the proxy object does not implement an interface, then it is a direct Cglib dynamic proxy.</li>
+</ul>
+<h3 id="SpringBoot默认AOP-Proxy"><a href="#SpringBoot默认AOP-Proxy" class="headerlink" title="SpringBoot默认AOP Proxy"></a>SpringBoot默认AOP Proxy</h3><p>又根据SpringBoot 1.0 与 SpringBoot 2.0 版本有所区分: </p>
+<ul>
+<li><p>SpringBoot 1.0 AOP Proxy原则: 默认用 JDK proxy</p>
+<blockquote>
+<p>If the developer has set spring.aop.proxy-target-class to false, then the JDK proxy is used.<br>If the developer has spring.aop.proxy-target-class set to true, then the Cglib proxy is used.<br>If the developer did not configure the spring.aop.proxy-target-class property in the first place, then the JDK proxy is used.</p>
+</blockquote>
+</li>
+<li><p>SpringBoot 2.0 AOP Proxy原则: 默认用 Cglib</p>
+<blockquote>
+<p>If the developer has set spring.aop.proxy-target-class to false, then the JDK proxy is used.<br>If the developer has spring.aop.proxy-target-class set to true, then the Cglib proxy is used.<br>If the developer did not configure the spring.aop.proxy-target-class property in the first place, then the Cglib proxy is used.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="其他好玩儿的"><a href="#其他好玩儿的" class="headerlink" title="其他好玩儿的"></a>其他好玩儿的</h3><ul>
+<li>之前线上也有过一次故障, 如下<code>nestedHystrixWrappedGetCurrentThreadId</code>方法调用, 调用到的 <code>hystrixWrappedGetCurrentThreadId</code> 则实际没有被增强.</li>
+<li>是因为调用 <code>hystrixWrappedGetCurrentThreadId</code> 实际是由 被代理对象(target) 调用的, 而不是由 代理对象(proxy) 调用的. 具体样例参见: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/test/java/edu/xmu/kunlun/headfirst/spring/service/impl/UserSvcTest.java">edu.xmu.kunlun.headfirst.spring.service.impl.UserSvcTest</a></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@HystrixWrapper</span><span class="token punctuation">(</span>commandGroupKey <span class="token operator">=</span> <span class="token string">"blog"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">hystrixWrappedGetCurrentThreadId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token function">getCurrentThreadId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+ 
+<span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">nestedHystrixWrappedGetCurrentThreadId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token function">hystrixWrappedGetCurrentThreadId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ul>
+<li><code>@Transactional</code> <mark>不要打在接口上, 一定要打在实现类上!!</mark></li>
+<li>显式声明<code>spring.aop.proxy-target-class=true</code>, <mark>让Spring&#x2F;SpringBoot项目统一都用cglib作为proxy方式. </mark> <code>As a reminder, to always use CGLIB, just set the “spring.aop.proxy-target-class” property to true.</code></li>
+</ul>
+<blockquote>
+<p>Before using CGLIB,<br>ensure your codebase always uses pre-existing AOP annotations (such as @Transactional) on concrete classes<br>instead of only on interfaces.<br>Interface-only AOP annotations will be ignored when CGLIB is enabled.<br>Changing when @Transactional aspects are triggered could lead to items not being saved to the database,<br>or poor performance due to transactional boundary shifting.</p>
+</blockquote>
+<h1 id="Code-Samples"><a href="#Code-Samples" class="headerlink" title="Code Samples"></a>Code Samples</h1><ul>
+<li>后续尽量会在每个知识点里, 都增加对应的完整可运行的code sample, 便于各位学习研究.</li>
+<li>随着该问题的深入研究, 搞明白了asm, cglib, jdk dynamic proxy, aspectj等的关系, 愈发觉得还是得多搜索英文资料.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/tree/feature/20220603_annotation_on_interface">本篇博文里完整的spring aop code sample</a></li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.credera.com/insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj">Aspect-Oriented Programming in Spring Boot Part 2: Spring JDK Proxies vs CGLIB vs AspectJ</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/spring/" rel="tag"># spring</a>
+              <a href="/tags/spring-boot/" rel="tag"># spring-boot</a>
+              <a href="/tags/aop/" rel="tag"># aop</a>
+              <a href="/tags/interface/" rel="tag"># interface</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-05-31-blacklist-or-attribute/" rel="prev" title="记一次黑名单方案设计引发的设计思考">
+                  <i class="fa fa-chevron-left"></i> 记一次黑名单方案设计引发的设计思考
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-06-04-love-death-robots/" rel="next" title="爱死机第三季观后感">
+                  爱死机第三季观后感 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

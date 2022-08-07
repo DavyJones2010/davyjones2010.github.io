@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="总结关于kube-scheduler的资源记账:以为的记账流程: 研究kube-scheduler代码, 关于nodeInfo里资源的记账, 总是有个误解, 以为会分为三个部分:  node上全量资源(totalCpu, totalMem) node上已经确定占用的资源(usedCpu, usedMem) 调度完成, node上待绑定的资源(assumedCpu, assumedMem), 实际绑">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="K8S调度器研究">
+<meta property="og:url" content="https://davyjones2010.github.io/2021-09-03-kube-scheduler/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="总结关于kube-scheduler的资源记账:以为的记账流程: 研究kube-scheduler代码, 关于nodeInfo里资源的记账, 总是有个误解, 以为会分为三个部分:  node上全量资源(totalCpu, totalMem) node上已经确定占用的资源(usedCpu, usedMem) 调度完成, node上待绑定的资源(assumedCpu, assumedMem), 实际绑">
+<meta property="og:locale">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071215437.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071215523.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071216225.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071216726.png">
+<meta property="article:published_time" content="2021-09-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.327Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="scheduler">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071215437.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2021-09-03-kube-scheduler/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"https://davyjones2010.github.io/2021-09-03-kube-scheduler/","path":"/2021-09-03-kube-scheduler/","title":"K8S调度器研究"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>K8S调度器研究 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ekube-scheduler%E7%9A%84%E8%B5%84%E6%BA%90%E8%AE%B0%E8%B4%A6"><span class="nav-number">1.1.</span> <span class="nav-text">关于kube-scheduler的资源记账:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%BA%E7%9A%84%E8%AE%B0%E8%B4%A6%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">以为的记账流程:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E7%9A%84%E8%AE%B0%E8%B4%A6%E6%B5%81%E7%A8%8B%E5%8F%82%E7%85%A7%E6%96%87%E7%AB%A0-Node-allocatable%E8%B5%84%E6%BA%90%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">实际的记账流程参照文章 Node allocatable资源的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">引发的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B-x2F-%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AAscheduler"><span class="nav-number">1.1.4.</span> <span class="nav-text">如何改进&#x2F;使用多个scheduler</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Part1-Job-dispatch"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">Part1: Job dispatch:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Part2-Conflict-resolution"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">Part2: Conflict resolution:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HOSS%E4%B8%8Ekube-scheduler%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">HOSS与kube-scheduler的对比</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ek8s%E4%B8%AD%E5%A4%A7%E9%A1%B5%E5%86%85%E5%AD%98%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">关于k8s中大页内存资源管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">限制条件:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8node%E4%B8%8A%E5%BC%80%E5%90%AF-amp-%E5%88%86%E9%85%8D%E5%A4%A7%E9%A1%B5%E5%86%85%E5%AD%98-%E5%B9%B6%E4%B8%8A%E6%8A%A5%E5%88%B0apiserver"><span class="nav-number">1.2.2.</span> <span class="nav-text">如何在node上开启&amp;分配大页内存(并上报到apiserver?)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8pod%E5%88%9B%E5%BB%BA%E6%97%B6%E5%A3%B0%E6%98%8E%E4%BD%BF%E7%94%A8%E5%A4%A7%E9%A1%B5%E5%86%85%E5%AD%98"><span class="nav-number">1.2.3.</span> <span class="nav-text">如何在pod创建时声明使用大页内存?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pod%E5%AE%9E%E9%99%85%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%A4%A7%E9%A1%B5%E5%86%85%E5%AD%98%E7%9A%84"><span class="nav-number">1.2.4.</span> <span class="nav-text">pod实际是如何使用大页内存的?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">2.</span> <span class="nav-text">Refs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hello"><span class="nav-number">3.</span> <span class="nav-text">Hello</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-2"><span class="nav-number">3.1.</span> <span class="nav-text">Hello 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Title-3"><span class="nav-number">4.</span> <span class="nav-text">Title 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-3"><span class="nav-number">4.1.</span> <span class="nav-text">Hello 3</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-03-kube-scheduler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="K8S调度器研究 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          K8S调度器研究
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-04T00:00:00+08:00">2021-09-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="关于kube-scheduler的资源记账"><a href="#关于kube-scheduler的资源记账" class="headerlink" title="关于kube-scheduler的资源记账:"></a>关于kube-scheduler的资源记账:</h2><h3 id="以为的记账流程"><a href="#以为的记账流程" class="headerlink" title="以为的记账流程:"></a>以为的记账流程:</h3><ul>
+<li>研究kube-scheduler代码, 关于nodeInfo里资源的记账, 总是有个误解, 以为会分为三个部分: <ul>
+<li>node上全量资源(totalCpu, totalMem)</li>
+<li>node上已经确定占用的资源(usedCpu, usedMem)</li>
+<li>调度完成, node上待绑定的资源(assumedCpu, assumedMem), 实际绑定成功&#x2F;失败未知, 只是for调度使用:  <ul>
+<li>当绑定成功, 会收到事件, 将assumedCpu&#x2F;Mem清理, 并把assumedCpu&#x2F;Mem 放到usedCpu&#x2F;usedMem里</li>
+<li>当绑定失败, 会收到事件, 将assumedCpu&#x2F;Mem清理, 不叠加到usedCpu&#x2F;usedMem里.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="实际的记账流程参照文章-Node-allocatable资源的含义"><a href="#实际的记账流程参照文章-Node-allocatable资源的含义" class="headerlink" title="实际的记账流程参照文章 Node allocatable资源的含义"></a>实际的记账流程参照文章 <a target="_blank" rel="noopener" href="https://www.mgasch.com/2017/10/sched-reconcile/">Node allocatable资源的含义</a></h3><ul>
+<li>但实际上kube-scheduler, 把nodeInfo分为2部分:<ul>
+<li>node上全量资源(NodeInfo.Allocatable), 注意之前经常会搞混, 以为allocatable &#x3D; total - used; 实际上allocatable代表total. 实际发现其他同学也有理解错的: <a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/kube-batch/issues/881">Allocatable Resources is calculated wrong</a></li>
+<li>node上已经占用的资源(NodeInfo.Requested), 包括如下2部分: <ul>
+<li>node上已经确定占用的资源</li>
+<li>调度完成, node上待绑定的资源(assumedCpu, assumedMem)</li>
+</ul>
+</li>
+<li>实际的对账过程: <ul>
+<li>当调度成功, bind前, 会直接把pod.request叠加到node.requested里.</li>
+<li>bind成功, (修改pod状态), node.requested不变</li>
+<li>bind失败, 1秒一次的轮询, 更新pod状态, 将pod的资源归还回node.requested里</li>
+<li>kube-scheduler重启: 会</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="引发的问题"><a href="#引发的问题" class="headerlink" title="引发的问题"></a>引发的问题</h3><ul>
+<li>kube-scheduler重启, 会执行一次fullsync, cache同步更新量会很大, 耗时可能会比较久, 这中间scheduler是不提供服务的</li>
+<li>如果多个scheduler同时工作, 由于不共享requestedResource, 并发场景下, 导致资源超卖:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071215437.png"><ul>
+<li>当前解决方案:</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何改进-x2F-使用多个scheduler"><a href="#如何改进-x2F-使用多个scheduler" class="headerlink" title="如何改进&#x2F;使用多个scheduler"></a>如何改进&#x2F;使用多个scheduler</h3><p>HOSS方案: </p>
+<h4 id="Part1-Job-dispatch"><a href="#Part1-Job-dispatch" class="headerlink" title="Part1: Job dispatch:"></a>Part1: Job dispatch:</h4><ol>
+<li>instanceLevel load balancing: 防止某些scheduler非常繁忙, 某些scheduler非常空闲.</li>
+<li>dynamic scheduling policy: 基于scheduler的标签, 进行调度</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071215523.png"><br>方案总结: 即新增scheduler-controller模块, 对多个scheduler进行进一步调度</p>
+<h4 id="Part2-Conflict-resolution"><a href="#Part2-Conflict-resolution" class="headerlink" title="Part2: Conflict resolution:"></a>Part2: Conflict resolution:</h4><ol>
+<li><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071216225.png"><br>方案总结: 即在api-server增加conflict-resolver模块, 识别binding的request, 进行冲突校验, 进行failfast.</li>
+</ol>
+<h4 id="HOSS与kube-scheduler的对比"><a href="#HOSS与kube-scheduler的对比" class="headerlink" title="HOSS与kube-scheduler的对比"></a>HOSS与kube-scheduler的对比</h4><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071216726.png"></p>
+<h2 id="关于k8s中大页内存资源管理"><a href="#关于k8s中大页内存资源管理" class="headerlink" title="关于k8s中大页内存资源管理"></a>关于k8s中大页内存资源管理</h2><h3 id="限制条件"><a href="#限制条件" class="headerlink" title="限制条件:"></a>限制条件:</h3><ul>
+<li>Nodes must pre-allocate huge pages in order for the node to report its huge page capacity. </li>
+<li>A node can only pre-allocate huge pages for a single size.</li>
+<li>Unlike CPU or memory, huge pages do not support over-commitment. (普通k8s的memory是如何over-commit的?)</li>
+</ul>
+<h3 id="如何在node上开启-amp-分配大页内存-并上报到apiserver"><a href="#如何在node上开启-amp-分配大页内存-并上报到apiserver" class="headerlink" title="如何在node上开启&amp;分配大页内存(并上报到apiserver?)"></a>如何在node上开启&amp;分配大页内存(并上报到apiserver?)</h3><ul>
+<li>k8s中, node上需要实现定义&amp;分配好大页内存, 如下, 注意下边<code>bootloader</code>部分: </li>
+<li>同时要注意, 可以在node运行时分配大页内存, 也可以在node boot时分配. 但最好在boot时分配, 因为运行时可能由于内存碎片, 无法分配出对应数量的大页内存.</li>
+<li>如下例子, 分配2M的大页内存, 数量是50个</li>
+</ul>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> tuned.openshift.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Tuned
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> hugepages
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> openshift<span class="token punctuation">-</span>cluster<span class="token punctuation">-</span>node<span class="token punctuation">-</span>tuning<span class="token punctuation">-</span>operator
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">profile</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">data</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        [main]
+        summary=Boot time configuration for hugepages
+        include=openshift-node
+        [bootloader]
+        cmdline_openshift_node_hugepages=hugepagesz=2M hugepages=50 </span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> openshift<span class="token punctuation">-</span>node<span class="token punctuation">-</span>hugepages
+
+  <span class="token key atrule">recommend</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">machineConfigLabels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">machineconfiguration.openshift.io/role</span><span class="token punctuation">:</span> <span class="token string">"worker-hp"</span>
+      <span class="token key atrule">priority</span><span class="token punctuation">:</span> <span class="token number">30</span>
+      <span class="token key atrule">profile</span><span class="token punctuation">:</span> openshift<span class="token punctuation">-</span>node<span class="token punctuation">-</span>hugepages<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="如何在pod创建时声明使用大页内存"><a href="#如何在pod创建时声明使用大页内存" class="headerlink" title="如何在pod创建时声明使用大页内存?"></a>如何在pod创建时声明使用大页内存?</h3><p>k8s中, pod使用是通过volumes来进行大页内存的Requests, 如下(下边的是单个node支持多种大小的大页内存, 但实际一般一个node只会支持一种大页内存大小): </p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> huge<span class="token punctuation">-</span>pages<span class="token punctuation">-</span>example
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> example
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> fedora<span class="token punctuation">:</span>latest
+    <span class="token key atrule">command</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sleep
+    <span class="token punctuation">-</span> inf
+    <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /hugepages<span class="token punctuation">-</span>2Mi
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> hugepage<span class="token punctuation">-</span>2mi
+    <span class="token punctuation">-</span> <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /hugepages<span class="token punctuation">-</span>1Gi
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> hugepage<span class="token punctuation">-</span>1gi
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+      <span class="token key atrule">limits</span><span class="token punctuation">:</span>
+        <span class="token key atrule">hugepages-2Mi</span><span class="token punctuation">:</span> 100Mi
+        <span class="token key atrule">hugepages-1Gi</span><span class="token punctuation">:</span> 2Gi
+        <span class="token key atrule">memory</span><span class="token punctuation">:</span> 100Mi
+      <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+        <span class="token key atrule">memory</span><span class="token punctuation">:</span> 100Mi
+  <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> hugepage<span class="token punctuation">-</span>2mi
+    <span class="token key atrule">emptyDir</span><span class="token punctuation">:</span>
+      <span class="token key atrule">medium</span><span class="token punctuation">:</span> HugePages<span class="token punctuation">-</span>2Mi
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> hugepage<span class="token punctuation">-</span>1gi
+    <span class="token key atrule">emptyDir</span><span class="token punctuation">:</span>
+      <span class="token key atrule">medium</span><span class="token punctuation">:</span> HugePages<span class="token punctuation">-</span>1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="pod实际是如何使用大页内存的"><a href="#pod实际是如何使用大页内存的" class="headerlink" title="pod实际是如何使用大页内存的?"></a>pod实际是如何使用大页内存的?</h3><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a target="_blank" rel="noopener" href="https://www.mgasch.com/2017/10/sched-reconcile/">Node allocatable资源的含义</a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=avORKrcyctM">Running Multiple Schedulers in Kubernetes by Xiaoning Ding, Huawei</a><br><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html/scalability_and_performance/what-huge-pages-do-and-how-they-are-consumed">k8s大页内存分配&amp;使用</a><br><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-configuring_transparent_huge_pages">linux上如何分配大页内存</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"Hello world! ecs"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Hello</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello world, abc!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>苟利国家生死以<br>岂因祸福避趋之。<br><br>One should uphold his country’s interest with his life, he should not do things just to pursue his personal gains and he should not be evade responsibilities for fear of personal loss.</p>
+</blockquote>
+<h1 id="Hello"><a href="#Hello" class="headerlink" title="Hello"></a>Hello</h1><h2 id="Hello-2"><a href="#Hello-2" class="headerlink" title="Hello 2"></a>Hello 2</h2><h1 id="Title-3"><a href="#Title-3" class="headerlink" title="Title 3"></a>Title 3</h1><h2 id="Hello-3"><a href="#Hello-3" class="headerlink" title="Hello 3"></a>Hello 3</h2><p>Under what circumstances should we step off a path? When is it essential that we finish what we start? If I bought a bag of peanuts and had an allergic reaction, no one would fault me if I threw it out. If I ended a relationship with a woman who hit me, no one would say that I had a commitment problem. But if I walk away from a seemingly secure route because my soul has other ideas, I am a flake?</p>
+<p>The truth is that no one else can definitively know the path we are here to walk. It’s tempting to listen—many of us long for the omnipotent other—but unless they are genuine psychic intuitives, they can’t know. All others can know is their own truth, and if they’ve actually done the work to excavate it, they will have the good sense to know that they cannot genuinely know anyone else’s. Only soul knows the path it is here to walk. Since you are the only one living in your temple, only you can know its scriptures and interpretive structure.</p>
+<p>At the heart of the struggle are two very different ideas of success—survival-driven and soul-driven. For survivalists, success is security, pragmatism, power over others. Success is the absence of material suffering, the nourishing of the soul be damned. It is an odd and ironic thing that most of the material power in our world often resides in the hands of younger souls. Still working in the egoic and material realms, they love the sensations of power and focus most of their energy on accumulation. Older souls tend not to be as materially driven. They have already played the worldly game in previous lives and they search for more subtle shades of meaning in this one—authentication rather than accumulation. They are often ignored by the culture at large, although they really are the truest warriors.</p>
+<p>A soulful notion of success rests on the actualization of our innate image. Success is simply the completion of a soul step, however unsightly it may be. We have finished what we started when the lesson is learned. What a fear-based culture calls a wonderful opportunity may be fruitless and misguided for the soul. Staying in a passionless relationship may satisfy our need for comfort, but it may stifle the soul. Becoming a famous lawyer is only worthwhile if the soul demands it. It is an essential failure if you are called to be a monastic this time around. If you need to explore and abandon ten careers in order to stretch your soul toward its innate image, then so be it. Flake it till you make it.</p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/scheduler/" rel="tag"># scheduler</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021-08-31-golang-basic/" rel="prev" title="golang入门笔记之基础语法">
+                  <i class="fa fa-chevron-left"></i> golang入门笔记之基础语法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021-09-04-ming-dynasty/" rel="next" title="明朝那些事儿">
+                  明朝那些事儿 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

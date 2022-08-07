@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Java SPI机制未生效, ServiceLoader获取不到实现类 最终定位到原因, 是因为接口实现的文件需要放在 main&#x2F;resources&#x2F;META-INF&#x2F;services&#x2F;MyInterface 中而实际文件放到了: main&#x2F;resources&#x2F;META-INF.services&#x2F;MyInterface 中了. 这里比较坑的一点是, 在IntelliJ IDEA中, 会默认flat">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="一些日常踩的小坑笔记">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-02-22-java-minor-bugs/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="Java SPI机制未生效, ServiceLoader获取不到实现类 最终定位到原因, 是因为接口实现的文件需要放在 main&#x2F;resources&#x2F;META-INF&#x2F;services&#x2F;MyInterface 中而实际文件放到了: main&#x2F;resources&#x2F;META-INF.services&#x2F;MyInterface 中了. 这里比较坑的一点是, 在IntelliJ IDEA中, 会默认flat">
+<meta property="og:locale">
+<meta property="og:image" content="https://davyjones2010.github.io/_assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png">
+<meta property="article:published_time" content="2022-02-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="learn-from-failure">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="mdc">
+<meta property="article:tag" content="npe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davyjones2010.github.io/_assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-02-22-java-minor-bugs/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"https://davyjones2010.github.io/2022-02-22-java-minor-bugs/","path":"/2022-02-22-java-minor-bugs/","title":"一些日常踩的小坑笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一些日常踩的小坑笔记 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-SPI%E6%9C%BA%E5%88%B6%E6%9C%AA%E7%94%9F%E6%95%88-ServiceLoader%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">Java SPI机制未生效, ServiceLoader获取不到实现类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-SPI%E6%9C%BA%E5%88%B6%E5%88%9B%E5%BB%BA%E7%9A%84%E5%AE%9E%E4%BE%8B%E6%97%A0%E6%B3%95%E8%A2%ABSpringContext%E7%AE%A1%E7%90%86%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">Java SPI机制创建的实例无法被SpringContext管理问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BB%A3%E7%A0%81%E6%A0%B7%E4%BE%8B"><span class="nav-number">2.1.</span> <span class="nav-text">问题代码样例:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%881-%E6%89%8B%E5%8A%A8%E6%B3%A8%E5%85%A5"><span class="nav-number">2.3.1.</span> <span class="nav-text">方案1: 手动注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%881%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83"><span class="nav-number">2.3.2.</span> <span class="nav-text">方案1的问题思考:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%882-%E4%BD%BF%E7%94%A8SpringBoot%E7%9A%84SPI"><span class="nav-number">2.3.3.</span> <span class="nav-text">方案2: 使用SpringBoot的SPI??</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refs"><span class="nav-number">2.4.</span> <span class="nav-text">Refs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%95%E5%B1%82cache%E4%BB%8ETair%E5%88%87%E6%8D%A2%E5%88%B0Redis%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91"><span class="nav-number">3.</span> <span class="nav-text">底层cache从Tair切换到Redis遇到的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jackson%E5%BA%8F%E5%88%97%E5%8C%96%E6%96%B9%E5%BC%8F-%E9%92%88%E5%AF%B9%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB-%E5%8F%AF%E4%BB%A5%E5%BA%8F%E5%88%97%E5%8C%96%E6%88%90%E5%8A%9F-%E4%BD%86%E6%98%AF%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%B1%E8%B4%A5"><span class="nav-number">3.2.</span> <span class="nav-text">Jackson序列化方式, 针对匿名内部类, 可以序列化成功, 但是反序列化失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jackson%E5%BA%8F%E5%88%97%E5%8C%96%E6%96%B9%E5%BC%8F-%E9%92%88%E5%AF%B9java-lang-Long%E7%B1%BB%E5%9E%8B-%E5%8F%AF%E4%BB%A5%E5%BA%8F%E5%88%97%E5%8C%96%E6%88%90%E5%8A%9F-%E4%BD%86%E6%98%AF%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%87%BA%E6%9D%A5%E5%B0%B1%E5%8F%98%E6%88%90%E4%BA%86Integer%E7%B1%BB%E5%9E%8B-%E4%BB%8E%E8%80%8C%E5%BC%95%E5%8F%91CCE"><span class="nav-number">3.3.</span> <span class="nav-text">Jackson序列化方式, 针对java.lang.Long类型, 可以序列化成功, 但是反序列化出来就变成了Integer类型, 从而引发CCE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%80%9D%E8%80%83"><span class="nav-number">3.4.</span> <span class="nav-text">扩展思考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FastJson-AnonymousInnerClass"><span class="nav-number">3.4.1.</span> <span class="nav-text">FastJson AnonymousInnerClass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FastJson-Long"><span class="nav-number">3.4.2.</span> <span class="nav-text">FastJson Long</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refs-1"><span class="nav-number">3.5.</span> <span class="nav-text">Refs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k8s-java-client%E9%81%87%E5%88%B0%E7%9A%84joda-time%E5%BA%8F%E5%88%97%E5%8C%96%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">k8s java client遇到的joda.time序列化问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">4.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">环境信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF"><span class="nav-number">4.3.</span> <span class="nav-text">错误信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90-1"><span class="nav-number">4.4.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-1"><span class="nav-number">4.5.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-02-22-java-minor-bugs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="一些日常踩的小坑笔记 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一些日常踩的小坑笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-23 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-23T00:00:00+08:00">2022-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Java-SPI机制未生效-ServiceLoader获取不到实现类"><a href="#Java-SPI机制未生效-ServiceLoader获取不到实现类" class="headerlink" title="Java SPI机制未生效, ServiceLoader获取不到实现类"></a>Java SPI机制未生效, ServiceLoader获取不到实现类</h1><hr>
+<p>最终定位到原因, 是因为接口实现的文件需要放在 <code>main/resources/META-INF/services/MyInterface</code> 中<br>而实际文件放到了: <code>main/resources/META-INF.services/MyInterface</code> 中了.</p>
+<p>这里比较坑的一点是, 在IntelliJ IDEA中, 会默认flatten package, 即将目录路径层级用<code>.</code>连接, 因此<br><code>main/resources/META-INF/services/MyInterface</code> 与 <code>main/resources/META-INF.services/MyInterface</code><br>两个目录看起来是一样的, 如下(根本分不清楚到底是文件夹名字叫<code>codecontest.bloomfilter</code>还是文件夹是<code>codecontest/bloomfilter</code>):<br><img data-src="/../_assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png" alt="2022-02-23-java-minor-bugs-idea-path.png"></p>
+<p>随便搜了下, 发现大家踩同样坑的也不少, 目前看貌似没有好的办法避免, 记住有这个坑, 后续引以为戒吧!</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/tszxlzc/article/details/65938891">intellij idea包路径和文件夹目录的坑</a></li>
+</ul>
+<h1 id="Java-SPI机制创建的实例无法被SpringContext管理问题"><a href="#Java-SPI机制创建的实例无法被SpringContext管理问题" class="headerlink" title="Java SPI机制创建的实例无法被SpringContext管理问题"></a>Java SPI机制创建的实例无法被SpringContext管理问题</h1><hr>
+<h2 id="问题代码样例"><a href="#问题代码样例" class="headerlink" title="问题代码样例:"></a>问题代码样例:</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 加载实现
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyServiceLoader</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ServiceLoader</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MyInterface</span><span class="token punctuation">></span></span> interfaces <span class="token operator">=</span> <span class="token class-name">ServiceLoader</span><span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token class-name">MyInterface</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">MyInterface</span> anInterface <span class="token operator">:</span> interfaces<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            anInterface<span class="token punctuation">.</span><span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 实现类
+ */</span>
+<span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyImpl</span> <span class="token keyword">implements</span> <span class="token class-name">MyInterface</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token class-name">MyService</span> myService<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        myService<span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h2><p>发现在<code>MyImpl#sayHello</code>会抛出NPE, 即<code>myService</code>对象为null.<br>很显而易见, 因为 <code>MyImpl</code> 实例是从ServiceLoader中new出来的, 而不是由Spring容器创建的, 因此自身就脱离了SpringContext的管理.<br>因此<code>@Component</code>这个annotation本质是不生效的, <code>myService</code> 也不会被Spring自动注入进去. </p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="方案1-手动注入"><a href="#方案1-手动注入" class="headerlink" title="方案1: 手动注入"></a>方案1: 手动注入</h3><p>手动获取Context, 手动注入: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 实现类
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyImpl</span> <span class="token keyword">implements</span> <span class="token class-name">MyInterface</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// SpringBeanTool代码参见 https://www.jianshu.com/p/7fc4358b4e36</span>
+    <span class="token class-name">MyService</span> myService <span class="token operator">=</span> <span class="token class-name">SpringBeanTool</span><span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">MyService</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        myService<span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="方案1的问题思考"><a href="#方案1的问题思考" class="headerlink" title="方案1的问题思考:"></a>方案1的问题思考:</h3><p>但一个疑问是如果MyImpl类中<code>myService</code>属性的初始化早于SpringContext的初始化<br>那么 <code>SpringBeanTool.getBean(MyService.class);</code> 必然返回的是null(因为SpringContext尚未初始化完成).<br>实际运行测试, 发现不会返回null. 那么实际的先后顺序是怎样的? 是否有可能返回null?</p>
+<h3 id="方案2-使用SpringBoot的SPI"><a href="#方案2-使用SpringBoot的SPI" class="headerlink" title="方案2: 使用SpringBoot的SPI??"></a>方案2: 使用SpringBoot的SPI??</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// TODO: 这个先留个坑, 待后续研究. </span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7fc4358b4e36">Spring Boot 获取上下文环境</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903890173837326">springboot-starter中的SPI 机制</a></li>
+</ul>
+<h1 id="底层cache从Tair切换到Redis遇到的坑"><a href="#底层cache从Tair切换到Redis遇到的坑" class="headerlink" title="底层cache从Tair切换到Redis遇到的坑"></a>底层cache从Tair切换到Redis遇到的坑</h1><hr>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.fasterxml.jackson.core<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jackson-core<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.12.5<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.fasterxml.jackson.core<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jackson-databind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.12.5<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Jackson序列化方式-针对匿名内部类-可以序列化成功-但是反序列化失败"><a href="#Jackson序列化方式-针对匿名内部类-可以序列化成功-但是反序列化失败" class="headerlink" title="Jackson序列化方式, 针对匿名内部类, 可以序列化成功, 但是反序列化失败"></a>Jackson序列化方式, 针对匿名内部类, 可以序列化成功, 但是反序列化失败</h2><p>本质上是由于 <code>@Cachable</code> 默认使用了Jackson序列化方式, 会默认把类型信息放到json里, 而cache中的对象是匿名内部类, 从而反序列化失败.</p>
+<blockquote>
+<p>内部类实例需要其外部类实例对象来进行实例化，而Jackson在反序列化时无法创建其外部类实例对象</p>
+</blockquote>
+<h2 id="Jackson序列化方式-针对java-lang-Long类型-可以序列化成功-但是反序列化出来就变成了Integer类型-从而引发CCE"><a href="#Jackson序列化方式-针对java-lang-Long类型-可以序列化成功-但是反序列化出来就变成了Integer类型-从而引发CCE" class="headerlink" title="Jackson序列化方式, 针对java.lang.Long类型, 可以序列化成功, 但是反序列化出来就变成了Integer类型, 从而引发CCE"></a>Jackson序列化方式, 针对java.lang.Long类型, 可以序列化成功, 但是反序列化出来就变成了Integer类型, 从而引发CCE</h2><ul>
+<li>代码样例如下, SpringCache框架默认使用了无类型的反序列化形式.</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JacksonSerializeTest</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">GenericJackson2JsonRedisSerializer</span> serializer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericJackson2JsonRedisSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 原始是Long类型</span>
+        <span class="token class-name">Long</span> str <span class="token operator">=</span> <span class="token number">123L</span><span class="token punctuation">;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> serialize <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Object</span> deserialize <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>serialize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// Jackson反序列化之后, 丢失了类型信息, 被默认为了Integer类型</span>
+        <span class="token function">assertTrue</span><span class="token punctuation">(</span>deserialize <span class="token keyword">instanceof</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Integer</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">assertFalse</span><span class="token punctuation">(</span>deserialize <span class="token keyword">instanceof</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Long</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">Long</span> deserialize1 <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>serialize<span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// Jackson反序列化时指定了类型信息, 则会按照类型来</span>
+        <span class="token function">assertTrue</span><span class="token punctuation">(</span>deserialize1 <span class="token keyword">instanceof</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Long</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="扩展思考"><a href="#扩展思考" class="headerlink" title="扩展思考"></a>扩展思考</h2><p>如果使用FastJson进行序列化&#x2F;反序列, JSON里边同样不包含类型信息, 针对匿名内部类, 针对Long类型, 怎么防止上述问题?</p>
+<h3 id="FastJson-AnonymousInnerClass"><a href="#FastJson-AnonymousInnerClass" class="headerlink" title="FastJson AnonymousInnerClass"></a>FastJson AnonymousInnerClass</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JacksonSerializeTest2</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">jacksonTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">GenericJackson2JsonRedisSerializer</span> serializer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GenericJackson2JsonRedisSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 原始是AnonymousInnerClass</span>
+        <span class="token class-name">MyClass</span> c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">return</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> serialize <span class="token operator">=</span> serializer<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 序列化的JSON里, 包含了类的信息</span>
+        <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"&#123;\"@class\":\"edu.xmu.test.javax.jackson.JacksonSerializeTest2$1\",\"name\":\"Hello\"&#125;"</span><span class="token punctuation">,</span>
+            <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>serialize<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 下边反序列代码抛出异常, Cannot deserialize Class edu.xmu.test.javax.jackson.JacksonSerializeTest2$1 (of type</span>
+        <span class="token comment">// local/anonymous) as a Bean</span>
+        serializer<span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>serialize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fastjsonTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 原始是AnonymousInnerClass</span>
+        <span class="token class-name">MyClass</span> c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">return</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token comment">//String s = JSON.toJSONString(c, new SerializerFeature[] &#123;SerializerFeature.WriteClassName&#125;);</span>
+        <span class="token class-name">String</span> s <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">toJSONString</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Object</span> parse <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"JSONObject"</span><span class="token punctuation">,</span> parse<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getSimpleName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">MyClass</span> c2 <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">parseObject</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token class-name">MyClass</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>c2<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fastjsonTest2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 原始是AnonymousInnerClass</span>
+        <span class="token class-name">MyClass</span> c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">return</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> s <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">toJSONString</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SerializerFeature</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span><span class="token class-name">SerializerFeature<span class="token punctuation">.</span>WriteClassName</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"&#123;\"@type\":\"edu.xmu.test.javax.jackson.JacksonSerializeTest2$3\",\"name\":\"Hello\"&#125;"</span><span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 由于序列化的s里边包含了类型信息, 下边会报错, 信息如下:</span>
+        <span class="token comment">/*
+         * com.alibaba.fastjson.JSONException: default constructor not found. class edu.xmu.test.javax.jackson
+         * .JacksonSerializeTest2$3
+         */</span>
+        <span class="token class-name">Object</span> parse <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="FastJson-Long"><a href="#FastJson-Long" class="headerlink" title="FastJson Long"></a>FastJson Long</h3><p>代码样例如下, 反序列化时需要提供类型信息.</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fastJsonTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Long</span> str <span class="token operator">=</span> <span class="token number">123L</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> s <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">toJSONString</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Long</span> str2 <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">parseObject</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// FastJson反序列化时指定了类型信息, 则会按照类型来</span>
+    <span class="token function">assertTrue</span><span class="token punctuation">(</span>str <span class="token keyword">instanceof</span> <span class="token class-name">Long</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assertEquals</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> str2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">Object</span> parse <span class="token operator">=</span> JSON<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// FastJson反序列化之后, 丢失了类型信息, 被默认为了Integer类型</span>
+    <span class="token function">assertTrue</span><span class="token punctuation">(</span>parse <span class="token keyword">instanceof</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Integer</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assertFalse</span><span class="token punctuation">(</span>parse <span class="token keyword">instanceof</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Long</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="Refs-1"><a href="#Refs-1" class="headerlink" title="Refs"></a>Refs</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904170403659784">一次反序列化内部类导致的问题排查过程</a></li>
+</ul>
+<h1 id="k8s-java-client遇到的joda-time序列化问题"><a href="#k8s-java-client遇到的joda-time序列化问题" class="headerlink" title="k8s java client遇到的joda.time序列化问题"></a>k8s java client遇到的joda.time序列化问题</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>两个系统间通过dubbo进行RPC调用, 都引用了k8s-java-client, dubbo接口说明如下:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">io<span class="token punctuation">.</span>kubernetes<span class="token punctuation">.</span>client<span class="token punctuation">.</span>openapi<span class="token punctuation">.</span>models<span class="token punctuation">.</span></span><span class="token class-name">V1Pod</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">K8sService</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token class-name">V1Pod</span> podSpec<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h2><ul>
+<li>使用的k8s-java-client版本如下:</li>
+</ul>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>io.kubernetes<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>client-java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>10.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><ol>
+<li>场景1, 系统调用</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Caused</span> by<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>RuntimeException</span><span class="token operator">:</span> <span class="token class-name">Serialized</span> <span class="token keyword">class</span> <span class="token class-name"><span class="token namespace">io<span class="token punctuation">.</span>kubernetes<span class="token punctuation">.</span>client<span class="token punctuation">.</span>openapi<span class="token punctuation">.</span>models<span class="token punctuation">.</span></span>V1Pod</span> must implement <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>Serializable</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="2">
+<li>场景2, 在provider机器上, 登录dubbo控制台, 手动invoke, 错误信息如下:</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Failed</span> <span class="token keyword">to</span> <span class="token namespace">invoke</span> method normalizeCpuMem<span class="token punctuation">,</span> cause<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>RuntimeException</span><span class="token operator">:</span> <span class="token class-name">Failed</span> <span class="token keyword">to</span> <span class="token namespace">set</span> pojo <span class="token class-name">V1ObjectMeta</span> property deletionTimestamp value <span class="token number">2022</span><span class="token operator">-</span><span class="token number">02</span><span class="token operator">-</span><span class="token number">28</span>T18<span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">24.000</span><span class="token operator">+</span><span class="token number">08</span><span class="token operator">:</span><span class="token function">00</span><span class="token punctuation">(</span><span class="token keyword">class</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cause<span class="token operator">:</span> argument type mismatch
+<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>RuntimeException</span><span class="token operator">:</span> <span class="token class-name">Failed</span> <span class="token keyword">to</span> <span class="token namespace">set</span> pojo <span class="token class-name">V1ObjectMeta</span> property deletionTimestamp value <span class="token number">2022</span><span class="token operator">-</span><span class="token number">02</span><span class="token operator">-</span><span class="token number">28</span>T18<span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">24.000</span><span class="token operator">+</span><span class="token number">08</span><span class="token operator">:</span><span class="token function">00</span><span class="token punctuation">(</span><span class="token keyword">class</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cause<span class="token operator">:</span> argument type mismatch
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>common<span class="token punctuation">.</span>utils<span class="token punctuation">.</span></span>PojoUtils</span><span class="token punctuation">.</span><span class="token function">realize0</span><span class="token punctuation">(</span><span class="token class-name">PojoUtils</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">450</span><span class="token punctuation">)</span>
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>common<span class="token punctuation">.</span>utils<span class="token punctuation">.</span></span>PojoUtils</span><span class="token punctuation">.</span><span class="token function">realize0</span><span class="token punctuation">(</span><span class="token class-name">PojoUtils</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">445</span><span class="token punctuation">)</span>
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>common<span class="token punctuation">.</span>utils<span class="token punctuation">.</span></span>PojoUtils</span><span class="token punctuation">.</span><span class="token function">realize0</span><span class="token punctuation">(</span><span class="token class-name">PojoUtils</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">372</span><span class="token punctuation">)</span>
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>common<span class="token punctuation">.</span>utils<span class="token punctuation">.</span></span>PojoUtils</span><span class="token punctuation">.</span><span class="token function">realize0</span><span class="token punctuation">(</span><span class="token class-name">PojoUtils</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">445</span><span class="token punctuation">)</span>
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>common<span class="token punctuation">.</span>utils<span class="token punctuation">.</span></span>PojoUtils</span><span class="token punctuation">.</span><span class="token function">realize0</span><span class="token punctuation">(</span><span class="token class-name">PojoUtils</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">445</span><span class="token punctuation">)</span>
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>common<span class="token punctuation">.</span>utils<span class="token punctuation">.</span></span>PojoUtils</span><span class="token punctuation">.</span><span class="token function">realize</span><span class="token punctuation">(</span><span class="token class-name">PojoUtils</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">200</span><span class="token punctuation">)</span>
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>common<span class="token punctuation">.</span>utils<span class="token punctuation">.</span></span>PojoUtils</span><span class="token punctuation">.</span><span class="token function">realize</span><span class="token punctuation">(</span><span class="token class-name">PojoUtils</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">79</span><span class="token punctuation">)</span>
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>rpc<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>telnet<span class="token punctuation">.</span></span>InvokeTelnetHandler</span><span class="token punctuation">.</span><span class="token function">telnet</span><span class="token punctuation">(</span><span class="token class-name">InvokeTelnetHandler</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">95</span><span class="token punctuation">)</span>
+  at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>dubbo<span class="token punctuation">.</span>remoting<span class="token punctuation">.</span>telnet<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>TelnetHandlerAdapter</span><span class="token punctuation">.</span><span class="token function">telnet</span><span class="token punctuation">(</span><span class="token class-name">TelnetHandlerAdapter</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">54</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="原因分析-1"><a href="#原因分析-1" class="headerlink" title="原因分析"></a>原因分析</h2><p>至此, 可以基本知道是由于序列化问题导致. 尤其是 <code>V1ObjectMeta</code> 里的 <code>deletionTimestamp</code> 字段, 是 <code>org.joda.time.DateTime</code> 类型.<br>经搜索得知, 已经有人在dubbo社区提出这个问题: <a target="_blank" rel="noopener" href="https://github.com/apache/dubbo/issues/9676">使用hessian2无法反序列化jodatime</a><br>但该bug仍然处于Open状态.</p>
+<h2 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h2><p>当前临时的解决方案是: </p>
+<ol>
+<li>第一步: 修改接口签名如下, 使用序列化后的JsonString.</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">K8sService</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token class-name">String</span> podSpec<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>第二步: Provider&amp;Consumer都使用同样的<code>toJson(V1Pod)</code>逻辑.<br>参见开源实现: <a target="_blank" rel="noopener" href="https://github.com/gkopff/gson-jodatime-serialisers">gson-jodatime-serialisers</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/learn-from-failure/" rel="tag"># learn-from-failure</a>
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/mdc/" rel="tag"># mdc</a>
+              <a href="/tags/npe/" rel="tag"># npe</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-02-13-maven-multi-module-test/" rel="prev" title="SpringBoot+Maven多模块项目测试最佳实践">
+                  <i class="fa fa-chevron-left"></i> SpringBoot+Maven多模块项目测试最佳实践
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-02-28-aliyun-ram-openapi/" rel="next" title="RAM的基础概念与实践">
+                  RAM的基础概念与实践 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

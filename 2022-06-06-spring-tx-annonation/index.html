@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景书接上回 SpringBoot基于Interface的Annotation在AOP中如何生效I,里边只是简略地说明了Spring中 @Transactional 只能在jdk proxy场景下生效, 在cglib场景下不生效, 但没有研究具体代码实现.本文详细探究下. 代码分析0. Spring AOP整体流程Spring把所有Bean初始化完成, 容器启动前, 会遍历容器中的每个bean,">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SpringBoot Transactional AOP 实现原理研究">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-06-06-spring-tx-annonation/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景书接上回 SpringBoot基于Interface的Annotation在AOP中如何生效I,里边只是简略地说明了Spring中 @Transactional 只能在jdk proxy场景下生效, 在cglib场景下不生效, 但没有研究具体代码实现.本文详细探究下. 代码分析0. Spring AOP整体流程Spring把所有Bean初始化完成, 容器启动前, 会遍历容器中的每个bean,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206072232406.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206062333446.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206062335278.png">
+<meta property="article:published_time" content="2022-06-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="spring-boot">
+<meta property="article:tag" content="aop">
+<meta property="article:tag" content="interface">
+<meta property="article:tag" content="spring-tx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206072232406.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-06-06-spring-tx-annonation/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-06-06-spring-tx-annonation/","path":"/2022-06-06-spring-tx-annonation/","title":"SpringBoot Transactional AOP 实现原理研究"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SpringBoot Transactional AOP 实现原理研究 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Spring-AOP%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">0. Spring AOP整体流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Transactional-%E7%9A%84JoinPoint-x2F-PointCut%E5%AE%9A%E4%B9%89"><span class="nav-number">2.2.</span> <span class="nav-text">1. @Transactional 的JoinPoint&#x2F;PointCut定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Transactional-%E7%9A%84Advice%E5%AE%9A%E4%B9%89"><span class="nav-number">2.3.</span> <span class="nav-text">2. @Transactional 的Advice定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Transactional-%E7%9A%84Advisor%E5%AE%9A%E4%B9%89"><span class="nav-number">2.4.</span> <span class="nav-text">3. @Transactional 的Advisor定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Transactional-%E7%9A%84AdvisorBean%E5%88%9D%E5%A7%8B%E5%8C%96-amp-%E7%BB%84%E8%A3%85"><span class="nav-number">2.5.</span> <span class="nav-text">4. @Transactional 的AdvisorBean初始化&amp;组装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%A0%B7%E4%BE%8B"><span class="nav-number">2.6.</span> <span class="nav-text">完整样例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">实际验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E4%BD%BF%E7%94%A8cglib-%E6%8E%A5%E5%8F%A3%E4%B8%8A%E7%9A%84-Transactional-%E8%83%BD%E5%90%A6%E8%A2%AB%E6%AD%A3%E5%B8%B8%E5%A2%9E%E5%BC%BA"><span class="nav-number">3.1.</span> <span class="nav-text">强制使用cglib, 接口上的 @Transactional 能否被正常增强?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E4%BD%BF%E7%94%A8jdk-proxy-%E6%8E%A5%E5%8F%A3%E4%B8%8A%E7%9A%84-Transactional-%E8%83%BD%E5%90%A6%E8%A2%AB%E6%AD%A3%E5%B8%B8%E5%A2%9E%E5%BC%BA"><span class="nav-number">3.2.</span> <span class="nav-text">强制使用jdk proxy, 接口上的 @Transactional 能否被正常增强?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Samples"><span class="nav-number">4.</span> <span class="nav-text">Code Samples</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">5.</span> <span class="nav-text">Refs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-06-spring-tx-annonation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SpringBoot Transactional AOP 实现原理研究 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot Transactional AOP 实现原理研究
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-07T00:00:00+08:00">2022-06-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>书接上回 <a href="https://davyjones2010.github.io/2022-06-03-spring-annotation-on-interface/">SpringBoot基于Interface的Annotation在AOP中如何生效I</a>,<br>里边只是简略地说明了Spring中 @Transactional 只能在jdk proxy场景下生效, 在cglib场景下不生效, 但没有研究具体代码实现.<br>本文详细探究下.</p>
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="0-Spring-AOP整体流程"><a href="#0-Spring-AOP整体流程" class="headerlink" title="0. Spring AOP整体流程"></a>0. Spring AOP整体流程</h2><p>Spring把所有Bean初始化完成, 容器启动前, 会遍历容器中的每个bean, 执行方法, 尝试找到可用的advisor, 生成新的增强bean, 方法入口: <code>org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator#findEligibleAdvisors</code><br>详细步骤: </p>
+<ol>
+<li>从Spring Context里找到所有Advisors: <code>org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator#findCandidateAdvisors</code></li>
+<li>根据Advisors里的PointCuts&#x2F;JoinPoints定义, 判断该bean是否可以被该Advisor增强. <code>org.springframework.aop.support.AopUtils#canApply(org.springframework.aop.Advisor, java.lang.Class&lt;?&gt;, boolean)</code></li>
+<li>获取到该bean可以被增强的advisors列表</li>
+<li>根据配置<code>spring.aop.proxy-target-class=true/false</code>, 使用Cglib或者JDK生成代理bean. <code>org.springframework.aop.framework.DefaultAopProxyFactory#createAopProxy</code></li>
+<li>之后从Spring容器中获取bean(getBean或者通过@Autowired等自动注入), 实际上获取到的是代理bean.</li>
+</ol>
+<h2 id="1-Transactional-的JoinPoint-x2F-PointCut定义"><a href="#1-Transactional-的JoinPoint-x2F-PointCut定义" class="headerlink" title="1. @Transactional 的JoinPoint&#x2F;PointCut定义"></a>1. @Transactional 的JoinPoint&#x2F;PointCut定义</h2><ul>
+<li>JoinPoint or PointCut, 在AOP里即是类似SQL中where的条件, 即哪些符合条件的class&#x2F;bean&#x2F;method需要被增强.</li>
+<li>JoinPoint标准接口定义如下: 核心是<code>matches</code>方法.</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">StaticMethodMatcher</span> <span class="token keyword">implements</span> <span class="token class-name">MethodMatcher</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">matches</span><span class="token punctuation">(</span><span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> targetClass<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token comment">// should never be invoked because isRuntime() returns false</span>
+		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">UnsupportedOperationException</span><span class="token punctuation">(</span><span class="token string">"Illegal MethodMatcher usage"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>@Transactional</code> 使用的是: <code>org.springframework.transaction.interceptor.TransactionAttributeSourcePointcut</code>, 而<mark>该pointcut, 会按照类继承关系向上寻找, 找到接口层面定义的annotation.</mark> </li>
+<li>详细测试代码参见: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/test/java/edu/xmu/kunlun/headfirst/spring/tx/aop/BeanFactoryTransactionAttributeSourceAdvisorTest.java">edu.xmu.kunlun.headfirst.spring.tx.aop.BeanFactoryTransactionAttributeSourceAdvisorTest#matchesTest</a></li>
+</ul>
+<h2 id="2-Transactional-的Advice定义"><a href="#2-Transactional-的Advice定义" class="headerlink" title="2. @Transactional 的Advice定义"></a>2. @Transactional 的Advice定义</h2><ul>
+<li>Advice, 在AOP里即是类似SQL中聚合函数, 即需要对符合条件的class&#x2F;bean&#x2F;method做什么处理.</li>
+<li>Advice标准接口详细定义如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">MethodInterceptor</span> <span class="token keyword">extends</span> <span class="token class-name">Interceptor</span> <span class="token punctuation">&#123;</span>
+	<span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nonnull</span> <span class="token class-name">MethodInvocation</span> invocation<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>@Transactional</code> 使用的是: <code>org.springframework.transaction.interceptor.TransactionInterceptor</code>, 即会在<code>invocation.proceed();</code>前后分别开启与提交事务.</li>
+</ul>
+<h2 id="3-Transactional-的Advisor定义"><a href="#3-Transactional-的Advisor定义" class="headerlink" title="3. @Transactional 的Advisor定义"></a>3. @Transactional 的Advisor定义</h2><ul>
+<li>Advisor or Aspect, 就是 JoinPoint + Advice, 同时需要作为bean注册在Spring中, 方便Spring容器启动时, 执行<code>从Spring Context里找到所有Advisors</code>步骤.</li>
+<li><code>@Transactional</code> 使用的是: <code>org.springframework.transaction.interceptor.BeanFactoryTransactionAttributeSourceAdvisor</code></li>
+<li>所以我们一般都会在 Aspect 上打上 @Aspect + @Component 的标签</li>
+</ul>
+<h2 id="4-Transactional-的AdvisorBean初始化-amp-组装"><a href="#4-Transactional-的AdvisorBean初始化-amp-组装" class="headerlink" title="4. @Transactional 的AdvisorBean初始化&amp;组装"></a>4. @Transactional 的AdvisorBean初始化&amp;组装</h2><ul>
+<li>代码位置: <code>org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration#transactionAdvisor</code></li>
+<li>本质是在 <code>@Configuration</code> 里通过 <code>@Bean</code> new出Bean<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206072232406.png"></li>
+</ul>
+<h2 id="完整样例"><a href="#完整样例" class="headerlink" title="完整样例"></a>完整样例</h2><ul>
+<li>如下样例:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Aspect</span> <span class="token comment">// 向Spring容器说明是个Aspect/Advisor</span>
+<span class="token annotation punctuation">@Component</span> <span class="token comment">// 向Spring容器注册, 方便找到该bean</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PerfAspect</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Around</span><span class="token punctuation">(</span><span class="token string">"@annotation(Perf)"</span><span class="token punctuation">)</span> <span class="token comment">// 作为PointCut定义</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">perf</span><span class="token punctuation">(</span><span class="token class-name">ProceedingJoinPoint</span> joinPoint<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span> <span class="token comment">//方法体作为Advice</span>
+        <span class="token keyword">long</span> start <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> methodName <span class="token operator">=</span> joinPoint<span class="token punctuation">.</span><span class="token function">getSignature</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>methodName <span class="token operator">+</span> <span class="token string">" start"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Object</span> o <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            o <span class="token operator">=</span> joinPoint<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>methodName <span class="token operator">+</span> <span class="token string">" finished cost: "</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> o<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="实际验证"><a href="#实际验证" class="headerlink" title="实际验证"></a>实际验证</h1><h2 id="强制使用cglib-接口上的-Transactional-能否被正常增强"><a href="#强制使用cglib-接口上的-Transactional-能否被正常增强" class="headerlink" title="强制使用cglib, 接口上的 @Transactional 能否被正常增强?"></a>强制使用cglib, 接口上的 @Transactional 能否被正常增强?</h2><ul>
+<li>在springboot配置里, <code>spring.aop.proxy-target-class=true</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/test/java/edu/xmu/kunlun/headfirst/spring/tx/TransApiTest.java">TransApiTest#updateTest代码样例</a></li>
+<li>如下发现<code>TransApi</code>是被cglib正常增强, 类名: <code>class edu.xmu.kunlun.headfirst.spring.tx.TransApiImpl$$EnhancerBySpringCGLIB$$2586b9e2</code>, 事务能被正常启动</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206062333446.png"></p>
+<h2 id="强制使用jdk-proxy-接口上的-Transactional-能否被正常增强"><a href="#强制使用jdk-proxy-接口上的-Transactional-能否被正常增强" class="headerlink" title="强制使用jdk proxy, 接口上的 @Transactional 能否被正常增强?"></a>强制使用jdk proxy, 接口上的 @Transactional 能否被正常增强?</h2><ul>
+<li>在springboot配置里, <code>spring.aop.proxy-target-class=false</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/blob/feature/20220603_annotation_on_interface/src/test/java/edu/xmu/kunlun/headfirst/spring/tx/TransApiTest.java">TransApiTest#updateTest代码样例</a></li>
+<li>如下发现<code>TransApi</code>是被jdk正常增强, 类名: <code>class com.sun.proxy.$Proxy56</code>, 事务能被正常启动</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206062335278.png"></p>
+<ul>
+<li>httodo: 这里与spring官方文档说明有所不同. 根据上述代码分析, 其实到底能不能增强, 与到底使用cglib还是使用jdk-proxy没啥关系, 只与JoinPoint&#x2F;PointCut的实现有关系. 待最终探究确认.</li>
+</ul>
+<h1 id="Code-Samples"><a href="#Code-Samples" class="headerlink" title="Code Samples"></a>Code Samples</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/head-first-spring/tree/feature/20220603_annotation_on_interface">本篇博文里完整的spring aop code sample</a></li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1>
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/spring/" rel="tag"># spring</a>
+              <a href="/tags/spring-boot/" rel="tag"># spring-boot</a>
+              <a href="/tags/aop/" rel="tag"># aop</a>
+              <a href="/tags/interface/" rel="tag"># interface</a>
+              <a href="/tags/spring-tx/" rel="tag"># spring-tx</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-06-05-mysql-conn-params/" rel="prev" title="MySQL连接池重要参数配置原理研究">
+                  <i class="fa fa-chevron-left"></i> MySQL连接池重要参数配置原理研究
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-06-10-asciinema/" rel="next" title="asciinema使用笔记">
+                  asciinema使用笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

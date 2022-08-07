@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景:在API设计时, 如果是list接口, 通常需要对返回的结果进行分页. 为啥需要分页? 数据库层面: 防止由于没有limit, 导致从数据库中一次查询数据太多, 导致形成慢SQL:  导致mysql需要把结果放在内存, 从而导致整体MySQL内存占用增加, 甚至oom 导致通过tcp数据库连接, 往client端传输耗时过久. 例如10MB的数据, 在100Mbps的带宽下需要几乎1秒">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="OpenAPI设计之NextToken">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-03-28-openapi-nexttoken/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景:在API设计时, 如果是list接口, 通常需要对返回的结果进行分页. 为啥需要分页? 数据库层面: 防止由于没有limit, 导致从数据库中一次查询数据太多, 导致形成慢SQL:  导致mysql需要把结果放在内存, 从而导致整体MySQL内存占用增加, 甚至oom 导致通过tcp数据库连接, 往client端传输耗时过久. 例如10MB的数据, 在100Mbps的带宽下需要几乎1秒">
+<meta property="og:locale">
+<meta property="og:image" content="https://davyjones2010.github.io/source/_posts/learn-from-failure/img.png">
+<meta property="article:published_time" content="2022-03-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="learn-from-failure">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="openapi">
+<meta property="article:tag" content="next-token">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davyjones2010.github.io/source/_posts/learn-from-failure/img.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-03-28-openapi-nexttoken/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"https://davyjones2010.github.io/2022-03-28-openapi-nexttoken/","path":"/2022-03-28-openapi-nexttoken/","title":"OpenAPI设计之NextToken"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenAPI设计之NextToken | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E9%9C%80%E8%A6%81%E5%88%86%E9%A1%B5"><span class="nav-number">2.</span> <span class="nav-text">为啥需要分页?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%881-pageNo-pageSize-%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">方案1: pageNo+pageSize 方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%B8%B8%E8%A7%84%E7%9A%84%E5%88%86%E9%A1%B5%E5%86%99%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">典型常规的分页写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">问题原因分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%882-%E6%94%B9%E8%BF%9B%E7%9A%84-pageNo-pageSize-%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">方案2: 改进的 pageNo+pageSize 方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B%E7%9A%84%E5%88%86%E9%A1%B5%E5%86%99%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">改进的分页写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%883-nextToken-maxResults-%E6%96%B9%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">方案3: nextToken+maxResults 方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E6%B3%95"><span class="nav-number">5.1.</span> <span class="nav-text">写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9%E6%AF%94%E8%BE%83%E4%B8%8E%E6%80%9D%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">优缺点比较与思考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9BNextToken-MaxResults%E7%9A%84%E5%AE%9E%E8%B7%B5"><span class="nav-number">7.</span> <span class="nav-text">一些NextToken+MaxResults的实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%AE%B0%E5%BD%95"><span class="nav-number">8.</span> <span class="nav-text">其他记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E6%9F%A5%E7%9C%8BBufferPool"><span class="nav-number">8.1.</span> <span class="nav-text">MySQL查看BufferPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E4%B8%AD-rowid%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">8.2.</span> <span class="nav-text">MySQL中_rowid的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6"><span class="nav-number">8.2.1.</span> <span class="nav-text">限制条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">8.2.2.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E9%94%AE%E5%88%97%E4%B8%8D%E6%98%AF%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B-%E4%B8%8D%E4%BC%9A%E6%9C%89-rowid"><span class="nav-number">8.2.2.1.</span> <span class="nav-text">主键列不是数字类型, 不会有_rowid</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%81%94%E5%90%88%E4%B8%BB%E9%94%AE-%E4%B8%8D%E4%BC%9A%E6%9C%89-rowid"><span class="nav-number">8.2.2.2.</span> <span class="nav-text">联合主键, 不会有_rowid</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">8.2.3.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E5%85%AC%E5%85%B1%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">8.3.</span> <span class="nav-text">MySQL公共大数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-Shell"><span class="nav-number">8.4.</span> <span class="nav-text">MySQL Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">8.4.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">8.4.2.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-03-28-openapi-nexttoken/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenAPI设计之NextToken | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenAPI设计之NextToken
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-29 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-29T00:00:00+08:00">2022-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景:"></a>背景:</h1><p>在API设计时, 如果是<code>list</code>接口, 通常需要对返回的结果进行分页.</p>
+<h1 id="为啥需要分页"><a href="#为啥需要分页" class="headerlink" title="为啥需要分页?"></a>为啥需要分页?</h1><ol>
+<li>数据库层面: 防止由于没有limit, 导致从数据库中一次查询数据太多, 导致形成慢SQL: <ol>
+<li>导致mysql需要把结果放在内存, 从而导致整体MySQL内存占用增加, 甚至oom</li>
+<li>导致通过tcp数据库连接, 往client端传输耗时过久. 例如10MB的数据, 在100Mbps的带宽下需要几乎1秒</li>
+</ol>
+</li>
+<li>应用层面: 如果没有分页, 也很容易造成应用内存占用过多, 如果是Java应用很可能触发FGC等.</li>
+<li>前端: 如果不分页, 导致浏览器无法缓存大量数据, 卡死.<br>所以一般对于非宽表, 以500~2000作为pageSize较为合适.</li>
+</ol>
+<h1 id="方案1-pageNo-pageSize-方式"><a href="#方案1-pageNo-pageSize-方式" class="headerlink" title="方案1: pageNo+pageSize 方式"></a>方案1: pageNo+pageSize 方式</h1><h2 id="典型常规的分页写法"><a href="#典型常规的分页写法" class="headerlink" title="典型常规的分页写法"></a>典型常规的分页写法</h2><ul>
+<li>当页数少时, 如下第1页, 耗时0ms:</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employees  <span class="token keyword">order</span> <span class="token keyword">by</span> emp_no <span class="token keyword">desc</span> <span class="token keyword">limit</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token operator">|</span> emp_no <span class="token operator">|</span> birth_date <span class="token operator">|</span> first_name <span class="token operator">|</span> last_name <span class="token operator">|</span> gender <span class="token operator">|</span> hire_date  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token operator">|</span> <span class="token number">499999</span> <span class="token operator">|</span> <span class="token number">1958</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">01</span> <span class="token operator">|</span> Sachin     <span class="token operator">|</span> Tsukuda   <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1997</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">30</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">499998</span> <span class="token operator">|</span> <span class="token number">1956</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">05</span> <span class="token operator">|</span> Patricia   <span class="token operator">|</span> Breugel   <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1993</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">-</span><span class="token number">13</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">499997</span> <span class="token operator">|</span> <span class="token number">1961</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">03</span> <span class="token operator">|</span> Berhard    <span class="token operator">|</span> Lenart    <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1986</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">21</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>– 当页数多时, 如下到第300000&#x2F;3&#x3D;10w页, 耗时110ms: </p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span>  <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employees  <span class="token keyword">order</span> <span class="token keyword">by</span> emp_no <span class="token keyword">desc</span> <span class="token keyword">limit</span> <span class="token number">300000</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token operator">|</span> emp_no <span class="token operator">|</span> birth_date <span class="token operator">|</span> first_name <span class="token operator">|</span> last_name  <span class="token operator">|</span> gender <span class="token operator">|</span> hire_date  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token operator">|</span>  <span class="token number">10024</span> <span class="token operator">|</span> <span class="token number">1958</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">05</span> <span class="token operator">|</span> Suzette    <span class="token operator">|</span> Pettey     <span class="token operator">|</span> F      <span class="token operator">|</span> <span class="token number">1997</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">19</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">10023</span> <span class="token operator">|</span> <span class="token number">1953</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">29</span> <span class="token operator">|</span> Bojan      <span class="token operator">|</span> Montemayor <span class="token operator">|</span> F      <span class="token operator">|</span> <span class="token number">1989</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">17</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">10022</span> <span class="token operator">|</span> <span class="token number">1952</span><span class="token operator">-</span><span class="token number">07</span><span class="token operator">-</span><span class="token number">08</span> <span class="token operator">|</span> Shahaf     <span class="token operator">|</span> Famili     <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1995</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">22</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.11</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>如上, 随着翻页的继续, 当 <code>limit 1000000, 100</code> 的时候, 性能会急剧下降.</p>
+<h2 id="问题原因分析"><a href="#问题原因分析" class="headerlink" title="问题原因分析"></a>问题原因分析</h2><p>具体原因参见: <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Wtg9acg6M5q5kkSH4M3qXQ">MySQL 用 limit 为什么会影响性能？</a><br>这里进行个概述, 在执行SQL时, innodb会做如下两步:  </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">第一步: 查询到索引叶子节点数据
+第二步: 根据叶子节点上的主键值去聚簇索引上查询需要的全部字段值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img data-src="/source/_posts/learn-from-failure/img.png" alt="img.png"></p>
+<blockquote>
+<p>像上面这样，需要查询1000000次索引节点，查询1000100次聚簇索引的数据，最后再将结果过滤掉前1000000条，取出最后100条。<br>MySQL耗费了大量随机I&#x2F;O在查询聚簇索引的数据上，而有1000000次随机I&#x2F;O查询到的数据是不会出现在结果集当中的。<br>加载了很多热点不是很高的数据页到buffer pool，会造成buffer pool的污染，占用buffer pool的空间。</p>
+</blockquote>
+<h1 id="方案2-改进的-pageNo-pageSize-方式"><a href="#方案2-改进的-pageNo-pageSize-方式" class="headerlink" title="方案2: 改进的 pageNo+pageSize 方式"></a>方案2: 改进的 pageNo+pageSize 方式</h1><p>本质<code>方案1</code>是由于回表耗时, 那么可以先将主键筛选&amp;查询出来, 然后直接根据筛选之后的主键去回表.</p>
+<h2 id="改进的分页写法"><a href="#改进的分页写法" class="headerlink" title="改进的分页写法"></a>改进的分页写法</h2><p>如下, </p>
+<ul>
+<li>从 110ms-&gt;70ms. 性能有一定提升, 但由于数据集不太好, 数据量太小. 后边试试airport数据集.</li>
+<li>内层SQL本质是直接在通过主键索引将3个主键查询出来, 外层SQL根据3个主键回表查询对应行的全部信息.</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> aa<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">from</span> employees aa <span class="token keyword">join</span> <span class="token punctuation">(</span><span class="token keyword">select</span> emp_no <span class="token keyword">from</span> employees  <span class="token keyword">order</span> <span class="token keyword">by</span> emp_no <span class="token keyword">desc</span> <span class="token keyword">limit</span> <span class="token number">300000</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> bb <span class="token keyword">on</span> aa<span class="token punctuation">.</span>emp_no<span class="token operator">=</span>bb<span class="token punctuation">.</span>emp_no<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token operator">|</span> emp_no <span class="token operator">|</span> birth_date <span class="token operator">|</span> first_name <span class="token operator">|</span> last_name  <span class="token operator">|</span> gender <span class="token operator">|</span> hire_date  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token operator">|</span>  <span class="token number">10024</span> <span class="token operator">|</span> <span class="token number">1958</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">05</span> <span class="token operator">|</span> Suzette    <span class="token operator">|</span> Pettey     <span class="token operator">|</span> F      <span class="token operator">|</span> <span class="token number">1997</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">19</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">10023</span> <span class="token operator">|</span> <span class="token number">1953</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">29</span> <span class="token operator">|</span> Bojan      <span class="token operator">|</span> Montemayor <span class="token operator">|</span> F      <span class="token operator">|</span> <span class="token number">1989</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">17</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">10022</span> <span class="token operator">|</span> <span class="token number">1952</span><span class="token operator">-</span><span class="token number">07</span><span class="token operator">-</span><span class="token number">08</span> <span class="token operator">|</span> Shahaf     <span class="token operator">|</span> Famili     <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1995</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">22</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.07</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="方案3-nextToken-maxResults-方式"><a href="#方案3-nextToken-maxResults-方式" class="headerlink" title="方案3: nextToken+maxResults 方式"></a>方案3: nextToken+maxResults 方式</h1><ul>
+<li>nextToken本质上就是按照查询条件, 上一次结果集中最后一条记录的数据库主键ID值.</li>
+<li>因此直接走主键索引.</li>
+</ul>
+<h2 id="写法"><a href="#写法" class="headerlink" title="写法"></a>写法</h2><ul>
+<li>当第一页时, 由于没有nextToken, 因此直接获取(可以看到与pageSize写法的limit 0, 3结果是一样的):</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employees <span class="token keyword">order</span> <span class="token keyword">by</span> emp_no <span class="token keyword">desc</span> <span class="token keyword">limit</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token operator">|</span> emp_no <span class="token operator">|</span> birth_date <span class="token operator">|</span> first_name <span class="token operator">|</span> last_name <span class="token operator">|</span> gender <span class="token operator">|</span> hire_date  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token operator">|</span> <span class="token number">499999</span> <span class="token operator">|</span> <span class="token number">1958</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">01</span> <span class="token operator">|</span> Sachin     <span class="token operator">|</span> Tsukuda   <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1997</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">30</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">499998</span> <span class="token operator">|</span> <span class="token number">1956</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">05</span> <span class="token operator">|</span> Patricia   <span class="token operator">|</span> Breugel   <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1993</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">-</span><span class="token number">13</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">499997</span> <span class="token operator">|</span> <span class="token number">1961</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">03</span> <span class="token operator">|</span> Berhard    <span class="token operator">|</span> Lenart    <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1986</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">21</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>当第10w页时, 有了上一次的nextToken, 因此如下:</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employees <span class="token keyword">where</span> emp_no<span class="token operator">&lt;</span><span class="token number">10025</span> <span class="token keyword">order</span> <span class="token keyword">by</span> emp_no <span class="token keyword">desc</span> <span class="token keyword">limit</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token operator">|</span> emp_no <span class="token operator">|</span> birth_date <span class="token operator">|</span> first_name <span class="token operator">|</span> last_name  <span class="token operator">|</span> gender <span class="token operator">|</span> hire_date  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token operator">|</span>  <span class="token number">10024</span> <span class="token operator">|</span> <span class="token number">1958</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">05</span> <span class="token operator">|</span> Suzette    <span class="token operator">|</span> Pettey     <span class="token operator">|</span> F      <span class="token operator">|</span> <span class="token number">1997</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">19</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">10023</span> <span class="token operator">|</span> <span class="token number">1953</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">29</span> <span class="token operator">|</span> Bojan      <span class="token operator">|</span> Montemayor <span class="token operator">|</span> F      <span class="token operator">|</span> <span class="token number">1989</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">17</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">10022</span> <span class="token operator">|</span> <span class="token number">1952</span><span class="token operator">-</span><span class="token number">07</span><span class="token operator">-</span><span class="token number">08</span> <span class="token operator">|</span> Shahaf     <span class="token operator">|</span> Famili     <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1995</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">22</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>可以看到, nextToken方式, 随着页数的增加, 结果与<code>pageSize</code>方式是完全等价的, 但时间消耗完全是稳定的.</p>
+<h1 id="优缺点比较与思考"><a href="#优缺点比较与思考" class="headerlink" title="优缺点比较与思考"></a>优缺点比较与思考</h1><p>nextToken方式</p>
+<ul>
+<li>优点: <ul>
+<li>不会随着页数的增加, 导致时间消耗线性增长. 而是直接走主键索引, 时间消耗稳定.</li>
+</ul>
+</li>
+<li>缺点: <ul>
+<li>由于nextToken只有一个值, 翻页之后, nextToken就被覆盖掉了. 只能顺序向前翻页, 而很难再退回上一页. (但实际调用端可以保存下来, )</li>
+<li>nextToken值本身由于是数据库主键, 因此需要进行加密, 防止外部窥探到数据条数等敏感信息. 但加解密带了了额外的CPU消耗.</li>
+</ul>
+</li>
+</ul>
+<h1 id="一些NextToken-MaxResults的实践"><a href="#一些NextToken-MaxResults的实践" class="headerlink" title="一些NextToken+MaxResults的实践"></a>一些NextToken+MaxResults的实践</h1><ul>
+<li><p>AWS的<a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html">DescribeInstances</a></p>
+</li>
+<li><p>AWS的<a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html">LastEvaluatedKey</a>, 本质与NextToken是一样的</p>
+<blockquote>
+<p>the LastEvaluatedKey from a Query response should be used as the ExclusiveStartKey for the next Query request</p>
+</blockquote>
+</li>
+<li><p>Aliyun的<a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/25506.html">DescribeInstances</a></p>
+</li>
+</ul>
+<h1 id="其他记录"><a href="#其他记录" class="headerlink" title="其他记录"></a>其他记录</h1><h2 id="MySQL查看BufferPool"><a href="#MySQL查看BufferPool" class="headerlink" title="MySQL查看BufferPool"></a>MySQL查看BufferPool</h2><p>如下, </p>
+<ul>
+<li>PRIMARY: 代表bufferpool中数据页数.</li>
+<li>val: 代表bufferpool中索引页.</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> TABLE_NAME<span class="token punctuation">,</span> index_name<span class="token punctuation">,</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span>INNODB_BUFFER_PAGE <span class="token keyword">where</span> INDEX_NAME <span class="token operator">in</span><span class="token punctuation">(</span><span class="token string">'val'</span><span class="token punctuation">,</span><span class="token string">'primary'</span><span class="token punctuation">)</span> <span class="token operator">and</span> TABLE_NAME <span class="token operator">like</span> <span class="token string">'%employees%'</span> <span class="token keyword">group</span> <span class="token keyword">by</span> TABLE_NAME<span class="token punctuation">,</span> index_name<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+------------+----------+</span>
+<span class="token operator">|</span> TABLE_NAME              <span class="token operator">|</span> index_name <span class="token operator">|</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+------------+----------+</span>
+<span class="token operator">|</span> <span class="token identifier"><span class="token punctuation">`</span>employees<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>salaries<span class="token punctuation">`</span></span>  <span class="token operator">|</span> <span class="token keyword">PRIMARY</span>    <span class="token operator">|</span>     <span class="token number">4486</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token identifier"><span class="token punctuation">`</span>employees<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>employees<span class="token punctuation">`</span></span> <span class="token operator">|</span> <span class="token keyword">PRIMARY</span>    <span class="token operator">|</span>      <span class="token number">887</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token identifier"><span class="token punctuation">`</span>employees<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>employees<span class="token punctuation">`</span></span> <span class="token operator">|</span> val        <span class="token operator">|</span>       <span class="token number">11</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token identifier"><span class="token punctuation">`</span>employees<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>dept_emp<span class="token punctuation">`</span></span>  <span class="token operator">|</span> <span class="token keyword">PRIMARY</span>    <span class="token operator">|</span>      <span class="token number">728</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+------------+----------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.05</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="MySQL中-rowid的使用"><a href="#MySQL中-rowid的使用" class="headerlink" title="MySQL中_rowid的使用"></a>MySQL中_rowid的使用</h2><h3 id="限制条件"><a href="#限制条件" class="headerlink" title="限制条件"></a>限制条件</h3><p>适用版本: <code>MySQL 5.7</code> ~ <code>MySQL 8.0.26</code><br>参见文档: <a target="_blank" rel="noopener" href="http://blog.itpub.net/26736162/viewspace-2734341/">MySQL中的_rowid</a></p>
+<p>_rowid不存在的情况:</p>
+<ul>
+<li><code>主键列</code>或者<code>非空唯一列</code>的类型不是<code>数字类型</code></li>
+<li>主键是联合主键</li>
+<li>唯一列不是非空的</li>
+</ul>
+<p>_rowid只存在于以下情况：</p>
+<ul>
+<li>当表中存在一个 <code>数字类型的单列主键</code>时， _rowid其实就是指的是这个主键列</li>
+<li>当表中 不存在主键但存在一个 <code>数字类型的非空唯一索引</code>时, _rowid其实就是指的是对应<code>非空唯一列</code></li>
+</ul>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><h4 id="主键列不是数字类型-不会有-rowid"><a href="#主键列不是数字类型-不会有-rowid" class="headerlink" title="主键列不是数字类型, 不会有_rowid"></a>主键列不是数字类型, 不会有_rowid</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">desc</span> departments<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field     <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> dept_no   <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> dept_name <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> UNI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------+-------------+------+-----+---------+-------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+mysql<span class="token operator">></span> <span class="token keyword">select</span> _rowid <span class="token keyword">from</span> departments <span class="token keyword">limit</span> <span class="token number">2</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1054</span> <span class="token punctuation">(</span><span class="token number">42</span>S22<span class="token punctuation">)</span>: Unknown <span class="token keyword">column</span> <span class="token string">'_rowid'</span> <span class="token operator">in</span> <span class="token string">'field list'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="联合主键-不会有-rowid"><a href="#联合主键-不会有-rowid" class="headerlink" title="联合主键, 不会有_rowid"></a>联合主键, 不会有_rowid</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">table</span> salaries<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="token operator">|</span> <span class="token keyword">Table</span>    <span class="token operator">|</span> <span class="token keyword">Create</span> <span class="token keyword">Table</span>                                                                                                                                                                                                                                                                                                                                           <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="token operator">|</span> salaries <span class="token operator">|</span> <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>salaries<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>emp_no<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>salary<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>from_date<span class="token punctuation">`</span></span> <span class="token keyword">date</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>to_date<span class="token punctuation">`</span></span> <span class="token keyword">date</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>emp_no<span class="token punctuation">`</span></span><span class="token punctuation">,</span><span class="token identifier"><span class="token punctuation">`</span>from_date<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">CONSTRAINT</span> <span class="token identifier"><span class="token punctuation">`</span>salaries_ibfk_1<span class="token punctuation">`</span></span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>emp_no<span class="token punctuation">`</span></span><span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> <span class="token identifier"><span class="token punctuation">`</span>employees<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>emp_no<span class="token punctuation">`</span></span><span class="token punctuation">)</span> <span class="token keyword">ON</span> <span class="token keyword">DELETE</span> <span class="token keyword">CASCADE</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb4 <span class="token keyword">COLLATE</span><span class="token operator">=</span>utf8mb4_0900_ai_ci <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">select</span> _rowid <span class="token keyword">from</span> salaries <span class="token keyword">limit</span> <span class="token number">10</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1054</span> <span class="token punctuation">(</span><span class="token number">42</span>S22<span class="token punctuation">)</span>: Unknown <span class="token keyword">column</span> <span class="token string">'_rowid'</span> <span class="token operator">in</span> <span class="token string">'field list'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>感觉_rowid很鸡肋, 如果乱用很容易出错.</p>
+<h2 id="MySQL公共大数据集"><a href="#MySQL公共大数据集" class="headerlink" title="MySQL公共大数据集"></a>MySQL公共大数据集</h2><blockquote>
+<p>为了测试大数据集nextToken与pageNo方式, 找了很多测试大数据集, 总结如下</p>
+</blockquote>
+<ul>
+<li>MySQL官方的<a target="_blank" rel="noopener" href="https://github.com/datacharmer/test_db">test_db</a><ul>
+<li>优点: 使用起来非常简单, 按照github中的步骤, 很快就完成了数据的导入.</li>
+<li>缺点: <ul>
+<li>总体数据量不太多, 最大的<code>salaries</code>表也只有200w行左右数据, 针对翻页极端情况,</li>
+<li><code>salaries</code>表没有primary_key, 不符合第二范式, 即数据表每一个实例或者行必须被唯一标识, 导致不好验证next_token</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MySQL官方的<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/airportdb/en/airportdb-introduction.html">airportdb</a><ul>
+<li>优点: 数据量大, <code>bookings</code>表有5000w数据, 且符合第二范式, 可以进行nextToken验证.</li>
+<li>缺点: <ul>
+<li>导入数据需要单独安装<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install-macos-quick.html">MySQL Shell</a></li>
+<li>数据集600MB, 下载速度实在是捉急.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="MySQL-Shell"><a href="#MySQL-Shell" class="headerlink" title="MySQL Shell"></a>MySQL Shell</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>参照文档: <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install-macos-quick.html">MySQL Shell</a><br>mac上直接下载dmg安装就好</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li>使用 <code>mysqlsh</code> 命令进入到shell里</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMacBook-Pro:~ davywalker$ mysqlsh
+MySQL Shell <span class="token number">8.0</span>.28
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2016</span>, <span class="token number">2022</span>, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type <span class="token string">'\help'</span> or <span class="token string">'\?'</span> <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">;</span> <span class="token string">'\quit'</span> to exit.
+ MySQL  JS <span class="token operator">></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>使用 <code>\connect</code> 命令连接数据库</li>
+</ul>
+<p>否则会报 <code>Util.loadDump: An open session is required to perform this operation. (RuntimeError)</code> 错误</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"> MySQL  JS <span class="token operator">></span> <span class="token punctuation">\</span>connect root@localhost:3306
+Creating a session to <span class="token string">'root@localhost:3306'</span>
+Please provide the password <span class="token keyword">for</span> <span class="token string">'root@localhost:3306'</span><span class="token builtin class-name">:</span>
+Your MySQL connection <span class="token function">id</span> is <span class="token number">31</span>
+Server version: <span class="token number">8.0</span>.26 MySQL Community Server - GPL
+No default schema selected<span class="token punctuation">;</span> <span class="token builtin class-name">type</span> <span class="token punctuation">\</span>use <span class="token operator">&lt;</span>schema<span class="token operator">></span> to <span class="token builtin class-name">set</span> one.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>enable <code>local_infile</code></li>
+</ul>
+<p>否则会报如下错误</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ERROR: The <span class="token string">'local_infile'</span> global system variable must be <span class="token builtin class-name">set</span> to ON <span class="token keyword">in</span> the target server, after the server is verified to be trusted.
+Util.loadDump: local_infile disabled <span class="token keyword">in</span> server <span class="token punctuation">(</span>RuntimeError<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mysql<span class="token operator">></span> <span class="token builtin class-name">set</span> global <span class="token assign-left variable">local_infile</span><span class="token operator">=</span>ON<span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>使用<code>util.loadDump</code>命令导入dump文件</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"> MySQL  localhost:3306 ssl  JS <span class="token operator">></span> util.loadDump<span class="token punctuation">(</span><span class="token string">"/Users/davywalker/Downloads/airport-db"</span>, <span class="token punctuation">&#123;</span>threads: <span class="token number">16</span>, deferTableIndexes: <span class="token string">"all"</span>, ignoreVersion: true<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+Loading DDL and Data from <span class="token string">'/Users/davywalker/Downloads/airport-db'</span> using <span class="token number">16</span> threads.
+Opening dump<span class="token punctuation">..</span>.
+NOTE: Dump <span class="token function">format</span> has version <span class="token number">1.0</span>.2 and was created by an older version of MySQL Shell. If you experience problems loading it, please recreate the dump using the current version of MySQL Shell and try again.
+Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from MySQL <span class="token number">8.0</span>.26-cloud<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/learn-from-failure/" rel="tag"># learn-from-failure</a>
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/openapi/" rel="tag"># openapi</a>
+              <a href="/tags/next-token/" rel="tag"># next-token</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-03-27-container-ecosystem/" rel="prev" title="容器生态的一些研究与对比">
+                  <i class="fa fa-chevron-left"></i> 容器生态的一些研究与对比
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-03-28-openapi-clienttoken/" rel="next" title="OpenAPI设计之ClientToken">
+                  OpenAPI设计之ClientToken <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在client端使用NIO意义&#x2F;优点, 相比于传统的BIO是啥? https:&#x2F;&#x2F;blog.csdn.net&#x2F;cenwenchu79&#x2F;article&#x2F;details&#x2F;4586939 尤其是在client需要连接海量的服务端时, 例如爬虫, 或者海量物理机集群的管控服务等, 参见异步HttpClient使用Netty作为SocketChannel的Provider   client重连机">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="ZkClient源码阅读与疑问总结">
+<meta property="og:url" content="https://davyjones2010.github.io/2021-12-17-zk-client/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="在client端使用NIO意义&#x2F;优点, 相比于传统的BIO是啥? https:&#x2F;&#x2F;blog.csdn.net&#x2F;cenwenchu79&#x2F;article&#x2F;details&#x2F;4586939 尤其是在client需要连接海量的服务端时, 例如爬虫, 或者海量物理机集群的管控服务等, 参见异步HttpClient使用Netty作为SocketChannel的Provider   client重连机">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="code-snippets">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="nio">
+<meta property="article:tag" content="zk-client">
+<meta property="article:tag" content="zookeeper">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2021-12-17-zk-client/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2021-12-17-zk-client/","path":"/2021-12-17-zk-client/","title":"ZkClient源码阅读与疑问总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ZkClient源码阅读与疑问总结 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-12-17-zk-client/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ZkClient源码阅读与疑问总结 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZkClient源码阅读与疑问总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-18T00:00:00+08:00">2021-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ol>
+<li>在client端使用NIO意义&#x2F;优点, 相比于传统的BIO是啥?<ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/cenwenchu79/article/details/4586939">https://blog.csdn.net/cenwenchu79/article/details/4586939</a></li>
+<li>尤其是在client需要连接海量的服务端时, 例如爬虫, 或者海量物理机集群的管控服务等, 参见<a href="https://davyjones2010.github.io/2022-03-15-http-client-netty/">异步HttpClient使用Netty作为SocketChannel的Provider</a></li>
+</ol>
+</li>
+<li>client重连机制是怎样的?<ol>
+<li>client是如何判定连接断开的?</li>
+<li>几个重要参数是怎样的?<ol>
+<li>已经建立的连接, 超时时间是多久, 则认为是连接断开了?</li>
+<li>未建立的连接, 建连超过多久则认为无法建立连接, 从而新选择其他zk host?</li>
+</ol>
+</li>
+<li>后羿的重连机制?</li>
+<li>curator的重连机制?</li>
+<li>shuffle机制!!!</li>
+</ol>
+</li>
+</ol>
+<p>org.apache.zookeeper.ClientCnxn.SendThread#onConnected</p>
+<p>readTimeout &#x3D; negotiatedSessionTimeout * 2 &#x2F; 3;<br>connectTimeout &#x3D; negotiatedSessionTimeout &#x2F; hostProvider.size();</p>
+<p>为啥在连接建立的最后, 要queue一个None的Event?<br>eventThread.queueEvent(new WatchedEvent(<br>Watcher.Event.EventType.None,<br>eventState, null));</p>
+<p>priming-packet 启动packet</p>
+<p>WatchedEvent 里两个重要的属性:</p>
+<ol>
+<li><p>Watcher.Event.EventType<br>None (-1),<br>NodeCreated (1),<br>NodeDeleted (2),<br>NodeDataChanged (3),<br>NodeChildrenChanged (4);</p>
+</li>
+<li><p>KeeperState<br>case   -1: return KeeperState.Unknown;<br>case    0: return KeeperState.Disconnected;<br>case    1: return KeeperState.NoSyncConnected;<br>case    3: return KeeperState.SyncConnected;<br>case    4: return KeeperState.AuthFailed;<br>case    5: return KeeperState.ConnectedReadOnly;<br>case    6: return KeeperState.SaslAuthenticated;<br>case -112: return KeeperState.Expired;</p>
+</li>
+</ol>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>Auth机制&amp;流程</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>selectionKey关键:</p>
+<ol>
+<li>往selector里注册事件, sockKey.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);<ol>
+<li>幂等的. 即可以重复注册多次.</li>
+<li>持续生效的: 即加入注册一次 sockKey.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);<ol>
+<li>后续任意时刻网卡里有数据可读, selector.selectedKeys() 都会返回 SelectionKey, 不会select一次之后就关掉该interest了</li>
+<li>任意时刻网卡写队列可写, selector.selectedKeys() 都会返回 SelectionKey, 不会write一次之后即关掉了</li>
+</ol>
+</li>
+<li>所以当没有数据要写时, 需要去掉OP_WRITE的interest, 否则会在SendThread里死循环.</li>
+</ol>
+</li>
+<li>其他:<ol>
+<li>Selector, Channel, SelectionKey 三者对象是啥关系?</li>
+<li>三者的线程安全情况?</li>
+</ol>
+</li>
+</ol>
+<p>&#x2F;&#x2F; TODO: 待实验验证</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>三个重要的QUEUE:</p>
+<ol>
+<li>outgoingQueue(LinkedList):<ol>
+<li>生产者: 客户线程; 注册&#x2F;执行操作, 会封装成packet, 放到outgoingQueue中.</li>
+<li>消费者: SendThread; 将outgoingQueue中packet序列化, 执行网络IO, 发送给zookeeperServer</li>
+<li>其他: 生产者可以通过 packet.finished+packet.wait(); 阻塞等待服务端返回结果</li>
+</ol>
+</li>
+<li>pendingQueue(LinkedList):<ol>
+<li>生产者: SendThread; 当将packet已经完全发送给服务端之后, 会把packet从outgoingQueue中移除, 放到pendingQueue中</li>
+<li>消费者: SendThread; 当收到服务端的reply, 根据(xid+严格顺序)匹配到对应的packet之后, 会把该packet从pendingQueue中移除, 同时:</li>
+</ol>
+</li>
+<li>waitingEvents(LinkedBlockingQueue):</li>
+</ol>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>SendThread 机制:</p>
+<p>为某个路径注册watcher过程<br>— UserThread发起: 生成packet对象</p>
+<ol>
+<li>UserThread: zk.exists(path,new Watcher() {xxx});</li>
+<li>UserThread: 将{path, watcher对象} 封装成packet放到 outgoingQueue</li>
+<li>UserThread: 调用selector.wakeup(); 引发SendThread解除阻塞</li>
+<li>UserThread: 陷入阻塞, 循环等待packet.finished完成<br>synchronized (packet) {<br>while (!packet.finished) {<br>packet.wait();<br>}<br>}</li>
+</ol>
+<p>— SendThread注册Selector:</p>
+<ol>
+<li>SendThread: 之前阻塞在selector.select(waitTimeOut); 由于上一步, UserThread调用了selector.wakeup(), 导致解除阻塞</li>
+<li>SendThread: selector.selectedKeys(); 由于服务端还没有返回数据, 即客户端缓冲区无数据, 所以为空.</li>
+<li>SendThread: 接下来查看outgoingQueue非空, 因此在Selector里注册 SelectionKey.OP_WRITE 事件 sockKey.interestOps(i | SelectionKey.OP_WRITE);</li>
+</ol>
+<p>— SendThread执行I&#x2F;O Write: enrich packet.request</p>
+<ol>
+<li>SendThread: 重新进入循环, selector.selectedKeys(); 由于此时操作系统写缓冲区readyForWrite(即写缓冲区未溢出), 因此(k.readyOps() &amp;  SelectionKey.OP_WRITE &#x3D;&#x3D; SelectionKey.OP_WRITE)</li>
+<li>SendThread: 将{path, watcher对象}序列化, 序列化的关键信息:<ol>
+<li>xid: 如果packet里没有, 会在这个时候从ClientCnxn里拿出来设置给packet<ol>
+<li>这里xid为per client的, 全局递增的ID</li>
+<li>与sessionId是不同的.</li>
+</ol>
+</li>
+<li>path:</li>
+<li>watch: true&#x2F;false, 让服务端知道是否需要watch, 即该路径有变化时, 是否需要通知对应的xid</li>
+<li>包字节长度 int, 占用4个字节: this.bb.putInt(this.bb.capacity() - 4);</li>
+</ol>
+</li>
+<li>SendThread: SocketChannel.write(packet.bb); 执行网络IO</li>
+<li>SendThread: 写包完成(具体大包拆解过程参加下边), 将packet放入到pendingQueue中</li>
+</ol>
+<p>— 服务端执行完成, 返回包给客户端, 数据已经写入客户端网卡缓冲区</p>
+<p>— SendThread执行I&#x2F;O Read: enrich packet.response</p>
+<ol>
+<li>SendThread: 重新进入循环, selector.selectedKeys(); 由于此时客户端网卡读缓冲区有数据, 因此(k.readyOps() &amp;  SelectionKey.OP_READ &#x3D;&#x3D; SelectionKey.OP_READ)</li>
+<li>SendThread: readResponse()<ol>
+<li>反序列化ReplyHeader<ol>
+<li>ReplyHeader重要字段:<ol>
+<li>xid</li>
+<li>zxid</li>
+</ol>
+</li>
+<li>从pendingQueue中取出第一个packet</li>
+<li>判断packet.xid 是否等于 replyHead.xid</li>
+</ol>
+</li>
+<li>如果replyHeader匹配上packet, 则将反序列化responseBody; 设置为 packet.response; 至此response读取处理完毕</li>
+<li>整个packet完整了, 既包含了request信息, 又包含了reponse信息</li>
+<li>具体如何处理大的包的读取(拆包问题), 后边详细介绍.</li>
+</ol>
+</li>
+<li>SendThread: 往Map&lt;String, Set<Watcher>&gt;里注册watcher, key是clientPath<ol>
+<li>p.watchRegistration.register(p.replyHeader.getErr());</li>
+<li>watches.put(clientPath, watchers);</li>
+</ol>
+</li>
+<li>SendThread: 由于packet的callback为null, 因此<ol>
+<li>p.finished &#x3D; true;</li>
+<li>p.notifyAll();</li>
+<li>终于到这里了, UserThread收到notifyAll的消息, 从block中唤醒.</li>
+</ol>
+</li>
+<li>SendThread: IO Read流程结束. 重新新一轮的select流程</li>
+</ol>
+<p>— watcher怎么漏了? 具体怎么watch的呢? 参见下边  Watcher流程 章节</p>
+<p>(具体是怎么找到写时候对应的packet呢? 根据啥作为index? )</p>
+<ul>
+<li>根据严格的 FIFO顺序+xid</li>
+<li>即第一个发出去的packet, 必然会第一个收到reply. 这里有点不可思议: 如果网络包延时, 导致到达客户端的时候乱序怎么办?</li>
+<li>同时根据xid进行匹配校验.</li>
+</ul>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>SendThread 如何处理大包写问题: (拆包问题)<br>具体代码在这里: org.apache.zookeeper.ClientCnxnSocketNIO#doIO<br>大致流程:</p>
+<ol>
+<li><p>首先从outgoingQueue中获取到packet (注意此时不会把packet从outgoingQuque中删除)</p>
+</li>
+<li><p>序列化packet, 放到packet.bb字段中, 会在开头4个字节表明包内容长度</p>
+</li>
+<li><p>socketChannel.write(packet.bb)</p>
+</li>
+<li><p>判断bb.hasRemaining(); 如果为true, 则说明单次写入没写完.</p>
+</li>
+<li><p>重新往Selector里注册写需求: sockKey.interestOps(i | SelectionKey.OP_WRITE);</p>
+</li>
+<li><p>再次进入sendThread循环</p>
+</li>
+<li><p>由于上一步packet仍然在outgoingQueue中没被删除, 因此获取到了刚才的packet</p>
+</li>
+<li><p>由于已经序列化过, 即 packet.bb字段非空, 因此不需要重新序列化.</p>
+</li>
+<li><p>继续在之前的bb index处往后执行网络IO: socketChannel.write(packet.bb)</p>
+</li>
+<li><p>判断bb.hasRemaining(); 如果为true, 则循环 6~10 步骤</p>
+</li>
+<li><p>bb.hasRemaining() 为false; 则说明该包写完成.</p>
+</li>
+<li><p>将该包从outgoingQueue中删除</p>
+</li>
+<li><p>将该包放到pendingQueue中</p>
+</li>
+<li><p>如果outgoingQueue为空, 则不再注册SelectionKey.OP_WRITE 事件</p>
+</li>
+</ol>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>SendThread 如何处理大包读问题: (黏包问题)</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>ByteBuffer &amp; SocketChannel 的合并用法:<br>ByteBuffer bb &#x3D; xxx;  &#x2F;&#x2F; 假设1024B<br>SocketChannel.write(bb); &#x2F;&#x2F; 这里如果单次只写出了1B, 那么是否会移动bb的cursor?<br>bb.hasRemaining(); &#x2F;&#x2F; 这里是否为true?</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>心跳机制:</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —</p>
+<p>Zk的watch机制是如何工作的?</p>
+<p>ZKWatchManager 里三个重要的watcherMap:<br>dataWatches<br>existWatches: 所有校验exists的watcher都放在这里, key: clientPath<br>childWatches:<br>defaultWatcher: new ZooKeeper()时在构造方法里传入的. 可以用来订阅zk状态变化, 也可以订阅zk node变化</p>
+<p>作用分别是啥?<br>如何处理路径级联问题?<br>例如在&#x2F;root路径上注册了事件,  同时&#x2F;root&#x2F;dir 节点是存在的, 后边实际增加了 &#x2F;root&#x2F;dir&#x2F;a 节点; 那么&#x2F;root节点上注册watcher会收到事件么?</p>
+<ol>
+<li>所有的watcher都是在EventThread线程里, processEvent()方法里, 串行执行的.<br>通过LinkedBlockingQueue.take()一个一个串行执行.<br>所以需要避免在注册的watcher.process方法里执行过重的操作. 否则会导致整个watcher机制延时.</li>
+</ol>
+<p>Watcher流程</p>
+<ol>
+<li>SendThread: 服务端node有变化, 发送消息到客户端, 客户端网卡中数据readyForRead, 因此select()返回</li>
+<li>SendThread: 反序列化消息头; 根据消息头replyHeader.xid &#x3D;&#x3D; -1 判定是watchEvent, 而不是普通packet的response.</li>
+<li>SendThread: 反序列化消息体; WatcherEvent 结构, 重要字段:<ol>
+<li>Path: 即发生变化的node路径</li>
+<li>KeeperState: zk状态变化情况</li>
+<li>EventType: zk node变化情况, 例如node数据更新, noe</li>
+</ol>
+</li>
+<li>SendThread: materialize() 找到该event对应的watcher<ol>
+<li>从watchRegistration里, 根据clientPath, map里获取到对应的watchers</li>
+<li>Remove掉路径对应的这个watcher</li>
+</ol>
+</li>
+<li>SendThread: 把WatcherSetEventPair{event, watchers} 组合加到EventThread的waitingEvents queue中.<br>所以当某个路径上的事件进入到watcher.process之后, 该watcher其实是已经被remove掉了. 如果有持续watch的需求, 还需要重新注册.</li>
+</ol>
+<p>EventThread处理流程:<br>6. EventThread: 无限循环, 从waitingEvents中take一个Event<br>7. EventThread: 获取对应的WatcherSetEventPair<br>    1. 从WatcherSetEventPair中获取到watchers,<br>    2. 循环遍历执行, watcher.process(event)</p>
+<p>&#x2F;&#x2F; todo: EventThread processEvent里另外一个分支, Packet相关是怎么发生, 怎么处理的?</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>watcher有以下三个特性：</p>
+<p>1、一次性：watch事件是一次性触发的，如果想再次监控数据，必须重新设置监控</p>
+<p>2、客户端串行执行：客户端Watcher回调过程是一个串行同步的过程，这为我们保证了顺序。</p>
+<p>3、轻量的：WatchedEvent是zk整个Watcher通知机制的最小通知单元，只有三部分组成：通知状态、时间类型、节点路径。也就是说，具体发生了什么变化，是需要客户端自己去查询的。</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>3、可以用exists方法：exists(path,true)来添加watch事件，当下次操作path会出发watch事件</p>
+<p>例如：</p>
+<pre><code>    zk.exists(path,true);//给path添加watch事件
+
+    zk.writeData(path,&quot;newValue&quot;);//触发watch事件 EventType-&gt;nodeDataChenage
+
+
+
+    zk.exists(path,true);//给path添加watch事件
+
+    zk.create(path,&quot;newValue&quot;,Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);//触发watch事件 EventType-&gt;nodeCreated
+
+
+
+    zk.exists(path,true);//给path添加watch事件
+
+    zk.delete(path,-1);//触发watch事件 EventType-&gt;nodeDeleted
+</code></pre>
+<p>4、getChildren(path,neeWatch) &#x2F;&#x2F;给path添加watch事件，监控子节点变化</p>
+<pre><code>    如果path新增或者删除节点会触发watch事件 EventType-&gt;nodechildrenChanged
+</code></pre>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>如果客户端启动多个zk, new ZooKeeper(), 对象结构是怎样的? 哪些是线程共用的? 哪些是线程私有的? 哪些是线程安全的?</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —</p>
+<p>Etcd 与 ZK 区别?</p>
+<p>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —<br>— — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — </p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/code-snippets/" rel="tag"># code-snippets</a>
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/nio/" rel="tag"># nio</a>
+              <a href="/tags/zk-client/" rel="tag"># zk-client</a>
+              <a href="/tags/zookeeper/" rel="tag"># zookeeper</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021-12-12-Dune/" rel="prev" title="沙丘 笔记">
+                  <i class="fa fa-chevron-left"></i> 沙丘 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021-12-17-tcp-time-wait/" rel="next" title="TCP协议中TIME_WAIT疑问与思考">
+                  TCP协议中TIME_WAIT疑问与思考 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

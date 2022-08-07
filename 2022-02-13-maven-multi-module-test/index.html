@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景项目中为了整体代码的高内聚与可移植性, 按照maven-module的方式对代码进行了拆分, 样例如下:  - root-module   - shared-common-module   - middleware-module     - cache-module       - cache-api       - cache-local-impl       - cache-redis-i">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SpringBoot+Maven多模块项目测试最佳实践">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-02-13-maven-multi-module-test/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景项目中为了整体代码的高内聚与可移植性, 按照maven-module的方式对代码进行了拆分, 样例如下:  - root-module   - shared-common-module   - middleware-module     - cache-module       - cache-api       - cache-local-impl       - cache-redis-i">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="maven">
+<meta property="article:tag" content="springboot">
+<meta property="article:tag" content="maven-module">
+<meta property="article:tag" content="maven test">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-02-13-maven-multi-module-test/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-02-13-maven-multi-module-test/","path":"/2022-02-13-maven-multi-module-test/","title":"SpringBoot+Maven多模块项目测试最佳实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SpringBoot+Maven多模块项目测试最佳实践 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%A7%84%E8%8C%83"><span class="nav-number">2.</span> <span class="nav-text">基本规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#root-module-pom%E6%96%87%E4%BB%B6%E6%9C%89%E4%B8%A4%E4%B8%AA%E4%BD%9C%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">root-module pom文件有两个作用:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E6%A8%A1%E5%9D%97%E4%B9%8B%E9%97%B4%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-number">2.2.</span> <span class="nav-text">子模块之间依赖关系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">问题说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">4.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">5.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E9%80%9A%E7%94%A8%E8%83%BD%E5%8A%9B%E6%94%BE%E5%88%B0shared-common%E9%87%8C"><span class="nav-number">5.1.</span> <span class="nav-text">一: 通用能力放到shared-common里</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E9%85%8D%E7%BD%AE%E8%83%BD%E5%8A%9B"><span class="nav-number">5.2.</span> <span class="nav-text">二: 模块化的配置能力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%8C%89%E7%85%A7-%E9%80%9A%E7%94%A8-%E6%B5%8B%E8%AF%95-x2F-%E7%94%9F%E4%BA%A7-x2F-%E7%AD%89%E7%8E%AF%E5%A2%83%E7%9B%B8%E5%85%B3-%E4%B8%A4%E7%B1%BB%E8%BF%9B%E8%A1%8C%E6%8B%86%E5%88%86"><span class="nav-number">5.2.1.</span> <span class="nav-text">第一步: 模块配置文件按照 通用+测试&#x2F;生产&#x2F;等环境相关 两类进行拆分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E4%BD%BF%E7%94%A8-spring-profiles-active-%E5%AF%B9-common-env%E7%9B%B8%E5%85%B3%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-%E8%BF%9B%E8%A1%8C%E5%8A%A0%E8%BD%BD"><span class="nav-number">5.2.2.</span> <span class="nav-text">第二步: 使用 spring.profiles.active 对 common + env相关的配置文件 进行加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E9%85%8D%E7%BD%AE-spring-profiles-active-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">5.2.3.</span> <span class="nav-text">第三步: 配置 spring.profiles.active 环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5-UT"><span class="nav-number">5.2.4.</span> <span class="nav-text">第四步: UT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84Spring%E5%AE%B9%E5%99%A8%E6%B5%8B%E8%AF%95%E8%83%BD%E5%8A%9B"><span class="nav-number">5.3.</span> <span class="nav-text">三: 模块化的Spring容器测试能力</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">7.</span> <span class="nav-text">Refs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-02-13-maven-multi-module-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SpringBoot+Maven多模块项目测试最佳实践 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot+Maven多模块项目测试最佳实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-14 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-14T00:00:00+08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中为了整体代码的高内聚与可移植性, 按照maven-module的方式对代码进行了拆分, 样例如下: </p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span> root<span class="token punctuation">-</span>module
+  <span class="token punctuation">-</span> shared<span class="token punctuation">-</span>common<span class="token punctuation">-</span>module
+  <span class="token punctuation">-</span> middleware<span class="token punctuation">-</span>module
+    <span class="token punctuation">-</span> cache<span class="token punctuation">-</span>module
+      <span class="token punctuation">-</span> cache<span class="token punctuation">-</span>api
+      <span class="token punctuation">-</span> cache<span class="token punctuation">-</span>local<span class="token punctuation">-</span>impl
+      <span class="token punctuation">-</span> cache<span class="token punctuation">-</span>redis<span class="token punctuation">-</span>impl
+    <span class="token punctuation">-</span> persistence<span class="token punctuation">-</span>module
+      <span class="token punctuation">-</span> persistence<span class="token punctuation">-</span>api
+      <span class="token punctuation">-</span> persistence<span class="token punctuation">-</span>mysql
+      <span class="token punctuation">-</span> persistence<span class="token punctuation">-</span>oracle
+  <span class="token punctuation">-</span> biz<span class="token punctuation">-</span>module
+    <span class="token punctuation">-</span> controller<span class="token punctuation">-</span>module
+    <span class="token punctuation">-</span> service<span class="token punctuation">-</span>module<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="基本规范"><a href="#基本规范" class="headerlink" title="基本规范"></a>基本规范</h1><h2 id="root-module-pom文件有两个作用"><a href="#root-module-pom文件有两个作用" class="headerlink" title="root-module pom文件有两个作用:"></a>root-module pom文件有两个作用:</h2><ol>
+<li>作为parent module, 管理各个子模块, 便于resolve自身各个模块之间的依赖关系. 如下, biz_module依赖(GAV)middleware-module + shared-common-module; middleware-module依赖(GAV)shared-common-module:</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>modules</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span><span class="token punctuation">></span></span>shared-common-module<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>module</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span><span class="token punctuation">></span></span>middleware-module<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>module</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span><span class="token punctuation">></span></span>biz-module<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>module</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>modules</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="2">
+<li>作为parent pom, 统一管理各个子模块的Maven依赖, 同时默认引入通用的maven依赖(例如apache-commons, guava等), 而无需子模块重复引入.</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencyManagement</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencyManagement</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="子模块之间依赖关系"><a href="#子模块之间依赖关系" class="headerlink" title="子模块之间依赖关系"></a>子模块之间依赖关系</h2><p>依赖关系如下: </p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">controller<span class="token punctuation">-</span>module <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> service<span class="token punctuation">-</span>module <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> cache<span class="token punctuation">-</span>api                              <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> shared<span class="token punctuation">-</span>common
+                                     <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> cache<span class="token punctuation">-</span>redis<span class="token punctuation">-</span>impl/cache<span class="token punctuation">-</span>local<span class="token punctuation">-</span>impl      <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> shared<span class="token punctuation">-</span>common
+                                     <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> persistence<span class="token punctuation">-</span>api                        <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> shared<span class="token punctuation">-</span>common
+                                     <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> persistence<span class="token punctuation">-</span>mysql                      <span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span> shared<span class="token punctuation">-</span>common<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h1><p>上述多模块导致的问题, 在SpringBoot场景下, 由于默认的Application是放在最外层的controller-module.<br>根据依赖关系, middleware-module, shared-common-module等无法依赖controller-module(否则会导致循环依赖)<br>所以由于找不到Application入口, 无法by模块地启动spring容器, 进行集成测试.</p>
+<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><ol>
+<li>每个模块能做到高内聚, 即模块相关的配置项都放在模块内部. 例如 <ol>
+<li>persistence-mysql相关的datasource的配置, 放在persistence-mysql模块的resources&#x2F;xxx.properties里</li>
+<li>cache-redis-impl相关的redis配置, 放在cache-redis-impl模块的resources&#x2F;xxx.properties里</li>
+</ol>
+</li>
+<li>各个模块的测试态&#x2F;运行态配置项是自说明的, 能便于依赖方进行集成测试, 而无需依赖方再重新配置一份. 例如: <ol>
+<li>service-module依赖了 persistence-mysql , cache-redis-impl 两个模块, service-module需要在UT里启动Spring容器, 测试具体service方法. </li>
+<li>无需把 persistence-mysql里的测试datasource配置, cache-redis-impl里的测试redis配置都在自己的 application.properties 里写一份. </li>
+<li>可以直接引入对应模块提供的测试properties.</li>
+<li>如果可以实现, 尤其是在模块依赖层次很深很复杂的时候, 使用简便性会更好. 例如 controller-module 层测试, 只需要配置controller层自己的配置就好, 无需关心到底依赖到的是哪些module, 这些module里到底需要哪些配置项.</li>
+</ol>
+</li>
+<li>能够by模块&#x2F;分层地启动Spring容器进行测试<ol>
+<li>方案1: JMockit<ul>
+<li>通常的一种做法是使用JMockIt, 但带来的问题是, 例如要测试的方法内部实现是调用某个OpenAPI, 可能一开始并不知道结果的结构是怎样的(尤其是在api文档缺失或者不全的情况下), 也不清楚性能怎样. </li>
+<li>这样ut的准确度与可靠性以及后续性能压测的能力都不具备.</li>
+</ul>
+</li>
+<li>方案2: 参见本文后续.</li>
+</ol>
+</li>
+</ol>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h2 id="一-通用能力放到shared-common里"><a href="#一-通用能力放到shared-common里" class="headerlink" title="一: 通用能力放到shared-common里"></a>一: 通用能力放到shared-common里</h2><p>尤其是log4j.xml等配置, 由于各个模块都需要, 因此需要放入到share-common里.  </p>
+<h2 id="二-模块化的配置能力"><a href="#二-模块化的配置能力" class="headerlink" title="二: 模块化的配置能力"></a>二: 模块化的配置能力</h2><h3 id="第一步-模块配置文件按照-通用-测试-x2F-生产-x2F-等环境相关-两类进行拆分"><a href="#第一步-模块配置文件按照-通用-测试-x2F-生产-x2F-等环境相关-两类进行拆分" class="headerlink" title="第一步: 模块配置文件按照 通用+测试&#x2F;生产&#x2F;等环境相关 两类进行拆分"></a>第一步: 模块配置文件按照 通用+测试&#x2F;生产&#x2F;等环境相关 两类进行拆分</h3><p>例如persistence-mysql模块的配置项拆分为如下几个: </p>
+<ul>
+<li>persistence-mysql-common.properties –&gt; common, 环境无关的配置, 如下:</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">spring.datasource.driver.driver-class-name&#x3D;com.mysql.jdbc.Driver
+spring.datasource.driver.type&#x3D;com.xxx.druid.pool.DruidDataSource
+spring.datasource.driver.maxActive&#x3D;300
+spring.datasource.driver.initialSize&#x3D;20<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>persistence-mysql-test.properties –&gt; for ut , 如下:</li>
+</ul>
+<pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.datasource.jdbc-url</span><span class="token punctuation">=</span><span class="token value attr-value">jdbc:mysql://xxx:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true</span>
+<span class="token key attr-name">spring.datasource.username</span><span class="token punctuation">=</span><span class="token value attr-value">usr</span>
+<span class="token key attr-name">spring.datasource.password</span><span class="token punctuation">=</span><span class="token value attr-value">pwd</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>persistence-mysql-dev.properties  –&gt; for dev env</li>
+<li>persistence-mysql-prod.properties –&gt; for prod env</li>
+</ul>
+<p>注意:<br>这些<code>*.properties</code>文件一定都要放在 src&#x2F;main&#x2F;resources&#x2F; 目录下, 注意尤其不能把  persistence-mysql-test.properties 放到 src&#x2F;test&#x2F;resources&#x2F; 目录下.<br>因为如果放到 src&#x2F;test&#x2F;resources&#x2F; 下, 虽然当前模块自身的UT能加载到 <code>persistence-mysql-test.properties</code> 文件<br>但其他依赖到该模块的UT就无法加载到 <code>persistence-mysql-test.properties</code> 文件了.</p>
+<h3 id="第二步-使用-spring-profiles-active-对-common-env相关的配置文件-进行加载"><a href="#第二步-使用-spring-profiles-active-对-common-env相关的配置文件-进行加载" class="headerlink" title="第二步: 使用 spring.profiles.active 对 common + env相关的配置文件 进行加载"></a>第二步: 使用 spring.profiles.active 对 common + env相关的配置文件 进行加载</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token annotation punctuation">@PropertySource</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"classpath:persistence-mysql-common.properties"</span><span class="token punctuation">,</span> <span class="token string">"classpath:persistence-mysql-$&#123;spring.profiles.active&#125;.properties"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataSourceConfig</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="第三步-配置-spring-profiles-active-环境变量"><a href="#第三步-配置-spring-profiles-active-环境变量" class="headerlink" title="第三步: 配置 spring.profiles.active 环境变量"></a>第三步: 配置 spring.profiles.active 环境变量</h3><ul>
+<li><p>方案1: 在UT代码里显式设置环境变量</p>
+</li>
+<li><p>方案2: 通过springboot的默认机制设置环境变量:<br>在对应模块的 <code>src/test/resources/</code> 目录下新建 <code>application.properties</code> 文件, 内容如下:  </p>
+<pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.profiles.active</span><span class="token punctuation">=</span><span class="token value attr-value">test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>UT启动时会优先加载 <code>src/test/resources/application.properties</code> 文件, 这样就把环境变量设置好了.</p>
+</li>
+</ul>
+<h3 id="第四步-UT"><a href="#第四步-UT" class="headerlink" title="第四步: UT"></a>第四步: UT</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">SpringRunner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@SpringBootTest</span>
+<span class="token annotation punctuation">@ActiveProfiles</span><span class="token punctuation">(</span><span class="token string">"test"</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultServiceTest</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token class-name">DefaultService</span> ds<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="三-模块化的Spring容器测试能力"><a href="#三-模块化的Spring容器测试能力" class="headerlink" title="三: 模块化的Spring容器测试能力"></a>三: 模块化的Spring容器测试能力</h2><p>由于各个模块没有Application.java类的入口, 而SpringBootTest需要有个Application入口.<br>因此当前的解决方案是 在各个模块的<code>src/test/java</code>代码里, 都加入TestApplication.java文件, 作为测试的context入口: </p>
+<ol>
+<li>在父包路径下创建该类, 则无需指定入口类, springboot默认会从 DefaultServiceTest测试类的包路径, 向上查找.</li>
+<li>在兄弟路径下设置该类, 则需要指定该入口类名称如下: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">SpringRunner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@SpringBootTest</span><span class="token punctuation">(</span>classes <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token class-name">TestApplication</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@ActiveProfiles</span><span class="token punctuation">(</span><span class="token string">"test"</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultServiceTest</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token class-name">DefaultService</span> ds<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>其实整体与SpringBoot的分层测试思路很像.</p>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1>
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/maven/" rel="tag"># maven</a>
+              <a href="/tags/springboot/" rel="tag"># springboot</a>
+              <a href="/tags/maven-module/" rel="tag"># maven-module</a>
+              <a href="/tags/maven-test/" rel="tag"># maven test</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-02-01-maven-deps-failure/" rel="prev" title="记一次Maven传递依赖失效问题排查">
+                  <i class="fa fa-chevron-left"></i> 记一次Maven传递依赖失效问题排查
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-02-22-java-minor-bugs/" rel="next" title="一些日常踩的小坑笔记">
+                  一些日常踩的小坑笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

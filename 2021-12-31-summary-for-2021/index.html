@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="2021年马上就要过去了, 是时候回顾一年的得失, 展望下未来了: 0x00 工作总结一个字: “稳”  稳定性上识别到了很多风险, perf tunning 等, 做的还不错. 全年无故障.但”稳”另一方面, 也代表着没有惊喜, 没有突破. 这也是很头疼的点, 只能守着自己的一亩三分地, 找不到突破的方向.个人认为瓶颈可能并不在技术侧.   不能妄自菲薄: 对比友商(aws), 相似的问题其实也">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="2021 年度总结">
+<meta property="og:url" content="https://davyjones2010.github.io/2021-12-31-summary-for-2021/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="2021年马上就要过去了, 是时候回顾一年的得失, 展望下未来了: 0x00 工作总结一个字: “稳”  稳定性上识别到了很多风险, perf tunning 等, 做的还不错. 全年无故障.但”稳”另一方面, 也代表着没有惊喜, 没有突破. 这也是很头疼的点, 只能守着自己的一亩三分地, 找不到突破的方向.个人认为瓶颈可能并不在技术侧.   不能妄自菲薄: 对比友商(aws), 相似的问题其实也">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="2021">
+<meta property="article:tag" content="year-in-review">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2021-12-31-summary-for-2021/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2021-12-31-summary-for-2021/","path":"/2021-12-31-summary-for-2021/","title":"2021 年度总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2021 年度总结 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">0x00 工作总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-%E5%AD%A6%E4%B9%A0%E6%88%90%E9%95%BF%E6%80%BB%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">0x01 学习成长总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E4%B8%8A"><span class="nav-number">2.1.</span> <span class="nav-text">技术上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">2.2.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-%E7%94%9F%E6%B4%BB%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">0x02 生活总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-%E6%80%BB%E4%BD%93%E5%8F%8D%E6%80%9D-amp-%E5%9B%9E%E9%A1%BE"><span class="nav-number">4.</span> <span class="nav-text">0x03 总体反思&amp;回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-%E5%B7%A5%E4%BD%9C%E8%A7%84%E5%88%92"><span class="nav-number">5.</span> <span class="nav-text">0x04 工作规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x05-%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92"><span class="nav-number">6.</span> <span class="nav-text">0x05 学习规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x06-%E7%94%9F%E6%B4%BB%E8%A7%84%E5%88%92"><span class="nav-number">7.</span> <span class="nav-text">0x06 生活规划</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-12-31-summary-for-2021/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2021 年度总结 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2021 年度总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-01T00:00:00+08:00">2022-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">年度总结</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>2021年马上就要过去了, 是时候回顾一年的得失, 展望下未来了:</p>
+<h1 id="0x00-工作总结"><a href="#0x00-工作总结" class="headerlink" title="0x00 工作总结"></a>0x00 工作总结</h1><p>一个字: “稳”</p>
+<ul>
+<li><p>稳定性上识别到了很多风险, perf tunning 等, 做的还不错. 全年无故障.<br>但”稳”另一方面, 也代表着没有惊喜, 没有突破. 这也是很头疼的点, 只能守着自己的一亩三分地, 找不到突破的方向.<br>个人认为瓶颈可能并不在技术侧. </p>
+</li>
+<li><p>不能妄自菲薄: 对比友商(aws), 相似的问题其实也一直都存在, 做的可能还没有我们好.</p>
+</li>
+<li><p>但也不能妄自尊大: 毕竟规模比我们大那么多, 与二方产品融合得也很好, 与我们简直是天壤之别.<br>不过技术上业务上确实有一些不错的创新点, 专利要开始申请起来. </p>
+</li>
+<li><p>除此之外, 技术上也发现并解决了一些有意思的问题. 后边需要陆续整理下.</p>
+</li>
+</ul>
+<h1 id="0x01-学习成长总结"><a href="#0x01-学习成长总结" class="headerlink" title="0x01 学习成长总结"></a>0x01 学习成长总结</h1><p>一个字: “杂”,</p>
+<ul>
+<li>“杂”, 绝不是一个好词. 代表着啥都感兴趣, 啥知道一点儿, 但啥都不精通. 从书单里就可以看出来.</li>
+</ul>
+<h2 id="技术上"><a href="#技术上" class="headerlink" title="技术上"></a>技术上</h2><ul>
+<li>这点导致真的很慌. 担心后边一事无成. 不过杂归杂, 也还是总结下吧: </li>
+<li>研究了 <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/kubernetes/tree/feature/20210830_code_review">kube-scheduler</a> &amp; vk的源代码与实现原理, 基本也算是把这些代码翻了个底儿朝天了. <ul>
+<li>原理研究方面: 但整体对k8s的具体内部实现细节(细节太多啦), 以及扩展方式等.</li>
+<li>动手实践方面: 对于k8s整体的使用运维, 实际运维经验太少.</li>
+<li>语言层面: 对于go仍然不能说很熟练地使用, 只能说能看懂代码了. 这点也需要加强.</li>
+</ul>
+</li>
+<li>了解了: 模拟电路, 数字电路, 以及底层门电路的构成, 门电路如何构成加法器. 感谢 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wi4y157D3">ELE实验室</a> 满足了自己极大的好奇心.</li>
+<li>了解了: CPU的生产, 现代计算机的架构. 真心感谢 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35786702">老狼</a> <ul>
+<li>从而明确知道了各种cpu的参数, 也基本能看懂 intel cpu 的架构图了</li>
+<li>从而对numa node有了更清晰的认识.</li>
+<li>等等很多很多的疑问(例如为啥现在都用串口, 并口速度不是更快么? 内存的通道是啥意思? 多核是啥意思? 超线程是啥意思? ), 对很多指标(例如晶体管数量, cacheline大小, 工艺)有了定量的认识.</li>
+</ul>
+</li>
+<li>了解了: 各种计算机接口参数指标, 以及悠久的发展历史.</li>
+<li>由于对操作系统硬件的更深一层理解, 从而更加能理解Java NIO的编程模型.</li>
+<li>深入研究了zkclient的连接以及传输机制.</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>对历史也萌生了极大的兴趣. 因为看历史, 就是在看现在, 就是在看未来. <ul>
+<li>&lt;明朝那些事儿&gt; </li>
+<li>袁腾飞</li>
+<li>&lt;大明王朝1566&gt;</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>“夏天过完了，好像什么事也没有做。” 　　</p>
+<p>“是啊，我们就只是跑来跑去，什么都没有做。”</p>
+<p>-《蓝色大门》</p>
+</blockquote>
+<h1 id="0x02-生活总结"><a href="#0x02-生活总结" class="headerlink" title="0x02 生活总结"></a>0x02 生活总结</h1><p>一个字: “喜”</p>
+<ul>
+<li>意外的惊喜很多. </li>
+<li>其一, 老婆终于怀孕了, 想到即将拥有自己的baby, 心里就会有一种喜悦, 但同时也多了一份责任感. 为人父, 亦为人表. 时刻督促我变成更优秀的自己.</li>
+<li>其二, 终于明年6月份公司要搬到家附近了. 终于可以结束为期两年的周末夫妻生活了, 到时候孩子应该也快诞生了.</li>
+</ul>
+<h1 id="0x03-总体反思-amp-回顾"><a href="#0x03-总体反思-amp-回顾" class="headerlink" title="0x03 总体反思&amp;回顾"></a>0x03 总体反思&amp;回顾</h1><p>总体来说今年的思想成熟很多, 写代码做业务研究技术, 也更加有方法论:  </p>
+<ul>
+<li>技术方案的设计更加完善: <ul>
+<li>能充分考虑到问题的复杂性与潜在的坑, 以及可能的解决方案以及优先级. 而不是一过来需求没考虑到就开始编码, 上线之后, 发现出现了问题而手忙脚乱地进行打补丁修复.</li>
+</ul>
+</li>
+<li>认知提升: <ul>
+<li>对于”重要但不紧急”的事情, 抛弃了过去没动力做, 想磨洋工, 靠别人给deadline的想法. 能充分认识到这些事情的重要性必要性. 哪怕没人肯定, 但只要是重要的, 该做的还是会坚持做下去.</li>
+</ul>
+</li>
+<li>更加积极乐观了.<ul>
+<li>更能””<br>有时候做技术跟业务, 就是要有一种坚守. </li>
+<li>坚持相信自己做的事情是有价值的, 并能确实创造价值.</li>
+<li>用准确无误的数字, 说服那些质疑的人, 这些事情的价值.</li>
+</ul>
+</li>
+</ul>
+<h1 id="0x04-工作规划"><a href="#0x04-工作规划" class="headerlink" title="0x04 工作规划"></a>0x04 工作规划</h1><ul>
+<li>把价格策略合理自动制定完成. </li>
+<li>一定要在容器调度层面有所突破. 无论是客户端, 还是服务端.<ul>
+<li>本身自己是在做调度, 所以深刻地理解, 调度是有很多事情要解决的. </li>
+<li>立下一个flag, 明年一定要成为kube-scheduler的committer!!!</li>
+</ul>
+</li>
+</ul>
+<h1 id="0x05-学习规划"><a href="#0x05-学习规划" class="headerlink" title="0x05 学习规划"></a>0x05 学习规划</h1><p>这里限制下自己明年的范围吧, 省得到时候又是杂乱无章, 一事无成:  </p>
+<ul>
+<li>向下钻研: 仍然需要在硬件层面, 在操作系统底层, 在汇编语言, C语言层面深入了解学习. <ul>
+<li>以书单里: &lt;深度探索嵌入式操作系统：从零开始设计、架构和开发&gt; 为索引</li>
+</ul>
+</li>
+<li>以Java NIO为契机基础:<ul>
+<li>向下, 把底层C的实现, 操作系统层面的实现研究下.</li>
+<li>向上, 把Netty再深入研究下吧. 写出来一个高性能nio server&#x2F;client, 绝对不是一件容易的事情.</li>
+<li>向上, 把AsyncHttpClient也研究下吧, 深入理解这里的http connection pool到底是啥? </li>
+<li>向上, 把Curator的重连机制研究下, 同时与自己直接通过zkClient做, 优缺点深入研究比较下.</li>
+</ul>
+</li>
+<li>最好同时能把sr-iov这些虚拟化技术也研究了解下</li>
+</ul>
+<h1 id="0x06-生活规划"><a href="#0x06-生活规划" class="headerlink" title="0x06 生活规划"></a>0x06 生活规划</h1><ul>
+<li>花更多时间在锻炼上, 不论是游泳, 划船, 还是乒乓球. 培养一个运动的爱好吧.</li>
+<li>身材管理: 一定要减肥, 再也忍受不了自己油腻的样子了. 今年已经戒断了吃夜宵的恶习, 有了一个好的开始, 明年继续加油, 体检一定要有个好结果!</li>
+<li>是时候重拾起吉他了.</li>
+<li>更加认真地对待生活, 博客长期认真地维护起来.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2021/" rel="tag"># 2021</a>
+              <a href="/tags/year-in-review/" rel="tag"># year-in-review</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021-12-17-java-nio/" rel="prev" title="Java NIO疑问与总结">
+                  <i class="fa fa-chevron-left"></i> Java NIO疑问与总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021-12-31-booklist-for-2022/" rel="next" title="2022 年度书单">
+                  2022 年度书单 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景&lt;dependency&gt;     &lt;groupId&gt;com.ning&lt;&#x2F;groupId&gt;     &lt;artifactId&gt;async-http-client&lt;&#x2F;artifactId&gt;     &lt;version&gt;1.9.40&lt;&#x2F;version&gt; &lt;&#x2F;dependency&gt; &lt;dependency&gt;     &lt;groupId&gt;io.net">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="异步HttpClient使用Netty作为SocketChannel的Provider">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-03-14-http-client-netty/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景&lt;dependency&gt;     &lt;groupId&gt;com.ning&lt;&#x2F;groupId&gt;     &lt;artifactId&gt;async-http-client&lt;&#x2F;artifactId&gt;     &lt;version&gt;1.9.40&lt;&#x2F;version&gt; &lt;&#x2F;dependency&gt; &lt;dependency&gt;     &lt;groupId&gt;io.net">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218576.png">
+<meta property="article:published_time" content="2022-03-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="httpclient">
+<meta property="article:tag" content="asynchttpclient">
+<meta property="article:tag" content="netty">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218576.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-03-14-http-client-netty/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-03-14-http-client-netty/","path":"/2022-03-14-http-client-netty/","title":"异步HttpClient使用Netty作为SocketChannel的Provider"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>异步HttpClient使用Netty作为SocketChannel的Provider | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AsyncHttpClient-%E9%87%8D%E8%A6%81%E5%8F%82%E6%95%B0%E4%B8%8E%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="nav-number">2.</span> <span class="nav-text">AsyncHttpClient 重要参数与使用指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E5%8F%82%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">重要参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="nav-number">2.2.</span> <span class="nav-text">使用指南</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.3.</span> <span class="nav-text">最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IO%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%9C%80%E5%A5%BD%E4%B8%8D%E8%A6%81%E7%94%A8CachedThreadPool%E2%80%93-gt-%E6%AD%A4%E5%A4%84%E5%AD%98%E7%96%91-%E6%9A%82%E6%97%B6%E6%97%A0%E6%B3%95%E5%A4%8D%E7%8E%B0%E4%BB%BB%E5%8A%A1%E8%A2%ABRejected%E5%9C%BA%E6%99%AF"><span class="nav-number">2.3.1.</span> <span class="nav-text">IO线程池最好不要用CachedThreadPool–&gt;此处存疑, 暂时无法复现任务被Rejected场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E7%8B%AC%E5%AE%9A%E4%B9%89Worker%E7%BA%BF%E7%A8%8B%E6%B1%A0-%E4%B8%8EIO%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%88%86%E5%BC%80"><span class="nav-number">2.3.2.</span> <span class="nav-text">单独定义Worker线程池, 与IO线程池分开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93%E8%AE%BE%E7%BD%AE%E4%BA%86maxConnectionsPerHost%E6%97%B6-allowPoolingConnections%E6%9C%80%E5%A5%BD%E8%AE%BE%E7%BD%AE%E4%B8%BAtrue-%E5%B9%B6%E4%B8%94%E8%AF%B7%E6%B1%82%E6%9C%80%E5%A5%BD%E4%B8%8D%E8%A6%81%E7%9E%AC%E6%97%B6%E5%B9%B6%E5%8F%91"><span class="nav-number">2.3.3.</span> <span class="nav-text">当设置了maxConnectionsPerHost时, allowPoolingConnections最好设置为true, 并且请求最好不要瞬时并发</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AsyncHttpClient-%E5%8F%82%E6%95%B0%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">AsyncHttpClient 参数适用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF1-%E4%B8%8E%E8%BE%83%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84Server-%E9%80%9A%E4%BF%A1%E9%A2%91%E7%B9%81%E6%88%96%E8%80%85%E6%9C%89%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE%E8%A6%81%E4%BC%A0%E8%BE%93-%E9%9C%80%E8%A6%81%E7%BB%B4%E6%8C%81TCP%E9%95%BF%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.1.</span> <span class="nav-text">场景1: 与较少数量的Server, 通信频繁或者有大量数据要传输, 需要维持TCP长连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF2-%E4%B8%8E%E8%BE%83%E5%A4%9A%E6%95%B0%E9%87%8F%E7%9A%84Server-%E6%AF%8F%E4%B8%AAServer%E4%BC%A0%E8%BE%93%E8%BE%83%E5%B0%91%E7%9A%84%E6%95%B0%E6%8D%AE-%E5%8F%AF%E4%BB%A5%E4%B8%8D%E7%94%A8%E8%BF%9E%E6%8E%A5%E5%A4%8D%E7%94%A8-%E4%BD%BF%E7%94%A8TCP%E7%9F%AD%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.</span> <span class="nav-text">场景2: 与较多数量的Server, 每个Server传输较少的数据, 可以不用连接复用, 使用TCP短连接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AsyncHttpClient-amp-Netty"><span class="nav-number">4.</span> <span class="nav-text">AsyncHttpClient &amp; Netty</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AsyncHttpClient-amp-%E5%85%B6%E4%BB%96Provider"><span class="nav-number">5.</span> <span class="nav-text">AsyncHttpClient &amp; 其他Provider</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AsyncHttpClient-amp-JDK"><span class="nav-number">5.1.</span> <span class="nav-text">AsyncHttpClient &amp; JDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">6.</span> <span class="nav-text">Refs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-03-14-http-client-netty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="异步HttpClient使用Netty作为SocketChannel的Provider | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          异步HttpClient使用Netty作为SocketChannel的Provider
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-15T00:00:00+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>ning<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>async<span class="token operator">-</span>http<span class="token operator">-</span>client<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">1.9</span><span class="token number">.40</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>io<span class="token punctuation">.</span>netty<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>netty<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">3.10</span><span class="token number">.6</span><span class="token punctuation">.</span>Final<span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="AsyncHttpClient-重要参数与使用指南"><a href="#AsyncHttpClient-重要参数与使用指南" class="headerlink" title="AsyncHttpClient 重要参数与使用指南"></a>AsyncHttpClient 重要参数与使用指南</h1><h2 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h2><h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><h3 id="IO线程池最好不要用CachedThreadPool–-gt-此处存疑-暂时无法复现任务被Rejected场景"><a href="#IO线程池最好不要用CachedThreadPool–-gt-此处存疑-暂时无法复现任务被Rejected场景" class="headerlink" title="IO线程池最好不要用CachedThreadPool–&gt;此处存疑, 暂时无法复现任务被Rejected场景"></a>IO线程池最好不要用CachedThreadPool–&gt;此处存疑, 暂时无法复现任务被Rejected场景</h3><ul>
+<li>如下样例, ioThread线程池只有10, 并发的请求有100, 由于<code>Executors.newCachedThreadPool</code>内部使用<code>SynchronousQueue</code>, 从而导致突发的请求会被Reject掉.</li>
+<li>如果要用也要评估好容量, size一定要大于, 防止Reject请求??</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ExecutorService</span> ioThreadPool<span class="token operator">=</span><span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DefaultThreadFactory</span><span class="token punctuation">(</span>workerThreadPoolName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        builder<span class="token punctuation">.</span><span class="token function">setExecutorService</span><span class="token punctuation">(</span>ioThreadPool<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// boss</span>
+        <span class="token class-name">String</span> bossThreadPoolName<span class="token operator">=</span><span class="token string">"AsyncHttpClient-Dispatcher"</span><span class="token punctuation">;</span>
+        <span class="token class-name">ExecutorService</span> bossThreadPool<span class="token operator">=</span><span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">DefaultThreadFactory</span><span class="token punctuation">(</span>bossThreadPoolName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">NioClientSocketChannelFactory</span> socketChannelFactory<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">NioClientSocketChannelFactory</span><span class="token punctuation">(</span>
+        bossThreadPool<span class="token punctuation">,</span>ioThreadPool<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// ...</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">"http://www.baidu.com/"</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">doAsyncGet</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100000L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h3 id="单独定义Worker线程池-与IO线程池分开"><a href="#单独定义Worker线程池-与IO线程池分开" class="headerlink" title="单独定义Worker线程池, 与IO线程池分开"></a>单独定义Worker线程池, 与IO线程池分开</h3><p>如下, 在<code>onCompleted()</code>里执行时, 本质上还是在IO线程里执行, 此时TCP连接仍然是ESTABLISHED状态.<br>只有当<code>onCompleted()</code>方法执行完成, 底层的TCP连接才会或者放回连接池中(allowPoolingConnections&#x3D;true, 以便其他请求复用), 或者关闭(allowPoolingConnections&#x3D;false)<br>如果在<code>onCompleted()</code>里执行很耗时的操作, 就会</p>
+<ol>
+<li>占用着TCP连接无法复用&#x2F;关闭, 造成资源浪费.</li>
+<li>占用IO线程, 导致其他IO任务等待.<br>由于此时http response已经完全读取完毕, 因此可以将response丢进worker线程池中, 执行耗时的业务操作. 从而把TCP连接复用&#x2F;关闭.<br>如下样例, 导致100个TCP连接一直处于ESTABLISHED状态</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">CommonCallback</span> <span class="token keyword">extends</span> <span class="token class-name">AsyncCompletionHandler</span> <span class="token punctuation">&#123;</span>
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">onCompleted</span><span class="token punctuation">(</span><span class="token class-name">Response</span> response<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> <span class="token class-name">Calendar</span><span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTimeInMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 此时TCP连接仍然是ESTABLISHED状态</span>
+    <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">1000L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> response<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218576.png"></p>
+<h3 id="当设置了maxConnectionsPerHost时-allowPoolingConnections最好设置为true-并且请求最好不要瞬时并发"><a href="#当设置了maxConnectionsPerHost时-allowPoolingConnections最好设置为true-并且请求最好不要瞬时并发" class="headerlink" title="当设置了maxConnectionsPerHost时, allowPoolingConnections最好设置为true, 并且请求最好不要瞬时并发"></a>当设置了maxConnectionsPerHost时, allowPoolingConnections最好设置为true, 并且请求最好不要瞬时并发</h3><p>否则如下例子, 请求就不会排队了, TCP连接也无法重用, 直接进入了Handler的<code>onThrowable()</code>方法里</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">doAsyncGet</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 这里最好根据平均处理时长, 设置一个sleep时长, 便于TCP连接回收回池子里, 从而不超过maxConnectionsPerHost阈值</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="AsyncHttpClient-参数适用场景"><a href="#AsyncHttpClient-参数适用场景" class="headerlink" title="AsyncHttpClient 参数适用场景"></a>AsyncHttpClient 参数适用场景</h1><h2 id="场景1-与较少数量的Server-通信频繁或者有大量数据要传输-需要维持TCP长连接"><a href="#场景1-与较少数量的Server-通信频繁或者有大量数据要传输-需要维持TCP长连接" class="headerlink" title="场景1: 与较少数量的Server, 通信频繁或者有大量数据要传输, 需要维持TCP长连接"></a>场景1: 与较少数量的Server, 通信频繁或者有大量数据要传输, 需要维持TCP长连接</h2><ul>
+<li>本质上来说就是<ul>
+<li>当建立&#x2F;维持TCP连接的成本高于传输成本时, 可以选择长连. 不论是TCP长连接, 还是HttpClient基于TCP的连接复用.</li>
+<li>需要服务端需要不定期向客户端推送数据.</li>
+</ul>
+</li>
+<li>实际场景: <ul>
+<li>大文件的下载(基于HTTP&#x2F;TCP协议)</li>
+<li>HTTP&#x2F;1.1, 即访问某个网站时, 短时间内需要往该Host发送N多HTTP请求.</li>
+<li>K8S Watch机制, 使用的是HTTP Streaming机制或者WebSocket机制, 本质上还是TCP长连接.</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">;</span> <span class="token comment">// 设定池子里空闲TCP连接的保持时间, 大于该时长, 则TCP连接被关闭, 从连接池中移除</span>
+<span class="token comment">// maxConnectionsPerHost = 100; // 设定往每个HOST的最大可以连接数量, 大于该连接的请求, 会进入到Handler的onThrowable里 (这里HOST是&#123;HOST_IP, PORT&#125; 还是 HOST_IP? 待验证)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="场景2-与较多数量的Server-每个Server传输较少的数据-可以不用连接复用-使用TCP短连接"><a href="#场景2-与较多数量的Server-每个Server传输较少的数据-可以不用连接复用-使用TCP短连接" class="headerlink" title="场景2: 与较多数量的Server, 每个Server传输较少的数据, 可以不用连接复用, 使用TCP短连接"></a>场景2: 与较多数量的Server, 每个Server传输较少的数据, 可以不用连接复用, 使用TCP短连接</h2><ul>
+<li>实际场景: <ul>
+<li>爬虫, 需要爬取N多个Server的标题&#x2F;概要信息, 构成网站地图, 每个Server&#x2F;Host的内容量较少. (当然如果是单个Server有N多内容要爬取, 也可以使用长连接)</li>
+</ul>
+</li>
+<li>实际参数:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 没必要把TCP连接放进池子里, 因为后续短期大概率就不会再跟该Host建立TCP连接</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="AsyncHttpClient-amp-Netty"><a href="#AsyncHttpClient-amp-Netty" class="headerlink" title="AsyncHttpClient &amp; Netty"></a>AsyncHttpClient &amp; Netty</h1><h1 id="AsyncHttpClient-amp-其他Provider"><a href="#AsyncHttpClient-amp-其他Provider" class="headerlink" title="AsyncHttpClient &amp; 其他Provider"></a>AsyncHttpClient &amp; 其他Provider</h1><h2 id="AsyncHttpClient-amp-JDK"><a href="#AsyncHttpClient-amp-JDK" class="headerlink" title="AsyncHttpClient &amp; JDK"></a>AsyncHttpClient &amp; JDK</h2><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li>详细的测试样例: <a target="_blank" rel="noopener" href="https://gitee.com/null_894_2517/test-core/blob/d504b14564ef7d6e2ee4a2b3a8379f62cdf894ee/src/test/java/edu/xmu/test/javaweb/httpclient/HttpAsyncClientTest.java">HttpAsyncClientTest.java</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/httpclient/" rel="tag"># httpclient</a>
+              <a href="/tags/asynchttpclient/" rel="tag"># asynchttpclient</a>
+              <a href="/tags/netty/" rel="tag"># netty</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-03-03-springboot-mybatis-xml/" rel="prev" title="SpringBoot+MyBatis使用XML配置方案">
+                  <i class="fa fa-chevron-left"></i> SpringBoot+MyBatis使用XML配置方案
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-03-18-docker-summary/" rel="next" title="Docker的一些总结">
+                  Docker的一些总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

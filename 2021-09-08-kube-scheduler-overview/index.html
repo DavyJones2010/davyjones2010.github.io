@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一言概之将PodSpec.NodeName为空的Pods逐个地，经过预选(Predicates)和优选(Priorities)两个步骤，挑选最合适的Node作为该Pod的Destination。 架构概述 kube-scheduler作为kubernetes master上一个单独的进程提供调度服务，通过–master指定kube-api-server的地址，用来watch pod和node和调用">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="kube-scheduler笔记">
+<meta property="og:url" content="https://davyjones2010.github.io/2021-09-08-kube-scheduler-overview/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="一言概之将PodSpec.NodeName为空的Pods逐个地，经过预选(Predicates)和优选(Priorities)两个步骤，挑选最合适的Node作为该Pod的Destination。 架构概述 kube-scheduler作为kubernetes master上一个单独的进程提供调度服务，通过–master指定kube-api-server的地址，用来watch pod和node和调用">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-09-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.327Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="scheduler">
+<meta property="article:tag" content="kube-scheduler">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-overview/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"https://davyjones2010.github.io/2021-09-08-kube-scheduler-overview/","path":"/2021-09-08-kube-scheduler-overview/","title":"kube-scheduler笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>kube-scheduler笔记 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%A8%80%E6%A6%82%E4%B9%8B"><span class="nav-number">1.</span> <span class="nav-text">一言概之</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">架构概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E7%96%91%E9%97%AE"><span class="nav-number">3.</span> <span class="nav-text">重要疑问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">关键操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ScheduleOne"><span class="nav-number">5.1.</span> <span class="nav-text">1. ScheduleOne</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E4%BB%A3%E7%A0%81"><span class="nav-number">5.1.1.</span> <span class="nav-text">1.1 代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%93%8D%E4%BD%9C%E8%AF%A6%E8%A7%A3"><span class="nav-number">5.1.2.</span> <span class="nav-text">1.2 操作详解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Schedule"><span class="nav-number">5.2.</span> <span class="nav-text">2. Schedule</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E4%BB%A3%E7%A0%81-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">1.1 代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%93%8D%E4%BD%9C%E8%AF%A6%E8%A7%A3-1"><span class="nav-number">5.2.2.</span> <span class="nav-text">1.2. 操作详解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-findNodesThatFit"><span class="nav-number">5.3.</span> <span class="nav-text">2. findNodesThatFit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E4%BB%A3%E7%A0%81"><span class="nav-number">5.3.1.</span> <span class="nav-text">2.1 代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%93%8D%E4%BD%9C%E8%AF%A6%E8%A7%A3"><span class="nav-number">5.3.2.</span> <span class="nav-text">2.1 操作详解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-PodFitsResources"><span class="nav-number">5.4.</span> <span class="nav-text">3. PodFitsResources</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="nav-number">5.4.1.</span> <span class="nav-text">3.1 核心代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E6%93%8D%E4%BD%9C%E8%AF%A6%E8%A7%A3"><span class="nav-number">5.4.2.</span> <span class="nav-text">3.2 操作详解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-assume"><span class="nav-number">5.5.</span> <span class="nav-text">4. assume</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="nav-number">5.5.1.</span> <span class="nav-text">4.1 核心代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-bind"><span class="nav-number">5.6.</span> <span class="nav-text">5. bind</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="nav-number">5.6.1.</span> <span class="nav-text">5.1 核心代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-%E6%93%8D%E4%BD%9C%E8%AF%A6%E8%A7%A3"><span class="nav-number">5.6.2.</span> <span class="nav-text">5.2 操作详解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E5%BA%A6%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1"><span class="nav-number">6.</span> <span class="nav-text">调度请求对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="kube-scheduler笔记 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          kube-scheduler笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一言概之"><a href="#一言概之" class="headerlink" title="一言概之"></a>一言概之</h2><p>将PodSpec.NodeName为空的Pods逐个地，经过预选(Predicates)和优选(Priorities)两个步骤，挑选最合适的Node作为该Pod的Destination。</p>
+<h2 id="架构概述"><a href="#架构概述" class="headerlink" title="架构概述"></a>架构概述</h2><ol>
+<li>kube-scheduler作为kubernetes master上一个单独的进程提供调度服务，通过–master指定kube-api-server的地址，用来watch pod和node和调用api server bind接口完成node和pod的Bind操作。</li>
+<li>kube-scheduler中维护了一个FIFO类型的PodQueue cache，新创建的Pod都会被ConfigFactory watch到，被添加到该PodQueue中，每次调度都从该PodQueue中getNextPod作为即将调度的Pod。</li>
+<li>获取到待调度的Pod后，就执行AlgorithmProvider配置Algorithm的Schedule方法进行调度，整个调度过程分两个关键步骤：Predicates和Priorities，最终选出一个最适合该Pod借宿的Node返回。</li>
+<li>更新SchedulerCache中Pod的状态(AssumePod)，标志该Pod为scheduled，并更新到对应的NodeInfo中。</li>
+<li>调用api server的Bind接口，完成node和pod的Bind操作，如果Bind失败，从SchedulerCache中删除上一步中已经Assumed的Pod。</li>
+</ol>
+<h2 id="重要疑问"><a href="#重要疑问" class="headerlink" title="重要疑问"></a>重要疑问</h2><ol>
+<li>如何实现亲和性&#x2F;反亲和性调度?<ol>
+<li>参见亲和性调度部分</li>
+</ol>
+</li>
+<li>如何做到Weighter?</li>
+<li>NC实际资源与Scheduler缓存的资源一致性如何保证?<ol>
+<li>snapshot机制, 无法保证, 只是在调度前都拿该资源</li>
+<li>同时将资源的操作都在scheduler进行收口</li>
+</ol>
+</li>
+<li>如果单个Pod调度失败(无论是在Filter&amp;Weigher阶段, 还是在assume阶段, 还是在Bind阶段), 这个Pod之后还会被重试调度么? 还是说直接失败? </li>
+<li>是否有类似Reservation功能呢? </li>
+<li>抢占式调度是如何实现的? <ol>
+<li>参见抢占式调度部分</li>
+</ol>
+</li>
+<li>调度发生时机是怎样的? 是否支持热迁移? 是否有离线规划? <ol>
+<li>无热迁移需求. </li>
+<li>只有ASI有离线规划情况.</li>
+</ol>
+</li>
+</ol>
+<h2 id="结构分析"><a href="#结构分析" class="headerlink" title="结构分析"></a>结构分析</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> genericScheduler <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	cache                    internalcache<span class="token punctuation">.</span>Cache
+	schedulingQueue          internalqueue<span class="token punctuation">.</span>SchedulingQueue
+	predicates               <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>FitPredicate
+	priorityMetaProducer     priorities<span class="token punctuation">.</span>PriorityMetadataProducer
+	predicateMetaProducer    predicates<span class="token punctuation">.</span>PredicateMetadataProducer
+	prioritizers             <span class="token punctuation">[</span><span class="token punctuation">]</span>priorities<span class="token punctuation">.</span>PriorityConfig
+	pluginSet                pluginsv1alpha1<span class="token punctuation">.</span>PluginSet
+	extenders                <span class="token punctuation">[</span><span class="token punctuation">]</span>algorithm<span class="token punctuation">.</span>SchedulerExtender
+	lastNodeIndex            <span class="token builtin">uint64</span>
+	alwaysCheckAllPredicates <span class="token builtin">bool</span>
+	nodeInfoSnapshot         internalcache<span class="token punctuation">.</span>NodeInfoSnapshot
+	volumeBinder             <span class="token operator">*</span>volumebinder<span class="token punctuation">.</span>VolumeBinder
+	pvcLister                corelisters<span class="token punctuation">.</span>PersistentVolumeClaimLister
+	pdbLister                algorithm<span class="token punctuation">.</span>PDBLister
+	disablePreemption        <span class="token builtin">bool</span>
+	percentageOfNodesToScore <span class="token builtin">int32</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>cache: 调度的cache</li>
+<li>nodeInfoSnapshot: node的snapshot, 详细分析参见”Scheduler Cache研究”</li>
+<li>schedulingQueue:  <ul>
+<li>参见: pkg&#x2F;scheduler&#x2F;internal&#x2F;queue&#x2F;scheduling_queue.go</li>
+<li>本质上是PriorityQueue, 详细分析参见: “Scheduler Queue研究”</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<h2 id="关键操作"><a href="#关键操作" class="headerlink" title="关键操作"></a>关键操作</h2><h3 id="1-ScheduleOne"><a href="#1-ScheduleOne" class="headerlink" title="1. ScheduleOne"></a>1. ScheduleOne</h3><h4 id="1-1-代码"><a href="#1-1-代码" class="headerlink" title="1.1 代码"></a>1.1 代码</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>scheduler<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">436</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>sched <span class="token operator">*</span>Scheduler<span class="token punctuation">)</span> <span class="token function">scheduleOne</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// 1. 从??获取到要调度的Pod信息</span>
+  pod <span class="token operator">:=</span> sched<span class="token punctuation">.</span>config<span class="token punctuation">.</span><span class="token function">NextPod</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">// 2. 执行调度, 找到合适的Node</span>
+	scheduleResult<span class="token punctuation">,</span> err <span class="token operator">:=</span> sched<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span>
+
+	<span class="token comment">// 3. 执行Node资源扣减</span>
+  assumedPod <span class="token operator">:=</span> pod<span class="token punctuation">.</span><span class="token function">DeepCopy</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	err <span class="token operator">=</span> sched<span class="token punctuation">.</span><span class="token function">assume</span><span class="token punctuation">(</span>assumedPod<span class="token punctuation">,</span> scheduleResult<span class="token punctuation">.</span>SuggestedHost<span class="token punctuation">)</span>
+
+	<span class="token comment">// 4. 执行Bind流程</span>
+	<span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token comment">// 4.1 执行prebind, 如果无法bind通过, 则将Node资源归还</span>
+		<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> pl <span class="token operator">:=</span> <span class="token keyword">range</span> plugins<span class="token punctuation">.</span><span class="token function">PrebindPlugins</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			approved<span class="token punctuation">,</span> err <span class="token operator">:=</span> pl<span class="token punctuation">.</span><span class="token function">Prebind</span><span class="token punctuation">(</span>plugins<span class="token punctuation">,</span> assumedPod<span class="token punctuation">,</span> scheduleResult<span class="token punctuation">.</span>SuggestedHost<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> <span class="token operator">!</span>approved <span class="token punctuation">&#123;</span>
+				forgetErr <span class="token operator">:=</span> sched<span class="token punctuation">.</span><span class="token function">Cache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ForgetPod</span><span class="token punctuation">(</span>assumedPod<span class="token punctuation">)</span>
+				<span class="token keyword">return</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token comment">// 4.2 执行bind, 如果无法bind通过, 此bind方法里将Node资源归还</span>
+		err <span class="token operator">:=</span> sched<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>assumedPod<span class="token punctuation">,</span> <span class="token operator">&amp;</span>v1<span class="token punctuation">.</span>Binding<span class="token punctuation">&#123;</span>
+			ObjectMeta<span class="token punctuation">:</span> metav1<span class="token punctuation">.</span>ObjectMeta<span class="token punctuation">&#123;</span>Namespace<span class="token punctuation">:</span> assumedPod<span class="token punctuation">.</span>Namespace<span class="token punctuation">,</span> Name<span class="token punctuation">:</span> assumedPod<span class="token punctuation">.</span>Name<span class="token punctuation">,</span> UID<span class="token punctuation">:</span> assumedPod<span class="token punctuation">.</span>UID<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			Target<span class="token punctuation">:</span> v1<span class="token punctuation">.</span>ObjectReference<span class="token punctuation">&#123;</span>
+				Kind<span class="token punctuation">:</span> <span class="token string">"Node"</span><span class="token punctuation">,</span>
+				Name<span class="token punctuation">:</span> scheduleResult<span class="token punctuation">.</span>SuggestedHost<span class="token punctuation">,</span>
+			<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="1-2-操作详解"><a href="#1-2-操作详解" class="headerlink" title="1.2 操作详解"></a>1.2 操作详解</h4><ul>
+<li>本质上就分为上边4步, 清晰易懂.</li>
+</ul>
+<h3 id="2-Schedule"><a href="#2-Schedule" class="headerlink" title="2. Schedule"></a>2. Schedule</h3><h4 id="1-1-代码-1"><a href="#1-1-代码-1" class="headerlink" title="1.1 代码"></a>1.1 代码</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go">generic_scheduler<span class="token punctuation">.</span><span class="token keyword">go</span>
+
+<span class="token comment">// Schedule tries to schedule the given pod to one of the nodes in the node list.</span>
+<span class="token comment">// If it succeeds, it will return the name of the node.</span>
+<span class="token comment">// If it fails, it will return a FitError error with reasons.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>g <span class="token operator">*</span>genericScheduler<span class="token punctuation">)</span> <span class="token function">Schedule</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> nodeLister algorithm<span class="token punctuation">.</span>NodeLister<span class="token punctuation">)</span> <span class="token punctuation">(</span>result ScheduleResult<span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+<span class="token comment">// 1. 获取最新Node信息</span>
+	nodes<span class="token punctuation">,</span> err <span class="token operator">:=</span> nodeLister<span class="token punctuation">.</span><span class="token function">List</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// 2. 用Node信息更新到scheduler的缓存中, 打个快照</span>
+  g<span class="token punctuation">.</span><span class="token function">snapshot</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 3. 执行filter</span>
+	filteredNodes<span class="token punctuation">,</span> failedPredicateMap<span class="token punctuation">,</span> err <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">findNodesThatFit</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> nodes<span class="token punctuation">)</span>
+<span class="token comment">// 4. 执行weighter</span>
+	metaPrioritiesInterface <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">priorityMetaProducer</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">)</span>
+	priorityList<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">PrioritizeNodes</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">,</span> metaPrioritiesInterface<span class="token punctuation">,</span> g<span class="token punctuation">.</span>prioritizers<span class="token punctuation">,</span> filteredNodes<span class="token punctuation">,</span> g<span class="token punctuation">.</span>extenders<span class="token punctuation">)</span>
+<span class="token comment">// 如果相同priority, 则根据roundrobin算法从list中获取随机NC</span>
+	host<span class="token punctuation">,</span> err <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">selectHost</span><span class="token punctuation">(</span>priorityList<span class="token punctuation">)</span>
+	<span class="token keyword">return</span> ScheduleResult<span class="token punctuation">&#123;</span>
+		SuggestedHost<span class="token punctuation">:</span>  host<span class="token punctuation">,</span>
+		EvaluatedNodes<span class="token punctuation">:</span> <span class="token function">len</span><span class="token punctuation">(</span>filteredNodes<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">len</span><span class="token punctuation">(</span>failedPredicateMap<span class="token punctuation">)</span><span class="token punctuation">,</span>
+		FeasibleNodes<span class="token punctuation">:</span>  <span class="token function">len</span><span class="token punctuation">(</span>filteredNodes<span class="token punctuation">)</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> err
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="1-2-操作详解-1"><a href="#1-2-操作详解-1" class="headerlink" title="1.2. 操作详解"></a>1.2. 操作详解</h4><ol>
+<li>nodeLister.list? 需要整体看下list机制.</li>
+<li>g.snapshot(): 给所有Node打一次快照. 具体参见Cache Snapshot机制</li>
+</ol>
+<h3 id="2-findNodesThatFit"><a href="#2-findNodesThatFit" class="headerlink" title="2. findNodesThatFit"></a>2. findNodesThatFit</h3><h4 id="2-1-代码"><a href="#2-1-代码" class="headerlink" title="2.1 代码"></a>2.1 代码</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token punctuation">(</span>g <span class="token operator">*</span>genericScheduler<span class="token punctuation">)</span> <span class="token function">findNodesThatFit</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> nodes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">,</span> FailedPredicateMap<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  
+	<span class="token keyword">var</span> filtered <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node
+
+  <span class="token comment">// 1. 根据所有Node个数, 确定最终Filter之后最大的Node个数, 缩小之后Weighter的范围</span>
+	allNodes <span class="token operator">:=</span> <span class="token function">int32</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span>cache<span class="token punctuation">.</span><span class="token function">NodeTree</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">NumNodes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	numNodesToFind <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">numFeasibleNodesToFind</span><span class="token punctuation">(</span>allNodes<span class="token punctuation">)</span>
+	filtered <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">,</span> numNodesToFind<span class="token punctuation">)</span>
+	meta <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">predicateMetaProducer</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">)</span>
+
+  <span class="token comment">// 2. 根据NodeTree结构, 找下一个Node, 判断Node资源是否能满足Pod资源请求</span>
+	checkNode <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		nodeName <span class="token operator">:=</span> g<span class="token punctuation">.</span>cache<span class="token punctuation">.</span><span class="token function">NodeTree</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		fits<span class="token punctuation">,</span> failedPredicates<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">podFitsOnNode</span><span class="token punctuation">(</span>
+			pod<span class="token punctuation">,</span>
+			meta<span class="token punctuation">,</span>
+			g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">[</span>nodeName<span class="token punctuation">]</span><span class="token punctuation">,</span>
+			g<span class="token punctuation">.</span>predicates<span class="token punctuation">,</span>
+			g<span class="token punctuation">.</span>schedulingQueue<span class="token punctuation">,</span>
+			g<span class="token punctuation">.</span>alwaysCheckAllPredicates<span class="token punctuation">,</span>
+		<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> fits <span class="token punctuation">&#123;</span>
+			length <span class="token operator">:=</span> atomic<span class="token punctuation">.</span><span class="token function">AddInt32</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>filteredLen<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+			<span class="token keyword">if</span> length <span class="token operator">></span> numNodesToFind <span class="token punctuation">&#123;</span>
+				atomic<span class="token punctuation">.</span><span class="token function">AddInt32</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>filteredLen<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+			<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+				filtered<span class="token punctuation">[</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">[</span>nodeName<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 3. 类似Fork&amp;Join, 启动16个协程并行进行Filter</span>
+	workqueue<span class="token punctuation">.</span><span class="token function">ParallelizeUntil</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token function">int</span><span class="token punctuation">(</span>allNodes<span class="token punctuation">)</span><span class="token punctuation">,</span> checkNode<span class="token punctuation">)</span>
+
+	<span class="token keyword">return</span> filtered<span class="token punctuation">,</span> failedPredicateMap<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="2-1-操作详解"><a href="#2-1-操作详解" class="headerlink" title="2.1 操作详解"></a>2.1 操作详解</h4><ol>
+<li>遍历Node, 使用的是NodeTree.next()机制, 这样就必须保证NodeTree.next()是线程安全的. K8S里采用mutex信号量来保障</li>
+<li>具体NodeTree的机制, 参见单独文章.</li>
+</ol>
+<h3 id="3-PodFitsResources"><a href="#3-PodFitsResources" class="headerlink" title="3. PodFitsResources"></a>3. PodFitsResources</h3><h4 id="3-1-核心代码"><a href="#3-1-核心代码" class="headerlink" title="3.1 核心代码"></a>3.1 核心代码</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>predicates<span class="token operator">/</span>predicates<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">769</span>
+
+<span class="token keyword">func</span> <span class="token function">PodFitsResources</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> meta PredicateMetadata<span class="token punctuation">,</span> nodeInfo <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>NodeInfo<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>PredicateFailureReason<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  node <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 1. 检查是否超过NC上允许调度的Pod个数上限</span>
+	allowedPodNumber <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">AllowedPodNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>nodeInfo<span class="token punctuation">.</span><span class="token function">Pods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span> <span class="token operator">></span> allowedPodNumber <span class="token punctuation">&#123;</span>
+		predicateFails <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">,</span> <span class="token function">NewInsufficientResourceError</span><span class="token punctuation">(</span>v1<span class="token punctuation">.</span>ResourcePods<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token function">int64</span><span class="token punctuation">(</span><span class="token function">len</span><span class="token punctuation">(</span>nodeInfo<span class="token punctuation">.</span><span class="token function">Pods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">int64</span><span class="token punctuation">(</span>allowedPodNumber<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 2. 计算出Pod的资源请求量</span>
+	<span class="token keyword">var</span> podRequest <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>Resource
+	podRequest <span class="token operator">=</span> <span class="token function">GetResourceRequest</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span>
+
+	allocatable <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">AllocatableResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">// 3. 判断Node.totalVcpu - podRequest.Vcpu - Node.usedVcpu是否OK</span>
+	<span class="token keyword">if</span> allocatable<span class="token punctuation">.</span>MilliCPU <span class="token operator">&lt;</span> podRequest<span class="token punctuation">.</span>MilliCPU<span class="token operator">+</span>nodeInfo<span class="token punctuation">.</span><span class="token function">RequestedResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>MilliCPU <span class="token punctuation">&#123;</span>
+		predicateFails <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">,</span> <span class="token function">NewInsufficientResourceError</span><span class="token punctuation">(</span>v1<span class="token punctuation">.</span>ResourceCPU<span class="token punctuation">,</span> podRequest<span class="token punctuation">.</span>MilliCPU<span class="token punctuation">,</span> nodeInfo<span class="token punctuation">.</span><span class="token function">RequestedResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>MilliCPU<span class="token punctuation">,</span> allocatable<span class="token punctuation">.</span>MilliCPU<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">if</span> allocatable<span class="token punctuation">.</span>Memory <span class="token operator">&lt;</span> podRequest<span class="token punctuation">.</span>Memory<span class="token operator">+</span>nodeInfo<span class="token punctuation">.</span><span class="token function">RequestedResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Memory <span class="token punctuation">&#123;</span>
+		predicateFails <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">,</span> <span class="token function">NewInsufficientResourceError</span><span class="token punctuation">(</span>v1<span class="token punctuation">.</span>ResourceMemory<span class="token punctuation">,</span> podRequest<span class="token punctuation">.</span>Memory<span class="token punctuation">,</span> nodeInfo<span class="token punctuation">.</span><span class="token function">RequestedResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Memory<span class="token punctuation">,</span> allocatable<span class="token punctuation">.</span>Memory<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>predicateFails<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> predicateFails<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-2-操作详解"><a href="#3-2-操作详解" class="headerlink" title="3.2 操作详解"></a>3.2 操作详解</h4><ol>
+<li>Node上重要的几个资源字段:<ol>
+<li>nodeInfo.AllocatableResource(): 代表该Node上所有的CPU量. 与openstack的totalCpu相同</li>
+<li>podRequest.MilliCPU: 代表该新Pod所需求的CPU量. </li>
+<li>nodeInfo.RequestedResource(): <ol>
+<li>代表已经调度到该Node上Pods已经占用的资源. 与openstack的usedCpu相同</li>
+<li>包含了已经assumed的, 但还没有实际bind到Node上的Pod资源.</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="4-assume"><a href="#4-assume" class="headerlink" title="4. assume"></a>4. assume</h3><h4 id="4-1-核心代码"><a href="#4-1-核心代码" class="headerlink" title="4.1 核心代码"></a>4.1 核心代码</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go">
+<span class="token keyword">func</span> <span class="token punctuation">(</span>sched <span class="token operator">*</span>Scheduler<span class="token punctuation">)</span> <span class="token function">assume</span><span class="token punctuation">(</span>assumed <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> host <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	assumed<span class="token punctuation">.</span>Spec<span class="token punctuation">.</span>NodeName <span class="token operator">=</span> host
+	sched<span class="token punctuation">.</span>config<span class="token punctuation">.</span>SchedulerCache<span class="token punctuation">.</span><span class="token function">AssumePod</span><span class="token punctuation">(</span>assumed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>cache <span class="token operator">*</span>schedulerCache<span class="token punctuation">)</span> <span class="token function">AssumePod</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">&#123;</span>
+	key<span class="token punctuation">,</span> err <span class="token operator">:=</span> schedulernodeinfo<span class="token punctuation">.</span><span class="token function">GetPodKey</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span>
+
+	<span class="token comment">// podName之前不能在podStates里</span>
+	<span class="token keyword">if</span> <span class="token boolean">_</span><span class="token punctuation">,</span> ok <span class="token operator">:=</span> cache<span class="token punctuation">.</span>podStates<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span> ok <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> fmt<span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">"pod %v is in the cache, so can't be assumed"</span><span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+	cache<span class="token punctuation">.</span><span class="token function">addPod</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span>
+	ps <span class="token operator">:=</span> <span class="token operator">&amp;</span>podState<span class="token punctuation">&#123;</span>
+		pod<span class="token punctuation">:</span> pod<span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+	cache<span class="token punctuation">.</span>podStates<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> ps
+	cache<span class="token punctuation">.</span>assumedPods<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>cache <span class="token operator">*</span>schedulerCache<span class="token punctuation">)</span> <span class="token function">addPod</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	n<span class="token punctuation">,</span> ok <span class="token operator">:=</span> cache<span class="token punctuation">.</span>nodes<span class="token punctuation">[</span>pod<span class="token punctuation">.</span>Spec<span class="token punctuation">.</span>NodeName<span class="token punctuation">]</span>	
+  <span class="token comment">// 见下方详解</span>
+	n<span class="token punctuation">.</span>info<span class="token punctuation">.</span><span class="token function">AddPod</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span>
+ <span class="token comment">// 将Node移动到双链表的头部</span>
+	cache<span class="token punctuation">.</span><span class="token function">moveNodeInfoToHead</span><span class="token punctuation">(</span>pod<span class="token punctuation">.</span>Spec<span class="token punctuation">.</span>NodeName<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>n <span class="token operator">*</span>NodeInfo<span class="token punctuation">)</span> <span class="token function">AddPod</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 1. 计算Pod所需资源</span>
+	res<span class="token punctuation">,</span> non0CPU<span class="token punctuation">,</span> non0Mem <span class="token operator">:=</span> <span class="token function">calculateResource</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span>
+  <span class="token comment">// 2. 将Pod所需资源叠加到Node.requestedResource上</span>
+	n<span class="token punctuation">.</span>requestedResource<span class="token punctuation">.</span>MilliCPU <span class="token operator">+=</span> res<span class="token punctuation">.</span>MilliCPU
+	n<span class="token punctuation">.</span>requestedResource<span class="token punctuation">.</span>Memory <span class="token operator">+=</span> res<span class="token punctuation">.</span>Memory
+  <span class="token comment">// 3. 将Pod得加到Node.pods列表上</span>
+	n<span class="token punctuation">.</span>pods <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>n<span class="token punctuation">.</span>pods<span class="token punctuation">,</span> pod<span class="token punctuation">)</span>
+  <span class="token comment">// 4. 更新Node.generation</span>
+	n<span class="token punctuation">.</span>generation <span class="token operator">=</span> <span class="token function">nextGeneration</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如下重要操作次序:</p>
+<ul>
+<li>将pod放到cache中Node的pods[]列表中</li>
+<li>将pod需求的资源量叠加到Node的requestedResource中(注意在调度filter的时候, 判断已经占用的资源, 用的就是这个字段).</li>
+<li>更新Node的generation, 将Node放到Node双向链表的头部(方便打增量snapshot)</li>
+</ul>
+<p>疑问&amp;关注点:</p>
+<ul>
+<li>如何防止Node资源超卖? 即将pod放到Node的pods[]列表中的时候, Node本身资源发生了变化, 导致useResource&gt;totalResource?</li>
+<li></li>
+</ul>
+<h3 id="5-bind"><a href="#5-bind" class="headerlink" title="5. bind"></a>5. bind</h3><h4 id="5-1-核心代码"><a href="#5-1-核心代码" class="headerlink" title="5.1 核心代码"></a>5.1 核心代码</h4><p>Binding结构核心: </p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">err :&#x3D; sched.bind(assumedPod, &amp;v1.Binding&#123;
+   ObjectMeta: metav1.ObjectMeta&#123;Namespace: assumedPod.Namespace, Name: assumedPod.Name, UID: assumedPod.UID&#125;,
+   Target: v1.ObjectReference&#123;
+      Kind: &quot;Node&quot;,
+      Name: scheduleResult.SuggestedHost,
+   &#125;,
+&#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>bind逻辑核心:</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">func (sched *Scheduler) bind(assumed *v1.Pod, b *v1.Binding) error &#123;
+  &#x2F;&#x2F; 1. 获取Binder, 并调用RPC接口, 让对应Node执行绑定Pod
+   err :&#x3D; sched.config.GetBinder(assumed).Bind(b)
+   if err !&#x3D; nil &#123;
+      sched.config.SchedulerCache.ForgetPod(assumed)
+      return err
+   &#125;
+   return nil
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>逆向流程: </p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">func (cache *schedulerCache) ForgetPod(pod *v1.Pod) error &#123;
+  &#x2F;&#x2F; 1. 获取PodID
+   key, err :&#x3D; schedulernodeinfo.GetPodKey(pod)
+
+   currState, ok :&#x3D; cache.podStates[key]
+   case ok &amp;&amp; cache.assumedPods[key]:
+       &#x2F;&#x2F; 2. 将pod从SchedulerCache中移除
+      err :&#x3D; cache.removePod(pod)
+      delete(cache.assumedPods, key)
+      delete(cache.podStates, key)
+   return nil
+&#125;
+
+func (cache *schedulerCache) removePod(pod *v1.Pod) error &#123;
+  &#x2F;&#x2F; 1. 找到该Pod调度到的Node, 从NodeInfo中移除该Pod
+	n, ok :&#x3D; cache.nodes[pod.Spec.NodeName]
+  err :&#x3D; n.info.RemovePod(pod)
+	if len(n.info.Pods()) &#x3D;&#x3D; 0 &amp;&amp; n.info.Node() &#x3D;&#x3D; nil &#123;
+    &#x2F;&#x2F; 2. 将空的Node从链表中移除
+		cache.removeNodeInfoFromList(pod.Spec.NodeName)
+	&#125; else &#123;
+    &#x2F;&#x2F; 3. 将Node放到双链表头部
+		cache.moveNodeInfoToHead(pod.Spec.NodeName)
+	&#125;
+	return nil
+&#125;
+
+func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
+	k1, err :&#x3D; GetPodKey(pod)
+	for i :&#x3D; range n.pods &#123;
+		k2, err :&#x3D; GetPodKey(n.pods[i])
+		if k1 &#x3D;&#x3D; k2 &#123;
+			&#x2F;&#x2F; 将Pod从Node的Pods列表中移除
+			n.pods[i] &#x3D; n.pods[len(n.pods)-1]
+			n.pods &#x3D; n.pods[:len(n.pods)-1]
+			&#x2F;&#x2F; 归还Node资源
+			res, non0CPU, non0Mem :&#x3D; calculateResource(pod)
+			n.requestedResource.MilliCPU -&#x3D; res.MilliCPU
+			n.requestedResource.Memory -&#x3D; res.Memory
+      &#x2F;&#x2F; 更新Node版本号
+			n.generation &#x3D; nextGeneration()
+			return nil
+		&#125;
+	&#125;
+	return fmt.Errorf(&quot;no corresponding pod %s in pods of node %s&quot;, pod.Name, n.node.Name)
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="5-2-操作详解"><a href="#5-2-操作详解" class="headerlink" title="5.2 操作详解"></a>5.2 操作详解</h4><ol>
+<li>Binding对象: 本质上是{Pod.UID, Node.nodeName}, </li>
+<li>执行绑定流程: 本质上是调用RPC, 将该Binding对象发送到对应Node上, 执行绑定<ol>
+<li>此处RPC模式是怎样的需要确认:  TODO<ol>
+<li>Pub-Sub模式: scheduler将请求发送到, Node上agent监听到该请求, 发现自身NodeId与消息中相同, 则执行bind过程. </li>
+<li>P2P模式: scheduler直接将请求发送到对应Node上, 执行.</li>
+</ol>
+</li>
+<li>此处RPC是同步还是一部需要确认: TODO<ol>
+<li>同步: 当前逆向流程即可覆盖</li>
+<li>异步: 需要单独注册回调, 在哪里? 怎么执行?</li>
+</ol>
+</li>
+<li>具体到Node上, kubelet执行的操作是怎样的, 同样需要确认. TODO</li>
+</ol>
+</li>
+<li>逆向流程: 本质上是将Pod资源归还给Node.</li>
+</ol>
+<h2 id="调度请求对象"><a href="#调度请求对象" class="headerlink" title="调度请求对象"></a>调度请求对象</h2><p><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/</a></p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type ResourceRequirements struct &#123;
+	Limits ResourceList &#96;json:&quot;limits,omitempty&quot; protobuf:&quot;bytes,1,rep,name&#x3D;limits,casttype&#x3D;ResourceList,castkey&#x3D;ResourceName&quot;&#96;
+	Requests ResourceList &#96;json:&quot;requests,omitempty&quot; protobuf:&quot;bytes,2,rep,name&#x3D;requests,casttype&#x3D;ResourceList,castkey&#x3D;ResourceName&quot;&#96;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>limits: 给kubelets用的, 指的是这个Pod能使用的最大资源量</li>
+<li>requests: 给scheduler用的, 指的是这个Pod最小需求的资源量</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://my.oschina.net/jxcdwangtao/blog/824965">https://my.oschina.net/jxcdwangtao/blog/824965</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/scheduler/" rel="tag"># scheduler</a>
+              <a href="/tags/kube-scheduler/" rel="tag"># kube-scheduler</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021-09-08-kube-scheduler-queue/" rel="prev" title="kube-scheduler笔记之Queue研究">
+                  <i class="fa fa-chevron-left"></i> kube-scheduler笔记之Queue研究
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021-09-08-kube-scheduler-filter/" rel="next" title="kube-scheduler笔记之filter">
+                  kube-scheduler笔记之filter <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

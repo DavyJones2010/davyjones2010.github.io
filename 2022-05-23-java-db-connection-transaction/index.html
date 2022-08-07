@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="思考1: Spring里各种事务隔离级别, 本质上是如何实现的?很有意思的一个问题. 单个connection或者DB原生是无法实现的, 本质上是通过不同的connection来实现的. https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;19526604&#x2F;how-does-transaction-suspension-work-in-spring  The point of">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Java中常用的数据库连接池以及事务框架的原理探究">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-05-23-java-db-connection-transaction/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="思考1: Spring里各种事务隔离级别, 本质上是如何实现的?很有意思的一个问题. 单个connection或者DB原生是无法实现的, 本质上是通过不同的connection来实现的. https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;19526604&#x2F;how-does-transaction-suspension-work-in-spring  The point of">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="spring-jdbc">
+<meta property="article:tag" content="database">
+<meta property="article:tag" content="connection">
+<meta property="article:tag" content="transaction">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-05-23-java-db-connection-transaction/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-05-23-java-db-connection-transaction/","path":"/2022-05-23-java-db-connection-transaction/","title":"Java中常用的数据库连接池以及事务框架的原理探究"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java中常用的数据库连接池以及事务框架的原理探究 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%831-Spring%E9%87%8C%E5%90%84%E7%A7%8D%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB-%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">思考1: Spring里各种事务隔离级别, 本质上是如何实现的?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8C%96%E5%90%8E%E7%9A%84%E6%A0%B7%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简化后的样例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#REQUIRES-NEW"><span class="nav-number">1.1.1.</span> <span class="nav-text">REQUIRES_NEW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PROPAGATION-REQUIRED"><span class="nav-number">1.1.2.</span> <span class="nav-text">PROPAGATION_REQUIRED</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NESTED"><span class="nav-number">1.1.3.</span> <span class="nav-text">NESTED</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%832-Druid%E8%BF%9E%E6%8E%A5%E6%B1%A0-%E5%A6%82%E4%BD%95%E7%9F%A5%E9%81%93%E6%B1%A0%E4%B8%AD%E5%93%AA%E4%BA%9Bconnection%E5%9C%A8%E7%94%A8-%E5%93%AA%E4%BA%9Bconnection%E6%B2%A1%E5%9C%A8%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">思考2: Druid连接池: 如何知道池中哪些connection在用, 哪些connection没在用?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Druid%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text">Druid实现:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-DBCP%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84"><span class="nav-number">2.2.</span> <span class="nav-text">扩展: DBCP的数据库连接池是如何实现的?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E6%B1%A0%E4%B8%AD%E8%8E%B7%E5%8F%96%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.2.1.</span> <span class="nav-text">从池中获取连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E8%BF%9E%E6%8E%A5%E5%BD%92%E8%BF%98%E5%9B%9E%E6%B1%A0%E5%AD%90"><span class="nav-number">2.2.2.</span> <span class="nav-text">将连接归还回池子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%833-CustomTransaction%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">思考3: CustomTransaction实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">3.1.</span> <span class="nav-text">背景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%834-TBTransactionImpl-%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">思考4: TBTransactionImpl 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF-1"><span class="nav-number">4.1.</span> <span class="nav-text">背景</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-23-java-db-connection-transaction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java中常用的数据库连接池以及事务框架的原理探究 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java中常用的数据库连接池以及事务框架的原理探究
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-24T00:00:00+08:00">2022-05-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="思考1-Spring里各种事务隔离级别-本质上是如何实现的"><a href="#思考1-Spring里各种事务隔离级别-本质上是如何实现的" class="headerlink" title="思考1: Spring里各种事务隔离级别, 本质上是如何实现的?"></a>思考1: Spring里各种事务隔离级别, 本质上是如何实现的?</h1><p>很有意思的一个问题. 单个connection或者DB原生是无法实现的, 本质上是通过不同的connection来实现的.</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/19526604/how-does-transaction-suspension-work-in-spring">https://stackoverflow.com/questions/19526604/how-does-transaction-suspension-work-in-spring</a></p>
+<blockquote>
+<p>The point of suspending a transaction is to change the current transaction for a thread to a new one. This would NOT line up with the semantics of nested transactions because the new and suspended transactions are completely independent of each other. There is no connection-level API to support suspending transactions so this has to be done by using a different connection. If you are using JTA with Spring, this is done by the JTA transaction manager. If you are using DataSourceTransactionManager, you can look in the code and see that it will be saving off the current connection as a “suspended resource” and grabbing a new connection from the data source for the new transaction.</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://wiyi.org/physical-and-logical-transactions.html">https://wiyi.org/physical-and-logical-transactions.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiyi.org/how-does-transaction-suspension-in-spring.html">https://wiyi.org/how-does-transaction-suspension-in-spring.html</a></li>
+</ul>
+<h2 id="简化后的样例"><a href="#简化后的样例" class="headerlink" title="简化后的样例"></a>简化后的样例</h2><h3 id="REQUIRES-NEW"><a href="#REQUIRES-NEW" class="headerlink" title="REQUIRES_NEW"></a>REQUIRES_NEW</h3><ul>
+<li>新建事务，如果当前存在事务，则把当前事务挂起</li>
+<li>这个方法会独立提交事务，不受调用者的事务影响，父级异常，它也是正常提交</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; 假定为REQUIRE_NEW传播类型
+&#x2F;&#x2F; 1. 外部事务执行
+Connection conn &#x3D; getConnection(); &#x2F;&#x2F; 这里是新建connection
+Statement stmt &#x3D; conn.createStatement();
+stmt.execute(&quot;update xxx set xxx &#x3D; xxx&quot;);
+
+&#x2F;&#x2F; 2. 到这里, 内部事务开始, 需要执行方法2, REQUIRE_NEW传播级别, 那本质上是新建了个connection. 在Spring里, 其实就是suspend(), 即将上一个conn从ThreadLocal里移除; 然后把conn2放入ThreadLocal里.
+Connection conn2 &#x3D; getConnection(); &#x2F;&#x2F; 这个conn2与上边的conn是不同的连接
+Statement stmt2 &#x3D; conn.createStatement();
+stmt2.execute(&quot;update xxx set xxx &#x3D; xxx&quot;);
+conn2.commit(); &#x2F;&#x2F; 这里内部事务执行commit();
+stmt2.close();
+conn2.close();
+
+&#x2F;&#x2F; 3. 外部事务继续执行
+stmt.execute(&quot;update xxx set xxx&#x3D;xxx&quot;);
+conn.commit();  &#x2F;&#x2F; 这里外部事务执行commit();
+stmt.close();
+conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="PROPAGATION-REQUIRED"><a href="#PROPAGATION-REQUIRED" class="headerlink" title="PROPAGATION_REQUIRED"></a>PROPAGATION_REQUIRED</h3><ul>
+<li>支持当前事务，如果当前没有事务，则新建事务</li>
+<li>如果当前存在事务，则加入当前事务，合并成一个事务</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; 假定为PROPAGATION_REQUIRED传播类型: 
+&#x2F;&#x2F; 1. 支持当前事务，如果当前没有事务，则新建事务
+&#x2F;&#x2F; 2. 如果当前存在事务，则加入当前事务，合并成一个事务
+
+&#x2F;&#x2F; 1. 外部事务执行
+Connection conn &#x3D; getConnection(); &#x2F;&#x2F; 这里是新建connection
+Statement stmt &#x3D; conn.createStatement();
+stmt.execute(&quot;update xxx set xxx &#x3D; xxx&quot;);
+
+&#x2F;&#x2F; 2. 到这里, 内部事务开始, 需要执行方法2, PROPAGATION_MANDATORY 传播级别, 那本质上是复用了上一个连接.
+Connection conn2 &#x3D; conn; &#x2F;&#x2F; 这个conn2与上边的conn是相同的连接
+Statement stmt2 &#x3D; conn.createStatement();
+stmt2.execute(&quot;update xxx set xxx &#x3D; xxx&quot;);
+&#x2F;&#x2F; conn2.commit(); &#x2F;&#x2F; 这里无法做到子事务单独提交, 因为跟父事务已经合并成了一个事务.
+
+&#x2F;&#x2F; 3. 外部事务继续执行
+stmt.execute(&quot;update xxx set xxx&#x3D;xxx&quot;);
+conn.commit();  &#x2F;&#x2F; 这里整体事务执行commit();
+stmt.close();
+conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="NESTED"><a href="#NESTED" class="headerlink" title="NESTED"></a>NESTED</h3><ul>
+<li>如果当前存在事务，它将会成为父级事务的一个子事务，方法结束后并没有提交，只有等父事务结束才提交</li>
+<li>如果当前没有事务，则新建事务</li>
+<li>如果它异常，父级可以捕获它的异常而不进行回滚，正常提交</li>
+<li>但如果父级异常，它必然回滚，这就是和 <code>REQUIRES_NEW</code> 的区别</li>
+</ul>
+<h1 id="思考2-Druid连接池-如何知道池中哪些connection在用-哪些connection没在用"><a href="#思考2-Druid连接池-如何知道池中哪些connection在用-哪些connection没在用" class="headerlink" title="思考2: Druid连接池: 如何知道池中哪些connection在用, 哪些connection没在用?"></a>思考2: Druid连接池: 如何知道池中哪些connection在用, 哪些connection没在用?</h1><h2 id="Druid实现"><a href="#Druid实现" class="headerlink" title="Druid实现:"></a>Druid实现:</h2><p>通常我们使用标准的对象池, 会有如下方法:</p>
+<ol>
+<li>Object borrow(): 即从池中借用对象, 从而该对象从池中移除, 不能再借给他人.</li>
+<li>return(Object obj): 即把对象归还给池子, 以便该对象能被其他人复用.</li>
+</ol>
+<p>但看标准的JDBC定义, 以及druid的实现, 发现只有如下定义, 即获取连接的定义.</p>
+<pre class="line-numbers language-none"><code class="language-none">public interface DataSource &#123;
+  Connection getConnection();
+  Connection getConnection(String username, String password);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>看Druid连接池的实现</p>
+<ol>
+<li>getConnection(): 是从连接池中获取到一个可用的连接, 参见: com.alibaba.druid.pool.DruidDataSource#getConnectionInternal</li>
+<li><strong>但为什么没有归还方法呢? 如果没有归还方法, 那连接池就没有意义了呀!!</strong><ol>
+<li>解惑: getConnection()拿到的是: DruidPooledConnection</li>
+<li>在 DruidPooledConnection.close() 的时候, 其实本质上不是将连接关闭, 而是将连接归还回了连接池!!<ol>
+<li>这个设计还是挺巧妙的.</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>那么真正销毁连接是在什么时候呢?<ol>
+<li>即整个连接池销毁的时候. DruidDataSource.close()</li>
+</ol>
+</li>
+</ol>
+<h2 id="扩展-DBCP的数据库连接池是如何实现的"><a href="#扩展-DBCP的数据库连接池是如何实现的" class="headerlink" title="扩展: DBCP的数据库连接池是如何实现的?"></a>扩展: DBCP的数据库连接池是如何实现的?</h2><p>核心代码参见: org.apache.commons.dbcp.BasicDataSource</p>
+<ol>
+<li>使用了工厂模式 </li>
+<li>依赖apache的commons.pool 架构整体比较优秀</li>
+</ol>
+<h3 id="从池中获取连接"><a href="#从池中获取连接" class="headerlink" title="从池中获取连接"></a>从池中获取连接</h3><pre class="line-numbers language-none"><code class="language-none">org.apache.commons.dbcp.BasicDataSource#createDataSource &#123;
+	createConnectionPool(); &#x2F;&#x2F; 1. 创建 GenericObjectPool 实例, 
+  createPoolableConnectionFactory(); &#x2F;&#x2F; 2. 创建ConnectionFactory, (这里用了工厂模式), Factory用来创建connection
+  &#x2F;&#x2F; 底层使用 org.apache.commons.dbcp.PoolableConnectionFactory#makeObject 来新建物理连接
+  createDataSourceInstance(); &#x2F;&#x2F; 3. 创建DbcpDataSource对象, 即该connectionpool
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="将连接归还回池子"><a href="#将连接归还回池子" class="headerlink" title="将连接归还回池子"></a>将连接归还回池子</h3><pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; 1. 实际在池子里的connection是: 
+org.apache.commons.dbcp.PoolableConnection#PoolableConnection
+
+&#x2F;&#x2F; 2. 也是在connection.close的时候将connection归还回池子:
+public synchronized void close() throws SQLException &#123;
+	if (!isUnderlyingConectionClosed) &#123;
+	&#x2F;&#x2F; Normal close: underlying connection is still open, so we
+	&#x2F;&#x2F; simply need to return this proxy to the pool
+	try &#123;
+		_pool.returnObject(this); &#x2F;&#x2F; XXX should be guarded to happen at most once
+	&#125;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="思考3-CustomTransaction实现"><a href="#思考3-CustomTransaction实现" class="headerlink" title="思考3: CustomTransaction实现"></a>思考3: CustomTransaction实现</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>为了防止单个大事务, 导致锁表问题. 因此需要把大事务拆分成多个子事务.</p>
+<h1 id="思考4-TBTransactionImpl-实现"><a href="#思考4-TBTransactionImpl-实现" class="headerlink" title="思考4: TBTransactionImpl 实现"></a>思考4: TBTransactionImpl 实现</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><ol>
+<li>为了解决多个DataSource, 多数据源事务问题.<ol>
+<li>例如 DB1 (sql1), DB2 (sql2); 希望这俩数据库的SQL执行, 要不同时成功,  要不同时失败.</li>
+</ol>
+</li>
+<li>Best Efforts 1PC (One Phase Commit)<ol>
+<li>本质是采用的是1阶段提交方式.</li>
+</ol>
+</li>
+<li>优缺点:<ol>
+<li>优点: 实现&amp;使用简单.</li>
+<li>缺点: 无法彻底保证一致性. 例如db1已经commit, db2 commit失败, 则整体回滚会失败掉!</li>
+</ol>
+</li>
+<li>代码实现:</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">SQLException</span> <span class="token punctuation">&#123;</span>
+     <span class="token keyword">boolean</span> var11 <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+     <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+         var11 <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+         <span class="token class-name">TBConnection</span> conn<span class="token punctuation">;</span>
+         <span class="token class-name">Iterator</span> i$<span class="token punctuation">;</span>
+         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>m_conn<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+             i$ <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>m_conn<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+             <span class="token keyword">while</span><span class="token punctuation">(</span>i$<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                 conn <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">TBConnection</span><span class="token punctuation">)</span>i$<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                 conn<span class="token punctuation">.</span><span class="token function">judgeConnAvailable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             <span class="token punctuation">&#125;</span>
+         <span class="token punctuation">&#125;</span>
+
+         i$ <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>m_conn<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 将db1, db2的connection都进行提交</span>
+         <span class="token keyword">while</span><span class="token punctuation">(</span>i$<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+             conn <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">TBConnection</span><span class="token punctuation">)</span>i$<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             conn<span class="token punctuation">.</span><span class="token function">realCommit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             conn<span class="token punctuation">.</span><span class="token function">realClose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token punctuation">&#125;</span>
+
+         var11 <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+     <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> var13<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token comment">// 将db1, db2的connection都进行回滚</span>
+         <span class="token keyword">this</span><span class="token punctuation">.</span>m_isCommitError <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+         <span class="token class-name">Iterator</span> i$ <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>m_conn<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+         <span class="token keyword">while</span><span class="token punctuation">(</span>i$<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+             <span class="token class-name">TBConnection</span> conn <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">TBConnection</span><span class="token punctuation">)</span>i$<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                 conn<span class="token punctuation">.</span><span class="token function">realRollback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                 conn<span class="token punctuation">.</span><span class="token function">realClose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> var12<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                 log<span class="token punctuation">.</span><span class="token function">fatal</span><span class="token punctuation">(</span><span class="token string">"Rollback ERROR:"</span> <span class="token operator">+</span> var12<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> var12<span class="token punctuation">)</span><span class="token punctuation">;</span>
+             <span class="token punctuation">&#125;</span>
+         <span class="token punctuation">&#125;</span>
+
+         <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">SQLException</span><span class="token punctuation">(</span>var13<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
+         <span class="token keyword">if</span> <span class="token punctuation">(</span>var11<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+             <span class="token keyword">if</span> <span class="token punctuation">(</span>log<span class="token punctuation">.</span><span class="token function">isWarnEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>m_startHoldConnectionTime <span class="token operator">></span> <span class="token number">0L</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                 <span class="token keyword">long</span> spendtime <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token keyword">this</span><span class="token punctuation">.</span>m_startHoldConnectionTime<span class="token punctuation">;</span>
+                 <span class="token keyword">if</span> <span class="token punctuation">(</span>spendtime <span class="token operator">>=</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span><span class="token keyword">this</span><span class="token punctuation">.</span>warnTime<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                     log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"事务持续时间过长:"</span> <span class="token operator">+</span> spendtime<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>m_addr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                 <span class="token punctuation">&#125;</span>
+             <span class="token punctuation">&#125;</span>
+
+             <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token punctuation">&#125;</span>
+     <span class="token punctuation">&#125;</span>
+
+     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/spring/" rel="tag"># spring</a>
+              <a href="/tags/spring-jdbc/" rel="tag"># spring-jdbc</a>
+              <a href="/tags/database/" rel="tag"># database</a>
+              <a href="/tags/connection/" rel="tag"># connection</a>
+              <a href="/tags/transaction/" rel="tag"># transaction</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-05-23-scheduler-api-design/" rel="prev" title="资源调度API设计的思考">
+                  <i class="fa fa-chevron-left"></i> 资源调度API设计的思考
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-05-24-java-spring-spi/" rel="next" title="Java与Spring中SPI机制的探讨与思考">
+                  Java与Spring中SPI机制的探讨与思考 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景FAQ网卡混杂模式 啥是网卡混杂模式？  正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。  开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。  啥时候需要开启？  &#x2F;&#x2F; TODO:  如何开启？ &#x2F;&#x2F; 开启混杂模式 ifconfig eth0 promisc &#x2F;&#x2F;">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Linux网络之原理探讨与疑问总结">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-06-29-linux-network-faq/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景FAQ网卡混杂模式 啥是网卡混杂模式？  正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。  开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。  啥时候需要开启？  &#x2F;&#x2F; TODO:  如何开启？ &#x2F;&#x2F; 开启混杂模式 ifconfig eth0 promisc &#x2F;&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052223099.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052218872.png">
+<meta property="article:published_time" content="2022-06-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="iaas">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="cloud-computing">
+<meta property="article:tag" content="nat">
+<meta property="article:tag" content="pat">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-06-29-linux-network-faq/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-06-29-linux-network-faq/","path":"/2022-06-29-linux-network-faq/","title":"Linux网络之原理探讨与疑问总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux网络之原理探讨与疑问总结 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FAQ"><span class="nav-number">2.</span> <span class="nav-text">FAQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E5%8D%A1%E6%B7%B7%E6%9D%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">网卡混杂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E4%B8%8ENAT%E8%AE%BE%E5%A4%87%E7%9A%84%E5%85%B3%E8%81%94%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="nav-number">2.2.</span> <span class="nav-text">路由器与NAT设备的关联与区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-number">2.2.1.</span> <span class="nav-text">路由器工作原理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-number">2.2.2.</span> <span class="nav-text">NAT工作原理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip-forwarding"><span class="nav-number">2.3.</span> <span class="nav-text">ip_forwarding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC%E5%9C%B0%E5%9D%80%E5%8C%B9%E9%85%8D-%E4%BD%86IP%E5%9C%B0%E5%9D%80%E4%B8%8D%E5%8C%B9%E9%85%8D"><span class="nav-number">2.3.1.</span> <span class="nav-text">MAC地址匹配, 但IP地址不匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE"><span class="nav-number">2.3.2.</span> <span class="nav-text">iptables工作原理图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5Linux%E9%BB%98%E8%AE%A4%E4%B8%8D%E5%BC%80%E5%90%AFip-forwarding"><span class="nav-number">2.3.3.</span> <span class="nav-text">为啥Linux默认不开启ip_forwarding?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BC%80%E5%90%AFip-forwarding"><span class="nav-number">2.3.4.</span> <span class="nav-text">如何开启ip_forwarding?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">2.3.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%A4%9A%E7%BD%91%E5%8D%A1curl%E5%85%AC%E7%BD%91%E5%9C%B0%E5%9D%80%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.</span> <span class="nav-text">本地多网卡curl公网地址问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%A4%9A%E7%BD%91%E5%8D%A1Java%E5%BA%94%E7%94%A8%E8%8E%B7%E5%8F%96HostIp%E9%97%AE%E9%A2%98"><span class="nav-number">2.5.</span> <span class="nav-text">本地多网卡Java应用获取HostIp问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP%E9%9A%A7%E9%81%93"><span class="nav-number">2.6.</span> <span class="nav-text">IP隧道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LVS"><span class="nav-number">2.7.</span> <span class="nav-text">LVS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LVS-v-s-iptables-x2F-netfilters"><span class="nav-number">2.7.1.</span> <span class="nav-text">LVS v.s. iptables&#x2F;netfilters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LVS%E7%9A%84%E5%87%A0%E7%A7%8D%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="nav-number">2.7.2.</span> <span class="nav-text">LVS的几种模式分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LVS-NAT-%E2%80%93-gt-NAT-x2F-DNAT"><span class="nav-number">2.7.2.1.</span> <span class="nav-text">LVS-NAT –&gt; NAT&#x2F;DNAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LVS-NAT-%E2%80%93-gt-FullNAT"><span class="nav-number">2.7.2.2.</span> <span class="nav-text">LVS-NAT –&gt; FullNAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LVS-DR"><span class="nav-number">2.7.2.3.</span> <span class="nav-text">LVS-DR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LVS-TUN"><span class="nav-number">2.7.2.4.</span> <span class="nav-text">LVS-TUN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%99%85"><span class="nav-number">2.7.2.5.</span> <span class="nav-text">实际</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP-%E4%BB%A3%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">HTTP 代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9D%E5%86%B7%E5%9C%9F%E8%B1%86%E8%B7%AF%E7%94%B1%E2%80%9D%E4%B8%8E%E2%80%9D%E7%83%AD%E5%9C%9F%E8%B1%86%E8%B7%AF%E7%94%B1%E2%80%9D"><span class="nav-number">4.</span> <span class="nav-text">什么是”冷土豆路由”与”热土豆路由”?</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-29-linux-network-faq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux网络之原理探讨与疑问总结 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux网络之原理探讨与疑问总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-30 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-30T00:00:00+08:00">2022-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="网卡混杂模式"><a href="#网卡混杂模式" class="headerlink" title="网卡混杂模式"></a>网卡混杂模式</h2><ul>
+<li><p>啥是网卡混杂模式？</p>
+</li>
+<li><p>正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。</p>
+</li>
+<li><p>开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。</p>
+</li>
+<li><p>啥时候需要开启？</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO:</p>
+</li>
+<li><p>如何开启？</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 开启混杂模式
+<span class="token function">ifconfig</span> eth0 promisc
+// 取消混杂模式
+<span class="token function">ifconfig</span> eth0 -promisc
+// 内核判断网卡是否处于混杂模式是看如下标识，如果置位了0x100，则处于混杂模式
+<span class="token function">cat</span> /sys/class/net/eth0/flags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>是否开启了混杂模式，就能嗅探局域网（二层网）内的所有数据包了？</p>
+</li>
+<li><p>不一定。</p>
+</li>
+<li><p>针对二层如果是集线器模式，可以嗅探到。</p>
+</li>
+<li><p>但现在大部分二层都是交换机模式。即交换机会根据CAM表，往对应的端口转发，不会无脑地全部端口都转发，因此嗅探不到。</p>
+</li>
+<li><p>开启混杂模式的例子</p>
+</li>
+<li><p>如下，docker0网桥就开启了混杂模式。</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO: 为啥docker0网桥开启混杂模式？具体怎么用的？</p>
+</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">cat</span> /sys/class/net/docker0/flags 
+0x1003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="路由器与NAT设备的关联与区别"><a href="#路由器与NAT设备的关联与区别" class="headerlink" title="路由器与NAT设备的关联与区别"></a>路由器与NAT设备的关联与区别</h2><h3 id="路由器工作原理："><a href="#路由器工作原理：" class="headerlink" title="路由器工作原理："></a>路由器工作原理：</h3><p>主要用来联通连个不同的网段，<mark>只修改sourceMac与targetMac，不修改sourceIp与targetIp</mark></p>
+<ol>
+<li>根据传入包指定的targetIp（传入包的MAC地址是路由器当前网卡的MAC地址，IP地址是真正的IP地址）</li>
+<li>查询自身路由表，查找到最近的下一跳的IP地址。<code>route -n</code></li>
+<li>再根据下一跳的IP地址，查找到对应的MAC地址。arp缓存表</li>
+<li>修改数据包的targetMAC地址为下一跳的MAC地址，sourceMAC为当前网卡出口的mac地址</li>
+<li>将数据包从对应网卡送出去。</li>
+</ol>
+<blockquote>
+<p>路由器的核心是路由表的维护，能生成最短最优路径。<br/><br>从sourceIp到targetIp的路由路径，很可能与回包，即从targetIp返回到sourceIp的路由路径不一样。<br>取决于当时的路径中路由器的路由表情况。</p>
+</blockquote>
+<h3 id="NAT工作原理："><a href="#NAT工作原理：" class="headerlink" title="NAT工作原理："></a>NAT工作原理：</h3><ul>
+<li><p>原理<br>需要修改sourceMac与targetMac。<br>同时如果是SNAT，则还要修改sourceIp。<br>如果是DNAT，则还要修改targetIp。</p>
+</li>
+<li><p>实现方式:<br>通过iptables可以设置nat表。<br>snat作用在postrouting阶段，dnat作用在prerouting阶段。<br>回包由内核的conntrack模块负责，不再由iptables负责。<br>详细参见 <a href="https://davyjones2010.github.io/2022-06-23-linux-network-nat">NAT之端口映射(PAT)原理总结&amp;实践</a></p>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>由此可知，家用的路由器，是附带了SNAT（也可以配置DNAT）功能的路由器。</p>
+<h2 id="ip-forwarding"><a href="#ip-forwarding" class="headerlink" title="ip_forwarding"></a>ip_forwarding</h2><h3 id="MAC地址匹配-但IP地址不匹配"><a href="#MAC地址匹配-但IP地址不匹配" class="headerlink" title="MAC地址匹配, 但IP地址不匹配"></a>MAC地址匹配, 但IP地址不匹配</h3><p>网卡会不会收到MAC地址与当前网卡MAC地址匹配, 但IP地址与当前网卡的IP不匹配的IP包?<br>具体咋处理? 直接丢弃? 还是可以使用?</p>
+<ul>
+<li>会收到。</li>
+<li>如果开启了ip_forwarding，则会进入FORWARD&#x2F;ROUTE阶段，查看本地 route 表，进入路由与postrouting阶段，找到对应的出口网卡，将包转发出去。与路由器的功能完全一致了。</li>
+<li>如果未开启ip_forwarding，则直接丢弃该包。</li>
+<li>所以，NAT模式下，必须要开启ip_forwarding。</li>
+</ul>
+<h3 id="iptables工作原理图"><a href="#iptables工作原理图" class="headerlink" title="iptables工作原理图"></a>iptables工作原理图</h3><p>此图摘自 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Iptables">Archlinux 文档</a></p>
+<pre class="line-numbers language-none"><code class="language-none">                               XXXXXXXXXXXXXXXXXX
+                             XXX     Network    XXX
+                               XXXXXXXXXXXXXXXXXX
+                                       +
+                                       |
+                                       v
+ +-------------+              +------------------+
+ |table: filter| &lt;---+        | table: nat&#x2F;dnat  |
+ |chain: INPUT |     |        | chain: PREROUTING|
+ +-----+-------+     |        +--------+---------+
+       |             |                 |
+       v             |                 v
+ [local process]     |           ****************          +--------------+
+       |             +---------+ Routing decision +------&gt; |table: filter |
+       v                         ****************          |chain: FORWARD|
+****************                                           +------+-------+
+Routing decision                                                  |
+****************                                                  |
+       |                                                          |
+       v                        ****************                  |
++-------------+       +------&gt;  Routing decision  &lt;---------------+
+|table: nat   |       |         ****************
+|chain: OUTPUT|       |               +
++-----+-------+       |               |
+      |               |               v
+      v               |      +-------------------+
++--------------+      |      | table: nat&#x2F;snat   |
+|table: filter | +----+      | chain: POSTROUTING|
+|chain: OUTPUT |             +--------+----------+
++--------------+                      |
+                                      v
+                               XXXXXXXXXXXXXXXXXX
+                             XXX    Network     XXX
+                               XXXXXXXXXXXXXXXXXX<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="为啥Linux默认不开启ip-forwarding"><a href="#为啥Linux默认不开启ip-forwarding" class="headerlink" title="为啥Linux默认不开启ip_forwarding?"></a>为啥Linux默认不开启ip_forwarding?</h3><p>因为在默认情况下，host只是扮演在网络中的一台主机的角色，根本不需要ip_forwarding的功能。</p>
+<blockquote>
+<p>A Linux machine acting as an ordinary host would not need to have IP forwarding enabled,<br>because it just generates and receives IP traffic for its own purposes</p>
+</blockquote>
+<h3 id="如何开启ip-forwarding"><a href="#如何开启ip-forwarding" class="headerlink" title="如何开启ip_forwarding?"></a>如何开启ip_forwarding?</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token number">1</span> <span class="token operator">></span> /proc/sys/net/ipv4/ip_forward<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>所以开启了ip_forwarding，相当于本机就具备一台路由器的能力了。<br/><br>如果再通过iptables配置了相应的nat规则，就相当于一台家用的路由器了。</p>
+<h2 id="本地多网卡curl公网地址问题"><a href="#本地多网卡curl公网地址问题" class="headerlink" title="本地多网卡curl公网地址问题"></a>本地多网卡curl公网地址问题</h2><ul>
+<li>如果本机有私网网卡virbr0, 公网网卡en0, 且开启了virbr0网段的SNAT规则. 则在本地curl公网地址, 则curl的出口网卡是啥? </li>
+<li>是通过virbr0, 然后走SNAT到en0出去么?</li>
+<li>还是直接通过en0出去?</li>
+</ul>
+<ol>
+<li><p>curl 支持指定出口网卡如下(实际只是使用了对应网卡的ip地址作为SIP): 如果不指定, 则使用默认网卡. </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// curl指定网卡出口
+<span class="token function">curl</span> --interface virbr0 http://www.baidu.com
+// mac上查看默认网卡: 
+route -n get <span class="token number">0.0</span>.0.0 <span class="token operator">|</span> <span class="token function">grep</span> interface<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>The –interface options is used to figure determine what address on the system will be used as the source IP. <br/><br>It doesn’t magically change anything about routing.</p>
+</blockquote>
+</li>
+<li><p>参见<a href="#iptables%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE">iptables工作原理图</a>, 可知从curl公网地址, 就是从local process出去, 接下来会走route, 即查看Host的路由表, 确定出口网卡与网关信息.</p>
+</li>
+<li><p>接下来进入postrouting(SNAT)阶段, 如果配置有SNAT规则, 且刚好命中, 则执行SNAT.</p>
+</li>
+<li><p>所以结论是出口网卡是en0, 而不会经过virbr0(即使指定了<code>--interface virbr0</code>).</p>
+</li>
+<li><p>是否会SNAT, 取决于是否指定了<code>--interface virbr0</code>, 指定了, 则会走SNAT; 未指定, 则不需要走SNAT.</p>
+</li>
+</ol>
+<h2 id="本地多网卡Java应用获取HostIp问题"><a href="#本地多网卡Java应用获取HostIp问题" class="headerlink" title="本地多网卡Java应用获取HostIp问题"></a>本地多网卡Java应用获取HostIp问题</h2><ul>
+<li>如果本机有多块网卡, 在Java中如何获取到这些IP地址? </li>
+<li>我们通常使用获取本机IP的方式如下: <mark>当Host多块网卡时, 不好兼容, 存在严重缺陷, 尤其是在线上服务器网卡堆叠场景下!</mark></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InetAddress</span> ip <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> hostname <span class="token operator">=</span> ip<span class="token punctuation">.</span><span class="token function">getHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>解决方案: </li>
+<li>方案1: 使用 <code>NetworkInterface.getNetworkInterfaces()</code> 接口, 获取所有网卡, 然后逐个获取IP信息.</li>
+<li>方案2: 获取本机的FQDN, 然后使用<code>InetAddress.getByName(FQDN)</code>来获取主网卡的IP信息.<ul>
+<li>本机的FQDN可以写在配置文件里.</li>
+</ul>
+</li>
+<li>Ref: <a target="_blank" rel="noopener" href="https://crunchify.com/how-to-get-server-ip-address-and-hostname-in-java/">How to get Server IP Address and Hostname in Java</a></li>
+</ul>
+<h2 id="IP隧道"><a href="#IP隧道" class="headerlink" title="IP隧道"></a>IP隧道</h2><h2 id="LVS"><a href="#LVS" class="headerlink" title="LVS"></a>LVS</h2><h3 id="LVS-v-s-iptables-x2F-netfilters"><a href="#LVS-v-s-iptables-x2F-netfilters" class="headerlink" title="LVS v.s. iptables&#x2F;netfilters"></a>LVS v.s. iptables&#x2F;netfilters</h3><p>本质上, 两个都可以做四层的DNAT, 都是工作在内核空间. </p>
+<ul>
+<li>LVS: 更侧重于LoadBalancing, 实现上使用hash查表, 而不是iptables的顺序查询. 效率更高. </li>
+<li>iptables:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png"></p>
+<ul>
+<li>可以看到, LVS本质上是与iptables配合使用</li>
+<li>客户访问虚拟 IP（VIP）时，数据包先在主机内核空间被 PREROUTING 链检测，根据数据包的目标地址进行路由判断，若目标地址是本地，则交由 INPUT 链进行处理。</li>
+<li>IPVS 工作于 INPUT 链，当数据包到达 INPUT 链时，会先由 IPVS 进行检查，并根据负载均衡算法选出真实服务器 IP。</li>
+<li>IPVS 转发模式为 NAT 模式时，将数据包由 FORWARD 链进行处理后由 POST-ROUTING 链发送给真实服务器。</li>
+<li>IPVS 转发模式为非 NAT 模式时，则将数据包由 POST-ROUTING 链发送给真实服务器。</li>
+</ul>
+<h3 id="LVS的几种模式分析"><a href="#LVS的几种模式分析" class="headerlink" title="LVS的几种模式分析"></a>LVS的几种模式分析</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Splend520/article/details/104587149">linux LVS负载均衡原理 NAT DR TUN FULLNAT 模式</a></p>
+<h4 id="LVS-NAT-–-gt-NAT-x2F-DNAT"><a href="#LVS-NAT-–-gt-NAT-x2F-DNAT" class="headerlink" title="LVS-NAT –&gt; NAT&#x2F;DNAT"></a>LVS-NAT –&gt; NAT&#x2F;DNAT</h4><p>本质是类似iptables的端口映射(PAT)–&gt; 注意这里全程没有DIP的参与.</p>
+<ul>
+<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
+<li>Client请求: {CIP, VIP}</li>
+<li>LVS映射: 修改目标IP, VIP-&gt;RIP, 构建新的请求: {CIP, RIP}</li>
+<li>Server处理: 完成后发送回包, {RIP, CIP}; 由于CIP与RIP不在同一个网段, 因此发送到网关(即LVS)</li>
+<li>LVS映射: 修改源IP, RIP-&gt;VIP, 构建新的响应: {VIP, CIP}</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052223099.png"></p>
+<ul>
+<li>缺点: <ul>
+<li>需要RS与DS在同一个二层网络里, 且需要把DS&#x2F;DIP配置为RS的网关.</li>
+</ul>
+</li>
+<li>优点: <ul>
+<li>&#x2F;&#x2F; TODO:</li>
+</ul>
+</li>
+</ul>
+<h4 id="LVS-NAT-–-gt-FullNAT"><a href="#LVS-NAT-–-gt-FullNAT" class="headerlink" title="LVS-NAT –&gt; FullNAT"></a>LVS-NAT –&gt; FullNAT</h4><ul>
+<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
+<li>Client请求: {CIP, VIP}</li>
+<li>LVS映射: 修改目标IP, VIP-&gt;RIP(RealServerIP); 修改源IP, CIP-&gt;DIP; 构建新的请求: {DIP, RIP}</li>
+<li>RealServer处理: 完成后发送回包, {RIP, DIP} (FullNAT模式, 不需要LVS必须是网关, 只要三层IP可达即可)</li>
+<li>LVS映射: 修改源IP, RIP-&gt;VIP; 通过conntrack查表, 修改目标IP, DIP-&gt;CIP; 构建新的响应: {VIP, CIP}</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052218872.png"></p>
+<ul>
+<li><p>注意: LVS 本身不支持 FULLNAT 模式，需要额外对内核打补丁后才能使用。</p>
+</li>
+<li><p>缺点: </p>
+<ul>
+<li>不管是请求数据包还是响应数据包，都要经过负载均衡器。但是响应数据包一般要比请求数据包大很多，这可能会成为系统的瓶颈。</li>
+</ul>
+</li>
+<li><p>优点:</p>
+<ul>
+<li>如上图, RealServer(DIP)不需要跟LVS在同一个网段, 只要IP包(三层路由)可达, 就能完成FullNAT</li>
+</ul>
+</li>
+</ul>
+<h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><h4 id="LVS-TUN"><a href="#LVS-TUN" class="headerlink" title="LVS-TUN"></a>LVS-TUN</h4><h4 id="实际"><a href="#实际" class="headerlink" title="实际"></a>实际</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/27544.html">阿里云CLB</a>使用的是哪种模式? NAT?<ul>
+<li>四层采用开源软件LVS（Linux Virtual Server）+ keepalived的方式实现负载均衡</li>
+<li>LVS应该使用的是NAT模式. 但如果是NAT模式, 则必须把LVS作为ECS的网关. &#x2F;&#x2F;TODO: 待验证</li>
+</ul>
+</li>
+</ul>
+<h1 id="HTTP-代理"><a href="#HTTP-代理" class="headerlink" title="HTTP 代理"></a>HTTP 代理</h1><h1 id="什么是”冷土豆路由”与”热土豆路由”"><a href="#什么是”冷土豆路由”与”热土豆路由”" class="headerlink" title="什么是”冷土豆路由”与”热土豆路由”?"></a>什么是”冷土豆路由”与”热土豆路由”?</h1><ul>
+<li>参见: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/azure/virtual-network/ip-services/routing-preference-overview">冷土豆路由&amp;热土豆路由</a></li>
+<li>热土豆:<ul>
+<li>入口流量: 如果来自新加坡的用户访问托管在芝加哥的 Azure 资源，则流量将通过公共 Internet 传输，并进入芝加哥的 Microsoft 全球网络。</li>
+<li>出口流量: 出口流量遵循相同的原则。 流量会在托管服务的同一区域退出 Microsoft 网络。 例如，如果来自 Azure 芝加哥服务的流量最终传输给来自新加坡的用户，流量将离开芝加哥的 Microsoft 网络，并通过公共 Internet 传输给新加坡的用户。</li>
+</ul>
+</li>
+<li>冷土豆:<ul>
+<li>入口流量: 如果来自新加坡的用户访问托管在美国芝加哥的 Azure 资源，则流量将进入位于新加坡 Edge POP 的 Microsoft 全球网络，并通过 Microsoft 网络传输到托管在芝加哥的服务。</li>
+<li>出口流量: 如果来自 Azure 芝加哥的流量最终传输给来自新加坡的用户，那么流量就会通过 Microsoft 网络从芝加哥传输到新加坡，并退出位于新加坡 Edge POP 的 Microsoft 网络。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/iaas/" rel="tag"># iaas</a>
+              <a href="/tags/network/" rel="tag"># network</a>
+              <a href="/tags/cloud-computing/" rel="tag"># cloud-computing</a>
+              <a href="/tags/nat/" rel="tag"># nat</a>
+              <a href="/tags/pat/" rel="tag"># pat</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-06-25-linux-network-scripts/" rel="prev" title="常用的Linux命令之网络相关命令">
+                  <i class="fa fa-chevron-left"></i> 常用的Linux命令之网络相关命令
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-07-01-java-jvm/" rel="next" title="Java&JVM&OQL 常用命令与脚本总结">
+                  Java&JVM&OQL 常用命令与脚本总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景新的应用以dubbo接口对外暴露调度能力。在上线前需要整体压测，确认下系统能力与瓶颈。 目标目标QPS: 500+目标RT: 100ms- 整体架构 应用框架 SpringBoot 2.5.6 Druid 1.1.22  机器配置清单 ECS规格： ecs.n4.2xlarge 2台8C16G 独享型 CPU: 2.5 GHz主频的Intel ® Xeon ®处理器 JDK 1.8 网络： 1">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="记一次Dubbo应用性能优化">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-07-02-dubbo-app-perf-tunning/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景新的应用以dubbo接口对外暴露调度能力。在上线前需要整体压测，确认下系统能力与瓶颈。 目标目标QPS: 500+目标RT: 100ms- 整体架构 应用框架 SpringBoot 2.5.6 Druid 1.1.22  机器配置清单 ECS规格： ecs.n4.2xlarge 2台8C16G 独享型 CPU: 2.5 GHz主频的Intel ® Xeon ®处理器 JDK 1.8 网络： 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216549.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042214249.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042215103.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042215636.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216269.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216085.png">
+<meta property="article:published_time" content="2022-07-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="dubbo">
+<meta property="article:tag" content="perf-tunning">
+<meta property="article:tag" content="redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216549.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-07-02-dubbo-app-perf-tunning/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-07-02-dubbo-app-perf-tunning/","path":"/2022-07-02-dubbo-app-perf-tunning/","title":"记一次Dubbo应用性能优化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>记一次Dubbo应用性能优化 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">整体架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6"><span class="nav-number">1.3.</span> <span class="nav-text">应用框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E9%85%8D%E7%BD%AE%E6%B8%85%E5%8D%95"><span class="nav-number">1.4.</span> <span class="nav-text">机器配置清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E9%85%8D%E7%BD%AE%E6%B8%85%E5%8D%95"><span class="nav-number">1.5.</span> <span class="nav-text">中间件配置清单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">1.5.1.</span> <span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DB-x2F-RDS"><span class="nav-number">1.5.2.</span> <span class="nav-text">DB&#x2F;RDS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%8B%E6%B5%8B%E8%AE%B0%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">压测记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E8%BD%AE%E5%8E%8B%E6%B5%8B"><span class="nav-number">2.1.</span> <span class="nav-text">第一轮压测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E6%B5%8B%E7%BB%93%E6%9E%9C"><span class="nav-number">2.1.1.</span> <span class="nav-text">压测结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%8C%87%E6%A0%87"><span class="nav-number">2.1.2.</span> <span class="nav-text">其他指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">2.1.3.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6%E6%85%A2%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">2.1.4.</span> <span class="nav-text">Redis访问速度慢问题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E6%98%AF%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">是否是服务端问题？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E6%98%AF%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">是否是客户端问题？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%95%8F%E9%A1%8C%E5%AE%9A%E4%BD%8D"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">問題定位</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88"><span class="nav-number">2.1.5.</span> <span class="nav-text">优化方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E8%BD%AE%E5%8E%8B%E6%B5%8B"><span class="nav-number">2.2.</span> <span class="nav-text">第二轮压测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E6%B5%8B%E7%BB%93%E6%9E%9C-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">压测结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">优化方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E8%BD%AE%E5%8E%8B%E6%B5%8B"><span class="nav-number">2.3.</span> <span class="nav-text">第三轮压测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E6%B5%8B%E7%BB%93%E6%9E%9C-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">压测结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%8C%87%E6%A0%87-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">其他指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90-2"><span class="nav-number">2.3.3.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88-2"><span class="nav-number">2.3.4.</span> <span class="nav-text">优化方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E8%BD%AE%E5%8E%8B%E6%B5%8B"><span class="nav-number">2.4.</span> <span class="nav-text">第四轮压测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E6%B5%8B%E7%BB%93%E6%9E%9C-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">压测结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%8C%87%E6%A0%87-2"><span class="nav-number">2.4.2.</span> <span class="nav-text">其他指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90-3"><span class="nav-number">2.4.3.</span> <span class="nav-text">原因分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Druid%E8%BF%9E%E6%8E%A5%E6%B1%A0%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">Druid连接池问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E7%BA%BF%E7%A8%8B%E9%98%9F%E5%88%97%E6%BB%A1%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.3.2.</span> <span class="nav-text">异步线程队列满问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Log4j%E6%97%A5%E5%BF%97%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.3.3.</span> <span class="nav-text">Log4j日志问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88-3"><span class="nav-number">2.4.4.</span> <span class="nav-text">优化方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E8%BD%AE%E5%8E%8B%E6%B5%8B"><span class="nav-number">2.5.</span> <span class="nav-text">第五轮压测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E6%B5%8B%E7%BB%93%E6%9E%9C-4"><span class="nav-number">2.5.1.</span> <span class="nav-text">压测结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%8C%87%E6%A0%87-3"><span class="nav-number">2.5.2.</span> <span class="nav-text">其他指标</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">优化总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-02-dubbo-app-perf-tunning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="记一次Dubbo应用性能优化 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          记一次Dubbo应用性能优化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-03 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-03T00:00:00+08:00">2022-07-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>新的应用以dubbo接口对外暴露调度能力。<br>在上线前需要整体压测，确认下系统能力与瓶颈。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>目标QPS: 500+<br>目标RT: 100ms-</p>
+<h2 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216549.png"></p>
+<h2 id="应用框架"><a href="#应用框架" class="headerlink" title="应用框架"></a>应用框架</h2><ul>
+<li>SpringBoot 2.5.6</li>
+<li>Druid 1.1.22</li>
+</ul>
+<h2 id="机器配置清单"><a href="#机器配置清单" class="headerlink" title="机器配置清单"></a>机器配置清单</h2><ul>
+<li>ECS规格： ecs.n4.2xlarge</li>
+<li>2台8C16G 独享型</li>
+<li>CPU: 2.5 GHz主频的Intel ® Xeon ®处理器</li>
+<li>JDK 1.8</li>
+<li>网络： 1.2Gbps，即至少支持100MB&#x2F;s的内网带宽</li>
+</ul>
+<h2 id="中间件配置清单"><a href="#中间件配置清单" class="headerlink" title="中间件配置清单"></a>中间件配置清单</h2><h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><ul>
+<li>规格：8C32GB</li>
+<li>支持的最大连接数量：30000</li>
+<li>Host到Redis的Ping延时在1ms以内</li>
+</ul>
+<h3 id="DB-x2F-RDS"><a href="#DB-x2F-RDS" class="headerlink" title="DB&#x2F;RDS"></a>DB&#x2F;RDS</h3><ul>
+<li>规格：mysql.x4.4xlarge.2 32C128GB</li>
+<li>MySQL 5.7</li>
+<li>支持的最大连接数量：20000</li>
+<li>Host到DB的Ping延时在1ms以内</li>
+</ul>
+<h1 id="压测记录"><a href="#压测记录" class="headerlink" title="压测记录"></a>压测记录</h1><h2 id="第一轮压测"><a href="#第一轮压测" class="headerlink" title="第一轮压测"></a>第一轮压测</h2><h3 id="压测结果"><a href="#压测结果" class="headerlink" title="压测结果"></a>压测结果</h3><ul>
+<li>压到140QPS时， RT已经飙升到8s+；</li>
+</ul>
+<h3 id="其他指标"><a href="#其他指标" class="headerlink" title="其他指标"></a>其他指标</h3><ul>
+<li>cpu: 已经基本跑满了，利用率780+%；</li>
+<li>mem: 内存占用量很低，总体稳定在34%左右。</li>
+<li>网络： 总体入流量在10Mbps以下，出流量1Mbps以下，远远没有打到带宽上限。</li>
+<li>磁盘： 没有频繁的磁盘IO</li>
+<li>Java: 没有发生频繁的GC。</li>
+</ul>
+<h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>根据应用日志，发现有如下几个问题：</p>
+<ul>
+<li>Redis访问<ul>
+<li>单次schedule()请求，会连续串行调用40+次的redis get接口。</li>
+<li>这些串行的get调用，加起来平均耗时在6s+</li>
+</ul>
+</li>
+<li>其他问题：<ul>
+<li>apache.util中Pair类型序列化问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="Redis访问速度慢问题分析"><a href="#Redis访问速度慢问题分析" class="headerlink" title="Redis访问速度慢问题分析"></a>Redis访问速度慢问题分析</h3><h4 id="是否是服务端问题？"><a href="#是否是服务端问题？" class="headerlink" title="是否是服务端问题？"></a>是否是服务端问题？</h4><p>查看了Redis服务端整体性能情况：</p>
+<ul>
+<li>出口帶寬爲100MB，當時只利用了10%左右</li>
+<li>CPU Usage 14% 左右</li>
+<li>連接數：最大支持30000，當時只有3個穩定的連接</li>
+<li>QPS: 高峯期QPS爲6000，而實例的max爲24w，使用率僅爲2.5%，遠遠沒有達到限流閾值</li>
+</ul>
+<h4 id="是否是客户端问题？"><a href="#是否是客户端问题？" class="headerlink" title="是否是客户端问题？"></a>是否是客户端问题？</h4><ul>
+<li>網絡流量：10MB左右，遠遠沒有打滿。</li>
+<li>Load: 很低，0.2以下</li>
+</ul>
+<h4 id="問題定位"><a href="#問題定位" class="headerlink" title="問題定位"></a>問題定位</h4><p>在這種情況下，一般就只能懷疑是client連接問題。類似HttpClient，客戶端請求都在排隊等着獲取connection。</p>
+<ul>
+<li>方案1： 增大連接池配置，增大最大連接數量。</li>
+<li>方案2： 減少請求次數</li>
+</ul>
+<h3 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h3><ul>
+<li>Redis优化：<ul>
+<li>采用了方案2： 使用Redis的mget，而不是单个get。以减少网络交互</li>
+<li>为啥没采用方案1？ <blockquote>
+<p>因为 SpringBoot 1.5.x 版本默认使用Jedis作为redis client，比较好调整connection数量等。<br/><br>但 SpringBoot 2.x 版本默认使用了Lettuce作为redis client，本身基于Netty的异步IO方式实现，与Jedis不同，本身就支持单个连接被多个线程同时访问。<br>所以官方不建议配置连接池。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042214249.png"></p>
+<ul>
+<li>其他问题优化<ul>
+<li>自己重新实现了一版Pair类型的序列化、反序列化方式</li>
+</ul>
+</li>
+</ul>
+<h2 id="第二轮压测"><a href="#第二轮压测" class="headerlink" title="第二轮压测"></a>第二轮压测</h2><h3 id="压测结果-1"><a href="#压测结果-1" class="headerlink" title="压测结果"></a>压测结果</h3><ul>
+<li>在250QPS时，RT基本稳定在100ms以下</li>
+<li>压到300QPS时，RT突然飙升到3s+</li>
+<li>cpu利用率较低</li>
+<li>内存占用量很低，总体稳定在34%左右</li>
+<li>没有发生GC</li>
+</ul>
+<h3 id="原因分析-1"><a href="#原因分析-1" class="headerlink" title="原因分析"></a>原因分析</h3><p>根据日志打点，很容易找到当时的瓶颈就在ram-client调用鉴权服务鉴权上。</p>
+<ul>
+<li>RAM接口问题：</li>
+</ul>
+<h3 id="优化方案-1"><a href="#优化方案-1" class="headerlink" title="优化方案"></a>优化方案</h3><ul>
+<li>RAM Client优化：<ul>
+<li>增大client的max-connections数量，增大到300。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>这里有个插曲，当增大client的max-connections数量到300之后，重新进行了一次压测，发现QPS并没有提升，RT的瓶颈仍然在访问RAM上！ <br/><br>后续看了ram-client的发布记录，发现属于ram-client的一个bug。<br/><br>ram-client使用了http-client作为内部实现。<br/><br>当前版本中，增大max-connections数量，只是增大了httpclient全局支持的connection数量，而单个host支持的connection数量仍然是默认值，即8. <br/><br>由于访问ram的endpoint就是单个host，因此相当于该配置没有生效！ <br/><br>后续升级了ram-client版本，新版本实现里，将max-connections值同时赋给了max-connections-per-host，因此相当于max-connections-per-host也被调大为300了<br/><br>关于max-connections与max-connections-per-host参数的详细解释，参见： <a href="https://davyjones2010.github.io/2022-03-15-http-client-netty/">异步HttpClient使用Netty作为SocketChannel的Provider</a></p>
+</blockquote>
+<h2 id="第三轮压测"><a href="#第三轮压测" class="headerlink" title="第三轮压测"></a>第三轮压测</h2><h3 id="压测结果-2"><a href="#压测结果-2" class="headerlink" title="压测结果"></a>压测结果</h3><ul>
+<li><p>200QPS, 80ms RT</p>
+</li>
+<li><p>300QPS，2000ms RT</p>
+</li>
+<li><p>结果与上轮相比，并没有显著提升。</p>
+</li>
+<li><p>根据日志分析，ramclient耗时已经趋于平稳，平均10ms以下，调度耗时又上来了。</p>
+</li>
+</ul>
+<h3 id="其他指标-1"><a href="#其他指标-1" class="headerlink" title="其他指标"></a>其他指标</h3><ul>
+<li>cpu: 利用率较高，780%+</li>
+<li>mem: 内存占用量很低，总体稳定在34%左右。</li>
+<li>网络： 总体流量在10Mbps，远远没有打到带宽上限。</li>
+<li>磁盘： 没有频繁的磁盘IO</li>
+<li>Java: 没有发生频繁的GC。</li>
+</ul>
+<h3 id="原因分析-2"><a href="#原因分析-2" class="headerlink" title="原因分析"></a>原因分析</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042215103.png"><br>根据当时的线程堆栈分析，占用CPU量最大的就是8个lettuce线程，几乎把CPU时间片占满了。<br>同时搜索了相关问题 ，发现<a target="_blank" rel="noopener" href="https://gitter.im/lettuce-io/Lobby?at=5de8f93446397c721c8ed8ed">不是个例</a>。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042215636.png"></p>
+<h3 id="优化方案-2"><a href="#优化方案-2" class="headerlink" title="优化方案"></a>优化方案</h3><ul>
+<li>Redis:<ul>
+<li>使用Jedis作为Client，并且调大Jedis对应的连接池数量</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.redis.client-type</span><span class="token punctuation">=</span><span class="token value attr-value">jedis</span>
+<span class="token key attr-name">spring.redis.jedis.pool.max-active</span><span class="token punctuation">=</span><span class="token value attr-value">100</span>
+<span class="token key attr-name">spring.redis.jedis.pool.max-idle</span><span class="token punctuation">=</span><span class="token value attr-value">16</span>
+<span class="token key attr-name">spring.redis.jedis.pool.max-wait</span><span class="token punctuation">=</span><span class="token value attr-value">10000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="第四轮压测"><a href="#第四轮压测" class="headerlink" title="第四轮压测"></a>第四轮压测</h2><h3 id="压测结果-3"><a href="#压测结果-3" class="headerlink" title="压测结果"></a>压测结果</h3><ul>
+<li>300QPS，100ms RT</li>
+<li>350QPS，200ms RT</li>
+<li>400QPS，2000ms RT</li>
+</ul>
+<h3 id="其他指标-2"><a href="#其他指标-2" class="headerlink" title="其他指标"></a>其他指标</h3><ul>
+<li>cpu: 利用率较高，780%+</li>
+<li>mem: 内存占用量很低，总体稳定在34%左右。</li>
+<li>网络： 总体流量在10Mbps，远远没有打到带宽上限。</li>
+<li>磁盘： 没有频繁的磁盘IO</li>
+<li>Java: 没有发生频繁的GC。</li>
+</ul>
+<h3 id="原因分析-3"><a href="#原因分析-3" class="headerlink" title="原因分析"></a>原因分析</h3><p>打印出了当时的线程栈信息，进行了详细的分析如下：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>线程数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>獲取Druid連接</td>
+<td>442</td>
+</tr>
+<tr>
+<td>歸還Druid連接</td>
+<td>164</td>
+</tr>
+<tr>
+<td>業務線程中Bind操作</td>
+<td>107</td>
+</tr>
+<tr>
+<td>Log4j打印</td>
+<td>77</td>
+</tr>
+<tr>
+<td>Jedis執行</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<ul>
+<li>大部分线程卡在Druid数据库连接池归还连接、获取连接的搶鎖阶段（lock()）</li>
+<li>小部分线程由于bind()异步线程池队列满，导致占用了业务线程</li>
+<li>最后一部分线程卡（blocked）在log4j打印日志</li>
+</ul>
+<h4 id="Druid连接池问题"><a href="#Druid连接池问题" class="headerlink" title="Druid连接池问题"></a>Druid连接池问题</h4><p>與 <a target="_blank" rel="noopener" href="https://blog.csdn.net/beFocused/article/details/108533137">记一次Dubbo线程耗尽的问题-druid数据库连接池突发性能</a> 文中的問題一模一樣。</p>
+<h4 id="异步线程队列满问题"><a href="#异步线程队列满问题" class="headerlink" title="异步线程队列满问题"></a>异步线程队列满问题</h4><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216269.png"></p>
+<p>隊列默認長度爲200，在200的長度滿了之後，使用的是<code>ThreadPoolExecutor.CallerRunsPolicy</code>, 即不再在異步線程裏執行，而是在caller線程中執行。<br>從而導致業務線程壓力進一步增大。</p>
+<h4 id="Log4j日志问题"><a href="#Log4j日志问题" class="headerlink" title="Log4j日志问题"></a>Log4j日志问题</h4><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216085.png"><br>也是比較經典的問題，使用Log2j的異步logger即可解決。</p>
+<h3 id="优化方案-3"><a href="#优化方案-3" class="headerlink" title="优化方案"></a>优化方案</h3><ul>
+<li><p>Druid优化： </p>
+<ul>
+<li>增大连接池中initial与max的连接数量</li>
+<li>使用非公平锁，而不是默认的公平锁。具体参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RaiU9_ioWHvomZLLKuSuGw">有赞的压测记录</a>。<pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.datasource.druid.maxActive</span><span class="token punctuation">=</span><span class="token value attr-value">600</span>
+<span class="token key attr-name">spring.datasource.druid.initialSize</span><span class="token punctuation">=</span><span class="token value attr-value">300</span>
+<span class="token key attr-name">spring.datasource.druid.maxWait</span><span class="token punctuation">=</span><span class="token value attr-value">6000</span>
+<span class="token key attr-name">spring.datasource.druid.minIdle</span><span class="token punctuation">=</span><span class="token value attr-value">300</span>
+<span class="token key attr-name">spring.datasource.druid.poolPreparedStatements</span><span class="token punctuation">=</span><span class="token value attr-value">true</span>
+<span class="token key attr-name">spring.datasource.druid.maxOpenPreparedStatements</span><span class="token punctuation">=</span><span class="token value attr-value">20</span>
+<span class="token key attr-name">spring.datasource.druid.useUnfairLock</span><span class="token punctuation">=</span><span class="token value attr-value">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>bind线程池优化：</p>
+<ul>
+<li>增大队列大小，从200增大到20000</li>
+</ul>
+</li>
+<li><p>log4j优化：</p>
+<ul>
+<li>使用log4j2的asyncLogger。</li>
+</ul>
+</li>
+</ul>
+<h2 id="第五轮压测"><a href="#第五轮压测" class="headerlink" title="第五轮压测"></a>第五轮压测</h2><h3 id="压测结果-4"><a href="#压测结果-4" class="headerlink" title="压测结果"></a>压测结果</h3><ul>
+<li>在600QPS时，RT基本稳定在40ms以下。</li>
+<li>由于每次调用接口，都会调用一次ram鉴权接口，ram整体限制单个租户需要小于600qps；也担心把ram接口打挂或者被ram限流，因此不再继续压测。</li>
+<li>按照其他指标推测，<mark> 理论上可以打到1000QPS+，即单机500QPS+ </mark></li>
+<li>终于达标了！~ 撒花庆祝~~~</li>
+</ul>
+<h3 id="其他指标-3"><a href="#其他指标-3" class="headerlink" title="其他指标"></a>其他指标</h3><ul>
+<li>cpu: 利用率较低，400%左右</li>
+<li>mem: 内存占用量很低，总体稳定在34%左右。</li>
+<li>网络： 总体流量在10Mbps，远远没有打到带宽上限。</li>
+<li>磁盘： 没有频繁的磁盘IO</li>
+<li>Java: 没有发生频繁的GC。</li>
+</ul>
+<h1 id="优化总结"><a href="#优化总结" class="headerlink" title="优化总结"></a>优化总结</h1>
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/dubbo/" rel="tag"># dubbo</a>
+              <a href="/tags/perf-tunning/" rel="tag"># perf-tunning</a>
+              <a href="/tags/redis/" rel="tag"># redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-07-01-java-jvm/" rel="prev" title="Java&JVM&OQL 常用命令与脚本总结">
+                  <i class="fa fa-chevron-left"></i> Java&JVM&OQL 常用命令与脚本总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-07-03-random-snippets/" rel="next" title="一些有意思的记录-4">
+                  一些有意思的记录-4 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

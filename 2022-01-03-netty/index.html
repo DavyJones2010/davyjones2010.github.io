@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="rgba(0,0,0,0)" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="TCP黏包拆包问题问题描述黏包:    1. 一次从缓冲区, 读取到了多个完整数据包, 需要将这几个数据包分别解析.拆包:    1. 一次从缓冲区, 读到了一个数据包的部分(可能由于服务端TCP接收滑窗非常小), 需要多次读取才能构建完整的数据包黏包+拆包:    1. 一次从缓冲区, 读取到一个数据包+另一个数据包的部分 解决方案 消息定长, 例如每个报文大小固定xx个字节, 如果不够, 则用">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Netty权威指南笔记">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-01-03-netty/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="TCP黏包拆包问题问题描述黏包:    1. 一次从缓冲区, 读取到了多个完整数据包, 需要将这几个数据包分别解析.拆包:    1. 一次从缓冲区, 读到了一个数据包的部分(可能由于服务端TCP接收滑窗非常小), 需要多次读取才能构建完整的数据包黏包+拆包:    1. 一次从缓冲区, 读取到一个数据包+另一个数据包的部分 解决方案 消息定长, 例如每个报文大小固定xx个字节, 如果不够, 则用">
+<meta property="og:locale">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071208885.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071206397.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071207489.png">
+<meta property="article:published_time" content="2022-01-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-07T09:54:11.331Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="books">
+<meta property="article:tag" content="2022">
+<meta property="article:tag" content="Netty">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Nio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071208885.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-01-03-netty/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"https://davyjones2010.github.io/2022-01-03-netty/","path":"/2022-01-03-netty/","title":"Netty权威指南笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Netty权威指南笔记 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E9%BB%8F%E5%8C%85%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">TCP黏包拆包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LineBasedFrameDecoder%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">LineBasedFrameDecoder原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netty%E7%BC%96%E8%A7%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">Netty编解码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%B0%E6%9C%89%E5%BA%8F%E5%88%97%E5%8C%96%E6%96%B9%E6%A1%88"><span class="nav-number">2.1.</span> <span class="nav-text">现有序列化方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E9%BB%98%E8%AE%A4%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">2.1.1.</span> <span class="nav-text">Java默认序列化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Protobuf"><span class="nav-number">2.1.2.</span> <span class="nav-text">Protobuf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML-x2F-Json"><span class="nav-number">2.1.3.</span> <span class="nav-text">XML&#x2F;Json</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty%E4%B8%AD%E5%AF%B9Java%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%AF%E6%8C%81"><span class="nav-number">2.2.</span> <span class="nav-text">Netty中对Java序列化支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty%E4%B8%AD%E5%AF%B9Protobuf%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%AF%E6%8C%81"><span class="nav-number">2.3.</span> <span class="nav-text">Netty中对Protobuf序列化支持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netty-HTTP%E5%8D%8F%E8%AE%AE%E5%BC%80%E5%8F%91"><span class="nav-number">3.</span> <span class="nav-text">Netty HTTP协议开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%B7%AF%E5%85%B3%E9%97%AD%E5%9C%BA%E6%99%AF"><span class="nav-number">3.1.</span> <span class="nav-text">链路关闭场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E6%80%A7%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.2.</span> <span class="nav-text">可靠性设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%83%E8%B7%B3%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">心跳机制</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number"></span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%BA%94%E7%94%A8%E4%B8%AD%E5%B8%B8%E7%94%A84%E7%A7%8D%E8%B7%A8%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">Java应用中常用4种跨节点通信方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E8%B7%A8%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E7%A7%81%E6%9C%89%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">Java跨节点通信私有协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UpStream-amp-DownStream%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">UpStream&amp;DownStream的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChannelHandler%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">ChannelHandler线程安全的理解</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-01-03-netty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Netty权威指南笔记 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Netty权威指南笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-04 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-04T00:00:00+08:00">2022-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 17:54:11" itemprop="dateModified" datetime="2022-08-07T17:54:11+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="TCP黏包拆包问题"><a href="#TCP黏包拆包问题" class="headerlink" title="TCP黏包拆包问题"></a>TCP黏包拆包问题</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>黏包:<br>    1. 一次从缓冲区, 读取到了多个完整数据包, 需要将这几个数据包分别解析.<br>拆包:<br>    1. 一次从缓冲区, 读到了一个数据包的部分(可能由于服务端TCP接收滑窗非常小), 需要多次读取才能构建完整的数据包<br>黏包+拆包:<br>    1. 一次从缓冲区, 读取到一个数据包+另一个数据包的部分</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>消息定长, 例如每个报文大小固定xx个字节, 如果不够, 则用空格补充<ol>
+<li>FixedLengthFrameDecoder</li>
+</ol>
+</li>
+<li>在包尾设定分隔符: 例如FTP协议用回车+换行分隔<ol>
+<li>LineBasedFrameDecoder</li>
+<li>DelimiterBasedFrameDecoder</li>
+</ol>
+</li>
+<li>消息设置为消息头+消息体: 消息头中用int32字段代表消息的总长度</li>
+<li>更复杂的应用层协议</li>
+</ol>
+<h3 id="LineBasedFrameDecoder原理"><a href="#LineBasedFrameDecoder原理" class="headerlink" title="LineBasedFrameDecoder原理"></a>LineBasedFrameDecoder原理</h3><p>&#x2F;&#x2F; todo</p>
+<h2 id="Netty编解码"><a href="#Netty编解码" class="headerlink" title="Netty编解码"></a>Netty编解码</h2><h3 id="现有序列化方案"><a href="#现有序列化方案" class="headerlink" title="现有序列化方案"></a>现有序列化方案</h3><h4 id="Java默认序列化"><a href="#Java默认序列化" class="headerlink" title="Java默认序列化"></a>Java默认序列化</h4><p>缺点:</p>
+<ul>
+<li>无法跨语言</li>
+<li>序列化后码流太大</li>
+<li>序列化性能太差<br>几乎没有主流的RPC采用</li>
+</ul>
+<h4 id="Protobuf"><a href="#Protobuf" class="headerlink" title="Protobuf"></a>Protobuf</h4><ul>
+<li>语言无关, 平台无关, 扩展性好</li>
+<li>性能好</li>
+</ul>
+<h4 id="XML-x2F-Json"><a href="#XML-x2F-Json" class="headerlink" title="XML&#x2F;Json"></a>XML&#x2F;Json</h4><p>解析时间开销, 空间开销都太大; 不适合做高性能的通信协议</p>
+<h3 id="Netty中对Java序列化支持"><a href="#Netty中对Java序列化支持" class="headerlink" title="Netty中对Java序列化支持"></a>Netty中对Java序列化支持</h3><p>ObjectEncoder<br>ObjectDecoder</p>
+<h3 id="Netty中对Protobuf序列化支持"><a href="#Netty中对Protobuf序列化支持" class="headerlink" title="Netty中对Protobuf序列化支持"></a>Netty中对Protobuf序列化支持</h3><p>ProtobufVarint32FrameDecoder: 用于半包处理<br>ProtobufDecoder: 仅负责解码, 不支持读半包, 因此需要使用: ProtobufVarint32FrameDecoder<br>ProtobufVarint32LengthFieldPrepender<br>ProtobufEncoder</p>
+<h2 id="Netty-HTTP协议开发"><a href="#Netty-HTTP协议开发" class="headerlink" title="Netty HTTP协议开发"></a>Netty HTTP协议开发</h2><h3 id="链路关闭场景"><a href="#链路关闭场景" class="headerlink" title="链路关闭场景"></a>链路关闭场景</h3><ul>
+<li>对方宕机或者重启, 会主动关闭链路:<ul>
+<li>另一方会读取到操作系统层的通知信号, 得知对方REST链路, 需要关闭连接, 释放自身的句柄资源.</li>
+<li>是否有主动停机, 优雅关闭 类似 kill -3 ?</li>
+</ul>
+</li>
+<li>消息读写过程, 发生了IO异常, 需要主动关闭</li>
+<li>心跳读写过程, 发生了IO异常, 需要主动关闭</li>
+<li>心跳超时, 需要主动关闭</li>
+<li>编解码等不可恢复错误时, 需要主动关闭</li>
+</ul>
+<h3 id="可靠性设计"><a href="#可靠性设计" class="headerlink" title="可靠性设计"></a>可靠性设计</h3><h4 id="心跳机制"><a href="#心跳机制" class="headerlink" title="心跳机制"></a>心跳机制</h4><ul>
+<li><p>网络空闲持续时间达到T(连续周期T没有读写消息)时, 客户端主动发送Ping心跳给服务端(这个与zkClient机制很相似)</p>
+</li>
+<li><p>如果在下一个周期T到来时, 客户端没有收到对方发送的Pong心跳应答消息, 或者读取到服务端发送的其他业务消息, 则心跳失败计数器+1</p>
+</li>
+<li><p>每当客户端接受到服务端的业务消息或者Pong应答消息, 则将心跳失败计数器清零.</p>
+</li>
+<li><p>当连续N次没有接受到服务端的Pong消息或者业务消息, 则主动关闭链路. 间隔INTERVAL之后, 发起重连操作.</p>
+</li>
+<li><p>服务端网络空闲持续时间达到T后, 服务端心跳失败计数器+1; 只要接收到客户端的Ping消息或者其他业务消息, 计数器清零</p>
+</li>
+<li><p>服务端连续N次没有接收到客户端的Ping消息或者其他业务消息, 则关闭链路, 释放资源, 等待客户端重连(这点与客户端机制不同).</p>
+</li>
+<li><p>需要防止: 由于一方短时间内繁忙没有及时返回应答消息导致的误判, 所以需要连续N个心跳检测都失败, 才能认定链路已经断连, 需要关闭并重建.</p>
+</li>
+<li><p>如果读写心跳发生IO异常, 说明链路已经中断, 此时就立刻关闭链路:</p>
+<ul>
+<li>如果客户端, 则需要重新发起连接.</li>
+<li>如果是服务端, 则需要清空缓存的半包信息, 等待客户端重连.</li>
+</ul>
+</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 如下代表啥意思:</span>
+<span class="token class-name">Unpooled</span><span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>lenght<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Unpooled</span><span class="token punctuation">.</span><span class="token function">copiedBuffer</span><span class="token punctuation">(</span>currentTime<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 根据操作系统获取换行符, 例如Linux下是\n, Windows下是\r\n(\r回车, 即把打字机针头放到行首; \n换行, 即把纸向下移动一行), Mac下是\r</span>
+<span class="token comment">// Unix/Mac系统下的文件在Windows里打开的话，所有文字会变成一行; </span>
+<span class="token comment">// 而Windows里的文件在Unix/Mac下打开的话，在每行的结尾可能会多出一个^M符号</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"line.separator"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="Java应用中常用4种跨节点通信方案"><a href="#Java应用中常用4种跨节点通信方案" class="headerlink" title="Java应用中常用4种跨节点通信方案"></a>Java应用中常用4种跨节点通信方案</h2><ul>
+<li>RMI</li>
+<li>Socket + Java序列化</li>
+<li>开源RPC框架, dubbo, thrift, avro</li>
+<li>公有协议: HTTP+XML, RESTful + JSON 或者 WebService</li>
+</ul>
+<h2 id="Java跨节点通信私有协议"><a href="#Java跨节点通信私有协议" class="headerlink" title="Java跨节点通信私有协议"></a>Java跨节点通信私有协议</h2><ul>
+<li>请求响应消息编解码定义</li>
+<li>控制和管理类指令<ul>
+<li>链路建立的握手请求和响应消息</li>
+<li>链路检测的心跳消息</li>
+</ul>
+</li>
+</ul>
+<h2 id="UpStream-amp-DownStream的理解"><a href="#UpStream-amp-DownStream的理解" class="headerlink" title="UpStream&amp;DownStream的理解"></a>UpStream&amp;DownStream的理解</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hills/article/details/46766665">对Netty服务端的 UpStream和DownStream的浅识</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9374284/how-does-upstream-and-downstream-handlers-work-in-netty">9374284&#x2F;how-does-upstream-and-downstream-handlers-work-in-netty</a></li>
+</ul>
+<ul>
+<li>UpStreamHandler, 即消息是从TCP&#x2F;IP协议栈的下层往上层传输, 即从 物理层(网卡) -&gt; 传输层(TCP) -&gt; 应用层(Netty代码处理), 即Inbound</li>
+<li>DownStreamHandler, 即消息是从TCP&#x2F;IP协议栈的上层往下层传输, 即从 应用层(Netty代码处理) -&gt; 传输层(TCP) -&gt; 物理层(网卡), 即Outbound</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071208885.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071206397.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071207489.png"></p>
+<h2 id="ChannelHandler线程安全的理解"><a href="#ChannelHandler线程安全的理解" class="headerlink" title="ChannelHandler线程安全的理解"></a>ChannelHandler线程安全的理解</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://netty.io/3.8/guide/#architecture.8.5">Do I need to synchronize my handler code given that events can happen at the same time?</a></li>
+</ul>
+<p>前提: OneHandler per Channel</p>
+<ul>
+<li>UpStreamHandler是不必担心线程安全性问题的:<ul>
+<li>单个TimeServerHandler内部, 不必担心i++共享导致的问题. </li>
+<li>两个TimeServerHandler会串行执行.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>ChannelUpstreamHandler will be invoked sequentially by the same thread</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// socketChannel.pipeline().addLast(new TimeServerHandler()).addLast(new TimeServerHandler());</span>
+<span class="token keyword">private</span> <span class="token keyword">class</span> <span class="token class-name">TimeServerHandler</span> <span class="token keyword">extends</span> <span class="token class-name">ChannelInboundHandlerAdapter</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">channelActive</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">channelActive</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">channelRead</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">,</span> <span class="token class-name">Object</span> msg<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        i<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>- </p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/books/" rel="tag"># books</a>
+              <a href="/tags/2022/" rel="tag"># 2022</a>
+              <a href="/tags/Netty/" rel="tag"># Netty</a>
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/Nio/" rel="tag"># Nio</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021-12-31-booklist-for-2022/" rel="prev" title="2022 年度书单">
+                  <i class="fa fa-chevron-left"></i> 2022 年度书单
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022-01-31-jetty-monitor-oom-bug/" rel="next" title="记一次由于使用jetty-monitor导致的内存泄露问题">
+                  记一次由于使用jetty-monitor导致的内存泄露问题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
