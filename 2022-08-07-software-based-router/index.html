@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="垃圾佬的周末, 没事儿就是瞎折腾, 前段时间被种草了软路由, 一直心痒痒. 月底下单奢侈一把, 今天给彻底搞起来了. 现在总结下. 为啥要使用软路由?有几个原因:   家里的Android(V2RayNG), Mac(ClashX), Windows, Ubuntu等设备都有相关软件能科学上网; 但iPad, iPhone等设备, 安装小火箭, 必须要登录海外AppStore, 而且软件还收费,">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="瞎折腾软路由笔记">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-08-07-software-based-router/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="垃圾佬的周末, 没事儿就是瞎折腾, 前段时间被种草了软路由, 一直心痒痒. 月底下单奢侈一把, 今天给彻底搞起来了. 现在总结下. 为啥要使用软路由?有几个原因:   家里的Android(V2RayNG), Mac(ClashX), Windows, Ubuntu等设备都有相关软件能科学上网; 但iPad, iPhone等设备, 安装小火箭, 必须要登录海外AppStore, 而且软件还收费,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072212775.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072216377.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072139468.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072140766.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072141717.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072137732.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072130374.png">
+<meta property="article:published_time" content="2022-08-07T12:38:43.000Z">
+<meta property="article:modified_time" content="2022-08-07T14:26:50.186Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="open-wrt">
+<meta property="article:tag" content="software-based-router">
+<meta property="article:tag" content="router">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072212775.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-08-07-software-based-router/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-08-07-software-based-router/","path":"/2022-08-07-software-based-router/","title":"瞎折腾软路由笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>瞎折腾软路由笔记 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme.html" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E8%A6%81%E4%BD%BF%E7%94%A8%E8%BD%AF%E8%B7%AF%E7%94%B1"><span class="nav-number">1.</span> <span class="nav-text">为啥要使用软路由?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%B8%85%E5%8D%95"><span class="nav-number">2.</span> <span class="nav-text">配置清单</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenWrt%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">OpenWrt安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">插件配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91"><span class="nav-number">4.</span> <span class="nav-text">网络拓扑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%94%B9%E9%80%A0%E5%89%8D"><span class="nav-number">4.1.</span> <span class="nav-text">软路由改造前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%94%B9%E9%80%A0%E5%90%8E"><span class="nav-number">4.2.</span> <span class="nav-text">软路由改造后</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">效果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E9%A2%84%E8%A7%88"><span class="nav-number">5.1.</span> <span class="nav-text">效果预览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.2.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">158</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-08-07-software-based-router/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="瞎折腾软路由笔记 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          瞎折腾软路由笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-07 20:38:43 / 修改时间：22:26:50" itemprop="dateCreated datePublished" datetime="2022-08-07T20:38:43+08:00">2022-08-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%9E%8E%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">瞎折腾</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>垃圾佬的周末, 没事儿就是瞎折腾, 前段时间被种草了软路由, 一直心痒痒. 月底下单奢侈一把, 今天给彻底搞起来了. 现在总结下.</p>
+<h1 id="为啥要使用软路由"><a href="#为啥要使用软路由" class="headerlink" title="为啥要使用软路由?"></a>为啥要使用软路由?</h1><p>有几个原因: </p>
+<ol>
+<li>家里的Android(V2RayNG), Mac(ClashX), Windows, Ubuntu等设备都有相关软件能科学上网; 但iPad, iPhone等设备, 安装小火箭, 必须要登录海外AppStore, 而且软件还收费, 太麻烦, 因此没有配置科学上网. 对强迫症患者来说, 简直是灾难.</li>
+<li>想要对网络设备的工作原理能有更深入的理解. 例如路由器的底层工作原理, 实际的路由表是咋样的? 之前使用华为的路由器, 这些权限完全是没有的, 也没办法看到这些的. 对于越狱狂魔来说, 也同样是灾难.</li>
+<li>家里的路由器明显感觉力不从心, 100M的带宽, 平常根本跑不满, 就开始发热. </li>
+<li>IPTV共享: <ol>
+<li>无法啊忍受丑陋的电信机顶盒(烽火 HG680-J), 设计得丑陋不堪, 遥控器巨难用; </li>
+<li>只能在客厅使用, 卧室里也想连接IPTV, 但是连接不上.</li>
+</ol>
+</li>
+</ol>
+<p>软路由本质上是一个低功耗的x86机器, 应该能很好地解决上边的问题. </p>
+<h1 id="配置清单"><a href="#配置清单" class="headerlink" title="配置清单"></a>配置清单</h1><table>
+<thead>
+<tr>
+<th>配件名称</th>
+<th>品牌</th>
+<th>价格</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主机</td>
+<td><a target="_blank" rel="noopener" href="https://detail.tmall.com/item.htm?id=673002078011&spm=a1z09.2.0.0.237b2e8dIxvpd0&_u=77rqrdmc3b6">倍控</a></td>
+<td>729</td>
+<td>裸机,</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/products/sku/212328/intel-celeron-processor-n5105-4m-cache-up-to-2-90-ghz/specifications.html">Intel N5105</a></td>
+<td>无, 包含在主机里</td>
+<td>第11代, Jasper Lake; 4Core; 10nm; Base 2GHz, Burst 2.9GHz; 4MB L3 Cache; 10W TDP</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>三星</td>
+<td>380</td>
+<td>16GB * 2(组成双通道); DDR4; 3200MHz;</td>
+</tr>
+<tr>
+<td>闪存</td>
+<td>西数 SN570</td>
+<td>350</td>
+<td>500GB; NVME</td>
+</tr>
+<tr>
+<td>网卡</td>
+<td>Intel I225-V</td>
+<td>无, 包含在主机里</td>
+<td>4个物理网口&#x2F;卡; 1000Mbps</td>
+</tr>
+</tbody></table>
+<p>几乎可以说是目前工控机的顶配了.</p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><h2 id="OpenWrt安装"><a href="#OpenWrt安装" class="headerlink" title="OpenWrt安装"></a>OpenWrt安装</h2><p>裸机上安装OpenWrt, 配置步骤直接看小电视: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1w541157Uo?spm_id_from=333.880.my_history.page.click&amp;vd_source=25b2aadfc1b4b676c371c31423142e7b">https://www.bilibili.com/video/BV1w541157Uo?spm_id_from=333.880.my_history.page.click&amp;vd_source=25b2aadfc1b4b676c371c31423142e7b</a></p>
+<h2 id="插件配置"><a href="#插件配置" class="headerlink" title="插件配置"></a>插件配置</h2><ul>
+<li>OpenClash: &#x2F;&#x2F; TODO:</li>
+</ul>
+<h1 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h1><p>由于家里的网络是FTTB(Fiber-To-The-Building)的, 因此没有光猫, 只有一根入户线. </p>
+<h2 id="软路由改造前"><a href="#软路由改造前" class="headerlink" title="软路由改造前"></a>软路由改造前</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072212775.png"></p>
+<h2 id="软路由改造后"><a href="#软路由改造后" class="headerlink" title="软路由改造后"></a>软路由改造后</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072216377.png"></p>
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><h2 id="效果预览"><a href="#效果预览" class="headerlink" title="效果预览"></a>效果预览</h2><ol>
+<li>安装好 <a target="_blank" rel="noopener" href="https://github.com/vernesong/OpenClash">OpenClash</a> 插件, 局域网内科学上网无忧.  </li>
+<li>直接SSH上去, 看到任何的网络相关信息:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072139468.png" alt="ARP表"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072140766.png" alt="路由表"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072141717.png" alt="网桥"></li>
+<li>网速基本能跑满:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072137732.png"></li>
+<li>IPTV共享: 目前还未实现, 涉及到组播+vLan等, 还在研究中.</li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>CPU Load极低, 长期维持在0.1-;</li>
+<li>MEM 使用比例极低, 长期可用内存维持在96%+;</li>
+<li>资源完全没有充分利用起来!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072130374.png"></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总体来说, 虽然达到了部分目标, 但还是大材小用了! 后边计划有几种方案来充分压榨: </p>
+<ul>
+<li>多跑几个docker容器, 例如搭建Jenkins, GitLab, Nginx, Redis; 方便自己平常的压测验证. </li>
+<li>改成裸机上刷esxi, 搭建几个虚拟机, 把OpenWrt放在其中一个虚拟机里, 其他的Ubuntu, Windows等作为日常休闲娱乐机.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/network/" rel="tag"># network</a>
+              <a href="/tags/open-wrt/" rel="tag"># open-wrt</a>
+              <a href="/tags/software-based-router/" rel="tag"># software-based-router</a>
+              <a href="/tags/router/" rel="tag"># router</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-07-23-github-token-login/" rel="prev" title="从GitHub CLI禁止用户名密码登录引发的思考与总结">
+                  <i class="fa fa-chevron-left"></i> 从GitHub CLI禁止用户名密码登录引发的思考与总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">229k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

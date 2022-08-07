@@ -281,22 +281,12 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
     <span class="token key atrule">emptyDir</span><span class="token punctuation">:</span>
       <span class="token key atrule">medium</span><span class="token punctuation">:</span> HugePages<span class="token punctuation">-</span>1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="pod实际是如何使用大页内存的"><a href="#pod实际是如何使用大页内存的" class="headerlink" title="pod实际是如何使用大页内存的?"></a>pod实际是如何使用大页内存的?</h3><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a href="https://www.mgasch.com/2017/10/sched-reconcile/">Node allocatable资源的含义</a><br><a href="https://www.youtube.com/watch?v=avORKrcyctM">Running Multiple Schedulers in Kubernetes by Xiaoning Ding, Huawei</a><br><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html/scalability_and_performance/what-huge-pages-do-and-how-they-are-consumed">k8s大页内存分配&amp;使用</a><br><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-configuring_transparent_huge_pages">linux上如何分配大页内存</a></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"Hello world! ecs"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Hello</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello world, abc!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>苟利国家生死以<br>岂因祸福避趋之。<br><br>One should uphold his country’s interest with his life, he should not do things just to pursue his personal gains and he should not be evade responsibilities for fear of personal loss.</p>
-</blockquote>
-<h1 id="Hello"><a href="#Hello" class="headerlink" title="Hello"></a>Hello</h1><h2 id="Hello-2"><a href="#Hello-2" class="headerlink" title="Hello 2"></a>Hello 2</h2><h1 id="Title-3"><a href="#Title-3" class="headerlink" title="Title 3"></a>Title 3</h1><h2 id="Hello-3"><a href="#Hello-3" class="headerlink" title="Hello 3"></a>Hello 3</h2><p>Under what circumstances should we step off a path? When is it essential that we finish what we start? If I bought a bag of peanuts and had an allergic reaction, no one would fault me if I threw it out. If I ended a relationship with a woman who hit me, no one would say that I had a commitment problem. But if I walk away from a seemingly secure route because my soul has other ideas, I am a flake?</p>
-<p>The truth is that no one else can definitively know the path we are here to walk. It’s tempting to listen—many of us long for the omnipotent other—but unless they are genuine psychic intuitives, they can’t know. All others can know is their own truth, and if they’ve actually done the work to excavate it, they will have the good sense to know that they cannot genuinely know anyone else’s. Only soul knows the path it is here to walk. Since you are the only one living in your temple, only you can know its scriptures and interpretive structure.</p>
-<p>At the heart of the struggle are two very different ideas of success—survival-driven and soul-driven. For survivalists, success is security, pragmatism, power over others. Success is the absence of material suffering, the nourishing of the soul be damned. It is an odd and ironic thing that most of the material power in our world often resides in the hands of younger souls. Still working in the egoic and material realms, they love the sensations of power and focus most of their energy on accumulation. Older souls tend not to be as materially driven. They have already played the worldly game in previous lives and they search for more subtle shades of meaning in this one—authentication rather than accumulation. They are often ignored by the culture at large, although they really are the truest warriors.</p>
-<p>A soulful notion of success rests on the actualization of our innate image. Success is simply the completion of a soul step, however unsightly it may be. We have finished what we started when the lesson is learned. What a fear-based culture calls a wonderful opportunity may be fruitless and misguided for the soul. Staying in a passionless relationship may satisfy our need for comfort, but it may stifle the soul. Becoming a famous lawyer is only worthwhile if the soul demands it. It is an essential failure if you are called to be a monastic this time around. If you need to explore and abandon ten careers in order to stretch your soul toward its innate image, then so be it. Flake it till you make it.</p>
+<h3 id="pod实际是如何使用大页内存的"><a href="#pod实际是如何使用大页内存的" class="headerlink" title="pod实际是如何使用大页内存的?"></a>pod实际是如何使用大页内存的?</h3><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://www.mgasch.com/2017/10/sched-reconcile/">Node allocatable资源的含义</a></li>
+<li><a href="https://www.youtube.com/watch?v=avORKrcyctM">Running Multiple Schedulers in Kubernetes by Xiaoning Ding, Huawei</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html/scalability_and_performance/what-huge-pages-do-and-how-they-are-consumed">k8s大页内存分配&amp;使用</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-configuring_transparent_huge_pages">linux上如何分配大页内存</a></li>
+</ul>
 ]]></content>
       <tags>
         <tag>k8s</tag>
@@ -3577,7 +3567,38 @@ pid 20697'</span>s current affinity list: <span class="token number">0</span>-3<
 <ul>
 <li>执行进程绑核操作</li>
 </ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">taskset -p COREMASK PID<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">taskset -p COREMASK PID<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<h1 id="磁盘操作"><a href="#磁盘操作" class="headerlink" title="磁盘操作"></a>磁盘操作</h1><h2 id="查看块设备-包括已分区与未分区的"><a href="#查看块设备-包括已分区与未分区的" class="headerlink" title="查看块设备(包括已分区与未分区的)"></a>查看块设备(包括已分区与未分区的)</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@OpenWrt:~<span class="token comment"># lsblk</span>
+NAME          MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+nvme0n1       <span class="token number">259</span>:0    <span class="token number">0</span> <span class="token number">465</span>.8G  <span class="token number">0</span> disk
+├─nvme0n1p1   <span class="token number">259</span>:1    <span class="token number">0</span>    16M  <span class="token number">0</span> part /boot
+│                                       /boot
+├─nvme0n1p2   <span class="token number">259</span>:2    <span class="token number">0</span>   500M  <span class="token number">0</span> part /rom
+├─nvme0n1p3   <span class="token number">259</span>:3    <span class="token number">0</span>   128G  <span class="token number">0</span> part /overlay
+├─nvme0n1p4   <span class="token number">259</span>:4    <span class="token number">0</span>   128G  <span class="token number">0</span> part /mnt/nvme0n1p4
+├─nvme0n1p5   <span class="token number">259</span>:5    <span class="token number">0</span>   128G  <span class="token number">0</span> part /mnt/nvme0n1p5
+├─nvme0n1p6   <span class="token number">259</span>:6    <span class="token number">0</span>  <span class="token number">81</span>.3G  <span class="token number">0</span> part /mnt/nvme0n1p6
+└─nvme0n1p128 <span class="token number">259</span>:7    <span class="token number">0</span>   239K  <span class="token number">0</span> part<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="查看分区的文件系统类型"><a href="#查看分区的文件系统类型" class="headerlink" title="查看分区的文件系统类型"></a>查看分区的文件系统类型</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@OpenWrt:~<span class="token comment"># parted -l</span>
+Model: WD Blue SN570 500GB SSD <span class="token punctuation">(</span>nvme<span class="token punctuation">)</span>
+Disk /dev/nvme0n1: 500GB
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name  Flags
+<span class="token number">128</span>     <span class="token number">17</span>.4kB  262kB   245kB                      bios_grub
+ <span class="token number">1</span>      262kB   <span class="token number">17</span>.0MB  <span class="token number">16</span>.8MB  fat16              legacy_boot
+ <span class="token number">2</span>      <span class="token number">17</span>.0MB  541MB   524MB
+ <span class="token number">3</span>      542MB   138GB   137GB   ext4
+ <span class="token number">4</span>      138GB   275GB   137GB   ext4
+ <span class="token number">5</span>      275GB   413GB   137GB   ext4
+ <span class="token number">6</span>      413GB   500GB   <span class="token number">87</span>.2GB  ext4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="为块设备分区"><a href="#为块设备分区" class="headerlink" title="为块设备分区"></a>为块设备分区</h2><h2 id="为分区格式化文件系统类型"><a href="#为分区格式化文件系统类型" class="headerlink" title="为分区格式化文件系统类型"></a>为分区格式化文件系统类型</h2>]]></content>
       <tags>
         <tag>code-snippets</tag>
         <tag>linux</tag>
@@ -9634,6 +9655,98 @@ osxkeychain<span aria-hidden="true" class="line-numbers-rows"><span></span><span
         <tag>distributed-system</tag>
         <tag>login</tag>
         <tag>token</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>瞎折腾软路由笔记</title>
+    <url>//2022-08-07-software-based-router/</url>
+    <content><![CDATA[<p>垃圾佬的周末, 没事儿就是瞎折腾, 前段时间被种草了软路由, 一直心痒痒. 月底下单奢侈一把, 今天给彻底搞起来了. 现在总结下.</p>
+<h1 id="为啥要使用软路由"><a href="#为啥要使用软路由" class="headerlink" title="为啥要使用软路由?"></a>为啥要使用软路由?</h1><p>有几个原因: </p>
+<ol>
+<li>家里的Android(V2RayNG), Mac(ClashX), Windows, Ubuntu等设备都有相关软件能科学上网; 但iPad, iPhone等设备, 安装小火箭, 必须要登录海外AppStore, 而且软件还收费, 太麻烦, 因此没有配置科学上网. 对强迫症患者来说, 简直是灾难.</li>
+<li>想要对网络设备的工作原理能有更深入的理解. 例如路由器的底层工作原理, 实际的路由表是咋样的? 之前使用华为的路由器, 这些权限完全是没有的, 也没办法看到这些的. 对于越狱狂魔来说, 也同样是灾难.</li>
+<li>家里的路由器明显感觉力不从心, 100M的带宽, 平常根本跑不满, 就开始发热. </li>
+<li>IPTV共享: <ol>
+<li>无法啊忍受丑陋的电信机顶盒(烽火 HG680-J), 设计得丑陋不堪, 遥控器巨难用; </li>
+<li>只能在客厅使用, 卧室里也想连接IPTV, 但是连接不上.</li>
+</ol>
+</li>
+</ol>
+<p>软路由本质上是一个低功耗的x86机器, 应该能很好地解决上边的问题. </p>
+<h1 id="配置清单"><a href="#配置清单" class="headerlink" title="配置清单"></a>配置清单</h1><table>
+<thead>
+<tr>
+<th>配件名称</th>
+<th>品牌</th>
+<th>价格</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主机</td>
+<td><a href="https://detail.tmall.com/item.htm?id=673002078011&spm=a1z09.2.0.0.237b2e8dIxvpd0&_u=77rqrdmc3b6">倍控</a></td>
+<td>729</td>
+<td>裸机,</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td><a href="https://www.intel.com/content/www/us/en/products/sku/212328/intel-celeron-processor-n5105-4m-cache-up-to-2-90-ghz/specifications.html">Intel N5105</a></td>
+<td>无, 包含在主机里</td>
+<td>第11代, Jasper Lake; 4Core; 10nm; Base 2GHz, Burst 2.9GHz; 4MB L3 Cache; 10W TDP</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>三星</td>
+<td>380</td>
+<td>16GB * 2(组成双通道); DDR4; 3200MHz;</td>
+</tr>
+<tr>
+<td>闪存</td>
+<td>西数 SN570</td>
+<td>350</td>
+<td>500GB; NVME</td>
+</tr>
+<tr>
+<td>网卡</td>
+<td>Intel I225-V</td>
+<td>无, 包含在主机里</td>
+<td>4个物理网口&#x2F;卡; 1000Mbps</td>
+</tr>
+</tbody></table>
+<p>几乎可以说是目前工控机的顶配了.</p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><h2 id="OpenWrt安装"><a href="#OpenWrt安装" class="headerlink" title="OpenWrt安装"></a>OpenWrt安装</h2><p>裸机上安装OpenWrt, 配置步骤直接看小电视: <a href="https://www.bilibili.com/video/BV1w541157Uo?spm_id_from=333.880.my_history.page.click&amp;vd_source=25b2aadfc1b4b676c371c31423142e7b">https://www.bilibili.com/video/BV1w541157Uo?spm_id_from=333.880.my_history.page.click&amp;vd_source=25b2aadfc1b4b676c371c31423142e7b</a></p>
+<h2 id="插件配置"><a href="#插件配置" class="headerlink" title="插件配置"></a>插件配置</h2><ul>
+<li>OpenClash: &#x2F;&#x2F; TODO:</li>
+</ul>
+<h1 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h1><p>由于家里的网络是FTTB(Fiber-To-The-Building)的, 因此没有光猫, 只有一根入户线. </p>
+<h2 id="软路由改造前"><a href="#软路由改造前" class="headerlink" title="软路由改造前"></a>软路由改造前</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072212775.png"></p>
+<h2 id="软路由改造后"><a href="#软路由改造后" class="headerlink" title="软路由改造后"></a>软路由改造后</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072216377.png"></p>
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><h2 id="效果预览"><a href="#效果预览" class="headerlink" title="效果预览"></a>效果预览</h2><ol>
+<li>安装好 <a href="https://github.com/vernesong/OpenClash">OpenClash</a> 插件, 局域网内科学上网无忧.  </li>
+<li>直接SSH上去, 看到任何的网络相关信息:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072139468.png" alt="ARP表"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072140766.png" alt="路由表"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072141717.png" alt="网桥"></li>
+<li>网速基本能跑满:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072137732.png"></li>
+<li>IPTV共享: 目前还未实现, 涉及到组播+vLan等, 还在研究中.</li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>CPU Load极低, 长期维持在0.1-;</li>
+<li>MEM 使用比例极低, 长期可用内存维持在96%+;</li>
+<li>资源完全没有充分利用起来!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072130374.png"></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总体来说, 虽然达到了部分目标, 但还是大材小用了! 后边计划有几种方案来充分压榨: </p>
+<ul>
+<li>多跑几个docker容器, 例如搭建Jenkins, GitLab, Nginx, Redis; 方便自己平常的压测验证. </li>
+<li>改成裸机上刷esxi, 搭建几个虚拟机, 把OpenWrt放在其中一个虚拟机里, 其他的Ubuntu, Windows等作为日常休闲娱乐机.</li>
+</ul>
+]]></content>
+      <categories>
+        <category>瞎折腾</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>network</tag>
+        <tag>open-wrt</tag>
+        <tag>software-based-router</tag>
+        <tag>router</tag>
       </tags>
   </entry>
 </search>

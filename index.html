@@ -156,18 +156,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">100</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-count">158</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -216,6 +216,161 @@
   
   
 
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-08-07-software-based-router/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-08-07-software-based-router/" class="post-title-link" itemprop="url">瞎折腾软路由笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-07 20:38:43 / 修改时间：22:26:50" itemprop="dateCreated datePublished" datetime="2022-08-07T20:38:43+08:00">2022-08-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%9E%8E%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">瞎折腾</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>垃圾佬的周末, 没事儿就是瞎折腾, 前段时间被种草了软路由, 一直心痒痒. 月底下单奢侈一把, 今天给彻底搞起来了. 现在总结下.</p>
+<h1 id="为啥要使用软路由"><a href="#为啥要使用软路由" class="headerlink" title="为啥要使用软路由?"></a>为啥要使用软路由?</h1><p>有几个原因: </p>
+<ol>
+<li>家里的Android(V2RayNG), Mac(ClashX), Windows, Ubuntu等设备都有相关软件能科学上网; 但iPad, iPhone等设备, 安装小火箭, 必须要登录海外AppStore, 而且软件还收费, 太麻烦, 因此没有配置科学上网. 对强迫症患者来说, 简直是灾难.</li>
+<li>想要对网络设备的工作原理能有更深入的理解. 例如路由器的底层工作原理, 实际的路由表是咋样的? 之前使用华为的路由器, 这些权限完全是没有的, 也没办法看到这些的. 对于越狱狂魔来说, 也同样是灾难.</li>
+<li>家里的路由器明显感觉力不从心, 100M的带宽, 平常根本跑不满, 就开始发热. </li>
+<li>IPTV共享: <ol>
+<li>无法啊忍受丑陋的电信机顶盒(烽火 HG680-J), 设计得丑陋不堪, 遥控器巨难用; </li>
+<li>只能在客厅使用, 卧室里也想连接IPTV, 但是连接不上.</li>
+</ol>
+</li>
+</ol>
+<p>软路由本质上是一个低功耗的x86机器, 应该能很好地解决上边的问题. </p>
+<h1 id="配置清单"><a href="#配置清单" class="headerlink" title="配置清单"></a>配置清单</h1><table>
+<thead>
+<tr>
+<th>配件名称</th>
+<th>品牌</th>
+<th>价格</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主机</td>
+<td><a target="_blank" rel="noopener" href="https://detail.tmall.com/item.htm?id=673002078011&spm=a1z09.2.0.0.237b2e8dIxvpd0&_u=77rqrdmc3b6">倍控</a></td>
+<td>729</td>
+<td>裸机,</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/products/sku/212328/intel-celeron-processor-n5105-4m-cache-up-to-2-90-ghz/specifications.html">Intel N5105</a></td>
+<td>无, 包含在主机里</td>
+<td>第11代, Jasper Lake; 4Core; 10nm; Base 2GHz, Burst 2.9GHz; 4MB L3 Cache; 10W TDP</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>三星</td>
+<td>380</td>
+<td>16GB * 2(组成双通道); DDR4; 3200MHz;</td>
+</tr>
+<tr>
+<td>闪存</td>
+<td>西数 SN570</td>
+<td>350</td>
+<td>500GB; NVME</td>
+</tr>
+<tr>
+<td>网卡</td>
+<td>Intel I225-V</td>
+<td>无, 包含在主机里</td>
+<td>4个物理网口&#x2F;卡; 1000Mbps</td>
+</tr>
+</tbody></table>
+<p>几乎可以说是目前工控机的顶配了.</p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><h2 id="OpenWrt安装"><a href="#OpenWrt安装" class="headerlink" title="OpenWrt安装"></a>OpenWrt安装</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-08-07-software-based-router/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-23-github-token-login/">
 
@@ -253,7 +408,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -358,7 +513,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -471,7 +626,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -582,7 +737,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -720,7 +875,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -819,7 +974,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -930,7 +1085,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -1045,7 +1200,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -1190,7 +1345,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -1313,7 +1468,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -1434,7 +1589,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -1547,7 +1702,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -1656,7 +1811,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -1763,7 +1918,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -1882,7 +2037,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2003,7 +2158,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2114,7 +2269,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2237,7 +2392,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2377,7 +2532,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2481,7 +2636,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2592,7 +2747,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2719,7 +2874,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2822,7 +2977,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -2953,7 +3108,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -3063,7 +3218,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -3262,7 +3417,7 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -3403,7 +3558,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -3522,7 +3677,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -3638,7 +3793,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -3760,7 +3915,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -3894,7 +4049,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -3989,114 +4144,6 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-03-Beyond-the-Label/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-05-03-Beyond-the-Label/" class="post-title-link" itemprop="url">深度思考：不断逼近问题的本质 读后感</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-04 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-04T00:00:00+08:00">2022-05-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>848</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>总体来说，鸡汤不少，但没啥干货，说的都是一些虚无缥缈且人尽皆知的大道理。</p>
-<hr>
-<p>读的过程，也感觉很鸡肋，感觉像是有些自恋的人的自传，愈发读不下去，但又为了完整读完一本书，硬着头皮读了下去，期待着后边说不定会由有不同的收获。<br>但结果令人失望，甚至都不想做笔记。<br>首先，书名非常具有迷惑性，实在没看出跟深度思考，以及探究问题的本质有任何关系。直到看了英文名称，才恍然大悟。<br>《Beyond the Label: Women, Leadership, and Success on Our Own Terms》，<br>直译过来就是：《拒绝标签：女性，领导力与成功》，压根跟深度思考没任何关系，也不知道书名的中文翻译人员咋想的。<br>如果早看了英文名，尤其是几个雷区词“Women”，“Leadership”，“Success”等这些，就一定不会读的。</p>
-<p>其次，内容更像是作者自己的经历自传。最开始当个推销员，莫名奇妙就推销成功了，然后还获得了贵人的帮助。<br>如果说是因为真诚，那么我相信世界上比她真诚的人要多得多，为什么其他人没有？<br>莫名其妙就结婚了，莫名其妙被派到香港，莫名其妙又掌管了GAP，把old navy做了起来，然后GAP莫名其妙就不行了，莫名其妙就成了香奈儿的CEO了。<br>最后由莫名其妙离婚，还美其名曰“打破规则”。<br>总体来说这些转变读者我是一头雾水。<br>我相信成为一个优秀的CEO，把一个公司与品牌做起来，需要的绝对不仅是书中她提到的这些软素质，还有巨大的一块，应该就是硬素质。<br>如何理解管理，毕竟也是一门工程与科学；如何理解财务报表，处理财务危机；如何品牌营销与形象树立？<br>等等。<br>文中提到的这些软素质，都太普通了，太没有专业门槛了。</p>
-<p>最后就是讲到的一些关于女性职场特有的问题，例如“当人们只注意你的外貌而非工作时，该怎么办？”，并无法引发丝毫我这位直男癌患者的共鸣。</p>
-<p>吸取几点教训吧：</p>
-<ol>
-<li>看英文翻译书之前，一定要看下原先的英文名称是啥，千万不能被忽悠了。</li>
-<li>相信自己的判断，一旦看不下去，觉得没意思没价值没收获，就果断弃坑，不要为了完成读书而读书，否则沉没成本太高。</li>
-</ol>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-05-03-Beyond-the-Label/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4122,7 +4169,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">230k</span>
+    <span title="站点总字数">229k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">

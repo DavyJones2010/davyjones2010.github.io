@@ -156,18 +156,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">100</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-count">158</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -217,6 +217,141 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-03-kube-scheduler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-09-03-kube-scheduler/" class="post-title-link" itemprop="url">K8S调度器研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-04T00:00:00+08:00">2021-09-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="关于kube-scheduler的资源记账"><a href="#关于kube-scheduler的资源记账" class="headerlink" title="关于kube-scheduler的资源记账:"></a>关于kube-scheduler的资源记账:</h2><h3 id="以为的记账流程"><a href="#以为的记账流程" class="headerlink" title="以为的记账流程:"></a>以为的记账流程:</h3><ul>
+<li>研究kube-scheduler代码, 关于nodeInfo里资源的记账, 总是有个误解, 以为会分为三个部分: <ul>
+<li>node上全量资源(totalCpu, totalMem)</li>
+<li>node上已经确定占用的资源(usedCpu, usedMem)</li>
+<li>调度完成, node上待绑定的资源(assumedCpu, assumedMem), 实际绑定成功&#x2F;失败未知, 只是for调度使用:  <ul>
+<li>当绑定成功, 会收到事件, 将assumedCpu&#x2F;Mem清理, 并把assumedCpu&#x2F;Mem 放到usedCpu&#x2F;usedMem里</li>
+<li>当绑定失败, 会收到事件, 将assumedCpu&#x2F;Mem清理, 不叠加到usedCpu&#x2F;usedMem里.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="实际的记账流程参照文章-Node-allocatable资源的含义"><a href="#实际的记账流程参照文章-Node-allocatable资源的含义" class="headerlink" title="实际的记账流程参照文章 Node allocatable资源的含义"></a>实际的记账流程参照文章 <a target="_blank" rel="noopener" href="https://www.mgasch.com/2017/10/sched-reconcile/">Node allocatable资源的含义</a></h3><ul>
+<li>但实际上kube-scheduler, 把nodeInfo分为2部分:<ul>
+<li>node上全量资源(NodeInfo.Allocatable), 注意之前经常会搞混, 以为allocatable &#x3D; total - used; 实际上allocatable代表total. 实际发现其他同学也有理解错的: <a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/kube-batch/issues/881">Allocatable Resources is calculated wrong</a></li>
+<li>node上已经占用的资源(NodeInfo.Requested), 包括如下2部分: <ul>
+<li>node上已经确定占用的资源</li>
+<li>调度完成, node上待绑定的资源(assumedCpu, assumedMem)</li>
+</ul>
+</li>
+<li>实际的对账过程: <ul>
+<li>当调度成功, bind前, 会直接把pod.request叠加到node.requested里.</li>
+<li>bind成功, (修改pod状态), node.requested不变</li>
+<li>bind失败, 1秒一次的轮询, 更新pod状态, 将pod的资源归还回node.requested里</li>
+<li>kube-scheduler重启: 会</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="引发的问题"><a href="#引发的问题" class="headerlink" title="引发的问题"></a>引发的问题</h3><ul>
+<li>kube-scheduler重启, 会执行一次fullsync, cache同步更新量会很大, 耗时可能会比较久, 这中间scheduler是不提供服务的</li>
+<li>如果多个scheduler同时工作, 由于不共享requestedResource, 并发场景下, 导致资源超卖:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071215437.png"><ul>
+<li>当前解决方案:</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何改进-x2F-使用多个scheduler"><a href="#如何改进-x2F-使用多个scheduler" class="headerlink" title="如何改进&#x2F;使用多个scheduler"></a>如何改进&#x2F;使用多个scheduler</h3><p>HOSS方案: </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-09-03-kube-scheduler/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-08-31-golang-basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -253,7 +388,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -366,7 +501,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
 
   
@@ -502,7 +637,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 20:37:52" itemprop="dateModified" datetime="2022-08-07T20:37:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-07 22:26:50" itemprop="dateModified" datetime="2022-08-07T22:26:50+08:00">2022-08-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -610,7 +745,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">230k</span>
+    <span title="站点总字数">229k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
