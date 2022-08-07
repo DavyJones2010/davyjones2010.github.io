@@ -165,3 +165,45 @@ pid 20697's current affinity list: 0-3
 ```shell
 taskset -p COREMASK PID
 ```
+
+
+# 磁盘操作
+## 查看块设备(包括已分区与未分区的)
+```shell
+root@OpenWrt:~# lsblk
+NAME          MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+nvme0n1       259:0    0 465.8G  0 disk
+├─nvme0n1p1   259:1    0    16M  0 part /boot
+│                                       /boot
+├─nvme0n1p2   259:2    0   500M  0 part /rom
+├─nvme0n1p3   259:3    0   128G  0 part /overlay
+├─nvme0n1p4   259:4    0   128G  0 part /mnt/nvme0n1p4
+├─nvme0n1p5   259:5    0   128G  0 part /mnt/nvme0n1p5
+├─nvme0n1p6   259:6    0  81.3G  0 part /mnt/nvme0n1p6
+└─nvme0n1p128 259:7    0   239K  0 part
+```
+
+## 查看分区的文件系统类型
+```shell
+root@OpenWrt:~# parted -l
+Model: WD Blue SN570 500GB SSD (nvme)
+Disk /dev/nvme0n1: 500GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name  Flags
+128     17.4kB  262kB   245kB                      bios_grub
+ 1      262kB   17.0MB  16.8MB  fat16              legacy_boot
+ 2      17.0MB  541MB   524MB
+ 3      542MB   138GB   137GB   ext4
+ 4      138GB   275GB   137GB   ext4
+ 5      275GB   413GB   137GB   ext4
+ 6      413GB   500GB   87.2GB  ext4
+```
+
+## 为块设备分区
+
+
+## 为分区格式化文件系统类型
+
