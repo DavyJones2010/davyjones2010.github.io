@@ -149,12 +149,12 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  GitHub: https://github.com/DavyJones2010 || fa fa-github
+  GitHub: https://github.com/DavyJones2010 || fab fa-github
   E-Mail: mailto:davyjones2010@gmail.com || fa fa-envelope
   RSS: /atom.xml || fa-solid fa-square-rss
 
 social_icons:
-  enable: false
+  enable: true
   icons_only: false
   transition: false
 
