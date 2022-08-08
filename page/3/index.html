@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-count">102</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -217,6 +217,137 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-12-17-java-nio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-12-17-java-nio/" class="post-title-link" itemprop="url">Java NIO疑问与总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-18T00:00:00+08:00">2021-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>806</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ByteBuffer</span> dst <span class="token operator">=</span> <span class="token class-name">ByteBuffer</span><span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">SocketChannel</span> clientChannel <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">SocketChannel</span><span class="token punctuation">)</span> key<span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> read <span class="token operator">=</span> clientChannel<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>dst<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span> <span class="token operator">==</span> read<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    clientChannel<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>dst<span class="token punctuation">.</span><span class="token function">hasRemaining</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+clientChannel<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p>这里 <code>-1==read</code> 与 <code>dst.hasRemaining()</code> 有啥区别? 上述两种判断方式有啥差异? </p>
+</li>
+<li><p>什么时候 <code>0 == read</code> ?</p>
+</li>
+<li><p>case1: 如果clientChannel刚好1024个字节:</p>
+<ul>
+<li>所以第一次read, 结果肯定不是-1, 而是1024, 即实际读取的字节数, 此时会进入下一次循环, clientChannel.read(dst); 变为”case3”</li>
+<li>此时dst.hasRemaining() &#x3D;&#x3D; false</li>
+</ul>
+</li>
+<li><p>case2: 如果clientChannel可读的&lt;1024个字节(例如128个字节): </p>
+<ul>
+<li>所以第一次read, 结果也不是-1, 而是1024, 即实际读取的字节数(128), 此时会进入下一次循环, clientChannel.read(dst); 变为”case3”</li>
+<li>此时dst.hasRemaining() &#x3D;&#x3D; true</li>
+</ul>
+</li>
+<li><p>case3: 如果clientChannel可读的0个字节: </p>
+<ul>
+<li>所以第一次read, 结果是-1</li>
+<li>此时dst.hasRemaining() &#x3D;&#x3D; true<br>所以, 综上case, dst.hasRemaining() 与 -1&#x3D;&#x3D;read() 基本一致. 但在case2场景下, 会少一次循环.<br>不过一般的应用层协议, 会在请求头里标明本次请求的字节数, 典型的例如ZK, 所以不太需要按照上边这种方式.</li>
+</ul>
+</li>
+</ul>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-12-17-java-nio/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-12-17-tcp-time-wait/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -253,7 +384,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -362,7 +493,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -508,7 +639,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -625,7 +756,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -737,7 +868,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -849,7 +980,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -948,7 +1079,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -1046,7 +1177,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -1179,7 +1310,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -1363,7 +1494,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -1503,7 +1634,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -1640,7 +1771,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -1777,7 +1908,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -1897,7 +2028,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -2012,7 +2143,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -2210,7 +2341,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -2349,7 +2480,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -2460,7 +2591,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -2575,7 +2706,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -2846,7 +2977,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -2950,7 +3081,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -3119,7 +3250,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -3246,7 +3377,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -3503,7 +3634,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -3661,7 +3792,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -3822,7 +3953,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -3930,7 +4061,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -4042,7 +4173,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -4147,7 +4278,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -4257,7 +4388,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -4363,7 +4494,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
     </span>
 
   
@@ -4419,128 +4550,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-05-jekyll-site/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-09-05-jekyll-site/" class="post-title-link" itemprop="url">Jekyll搭建博客总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-05 12:05:23" itemprop="dateCreated datePublished" datetime="2021-09-05T12:05:23+08:00">2021-09-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 22:36:21" itemprop="dateModified" datetime="2022-08-07T22:36:21+08:00">2022-08-07</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>终于下定决心，花一些事件，把自己沉淀与思考，都用GitHubPages保存起来。</p>
-<ul>
-<li>一来，作为自己备忘，如此之多的知识，如果不加以梳理，在脑海里始终就是分散的点。</li>
-<li>二来，有幸同道中人看到，加以指正与讨论，更是妙哉！</li>
-</ul>
-<hr>
-<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><ul>
-<li><p>启动本地服务</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bundle <span class="token builtin class-name">exec</span> jekyll serve --draft<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>编译，生成_site目录</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bundle <span class="token builtin class-name">exec</span> jekyll build<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>在Gemfile中增加了插件之后，安装插件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bundle <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
-<hr>
-<h1 id="使用的插件"><a href="#使用的插件" class="headerlink" title="使用的插件"></a>使用的插件</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://beautifuljekyll.com/">Beautiful Jekyll</a>: beautiful-jekyll主题</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/allejo/jekyll-toc">jekyll-toc</a>：方便增加toc，虽然有点丑</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/allejo/jekyll-anchor-headings">jekyll-anchor-headings</a>：方便给标题增加anchor链接，虽然也有点丑，😅</li>
-<li><a target="_blank" rel="noopener" href="http://www.fontawesome.com.cn/icons/list/">font-awesome</a>: 无须重新安装， 默认beautiful-jekyll里包含了</li>
-<li><a target="_blank" rel="noopener" href="https://www.netlifycms.org/docs/add-to-your-site/#enable-identity-and-git-gateway">netlifycms</a>：使用这个CMS系统，直接在网页写blog并发布到gh-pages里</li>
-</ul>
-<hr>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-09-05-jekyll-site/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4566,14 +4575,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">229k</span>
+    <span title="站点总字数">233k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:29</span>
+    <span title="站点阅读时长">3:32</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

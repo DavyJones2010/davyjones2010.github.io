@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="DNS服务器类型root nameserver即负责.域名的, 全球只有13台(至于为啥只有13台, 自己google吧):   davywalkerdeMBP:_assets davywalker$ dig baidu.com +trace  ; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; baidu.com +trace ;; global options: +cmd .">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="深入探究DNS流程与报文">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-08-08-dns-deep-dive/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="DNS服务器类型root nameserver即负责.域名的, 全球只有13台(至于为啥只有13台, 自己google吧):   davywalkerdeMBP:_assets davywalker$ dig baidu.com +trace  ; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; baidu.com +trace ;; global options: +cmd .">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082351183.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082352908.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082353697.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082303614.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082259231.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082306546.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082308662.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082315463.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082321212.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082323511.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082326335.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082343058.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082343720.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082344089.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082345386.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082347974.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208090001833.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208090002803.png">
+<meta property="article:published_time" content="2022-08-08T14:26:58.000Z">
+<meta property="article:modified_time" content="2022-08-08T16:05:38.617Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="dns">
+<meta property="article:tag" content="network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082351183.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-08-08-dns-deep-dive/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-08-08-dns-deep-dive/","path":"/2022-08-08-dns-deep-dive/","title":"深入探究DNS流程与报文"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>深入探究DNS流程与报文 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme.html" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">DNS服务器类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#root-nameserver"><span class="nav-number">1.1.</span> <span class="nav-text">root nameserver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLD-Top-Level-Domain-nameserver"><span class="nav-number">1.2.</span> <span class="nav-text">TLD(Top Level Domain) nameserver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#authoritative-nameserver"><span class="nav-number">1.3.</span> <span class="nav-text">authoritative nameserver</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS%E6%9F%A5%E8%AF%A2%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">DNS查询类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E5%BC%8F-Recursive-Query"><span class="nav-number">2.1.</span> <span class="nav-text">递归式(Recursive Query)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%BC%8F-Iterative-Query"><span class="nav-number">2.2.</span> <span class="nav-text">迭代式(Iterative Query)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WireShark%E6%8A%93%E5%8C%85%E5%AE%9E%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">WireShark抓包实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8DDNS%E6%8A%93%E5%8C%85"><span class="nav-number">3.1.</span> <span class="nav-text">简单的顶级域名DNS抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.1.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dig%E8%BF%AD%E4%BB%A3%E5%BC%8F-WireShark%E5%88%86%E6%9E%90"><span class="nav-number">3.1.2.</span> <span class="nav-text">+dig迭代式, WireShark分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%90%91LocalDNS%E5%8F%91%E8%B5%B7%E8%AF%B7%E6%B1%82-%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96-%E5%AF%B9%E5%BA%94%E7%9A%84root-nameserver"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">第一步: 向LocalDNS发起请求, 请求获取.对应的root nameserver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%90%91root-nameserver%E8%AF%B7%E6%B1%82-%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96-com-%E5%AF%B9%E5%BA%94%E7%9A%84TLD%E2%80%99s-nameserver"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">第二步: 向root nameserver请求, 请求获取.com.对应的TLD’s nameserver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E5%90%91TLD%E2%80%99s-nameserver%E8%AF%B7%E6%B1%82-%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96baidu-com-%E5%AF%B9%E5%BA%94%E7%9A%84authoritative-nameserver"><span class="nav-number">3.1.2.3.</span> <span class="nav-text">第三步: 向TLD’s nameserver请求, 请求获取baidu.com.对应的authoritative nameserver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5-%E5%90%91authoritative-nameserver%E8%AF%B7%E6%B1%82-%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96baidu-com-%E5%AF%B9%E5%BA%94%E7%9A%84ip"><span class="nav-number">3.1.2.4.</span> <span class="nav-text">第四步: 向authoritative nameserver请求, 请求获取baidu.com.对应的ip</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%8A%A0-dig%E9%80%92%E5%BD%92%E5%BC%8F-WireShark%E5%88%86%E6%9E%90"><span class="nav-number">3.1.3.</span> <span class="nav-text">不加+dig递归式, WireShark分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%90%91LocalDNS%E5%8F%91%E8%B5%B7%E8%AF%B7%E6%B1%82-%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96aliyun-com%E7%9A%84IP%E5%9C%B0%E5%9D%80-A%E8%AE%B0%E5%BD%95"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">第一步: 向LocalDNS发起请求, 请求获取aliyun.com的IP地址(A记录)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%96%91%E9%97%AE"><span class="nav-number">4.</span> <span class="nav-text">疑问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9C%AC%E8%BA%ABIP%E8%A7%A3%E6%9E%90%E9%97%AE%E9%A2%98"><span class="nav-number">4.1.</span> <span class="nav-text">域名服务器本身IP解析问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dig%E8%AF%B7%E6%B1%82%E8%83%BD%E5%90%A6%E4%BD%BF%E7%94%A8%E6%8C%87%E5%AE%9A%E2%80%9D%E9%80%92%E5%BD%92%E5%BC%8F%E2%80%9D%E6%88%96%E8%80%85%E2%80%9D%E8%BF%AD%E4%BB%A3%E5%BC%8F%E2%80%9D%E4%B9%88"><span class="nav-number">4.2.</span> <span class="nav-text">dig请求能否使用指定”递归式”或者”迭代式”么?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">5.</span> <span class="nav-text">Refs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">161</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-08-08-dns-deep-dive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="深入探究DNS流程与报文 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深入探究DNS流程与报文
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-08 22:26:58" itemprop="dateCreated datePublished" datetime="2022-08-08T22:26:58+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-09 00:05:38" itemprop="dateModified" datetime="2022-08-09T00:05:38+08:00">2022-08-09</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="DNS服务器类型"><a href="#DNS服务器类型" class="headerlink" title="DNS服务器类型"></a>DNS服务器类型</h1><h2 id="root-nameserver"><a href="#root-nameserver" class="headerlink" title="root nameserver"></a>root nameserver</h2><p>即负责.域名的, 全球只有13台(至于为啥只有13台, 自己google吧):  </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMBP:_assets davywalker$ <span class="token function">dig</span> baidu.com +trace
+
+<span class="token punctuation">;</span> <span class="token operator">&lt;&lt;</span><span class="token operator">>></span> DiG <span class="token number">9.10</span>.6 <span class="token operator">&lt;&lt;</span><span class="token operator">>></span> baidu.com +trace
+<span class="token punctuation">;</span><span class="token punctuation">;</span> global options: +cmd
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	m.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	a.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	h.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	l.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	i.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	g.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	j.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	c.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	k.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	e.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	f.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	b.root-servers.net.
+<span class="token builtin class-name">.</span>			<span class="token number">1</span>	IN	NS	d.root-servers.net.
+<span class="token punctuation">;</span><span class="token punctuation">;</span> Received <span class="token number">239</span> bytes from <span class="token number">192.168</span>.1.1<span class="token comment">#53(192.168.1.1) in 7 ms</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="TLD-Top-Level-Domain-nameserver"><a href="#TLD-Top-Level-Domain-nameserver" class="headerlink" title="TLD(Top Level Domain) nameserver"></a>TLD(Top Level Domain) nameserver</h2><p>即对应 <code>.com</code>, <code>.gov</code>, <code>.cn</code> 等的解析服务器. </p>
+<h2 id="authoritative-nameserver"><a href="#authoritative-nameserver" class="headerlink" title="authoritative nameserver"></a>authoritative nameserver</h2><p>即对应 <code>.baidu.com</code> <code>.hangzhou.gov</code>, <code>gitee.cn</code> 等的解析服务器.<br>通常 authoritative nameserver 是DNS解析的最后一步</p>
+<blockquote>
+<p>The authoritative nameserver is usually the resolver’s last step in the journey for an IP address.</p>
+</blockquote>
+<p>但也不是必须的, 取决于authoritative nameserver对应的子域名配置方式: </p>
+<ul>
+<li>如果</li>
+<li>(但也可以继续往下走, 具体取决于).</li>
+</ul>
+<h1 id="DNS查询类型"><a href="#DNS查询类型" class="headerlink" title="DNS查询类型"></a>DNS查询类型</h1><h2 id="递归式-Recursive-Query"><a href="#递归式-Recursive-Query" class="headerlink" title="递归式(Recursive Query)"></a>递归式(Recursive Query)</h2><ul>
+<li><p>DNS请求: 如下, 是个请求中的标识位, 使用dig命令, 如果<code>+trace</code>则请求自动禁用递归(即如下递归标识设置为false).<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082351183.png"></p>
+</li>
+<li><p>DNS响应: 如下, 代表当前LocalDNS服务器支持递归查询. 与此形成鲜明对比的是ROOT根DNS服务器返回不支持递归查询.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082352908.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082353697.png"></p>
+</li>
+</ul>
+<h2 id="迭代式-Iterative-Query"><a href="#迭代式-Iterative-Query" class="headerlink" title="迭代式(Iterative Query)"></a>迭代式(Iterative Query)</h2><h1 id="WireShark抓包实战"><a href="#WireShark抓包实战" class="headerlink" title="WireShark抓包实战"></a>WireShark抓包实战</h1><h2 id="简单的顶级域名DNS抓包"><a href="#简单的顶级域名DNS抓包" class="headerlink" title="简单的顶级域名DNS抓包"></a>简单的顶级域名DNS抓包</h2><h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 就简单地对baidu.com进行DNS抓包</span>
+davywalkerdeMBP:_assets davywalker$ <span class="token function">dig</span> baidu.com +trace<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="dig迭代式-WireShark分析"><a href="#dig迭代式-WireShark分析" class="headerlink" title="+dig迭代式, WireShark分析"></a><code>+dig</code>迭代式, WireShark分析</h3><h4 id="第一步-向LocalDNS发起请求-请求获取-对应的root-nameserver"><a href="#第一步-向LocalDNS发起请求-请求获取-对应的root-nameserver" class="headerlink" title="第一步: 向LocalDNS发起请求, 请求获取.对应的root nameserver"></a>第一步: 向LocalDNS发起请求, 请求获取<code>.</code>对应的root nameserver</h4><h5 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h5><p>可以看到: </p>
+<ul>
+<li>请求的目标IP是<code>/etc/resolv.conf</code>中对应的LocalDNS IP</li>
+<li>请求是UDP协议, 目标LocalDNS的端口号是53</li>
+<li>请求内容是: <code>&lt;ROOT&gt;</code>, 即根域名DNS; 类型是 <code>NS</code>, 即nameserver; 就是请求根域名的nameserver<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082303614.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082259231.png"></li>
+</ul>
+<h5 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h5><p>可以看到: </p>
+<ul>
+<li>响应内容里有13个根域名服务器的域名 </li>
+<li>但注意: <mark>没有返回nameserver的domain对应的IP地址!!!</mark> , 经分析与推测, 由于全球13个根域名服务器的IP是永远不会变的, 因此各个domain对应的IP地址应该是<mark>内置在操作系统中的</mark>.</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082306546.png"></p>
+<h4 id="第二步-向root-nameserver请求-请求获取-com-对应的TLD’s-nameserver"><a href="#第二步-向root-nameserver请求-请求获取-com-对应的TLD’s-nameserver" class="headerlink" title="第二步: 向root nameserver请求, 请求获取.com.对应的TLD’s nameserver"></a>第二步: 向root nameserver请求, 请求获取<code>.com.</code>对应的TLD’s nameserver</h4><h5 id="请求-1"><a href="#请求-1" class="headerlink" title="请求"></a>请求</h5><p>可以看到: </p>
+<ul>
+<li>请求的目标IP是<code>202.12.27.33</code>, 经分析, 是<code>m.root-servers.net.</code>对应的IP地址. 应该是按照某种算法随机选的.</li>
+<li>请求想要直接从root nameserver中获取到 baidu.com 的A记录<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082308662.png"></li>
+</ul>
+<h5 id="响应-1"><a href="#响应-1" class="headerlink" title="响应"></a>响应</h5><p>可以看到: </p>
+<ul>
+<li>响应内容里有13个<code>.com.</code>域名服务器的域名.</li>
+<li>但注意: <mark>同时在Additional records部分, 把各个域名服务器对应的IP也都以A记录形式返回</mark>. 这个就是所谓的 <strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/dranker/article/details/109754755">Glue Record</a></strong>, 试想下, 如果没有返回A记录, 那么如果<code>.com.</code>返回的nameserver是<code>a.com.</code>, 那么如何获取到这个domain对应的IP? 通过DNS么? 那就无限递归了!</li>
+<li>Additional records中<code>AAAA</code>记录, 代表的是各个域名服务器对应的IPV6地址.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082315463.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082321212.png"></li>
+</ul>
+<h4 id="第三步-向TLD’s-nameserver请求-请求获取baidu-com-对应的authoritative-nameserver"><a href="#第三步-向TLD’s-nameserver请求-请求获取baidu-com-对应的authoritative-nameserver" class="headerlink" title="第三步: 向TLD’s nameserver请求, 请求获取baidu.com.对应的authoritative nameserver"></a>第三步: 向TLD’s nameserver请求, 请求获取<code>baidu.com.</code>对应的authoritative nameserver</h4><h5 id="请求-2"><a href="#请求-2" class="headerlink" title="请求"></a>请求</h5><p>可以看到: </p>
+<ul>
+<li>请求的目标IP是<code>192.31.80.30</code>, 通过翻看上一个Glue Record, 可以知道正是<code>d.gtld-servers.net: type A, class IN, addr 192.31.80.30</code>对应的IP.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082323511.png"></li>
+</ul>
+<h5 id="响应-2"><a href="#响应-2" class="headerlink" title="响应"></a>响应</h5><p>可以看到: </p>
+<ul>
+<li>响应的内容里没有<code>baidu.com</code>的A记录信息, 而是一堆的NS记录信息, 以及NS对应的IP, 因此还需要继续往下查.</li>
+<li>如果是查询顶级域名(例如github.com), 或者二级域名(例如login.github.com)等:  <ul>
+<li>那么理论上这个时候就可以直接返回A记录了. 即不用再走第四步了. 此时A记录可以是个VIP, 然后根据请求具体的二级域名, 例如<code>login.github.com</code>, 通过Nginx等反向代理到对应服务即可.</li>
+<li>但实际分析了下, 大部分网站(如下图中<code>alibaba.com</code>, <code>zhihu.com</code>, <code>aliyun.com</code>等), 都是在这里返回自己的<code>authoritative nameserver</code>, 自己思考了下原因: <ul>
+<li>一是: 因为 TLD’s nameserver 通常是由国家或者组织统一管理的, 各个公司如果IP变化, 不好同步到 TLD 中. 而 authoritative nameserver 一般都是各个公司自己管理, 时效性与灵活性都很高. 例如可以给某些二级&#x2F;三级域名配置不同的IP.  </li>
+<li>二是: 因为如果直接A记录注册在TLD上, 那么整个网站的所有二级&#x2F;三级域名等, 就只能有一个IP入口了. 整体风险就很大了. 如果VIP挂了, 整个网站都不可用了. 如果是不同的二级域名, 分配不同nameserver, 则</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082326335.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082343058.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082343720.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082344089.png"></p>
+<h4 id="第四步-向authoritative-nameserver请求-请求获取baidu-com-对应的ip"><a href="#第四步-向authoritative-nameserver请求-请求获取baidu-com-对应的ip" class="headerlink" title="第四步: 向authoritative nameserver请求, 请求获取baidu.com.对应的ip"></a>第四步: 向authoritative nameserver请求, 请求获取<code>baidu.com.</code>对应的ip</h4><h5 id="请求-3"><a href="#请求-3" class="headerlink" title="请求"></a>请求</h5><p>可以看到:</p>
+<ul>
+<li>请求的目标IP是<code>14.215.178.80</code>, 通过翻看上一个Glue Record, 可以知道正是<code>ns4.baidu.com: type A, class IN, addr 14.215.178.80</code>对应的IP.</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082345386.png"></p>
+<h5 id="响应-3"><a href="#响应-3" class="headerlink" title="响应"></a>响应</h5><p>可以看到: </p>
+<ul>
+<li>正确地返回了<code>baidu.com</code>的A记录<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082347974.png"></li>
+</ul>
+<h3 id="不加-dig递归式-WireShark分析"><a href="#不加-dig递归式-WireShark分析" class="headerlink" title="不加+dig递归式, WireShark分析"></a>不加<code>+dig</code>递归式, WireShark分析</h3><h4 id="第一步-向LocalDNS发起请求-请求获取aliyun-com的IP地址-A记录"><a href="#第一步-向LocalDNS发起请求-请求获取aliyun-com的IP地址-A记录" class="headerlink" title="第一步: 向LocalDNS发起请求, 请求获取aliyun.com的IP地址(A记录)"></a>第一步: 向LocalDNS发起请求, 请求获取<code>aliyun.com</code>的IP地址(A记录)</h4><h5 id="请求-4"><a href="#请求-4" class="headerlink" title="请求"></a>请求</h5><p>可以看到:</p>
+<ul>
+<li>请求的目标IP是<code>/etc/resolv.conf</code>中对应的LocalDNS IP</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208090001833.png"></p>
+<h5 id="响应-4"><a href="#响应-4" class="headerlink" title="响应"></a>响应</h5><p>可以看到: </p>
+<ul>
+<li>LocalDNS直接把DNS的A记录结果返回了. 所有的迭代操作都是LocalDNS执行的了.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208090002803.png"></li>
+</ul>
+<h1 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h1><h2 id="域名服务器本身IP解析问题"><a href="#域名服务器本身IP解析问题" class="headerlink" title="域名服务器本身IP解析问题"></a>域名服务器本身IP解析问题</h2><p>DNS协议返回了根域名服务器的域名, 例如<code>m.root-servers.net.</code>, 但实际后续向根域名服务器发起查询TLD域名服务器的请求时, 是需要知道根域名服务器的IP的! 这个IP从哪里获取? 通过WireShark抓包, 发现返回的根域名服务器域名列表里, 没有这些域名对应的IP地址. 难道也是通过DNS解析的么? 这样就涉及到循环.<br><mark> Glue Record </mark></p>
+<h2 id="dig请求能否使用指定”递归式”或者”迭代式”么"><a href="#dig请求能否使用指定”递归式”或者”迭代式”么" class="headerlink" title="dig请求能否使用指定”递归式”或者”迭代式”么?"></a>dig请求能否使用指定”递归式”或者”迭代式”么?</h2><blockquote>
+<p>切换查询中的 RD（要求递归）位设置。<br>在缺省情况下设置该位，也就是说 dig 正常情形下发送递归查询。<br>当使用查询选项 +nssearch 或 +trace 时，递归自动禁用。</p>
+</blockquote>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/dns/dns-server-types/">https://www.cloudflare.com/learning/dns/dns-server-types/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f6ef04bf6af2">https://www.jianshu.com/p/f6ef04bf6af2</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/dns/" rel="tag"># dns</a>
+              <a href="/tags/network/" rel="tag"># network</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-08-07-jenkins-cloud-plugin-dev-summary/" rel="prev" title="Jenkins Alibaba Cloud 插件开发总结">
+                  <i class="fa fa-chevron-left"></i> Jenkins Alibaba Cloud 插件开发总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">233k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
