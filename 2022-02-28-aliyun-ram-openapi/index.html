@@ -23,16 +23,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="重要概念:RAM用户:  主账号 子账号用户组:  与传统RBAC里的角色对应.RAM角色:RAM里的角色与普通RBAC里的角色是不一样的, 这里的角色相当于是一个虚拟实体(虚拟用户), 没有ak&#x2F;sk, 因此不能被直接使用.但可以被ram用户(子账号或主账号或者云产品云服务等)扮演(assume), 一旦扮演完成, 即可拥有该角色上的所有权限.  重要属性 权限管理: 用来设置该角色拥">
+    <meta name="description" content="基础重要概念:RAM用户:  主账号 子账号  用户组:   与传统RBAC里的角色对应.  RAM角色:   RAM里的角色与普通RBAC里的角色是不一样的, 这里的角色相当于是一个虚拟实体(虚拟用户), 没有ak&#x2F;sk, 因此不能被直接使用.  但可以被ram用户(子账号或主账号或者云产品云服务等)扮演(assume), 一旦扮演完成, 即可拥有该角色上的所有权限.  重要属性 权限">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="RAM的基础概念与实践">
 <meta property="og:url" content="https://davyjones2010.github.io/2022-02-28-aliyun-ram-openapi/">
 <meta property="og:site_name" content="Coders@Work">
-<meta property="og:description" content="重要概念:RAM用户:  主账号 子账号用户组:  与传统RBAC里的角色对应.RAM角色:RAM里的角色与普通RBAC里的角色是不一样的, 这里的角色相当于是一个虚拟实体(虚拟用户), 没有ak&#x2F;sk, 因此不能被直接使用.但可以被ram用户(子账号或主账号或者云产品云服务等)扮演(assume), 一旦扮演完成, 即可拥有该角色上的所有权限.  重要属性 权限管理: 用来设置该角色拥">
+<meta property="og:description" content="基础重要概念:RAM用户:  主账号 子账号  用户组:   与传统RBAC里的角色对应.  RAM角色:   RAM里的角色与普通RBAC里的角色是不一样的, 这里的角色相当于是一个虚拟实体(虚拟用户), 没有ak&#x2F;sk, 因此不能被直接使用.  但可以被ram用户(子账号或主账号或者云产品云服务等)扮演(assume), 一旦扮演完成, 即可拥有该角色上的所有权限.  重要属性 权限">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218061.png">
 <meta property="article:published_time" content="2022-02-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-08-09T14:09:09.422Z">
+<meta property="article:modified_time" content="2022-08-09T14:12:06.697Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="ram">
@@ -150,7 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.0.1.</span> <span class="nav-text">重要概念:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E5%B1%9E%E6%80%A7"><span class="nav-number">1.0.2.</span> <span class="nav-text">重要属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%92%E8%89%B2%E5%88%86%E7%B1%BB"><span class="nav-number">1.0.3.</span> <span class="nav-text">角色分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E8%A7%92%E8%89%B2"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">普通角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SLR-ServiceLinkedRole-%E6%9C%8D%E5%8A%A1%E5%85%B3%E8%81%94%E8%A7%92%E8%89%B2"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">SLR(ServiceLinkedRole, 服务关联角色)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%ACAPI%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">基本API使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F1-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8AK-x2F-SK"><span class="nav-number">2.1.</span> <span class="nav-text">方式1: 直接使用AK&#x2F;SK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%B7%E4%BE%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">使用样例:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90"><span class="nav-number">2.1.2.</span> <span class="nav-text">适用场景分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F2-%E6%89%AE%E6%BC%94RAM%E8%A7%92%E8%89%B2-%E4%BD%BF%E7%94%A8RAM%E8%A7%92%E8%89%B2%E7%9A%84STSToken"><span class="nav-number">2.2.</span> <span class="nav-text">方式2: 扮演RAM角色, 使用RAM角色的STSToken</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%B7%E4%BE%8B-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">使用样例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90"><span class="nav-number">2.2.2.</span> <span class="nav-text">使用场景分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F3-%E5%86%85%E9%83%A8%E8%B0%83%E7%94%A8%E4%BD%BF%E7%94%A8innerAPI"><span class="nav-number">2.3.</span> <span class="nav-text">方式3: 内部调用使用innerAPI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用场景分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">2.3.2.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%80%9D%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">其他思考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.1.</span> <span class="nav-text">最佳实践</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">4.</span> <span class="nav-text">Refs</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">重要概念:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">重要属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%92%E8%89%B2%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text">角色分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E8%A7%92%E8%89%B2"><span class="nav-number">1.3.1.</span> <span class="nav-text">普通角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SLR-ServiceLinkedRole-%E6%9C%8D%E5%8A%A1%E5%85%B3%E8%81%94%E8%A7%92%E8%89%B2"><span class="nav-number">1.3.2.</span> <span class="nav-text">SLR(ServiceLinkedRole, 服务关联角色)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%ACAPI%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">基本API使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F1-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8AK-x2F-SK"><span class="nav-number">2.1.</span> <span class="nav-text">方式1: 直接使用AK&#x2F;SK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%B7%E4%BE%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">使用样例:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90"><span class="nav-number">2.1.2.</span> <span class="nav-text">适用场景分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F2-%E6%89%AE%E6%BC%94RAM%E8%A7%92%E8%89%B2-%E4%BD%BF%E7%94%A8RAM%E8%A7%92%E8%89%B2%E7%9A%84STSToken"><span class="nav-number">2.2.</span> <span class="nav-text">方式2: 扮演RAM角色, 使用RAM角色的STSToken</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%B7%E4%BE%8B-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">使用样例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90"><span class="nav-number">2.2.2.</span> <span class="nav-text">使用场景分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F3-%E5%86%85%E9%83%A8%E8%B0%83%E7%94%A8%E4%BD%BF%E7%94%A8innerAPI"><span class="nav-number">2.3.</span> <span class="nav-text">方式3: 内部调用使用innerAPI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用场景分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">2.3.2.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%80%9D%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">其他思考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.1.</span> <span class="nav-text">最佳实践</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">4.</span> <span class="nav-text">Refs</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -263,7 +263,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-09 22:09:09" itemprop="dateModified" datetime="2022-08-09T22:09:09+08:00">2022-08-09</time>
+      <time title="修改时间：2022-08-09 22:12:06" itemprop="dateModified" datetime="2022-08-09T22:12:06+08:00">2022-08-09</time>
     </span>
 
   
@@ -291,21 +291,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h3 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念:"></a>重要概念:</h3><p>RAM用户:</p>
+        <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念:"></a>重要概念:</h2><p>RAM用户:</p>
 <ul>
 <li>主账号</li>
-<li>子账号<br>用户组: </li>
-<li>与传统RBAC里的角色对应.<br>RAM角色:<br>RAM里的角色与普通RBAC里的角色是不一样的, 这里的角色相当于是一个虚拟实体(虚拟用户), 没有ak&#x2F;sk, 因此不能被直接使用.<br>但可以被ram用户(子账号或主账号或者云产品云服务等)扮演(assume), 一旦扮演完成, 即可拥有该角色上的所有权限.</li>
+<li>子账号</li>
 </ul>
-<h3 id="重要属性"><a href="#重要属性" class="headerlink" title="重要属性"></a>重要属性</h3><ul>
+<p>用户组: </p>
+<ul>
+<li>与传统RBAC里的角色对应.</li>
+</ul>
+<p>RAM角色: </p>
+<ul>
+<li>RAM里的角色与普通RBAC里的角色是不一样的, 这里的角色相当于是一个虚拟实体(虚拟用户), 没有ak&#x2F;sk, 因此不能被直接使用. </li>
+<li>但可以被ram用户(子账号或主账号或者云产品云服务等)扮演(assume), 一旦扮演完成, 即可拥有该角色上的所有权限.</li>
+</ul>
+<h2 id="重要属性"><a href="#重要属性" class="headerlink" title="重要属性"></a>重要属性</h2><ul>
 <li>权限管理: 用来设置该角色拥有哪些权限.</li>
 <li>信任策略管理: 用来管理哪些RAM用户&#x2F;服务能够扮演(assume)该角色</li>
 </ul>
-<h3 id="角色分类"><a href="#角色分类" class="headerlink" title="角色分类"></a>角色分类</h3><h4 id="普通角色"><a href="#普通角色" class="headerlink" title="普通角色"></a>普通角色</h4><ul>
+<h2 id="角色分类"><a href="#角色分类" class="headerlink" title="角色分类"></a>角色分类</h2><h3 id="普通角色"><a href="#普通角色" class="headerlink" title="普通角色"></a>普通角色</h3><ul>
 <li>用户可以自己创建角色, 并设置”信任策略管理”</li>
 <li>也可以由用户开通云服务时, 授权云服务来为用户创建该角色, 并把云服务加入到”信任策略”里. 从而云服务可以扮演该角色.</li>
 </ul>
-<h4 id="SLR-ServiceLinkedRole-服务关联角色"><a href="#SLR-ServiceLinkedRole-服务关联角色" class="headerlink" title="SLR(ServiceLinkedRole, 服务关联角色)"></a>SLR(ServiceLinkedRole, 服务关联角色)</h4><p>相当于普通角色的升级版, 主要是给云服务使用.<br>与普通角色的区别是: SLR一旦创建成功, 用户不能再添加&#x2F;修改SLR的 “权限管理” 以及 “信任策略管理”. 只能删除.<br>优点是防止用户误修改权限&#x2F;信任策略, 导致云服务无法正常扮演, 提供服务.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218061.png"></p>
+<h3 id="SLR-ServiceLinkedRole-服务关联角色"><a href="#SLR-ServiceLinkedRole-服务关联角色" class="headerlink" title="SLR(ServiceLinkedRole, 服务关联角色)"></a>SLR(ServiceLinkedRole, 服务关联角色)</h3><p>相当于普通角色的升级版, 主要是给云服务使用.<br>与普通角色的区别是: SLR一旦创建成功, 用户不能再添加&#x2F;修改SLR的 “权限管理” 以及 “信任策略管理”. 只能删除.<br>优点是防止用户误修改权限&#x2F;信任策略, 导致云服务无法正常扮演, 提供服务.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218061.png"></p>
 <h1 id="基本API使用"><a href="#基本API使用" class="headerlink" title="基本API使用"></a>基本API使用</h1><h2 id="方式1-直接使用AK-x2F-SK"><a href="#方式1-直接使用AK-x2F-SK" class="headerlink" title="方式1: 直接使用AK&#x2F;SK"></a>方式1: 直接使用AK&#x2F;SK</h2><h3 id="使用样例"><a href="#使用样例" class="headerlink" title="使用样例:"></a>使用样例:</h3><ul>
 <li>使用主账号的AK&#x2F;SK</li>
 <li>使用子账号的AK&#x2F;SK</li>
