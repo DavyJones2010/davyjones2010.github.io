@@ -3614,60 +3614,6 @@ Number  Start   End     Size    File system  Name  Flags
       </tags>
   </entry>
   <entry>
-    <title>沙丘 笔记</title>
-    <url>//2021-12-12-Dune/</url>
-    <content><![CDATA[<hr>
-<blockquote>
-<p>他转过身, 沿着过道大步走回大厅, 脑海中的记忆翻腾起来, 就像一个个没牙的老太婆在唠唠叨叨地述说.<br>他想起了宽阔的水域, 起伏的波浪, 想起了满眼青草而不是黄沙的日子, 想起了艳阳高照的夏季, 这种日子已经像风暴中的落叶一样迅猛地离他而去了.</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>生命会将狂暴的废物变成优雅的灵动之物, 他想, 这就是沙漠对我们的教诲.<br>现实的这种改变常常让他瞠目结舌.<br>他很想转身对着挤在穴地入口处的助手们大声叫喊:<br>如果你们一定要崇拜某种东西的话, 就崇拜生命吧<br>– 所有生命, 哪怕是最低贱的生命! 生命的美好属于我们全体!</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>有那么一会儿，他任凭自己的思绪自由飘荡。<br>他想起他带着孩提时候的保罗到卡拉丹海滨市场的那一天。<br>太阳照在水面上，发出耀眼的光芒。<br>大海丰饶的产品静静地摆在那儿出售。<br>艾达荷还记起了经常为他们弹奏巴厘琴的哥尼·哈莱克，那些欢笑，那些快乐时光。<br>音乐的旋律在他的脑海中跳跃，像咒语一般，引领着他的意识，走进快乐的回忆。</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>一瞬间，艾达荷触到了预知幻象，看到未来的人们用谈论大海的口气谈论保罗。<br>他一生蒙尘，在沙土中奔走，但水一直伴随着他。<br>“他的肉体沉没了，”人们会说，“可他却游了上来。”</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>艾达荷把自己的嘴唇挨到她的头发上。“求求你，别难过了。”他低声说，<br>感到她的悲哀和自己的混合在一起，像两条小溪融入了同一个水池。</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>他感觉自己是在时间的海洋中冲浪，时而跌进浪谷，时而骑上浪尖，<br>与此同时，周围的其他波浪此起彼伏，它们表面载着的东西也时隐时现。</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>宪法是鼓动起来的社会权力，没有任何道德和良心。<br>它可以摧毁社会的各个阶层，无情地抹杀所有尊严和个性。它没有稳定的标准，也不受任何限制。<br>与此相比，我则是有限制的。为了给我的人民提供绝对的保护，我禁止颁布宪法。</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>“啊，法律。”他说。他走到窗前，拉开帷幔，好像能看见外面似的，<br>“什么是法律？控制吗？法律过滤了混乱，滤下来的又是什么？祥和？法律既是我们的最高理想，又是我们最根本的天性。<br>法律经不起细看，认真琢磨的话，你会发现它只不过是一套理性化的阐释、合法的诡辩、一些方便人们运用的先例。<br>对，还有祥和，但那不过是死亡的代名词而已。”</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>她曾给他引述了一段贝尼·杰瑟里特谚语：<br>“当宗教与政治同乘一辆马车时，驾车人会觉得没有什么东西可以阻挡他们。他们会一路狂奔，速度越来越快，把一切思想障碍都抛到一边。<br>他们会把一切危机意识抛诸脑后，忘记前面的悬崖并不会主动提醒闭起眼睛盲目狂奔的人。<br>他们不懂得悬崖勒马，直到为时已晚。”</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>她只站了短短的一刻，一瞬而已，就像她自己的生命与时间本身相比那样不值一提。<br>但就在这一瞬，她觉得连这颗星球都快被狂风吹走了，和狂风挟带的其他一切一样，变成宇宙的尘埃。</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>但他渐渐意识到，不留下任何痕迹地死去，或许是一种难得的礼遇——没有尸骸，什么都没有，整个星球就是他的墓地。</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>books</tag>
-        <tag>2021</tag>
-        <tag>sci-fi</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java NIO疑问与总结</title>
     <url>//2021-12-17-java-nio/</url>
     <content><![CDATA[<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ByteBuffer</span> dst <span class="token operator">=</span> <span class="token class-name">ByteBuffer</span><span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -6047,6 +5993,60 @@ k describe rs<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
       <tags>
         <tag>code-snippets</tag>
         <tag>kubectl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>沙丘 笔记</title>
+    <url>//2021-12-12-Dune/</url>
+    <content><![CDATA[<hr>
+<blockquote>
+<p>他转过身, 沿着过道大步走回大厅, 脑海中的记忆翻腾起来, 就像一个个没牙的老太婆在唠唠叨叨地述说.<br>他想起了宽阔的水域, 起伏的波浪, 想起了满眼青草而不是黄沙的日子, 想起了艳阳高照的夏季, 这种日子已经像风暴中的落叶一样迅猛地离他而去了.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>生命会将狂暴的废物变成优雅的灵动之物, 他想, 这就是沙漠对我们的教诲.<br>现实的这种改变常常让他瞠目结舌.<br>他很想转身对着挤在穴地入口处的助手们大声叫喊:<br>如果你们一定要崇拜某种东西的话, 就崇拜生命吧<br>– 所有生命, 哪怕是最低贱的生命! 生命的美好属于我们全体!</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>有那么一会儿，他任凭自己的思绪自由飘荡。<br>他想起他带着孩提时候的保罗到卡拉丹海滨市场的那一天。<br>太阳照在水面上，发出耀眼的光芒。<br>大海丰饶的产品静静地摆在那儿出售。<br>艾达荷还记起了经常为他们弹奏巴厘琴的哥尼·哈莱克，那些欢笑，那些快乐时光。<br>音乐的旋律在他的脑海中跳跃，像咒语一般，引领着他的意识，走进快乐的回忆。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>一瞬间，艾达荷触到了预知幻象，看到未来的人们用谈论大海的口气谈论保罗。<br>他一生蒙尘，在沙土中奔走，但水一直伴随着他。<br>“他的肉体沉没了，”人们会说，“可他却游了上来。”</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>艾达荷把自己的嘴唇挨到她的头发上。“求求你，别难过了。”他低声说，<br>感到她的悲哀和自己的混合在一起，像两条小溪融入了同一个水池。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>他感觉自己是在时间的海洋中冲浪，时而跌进浪谷，时而骑上浪尖，<br>与此同时，周围的其他波浪此起彼伏，它们表面载着的东西也时隐时现。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>宪法是鼓动起来的社会权力，没有任何道德和良心。<br>它可以摧毁社会的各个阶层，无情地抹杀所有尊严和个性。它没有稳定的标准，也不受任何限制。<br>与此相比，我则是有限制的。为了给我的人民提供绝对的保护，我禁止颁布宪法。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>“啊，法律。”他说。他走到窗前，拉开帷幔，好像能看见外面似的，<br>“什么是法律？控制吗？法律过滤了混乱，滤下来的又是什么？祥和？法律既是我们的最高理想，又是我们最根本的天性。<br>法律经不起细看，认真琢磨的话，你会发现它只不过是一套理性化的阐释、合法的诡辩、一些方便人们运用的先例。<br>对，还有祥和，但那不过是死亡的代名词而已。”</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>她曾给他引述了一段贝尼·杰瑟里特谚语：<br>“当宗教与政治同乘一辆马车时，驾车人会觉得没有什么东西可以阻挡他们。他们会一路狂奔，速度越来越快，把一切思想障碍都抛到一边。<br>他们会把一切危机意识抛诸脑后，忘记前面的悬崖并不会主动提醒闭起眼睛盲目狂奔的人。<br>他们不懂得悬崖勒马，直到为时已晚。”</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>她只站了短短的一刻，一瞬而已，就像她自己的生命与时间本身相比那样不值一提。<br>但就在这一瞬，她觉得连这颗星球都快被狂风吹走了，和狂风挟带的其他一切一样，变成宇宙的尘埃。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>但他渐渐意识到，不留下任何痕迹地死去，或许是一种难得的礼遇——没有尸骸，什么都没有，整个星球就是他的墓地。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>books</tag>
+        <tag>2021</tag>
+        <tag>sci-fi</tag>
       </tags>
   </entry>
   <entry>
@@ -9874,10 +9874,97 @@ davywalkerdeMBP:_assets davywalker$ <span class="token function">dig</span> baid
 <li><a href="https://www.jianshu.com/p/f6ef04bf6af2">https://www.jianshu.com/p/f6ef04bf6af2</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
       <tags>
         <tag>linux</tag>
         <tag>dns</tag>
         <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用的Nginx命令与配置</title>
+    <url>//2022-08-09-nginx-scripts/</url>
+    <content><![CDATA[<h1 id="MAC环境"><a href="#MAC环境" class="headerlink" title="MAC环境"></a>MAC环境</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/var/www
+/usr/local/Cellar/nginx/1.21.3/html<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="配置文件路径"><a href="#配置文件路径" class="headerlink" title="配置文件路径"></a>配置文件路径</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/etc/nginx
+/usr/local/etc/nginx/nginx.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="禁止通过IP访问"><a href="#禁止通过IP访问" class="headerlink" title="禁止通过IP访问"></a>禁止通过IP访问</h3><ul>
+<li>绑定了hosts<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">127.0</span>.0.1 example.org www.example.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>只允许通过<code>localhost:8080</code>或者<code>example.org:8080</code>或者<code>www.example.org:8080</code>访问, </li>
+<li>禁止通过<code>127.0.0.1:8080</code>访问, 返回502错误.<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server <span class="token punctuation">&#123;</span>
+    listen  <span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token builtin class-name">return</span> <span class="token number">502</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+server <span class="token punctuation">&#123;</span>
+    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
+    server_name  localhost example.org www.example.org<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092149192.png"></p>
+<h3 id="单Host多域名-不同域名访问不同服务"><a href="#单Host多域名-不同域名访问不同服务" class="headerlink" title="单Host多域名, 不同域名访问不同服务"></a>单Host多域名, 不同域名访问不同服务</h3><ul>
+<li>绑定了hosts<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">127.0</span>.0.1 example.org www.example.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>通过<code>localhost:8080</code>访问, 则访问到 <code>$NGINX_HOME/html/</code> 目录</li>
+<li>通过<code>example.org:8080</code>或者<code>www.example.org:8080</code>访问, 则访问到 <code>$NGINX_HOME/html2/</code> 目录</li>
+<li>禁止通过<code>127.0.0.1:8080</code>访问, 返回502错误.<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server <span class="token punctuation">&#123;</span>
+    listen  <span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token builtin class-name">return</span> <span class="token number">502</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+server <span class="token punctuation">&#123;</span>
+    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
+    server_name  example.org www.example.org<span class="token punctuation">;</span>
+    location / <span class="token punctuation">&#123;</span>
+        root html2<span class="token punctuation">;</span>
+        index index.html index.htm<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    error_page   <span class="token number">500</span> <span class="token number">502</span> <span class="token number">503</span> <span class="token number">504</span>  /50x.html<span class="token punctuation">;</span>
+    location <span class="token operator">=</span> /50x.html <span class="token punctuation">&#123;</span>
+        root   html2<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+server <span class="token punctuation">&#123;</span>
+    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
+    server_name  localhost<span class="token punctuation">;</span>
+    location / <span class="token punctuation">&#123;</span>
+        root   html<span class="token punctuation">;</span>
+        index  index.html index.htm<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    error_page   <span class="token number">500</span> <span class="token number">502</span> <span class="token number">503</span> <span class="token number">504</span>  /50x.html<span class="token punctuation">;</span>
+    location <span class="token operator">=</span> /50x.html <span class="token punctuation">&#123;</span>
+        root   html<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092152127.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092152948.png"></li>
+</ul>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>NGINX_HOME:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/Cellar/nginx/1.21.3
+location / <span class="token punctuation">&#123;</span>
+root   html<span class="token punctuation">;</span>
+index  index.html index.htm<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上边的html就是 NGINX_HOME&#x2F;html&#x2F;</p>
+<h2 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew services start nginx
+brew services restart nginx
+brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Nginx是如何知道本次请求-请求的是IP还是域名-如果是域名的话-多个域名如何区分"><a href="#Nginx是如何知道本次请求-请求的是IP还是域名-如果是域名的话-多个域名如何区分" class="headerlink" title="Nginx是如何知道本次请求, 请求的是IP还是域名? 如果是域名的话, 多个域名如何区分?"></a>Nginx是如何知道本次请求, 请求的是IP还是域名? 如果是域名的话, 多个域名如何区分?</h3><ul>
+<li>如下图, 本质上还是Nginx解析HTTP协议, 根据请求行里的<code>RequestURL</code>来进行判断.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092154665.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092154173.png"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>mac</tag>
+        <tag>linux</tag>
+        <tag>network</tag>
+        <tag>nginx</tag>
       </tags>
   </entry>
 </search>
