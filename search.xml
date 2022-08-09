@@ -9800,12 +9800,12 @@ osxkeychain<span aria-hidden="true" class="line-numbers-rows"><span></span><span
 <p>The authoritative nameserver is usually the resolver’s last step in the journey for an IP address.</p>
 </blockquote>
 <h1 id="DNS查询类型"><a href="#DNS查询类型" class="headerlink" title="DNS查询类型"></a>DNS查询类型</h1><h2 id="递归式-Recursive-Query"><a href="#递归式-Recursive-Query" class="headerlink" title="递归式(Recursive Query)"></a>递归式(Recursive Query)</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092118248.png"></p>
-<h2 id="DNS请求"><a href="#DNS请求" class="headerlink" title="DNS请求:"></a>DNS请求:</h2><p>如下, 是个请求中的标识位, 使用dig命令, </p>
+<h3 id="DNS请求"><a href="#DNS请求" class="headerlink" title="DNS请求:"></a>DNS请求:</h3><p>如下, 是个请求中的标识位, 使用dig命令, </p>
 <ul>
 <li>如果<code>+trace</code>则请求自动禁用递归(即如下递归标识设置为false);<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082351183.png"></li>
 <li>不加<code>+trace</code>, 则请求自动使用递归.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092101659.png"></li>
 </ul>
-<h2 id="DNS响应"><a href="#DNS响应" class="headerlink" title="DNS响应:"></a>DNS响应:</h2><p>如下, </p>
+<h3 id="DNS响应"><a href="#DNS响应" class="headerlink" title="DNS响应:"></a>DNS响应:</h3><p>如下, </p>
 <ul>
 <li>代表当前LocalDNS服务器支持递归查询.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082352908.png"></li>
 <li>与此形成鲜明对比的是ROOT根DNS服务器返回不支持递归查询.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082353697.png"></li>
