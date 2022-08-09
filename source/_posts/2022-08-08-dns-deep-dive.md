@@ -42,14 +42,14 @@ davywalkerdeMBP:_assets davywalker$ dig baidu.com +trace
 
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092118248.png)
 
-## DNS请求: 
+### DNS请求: 
 如下, 是个请求中的标识位, 使用dig命令, 
 - 如果`+trace`则请求自动禁用递归(即如下递归标识设置为false);
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082351183.png)
 - 不加`+trace`, 则请求自动使用递归.
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092101659.png)
 
-## DNS响应: 
+### DNS响应: 
 如下, 
 - 代表当前LocalDNS服务器支持递归查询. 
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082352908.png)
