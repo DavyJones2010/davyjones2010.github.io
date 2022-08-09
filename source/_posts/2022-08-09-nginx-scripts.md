@@ -2,6 +2,7 @@
 title: 常用的Nginx命令与配置
 date: 2022-08-09 21:42:45
 tags: [nginx, network, linux, mac]
+categories: 技术
 ---
 
 # MAC环境
