@@ -247,7 +247,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -374,7 +374,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -506,7 +506,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -544,23 +544,23 @@ server <span class="token punctuation">&#123;</span>
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Cloud框架的架构与概念"><a href="#Cloud框架的架构与概念" class="headerlink" title="Cloud框架的架构与概念"></a>Cloud框架的架构与概念</h1><hr>
-<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><h3 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h3><pre class="line-numbers language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">erDiagram</span>
-    Jenkins <span class="token arrow operator">||--o&#123;</span> hudson_slaves_Cloud <span class="token operator">:</span> contains
-    hudson_slaves_Cloud <span class="token punctuation">&#123;</span>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><h3 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h3><pre class="mermaid">erDiagram
+    Jenkins ||--o{ hudson_slaves_Cloud : contains
+    hudson_slaves_Cloud {
         id name
-    <span class="token punctuation">&#125;</span>
-    hudson_slaves_Cloud <span class="token arrow operator">||--|&#123;</span> SlaveTemplate <span class="token operator">:</span> contains
-    SlaveTemplate <span class="token punctuation">&#123;</span>
+    }
+    hudson_slaves_Cloud ||--|{ SlaveTemplate : contains
+    SlaveTemplate {
         id templateName
-    <span class="token punctuation">&#125;</span>
-    SlaveTemplate <span class="token arrow operator">||--o&#123;</span> AlibabaEcsSpotFollower <span class="token operator">:</span> <span class="token string">"provision"</span>
-    AlibabaEcsSpotFollower <span class="token punctuation">&#123;</span>
+    }
+    SlaveTemplate ||--o{ AlibabaEcsSpotFollower : "provision"
+    AlibabaEcsSpotFollower {
         id ecsInstanceId
-    <span class="token punctuation">&#125;</span>
-    AlibabaEcsSpotFollower <span class="token arrow operator">||--||</span> SlaveComputer <span class="token operator">:</span> createComputer
-    SlaveComputer <span class="token punctuation">&#123;</span>
+    }
+    AlibabaEcsSpotFollower ||--|| SlaveComputer : createComputer
+    SlaveComputer {
         id 
-    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    }</pre>
 
 <h3 id="各Entity关联关系"><a href="#各Entity关联关系" class="headerlink" title="各Entity关联关系"></a>各Entity关联关系</h3><p>&#x2F;&#x2F; TODO: 待补充完善.</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Jenkins</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -636,7 +636,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -797,7 +797,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -902,7 +902,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1015,7 +1015,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1126,7 +1126,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1264,7 +1264,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1363,7 +1363,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1474,7 +1474,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1589,7 +1589,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1734,7 +1734,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1857,7 +1857,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -1978,7 +1978,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -2091,7 +2091,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -2200,7 +2200,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -2307,7 +2307,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -2426,7 +2426,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -2547,7 +2547,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -2658,7 +2658,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -2781,7 +2781,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -2921,7 +2921,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -3025,7 +3025,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -3136,7 +3136,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -3263,7 +3263,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -3366,7 +3366,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -3497,7 +3497,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -3607,7 +3607,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -3806,7 +3806,7 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -3947,7 +3947,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
@@ -4066,7 +4066,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
     </span>
 
   
