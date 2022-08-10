@@ -9671,7 +9671,71 @@ osxkeychain<span aria-hidden="true" class="line-numbers-rows"><span></span><span
   <entry>
     <title>Jenkins Alibaba Cloud 插件开发总结</title>
     <url>//2022-08-07-jenkins-cloud-plugin-dev-summary/</url>
-    <content><![CDATA[<p>&#x2F;&#x2F; TODO: 占个坑, 找时间填上</p>
+    <content><![CDATA[<h1 id="Cloud框架的架构与概念"><a href="#Cloud框架的架构与概念" class="headerlink" title="Cloud框架的架构与概念"></a>Cloud框架的架构与概念</h1><hr>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><h3 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h3><pre class="line-numbers language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">erDiagram</span>
+    Jenkins <span class="token arrow operator">||--o&#123;</span> hudson_slaves_Cloud <span class="token operator">:</span> contains
+    hudson_slaves_Cloud <span class="token punctuation">&#123;</span>
+        id name
+    <span class="token punctuation">&#125;</span>
+    hudson_slaves_Cloud <span class="token arrow operator">||--|&#123;</span> SlaveTemplate <span class="token operator">:</span> contains
+    SlaveTemplate <span class="token punctuation">&#123;</span>
+        id templateName
+    <span class="token punctuation">&#125;</span>
+    SlaveTemplate <span class="token arrow operator">||--o&#123;</span> AlibabaEcsSpotFollower <span class="token operator">:</span> <span class="token string">"provision"</span>
+    AlibabaEcsSpotFollower <span class="token punctuation">&#123;</span>
+        id ecsInstanceId
+    <span class="token punctuation">&#125;</span>
+    AlibabaEcsSpotFollower <span class="token arrow operator">||--||</span> SlaveComputer <span class="token operator">:</span> createComputer
+    SlaveComputer <span class="token punctuation">&#123;</span>
+        id 
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="各Entity关联关系"><a href="#各Entity关联关系" class="headerlink" title="各Entity关联关系"></a>各Entity关联关系</h3><p>&#x2F;&#x2F; TODO: 待补充完善.</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Jenkins</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h2 id="noDelayProvisioning"><a href="#noDelayProvisioning" class="headerlink" title="noDelayProvisioning"></a>noDelayProvisioning</h2><ul>
+<li>当任务队列里有任务时, 自动会在 instanceFloor与instanceCap 之间进行弹性创建node.</li>
+</ul>
+<p>&#x2F;&#x2F; TODO: 待补充完善.</p>
+<h1 id="其他重要信息"><a href="#其他重要信息" class="headerlink" title="其他重要信息"></a>其他重要信息</h1><p>对象序列化后XML文件路径:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token variable">$&#123;proj_path&#125;</span>/alibabacloud-ecs-plugin/work/config.xml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="插件开发的经验"><a href="#插件开发的经验" class="headerlink" title="插件开发的经验"></a>插件开发的经验</h1><hr>
+<h2 id="规格选择"><a href="#规格选择" class="headerlink" title="规格选择"></a>规格选择</h2><p>在规格选择栏, 设计的时候为了简便用户选择:</p>
+<ol>
+<li>下拉框方式, 方便不熟悉ECS的用户选择</li>
+<li>默认使用2C8G, 即独享型最小规格. 从而减少下拉框规格量, 便于入门.</li>
+</ol>
+<p>但在实际企业级场景下, 用户</p>
+<ol>
+<li>需要有大规格, 基本都是48C以上, 即 12xlarge, 16xlarge, 24xlarge 的规格</li>
+<li>本身使用ECS, 对ECS规格熟悉, 有目标规格.</li>
+</ol>
+<h2 id="SKU选择"><a href="#SKU选择" class="headerlink" title="SKU选择"></a>SKU选择</h2><ol>
+<li>单个CloudProvider, 只支持一个SKU, 数量可以选择多个.<br>但在实际场景下:</li>
+<li>用户希望在多可用区, 多规格, 这样需要重复逐一配置CloudProvider, 非常麻烦.</li>
+</ol>
+<h2 id="系统盘类型选择"><a href="#系统盘类型选择" class="headerlink" title="系统盘类型选择"></a>系统盘类型选择</h2><p>在系统盘选择项上, 设计的时候为了简便用户上手:</p>
+<ol>
+<li>不需要用户填入系统盘类型, 创建ECS(RunInstances)时不传入系统盘类型&amp;大小, 从而让ECS使用的默认值, 即cloud_efficiency</li>
+<li>不需要用户填入系统盘大小, 即使用默认的20GB</li>
+</ol>
+<p>但在实际场景下, 用户:</p>
+<ol>
+<li>选择ecs.c7.xxx规格, 7代规格不支持cloud_efficiency, 只支持cloud_essd, 即RunInstances接口必须传入cloud_essd系统盘类型</li>
+</ol>
+<h2 id="数据盘类型"><a href="#数据盘类型" class="headerlink" title="数据盘类型"></a>数据盘类型</h2><p>在数据盘选项上, 为了用户上手方便:</p>
+<ol>
+<li>默认不创建&amp;挂载系统盘, 因此不需要用户选择数据盘类型&amp;数据盘大小<br>但在实际场景下, 用户:</li>
+<li>会有全镜像, 即镜像中既包含系统盘, 又包含数据盘</li>
+</ol>
+<h2 id="Master与Slave通信方式"><a href="#Master与Slave通信方式" class="headerlink" title="Master与Slave通信方式"></a>Master与Slave通信方式</h2><p>JenkinsMaster与Slave的联通方式, 设计的时候为了方便应对用户Master在云上&#x2F;其他云上&#x2F;云下等场景, 默认为Slave创建公网IP, 从而Master通过公网IP与Slave联通.<br>但在实际场景下:</p>
+<ol>
+<li>创建公网IP会导致频繁的攻击.<pre class="line-numbers language-java" data-language="java"><code class="language-java">【XXX】尊敬的xxxx：
+云安全中心检测到恶意XX<span class="token punctuation">.</span>XX<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx正在尝试攻击您的服务器：XX<span class="token punctuation">.</span>XX<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx（XX<span class="token operator">-</span>XX<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>），已为您创建IP拦截策略，并成功拦截该恶意IP，建议您登录云安全中心控制台安全告警页中查看IP拦截策略。若您需要放行该 IP ，您可以在IP 拦截策略中禁用安全策略。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>用户本身VPC就是在阿里云上, 通过公网连接, 会产生额外的费用.</li>
+</ol>
 ]]></content>
       <categories>
         <category>技术</category>

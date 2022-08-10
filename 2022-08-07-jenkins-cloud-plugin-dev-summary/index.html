@@ -23,15 +23,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="&#x2F;&#x2F; TODO: 占个坑, 找时间填上">
+    <meta name="description" content="Cloud框架的架构与概念 架构ER图erDiagram     Jenkins ||--o&amp;#123; hudson_slaves_Cloud : contains     hudson_slaves_Cloud &amp;#123;         id name     &amp;#125;     hudson_slaves_Cloud ||--|&amp;#123; SlaveTemplate : contai">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Jenkins Alibaba Cloud 插件开发总结">
 <meta property="og:url" content="https://davyjones2010.github.io/2022-08-07-jenkins-cloud-plugin-dev-summary/">
 <meta property="og:site_name" content="Coders@Work">
-<meta property="og:description" content="&#x2F;&#x2F; TODO: 占个坑, 找时间填上">
+<meta property="og:description" content="Cloud框架的架构与概念 架构ER图erDiagram     Jenkins ||--o&amp;#123; hudson_slaves_Cloud : contains     hudson_slaves_Cloud &amp;#123;         id name     &amp;#125;     hudson_slaves_Cloud ||--|&amp;#123; SlaveTemplate : contai">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-07T14:31:55.000Z">
-<meta property="article:modified_time" content="2022-08-10T14:30:43.669Z">
+<meta property="article:modified_time" content="2022-08-10T15:56:04.035Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="jenkins">
 <meta property="article:tag" content="ci">
@@ -136,7 +136,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -149,6 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cloud%E6%A1%86%E6%9E%B6%E7%9A%84%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">Cloud框架的架构与概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ER%E5%9B%BE"><span class="nav-number">1.1.1.</span> <span class="nav-text">ER图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84Entity%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">各Entity关联关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#noDelayProvisioning"><span class="nav-number">1.3.</span> <span class="nav-text">noDelayProvisioning</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">其他重要信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9A%84%E7%BB%8F%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">插件开发的经验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%84%E6%A0%BC%E9%80%89%E6%8B%A9"><span class="nav-number">3.1.</span> <span class="nav-text">规格选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SKU%E9%80%89%E6%8B%A9"><span class="nav-number">3.2.</span> <span class="nav-text">SKU选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%9B%98%E7%B1%BB%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-number">3.3.</span> <span class="nav-text">系统盘类型选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9B%98%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">数据盘类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Master%E4%B8%8ESlave%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="nav-number">3.5.</span> <span class="nav-text">Master与Slave通信方式</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -255,7 +256,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-10 22:30:43" itemprop="dateModified" datetime="2022-08-10T22:30:43+08:00">2022-08-10</time>
+      <time title="修改时间：2022-08-10 23:56:04" itemprop="dateModified" datetime="2022-08-10T23:56:04+08:00">2022-08-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -274,7 +275,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>26</span>
+      <span>1.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -292,7 +293,71 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>&#x2F;&#x2F; TODO: 占个坑, 找时间填上</p>
+        <h1 id="Cloud框架的架构与概念"><a href="#Cloud框架的架构与概念" class="headerlink" title="Cloud框架的架构与概念"></a>Cloud框架的架构与概念</h1><hr>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><h3 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h3><pre class="line-numbers language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">erDiagram</span>
+    Jenkins <span class="token arrow operator">||--o&#123;</span> hudson_slaves_Cloud <span class="token operator">:</span> contains
+    hudson_slaves_Cloud <span class="token punctuation">&#123;</span>
+        id name
+    <span class="token punctuation">&#125;</span>
+    hudson_slaves_Cloud <span class="token arrow operator">||--|&#123;</span> SlaveTemplate <span class="token operator">:</span> contains
+    SlaveTemplate <span class="token punctuation">&#123;</span>
+        id templateName
+    <span class="token punctuation">&#125;</span>
+    SlaveTemplate <span class="token arrow operator">||--o&#123;</span> AlibabaEcsSpotFollower <span class="token operator">:</span> <span class="token string">"provision"</span>
+    AlibabaEcsSpotFollower <span class="token punctuation">&#123;</span>
+        id ecsInstanceId
+    <span class="token punctuation">&#125;</span>
+    AlibabaEcsSpotFollower <span class="token arrow operator">||--||</span> SlaveComputer <span class="token operator">:</span> createComputer
+    SlaveComputer <span class="token punctuation">&#123;</span>
+        id 
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="各Entity关联关系"><a href="#各Entity关联关系" class="headerlink" title="各Entity关联关系"></a>各Entity关联关系</h3><p>&#x2F;&#x2F; TODO: 待补充完善.</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Jenkins</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h2 id="noDelayProvisioning"><a href="#noDelayProvisioning" class="headerlink" title="noDelayProvisioning"></a>noDelayProvisioning</h2><ul>
+<li>当任务队列里有任务时, 自动会在 instanceFloor与instanceCap 之间进行弹性创建node.</li>
+</ul>
+<p>&#x2F;&#x2F; TODO: 待补充完善.</p>
+<h1 id="其他重要信息"><a href="#其他重要信息" class="headerlink" title="其他重要信息"></a>其他重要信息</h1><p>对象序列化后XML文件路径:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token variable">$&#123;proj_path&#125;</span>/alibabacloud-ecs-plugin/work/config.xml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="插件开发的经验"><a href="#插件开发的经验" class="headerlink" title="插件开发的经验"></a>插件开发的经验</h1><hr>
+<h2 id="规格选择"><a href="#规格选择" class="headerlink" title="规格选择"></a>规格选择</h2><p>在规格选择栏, 设计的时候为了简便用户选择:</p>
+<ol>
+<li>下拉框方式, 方便不熟悉ECS的用户选择</li>
+<li>默认使用2C8G, 即独享型最小规格. 从而减少下拉框规格量, 便于入门.</li>
+</ol>
+<p>但在实际企业级场景下, 用户</p>
+<ol>
+<li>需要有大规格, 基本都是48C以上, 即 12xlarge, 16xlarge, 24xlarge 的规格</li>
+<li>本身使用ECS, 对ECS规格熟悉, 有目标规格.</li>
+</ol>
+<h2 id="SKU选择"><a href="#SKU选择" class="headerlink" title="SKU选择"></a>SKU选择</h2><ol>
+<li>单个CloudProvider, 只支持一个SKU, 数量可以选择多个.<br>但在实际场景下:</li>
+<li>用户希望在多可用区, 多规格, 这样需要重复逐一配置CloudProvider, 非常麻烦.</li>
+</ol>
+<h2 id="系统盘类型选择"><a href="#系统盘类型选择" class="headerlink" title="系统盘类型选择"></a>系统盘类型选择</h2><p>在系统盘选择项上, 设计的时候为了简便用户上手:</p>
+<ol>
+<li>不需要用户填入系统盘类型, 创建ECS(RunInstances)时不传入系统盘类型&amp;大小, 从而让ECS使用的默认值, 即cloud_efficiency</li>
+<li>不需要用户填入系统盘大小, 即使用默认的20GB</li>
+</ol>
+<p>但在实际场景下, 用户:</p>
+<ol>
+<li>选择ecs.c7.xxx规格, 7代规格不支持cloud_efficiency, 只支持cloud_essd, 即RunInstances接口必须传入cloud_essd系统盘类型</li>
+</ol>
+<h2 id="数据盘类型"><a href="#数据盘类型" class="headerlink" title="数据盘类型"></a>数据盘类型</h2><p>在数据盘选项上, 为了用户上手方便:</p>
+<ol>
+<li>默认不创建&amp;挂载系统盘, 因此不需要用户选择数据盘类型&amp;数据盘大小<br>但在实际场景下, 用户:</li>
+<li>会有全镜像, 即镜像中既包含系统盘, 又包含数据盘</li>
+</ol>
+<h2 id="Master与Slave通信方式"><a href="#Master与Slave通信方式" class="headerlink" title="Master与Slave通信方式"></a>Master与Slave通信方式</h2><p>JenkinsMaster与Slave的联通方式, 设计的时候为了方便应对用户Master在云上&#x2F;其他云上&#x2F;云下等场景, 默认为Slave创建公网IP, 从而Master通过公网IP与Slave联通.<br>但在实际场景下:</p>
+<ol>
+<li>创建公网IP会导致频繁的攻击.<pre class="line-numbers language-java" data-language="java"><code class="language-java">【XXX】尊敬的xxxx：
+云安全中心检测到恶意XX<span class="token punctuation">.</span>XX<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx正在尝试攻击您的服务器：XX<span class="token punctuation">.</span>XX<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx（XX<span class="token operator">-</span>XX<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>），已为您创建IP拦截策略，并成功拦截该恶意IP，建议您登录云安全中心控制台安全告警页中查看IP拦截策略。若您需要放行该 IP ，您可以在IP 拦截策略中禁用安全策略。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>用户本身VPC就是在阿里云上, 通过公网连接, 会产生额外的费用.</li>
+</ol>
 
     </div>
 
@@ -353,14 +418,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">236k</span>
+    <span title="站点总字数">237k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:34</span>
+    <span title="站点阅读时长">3:36</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
@@ -379,6 +444,8 @@
 <script src="/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
 
 
   <script src="/js/third-party/pace.js"></script>
