@@ -22,11 +22,17 @@ tags: [linux, open-wrt, software-based-router, router, network]
 | --- | --- | --- | --- |
 | 主机 | [倍控](https://detail.tmall.com/item.htm?id=673002078011&spm=a1z09.2.0.0.237b2e8dIxvpd0&_u=77rqrdmc3b6) | 729 | 裸机,  |
 | CPU | [Intel N5105](https://www.intel.com/content/www/us/en/products/sku/212328/intel-celeron-processor-n5105-4m-cache-up-to-2-90-ghz/specifications.html) | 无, 包含在主机里 | 第11代, Jasper Lake; 4Core; 10nm; Base 2GHz, Burst 2.9GHz; 4MB L3 Cache; 10W TDP |  
-| 内存 | 三星 | 380 | 16GB * 2(组成双通道); DDR4; 3200MHz; | 
+| 内存 | 三星 | 380*2 | 16GB * 2(组成双通道); DDR4; 3200MHz; | 
 | 闪存 | 西数 SN570 | 350 | 500GB; NVME  | 
-| 网卡 | Intel I225-V | 无, 包含在主机里 | 4个物理网口/卡; 1000Mbps |  
+| 网卡 | Intel I225-V | 无, 包含在主机里 | 4个物理网口/卡; 1000Mbps |
+  
+合计: `729 + 380*2 + 350 = 1839`, 几乎可以说是目前工控机的顶配了.
 
-几乎可以说是目前工控机的顶配了.
+{% note warning %}
+#### 内存频率限制
+CPU支持的内存频率最大为`2933 MHz`, 因此使用的 DDR4 `3200MHz` 被自动降频到了`2933 MHz`;
+{% endnote %}
+
 
 # 安装步骤
 ## OpenWrt安装
