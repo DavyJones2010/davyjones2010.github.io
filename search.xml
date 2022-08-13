@@ -9803,7 +9803,7 @@ osxkeychain<span aria-hidden="true" class="line-numbers-rows"><span></span><span
 </tr>
 </tbody></table>
 <p>合计: <code>729 + 380*2 + 350 = 1839</code>, 几乎可以说是目前工控机的顶配了.</p>
-<div class="note warning"><h4 id="内存频率限制"><a href="#内存频率限制" class="headerlink" title="内存频率限制"></a>内存频率限制</h4><p>CPU支持的内存频率最大为<code>2933 MHz</code>, 因此使用的 DDR4 <code>3200MHz</code> 被自动降频到了<code>2933 MHz</code>;</p>
+<div class="note warning"><p>内存频率限制<br>CPU支持的内存频率最大为<code>2933 MHz</code>, 因此使用的 DDR4 <code>3200MHz</code> 被自动降频到了<code>2933 MHz</code>;</p>
 </div>
 
 
@@ -10172,7 +10172,7 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <td>4铜管, 3针脚</td>
 </tr>
 <tr>
-<td>几项</td>
+<td>机箱</td>
 <td>待挑选</td>
 <td>1</td>
 <td>??</td>
@@ -10181,7 +10181,7 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 </tbody></table>
 <p>合计 <code>80 + 250 + 160 + 200 + 160 + 350 + 120 + 45 = 1,365</code><br>现在显卡电源都还没到, 希望组装上去之后一次点亮, 就可以说声”真香!”啦.</p>
 <h2 id="主板细节"><a href="#主板细节" class="headerlink" title="主板细节"></a>主板细节</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208132325729.png"></p>
-<div class="note info"><h4 id="x99含义"><a href="#x99含义" class="headerlink" title="x99含义"></a>x99含义</h4><p>所谓的x99主板, 代表的其实是<code>Intel X99 chipset</code>, 是Intel的PCH(Platform Controller Hub)即南桥芯片, 定义了主板的规范, 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208140001662.png"></p>
+<div class="note info"><p>x99含义<br>所谓的x99主板, 代表的其实是<code>Intel X99 chipset</code>, 是Intel的PCH(Platform Controller Hub)即南桥芯片, 定义了主板的规范, 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208140001662.png"></p>
 </div>
 
 <p>其他细节: </p>
