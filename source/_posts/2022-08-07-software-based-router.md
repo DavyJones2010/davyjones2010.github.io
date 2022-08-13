@@ -29,7 +29,7 @@ tags: [linux, open-wrt, software-based-router, router, network]
 合计: `729 + 380*2 + 350 = 1839`, 几乎可以说是目前工控机的顶配了.
 
 {% note warning %}
-#### 内存频率限制
+内存频率限制
 CPU支持的内存频率最大为`2933 MHz`, 因此使用的 DDR4 `3200MHz` 被自动降频到了`2933 MHz`;
 {% endnote %}
 

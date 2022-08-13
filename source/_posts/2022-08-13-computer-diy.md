@@ -31,7 +31,7 @@ tags: [diy]
 | 显卡 | 蓝宝石RX460 | 1 | 350 |  4GB显存; 无需单独供电  | 
 | 电源 | 鑫谷全模组 | 1 | 120 |  550W, 整体绰绰有余了  | 
 | CPU散热器 | 长城霄龙400 | 1 | 45 | 4铜管, 3针脚 |
-| 几项 | 待挑选 | 1 | ?? | ?? |
+| 机箱 | 待挑选 | 1 | ?? | ?? |
 
 合计 `80 + 250 + 160 + 200 + 160 + 350 + 120 + 45 = 1,365` 
 现在显卡电源都还没到, 希望组装上去之后一次点亮, 就可以说声"真香!"啦.
@@ -41,7 +41,7 @@ tags: [diy]
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208132325729.png)
 
 {% note info %}
-#### x99含义
+x99含义
 所谓的x99主板, 代表的其实是`Intel X99 chipset`, 是Intel的PCH(Platform Controller Hub)即南桥芯片, 定义了主板的规范, 如下:
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208140001662.png)
 {% endnote %}
