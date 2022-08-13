@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072137732.png">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208072130374.png">
 <meta property="article:published_time" content="2022-08-07T12:38:43.000Z">
-<meta property="article:modified_time" content="2022-08-10T16:04:09.299Z">
+<meta property="article:modified_time" content="2022-08-13T16:03:52.676Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="network">
@@ -159,7 +159,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E8%A6%81%E4%BD%BF%E7%94%A8%E8%BD%AF%E8%B7%AF%E7%94%B1"><span class="nav-number">1.</span> <span class="nav-text">为啥要使用软路由?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%B8%85%E5%8D%95"><span class="nav-number">2.</span> <span class="nav-text">配置清单</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenWrt%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">OpenWrt安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">插件配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91"><span class="nav-number">4.</span> <span class="nav-text">网络拓扑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%94%B9%E9%80%A0%E5%89%8D"><span class="nav-number">4.1.</span> <span class="nav-text">软路由改造前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%94%B9%E9%80%A0%E5%90%8E"><span class="nav-number">4.2.</span> <span class="nav-text">软路由改造后</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">效果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E9%A2%84%E8%A7%88"><span class="nav-number">5.1.</span> <span class="nav-text">效果预览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.2.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E8%A6%81%E4%BD%BF%E7%94%A8%E8%BD%AF%E8%B7%AF%E7%94%B1"><span class="nav-number">1.</span> <span class="nav-text">为啥要使用软路由?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%B8%85%E5%8D%95"><span class="nav-number">2.</span> <span class="nav-text">配置清单</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E9%A2%91%E7%8E%87%E9%99%90%E5%88%B6"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">内存频率限制</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenWrt%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">OpenWrt安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">插件配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91"><span class="nav-number">4.</span> <span class="nav-text">网络拓扑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%94%B9%E9%80%A0%E5%89%8D"><span class="nav-number">4.1.</span> <span class="nav-text">软路由改造前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E8%B7%AF%E7%94%B1%E6%94%B9%E9%80%A0%E5%90%8E"><span class="nav-number">4.2.</span> <span class="nav-text">软路由改造后</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">效果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E9%A2%84%E8%A7%88"><span class="nav-number">5.1.</span> <span class="nav-text">效果预览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.2.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -266,7 +266,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -340,7 +340,7 @@
 <tr>
 <td>内存</td>
 <td>三星</td>
-<td>380</td>
+<td>380*2</td>
 <td>16GB * 2(组成双通道); DDR4; 3200MHz;</td>
 </tr>
 <tr>
@@ -356,7 +356,11 @@
 <td>4个物理网口&#x2F;卡; 1000Mbps</td>
 </tr>
 </tbody></table>
-<p>几乎可以说是目前工控机的顶配了.</p>
+<p>合计: <code>729 + 380*2 + 350 = 1839</code>, 几乎可以说是目前工控机的顶配了.</p>
+<div class="note warning"><h4 id="内存频率限制"><a href="#内存频率限制" class="headerlink" title="内存频率限制"></a>内存频率限制</h4><p>CPU支持的内存频率最大为<code>2933 MHz</code>, 因此使用的 DDR4 <code>3200MHz</code> 被自动降频到了<code>2933 MHz</code>;</p>
+</div>
+
+
 <h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><h2 id="OpenWrt安装"><a href="#OpenWrt安装" class="headerlink" title="OpenWrt安装"></a>OpenWrt安装</h2><p>裸机上安装OpenWrt, 配置步骤直接看小电视: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1w541157Uo?spm_id_from=333.880.my_history.page.click&amp;vd_source=25b2aadfc1b4b676c371c31423142e7b">https://www.bilibili.com/video/BV1w541157Uo?spm_id_from=333.880.my_history.page.click&amp;vd_source=25b2aadfc1b4b676c371c31423142e7b</a></p>
 <h2 id="插件配置"><a href="#插件配置" class="headerlink" title="插件配置"></a>插件配置</h2><ul>
 <li>OpenClash: &#x2F;&#x2F; TODO:</li>
@@ -442,14 +446,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">237k</span>
+    <span title="站点总字数">239k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:36</span>
+    <span title="站点阅读时长">3:38</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

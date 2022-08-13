@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,122 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-15-cruise-framework-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-15-cruise-framework-design/" class="post-title-link" itemprop="url">一个通用数据巡检框架的设计</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-16 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-16T00:00:00+08:00">2022-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>650</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在实际项目中, 有许多业务场景, 会存在多张表数据不一致或者脏数据残留的问题,<br>需要定期执行一些SQL来进行数据一致性的巡检与订正, 以实现数据的最终一致性.<br>例如下表, 需要定期查询&amp;统计出’deleted’状态的用户数量, 报警, 并清理这些数据.</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- user表</span>
+user_id<span class="token operator">|</span> age<span class="token operator">|</span> <span class="token keyword">status</span><span class="token operator">|</span>
+<span class="token number">1</span><span class="token operator">|</span> <span class="token number">18</span><span class="token operator">|</span> deleted<span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="初步方案"><a href="#初步方案" class="headerlink" title="初步方案:"></a>初步方案:</h1><p>方案1: 可以针对每个需求, 单独写SQL-&gt;DAO-&gt;Service等, 但带来的问题是: </p>
+<ol>
+<li>开发量大, 每次新的需求, 都需要撸一遍, 重复工作量大.</li>
+<li>SQL-&gt;Service整体功能分散, 不便于维护.<br>方案2: 可以基于此, 抽象出一个面向SQL的通用巡检框架, 便于统一接入与维护.</li>
+</ol>
+<h1 id="架构设计思考"><a href="#架构设计思考" class="headerlink" title="架构设计思考"></a>架构设计思考</h1><p>从用户角度, 可以:<br>定时任务框架: </p>
+<ol>
+<li>创建巡检任务, 与输入自定义的SQL绑定</li>
+<li>定义巡检周期</li>
+<li>手动触发运行(便于首次配置之后调试)</li>
+<li>查看运行记录(便于)</li>
+</ol>
+<p>报警与订正框架: </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-15-cruise-framework-design/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-15-software-enginnering-best-practice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +363,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -369,7 +485,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -503,7 +619,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -642,7 +758,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -750,7 +866,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -864,7 +980,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -976,7 +1092,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1083,7 +1199,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1209,7 +1325,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1324,7 +1440,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1430,7 +1546,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1550,7 +1666,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1655,7 +1771,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1761,7 +1877,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1883,7 +1999,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -1999,7 +2115,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -2104,7 +2220,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -2218,7 +2334,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -2316,7 +2432,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -2446,7 +2562,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -2635,7 +2751,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -2745,7 +2861,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -2853,7 +2969,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3007,7 +3123,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3142,7 +3258,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3260,7 +3376,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3375,7 +3491,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3492,7 +3608,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3623,7 +3739,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3745,7 +3861,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3843,7 +3959,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
+      <time title="修改时间：2022-08-14 00:03:52" itemprop="dateModified" datetime="2022-08-14T00:03:52+08:00">2022-08-14</time>
     </span>
 
   
@@ -3912,152 +4028,6 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-12-31-booklist-for-2022/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-12-31-booklist-for-2022/" class="post-title-link" itemprop="url">2022 年度书单</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-01T00:00:00+08:00">2022-01-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-11 00:04:09" itemprop="dateModified" datetime="2022-08-11T00:04:09+08:00">2022-08-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%B9%A6%E5%8D%95/" itemprop="url" rel="index"><span itemprop="name">书单</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>666</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="BookList"><a href="#BookList" class="headerlink" title="BookList"></a>BookList</h1><hr>
-<h2 id="必读"><a href="#必读" class="headerlink" title="必读"></a>必读</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/25897245/">Netty权威指南</a> -20220315 done</li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/30244461/">规模：复杂世界的简单法则</a> -20220724 done</li>
-<li>Google 4篇论文复习 GFS MapReduce BigTable Dapper</li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/26643785/">深度探索嵌入式操作系统：从零开始设计、架构和开发</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/10750155/">数学之美</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/33429491/">昆仑</a></li>
-<li><a target="_blank" rel="noopener" href="https://edu.51cto.com/center/course/lesson/index?id=118666">开源虚拟化KVM入门（KVM架构+KVM基本管理）视频课程</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/25985021/">人类简史</a> -20220215 done</li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/3998926/">系统分析师考试全程指导</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%E5%B8%88%E6%95%99%E7%A8%8B/8182174">系统分析师教程</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/3229243/">Linux内核完全剖析</a></li>
-<li><a target="_blank" rel="noopener" href="https://abseil.io/resources/swe_at_google.2.pdf">Software Engineering at Google</a></li>
-<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/underly/arch">Docker从入门到实践</a> -20220328 done</li>
-<li><a target="_blank" rel="noopener" href="http://product.dangdang.com/25336322.html">深度思考： 不断逼近问题的本质</a> -20220504 done</li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/26943161/">未来简史</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/30259720/">今日简史</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/3596861/">从产品到服务:企业向服务经济转型指南</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/35424872/">深入剖析Kubernetes</a> -20220612 done</li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/30348776/">筚路蓝缕-世纪工程决策建设记述</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/1062991/">北京法源寺</a> -20220717 done</li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/1322455/">遥远的救世主</a> -20220725 done</li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/1322455/">天幕红尘</a> -20220806 done</li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/30155731/">算法之美</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/11530329/">30天自制操作系统</a></li>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/27091064/">云原生应用架构实践——从单体到服务化架构演进</a></li>
-</ul>
-<h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
-</ul>
-<h1 id="ReadList"><a href="#ReadList" class="headerlink" title="ReadList"></a>ReadList</h1><hr>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1587433">有赞 Bond 分布式锁</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cl.cam.ac.uk/research/srg/netos/camsas/blog/2016-03-09-scheduler-architectures.html">scheduler-architectures</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.paessler.com/disabling-icmp-and-snmp-wont-increase-security-but-will-impact-network-monitoring">ICMP</a></li>
-<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的Thread Monitor方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/xkJNoczVDHARLkKjvDOm">深度揭秘阿里云 Serverless Kubernetes</a></li>
-</ul>
-<h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-12-31-booklist-for-2022/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4083,14 +4053,14 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">237k</span>
+    <span title="站点总字数">239k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:36</span>
+    <span title="站点阅读时长">3:38</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
