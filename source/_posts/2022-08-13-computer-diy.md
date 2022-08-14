@@ -71,8 +71,6 @@ x99含义
 
 {% endnote %}
 
-
-
 ### ECC内存
 {% note warning %}
 内存买成ECC却不能用 ECC内存到底是什么鬼?
