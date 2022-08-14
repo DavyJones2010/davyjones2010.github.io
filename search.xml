@@ -10127,7 +10127,7 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <td><a href="https://ark.intel.com/content/www/us/en/ark/products/83357/intel-xeon-processor-e52630l-v3-20m-cache-1-80-ghz.html">Intel® Xeon® Processor E5-2630L v3</a></td>
 <td>1</td>
 <td>80</td>
-<td>8Core 16HT; 22 nm制程; Base 1.8GHz, Burst 2.90 GHz; 20MB L3 Cache; 55W TDP</td>
+<td>Haswell; 8Core 16HT; 22 nm制程; Base 1.8GHz, Burst 2.90 GHz; 20MB L3 Cache; 55W TDP</td>
 </tr>
 <tr>
 <td>主板</td>
@@ -10223,6 +10223,11 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <td>6Core 12HT; 22 nm制程; Base 2.40 GHz, Burst 3.20 GHz; 15MB L3 Cache; 85W TDP; 你不能对一个20块钱的CPU要求更多了! :)</td>
 </tr>
 </tbody></table>
+<div class="note info"><blockquote>
+<p>CPU盖子上的<code>Costa Rica</code>, <code>Malay</code> 代表啥意思?<br>Just to clear something up, the markings on the back of the CPU refer to the packaging site - not the manufacturing site of the actual silicon chip itself.<br>也就是说<mark>代表的是封装工厂的地点</mark>, <code>Malay</code> 代表 <code>Malaysia</code></p>
+</blockquote>
+</div>
+
 <h3 id="ECC内存"><a href="#ECC内存" class="headerlink" title="ECC内存"></a>ECC内存</h3><div class="note warning"><p>内存买成ECC却不能用 ECC内存到底是什么鬼?</p>
 </div>
 
@@ -10252,22 +10257,19 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <li>应该购买6铜管</li>
 <li>应该购买4针的</li>
 </ol>
-<h2 id="升级潜力-amp-计划"><a href="#升级潜力-amp-计划" class="headerlink" title="升级潜力&amp;计划"></a>升级潜力&amp;计划</h2><p>整体CPU还是比较强悍的, 有很大升级潜力: </p>
-<ul>
-<li>主板升级:<ul>
+<h2 id="升级潜力-amp-计划"><a href="#升级潜力-amp-计划" class="headerlink" title="升级潜力&amp;计划"></a>升级潜力&amp;计划</h2><p>整体CPU还是比较强悍的, 有很大升级潜力</p>
+<h3 id="主板升级"><a href="#主板升级" class="headerlink" title="主板升级"></a>主板升级</h3><ul>
 <li>升级成两路, 看有没必要吧, 这样电费吃不消, 电源可能也要升级; <a href="https://post.smzdm.com/p/aoo8wewm/pic_3/#bigImg">X99双路主板简评</a> 指明了方向</li>
 </ul>
-</li>
-<li>CPU升级:<ul>
-<li>X99整体还支持V4(Broadwell)的CPU, 例如 <code>E5-2660 V4</code>, 16年上市, 14nm制程.</li>
+<h3 id="CPU升级"><a href="#CPU升级" class="headerlink" title="CPU升级"></a>CPU升级</h3><ul>
+<li>X99整体还支持V4(Broadwell)的CPU, 例如 <code>E5-2660 V4</code>, 16年上市, 14nm制程. 全部列表参见: </li>
+<li>2699 v3: 650RMB左右</li>
+<li><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208141020764.png"></li>
 </ul>
-</li>
-<li>内存升级:<ul>
+<h3 id="内存升级"><a href="#内存升级" class="headerlink" title="内存升级"></a>内存升级</h3><ul>
 <li>ECC内存: 这几个CPU都支持ECC内存, 等下批服务器淘汰, 或者DDR5主流, 就可以低价淘几个DDR4 ECC内存;</li>
 <li>容量升级: CPU支持 <code>192GB * 4 = 768GB</code> 主板支持<code>32GB*4=128GB</code>; 当前是<code>8GB*4=32GB</code>, 有很大升级潜力, 等内存价格下降吧~</li>
 <li>频率升级: CPU限制最大支持2133MHz, 导致最新的3200MHz都没法用(能用, 但会自动降频到2133MHz).</li>
-</ul>
-</li>
 </ul>
 <h1 id="学到了啥"><a href="#学到了啥" class="headerlink" title="学到了啥"></a>学到了啥</h1><h2 id="常用主板型号"><a href="#常用主板型号" class="headerlink" title="常用主板型号"></a>常用主板型号</h2><ul>
 <li>X79<ul>
