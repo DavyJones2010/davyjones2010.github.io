@@ -24,7 +24,7 @@ tags: [diy]
 
 | 配件名称 | 品牌 | 数量 | 价格 | 详细说明 |
 | --- | --- | --- | --- | --- |
-| CPU | [Intel® Xeon® Processor E5-2630L v3](https://ark.intel.com/content/www/us/en/ark/products/83357/intel-xeon-processor-e52630l-v3-20m-cache-1-80-ghz.html) | 1 | 80 | 8Core 16HT; 22 nm制程; Base 1.8GHz, Burst 2.90 GHz; 20MB L3 Cache; 55W TDP |
+| CPU | [Intel® Xeon® Processor E5-2630L v3](https://ark.intel.com/content/www/us/en/ark/products/83357/intel-xeon-processor-e52630l-v3-20m-cache-1-80-ghz.html) | 1 | 80 | Haswell; 8Core 16HT; 22 nm制程; Base 1.8GHz, Burst 2.90 GHz; 20MB L3 Cache; 55W TDP |
 | 主板 | [X99寨板](https://item.taobao.com/item.htm?id=676047268901) | 1 | 250 |   |
 | 内存 | 威刚万紫千红 | 4 |  160 + 200 | 8GB; DDR4 2133MHz; 强迫症4条必须插满, 组成4通道^_^  | 
 | 闪存 | [Intel® SSD 760P](https://www.intel.com/content/www/us/en/products/sku/134583/intel-ssd-760p-series-256gb-m-2-80mm-pcie-3-1-x4-3d2-tlc/specifications.html) | 1 | 160 | 256GB; PCIe 3.1 x4 接口, NVMe  | 
@@ -64,6 +64,15 @@ x99含义
 | CPU | [Intel® Xeon® Processor E5-2660 v3](https://ark.intel.com/content/www/us/en/ark/products/81706/intel-xeon-processor-e52660-v3-25m-cache-2-60-ghz.html) | 1 | 100 | 10Core 20HT; 22 nm制程; Base 2.60 GHz, Burst 3.3 GHz; 25MB L3 Cache; 105W TDP |
 | CPU | [Intel® Xeon® Processor E5-2620 v3](https://ark.intel.com/content/www/us/en/ark/products/83352/intel-xeon-processor-e52620-v3-15m-cache-2-40-ghz.html) | 1 | 20 | 6Core 12HT; 22 nm制程; Base 2.40 GHz, Burst 3.20 GHz; 15MB L3 Cache; 85W TDP; 你不能对一个20块钱的CPU要求更多了! :) |
 
+{% note info %}
+> CPU盖子上的`Costa Rica`, `Malay` 代表啥意思?
+> Just to clear something up, the markings on the back of the CPU refer to the packaging site - not the manufacturing site of the actual silicon chip itself.
+> 也就是说<mark>代表的是封装工厂的地点</mark>, `Malay` 代表 `Malaysia`
+
+{% endnote %}
+
+
+
 ### ECC内存
 {% note warning %}
 内存买成ECC却不能用 ECC内存到底是什么鬼?
@@ -92,15 +101,20 @@ x99含义
 2. 应该购买4针的
 
 ## 升级潜力&计划
-整体CPU还是比较强悍的, 有很大升级潜力: 
-- 主板升级:
-  - 升级成两路, 看有没必要吧, 这样电费吃不消, 电源可能也要升级; [X99双路主板简评](https://post.smzdm.com/p/aoo8wewm/pic_3/#bigImg) 指明了方向
-- CPU升级:
-  - X99整体还支持V4(Broadwell)的CPU, 例如 `E5-2660 V4`, 16年上市, 14nm制程.
-- 内存升级:
-  - ECC内存: 这几个CPU都支持ECC内存, 等下批服务器淘汰, 或者DDR5主流, 就可以低价淘几个DDR4 ECC内存;
-  - 容量升级: CPU支持 `192GB * 4 = 768GB` 主板支持`32GB*4=128GB`; 当前是`8GB*4=32GB`, 有很大升级潜力, 等内存价格下降吧~
-  - 频率升级: CPU限制最大支持2133MHz, 导致最新的3200MHz都没法用(能用, 但会自动降频到2133MHz).
+整体CPU还是比较强悍的, 有很大升级潜力
+
+### 主板升级
+- 升级成两路, 看有没必要吧, 这样电费吃不消, 电源可能也要升级; [X99双路主板简评](https://post.smzdm.com/p/aoo8wewm/pic_3/#bigImg) 指明了方向
+### CPU升级
+- X99整体还支持V4(Broadwell)的CPU, 例如 `E5-2660 V4`, 16年上市, 14nm制程. 全部列表参见: 
+- 2699 v3: 650RMB左右
+- 
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208141020764.png)
+
+### 内存升级
+- ECC内存: 这几个CPU都支持ECC内存, 等下批服务器淘汰, 或者DDR5主流, 就可以低价淘几个DDR4 ECC内存;
+- 容量升级: CPU支持 `192GB * 4 = 768GB` 主板支持`32GB*4=128GB`; 当前是`8GB*4=32GB`, 有很大升级潜力, 等内存价格下降吧~
+- 频率升级: CPU限制最大支持2133MHz, 导致最新的3200MHz都没法用(能用, 但会自动降频到2133MHz).
 
 
 # 学到了啥
