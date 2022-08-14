@@ -10155,7 +10155,7 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <td>蓝宝石RX460</td>
 <td>1</td>
 <td>350</td>
-<td>4GB显存; 无需单独供电</td>
+<td>4GB显存; 无需单独供电; HDMI + VGA + DP 接口</td>
 </tr>
 <tr>
 <td>电源</td>
@@ -10186,8 +10186,9 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 
 <p>其他细节: </p>
 <ul>
-<li>CPU插槽: 单路; 2011针脚</li>
+<li>CPU插槽: 单路; LGA2011, 因此是2011个针脚;</li>
 <li>CPU只支持DDR4内存, 但主板支持DDR3(问了店家, 主板同时也支持DDR4), 现在DDR4普遍价格比较贵, 没办法使用闲鱼上价格巨便宜的DDR3 ECC内存.</li>
+<li></li>
 </ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="CPU型号"><a href="#CPU型号" class="headerlink" title="CPU型号"></a>CPU型号</h3><p>买的时候没有看清楚CPU型号, 以为是 <code>E5-2630 V3</code>, 结果实际是 <code>E5-2630L V3</code>, 才知道多了的这个<code>L</code>代表<mark>低功耗(Low Power)</mark>, 基频只有<code>1.8GHz</code>不能忍.<br>因此就又淘了如下两个能够适配X99主板的CPU, 准备到时候各自对比测试下:</p>
 <table>
@@ -10222,14 +10223,43 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <td>6Core 12HT; 22 nm制程; Base 2.40 GHz, Burst 3.20 GHz; 15MB L3 Cache; 85W TDP; 你不能对一个20块钱的CPU要求更多了! :)</td>
 </tr>
 </tbody></table>
-<h3 id="ECC内存"><a href="#ECC内存" class="headerlink" title="ECC内存"></a>ECC内存</h3><ul>
-<li>内存买成ECC却不能用 ECC内存到底是什么鬼? </li>
-<li>这是因为一般的电脑为了速度，一般都是不支持这样的ECC内存的，而ECC内存由于有校验这一步骤，一般都多用在服务器领域，<mark>普通的家用主板一般都是不支持的</mark>，而且对于服务器，还要区分REG-ECC和纯ECC的区别，REG是带寄存器的ECC内存，可以支持更大的单条容量，但是由于有寄存器的存在，延迟会更高。</li>
+<h3 id="ECC内存"><a href="#ECC内存" class="headerlink" title="ECC内存"></a>ECC内存</h3><div class="note warning"><p>内存买成ECC却不能用 ECC内存到底是什么鬼?</p>
+</div>
+
+<ul>
+<li>这是因为一般的电脑为了速度，一般都是不支持ECC内存，而ECC内存由于有校验这一步骤，一般都多用在服务器领域，<mark>普通的家用主板一般都是不支持的</mark>，而且对于服务器，还要区分REG-ECC和纯ECC的区别，REG是带寄存器的ECC内存，可以支持更大的单条容量，但是由于有寄存器的存在，延迟会更高。</li>
 </ul>
+<h3 id="CPU散热器"><a href="#CPU散热器" class="headerlink" title="CPU散热器"></a>CPU散热器</h3><div class="note warning"><p>主板上<code>CPU FAN</code>是4针的, 买来的散热器风扇是3针的. 区别是啥? 怎么插?</p>
+</div>
+
+<blockquote>
+<p>2针, 3针与4针风扇区别?</p>
+</blockquote>
+<ul>
+<li>2针的散热风扇（结构简单，但不能测速）: 一个用于供电、一个用于接地，不过没有测速功能。目前2针的散热风扇已经在市场上大量采用，但是2针的风扇在变速等方面上已经不能满足要求了</li>
+<li>3针的散热风扇（VC电压调速，灵活性欠佳）: 第三条线, 主要是起着测速的作用，通过主板能够侦测到风扇是否在转、转速为多少，但是3针散热风扇的调速是通过调整风扇电压来实现的，此外，能不能调速还需要看下主板是否支持，显然这种调节转速并不够灵活，不能实时反映CPU状态的信息，还需要在主板BIOS中进行各种设置。</li>
+<li>4针的散热风扇（更加灵活更加智能的调速）: 4针的散热风扇是在3针基础上又多了一根PWM线（ 脉宽调变），所谓的PWM线就是利用PWM机制来调节风扇转速，而风扇电压是恒定的，避免了控制电压来变速的一系列弊端。而PWM风扇无需依赖主板BIOS，更加省心方便。PWM脉冲信号可以输出不同的占空比（Duty Cycle），0-100%之间的占空比就能调节出不同的风扇转速，所以能够做到精确、灵活控制。</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208140950640.png"></p>
+<blockquote>
+<p>3针怎么插入主板4针接口中?</p>
+</blockquote>
+<ul>
+<li>兼容, 有防呆机制.</li>
+</ul>
+<p>总体来说, 风扇踩坑了, 但也够用了:</p>
+<ol>
+<li>应该购买6铜管</li>
+<li>应该购买4针的</li>
+</ol>
 <h2 id="升级潜力-amp-计划"><a href="#升级潜力-amp-计划" class="headerlink" title="升级潜力&amp;计划"></a>升级潜力&amp;计划</h2><p>整体CPU还是比较强悍的, 有很大升级潜力: </p>
 <ul>
 <li>主板升级:<ul>
 <li>升级成两路, 看有没必要吧, 这样电费吃不消, 电源可能也要升级; <a href="https://post.smzdm.com/p/aoo8wewm/pic_3/#bigImg">X99双路主板简评</a> 指明了方向</li>
+</ul>
+</li>
+<li>CPU升级:<ul>
+<li>X99整体还支持V4(Broadwell)的CPU, 例如 <code>E5-2660 V4</code>, 16年上市, 14nm制程.</li>
 </ul>
 </li>
 <li>内存升级:<ul>
@@ -10240,8 +10270,16 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 </li>
 </ul>
 <h1 id="学到了啥"><a href="#学到了啥" class="headerlink" title="学到了啥"></a>学到了啥</h1><h2 id="常用主板型号"><a href="#常用主板型号" class="headerlink" title="常用主板型号"></a>常用主板型号</h2><ul>
-<li>X79</li>
-<li>X99</li>
+<li>X79<ul>
+<li>Sandy Bridge-E, Ivy Bridge-E</li>
+<li>Quad-channel DDR3, up to two DIMMs per channel</li>
+</ul>
+</li>
+<li>X99<ul>
+<li>Haswell-E, Broadwell-E</li>
+<li>Quad-channel DDR4, up to two DIMMs per channel</li>
+</ul>
+</li>
 </ul>
 <h2 id="家用机箱型号"><a href="#家用机箱型号" class="headerlink" title="家用机箱型号"></a>家用机箱型号</h2><ul>
 <li>E-ATX</li>
@@ -10251,15 +10289,18 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 </ul>
 <h2 id="其他体悟"><a href="#其他体悟" class="headerlink" title="其他体悟"></a>其他体悟</h2><ul>
 <li>知道了经常说的V3, V4利旧是啥了; 对这种洋垃圾CPU市场行情有了大概的认知.</li>
-<li>计算机并非只有CPU, 还有内存, 主板, 显卡甚至电源, 散热器等; 也都是极为关键的. 尤其是这种洋垃圾, CPU跟不要钱一样, 其他组件的可扩展性与稳定性就至关重要了. 很多特性不止要看CPU是否支持, 也要看主板. 例如内存的最大容量, 通道数, 最大频率, 是否支持ECC; 例如CPU插槽的针脚数;</li>
+<li>计算机并非只有CPU, 还有内存, 主板, 显卡甚至电源, 散热器等; 也都是极为关键的. 尤其是这种洋垃圾, CPU跟不要钱一样, 其他组件的可扩展性与稳定性就至关重要了. 很多特性不止要看CPU是否支持, 也要看主板. 例如内存的DDR代数, 最大容量, 通道数, 最大频率, 是否支持ECC; 例如CPU插槽的针脚数;</li>
 <li>摩尔定律的恐怖: 上边几个CPU基本都是14年Q3上市, 到今天2022年Q2, 仅仅8年左右:  <ul>
 <li>价格: 就已经跌倒了白菜价, 以<code>E5-2660 v3</code>为例, 上市价格是<code>$1445.00</code>, 现在是<code>100RMB=$15</code>. </li>
-<li>性能: 当前主流的12代Intel, 以家用的 <a href="https://ark.intel.com/content/www/cn/zh/ark/products/134594/intel-core-i712700k-processor-25m-cache-up-to-5-00-ghz.html">i7-12700K</a> 为例, 制程已经到了7nm; 更不用提ARM架构下的主流制程都是5nm了.<blockquote>
-<p>旧时王谢堂前燕, 飞入寻常百姓家</p>
-</blockquote>
-</li>
+<li>性能: 当前主流的12代Intel, 以家用的 <a href="https://ark.intel.com/content/www/cn/zh/ark/products/134594/intel-core-i712700k-processor-25m-cache-up-to-5-00-ghz.html">i7-12700K</a> 为例, 制程已经到了7nm; 更不用提ARM架构下的主流制程都是5nm了.</li>
 </ul>
 </li>
+</ul>
+<blockquote>
+<p>旧时王谢堂前燕, 飞入寻常百姓家</p>
+</blockquote>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://www.expreview.com/62077.html">散热风扇的2针、3针、4针都有什么区别？</a></li>
 </ul>
 ]]></content>
       <categories>
