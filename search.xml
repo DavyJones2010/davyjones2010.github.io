@@ -10257,6 +10257,8 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <li>应该购买6铜管</li>
 <li>应该购买4针的</li>
 </ol>
+<h2 id="成果展示"><a href="#成果展示" class="headerlink" title="成果展示"></a>成果展示</h2><h3 id="成品图"><a href="#成品图" class="headerlink" title="成品图"></a>成品图</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208172253812.png"></p>
+<h3 id="数框框"><a href="#数框框" class="headerlink" title="数框框"></a>数框框</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208172250303.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208172253927.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208172254393.png"></p>
 <h2 id="升级潜力-amp-计划"><a href="#升级潜力-amp-计划" class="headerlink" title="升级潜力&amp;计划"></a>升级潜力&amp;计划</h2><p>整体CPU还是比较强悍的, 有很大升级潜力</p>
 <h3 id="主板升级"><a href="#主板升级" class="headerlink" title="主板升级"></a>主板升级</h3><ul>
 <li>升级成两路, 看有没必要吧, 这样电费吃不消, 电源可能也要升级; <a href="https://post.smzdm.com/p/aoo8wewm/pic_3/#bigImg">X99双路主板简评</a> 指明了方向</li>
@@ -10289,6 +10291,9 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <li>M-ATX</li>
 <li>ITX</li>
 </ul>
+<h2 id="奇技淫巧"><a href="#奇技淫巧" class="headerlink" title="奇技淫巧"></a>奇技淫巧</h2><blockquote>
+<p>Q: 鞋盒机箱, 如何无开关开机?<br>A: 直接螺丝刀戳主板, 连接针脚.<br><img data-src="http://p8.itc.cn/images01/20200823/5eb93a0ca39443f68d7d3392fc3615ea.jpeg"></p>
+</blockquote>
 <h2 id="其他体悟"><a href="#其他体悟" class="headerlink" title="其他体悟"></a>其他体悟</h2><ul>
 <li>知道了经常说的V3, V4利旧是啥了; 对这种洋垃圾CPU市场行情有了大概的认知.</li>
 <li>计算机并非只有CPU, 还有内存, 主板, 显卡甚至电源, 散热器等; 也都是极为关键的. 尤其是这种洋垃圾, CPU跟不要钱一样, 其他组件的可扩展性与稳定性就至关重要了. 很多特性不止要看CPU是否支持, 也要看主板. 例如内存的DDR代数, 最大容量, 通道数, 最大频率, 是否支持ECC; 例如CPU插槽的针脚数;</li>
@@ -10300,6 +10305,35 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 </ul>
 <blockquote>
 <p>旧时王谢堂前燕, 飞入寻常百姓家</p>
+</blockquote>
+<h2 id="老司机踩坑记"><a href="#老司机踩坑记" class="headerlink" title="老司机踩坑记"></a>老司机踩坑记</h2><blockquote>
+<p>自诩为垃圾佬, 结果这次组装电脑, 结结实实把自己给教育了一番.</p>
+</blockquote>
+<h3 id="U盘套路"><a href="#U盘套路" class="headerlink" title="U盘套路"></a>U盘套路</h3><p>在某宝买了2个32GB的U盘, 想要分别作为win10与centos的装机PE.<br>结果在拷贝镜像到U盘的时候, 发现传输速度奇慢无比, 只有6MB&#x2F;s.<br>普通的win10镜像大小是4GB左右, 也就是全部拷贝到U盘里需要: <code>4 * 1024 / 6 / 60 = 11.3</code>, 要10min+;<br>不解, 遂问客服, 解释道是USB2.0的. 仔细看了下详情页, 硕大的”USB 2.0”仿佛在嘲讽我@-@<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208172225310.png"></p>
+<p>What??? 都2202年了, 竟然还有USB 2.0?? 我仿佛听到了一个国际笑话.<br>个人下意识里USB2.0都已经跟鼠标&#x2F;键盘的PS&#x2F;2接口一样, 已经销声匿迹了, by default不都应该是3.0的么?</p>
+<p>此为坑一.</p>
+<h3 id="镜像文件套路"><a href="#镜像文件套路" class="headerlink" title="镜像文件套路"></a>镜像文件套路</h3><p>为图省事儿, 在某CSXN网站花了N多积分, 下载了个”纯净版”镜像.<br>结果一安装, 里边密密麻麻各种软件, 什么360全家桶, TX全家桶, 2345全家桶.<br>浏览器主页被修改得不像样子.<br><mark>原来伪装成纯净版啊</mark></p>
+<p>去搜自己仍然停留在十年前的经典的 雨林X风, 深度, 系统之家等, 结果一个一个都不像样子. 一点都不<code>纯净</code>!<br>最后只能老老实实去下载官方镜像, 又不是不能用@-@</p>
+<h3 id="2345套路"><a href="#2345套路" class="headerlink" title="2345套路"></a>2345套路</h3><p>注册表里搜索”看图王”, 不查不知道, 一查吓一跳. 密密麻麻的, 看得我神经衰弱.<br>心想一个一个删除也不是个事儿啊.<br>索性大笔一挥, 直接把父节点删除. 结果直接经典的windows蓝屏.<br>没办法, 只好拾起传统艺能, 进入PE, 重装系统!</p>
+<ul>
+<li>不搜不知道, 一搜吓一跳. <a href="https://www.zhihu.com/question/35188509/answer/1266544765">劣迹斑斑</a>. 原来老板已经跑路, 搞起了网贷, 区块链.</li>
+<li>好家伙, 我直呼好家伙. 原来还想做百年企业, 天天在官网给自己倒计时呢.</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208172241888.png"></p>
+<blockquote>
+<p>同样是小章鱼, 差别咋就那么大呢? 瞧瞧人家 <a href="https://github.com/">GitHub</a> 多有节操.</p>
+</blockquote>
+<h3 id="win10无节操套路"><a href="#win10无节操套路" class="headerlink" title="win10无节操套路"></a>win10无节操套路</h3><p>安装好系统, 准备安装显卡驱动, 结果报警, C盘存储空间不足.<br>What??? 我C盘可是40GB的容量, 就装了个系统, 啥软件都没安装呢, 咋就没了?<br>每个文件夹大小加起来, 总共也才10多GB, 剩下的20GB哪里去了? 查询才知道, 原来是被微软套路了.</p>
+<ul>
+<li><a href="https://www.itechtics.com/reserved-storage-windows-10/">17GB的预留空间</a></li>
+<li>5GB的休眠文件</li>
+</ul>
+<blockquote>
+<p>FxxK MicroSoft!</p>
+</blockquote>
+<h3 id="多么痛的领悟"><a href="#多么痛的领悟" class="headerlink" title="多么痛的领悟"></a>多么痛的领悟</h3><p>想想之前, 自己被mac&#x2F;linux保护得太好了. 还一直在纳闷为啥要给硬盘分区, C盘, D盘啥的多麻烦.<br>这次我知道了, 我乖乖地分成了几个区, 安装好了GHOST工具, 乖乖给C盘打了个GHOST镜像.<br>随时准备被这些流氓软件”XX”, 随时准备重装&#x2F;恢复系统.</p>
+<blockquote>
+<p>没办法, Windows的生存环境实在是太恶劣了!!</p>
 </blockquote>
 <h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
 <li><a href="https://www.expreview.com/62077.html">散热风扇的2针、3针、4针都有什么区别？</a></li>
