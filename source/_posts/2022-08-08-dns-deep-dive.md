@@ -123,7 +123,7 @@ davywalkerdeMBP:_assets davywalker$ dig baidu.com +trace
 ##### 响应
 可以看到: 
 - 响应内容里有13个根域名服务器的域名 
-- 但注意: <mark>没有返回nameserver的domain对应的IP地址!!!</mark> , 经分析与推测, 由于全球13个根域名服务器的IP是永远不会变的, 因此各个domain对应的IP地址应该是<mark>内置在操作系统中的</mark>.
+- 但注意: <mark>没有返回nameserver的domain对应的IP地址!!!</mark> , 经分析与推测, 由于全球13个根域名服务器的IP是~~永远不会变~~的(有可能会变化, [历史上也变化过](https://web.archive.org/web/20130310100321/http://d.root-servers.org/renumber.html)), 各个domain对应的IP地址应该是<mark>通过[Root Hint File](https://www.iana.org/domains/root/files), 缓存在操作系统中</mark>.
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082306546.png)
 
 
