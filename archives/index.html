@@ -156,12 +156,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">163</span>
+        <span class="site-state-item-count">165</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,134 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-08-30-disk-partition/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-08-30-disk-partition/" class="post-title-link" itemprop="url">十万个为什么之--为什么磁盘需要分区与挂载?</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-30 11:41:13" itemprop="dateCreated datePublished" datetime="2022-08-30T11:41:13+08:00">2022-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88/" itemprop="url" rel="index"><span itemprop="name">十万个为什么</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问</p>
+<ul>
+<li>为什么磁盘需要进行分区, 不分区直接按照文件夹划分有啥问题? 这个在Windows下尤其有疑问.</li>
+<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下?</li>
+</ul>
+<h1 id="为啥需要分区"><a href="#为啥需要分区" class="headerlink" title="为啥需要分区?"></a>为啥需要分区?</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>习惯了使用Linux&#x2F;Mac之后, 完全没有分区的概念了.</p>
+<ul>
+<li>Linux&#x2F;Ubuntu装机步骤:<ul>
+<li>一整块磁盘, 选定文件系统类型, 进行格式化.</li>
+<li>直接在磁盘上安装操作系统, 就可以开始使用了.</li>
+</ul>
+</li>
+<li>Mac甚至无需装机, 开机直接使用.</li>
+</ul>
+<p>实际使用过程中, 不分区有如下优势:</p>
+<ul>
+<li>软件安装: 无需关注需要把软件安装在哪个盘(C盘&#x2F;D盘&#x2F;E盘…), 通常只需要默认路径就好;</li>
+<li>文件下载存储: 无需关注文件要保存在哪个盘, 只需要关注保存在哪个目录即可.</li>
+</ul>
+<blockquote>
+<p>因此完全不用担心到底分几个区, 每个分区大小多少, C盘满了如何扩容之类的问题.</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-08-30-disk-partition/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-08-13-computer-diy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +375,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -435,7 +563,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -562,7 +690,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -694,7 +822,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -824,7 +952,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -989,7 +1117,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1094,7 +1222,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1207,7 +1335,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1318,7 +1446,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1456,7 +1584,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1555,7 +1683,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1666,7 +1794,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1781,7 +1909,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1926,7 +2054,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2049,7 +2177,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2170,7 +2298,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2283,7 +2411,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2392,7 +2520,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2499,7 +2627,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2618,7 +2746,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2739,7 +2867,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2850,7 +2978,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2973,7 +3101,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3113,7 +3241,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3217,7 +3345,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3328,7 +3456,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3455,7 +3583,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3558,7 +3686,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3689,7 +3817,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3799,7 +3927,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3998,7 +4126,7 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -4095,125 +4223,6 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-18-springboot-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-05-18-springboot-cache/" class="post-title-link" itemprop="url">记SpringBootCache使用的问题总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-19 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-19T00:00:00+08:00">2022-05-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>729</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Cacheable-无参方法"><a href="#Cacheable-无参方法" class="headerlink" title="@Cacheable 无参方法"></a>@Cacheable 无参方法</h1><p>有些无参方法, 也需要被SpringBoot @Cacheable 进行cache, 如下代码样例:  </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">listAllUids</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>有如下需要注意的点:</p>
-<ul>
-<li>可以不写 <code>key=xxx</code>, 这样默认的key就是<code>SimpleType []</code></li>
-<li>SpringBoot官方建议<a target="_blank" rel="noopener" href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/cache.html">使用方法名作为key</a>, 如下:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key <span class="token operator">=</span> <span class="token string">"#root.method.name"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>也可以hardcode一个key, 这样更易于查找, 如下:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token string">"'my_key'"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>要注意key里的常量, <font color="red">一定要用单引号括起来</font>, 否则会<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/33383366/cacheble-annotation-on-no-parameter-method">报错如下</a>: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>expression<span class="token punctuation">.</span>spel<span class="token punctuation">.</span></span>SpelEvaluationException</span><span class="token operator">:</span> EL1008E<span class="token operator">:</span><span class="token punctuation">(</span>pos <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Property</span> or field my_key cannot be found on object of type '<span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>interceptor<span class="token punctuation">.</span></span>CacheExpressionRootObject</span>' <span class="token operator">-</span> maybe not <span class="token keyword">public</span><span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-05-18-springboot-cache/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4239,14 +4248,14 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">241k</span>
+    <span title="站点总字数">245k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:39</span>
+    <span title="站点阅读时长">3:42</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

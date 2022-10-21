@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208090002803.png">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092137035.png">
 <meta property="article:published_time" content="2022-08-08T14:26:58.000Z">
-<meta property="article:modified_time" content="2022-08-20T04:16:37.203Z">
+<meta property="article:modified_time" content="2022-10-21T11:56:08.971Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="dns">
@@ -192,12 +192,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">163</span>
+        <span class="site-state-item-count">165</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -284,7 +284,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -391,7 +391,7 @@ davywalkerdeMBP:_assets davywalker$ <span class="token function">dig</span> baid
 <h5 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h5><p>可以看到: </p>
 <ul>
 <li>响应内容里有13个根域名服务器的域名 </li>
-<li>但注意: <mark>没有返回nameserver的domain对应的IP地址!!!</mark> , 经分析与推测, 由于全球13个根域名服务器的IP是永远不会变的, 因此各个domain对应的IP地址应该是<mark>内置在操作系统中的</mark>.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082306546.png"></li>
+<li>但注意: <mark>没有返回nameserver的domain对应的IP地址!!!</mark> , 经分析与推测, 由于全球13个根域名服务器的IP是<del>永远不会变</del>的(有可能会变化, <a target="_blank" rel="noopener" href="https://web.archive.org/web/20130310100321/http://d.root-servers.org/renumber.html">历史上也变化过</a>), 各个domain对应的IP地址应该是<mark>通过<a target="_blank" rel="noopener" href="https://www.iana.org/domains/root/files">Root Hint File</a>, 缓存在操作系统中</mark>.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082306546.png"></li>
 </ul>
 <h4 id="第二步-向root-nameserver请求-请求获取-com-对应的TLD’s-nameserver"><a href="#第二步-向root-nameserver请求-请求获取-com-对应的TLD’s-nameserver" class="headerlink" title="第二步: 向root nameserver请求, 请求获取.com.对应的TLD’s nameserver"></a>第二步: 向root nameserver请求, 请求获取<code>.com.</code>对应的TLD’s nameserver</h4><h5 id="请求-1"><a href="#请求-1" class="headerlink" title="请求"></a>请求</h5><p>可以看到: </p>
 <ul>
@@ -538,14 +538,14 @@ baidu.com.		<span class="token number">1</span>	IN	A	<span class="token number">
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">241k</span>
+    <span title="站点总字数">245k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:39</span>
+    <span title="站点阅读时长">3:42</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

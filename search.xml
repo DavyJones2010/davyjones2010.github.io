@@ -3119,12 +3119,20 @@ For <span class="token function">more</span> details, please visit https://suppo
 <td>25.6GBytes&#x2F;sec</td>
 </tr>
 </tbody></table>
+<p>update 2022-10-9 23:03:35: 当前DDR5已经开始逐步铺货了, 可以知道未来两三年DDR5会成为主流.</p>
 <h4 id="DIMM接口图片"><a href="#DIMM接口图片" class="headerlink" title="DIMM接口图片"></a>DIMM接口图片</h4><p><img data-src="/../_assets/2021-11-19-throughput/2021-11-19-throughput-dimm.png" alt="2021-11-19-throughput-dimm.png.png"></p>
 <h4 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h4><ul>
 <li>by 2021年, DDR4是主流, 2021年9月, SK Hynix出产第一批DDR5内存</li>
 <li>DDR2-800的速度基本上跟HDMI 2.1速度差不多了. 果然整体还是DDR速度最快</li>
 </ul>
-<h2 id="总线接口DMI"><a href="#总线接口DMI" class="headerlink" title="总线接口DMI"></a>总线接口DMI</h2><h2 id="硬盘接口"><a href="#硬盘接口" class="headerlink" title="硬盘接口"></a>硬盘接口</h2><h3 id="SATA"><a href="#SATA" class="headerlink" title="SATA"></a>SATA</h3><p>一般老的HDD硬盘(2021年), 都用SATA接口: </p>
+<h2 id="总线接口DMI"><a href="#总线接口DMI" class="headerlink" title="总线接口DMI"></a>总线接口DMI</h2><h2 id="网络接口"><a href="#网络接口" class="headerlink" title="网络接口"></a>网络接口</h2><h3 id="RJ45"><a href="#RJ45" class="headerlink" title="RJ45"></a>RJ45</h3><h3 id="光纤"><a href="#光纤" class="headerlink" title="光纤"></a>光纤</h3><ul>
+<li>百兆(100Mbps, 即10MB&#x2F;s), 是当前(2022年)家用的主流, 是 SATA 1.0 标称速度的1&#x2F;10;</li>
+<li>千兆(1Gbps, 即100MB&#x2F;s), 是当前(2022年)服务器虚拟机的主流, 大约等于 SATA 1.0 的标称速度(所以在云上跑满带宽时, 磁盘大概率不会成为瓶颈);</li>
+<li>万兆(10Gbps, 即1GB&#x2F;s), 是当前(2022年)物理服务器的主流, 已经大于的 SATA 3.0 的标称速度. 此时磁盘可能成为瓶颈;</li>
+<li>25G(25Gbps, 即2.5GB&#x2F;s), 当前(2022年)物理服务器逐步在普及, 基本等于 DDR1 的标称速度, 是当前(by 2022年)主流的DDR4标称速度的1&#x2F;10;</li>
+<li>50G(50Gbps, 即5GB&#x2F;s), 当前(2022年)物理服务器的前沿(尚未上量), 基本等于 DDR2 的标称速度</li>
+</ul>
+<h2 id="硬盘接口"><a href="#硬盘接口" class="headerlink" title="硬盘接口"></a>硬盘接口</h2><h3 id="SATA"><a href="#SATA" class="headerlink" title="SATA"></a>SATA</h3><p>一般老的HDD硬盘(2021年), 都用SATA接口: </p>
 <h4 id="Spec-1"><a href="#Spec-1" class="headerlink" title="Spec"></a>Spec</h4><table>
 <thead>
 <tr>
@@ -3149,7 +3157,14 @@ For <span class="token function">more</span> details, please visit https://suppo
 <td>600</td>
 </tr>
 </tbody></table>
-<h4 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h4><h4 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h4><p><img data-src="/../_assets/2021-11-19-throughput/2021-11-19-throughput-sata.png" alt="2021-11-19-throughput-sata.png.png"></p>
+<h4 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h4><p>自己组装电脑时单独安装了个SATA硬盘. </p>
+<ul>
+<li>分为数据线&amp;供电线. 数据线7针</li>
+<li>需要单独供电</li>
+<li>与之对比的是PCIE M.2接口, 可以用来对接SSD硬盘, 类似于一个口香糖插在主板上, 无需单独供电, 整体集成度更高.</li>
+<li>个人实际使用下来, SATA 3.0 读取速度大概只能到150MB&#x2F;s左右(远没有达到标称速度); 与之对比的是M.2 SSD 读取速度到600MB&#x2F;s(也没有达到标称速度)</li>
+</ul>
+<h4 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h4><p><img data-src="/../_assets/2021-11-19-throughput/2021-11-19-throughput-sata.png" alt="2021-11-19-throughput-sata.png"></p>
 <h3 id="PCIE-x2F-M-2接口"><a href="#PCIE-x2F-M-2接口" class="headerlink" title="PCIE&#x2F;M.2接口"></a>PCIE&#x2F;M.2接口</h3><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
 <li>既是通道，也是接口</li>
 </ul>
@@ -3201,24 +3216,24 @@ For <span class="token function">more</span> details, please visit https://suppo
 </tr>
 </thead>
 <tbody><tr>
-<td>USB</td>
-<td>1.0</td>
+<td>USB 1.0</td>
 <td>12</td>
+<td>1.5</td>
 </tr>
 <tr>
-<td>USB</td>
-<td>2.0</td>
+<td>USB 2.0</td>
 <td>480</td>
+<td>60</td>
 </tr>
 <tr>
-<td>USB</td>
-<td>3.0</td>
+<td>USB 3.0</td>
 <td>5G</td>
+<td>500</td>
 </tr>
 <tr>
-<td>USB</td>
-<td>3.1</td>
+<td>USB 3.1</td>
 <td>10G</td>
+<td>1000</td>
 </tr>
 </tbody></table>
 <h4 id="图片-2"><a href="#图片-2" class="headerlink" title="图片"></a>图片</h4><h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><h2 id="视频接口"><a href="#视频接口" class="headerlink" title="视频接口"></a>视频接口</h2><h3 id="VGA"><a href="#VGA" class="headerlink" title="VGA"></a>VGA</h3><p>模拟信号</p>
@@ -4016,6 +4031,8 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><a href="https://book.douban.com/subject/11530329/">30天自制操作系统</a></li>
 <li><a href="https://book.douban.com/subject/27091064/">云原生应用架构实践——从单体到服务化架构演进</a></li>
 <li><a href="https://book.douban.com/subject/27032786/">天局</a> -20220818 done</li>
+<li><a href="https://book.douban.com/subject/1578545/">背叛</a> -20220821 done</li>
+<li><a href="https://book.douban.com/subject/20257955/">丰乳肥臀</a> -20220909 done</li>
 </ul>
 <h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
 <li><a href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
@@ -4027,6 +4044,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><a href="https://blog.paessler.com/disabling-icmp-and-snmp-wont-increase-security-but-will-impact-network-monitoring">ICMP</a></li>
 <li><a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的Thread Monitor方案</a></li>
 <li><a href="https://www.infoq.cn/article/xkJNoczVDHARLkKjvDOm">深度揭秘阿里云 Serverless Kubernetes</a></li>
+<li><a href="https://manybutfinite.com/post/what-does-an-idle-cpu-do/">site for curious people</a></li>
 </ul>
 <h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1><hr>
 <ul>
@@ -4043,6 +4061,13 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><a href="https://book.douban.com/subject/35494904/">山海情</a></li>
 <li><a href="https://book.douban.com/subject/34864748/">平凡岁月</a></li>
 <li><a href="https://movie.douban.com/subject/2347485/">天道</a></li>
+<li><a href="https://movie.douban.com/subject/35118256/">赛博朋克：边缘行者</a></li>
+</ul>
+<h1 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h1><hr>
+<ul>
+<li><a href="https://zh.wikipedia.org/zh-sg/%E7%91%AA%E5%88%A9%E6%AD%90%E8%88%87%E8%B7%AF%E6%98%93%E5%90%89RPG4_%E5%A4%A2%E5%A2%83%E5%86%92%E9%9A%AA">马力欧与路易吉RPG4 梦境冒险</a></li>
+<li><a href="https://www.douban.com/game/25890885/">逆转裁判123</a></li>
+<li><a href="https://www.douban.com/game/25931998/">赛博朋克2077</a></li>
 </ul>
 <h1 id="Certificates"><a href="#Certificates" class="headerlink" title="Certificates"></a>Certificates</h1><hr>
 <ul>
@@ -9916,7 +9941,7 @@ davywalkerdeMBP:_assets davywalker$ <span class="token function">dig</span> baid
 <h5 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h5><p>可以看到: </p>
 <ul>
 <li>响应内容里有13个根域名服务器的域名 </li>
-<li>但注意: <mark>没有返回nameserver的domain对应的IP地址!!!</mark> , 经分析与推测, 由于全球13个根域名服务器的IP是永远不会变的, 因此各个domain对应的IP地址应该是<mark>内置在操作系统中的</mark>.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082306546.png"></li>
+<li>但注意: <mark>没有返回nameserver的domain对应的IP地址!!!</mark> , 经分析与推测, 由于全球13个根域名服务器的IP是<del>永远不会变</del>的(有可能会变化, <a href="https://web.archive.org/web/20130310100321/http://d.root-servers.org/renumber.html">历史上也变化过</a>), 各个domain对应的IP地址应该是<mark>通过<a href="https://www.iana.org/domains/root/files">Root Hint File</a>, 缓存在操作系统中</mark>.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208082306546.png"></li>
 </ul>
 <h4 id="第二步-向root-nameserver请求-请求获取-com-对应的TLD’s-nameserver"><a href="#第二步-向root-nameserver请求-请求获取-com-对应的TLD’s-nameserver" class="headerlink" title="第二步: 向root nameserver请求, 请求获取.com.对应的TLD’s nameserver"></a>第二步: 向root nameserver请求, 请求获取<code>.com.</code>对应的TLD’s nameserver</h4><h5 id="请求-1"><a href="#请求-1" class="headerlink" title="请求"></a>请求</h5><p>可以看到: </p>
 <ul>
@@ -10345,6 +10370,124 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
       </categories>
       <tags>
         <tag>diy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
+    <url>//2022-08-30-disk-partition/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问</p>
+<ul>
+<li>为什么磁盘需要进行分区, 不分区直接按照文件夹划分有啥问题? 这个在Windows下尤其有疑问.</li>
+<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下?</li>
+</ul>
+<h1 id="为啥需要分区"><a href="#为啥需要分区" class="headerlink" title="为啥需要分区?"></a>为啥需要分区?</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>习惯了使用Linux&#x2F;Mac之后, 完全没有分区的概念了.</p>
+<ul>
+<li>Linux&#x2F;Ubuntu装机步骤:<ul>
+<li>一整块磁盘, 选定文件系统类型, 进行格式化.</li>
+<li>直接在磁盘上安装操作系统, 就可以开始使用了.</li>
+</ul>
+</li>
+<li>Mac甚至无需装机, 开机直接使用.</li>
+</ul>
+<p>实际使用过程中, 不分区有如下优势:</p>
+<ul>
+<li>软件安装: 无需关注需要把软件安装在哪个盘(C盘&#x2F;D盘&#x2F;E盘…), 通常只需要默认路径就好;</li>
+<li>文件下载存储: 无需关注文件要保存在哪个盘, 只需要关注保存在哪个目录即可.</li>
+</ul>
+<blockquote>
+<p>因此完全不用担心到底分几个区, 每个分区大小多少, C盘满了如何扩容之类的问题.</p>
+</blockquote>
+<p>因此, 在攒了台Windows机器之后, 犹豫要不要分多个区. 后来事实教会了我怎么做人.</p>
+<blockquote>
+<p>Win10很无节操地会在C盘预留30GB+的空间, 还要放虚拟内存文件等, 导致可怜的C盘立刻存储报警.</p>
+</blockquote>
+<h2 id="个人实践理解"><a href="#个人实践理解" class="headerlink" title="个人实践理解"></a>个人实践理解</h2><p>个人使用下来, 唯一的理由就是: <strong>分区隔离, 方便无损重装系统.</strong></p>
+<p>Mac&#x2F;Linux上, 几乎无需也没有重装过系统. 但<strong>在Windows下, 重装系统简直是常态</strong>. </p>
+<blockquote>
+<p>垃圾(病毒)软件太多, 连所谓的纯净镜像也根本不纯净.</p>
+</blockquote>
+<ul>
+<li>都想往注册表里偷偷塞东西. 清理注册表, 一不小心就会把系统清理蓝屏.</li>
+<li>或者有病毒, 直接系统崩溃.</li>
+</ul>
+<blockquote>
+<p>解决方案</p>
+</blockquote>
+<ul>
+<li>要么通过PE进入系统, 找到问题点, 进行修复. </li>
+<li>要么直接重装系统. </li>
+<li>找到问题点太麻烦, 所以还是无脑一键重装吧.</li>
+</ul>
+<p>但重装系统, 就需要把分区重新格式化. 想想吧, 辛苦安装的软件, 设定的配置, 保存的文件, 都会随着格式化被完全抹除!<br>所以还是分区吧, 只格式化C盘就好. 软件啊, 文件啊, 配置啊, 都放到其他盘里好了.</p>
+<h2 id="其他专业理由"><a href="#其他专业理由" class="headerlink" title="其他专业理由"></a>其他专业理由</h2><p>参照知乎 <a href="https://www.zhihu.com/question/47538075/answer/107737383">其实windows分区是不是分C盘和D盘就好了？</a> 回答.</p>
+<ul>
+<li>病毒泛滥, 会把系统搞Crash, 需要频繁重装系统.</li>
+<li>早期的FAT16&#x2F;32文件系统支持的单个分区容量有限. FAT32最大文件系统总容量 128GB, 在现在随便一个硬盘就是1TB+, 无法充分利用磁盘空间.</li>
+<li>xp之前的windows系列操作系统本身稳定性堪忧，很容易因为用户操作、软件故障崩溃甚至破坏。尤其是经常折腾的桌面系统。这就导致用户不得不频繁重装系统。</li>
+<li>操作系统权限&amp;软件兼容问题: 现在win10管理员权限小了，某些软件装在C盘会有权限问题，比如notepad++装在C盘，直接运行的话是不能保存自定义配置的</li>
+</ul>
+<blockquote>
+<p>所以在Windows下, 还是老老实实分区吧! 当然在严肃的企业场景, 也推荐按照系统盘与数据盘进行下区分.</p>
+</blockquote>
+<h1 id="为啥需要挂载"><a href="#为啥需要挂载" class="headerlink" title="为啥需要挂载?"></a>为啥需要挂载?</h1><h1 id="磁盘-amp-文件系统的扩展知识"><a href="#磁盘-amp-文件系统的扩展知识" class="headerlink" title="磁盘&amp;文件系统的扩展知识"></a>磁盘&amp;文件系统的扩展知识</h1><h2 id="磁盘-分区-文件系统-关系"><a href="#磁盘-分区-文件系统-关系" class="headerlink" title="磁盘, 分区, 文件系统 关系"></a>磁盘, 分区, 文件系统 关系</h2><p>如下: </p>
+<pre class="mermaid">erDiagram
+    DiskDevice ||--|{ Partition : contain
+    Partition ||--|| FileSystem : format</pre>
+
+<h3 id="磁盘-x2F-块设备-gt-分区"><a href="#磁盘-x2F-块设备-gt-分区" class="headerlink" title="磁盘&#x2F;块设备 -&gt; 分区"></a>磁盘&#x2F;块设备 -&gt; 分区</h3><p>一个磁盘设备(HDD, SSD, U盘等), 可以划分为多个分区. 分区方式有MBR, GPT两种.<br>那么磁盘分区的元信息写在哪里? </p>
+<ul>
+<li>是存储在文件系统中么? 此时磁盘还没有文件系统, 所以应该不是以文件形式保存, 所以我们也就无法直接在操作系统里找到这个文件并操作.</li>
+<li>是存储在裸设备的固定位置(它在硬盘上的三维地址为（柱面，磁头，扇区）＝（0，0，1）。)</li>
+<li>通过 <code>lsblk</code> 命令查看已经挂载的块设备<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># lsblk</span>
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda    <span class="token number">254</span>:0    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> disk
+`-vda1 <span class="token number">254</span>:1    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> part /etc/hosts<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3 id="分区-gt-文件系统"><a href="#分区-gt-文件系统" class="headerlink" title="分区 -&gt; 文件系统"></a>分区 -&gt; 文件系统</h3><p>一个分区对应一个文件系统. 因此同一个磁盘设备的多个分区, 各个分区都可以格式化成不同的文件系统类型.</p>
+<ul>
+<li>通过 <code>df -h</code> 命令查看分区<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># df -h</span>
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /
+tmpfs            64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev
+shm              64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev/shm
+/dev/vda1        59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /data
+tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /proc/acpi
+tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /sys/firmware<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3 id="文件系统类型描述元数据"><a href="#文件系统类型描述元数据" class="headerlink" title="文件系统类型描述元数据"></a>文件系统类型描述元数据</h3><div class="note warning"><p>TODO: 暂时还没搜索到相关信息.</p>
+</div>
+
+<h3 id="文件系统内部目录-amp-文件元数据"><a href="#文件系统内部目录-amp-文件元数据" class="headerlink" title="文件系统内部目录&amp;文件元数据:"></a>文件系统内部目录&amp;文件元数据:</h3><ul>
+<li>例如ext4, 以inode形式保存. 包括文件大小, 权限信息, gmtCreated, gmtModified, 包含的block数量, 存储在磁盘的位置(柱面) 等</li>
+<li>可以使用 stat 命令查看</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># stat dump.rdb</span>
+  File: dump.rdb
+  Size: <span class="token number">105</span>       	Blocks: <span class="token number">8</span>          IO Block: <span class="token number">4096</span>   regular <span class="token function">file</span>
+Device: fe01h/65025d	Inode: <span class="token number">1055693</span>     Links: <span class="token number">1</span>
+Access: <span class="token punctuation">(</span>0600/-rw-------<span class="token punctuation">)</span>  Uid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>   Gid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>
+Access: <span class="token number">2022</span>-10-12 <span class="token number">16</span>:01:07.043330092 +0000
+Modify: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.880774990 +0000
+Change: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.896774990 +0000
+ Birth: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.869774990 +0000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<div class="note warning"><p>TODO: 分析下stat的具体信息含义, 尤其是 Device 相关的, 是不是操作系统直接就按照这个信息去寻找到文件的柱面范围了?</p>
+</div>
+
+<h3 id="分区名称规范"><a href="#分区名称规范" class="headerlink" title="分区名称规范"></a>分区名称规范</h3><ul>
+<li>在Linux系统中，硬盘分区命名为sda1－sda4或者hda1－hda4</li>
+</ul>
+<div class="note warning"><p>TODO: 自己找个U盘试下划分成多个分区, 每个分区不同的文件系统类型?</p>
+</div>
+
+<h2 id="为啥磁盘需要挂载才能使用"><a href="#为啥磁盘需要挂载才能使用" class="headerlink" title="为啥磁盘需要挂载才能使用?"></a>为啥磁盘需要挂载才能使用?</h2>]]></content>
+      <categories>
+        <category>十万个为什么</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>disk</tag>
+        <tag>os</tag>
       </tags>
   </entry>
 </search>

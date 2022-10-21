@@ -156,12 +156,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">163</span>
+        <span class="site-state-item-count">165</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,119 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-01-03-netty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-01-03-netty/" class="post-title-link" itemprop="url">Netty权威指南笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-04 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-04T00:00:00+08:00">2022-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="TCP黏包拆包问题"><a href="#TCP黏包拆包问题" class="headerlink" title="TCP黏包拆包问题"></a>TCP黏包拆包问题</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>黏包:<br>    1. 一次从缓冲区, 读取到了多个完整数据包, 需要将这几个数据包分别解析.<br>拆包:<br>    1. 一次从缓冲区, 读到了一个数据包的部分(可能由于服务端TCP接收滑窗非常小), 需要多次读取才能构建完整的数据包<br>黏包+拆包:<br>    1. 一次从缓冲区, 读取到一个数据包+另一个数据包的部分</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>消息定长, 例如每个报文大小固定xx个字节, 如果不够, 则用空格补充<ol>
+<li>FixedLengthFrameDecoder</li>
+</ol>
+</li>
+<li>在包尾设定分隔符: 例如FTP协议用回车+换行分隔<ol>
+<li>LineBasedFrameDecoder</li>
+<li>DelimiterBasedFrameDecoder</li>
+</ol>
+</li>
+<li>消息设置为消息头+消息体: 消息头中用int32字段代表消息的总长度</li>
+<li>更复杂的应用层协议</li>
+</ol>
+<h3 id="LineBasedFrameDecoder原理"><a href="#LineBasedFrameDecoder原理" class="headerlink" title="LineBasedFrameDecoder原理"></a>LineBasedFrameDecoder原理</h3><p>&#x2F;&#x2F; todo</p>
+<h2 id="Netty编解码"><a href="#Netty编解码" class="headerlink" title="Netty编解码"></a>Netty编解码</h2><h3 id="现有序列化方案"><a href="#现有序列化方案" class="headerlink" title="现有序列化方案"></a>现有序列化方案</h3><h4 id="Java默认序列化"><a href="#Java默认序列化" class="headerlink" title="Java默认序列化"></a>Java默认序列化</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-01-03-netty/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-12-31-booklist-for-2022/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +360,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -266,7 +379,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>694</span>
+      <span>790</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -312,6 +425,8 @@
 <li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/11530329/">30天自制操作系统</a></li>
 <li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/27091064/">云原生应用架构实践——从单体到服务化架构演进</a></li>
 <li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/27032786/">天局</a> -20220818 done</li>
+<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/1578545/">背叛</a> -20220821 done</li>
+<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/20257955/">丰乳肥臀</a> -20220909 done</li>
 </ul>
 <h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
@@ -323,6 +438,7 @@
 <li><a target="_blank" rel="noopener" href="https://blog.paessler.com/disabling-icmp-and-snmp-wont-increase-security-but-will-impact-network-monitoring">ICMP</a></li>
 <li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的Thread Monitor方案</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/xkJNoczVDHARLkKjvDOm">深度揭秘阿里云 Serverless Kubernetes</a></li>
+<li><a target="_blank" rel="noopener" href="https://manybutfinite.com/post/what-does-an-idle-cpu-do/">site for curious people</a></li>
 </ul>
 <h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1>
           <!--noindex-->
@@ -394,7 +510,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -536,7 +652,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -667,7 +783,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -776,7 +892,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -922,7 +1038,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1039,7 +1155,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1151,7 +1267,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1263,7 +1379,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1362,7 +1478,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1460,7 +1576,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1593,7 +1709,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1603,7 +1719,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.1k</span>
+      <span>2.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1706,8 +1822,8 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <td>25.6GBytes&#x2F;sec</td>
 </tr>
 </tbody></table>
+<p>update 2022-10-9 23:03:35: 当前DDR5已经开始逐步铺货了, 可以知道未来两三年DDR5会成为主流.</p>
 <h4 id="DIMM接口图片"><a href="#DIMM接口图片" class="headerlink" title="DIMM接口图片"></a>DIMM接口图片</h4><p><img data-src="/../_assets/2021-11-19-throughput/2021-11-19-throughput-dimm.png" alt="2021-11-19-throughput-dimm.png.png"></p>
-<h4 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h4>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-11-18-throughput/#more" rel="contents">
@@ -1777,7 +1893,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -1917,7 +2033,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2054,7 +2170,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2191,7 +2307,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2311,7 +2427,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2426,7 +2542,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2624,7 +2740,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2763,7 +2879,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2874,7 +2990,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -2989,7 +3105,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3260,7 +3376,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3364,7 +3480,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3533,7 +3649,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3660,7 +3776,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -3917,7 +4033,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -4075,7 +4191,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -4236,7 +4352,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -4344,7 +4460,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -4456,7 +4572,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
+      <time title="修改时间：2022-10-21 19:56:08" itemprop="dateModified" datetime="2022-10-21T19:56:08+08:00">2022-10-21</time>
     </span>
 
   
@@ -4517,116 +4633,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-07-golang-cobra/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-09-07-golang-cobra/" class="post-title-link" itemprop="url">golang入门笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-08 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-08T00:00:00+08:00">2021-09-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 12:16:37" itemprop="dateModified" datetime="2022-08-20T12:16:37+08:00">2022-08-20</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>834</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><ul>
-<li><p>创建简版的ECS CLI, 实现实例创建等基础操作</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">runInstances --region cn-beijing --zone cn-beijing-h --instanceType ecs.c5.large --payType spot --image xxx --vpc xxx --vsw xxx --sg xxx --count <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>创建go版本 <a target="_blank" rel="noopener" href="https://github.com/aliyun/alibabacloud-ecs-easy-sdk/tree/master/incubator-plugins/preemptive-instance-recommendation">Preemptive Instance Recommendation CLI</a></p>
-</li>
-<li><p>创建&amp;部署<a target="_blank" rel="noopener" href="https://github.com/kube-aws/kube-spot-termination-notice-handler">spot-interruption-handler</a></p>
-</li>
-</ul>
-<h1 id="cobra"><a href="#cobra" class="headerlink" title="cobra"></a>cobra</h1><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://www.qikqiak.com/post/create-cli-app-with-cobra/">在 Golang 中使用 Cobra 创建 CLI 应用</a></p>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="初始化cobra-CLI应用脚手架"><a href="#初始化cobra-CLI应用脚手架" class="headerlink" title="初始化cobra CLI应用脚手架"></a>初始化cobra CLI应用脚手架</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cobra init --pkg-name spot-tool<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="编译二进制"><a href="#编译二进制" class="headerlink" title="编译二进制"></a>编译二进制</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">go build -o spot-tool<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-09-07-golang-cobra/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4652,14 +4658,14 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">241k</span>
+    <span title="站点总字数">245k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:39</span>
+    <span title="站点阅读时长">3:42</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
