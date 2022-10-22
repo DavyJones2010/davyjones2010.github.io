@@ -256,7 +256,7 @@ traceroute to 220.181.38.148 (220.181.38.148), 30 hops max, 60 byte packets
 ```
 
 # 其他
-路由器上，多个网卡，请求到某个网卡之后，是如何转发到其他网卡的？
+## 路由器上，多个网卡，请求到某个网卡之后，是如何转发到其他网卡的？
 例如：
 docker容器内部 172.17.0.2，访问host的ip (192.168.3.80)
 1. docker容器内部有一条路由规则，非docker容器网段，都到docker0网桥上，docker0网桥IP 172.17.0.1
@@ -273,4 +273,43 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.3.1     0.0.0.0         UG    600    0        0 wlp4s0
 172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0
 192.168.3.0     0.0.0.0         255.255.255.0   U     600    0        0 wlp4s0
+```
+
+## centos如何查看网卡状态, 并将某个网卡设置为默认启动
+使用`VMware Fusion`安装好了`CentOS 7`虚拟机之后, 发现网络怎么都不通.
+```shell
+$ ping baidu.com
+ping: baidu.com: Name or service not known
+
+$ curl baidu.com
+curl: Could not resolve host: baidu.com; Unknown error
+```
+使用如下方式进行排查: 
+1. 查看网卡连接状态, 发现以太网卡`ens33`为未连接
+```shell
+$ sudo nmcli d
+DEVICE  TYPE      STATE         CONNECTION
+ens33   ethernet  disconnected  --
+lo      lookback  unmanaged     --
+```
+2. 修改网卡状态
+```shell
+$ sudo vi /etc/sysconfig/network-scripts/ifcfg-ens33
+-- ONBOOT=no
+ONBOOT=yes
+```
+3. 重启网络服务
+```shell
+$ sudo /etc/init.d/network restart
+```
+4. 验证网卡状态
+```shell
+$ sudo nmcli d
+DEVICE  TYPE      STATE         CONNECTION
+ens33   ethernet  connected     ens33
+lo      lookback  unmanaged     --
+```
+5. 验证网络状态: 成功
+```shell
+$ ping baidu.com
 ```
