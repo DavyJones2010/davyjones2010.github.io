@@ -45,7 +45,12 @@ Mac字体最开始也是因为Steve Jobs在大学选修了这门课。
 1. 只有英文, 没有对应中文的名称, 诗意很难体现出来.  
 2. 英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 "暖粉红", "山茶红", "樱桃红", "褐色"
 
+# Emoji的灵活运用
+灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?
 
+- 例如 [minikube](https://minikube.sigs.k8s.io/docs/start/) 的启动console界面: 
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png)
 
-
+- 例如 [EC2-Jenkins的ReleaseNotes](https://github.com/jenkinsci/ec2-plugin/releases): 
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png)
 
