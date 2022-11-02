@@ -5067,7 +5067,7 @@ pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="t
 </li>
 <li><p>在Mac上的Docker </p>
 <ol>
-<li>同样用虚拟化技术xhyve或者virtualbox来实现, 不共享mac os内核。</li>
+<li>同样用虚拟化技术xhyve或者virtualbox来实现, 不共享mac os内核。update 2022, mac上的Docker使用 <a href="https://github.com/moby/hyperkit">hyperkit VM</a> 作为核心组件.</li>
 <li>只能创建linux类docker，不能创建Mac OSX的docker. update 2022, <a href="https://github.com/sickcodes/Docker-OSX">Docker-OSX</a> 项目可以了. 但本质上也是使用了KVM虚拟机.</li>
 </ol>
 </li>
@@ -5974,7 +5974,14 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
     <content><![CDATA[<h1 id="个人习惯"><a href="#个人习惯" class="headerlink" title="个人习惯"></a>个人习惯</h1><p>在<code>~/.bash_profile</code>里增加alias: </p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">alias</span> <span class="token assign-left variable">k</span><span class="token operator">=</span><span class="token string">'kubectl'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h1 id="资源相关命令"><a href="#资源相关命令" class="headerlink" title="资源相关命令"></a>资源相关命令</h1><h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><h3 id="列出pod-包含所在的node"><a href="#列出pod-包含所在的node" class="headerlink" title="列出pod(包含所在的node)"></a>列出pod(包含所在的node)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k get pod -n kube-system -o wide<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h1 id="资源相关命令"><a href="#资源相关命令" class="headerlink" title="资源相关命令"></a>资源相关命令</h1><h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><h3 id="创建pod"><a href="#创建pod" class="headerlink" title="创建pod"></a>创建pod</h3><ul>
+<li><p>快速创建pod</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k run mytest --image<span class="token operator">=</span>k8s.gcr.io/pause:2.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>根据yaml创建pod</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k apply -f my-pause.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<h3 id="列出pod-包含所在的node"><a href="#列出pod-包含所在的node" class="headerlink" title="列出pod(包含所在的node)"></a>列出pod(包含所在的node)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k get pod -n kube-system -o wide<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="查看pod详情-包含所在的node"><a href="#查看pod详情-包含所在的node" class="headerlink" title="查看pod详情(包含所在的node)"></a>查看pod详情(包含所在的node)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k describe pod nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -10530,21 +10537,68 @@ Change: <span class="token number">2022</span>-06-26 <span class="token number">
   <entry>
     <title>K8s部署使用错误排查</title>
     <url>//2022-11-01-k8s-trouble-shooting/</url>
-    <content><![CDATA[<p><a href="https://github.com/docker/for-mac/issues/1317">https://github.com/docker/for-mac/issues/1317</a></p>
+    <content><![CDATA[<h1 id="ImagePullBackOff"><a href="#ImagePullBackOff" class="headerlink" title="ImagePullBackOff"></a>ImagePullBackOff</h1><h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><hr>
+<p>在mac上使用minikube, 创建pod出现如下 ImagePullBackOff:</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Normal   Pulling    8s               kubelet            Pulling image <span class="token string">"docker.io/nginx:1.23"</span>
 Warning  Failed     8s               kubelet            Failed to pull image <span class="token string">"docker.io/nginx:1.23"</span><span class="token builtin class-name">:</span> rpc error: code <span class="token operator">=</span> Unknown desc <span class="token operator">=</span> Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving
 Warning  Failed     8s               kubelet            Error: ErrImagePull
 Normal   BackOff    6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Back-off pulling image <span class="token string">"docker.io/nginx:1.23"</span>
 Warning  Failed     6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Error: ImagePullBackOff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><hr>
+<p>参见: <a href="https://github.com/docker/for-mac/issues/1317">解决方案</a></p>
+<ol>
+<li><p>登录minikube的节点</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ minikube <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>在minikube node上手动 pull docker image, 如下, 发现问题仍然重现</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx
+Using default tag: latest
+Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改minikube node上的resolv.conf文件的nameserver:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">vi</span> /etc/resolv.conf
+nameserver <span class="token number">8.8</span>.8.8
+search <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>重新尝试手动pull image, 发现问题解决:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx:1.23
+<span class="token number">1.23</span>: Pulling from library/nginx
+Digest: sha256:943c25b4b66b332184d5ba6bb18234273551593016c0e0ae906bab111548239f
+Status: Downloaded newer image <span class="token keyword">for</span> nginx:1.23
+docker.io/library/nginx:1.23<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>退出node, 在Mac上重新检查pod状态, 问题解决🎉🎉🎉:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMacBook-Pro:~ davywalker$ k get po
+NAME                              READY   STATUS    RESTARTS   AGE
+hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          87s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h2 id="为啥叫”ImagePullBackOff”"><a href="#为啥叫”ImagePullBackOff”" class="headerlink" title="为啥叫”ImagePullBackOff”??"></a>为啥叫”ImagePullBackOff”??</h2><hr>
+<p>参见文章 <a href="https://www.tutorialworks.com/kubernetes-imagepullbackoff/">Kubernetes ImagePullBackOff error: what you need to know</a> 说明.</p>
+<blockquote>
+<p>The status ImagePullBackOff means that a Pod couldn’t start,<br>because Kubernetes couldn’t pull a container image.<br>The ‘BackOff’ part means that Kubernetes will keep trying to pull the image,<br>with an increasing delay (‘back-off’).</p>
+</blockquote>
+<p>这里的”BackOff”就是”退避”的意思, 当拉取失败时, kubelet应该有个退避算法来重试拉取. 具体退避算法是啥, 有待后续钻研. 🤔</p>
 ]]></content>
       <tags>
         <tag>k8s</tag>
         <tag>kubectl</tag>
         <tag>trouble-shooting</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>玩转minikube</title>
+    <url>//2022-11-02-k8s-play-with-minikube/</url>
+    <content><![CDATA[<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><ul>
+<li><p>登录Node</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">minikube <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>kubectl</tag>
+        <tag>minikube</tag>
       </tags>
   </entry>
 </search>

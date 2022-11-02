@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">166</span>
+        <span class="site-state-item-count">167</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,205 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-22-k8s-promethus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-05-22-k8s-promethus/" class="post-title-link" itemprop="url">k8s生态中promethus的架构与原理研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-23 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-23T00:00:00+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><p><a target="_blank" rel="noopener" href="https://prometheus.io/docs/introduction/faq/">https://prometheus.io/docs/introduction/faq/</a></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122209641.png"></p>
+<p>本质上是类似alimonitor的系统.</p>
+<h1 id="几个细节"><a href="#几个细节" class="headerlink" title="几个细节:"></a>几个细节:</h1><ul>
+<li><p>使用pull模式, 而不是push模式. 即promethus server主动去各个业务方捞取数据, 而不是各个业务方主动往promethus server推送数据.</p>
+<ul>
+<li>为啥使用pull模式? <a target="_blank" rel="noopener" href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push</a><ul>
+<li>You can run your monitoring on your laptop when developing changes.</li>
+<li>You can more easily tell if a target is down.</li>
+<li>You can manually go to a target and inspect its health with a web browser.</li>
+</ul>
+</li>
+<li>针对现存的已经有的push模式, 提供了pushgateway方案来兼容. (可以参见上图架构)<ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/instrumenting/pushing/">https://prometheus.io/docs/instrumenting/pushing/</a></li>
+<li>pushgateway类似于</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>由于使用了pull模式, 因此会有各种<a target="_blank" rel="noopener" href="https://prometheus.io/docs/instrumenting/exporters/">exporter组件</a>, 来适配各个常用监控源, 例如 casandra exporter, ECS Exporter等. 本质上这种exporter是类似一个http服务器, 可以让promethus server来捞取数据.</p>
+</li>
+<li><p>服务发现: 由于使用的是pull模式, 因此promethus需要知道要从哪里捞取各个业务方的metrics, 因此需要一个服务发现机制. 有如下两种:</p>
+<ul>
+<li>静态文件配置(File-Based SD): ip:port</li>
+<li>DNS: nameserver:port <a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config">https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config</a></li>
+<li>HTTP_SD:</li>
+</ul>
+</li>
+<li><p>存储:</p>
+<ul>
+<li>存储介质:<ul>
+<li>默认使用的localstorage, 本地存储</li>
+<li>可以支持remote storage, 但由于各个remote storage的接口&amp;对原生的promethus SQL支持度的不同, 分为read&amp;write能力<ul>
+<li><a target="_blank" rel="noopener" href="https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage">remote storage支持列表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据格式:<ul>
+<li>自定义的, 支持压缩的本地存储格式.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HA:</p>
+<ul>
+<li>服务HA:<ul>
+<li><a target="_blank" rel="noopener" href="https://www.robustperception.io/scaling-and-federating-prometheus">https://www.robustperception.io/scaling-and-federating-prometheus</a></li>
+<li>默认: 单台server足以支撑1000台server的metrics量.</li>
+<li>方案1: Initial Deployment<ul>
+<li>2个global Prometheus , N个local Promethus, global负责汇聚local数据</li>
+<li>保持2个global, 防止单台宕机.</li>
+</ul>
+</li>
+<li>方案2: Splitting By Use, 按用途垂直拆分<ul>
+<li>promethus前后端分离部署</li>
+<li>按业务域分别部署, 例如为Cassandra服务单独部署一套, 为MySQL服务单独部署一套</li>
+</ul>
+</li>
+<li>方案3: Horizontal Sharding, 水平拆分<ul>
+<li>不推荐多机器部署,</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据HA:<ul>
+<li>localstorage: 无法HA, 因此promethus是推荐使用RAID, 或者定期打快照.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>限制:</p>
+<ul>
+<li>不要用promethus来进行tracing&#x2F;logging, 只能用来做metrics</li>
+</ul>
+</li>
+</ul>
+<h1 id="核心术语-x2F-指标"><a href="#核心术语-x2F-指标" class="headerlink" title="核心术语&#x2F;指标"></a>核心术语&#x2F;指标</h1><p>定义了很好的几种通用指标, 来覆盖metrics各个方面:</p>
+<ol>
+<li><p>counter: <a target="_blank" rel="noopener" href="https://www.robustperception.io/how-does-a-prometheus-counter-work">https://www.robustperception.io/how-does-a-prometheus-counter-work</a></p>
+<ol>
+<li>rate</li>
+</ol>
+</li>
+<li><p>gauge</p>
+</li>
+<li><p>histogram, 如下, 按照le&#x3D;”xxx”, le即”less than”, 将latency分成了10个bucket</p>
+<pre class="line-numbers language-none"><code class="language-none">prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.1&quot;&#125; 25547
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.2&quot;&#125; 26688
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.4&quot;&#125; 27760
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;1&quot;&#125; 28641
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;3&quot;&#125; 28782
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;8&quot;&#125; 28844
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;20&quot;&#125; 28855
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;60&quot;&#125; 28860
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;120&quot;&#125; 28860
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;+Inf&quot;&#125; 28860<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>summary</p>
+</li>
+</ol>
+<h1 id="核心组件研究"><a href="#核心组件研究" class="headerlink" title="核心组件研究"></a>核心组件研究</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-05-22-k8s-promethus/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-18-rpc-exception-handling/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +446,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -388,7 +587,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -507,7 +706,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -623,7 +822,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -745,7 +944,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -879,7 +1078,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1018,7 +1217,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1126,7 +1325,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1240,7 +1439,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1352,7 +1551,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1459,7 +1658,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1585,7 +1784,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1700,7 +1899,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1806,7 +2005,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -1926,7 +2125,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -2031,7 +2230,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -2137,7 +2336,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -2259,7 +2458,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -2269,7 +2468,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.9k</span>
+      <span>3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -2290,11 +2489,16 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
           <h1 id="个人习惯"><a href="#个人习惯" class="headerlink" title="个人习惯"></a>个人习惯</h1><p>在<code>~/.bash_profile</code>里增加alias: </p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">alias</span> <span class="token assign-left variable">k</span><span class="token operator">=</span><span class="token string">'kubectl'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h1 id="资源相关命令"><a href="#资源相关命令" class="headerlink" title="资源相关命令"></a>资源相关命令</h1><h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><h3 id="列出pod-包含所在的node"><a href="#列出pod-包含所在的node" class="headerlink" title="列出pod(包含所在的node)"></a>列出pod(包含所在的node)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k get pod -n kube-system -o wide<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h1 id="资源相关命令"><a href="#资源相关命令" class="headerlink" title="资源相关命令"></a>资源相关命令</h1><h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><h3 id="创建pod"><a href="#创建pod" class="headerlink" title="创建pod"></a>创建pod</h3><ul>
+<li><p>快速创建pod</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k run mytest --image<span class="token operator">=</span>k8s.gcr.io/pause:2.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>根据yaml创建pod</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k apply -f my-pause.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<h3 id="列出pod-包含所在的node"><a href="#列出pod-包含所在的node" class="headerlink" title="列出pod(包含所在的node)"></a>列出pod(包含所在的node)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k get pod -n kube-system -o wide<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="查看pod详情-包含所在的node"><a href="#查看pod详情-包含所在的node" class="headerlink" title="查看pod详情(包含所在的node)"></a>查看pod详情(包含所在的node)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k describe pod nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>包含如下重要信息:</p>
+<h3 id="查看pod详情-包含所在的node"><a href="#查看pod详情-包含所在的node" class="headerlink" title="查看pod详情(包含所在的node)"></a>查看pod详情(包含所在的node)</h3>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022-04-05-k8s-kubectl-cmd/#more" rel="contents">
@@ -2364,7 +2568,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -2480,7 +2684,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -2594,7 +2798,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -2692,7 +2896,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -2822,7 +3026,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3011,7 +3215,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3121,7 +3325,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3229,7 +3433,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3239,7 +3443,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>7.7k</span>
+      <span>7.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -3273,7 +3477,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
 </li>
 <li><p>在Mac上的Docker </p>
 <ol>
-<li>同样用虚拟化技术xhyve或者virtualbox来实现, 不共享mac os内核。</li>
+<li>同样用虚拟化技术xhyve或者virtualbox来实现, 不共享mac os内核。update 2022, mac上的Docker使用 <a target="_blank" rel="noopener" href="https://github.com/moby/hyperkit">hyperkit VM</a> 作为核心组件.</li>
 <li>只能创建linux类docker，不能创建Mac OSX的docker. update 2022, <a target="_blank" rel="noopener" href="https://github.com/sickcodes/Docker-OSX">Docker-OSX</a> 项目可以了. 但本质上也是使用了KVM虚拟机.</li>
 </ol>
 </li>
@@ -3383,7 +3587,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3518,7 +3722,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3636,7 +3840,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3751,7 +3955,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3868,7 +4072,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
+      <time title="修改时间：2022-11-02 23:44:23" itemprop="dateModified" datetime="2022-11-02T23:44:23+08:00">2022-11-02</time>
     </span>
 
   
@@ -3955,128 +4159,6 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-02-01-maven-deps-failure/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-02-01-maven-deps-failure/" class="post-title-link" itemprop="url">记一次Maven传递依赖失效问题排查</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-02-02 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-02T00:00:00+08:00">2022-02-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-02 22:44:57" itemprop="dateModified" datetime="2022-11-02T22:44:57+08:00">2022-11-02</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在test-scheduler项目中, 代码按照maven模块(module)组织, 如下:</p>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">- test-scheduler
----- shared-common
----- resource-manage
----- persistence<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其中<br>resource-manage模块在pom中依赖了shared-common模块</p>
-<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><h2 id="错误信息是怎样的"><a href="#错误信息是怎样的" class="headerlink" title="错误信息是怎样的?"></a>错误信息是怎样的?</h2><p>在运行resource-manage模块的ut时, 报错信息如下:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Caused</span> by<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>NoClassDefFoundError</span><span class="token operator">:</span> com<span class="token operator">/</span>xxx<span class="token operator">/</span>xxx<span class="token operator">/</span>manager<span class="token operator">/</span><span class="token class-name">ManagerListener</span>
-	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span>MetaPushConsumer</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token class-name">MetaPushConsumer</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">338</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span></span>CommonMetaPushConsumer</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token class-name">CommonMetaPushConsumer</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">23</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke0</span><span class="token punctuation">(</span><span class="token class-name">Native</span> <span class="token class-name">Method</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">NativeMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">62</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">43</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>Method</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Method</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">498</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">invokeCustomInitMethod</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1930</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">invokeInitMethods</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1872</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">initializeBean</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1800</span><span class="token punctuation">)</span>
-	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token number">42</span> more
-<span class="token class-name">Caused</span> by<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassNotFoundException</span><span class="token operator">:</span> <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>manager<span class="token punctuation">.</span></span>ManagerListener</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span>URLClassLoader</span><span class="token punctuation">.</span><span class="token function">findClass</span><span class="token punctuation">(</span><span class="token class-name">URLClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">382</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">418</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>Launcher</span>$<span class="token class-name">AppClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">Launcher</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">355</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">351</span><span class="token punctuation">)</span>
-	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token number">51</span> more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="丢失的类是在哪里的"><a href="#丢失的类是在哪里的" class="headerlink" title="丢失的类是在哪里的?"></a>丢失的类是在哪里的?</h2><p>经分析, com.xxx.xxx.manager.ManagerListener 类是在如下GAV中引入:<br><dependency><br><groupid>com.xxx.xxx</groupid><br><artifactid>diamond-client</artifactid><br><version>3.9.2</version><br></dependency></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-02-01-maven-deps-failure/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4102,14 +4184,14 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">246k</span>
+    <span title="站点总字数">247k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:44</span>
+    <span title="站点阅读时长">3:45</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
