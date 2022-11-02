@@ -19,7 +19,7 @@ lang: zh
 > You can connect multiple containers using user-defined networks and shared volumes.
 
 2. 在Mac上的Docker 
-   1. 同样用虚拟化技术xhyve或者virtualbox来实现, 不共享mac os内核。
+   1. 同样用虚拟化技术xhyve或者virtualbox来实现, 不共享mac os内核。update 2022, mac上的Docker使用 [hyperkit VM](https://github.com/moby/hyperkit) 作为核心组件.
    2. 只能创建linux类docker，不能创建Mac OSX的docker. update 2022, [Docker-OSX](https://github.com/sickcodes/Docker-OSX) 项目可以了. 但本质上也是使用了KVM虚拟机.
 3. Windows的Docker
    1. 不能在Linux机器上使用windows的docker镜像. 参见: [can-windows-containers-be-hosted-on-linux](https://stackoverflow.com/questions/42158596/can-windows-containers-be-hosted-on-linux)

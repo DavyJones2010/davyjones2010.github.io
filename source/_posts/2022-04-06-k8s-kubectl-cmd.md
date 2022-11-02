@@ -14,6 +14,17 @@ alias k='kubectl'
 # 资源相关命令
 ## Pod
 
+### 创建pod
+- 快速创建pod
+```shell
+k run mytest --image=k8s.gcr.io/pause:2.0
+```
+
+- 根据yaml创建pod
+```shell
+k apply -f my-pause.yaml
+```
+
 ### 列出pod(包含所在的node)
 ```shell
 k get pod -n kube-system -o wide
