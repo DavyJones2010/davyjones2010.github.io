@@ -1333,80 +1333,6 @@ pkg<span class="token operator">/</span>scheduler<span class="token operator">/<
       </tags>
   </entry>
   <entry>
-    <title>kube-scheduler笔记之Queue研究</title>
-    <url>//2021-09-08-kube-scheduler-queue/</url>
-    <content><![CDATA[<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type PriorityQueue struct &#123;
-
-   &#x2F;&#x2F; backoff队列
-   podBackoff *util.PodBackoff
-   &#x2F;&#x2F; backoff队列, 与podBackoff区别?
-   podBackoffQ *util.Heap
-  
-   &#x2F;&#x2F; activeQ is heap structure that scheduler actively looks at to find pods to
-   &#x2F;&#x2F; schedule. Head of heap is the highest priority pod.
-   activeQ *util.Heap
-
-   &#x2F;&#x2F; unschedulable队列
-   unschedulableQ *UnschedulablePodsMap
-  
-   &#x2F;&#x2F; 抢占式调度成功后, 将preemptor放到nominatedPodMap里
-   nominatedPods *nominatedPodMap
-  
-   &#x2F;&#x2F; 全局调度周期的递增序号，当pod pop的时候会递增
-   schedulingCycle int64
-   &#x2F;&#x2F; 当未调度的pod重新被添加到activeQueue中会保存schedulingCycle到moveRequestCycle中
-   moveRequestCycle int64
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="核心解读"><a href="#核心解读" class="headerlink" title="核心解读"></a>核心解读</h2><ol>
-<li>Heap结构, 即为最大堆.</li>
-<li>activeQ: 存储所有等待调度的Pod的队列, 根据pod.Spec.Priority来构建最大堆</li>
-<li>podBackoffQ: 存储在多个schedulingCycle中依旧调度失败的情况下，则会通过之前说的backOff机制，延迟等待调度的时间. 但该backoffQ是纯的PodHeap, 并没有存储pod的backOff的具体信息</li>
-<li>podBackoff: 类似一个记分板, backoff的计数器，最后一次更新的时间等</li>
-<li>unschedulableQ: 本质上是&lt;podName, podInfo&gt;的map, 而不是一个队列.</li>
-</ol>
-<h2 id="重点疑问"><a href="#重点疑问" class="headerlink" title="重点疑问"></a>重点疑问</h2><ol>
-<li><p>在什么时候Pod被加入到activeQ中? 何时加入podBackoffQ中? 何时加入unschedulableQ中? Pod在这几个Q中间是如何变化的?</p>
-<ol>
-<li></li>
-</ol>
-</li>
-<li><p>podBackoffQ是按照什么来划分优先级的?</p>
-<ol>
-<li>如果仍然是按照优先级来, 如何防止高优先级Pod反复拉起, 反复失败?</li>
-<li>应该是按照调度失败次数? 还是调度等待时长?</li>
-<li>根据podsCompareBackoffCompleted, 按照podBackoffTime, 即调度失败次数. 调度等待时长与调度失败次数有一个函数关系.<ol>
-<li>如果pod从podBackoffQ中移入到activeQ中, 接下来调度失败, 重新移入podBackoffQ中, 此时podBackoffTime会重置么?</li>
-</ol>
-</li>
-</ol>
-</li>
-<li><p>从unschedulableQ中移出pod的优先级是怎样的?</p>
-<ol>
-<li></li>
-</ol>
-</li>
-<li><p>Pod调度失败的终止条件是什么? 还是说没有终止条件? 始终在几个Queue中打转?</p>
-<ol>
-<li>对的. 除非显式调用api删除掉该Pod</li>
-</ol>
-</li>
-<li><p>各个队列有大小限制么? 如何防止Pod请求积压过多导致Queue(内存)满了?</p>
-</li>
-</ol>
-<p><img data-src="https://bbsmax.ikafan.com/static/L3Byb3h5L2h0dHBzL2ltZzIwMTguY25ibG9ncy5jb20vYmxvZy8xNTA2NzI0LzIwMjAwMS8xNTA2NzI0LTIwMjAwMTEzMTEwMzU5Mzg1LTM2MDkzMzYzNS5wbmc=.jpg" alt="img"></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.shuzhiduo.com/A/rV576rRXJP/">https://www.shuzhiduo.com/A/rV576rRXJP/</a></p>
-]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>scheduler</tag>
-        <tag>kube-scheduler</tag>
-        <tag>kube-scheduler-queue</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kube-scheduler笔记</title>
     <url>//2021-09-08-kube-scheduler-overview/</url>
     <content><![CDATA[<h2 id="一言概之"><a href="#一言概之" class="headerlink" title="一言概之"></a>一言概之</h2><p>将PodSpec.NodeName为空的Pods逐个地，经过预选(Predicates)和优选(Priorities)两个步骤，挑选最合适的Node作为该Pod的Destination。</p>
@@ -1773,6 +1699,80 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       </tags>
   </entry>
   <entry>
+    <title>kube-scheduler笔记之Queue研究</title>
+    <url>//2021-09-08-kube-scheduler-queue/</url>
+    <content><![CDATA[<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type PriorityQueue struct &#123;
+
+   &#x2F;&#x2F; backoff队列
+   podBackoff *util.PodBackoff
+   &#x2F;&#x2F; backoff队列, 与podBackoff区别?
+   podBackoffQ *util.Heap
+  
+   &#x2F;&#x2F; activeQ is heap structure that scheduler actively looks at to find pods to
+   &#x2F;&#x2F; schedule. Head of heap is the highest priority pod.
+   activeQ *util.Heap
+
+   &#x2F;&#x2F; unschedulable队列
+   unschedulableQ *UnschedulablePodsMap
+  
+   &#x2F;&#x2F; 抢占式调度成功后, 将preemptor放到nominatedPodMap里
+   nominatedPods *nominatedPodMap
+  
+   &#x2F;&#x2F; 全局调度周期的递增序号，当pod pop的时候会递增
+   schedulingCycle int64
+   &#x2F;&#x2F; 当未调度的pod重新被添加到activeQueue中会保存schedulingCycle到moveRequestCycle中
+   moveRequestCycle int64
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="核心解读"><a href="#核心解读" class="headerlink" title="核心解读"></a>核心解读</h2><ol>
+<li>Heap结构, 即为最大堆.</li>
+<li>activeQ: 存储所有等待调度的Pod的队列, 根据pod.Spec.Priority来构建最大堆</li>
+<li>podBackoffQ: 存储在多个schedulingCycle中依旧调度失败的情况下，则会通过之前说的backOff机制，延迟等待调度的时间. 但该backoffQ是纯的PodHeap, 并没有存储pod的backOff的具体信息</li>
+<li>podBackoff: 类似一个记分板, backoff的计数器，最后一次更新的时间等</li>
+<li>unschedulableQ: 本质上是&lt;podName, podInfo&gt;的map, 而不是一个队列.</li>
+</ol>
+<h2 id="重点疑问"><a href="#重点疑问" class="headerlink" title="重点疑问"></a>重点疑问</h2><ol>
+<li><p>在什么时候Pod被加入到activeQ中? 何时加入podBackoffQ中? 何时加入unschedulableQ中? Pod在这几个Q中间是如何变化的?</p>
+<ol>
+<li></li>
+</ol>
+</li>
+<li><p>podBackoffQ是按照什么来划分优先级的?</p>
+<ol>
+<li>如果仍然是按照优先级来, 如何防止高优先级Pod反复拉起, 反复失败?</li>
+<li>应该是按照调度失败次数? 还是调度等待时长?</li>
+<li>根据podsCompareBackoffCompleted, 按照podBackoffTime, 即调度失败次数. 调度等待时长与调度失败次数有一个函数关系.<ol>
+<li>如果pod从podBackoffQ中移入到activeQ中, 接下来调度失败, 重新移入podBackoffQ中, 此时podBackoffTime会重置么?</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>从unschedulableQ中移出pod的优先级是怎样的?</p>
+<ol>
+<li></li>
+</ol>
+</li>
+<li><p>Pod调度失败的终止条件是什么? 还是说没有终止条件? 始终在几个Queue中打转?</p>
+<ol>
+<li>对的. 除非显式调用api删除掉该Pod</li>
+</ol>
+</li>
+<li><p>各个队列有大小限制么? 如何防止Pod请求积压过多导致Queue(内存)满了?</p>
+</li>
+</ol>
+<p><img data-src="https://bbsmax.ikafan.com/static/L3Byb3h5L2h0dHBzL2ltZzIwMTguY25ibG9ncy5jb20vYmxvZy8xNTA2NzI0LzIwMjAwMS8xNTA2NzI0LTIwMjAwMTEzMTEwMzU5Mzg1LTM2MDkzMzYzNS5wbmc=.jpg" alt="img"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.shuzhiduo.com/A/rV576rRXJP/">https://www.shuzhiduo.com/A/rV576rRXJP/</a></p>
+]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>scheduler</tag>
+        <tag>kube-scheduler</tag>
+        <tag>kube-scheduler-queue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>精神训练与身体训练</title>
     <url>//2021-09-08-physical-psychological/</url>
     <content><![CDATA[<blockquote>
@@ -1850,33 +1850,6 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       <tags>
         <tag>psychology</tag>
         <tag>wangyangming</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2021年10月第三周</title>
-    <url>//2021-10-17-weekend-summary/</url>
-    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
-<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
-<blockquote>
-<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
-</blockquote>
-<blockquote>
-<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
-</blockquote>
-<blockquote>
-<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
-</blockquote>
-<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
-<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
-<blockquote>
-<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
-</blockquote>
-<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
-]]></content>
-      <tags>
-        <tag>weekend</tag>
-        <tag>diary</tag>
-        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -2366,6 +2339,33 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
       <tags>
         <tag>code-snippets</tag>
         <tag>concurrent</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2021年10月第三周</title>
+    <url>//2021-10-17-weekend-summary/</url>
+    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
+<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
+<blockquote>
+<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
+</blockquote>
+<blockquote>
+<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
+</blockquote>
+<blockquote>
+<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
+</blockquote>
+<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
+<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
+<blockquote>
+<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
+</blockquote>
+<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
+]]></content>
+      <tags>
+        <tag>weekend</tag>
+        <tag>diary</tag>
+        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -4054,10 +4054,10 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 </ul>
 <h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1><hr>
 <ul>
-<li>人世间</li>
-<li>风起陇西</li>
-<li>异物志</li>
-<li>大明王朝: 1566</li>
+<li><a href="https://movie.douban.com/subject/35207856/">人世间</a></li>
+<li><a href="https://movie.douban.com/subject/26766214/">风起陇西</a></li>
+<li><a href="https://movie.douban.com/subject/26889177/">异物志</a></li>
+<li><a href="https://movie.douban.com/subject/2210001/">大明王朝: 1566</a></li>
 <li>Yes, Minister</li>
 <li>Yes, Prime Minister</li>
 <li><a href="https://movie.douban.com/subject/30314848/">瞬息全宇宙</a></li>
@@ -4068,11 +4068,13 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><a href="https://book.douban.com/subject/34864748/">平凡岁月</a></li>
 <li><a href="https://movie.douban.com/subject/2347485/">天道</a></li>
 <li><a href="https://movie.douban.com/subject/35118256/">赛博朋克：边缘行者</a></li>
+<li><a href="https://movie.douban.com/subject/1424406/">星际牛仔</a></li>
 </ul>
 <h1 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h1><hr>
 <ul>
 <li><a href="https://zh.wikipedia.org/zh-sg/%E7%91%AA%E5%88%A9%E6%AD%90%E8%88%87%E8%B7%AF%E6%98%93%E5%90%89RPG4_%E5%A4%A2%E5%A2%83%E5%86%92%E9%9A%AA">马力欧与路易吉RPG4 梦境冒险</a></li>
 <li><a href="https://www.douban.com/game/25890885/">逆转裁判123</a></li>
+<li><a href="https://www.douban.com/game/26382626/">火影忍者：究极忍者风暴4</a></li>
 <li><a href="https://www.douban.com/game/25931998/">赛博朋克2077</a></li>
 </ul>
 <h1 id="Certificates"><a href="#Certificates" class="headerlink" title="Certificates"></a>Certificates</h1><hr>
@@ -5541,17 +5543,6 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
-    <title>OpenAPI设计之ClientToken</title>
-    <url>//2022-03-28-openapi-clienttoken/</url>
-    <content><![CDATA[<h1 id="ClientToken作用"><a href="#ClientToken作用" class="headerlink" title="ClientToken作用"></a>ClientToken作用</h1>]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>java</tag>
-        <tag>client-token</tag>
-        <tag>openapi</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s statefulset的研究与实践</title>
     <url>//2022-03-27-k8s-stateful-set/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
@@ -5599,6 +5590,17 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       <tags>
         <tag>k8s</tag>
         <tag>stateful-set</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAPI设计之ClientToken</title>
+    <url>//2022-03-28-openapi-clienttoken/</url>
+    <content><![CDATA[<h1 id="ClientToken作用"><a href="#ClientToken作用" class="headerlink" title="ClientToken作用"></a>ClientToken作用</h1>]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>java</tag>
+        <tag>client-token</tag>
+        <tag>openapi</tag>
       </tags>
   </entry>
   <entry>
@@ -5967,36 +5969,8 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
       </tags>
   </entry>
   <entry>
-    <title>k8s基础架构笔记--list&amp;watch机制</title>
-    <url>//2022-04-05-k8s-list-watch/</url>
-    <content><![CDATA[<p>本质上:  </p>
-<ul>
-<li>list: 就是一个GET的HTTP操作, 请求到apiserver, 是个短连接. list结束, 连接就关闭.</li>
-<li>watch: 是一个基于<code>Transfer-Encoding: chunked</code>的<a href="https://imququ.com/post/transfer-encoding-header-in-http.html">HTTP长连接</a>, apiserver作为http server, kube-proxy&#x2F;kubelet&#x2F;kube-scheduler等作为http client.</li>
-</ul>
-<p>这样: </p>
-<ul>
-<li>list: 来实现kube-proxy, kubelet, kube-scheduler等角色启动初始化时, 存量数据的一次拉取.</li>
-<li>watch: 来实现后续各种资源的增量更新</li>
-</ul>
-<p>扩展: </p>
-<ul>
-<li>watch: <ul>
-<li>k8s java client中watch机制, 是基于OkHttpClient. &#x2F;&#x2F; TODO: 补上具体实现例子</li>
-<li>watch机制也可以基于websocket来实现</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>k8s-architect</tag>
-        <tag>list-watch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>常用的KubeCtl命令</title>
-    <url>//2022-04-05-kubectl-cmd/</url>
+    <url>//2022-04-05-k8s-kubectl-cmd/</url>
     <content><![CDATA[<h1 id="个人习惯"><a href="#个人习惯" class="headerlink" title="个人习惯"></a>个人习惯</h1><p>在<code>~/.bash_profile</code>里增加alias: </p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">alias</span> <span class="token assign-left variable">k</span><span class="token operator">=</span><span class="token string">'kubectl'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -6097,6 +6071,34 @@ k describe rs<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
       <tags>
         <tag>code-snippets</tag>
         <tag>kubectl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记--list&amp;watch机制</title>
+    <url>//2022-04-05-k8s-list-watch/</url>
+    <content><![CDATA[<p>本质上:  </p>
+<ul>
+<li>list: 就是一个GET的HTTP操作, 请求到apiserver, 是个短连接. list结束, 连接就关闭.</li>
+<li>watch: 是一个基于<code>Transfer-Encoding: chunked</code>的<a href="https://imququ.com/post/transfer-encoding-header-in-http.html">HTTP长连接</a>, apiserver作为http server, kube-proxy&#x2F;kubelet&#x2F;kube-scheduler等作为http client.</li>
+</ul>
+<p>这样: </p>
+<ul>
+<li>list: 来实现kube-proxy, kubelet, kube-scheduler等角色启动初始化时, 存量数据的一次拉取.</li>
+<li>watch: 来实现后续各种资源的增量更新</li>
+</ul>
+<p>扩展: </p>
+<ul>
+<li>watch: <ul>
+<li>k8s java client中watch机制, 是基于OkHttpClient. &#x2F;&#x2F; TODO: 补上具体实现例子</li>
+<li>watch机制也可以基于websocket来实现</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>k8s-architect</tag>
+        <tag>list-watch</tag>
       </tags>
   </entry>
   <entry>
@@ -6422,30 +6424,6 @@ Shift + Ctrl + PrintScreen # 自由选取<span aria-hidden="true" class="line-nu
       </tags>
   </entry>
   <entry>
-    <title>记一次由于JVM优化导致异常堆栈丢失的问题</title>
-    <url>//2022-04-30-java-exception-stack-trace-missing/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>线上某次故障排查, 发现线上有异常, 但无堆栈信息.<br>实际查看打印异常的地方, 确实是会打印出堆栈的. 那么堆栈信息为啥会丢呢? </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassCastException</span><span class="token operator">:</span> <span class="token keyword">null</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="原因排查"><a href="#原因排查" class="headerlink" title="原因排查"></a>原因排查</h1><p>JVM默认会优化掉相同堆栈的信息:<br><a href="https://stackoverflow.com/questions/40502576/java-lang-classcastexception-with-null-message-and-cause">java.lang.ClassCastException with null message and cause</a></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
-<li>如 <a href="https://blog.csdn.net/lisheng19870305/article/details/106361875">“java.lang.ClassCastException: null”原因解决</a>, 针对如下类型的异常, JVM默认都会优化: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">NullPointerException</span>
-<span class="token class-name">ArrayIndexOutOfBoundsException</span>
-<span class="token class-name">ClassCastException</span>
-<span class="token class-name">ArrayIndexOutOfBoundsException</span>
-<span class="token class-name">ArrayStoreException</span>
-<span class="token class-name">ArithmeticException</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>以后错误日志最好保留时间长一点, 这样才能定位出异常首次出现的位置, 才能看到完整的堆栈信息. </li>
-<li>或者可以增加: <code>-XX:-OmitStackTraceInFastThrow</code> 参数来防止JVM优化.</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>java</tag>
-        <tag>stacktrace</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记一次由于remoteCache类型不兼容修改导致的异常问题</title>
     <url>//2022-04-30-cache-incompatible/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>进行Redis缓存升级改造, 缓存访问层统一进行了修改:<br>修改前代码如下, 按照Java原生序列化方式: </p>
@@ -6474,6 +6452,30 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <tag>learn-from-failure</tag>
         <tag>java</tag>
         <tag>cache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次由于JVM优化导致异常堆栈丢失的问题</title>
+    <url>//2022-04-30-java-exception-stack-trace-missing/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>线上某次故障排查, 发现线上有异常, 但无堆栈信息.<br>实际查看打印异常的地方, 确实是会打印出堆栈的. 那么堆栈信息为啥会丢呢? </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassCastException</span><span class="token operator">:</span> <span class="token keyword">null</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="原因排查"><a href="#原因排查" class="headerlink" title="原因排查"></a>原因排查</h1><p>JVM默认会优化掉相同堆栈的信息:<br><a href="https://stackoverflow.com/questions/40502576/java-lang-classcastexception-with-null-message-and-cause">java.lang.ClassCastException with null message and cause</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>如 <a href="https://blog.csdn.net/lisheng19870305/article/details/106361875">“java.lang.ClassCastException: null”原因解决</a>, 针对如下类型的异常, JVM默认都会优化: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">NullPointerException</span>
+<span class="token class-name">ArrayIndexOutOfBoundsException</span>
+<span class="token class-name">ClassCastException</span>
+<span class="token class-name">ArrayIndexOutOfBoundsException</span>
+<span class="token class-name">ArrayStoreException</span>
+<span class="token class-name">ArithmeticException</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>以后错误日志最好保留时间长一点, 这样才能定位出异常首次出现的位置, 才能看到完整的堆栈信息. </li>
+<li>或者可以增加: <code>-XX:-OmitStackTraceInFastThrow</code> 参数来防止JVM优化.</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>java</tag>
+        <tag>stacktrace</tag>
       </tags>
   </entry>
   <entry>
@@ -7670,6 +7672,89 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
+    <title>MySQL连接池重要参数配置原理研究</title>
+    <url>//2022-06-05-mysql-conn-params/</url>
+    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
+<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
+<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
+<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
+<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
+<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
+<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
+<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
+<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
+</ul>
+<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
+<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
+</ul>
+<ol>
+<li>即客户端从连接池中获取connection的最大等待时长</li>
+<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
+<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
+    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
+    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
+    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<ul>
+<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
+<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
+</ul>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
+<li>initialSize: 100</li>
+<li>maxActive: 200</li>
+<li>minIdle: 100</li>
+<li>maxWait: 6000</li>
+</ul>
+<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
+<ul>
+<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
+<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
+</ul>
+<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
+<li>initialSize: 未配置</li>
+<li>maxActive: 300</li>
+<li>minIdle: 30</li>
+<li>maxWait: 60000</li>
+</ul>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
+<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
+<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
+<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
+</ol>
+</li>
+<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
+<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
+<li>取决于物理机&#x2F;虚拟机的配置.</li>
+</ol>
+</li>
+<li>什么是MySQL的session? 与connection是啥关系?<ol>
+<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
+<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
+<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>mysql</tag>
+        <tag>database</tag>
+        <tag>connection-pool</tag>
+        <tag>druid</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot Transactional AOP 实现原理研究</title>
     <url>//2022-06-06-spring-tx-annonation/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>书接上回 <a href="https://davyjones2010.github.io/2022-06-03-spring-annotation-on-interface/">SpringBoot基于Interface的Annotation在AOP中如何生效I</a>,<br>里边只是简略地说明了Spring中 @Transactional 只能在jdk proxy场景下生效, 在cglib场景下不生效, 但没有研究具体代码实现.<br>本文详细探究下.</p>
@@ -7793,89 +7878,6 @@ public synchronized void close() throws SQLException &#123;
         <tag>tools</tag>
         <tag>asciinema</tag>
         <tag>svg</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL连接池重要参数配置原理研究</title>
-    <url>//2022-06-05-mysql-conn-params/</url>
-    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
-<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
-<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
-<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
-<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
-<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
-<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
-<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
-<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
-</ul>
-<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
-<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
-</ul>
-<ol>
-<li>即客户端从连接池中获取connection的最大等待时长</li>
-<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
-<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
-    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
-    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
-    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<ul>
-<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
-<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
-</ul>
-<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
-<li>initialSize: 100</li>
-<li>maxActive: 200</li>
-<li>minIdle: 100</li>
-<li>maxWait: 6000</li>
-</ul>
-<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
-<ul>
-<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
-<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
-</ul>
-<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
-<li>initialSize: 未配置</li>
-<li>maxActive: 300</li>
-<li>minIdle: 30</li>
-<li>maxWait: 60000</li>
-</ul>
-<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
-<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
-<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
-<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
-</ol>
-</li>
-<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
-<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
-<li>取决于物理机&#x2F;虚拟机的配置.</li>
-</ol>
-</li>
-<li>什么是MySQL的session? 与connection是啥关系?<ol>
-<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
-<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
-<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>mysql</tag>
-        <tag>database</tag>
-        <tag>connection-pool</tag>
-        <tag>druid</tag>
       </tags>
   </entry>
   <entry>
@@ -8098,6 +8100,112 @@ yum <span class="token function">install</span> bridge-utils -y<span aria-hidden
       </tags>
   </entry>
   <entry>
+    <title>NAT之端口映射(PAT)原理总结&amp;实践</title>
+    <url>//2022-06-22-linux-network-nat/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常在家用路由器中, 看到有端口映射(PAT)选项, 但不明所以.<br>最近刚好在研究NAT, 知道了<mark>PAT本质是NAT的一种实现方式, 更确切地说是DNAT的一种实现方式</mark>.<br>因此借此机会好好研究下.</p>
+<h1 id="DNAT总结"><a href="#DNAT总结" class="headerlink" title="DNAT总结"></a>DNAT总结</h1><h2 id="PAT作用概述"><a href="#PAT作用概述" class="headerlink" title="PAT作用概述"></a>PAT作用概述</h2><p>家用路由器中配置PAT, 本质上还是一种<code>内网穿透</code>的实现方式，或者DNAT的一种方式。<br>即需要把家里内网某台主机的某个服务, 暴露到公网上, 以便能在公网环境下访问该服务.<br>例如</p>
+<ul>
+<li>家庭内网网段是<code>192.168.3.0/24</code></li>
+<li>家用路由器, 电信运营商分配的对外公网IP是<code>115.192.71.187</code></li>
+<li>某台主机IP是<code>192.168.3.213</code>: <ul>
+<li>暴露了8080的某个tomcat服务, 想要把这个服务暴露在公网上, 以便其他人能够访问.</li>
+<li>暴露了远程桌面RDP端口服务, 以便在公司或者咖啡厅, 能访问到该远程桌面.</li>
+<li>等等</li>
+</ul>
+</li>
+<li>此时可以在路由器上开启端口映射(PAT), 将路由器上某个端口(如8888)与内网主机的端口(如8080)如进行映射, 所有访问{路由器IP, 8888端口}的请求, 就会被自动路由到{内网IP, 8080端口}上:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206232339615.png"></p>
+<p>&#x2F;&#x2F; TODO: 这里挖个坑, 内网穿透除了PAT外, 还有其他方案, 例如 <code>花生壳</code>, 后边新开篇章讲下原理.</p>
+<h2 id="原理概述"><a href="#原理概述" class="headerlink" title="原理概述"></a>原理概述</h2><p>本质上是家用路由器保存了这么一张NAT表:<br><code>&#123;publicIp, publicPort&#125;</code> —映射到—&gt; <code>&#123;localIp, localPort&#125;</code></p>
+<h2 id="PAT路由流程"><a href="#PAT路由流程" class="headerlink" title="PAT路由流程"></a>PAT路由流程</h2><h3 id="0X00-外部用户-–-gt-路由器"><a href="#0X00-外部用户-–-gt-路由器" class="headerlink" title="0X00: 外部用户 –&gt; 路由器"></a>0X00: 外部用户 –&gt; 路由器</h3><ol>
+<li>二层帧: <code>&#123;remoteMac, remoteIp, remotePort&#125;, &#123;publicMac, publicIp, publicPort&#125;</code></li>
+</ol>
+<h3 id="0X01-路由器-–-gt-内网Server"><a href="#0X01-路由器-–-gt-内网Server" class="headerlink" title="0X01: 路由器 –&gt; 内网Server:"></a>0X01: 路由器 –&gt; 内网Server:</h3><ol>
+<li>目标 publicMac &#x3D;&#x3D; router’s publicMac，网卡接收，解析三层IP包</li>
+<li>进入prerouting阶段：(DNAT作用在preroute阶段)<ol>
+<li>查NAT表（DNAT条目）: <code>&#123;publicIp, publicPort&#125;</code> –&gt; <code>&#123;localIp, localPort&#125;</code></li>
+<li>修改三层IP包 <code>&#123;remoteIp, remotePort&#125;</code> –&gt; <code>&#123;localIp, localPort&#125;</code></li>
+</ol>
+</li>
+<li>由于此时targetIp是 localIp, !&#x3D; publicIp，因此不会走入INPUT流程，因此也就不会把数据包交给上层应用。</li>
+<li>进入FORWARD&#x2F;ROUTE阶段：<ol>
+<li>如果没有开启ip_forwarding，则流程到此结束。直接把IP包丢弃掉。</li>
+<li>查看路由表，<code>route -n</code>，找到往localIp网段发送数据包，应该使用的网卡与网卡对应的Mac地址（例如 gatewayMac）</li>
+</ol>
+</li>
+<li>封装二层帧<ol>
+<li>发ARP广播: what’s localIp’s mac addr, tell publicMac</li>
+<li>获取ARP缓存表项: {localIp} –&gt; {localMac}</li>
+<li>修改帧内容为: <code>&#123;gatewayMac, remoteIp, remotePort&#125;, &#123;localMac, localIp, localPort&#125;</code></li>
+</ol>
+</li>
+<li>通过对应的网卡发出二层帧。</li>
+</ol>
+<p><img data-src="https://p.k8s.li/iptables.png"></p>
+<h3 id="0X02-Server端处理"><a href="#0X02-Server端处理" class="headerlink" title="0X02: Server端处理:"></a>0X02: Server端处理:</h3><ol>
+<li>接收如下IP帧<br><code>&#123;gatewayMac, remoteIp, remotePort&#125;, &#123;localMac, localIp, localPort&#125;</code></li>
+<li>目标 localMac &#x3D;&#x3D; Server localMac, 网卡接收(无需开启混杂模式), 否则丢弃</li>
+<li>目标 localIp &#x3D;&#x3D; Server localIp, TCP&#x2F;IP协议栈接收. <ol>
+<li>是否有可能IP不匹配? 如何处理? –&gt; 是否开启了ip_forwarding？ 具体参见</li>
+</ol>
+</li>
+<li>server端将TCP数据包转给对应应用层程序处理</li>
+</ol>
+<h3 id="0X03-Server-–回包–-gt-路由器"><a href="#0X03-Server-–回包–-gt-路由器" class="headerlink" title="0X03: Server –回包–&gt; 路由器:"></a>0X03: Server –回包–&gt; 路由器:</h3><ol>
+<li>Server处理完毕, 生成回包, 由于remoteIp不在网段:<br><code>&#123;localIp, localPort&#125;, &#123;remoteIp, remotePort&#125;</code></li>
+<li>Server发送ARP广播, 查找默认网关(server端事先配置好了网关的IP)的MAC地址 {gatewayIp} –&gt; {gatewayMac}</li>
+<li>Server封装二层帧, 发送给路由器:<br><code>&#123;localMac, localIp, localPort&#125;, &#123;gatewayMac, remoteIp, remotePort&#125;</code></li>
+</ol>
+<h3 id="0X04-路由器PAT处理回包"><a href="#0X04-路由器PAT处理回包" class="headerlink" title="0X04: 路由器PAT处理回包"></a>0X04: 路由器PAT处理回包</h3><p>后经查证，<mark> 针对回包，不会再过iptables</mark>，进行如下NAT反向查表了。<br>实际看了下，确实没有同时创建出如下反向的iptables规则。<br>而是<mark>由kernel模块conntrack进行维护完成{mac, ip, port}的替换。<mark></p>
+<ol>
+<li><del>收到二层帧:<br><code>&#123;localMac, localIp, localPort&#125;, &#123;gatewayMac, remoteIp, remotePort&#125;</code></del></li>
+<li><del>反向查找NAT表:<br><code>&#123;localIp, localPort&#125; --&gt; &#123;publicIp, publicPort&#125;</code></del></li>
+<li><del>修改三层包(替换掉localIp, localPort):<br><code>&#123;publicIp, publicPort&#125;, &#123;remoteIp, remotePort&#125;</code></del></li>
+<li><del>二层帧修改(修改掉localMac, gatewayMac):<br><code>&#123;publicMac, publicIp, publicPort&#125;, &#123;remoteMac, remoteIp, remotePort&#125;</code></del></li>
+</ol>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h3><p>路由器本身是有多个网卡的, 内网中是 {gatewayMac, gatewayIp}, 对应的公网是 {publicMac, publicIp}</p>
+<h1 id="SNAT总结"><a href="#SNAT总结" class="headerlink" title="SNAT总结"></a>SNAT总结</h1><p>&#x2F;&#x2F; TODO: 如何作用在postrouting阶段？</p>
+<h1 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h1><p>核心是路由器怎么创建NAT表? 使用iptables么? 怎么操作iptables能实现相同功能? </p>
+<h1 id="实践-amp-验证"><a href="#实践-amp-验证" class="headerlink" title="实践&amp;验证"></a>实践&amp;验证</h1><p>&#x2F;&#x2F; TODO: </p>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://blog.k8s.li/linux-net-and-iptables.html#%E5%85%B3%E7%B3%BB">Linux 网络和 iptables 运行原理</a></li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>最近研究关于网络, 有一堆的概念, 一堆的坑要填, 这里先列出来: </p>
+<ul>
+<li>几张表, 作用是啥? 分别如何查看表项? <ul>
+<li>cam表</li>
+<li>arp缓存表</li>
+<li>nat表</li>
+<li>dns缓存表</li>
+</ul>
+</li>
+<li>几种设备: <ul>
+<li>三层交换机与二层交换机区别?</li>
+<li>Linux网桥与交换机有啥区别?</li>
+</ul>
+</li>
+<li>几个技术细节<ul>
+<li>网卡混杂模式? 啥时候下开启? 应用场景是啥?</li>
+<li>会不会收到MAC地址匹配, 但IP地址不匹配的IP包? 具体咋处理? 直接丢弃? 还是可以使用? </li>
+<li>ip forwarding 是啥? 为啥NAT模式下需要开启? 为啥不默认开启? </li>
+<li>ip隧道的原理是啥? </li>
+<li>lvs的几种工作原理再研究, 再实践验证</li>
+<li>组播的应用场景是啥? 很重要么?</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>iaas</tag>
+        <tag>network</tag>
+        <tag>cloud-computing</tag>
+        <tag>nat</tag>
+        <tag>pat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记一次Dubbo服务调用异常排查</title>
     <url>//2022-06-24-dubbo-invoke-error/</url>
     <content><![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><ul>
@@ -8214,112 +8322,6 @@ yum <span class="token function">install</span> bridge-utils -y<span aria-hidden
       <tags>
         <tag>java</tag>
         <tag>dubbo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NAT之端口映射(PAT)原理总结&amp;实践</title>
-    <url>//2022-06-22-linux-network-nat/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常在家用路由器中, 看到有端口映射(PAT)选项, 但不明所以.<br>最近刚好在研究NAT, 知道了<mark>PAT本质是NAT的一种实现方式, 更确切地说是DNAT的一种实现方式</mark>.<br>因此借此机会好好研究下.</p>
-<h1 id="DNAT总结"><a href="#DNAT总结" class="headerlink" title="DNAT总结"></a>DNAT总结</h1><h2 id="PAT作用概述"><a href="#PAT作用概述" class="headerlink" title="PAT作用概述"></a>PAT作用概述</h2><p>家用路由器中配置PAT, 本质上还是一种<code>内网穿透</code>的实现方式，或者DNAT的一种方式。<br>即需要把家里内网某台主机的某个服务, 暴露到公网上, 以便能在公网环境下访问该服务.<br>例如</p>
-<ul>
-<li>家庭内网网段是<code>192.168.3.0/24</code></li>
-<li>家用路由器, 电信运营商分配的对外公网IP是<code>115.192.71.187</code></li>
-<li>某台主机IP是<code>192.168.3.213</code>: <ul>
-<li>暴露了8080的某个tomcat服务, 想要把这个服务暴露在公网上, 以便其他人能够访问.</li>
-<li>暴露了远程桌面RDP端口服务, 以便在公司或者咖啡厅, 能访问到该远程桌面.</li>
-<li>等等</li>
-</ul>
-</li>
-<li>此时可以在路由器上开启端口映射(PAT), 将路由器上某个端口(如8888)与内网主机的端口(如8080)如进行映射, 所有访问{路由器IP, 8888端口}的请求, 就会被自动路由到{内网IP, 8080端口}上:</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206232339615.png"></p>
-<p>&#x2F;&#x2F; TODO: 这里挖个坑, 内网穿透除了PAT外, 还有其他方案, 例如 <code>花生壳</code>, 后边新开篇章讲下原理.</p>
-<h2 id="原理概述"><a href="#原理概述" class="headerlink" title="原理概述"></a>原理概述</h2><p>本质上是家用路由器保存了这么一张NAT表:<br><code>&#123;publicIp, publicPort&#125;</code> —映射到—&gt; <code>&#123;localIp, localPort&#125;</code></p>
-<h2 id="PAT路由流程"><a href="#PAT路由流程" class="headerlink" title="PAT路由流程"></a>PAT路由流程</h2><h3 id="0X00-外部用户-–-gt-路由器"><a href="#0X00-外部用户-–-gt-路由器" class="headerlink" title="0X00: 外部用户 –&gt; 路由器"></a>0X00: 外部用户 –&gt; 路由器</h3><ol>
-<li>二层帧: <code>&#123;remoteMac, remoteIp, remotePort&#125;, &#123;publicMac, publicIp, publicPort&#125;</code></li>
-</ol>
-<h3 id="0X01-路由器-–-gt-内网Server"><a href="#0X01-路由器-–-gt-内网Server" class="headerlink" title="0X01: 路由器 –&gt; 内网Server:"></a>0X01: 路由器 –&gt; 内网Server:</h3><ol>
-<li>目标 publicMac &#x3D;&#x3D; router’s publicMac，网卡接收，解析三层IP包</li>
-<li>进入prerouting阶段：(DNAT作用在preroute阶段)<ol>
-<li>查NAT表（DNAT条目）: <code>&#123;publicIp, publicPort&#125;</code> –&gt; <code>&#123;localIp, localPort&#125;</code></li>
-<li>修改三层IP包 <code>&#123;remoteIp, remotePort&#125;</code> –&gt; <code>&#123;localIp, localPort&#125;</code></li>
-</ol>
-</li>
-<li>由于此时targetIp是 localIp, !&#x3D; publicIp，因此不会走入INPUT流程，因此也就不会把数据包交给上层应用。</li>
-<li>进入FORWARD&#x2F;ROUTE阶段：<ol>
-<li>如果没有开启ip_forwarding，则流程到此结束。直接把IP包丢弃掉。</li>
-<li>查看路由表，<code>route -n</code>，找到往localIp网段发送数据包，应该使用的网卡与网卡对应的Mac地址（例如 gatewayMac）</li>
-</ol>
-</li>
-<li>封装二层帧<ol>
-<li>发ARP广播: what’s localIp’s mac addr, tell publicMac</li>
-<li>获取ARP缓存表项: {localIp} –&gt; {localMac}</li>
-<li>修改帧内容为: <code>&#123;gatewayMac, remoteIp, remotePort&#125;, &#123;localMac, localIp, localPort&#125;</code></li>
-</ol>
-</li>
-<li>通过对应的网卡发出二层帧。</li>
-</ol>
-<p><img data-src="https://p.k8s.li/iptables.png"></p>
-<h3 id="0X02-Server端处理"><a href="#0X02-Server端处理" class="headerlink" title="0X02: Server端处理:"></a>0X02: Server端处理:</h3><ol>
-<li>接收如下IP帧<br><code>&#123;gatewayMac, remoteIp, remotePort&#125;, &#123;localMac, localIp, localPort&#125;</code></li>
-<li>目标 localMac &#x3D;&#x3D; Server localMac, 网卡接收(无需开启混杂模式), 否则丢弃</li>
-<li>目标 localIp &#x3D;&#x3D; Server localIp, TCP&#x2F;IP协议栈接收. <ol>
-<li>是否有可能IP不匹配? 如何处理? –&gt; 是否开启了ip_forwarding？ 具体参见</li>
-</ol>
-</li>
-<li>server端将TCP数据包转给对应应用层程序处理</li>
-</ol>
-<h3 id="0X03-Server-–回包–-gt-路由器"><a href="#0X03-Server-–回包–-gt-路由器" class="headerlink" title="0X03: Server –回包–&gt; 路由器:"></a>0X03: Server –回包–&gt; 路由器:</h3><ol>
-<li>Server处理完毕, 生成回包, 由于remoteIp不在网段:<br><code>&#123;localIp, localPort&#125;, &#123;remoteIp, remotePort&#125;</code></li>
-<li>Server发送ARP广播, 查找默认网关(server端事先配置好了网关的IP)的MAC地址 {gatewayIp} –&gt; {gatewayMac}</li>
-<li>Server封装二层帧, 发送给路由器:<br><code>&#123;localMac, localIp, localPort&#125;, &#123;gatewayMac, remoteIp, remotePort&#125;</code></li>
-</ol>
-<h3 id="0X04-路由器PAT处理回包"><a href="#0X04-路由器PAT处理回包" class="headerlink" title="0X04: 路由器PAT处理回包"></a>0X04: 路由器PAT处理回包</h3><p>后经查证，<mark> 针对回包，不会再过iptables</mark>，进行如下NAT反向查表了。<br>实际看了下，确实没有同时创建出如下反向的iptables规则。<br>而是<mark>由kernel模块conntrack进行维护完成{mac, ip, port}的替换。<mark></p>
-<ol>
-<li><del>收到二层帧:<br><code>&#123;localMac, localIp, localPort&#125;, &#123;gatewayMac, remoteIp, remotePort&#125;</code></del></li>
-<li><del>反向查找NAT表:<br><code>&#123;localIp, localPort&#125; --&gt; &#123;publicIp, publicPort&#125;</code></del></li>
-<li><del>修改三层包(替换掉localIp, localPort):<br><code>&#123;publicIp, publicPort&#125;, &#123;remoteIp, remotePort&#125;</code></del></li>
-<li><del>二层帧修改(修改掉localMac, gatewayMac):<br><code>&#123;publicMac, publicIp, publicPort&#125;, &#123;remoteMac, remoteIp, remotePort&#125;</code></del></li>
-</ol>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h3><p>路由器本身是有多个网卡的, 内网中是 {gatewayMac, gatewayIp}, 对应的公网是 {publicMac, publicIp}</p>
-<h1 id="SNAT总结"><a href="#SNAT总结" class="headerlink" title="SNAT总结"></a>SNAT总结</h1><p>&#x2F;&#x2F; TODO: 如何作用在postrouting阶段？</p>
-<h1 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h1><p>核心是路由器怎么创建NAT表? 使用iptables么? 怎么操作iptables能实现相同功能? </p>
-<h1 id="实践-amp-验证"><a href="#实践-amp-验证" class="headerlink" title="实践&amp;验证"></a>实践&amp;验证</h1><p>&#x2F;&#x2F; TODO: </p>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://blog.k8s.li/linux-net-and-iptables.html#%E5%85%B3%E7%B3%BB">Linux 网络和 iptables 运行原理</a></li>
-</ul>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>最近研究关于网络, 有一堆的概念, 一堆的坑要填, 这里先列出来: </p>
-<ul>
-<li>几张表, 作用是啥? 分别如何查看表项? <ul>
-<li>cam表</li>
-<li>arp缓存表</li>
-<li>nat表</li>
-<li>dns缓存表</li>
-</ul>
-</li>
-<li>几种设备: <ul>
-<li>三层交换机与二层交换机区别?</li>
-<li>Linux网桥与交换机有啥区别?</li>
-</ul>
-</li>
-<li>几个技术细节<ul>
-<li>网卡混杂模式? 啥时候下开启? 应用场景是啥?</li>
-<li>会不会收到MAC地址匹配, 但IP地址不匹配的IP包? 具体咋处理? 直接丢弃? 还是可以使用? </li>
-<li>ip forwarding 是啥? 为啥NAT模式下需要开启? 为啥不默认开启? </li>
-<li>ip隧道的原理是啥? </li>
-<li>lvs的几种工作原理再研究, 再实践验证</li>
-<li>组播的应用场景是啥? 很重要么?</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>iaas</tag>
-        <tag>network</tag>
-        <tag>cloud-computing</tag>
-        <tag>nat</tag>
-        <tag>pat</tag>
       </tags>
   </entry>
   <entry>
@@ -9339,97 +9341,6 @@ tcp        <span class="token number">0</span>      <span class="token number">0
       </tags>
   </entry>
   <entry>
-    <title>从GitHub CLI禁止用户名密码登录引发的思考与总结</title>
-    <url>//2022-07-23-github-token-login/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在本地CLI中push github代码时, 要求输入用户名密码, 但输入密码之后, 提示禁止使用密码登录.</p>
-<ul>
-<li>根据提示配置了半天SSH免登, 结果发现并不生效, push时仍然让输入账号名密码.</li>
-<li>后续根据提示, 在<a href="https://github.com/settings/tokens">GitHub页面新申请了Token</a>, 然后使用 用户名+Token 登录就可以了.<br>从而引发了诸多疑问与思考.</li>
-</ul>
-<h1 id="GitHub访问几种方式"><a href="#GitHub访问几种方式" class="headerlink" title="GitHub访问几种方式"></a>GitHub访问几种方式</h1><h2 id="方案1-SSH方式"><a href="#方案1-SSH方式" class="headerlink" title="方案1: SSH方式"></a>方案1: SSH方式</h2><h3 id="配置方式"><a href="#配置方式" class="headerlink" title="配置方式"></a>配置方式</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242155452.png"></p>
-<p>这种方式, 可以通过配置SSH免登即可.</p>
-<h3 id="如何支持不同Host采用不同SSHKey"><a href="#如何支持不同Host采用不同SSHKey" class="headerlink" title="如何支持不同Host采用不同SSHKey?"></a>如何支持不同Host采用不同SSHKey?</h3><p>如果在本地, 既需要配置gitee的SSH免登, 又需要配置github的SSH免登, 有需要配置其他Host的SSH免登, 怎么能让不同的Host使用不同的公私钥对?</p>
-<ul>
-<li>配置样例如下:</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> ~/.ssh/config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">-- 为 git@gitee.com:/xxx ssh地址配置
-Host gitee.com
-  HostName gitee.com
-  AddKeysToAgent <span class="token function">yes</span>
-  UseKeychain <span class="token function">yes</span>
-  IdentityFile ~/.ssh/id_rsa
-
--- 为 git@github.com:xxx/xxx ssh地址配置
-Host github.com
-  HostName github.com
-  AddKeysToAgent <span class="token function">yes</span>
-  UseKeychain <span class="token function">yes</span>
-  IdentityFile ~/.ssh/id_ed25519
-
--- 其他地址默认ssh地址配置
-Host *
-  AddKeysToAgent <span class="token function">yes</span>
-  UseKeychain <span class="token function">yes</span>
-  IdentityFile ~/.ssh/id_ed25519<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>验证是否配置正确:</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>davywalker@davywalkers-MacBook-Pro ~<span class="token punctuation">]</span>$ <span class="token function">ssh</span> git@github.com
-PTY allocation request failed on channel <span class="token number">1</span>
-Hi DavyJones2010<span class="token operator">!</span> You've successfully authenticated, but GitHub does not provide shell access.
-Connection to github.com closed.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<h2 id="方案2-HTTPS方式"><a href="#方案2-HTTPS方式" class="headerlink" title="方案2: HTTPS方式"></a>方案2: HTTPS方式</h2><h3 id="配置方式-1"><a href="#配置方式-1" class="headerlink" title="配置方式"></a>配置方式</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242155904.png"></p>
-<p>这种方式, 即背景中的案例, 必须通过 用户名+Token方式 登录, 即CLI中密码字段, 不要输入账号的密码, 而是输入Token</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242158549.png"></p>
-<p>搜索了下, <strong>从2021年8月13日开始, GitHub已经禁止了 用户名+密码方式 登录</strong></p>
-<blockquote>
-<p>From August 13, 2021, <br/><br>GitHub is no longer accepting account passwords when authenticating Git operations. <br/><br>You need to add a PAT (Personal Access Token) instead, <br/><br>and you can follow the below method to add a PAT on your system. <br/></p>
-</blockquote>
-<h3 id="GitHub密码存储位置"><a href="#GitHub密码存储位置" class="headerlink" title="GitHub密码存储位置"></a>GitHub密码存储位置</h3><p>在使用SourceTree的时候, 由于repo使用的也是HTTPS, 因此也提示输入 用户名+密码, 由于密码方式被禁用, 因此后续再push这个repo, 会一直报禁止密码登录错误.<br>但也<mark>找不到修改&#x2F;删除该密码的位置.</mark></p>
-<p>查了下资料, 不同的操作系统, 甚至同样操作系统的不同的版本, 存储方式都不同. 这里以 <a href="https://stackoverflow.com/questions/42584934/where-is-my-remote-git-repository-password-stored-on-the-local-machine">MacOS Monterey 12.3.1版本</a> 为例:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMacBook-Pro:~ davywalker$ <span class="token function">git</span> config credential.helper
-osxkeychain<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>可以看出来是由keychain进行的管理, 在Mac的 <code>Applications -&gt; Utilties -&gt; Keychain Access</code> </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207252101640.png"></p>
-<ul>
-<li>可以看到SourceTree应用保存的GitHub Repo密码.</li>
-<li>同时也可以看到IntelliJ IDEA保存的GitHub Repo密码, 通过显示repo密码发现, 这个密码字段其实就是签发给Intellij的 PAT(Personal Access Token)</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>由于<font color='red'>本地配置的remote repo是HTTPS方式, 因此通过配置SSH免登方式必然是无效的.</font> </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242202265.png"></p>
-<h1 id="登录安全思考"><a href="#登录安全思考" class="headerlink" title="登录安全思考"></a>登录安全思考</h1><h2 id="为啥禁止CLI-HTTPS方式通过用户名密码登录"><a href="#为啥禁止CLI-HTTPS方式通过用户名密码登录" class="headerlink" title="为啥禁止CLI HTTPS方式通过用户名密码登录?"></a>为啥禁止CLI HTTPS方式通过用户名密码登录?</h2><p>应该是担心密码泄露.<br>但会在哪种情况下泄露密码?</p>
-<ol>
-<li>存储过程: 为了防止每次push都重复输入, git client应该把用户名密码存储到本机某个位置了. </li>
-<li>传输过程: HTTPS中间人攻击, 发生概率就较小了<br>所以应该还是密码存储的风险.<br>通过页面登录, 有交互方式可以实现MFA, 但<mark>CLI方式无法进行交互从而实现MFA.</mark><br>这样从而减弱了安全性.</li>
-</ol>
-<h2 id="为啥通过用户名-Token方式登录-就支持呢"><a href="#为啥通过用户名-Token方式登录-就支持呢" class="headerlink" title="为啥通过用户名+Token方式登录, 就支持呢"></a>为啥通过用户名+Token方式登录, 就支持呢</h2><h3 id="几种类型的Token"><a href="#几种类型的Token" class="headerlink" title="几种类型的Token"></a>几种类型的Token</h3><ul>
-<li>密码: 时间维度是永久有效, 不可召回. 权限范围是无限的(除非子账号). 可能是有规律的.</li>
-<li>SecretKey: 时间维度通常是永久有效(但支持设定长期), 可以召回. 权限范围是有限的. 通常是UUID等无规律的.</li>
-<li>RefreshToken: 时间维度是较长维度(例如可以60天), 可以召回. 权限范围是有限的. 通常是UUID等无规律的.</li>
-<li>AccessToken: 时间维度是较短维度(例如4个小时), 可以召回(但一般不召回, 通过召回RefreshToken实现). 权限范围是优先的. 通常是UUID等无规律的.</li>
-</ul>
-<h3 id="几种登录方式"><a href="#几种登录方式" class="headerlink" title="几种登录方式"></a>几种登录方式</h3><ul>
-<li>方式1: 在网页端, 通常选择密码方式登录, 但需要开启MFA以加固安全. 以该方式作为安全性最强, 权限最大的方式. </li>
-<li>方式2: 在服务端SDK里, 通常选择SecretKey方式. SecretKey如果泄露, 可以通过方式1登录, 然后撤销SecretKey的有效性, 重新签发新的SecretKey. </li>
-<li>方式3: 在移动端SDK里, 通常会签发一个RefreshToken+AccessToken. 每次AccessToken过期之后, 重新通过RefreshToken调用API申请新的AccessToken.</li>
-</ul>
-<p>因此在GitHub CLI方式登录, 其实就是从方式1(但不带MFA)降级到方案2, 一是限制权限范围, 二是可以随时撤销. </p>
-<h2 id="其他解决方案"><a href="#其他解决方案" class="headerlink" title="其他解决方案"></a>其他解决方案</h2><ul>
-<li>也可以将remote repo切换成<a href="https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories#switching-remote-urls-from-https-to-ssh">SSH方式</a>, 并配置SSH免登实现.</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>distributed-system</tag>
-        <tag>login</tag>
-        <tag>token</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>由ZK的SID/ZXID与snowflake算法引发的ID生成算法探讨</title>
     <url>//2022-07-11-zk-uuid-gen/</url>
     <content><![CDATA[<h1 id="几种生成算法"><a href="#几种生成算法" class="headerlink" title="几种生成算法"></a>几种生成算法</h1><h2 id="zk里的sid生成算法"><a href="#zk里的sid生成算法" class="headerlink" title="zk里的sid生成算法"></a>zk里的sid生成算法</h2><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
@@ -9727,6 +9638,97 @@ zxid<span class="token operator">++</span><span class="token punctuation">;</spa
         <tag>uuid</tag>
         <tag>snowflake</tag>
         <tag>sid</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从GitHub CLI禁止用户名密码登录引发的思考与总结</title>
+    <url>//2022-07-23-github-token-login/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在本地CLI中push github代码时, 要求输入用户名密码, 但输入密码之后, 提示禁止使用密码登录.</p>
+<ul>
+<li>根据提示配置了半天SSH免登, 结果发现并不生效, push时仍然让输入账号名密码.</li>
+<li>后续根据提示, 在<a href="https://github.com/settings/tokens">GitHub页面新申请了Token</a>, 然后使用 用户名+Token 登录就可以了.<br>从而引发了诸多疑问与思考.</li>
+</ul>
+<h1 id="GitHub访问几种方式"><a href="#GitHub访问几种方式" class="headerlink" title="GitHub访问几种方式"></a>GitHub访问几种方式</h1><h2 id="方案1-SSH方式"><a href="#方案1-SSH方式" class="headerlink" title="方案1: SSH方式"></a>方案1: SSH方式</h2><h3 id="配置方式"><a href="#配置方式" class="headerlink" title="配置方式"></a>配置方式</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242155452.png"></p>
+<p>这种方式, 可以通过配置SSH免登即可.</p>
+<h3 id="如何支持不同Host采用不同SSHKey"><a href="#如何支持不同Host采用不同SSHKey" class="headerlink" title="如何支持不同Host采用不同SSHKey?"></a>如何支持不同Host采用不同SSHKey?</h3><p>如果在本地, 既需要配置gitee的SSH免登, 又需要配置github的SSH免登, 有需要配置其他Host的SSH免登, 怎么能让不同的Host使用不同的公私钥对?</p>
+<ul>
+<li>配置样例如下:</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> ~/.ssh/config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">-- 为 git@gitee.com:/xxx ssh地址配置
+Host gitee.com
+  HostName gitee.com
+  AddKeysToAgent <span class="token function">yes</span>
+  UseKeychain <span class="token function">yes</span>
+  IdentityFile ~/.ssh/id_rsa
+
+-- 为 git@github.com:xxx/xxx ssh地址配置
+Host github.com
+  HostName github.com
+  AddKeysToAgent <span class="token function">yes</span>
+  UseKeychain <span class="token function">yes</span>
+  IdentityFile ~/.ssh/id_ed25519
+
+-- 其他地址默认ssh地址配置
+Host *
+  AddKeysToAgent <span class="token function">yes</span>
+  UseKeychain <span class="token function">yes</span>
+  IdentityFile ~/.ssh/id_ed25519<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>验证是否配置正确:</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>davywalker@davywalkers-MacBook-Pro ~<span class="token punctuation">]</span>$ <span class="token function">ssh</span> git@github.com
+PTY allocation request failed on channel <span class="token number">1</span>
+Hi DavyJones2010<span class="token operator">!</span> You've successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="方案2-HTTPS方式"><a href="#方案2-HTTPS方式" class="headerlink" title="方案2: HTTPS方式"></a>方案2: HTTPS方式</h2><h3 id="配置方式-1"><a href="#配置方式-1" class="headerlink" title="配置方式"></a>配置方式</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242155904.png"></p>
+<p>这种方式, 即背景中的案例, 必须通过 用户名+Token方式 登录, 即CLI中密码字段, 不要输入账号的密码, 而是输入Token</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242158549.png"></p>
+<p>搜索了下, <strong>从2021年8月13日开始, GitHub已经禁止了 用户名+密码方式 登录</strong></p>
+<blockquote>
+<p>From August 13, 2021, <br/><br>GitHub is no longer accepting account passwords when authenticating Git operations. <br/><br>You need to add a PAT (Personal Access Token) instead, <br/><br>and you can follow the below method to add a PAT on your system. <br/></p>
+</blockquote>
+<h3 id="GitHub密码存储位置"><a href="#GitHub密码存储位置" class="headerlink" title="GitHub密码存储位置"></a>GitHub密码存储位置</h3><p>在使用SourceTree的时候, 由于repo使用的也是HTTPS, 因此也提示输入 用户名+密码, 由于密码方式被禁用, 因此后续再push这个repo, 会一直报禁止密码登录错误.<br>但也<mark>找不到修改&#x2F;删除该密码的位置.</mark></p>
+<p>查了下资料, 不同的操作系统, 甚至同样操作系统的不同的版本, 存储方式都不同. 这里以 <a href="https://stackoverflow.com/questions/42584934/where-is-my-remote-git-repository-password-stored-on-the-local-machine">MacOS Monterey 12.3.1版本</a> 为例:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMacBook-Pro:~ davywalker$ <span class="token function">git</span> config credential.helper
+osxkeychain<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>可以看出来是由keychain进行的管理, 在Mac的 <code>Applications -&gt; Utilties -&gt; Keychain Access</code> </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207252101640.png"></p>
+<ul>
+<li>可以看到SourceTree应用保存的GitHub Repo密码.</li>
+<li>同时也可以看到IntelliJ IDEA保存的GitHub Repo密码, 通过显示repo密码发现, 这个密码字段其实就是签发给Intellij的 PAT(Personal Access Token)</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>由于<font color='red'>本地配置的remote repo是HTTPS方式, 因此通过配置SSH免登方式必然是无效的.</font> </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207242202265.png"></p>
+<h1 id="登录安全思考"><a href="#登录安全思考" class="headerlink" title="登录安全思考"></a>登录安全思考</h1><h2 id="为啥禁止CLI-HTTPS方式通过用户名密码登录"><a href="#为啥禁止CLI-HTTPS方式通过用户名密码登录" class="headerlink" title="为啥禁止CLI HTTPS方式通过用户名密码登录?"></a>为啥禁止CLI HTTPS方式通过用户名密码登录?</h2><p>应该是担心密码泄露.<br>但会在哪种情况下泄露密码?</p>
+<ol>
+<li>存储过程: 为了防止每次push都重复输入, git client应该把用户名密码存储到本机某个位置了. </li>
+<li>传输过程: HTTPS中间人攻击, 发生概率就较小了<br>所以应该还是密码存储的风险.<br>通过页面登录, 有交互方式可以实现MFA, 但<mark>CLI方式无法进行交互从而实现MFA.</mark><br>这样从而减弱了安全性.</li>
+</ol>
+<h2 id="为啥通过用户名-Token方式登录-就支持呢"><a href="#为啥通过用户名-Token方式登录-就支持呢" class="headerlink" title="为啥通过用户名+Token方式登录, 就支持呢"></a>为啥通过用户名+Token方式登录, 就支持呢</h2><h3 id="几种类型的Token"><a href="#几种类型的Token" class="headerlink" title="几种类型的Token"></a>几种类型的Token</h3><ul>
+<li>密码: 时间维度是永久有效, 不可召回. 权限范围是无限的(除非子账号). 可能是有规律的.</li>
+<li>SecretKey: 时间维度通常是永久有效(但支持设定长期), 可以召回. 权限范围是有限的. 通常是UUID等无规律的.</li>
+<li>RefreshToken: 时间维度是较长维度(例如可以60天), 可以召回. 权限范围是有限的. 通常是UUID等无规律的.</li>
+<li>AccessToken: 时间维度是较短维度(例如4个小时), 可以召回(但一般不召回, 通过召回RefreshToken实现). 权限范围是优先的. 通常是UUID等无规律的.</li>
+</ul>
+<h3 id="几种登录方式"><a href="#几种登录方式" class="headerlink" title="几种登录方式"></a>几种登录方式</h3><ul>
+<li>方式1: 在网页端, 通常选择密码方式登录, 但需要开启MFA以加固安全. 以该方式作为安全性最强, 权限最大的方式. </li>
+<li>方式2: 在服务端SDK里, 通常选择SecretKey方式. SecretKey如果泄露, 可以通过方式1登录, 然后撤销SecretKey的有效性, 重新签发新的SecretKey. </li>
+<li>方式3: 在移动端SDK里, 通常会签发一个RefreshToken+AccessToken. 每次AccessToken过期之后, 重新通过RefreshToken调用API申请新的AccessToken.</li>
+</ul>
+<p>因此在GitHub CLI方式登录, 其实就是从方式1(但不带MFA)降级到方案2, 一是限制权限范围, 二是可以随时撤销. </p>
+<h2 id="其他解决方案"><a href="#其他解决方案" class="headerlink" title="其他解决方案"></a>其他解决方案</h2><ul>
+<li>也可以将remote repo切换成<a href="https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories#switching-remote-urls-from-https-to-ssh">SSH方式</a>, 并配置SSH免登实现.</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>distributed-system</tag>
+        <tag>login</tag>
+        <tag>token</tag>
       </tags>
   </entry>
   <entry>
@@ -10523,6 +10525,26 @@ Change: <span class="token number">2022</span>-06-26 <span class="token number">
         <tag>linux</tag>
         <tag>disk</tag>
         <tag>os</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s部署使用错误排查</title>
+    <url>//2022-11-01-k8s-trouble-shooting/</url>
+    <content><![CDATA[<p><a href="https://github.com/docker/for-mac/issues/1317">https://github.com/docker/for-mac/issues/1317</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Normal   Pulling    8s               kubelet            Pulling image <span class="token string">"docker.io/nginx:1.23"</span>
+Warning  Failed     8s               kubelet            Failed to pull image <span class="token string">"docker.io/nginx:1.23"</span><span class="token builtin class-name">:</span> rpc error: code <span class="token operator">=</span> Unknown desc <span class="token operator">=</span> Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving
+Warning  Failed     8s               kubelet            Error: ErrImagePull
+Normal   BackOff    6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Back-off pulling image <span class="token string">"docker.io/nginx:1.23"</span>
+Warning  Failed     6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Error: ImagePullBackOff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>kubectl</tag>
+        <tag>trouble-shooting</tag>
       </tags>
   </entry>
 </search>
