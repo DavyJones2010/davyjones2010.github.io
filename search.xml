@@ -4051,6 +4051,8 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的Thread Monitor方案</a></li>
 <li><a href="https://www.infoq.cn/article/xkJNoczVDHARLkKjvDOm">深度揭秘阿里云 Serverless Kubernetes</a></li>
 <li><a href="https://manybutfinite.com/post/what-does-an-idle-cpu-do/">site for curious people</a></li>
+<li><a href="https://plantegg.github.io/2021/07/19/CPU%E6%80%A7%E8%83%BD%E5%92%8CCACHE/">CPU性能和CACHE</a></li>
+<li><a href="https://www.realworldtech.com/transistor-count-flawed-metric/">Transistor Count: A Flawed Metric</a></li>
 </ul>
 <h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1><hr>
 <ul>
@@ -7684,89 +7686,6 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
-    <title>MySQL连接池重要参数配置原理研究</title>
-    <url>//2022-06-05-mysql-conn-params/</url>
-    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
-<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
-<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
-<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
-<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
-<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
-<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
-<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
-<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
-</ul>
-<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
-<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
-</ul>
-<ol>
-<li>即客户端从连接池中获取connection的最大等待时长</li>
-<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
-<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
-    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
-    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
-    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<ul>
-<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
-<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
-</ul>
-<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
-<li>initialSize: 100</li>
-<li>maxActive: 200</li>
-<li>minIdle: 100</li>
-<li>maxWait: 6000</li>
-</ul>
-<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
-<ul>
-<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
-<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
-</ul>
-<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
-<li>initialSize: 未配置</li>
-<li>maxActive: 300</li>
-<li>minIdle: 30</li>
-<li>maxWait: 60000</li>
-</ul>
-<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
-<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
-<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
-<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
-</ol>
-</li>
-<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
-<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
-<li>取决于物理机&#x2F;虚拟机的配置.</li>
-</ol>
-</li>
-<li>什么是MySQL的session? 与connection是啥关系?<ol>
-<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
-<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
-<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>mysql</tag>
-        <tag>database</tag>
-        <tag>connection-pool</tag>
-        <tag>druid</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringBoot Transactional AOP 实现原理研究</title>
     <url>//2022-06-06-spring-tx-annonation/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>书接上回 <a href="https://davyjones2010.github.io/2022-06-03-spring-annotation-on-interface/">SpringBoot基于Interface的Annotation在AOP中如何生效I</a>,<br>里边只是简略地说明了Spring中 @Transactional 只能在jdk proxy场景下生效, 在cglib场景下不生效, 但没有研究具体代码实现.<br>本文详细探究下.</p>
@@ -7890,6 +7809,89 @@ public synchronized void close() throws SQLException &#123;
         <tag>tools</tag>
         <tag>asciinema</tag>
         <tag>svg</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL连接池重要参数配置原理研究</title>
+    <url>//2022-06-05-mysql-conn-params/</url>
+    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
+<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
+<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
+<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
+<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
+<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
+<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
+<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
+<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
+</ul>
+<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
+<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
+</ul>
+<ol>
+<li>即客户端从连接池中获取connection的最大等待时长</li>
+<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
+<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
+    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
+    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
+    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<ul>
+<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
+<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
+</ul>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
+<li>initialSize: 100</li>
+<li>maxActive: 200</li>
+<li>minIdle: 100</li>
+<li>maxWait: 6000</li>
+</ul>
+<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
+<ul>
+<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
+<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
+</ul>
+<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
+<li>initialSize: 未配置</li>
+<li>maxActive: 300</li>
+<li>minIdle: 30</li>
+<li>maxWait: 60000</li>
+</ul>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
+<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
+<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
+<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
+</ol>
+</li>
+<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
+<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
+<li>取决于物理机&#x2F;虚拟机的配置.</li>
+</ol>
+</li>
+<li>什么是MySQL的session? 与connection是啥关系?<ol>
+<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
+<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
+<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>mysql</tag>
+        <tag>database</tag>
+        <tag>connection-pool</tag>
+        <tag>druid</tag>
       </tags>
   </entry>
   <entry>
