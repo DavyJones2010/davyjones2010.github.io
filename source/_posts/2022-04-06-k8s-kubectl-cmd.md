@@ -151,6 +151,11 @@ Events:  <none>
 
 ## 其他
 
+### 快速创建deploy
+```shell
+k run redis --image=reids
+```
+
 ### 获取deployments列表
 ```shell
 k get deploy/deployment/deployments -n <your-namesapce> -o wide
@@ -171,4 +176,14 @@ k get rs
 k describe rs
 ```
 
+### 查看cluster详细信息
+```shell
+k cluster-info
+k cluster-info dump
+```
 
+### 快捷修改deploy/pod等配置
+如下, 修改完成自动生效:
+```shell
+k edit deploy nginx
+```
