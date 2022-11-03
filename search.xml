@@ -6061,7 +6061,9 @@ Subsets:
 
 Events:  <span class="token operator">&lt;</span>none<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="获取deployments列表"><a href="#获取deployments列表" class="headerlink" title="获取deployments列表"></a>获取deployments列表</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k get deploy/deployment/deployments -n <span class="token operator">&lt;</span>your-namesapce<span class="token operator">></span> -o wide<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="快速创建deploy"><a href="#快速创建deploy" class="headerlink" title="快速创建deploy"></a>快速创建deploy</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k run redis --image<span class="token operator">=</span>reids<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="获取deployments列表"><a href="#获取deployments列表" class="headerlink" title="获取deployments列表"></a>获取deployments列表</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k get deploy/deployment/deployments -n <span class="token operator">&lt;</span>your-namesapce<span class="token operator">></span> -o wide<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="查看deployments详细信息"><a href="#查看deployments详细信息" class="headerlink" title="查看deployments详细信息"></a>查看deployments详细信息</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k describe deploy/deployment <span class="token operator">&lt;</span>your-deploy-name<span class="token operator">></span> -n <span class="token operator">&lt;</span>your-namesapce<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>包含如下关键信息</p>
@@ -6073,8 +6075,11 @@ Events:  <span class="token operator">&lt;</span>none<span class="token operator
 <h3 id="查看rs列表与详细信息"><a href="#查看rs列表与详细信息" class="headerlink" title="查看rs列表与详细信息"></a>查看rs列表与详细信息</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k get rs
 k describe rs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
+<h3 id="查看cluster详细信息"><a href="#查看cluster详细信息" class="headerlink" title="查看cluster详细信息"></a>查看cluster详细信息</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k cluster-info
+k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-]]></content>
+<h3 id="快捷修改deploy-x2F-pod等配置"><a href="#快捷修改deploy-x2F-pod等配置" class="headerlink" title="快捷修改deploy&#x2F;pod等配置"></a>快捷修改deploy&#x2F;pod等配置</h3><p>如下, 修改完成自动生效:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k edit deploy nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
       <tags>
         <tag>code-snippets</tag>
         <tag>kubectl</tag>
