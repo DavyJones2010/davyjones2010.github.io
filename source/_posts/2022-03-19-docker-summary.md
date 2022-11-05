@@ -151,34 +151,34 @@ RUN yum install -y gcc make cmake \
 
 容器命令
 ---
-* 使用镜像创建容器
-  * v: 挂载volume
+* 使用镜像创建容器, v: 挂载volume
 ```shell
 docker create -p 3000:3000 --name <the-container-id> <the-image-id>
 docker create -p 3000:3000 -v <the-volume-id>:<mount-point> --name <the-container-id> <the-image-id>
 ```
 
 * 查看运行的容器
-    * 查看运行中的容器
 
 ```shell
 docker ps
 CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS         PORTS                                       NAMES
 d2c016a1e2ab   getting-started          "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp   confident_bouman
 ```
-    * 查看所有容器(包括Stopped)
+
+* 查看所有容器(包括Stopped)
 
 ```shell
 docker ps -a
 docker container ls -a
 ```
-    * 查看容器Command完整列表
+
+* 查看容器Command完整列表
 
 ```shell
 docker ps --no-trunc
 ```
 
-    * 查看容器详情
+* 查看容器详情
 
 ```shell
 docker inspect <the-container-id>
@@ -231,6 +231,18 @@ docker commit <the-container-id> <the-image-id>
 docker commit <the-container-id> <your-docker-namespace>/<the-image-id>
 ```
 
+* 为什么不能在start容器时, 修改port binding?
+
+如上所述, 容器与Host的port binding, 只能在构建镜像时(create, run)指定, 为啥不能在容器stop之后, 重新start的时候修改呢?
+例如 nginx 的本地镜像, 创建时 -p 80:80 (即把容器的80端口映射到主机的80端口), 创建出nginx-1容器, 发现由于主机的80端口已经被占用, 因此容器启动失败. 将nginx-1容器停止之后, 想要修改成 -p 8080:80, 却发现docker start命令根本没法指定port binding.
+
+初学者估计都会有这样的疑问, 看[官方论坛也有无数人问过这个问题](https://forums.docker.com/t/solved-edit-container-details-ports-and-restarts-etc/64699). 这个就是虚拟机思维与容器思维的差异啦. 
+> 因为docker默认容器是无状态的. 因此启动的关键配置都已经固化在镜像里了. 假设可以在启动时修改port binding, 假设容器崩溃, 或者增加副本数量, 在新的host上使用镜像重新创建新的容器时, 该使用 -p 8080:80 还是该使用 -p 80:80 呢? 
+
+* **真的没办法在start时修改么?** 实际是可以的. 根据stackoverflow的建议, 有几个方案:
+1. hack方式: [ports and restarts](https://forums.docker.com/t/solved-edit-container-details-ports-and-restarts-etc/64699) 本质是修改该容器在host上的配置文件, 而不修改镜像. 但非常不建议这么做! 理由如上.
+2. 修改镜像方式: 把变更commit到镜像里(不推荐, 造成黑箱镜像), 或者重新构建新的镜像(推荐, 所有配置都明确在dockerfile里), 使用新镜像重建容器. 
+建议使用方式2.
 
 ## 镜像
 * 通过源文件Dockerfile构建镜像

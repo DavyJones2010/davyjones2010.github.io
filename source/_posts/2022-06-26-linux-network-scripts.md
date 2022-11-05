@@ -313,3 +313,22 @@ lo      lookback  unmanaged     --
 ```shell
 $ ping baidu.com
 ```
+
+## 如何查看TCP连接创建的时间
+在排查TCP连接异常时, 某个长连接经常莫名其妙断连, 需要判断连接的建立时间:
+1. 查看进程的TCP连接, 获取具体的本地端口号${port_no}
+```shell
+sudo lsof -p ${pid} -nP | fgrep TCP 
+```
+
+2. 查看本地端口对应的TCP连接详情, PID与FD
+```shell
+sudo lsof -i:${port_no}
+```
+
+3. 查看文件创建时间
+如下, 文件创建时间即TCP连接建立时间
+```shell
+sudo ls -l /proc/${pid}/fd/${fd}
+```
+
