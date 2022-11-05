@@ -1,5 +1,5 @@
 ---
-title: 十万个为什么--用晶体管数量衡量芯片的先进性
+title: 十万个为什么--用晶体管数量衡量芯片的先进性合理么?
 date: 2022-11-05 10:55:04
 categories: 十万个为什么
 tags: [semi-conductor, cpu, hardware, chip]
