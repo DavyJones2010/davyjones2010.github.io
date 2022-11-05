@@ -2,6 +2,492 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://davyjones2010.github.io/2022-07-02-dubbo-app-perf-tunning/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-07-03-random-snippets/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-07-06-state-machine-in-distributed-system/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-07-10-linux-network-http-proxy/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-07-11-zk-uuid-gen/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-07-23-github-token-login/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-08-07-jenkins-cloud-plugin-dev-summary/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-08-07-software-based-router/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-08-08-dns-deep-dive/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-08-09-nginx-scripts/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-08-13-computer-diy/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-08-30-disk-partition/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-11-01-k8s-trouble-shooting/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-11-02-k8s-play-with-minikube/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-11-05-transistor-cnt-a-flawed-metric/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/aboutme.html</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/categories/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-09-08-kube-scheduler-filter/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-09-08-kube-scheduler-overview/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-09-08-kube-scheduler-queue/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-09-08-physical-psychological/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-09-08-random-snippets/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-09-08-wangyangming/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-10-08-simple-fork-join-framework/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-10-17-weekend-summary/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-10-23-weekend-summary/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-10-30-weekend-summary/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-03-java-mdc-put-npe/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-06-mac-init/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-06-resolution/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-08-mysql-unique-index-not-working/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-13-GFS-thesis/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-15-java-lambda-list-to-map/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-18-Linux-Basic/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-18-gpu-heat-dissipation/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-18-throughput/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-22-git/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-22-linux-scripts/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-22-random-snippets/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-12-Dune/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-17-java-nio/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-17-tcp-time-wait/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-17-zk-client/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-31-booklist-for-2022/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-31-summary-for-2021/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-01-03-netty/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-01-31-jetty-monitor-oom-bug/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-02-01-maven-deps-failure/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-02-13-maven-multi-module-test/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-02-22-java-minor-bugs/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-02-28-aliyun-ram-openapi/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-03-03-springboot-mybatis-xml/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-03-14-http-client-netty/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/2022-03-18-docker-summary/</loc>
     
     <lastmod>2022-11-05</lastmod>
@@ -407,168 +893,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2022-07-02-dubbo-app-perf-tunning/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-07-03-random-snippets/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-07-06-state-machine-in-distributed-system/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-07-10-linux-network-http-proxy/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-07-11-zk-uuid-gen/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-07-23-github-token-login/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-08-07-jenkins-cloud-plugin-dev-summary/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-08-07-software-based-router/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-08-08-dns-deep-dive/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-08-09-nginx-scripts/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-08-13-computer-diy/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-08-30-disk-partition/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-11-01-k8s-trouble-shooting/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-11-02-k8s-play-with-minikube/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-11-05-transistor-cnt-a-flawed-metric/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/aboutme.html</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/categories/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/2020-12-31-booklist-for-2021/</loc>
     
     <lastmod>2022-11-05</lastmod>
@@ -669,330 +993,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/2021-09-08-kube-scheduler-cache/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-09-08-kube-scheduler-filter/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-09-08-kube-scheduler-overview/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-09-08-kube-scheduler-queue/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-09-08-physical-psychological/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-09-08-random-snippets/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-09-08-wangyangming/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-10-08-simple-fork-join-framework/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-10-17-weekend-summary/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-10-23-weekend-summary/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-10-30-weekend-summary/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-03-java-mdc-put-npe/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-06-mac-init/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-06-resolution/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-08-mysql-unique-index-not-working/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-13-GFS-thesis/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-15-java-lambda-list-to-map/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-18-Linux-Basic/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-18-gpu-heat-dissipation/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-18-throughput/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-22-git/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-22-linux-scripts/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-22-random-snippets/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-12-Dune/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-17-java-nio/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-17-tcp-time-wait/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-17-zk-client/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-31-booklist-for-2022/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-31-summary-for-2021/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-01-03-netty/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-01-31-jetty-monitor-oom-bug/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-02-01-maven-deps-failure/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-02-13-maven-multi-module-test/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-02-22-java-minor-bugs/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-02-28-aliyun-ram-openapi/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-03-03-springboot-mybatis-xml/</loc>
-    
-    <lastmod>2022-11-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-03-14-http-client-netty/</loc>
     
     <lastmod>2022-11-05</lastmod>
     
