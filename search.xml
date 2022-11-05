@@ -5179,31 +5179,31 @@ RUN yum <span class="token function">install</span> -y gcc <span class="token fu
 </ul>
 <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><h2 id="容器生命周期"><a href="#容器生命周期" class="headerlink" title="容器生命周期"></a>容器生命周期</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206122132089.png"></p>
 <h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><ul>
-<li><p>使用镜像创建容器</p>
-<ul>
-<li>v: 挂载volume<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> create -p <span class="token number">3000</span>:3000 --name <span class="token operator">&lt;</span>the-container-id<span class="token operator">></span> <span class="token operator">&lt;</span>the-image-id<span class="token operator">></span>
-<span class="token function">docker</span> create -p <span class="token number">3000</span>:3000 -v <span class="token operator">&lt;</span>the-volume-id<span class="token operator">></span>:<span class="token operator">&lt;</span>mount-point<span class="token operator">></span> --name <span class="token operator">&lt;</span>the-container-id<span class="token operator">></span> <span class="token operator">&lt;</span>the-image-id<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-</ul>
+<li><p>使用镜像创建容器, v: 挂载volume</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> create -p <span class="token number">3000</span>:3000 --name <span class="token operator">&lt;</span>the-container-id<span class="token operator">></span> <span class="token operator">&lt;</span>the-image-id<span class="token operator">></span>
+<span class="token function">docker</span> create -p <span class="token number">3000</span>:3000 -v <span class="token operator">&lt;</span>the-volume-id<span class="token operator">></span>:<span class="token operator">&lt;</span>mount-point<span class="token operator">></span> --name <span class="token operator">&lt;</span>the-container-id<span class="token operator">></span> <span class="token operator">&lt;</span>the-image-id<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 <li><p>查看运行的容器</p>
-<ul>
-<li>查看运行中的容器</li>
-</ul>
 </li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span>
 CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS         PORTS                                       NAMES
 d2c016a1e2ab   getting-started          <span class="token string">"docker-entrypoint.s…"</span>   <span class="token number">2</span> minutes ago   Up <span class="token number">2</span> minutes   <span class="token number">0.0</span>.0.0:3000-<span class="token operator">></span><span class="token number">3000</span>/tcp, :::3000-<span class="token operator">></span><span class="token number">3000</span>/tcp   confident_bouman<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<pre><code>* 查看所有容器(包括Stopped)
-</code></pre>
+
+<ul>
+<li>查看所有容器(包括Stopped)</li>
+</ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> -a
 <span class="token function">docker</span> container <span class="token function">ls</span> -a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre><code>* 查看容器Command完整列表
-</code></pre>
+
+<ul>
+<li>查看容器Command完整列表</li>
+</ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> --no-trunc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre><code>* 查看容器详情
-</code></pre>
+<ul>
+<li>查看容器详情</li>
+</ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> inspect <span class="token operator">&lt;</span>the-container-id<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
@@ -5251,7 +5251,21 @@ d2c016a1e2ab   getting-started          <span class="token string">"docker-entry
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> commit <span class="token operator">&lt;</span>the-container-id<span class="token operator">></span> <span class="token operator">&lt;</span>the-image-id<span class="token operator">></span>
 <span class="token function">docker</span> commit <span class="token operator">&lt;</span>the-container-id<span class="token operator">></span> <span class="token operator">&lt;</span>your-docker-namespace<span class="token operator">></span>/<span class="token operator">&lt;</span>the-image-id<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-
+<ul>
+<li>为什么不能在start容器时, 修改port binding?</li>
+</ul>
+<p>如上所述, 容器与Host的port binding, 只能在构建镜像时(create, run)指定, 为啥不能在容器stop之后, 重新start的时候修改呢?<br>例如 nginx 的本地镜像, 创建时 -p 80:80 (即把容器的80端口映射到主机的80端口), 创建出nginx-1容器, 发现由于主机的80端口已经被占用, 因此容器启动失败. 将nginx-1容器停止之后, 想要修改成 -p 8080:80, 却发现docker start命令根本没法指定port binding.</p>
+<p>初学者估计都会有这样的疑问, 看<a href="https://forums.docker.com/t/solved-edit-container-details-ports-and-restarts-etc/64699">官方论坛也有无数人问过这个问题</a>. 这个就是虚拟机思维与容器思维的差异啦. </p>
+<blockquote>
+<p>因为docker默认容器是无状态的. 因此启动的关键配置都已经固化在镜像里了. 假设可以在启动时修改port binding, 假设容器崩溃, 或者增加副本数量, 在新的host上使用镜像重新创建新的容器时, 该使用 -p 8080:80 还是该使用 -p 80:80 呢? </p>
+</blockquote>
+<ul>
+<li><strong>真的没办法在start时修改么?</strong> 实际是可以的. 根据stackoverflow的建议, 有几个方案:</li>
+</ul>
+<ol>
+<li>hack方式: <a href="https://forums.docker.com/t/solved-edit-container-details-ports-and-restarts-etc/64699">ports and restarts</a> 本质是修改该容器在host上的配置文件, 而不修改镜像. 但非常不建议这么做! 理由如上.</li>
+<li>修改镜像方式: 把变更commit到镜像里(不推荐, 造成黑箱镜像), 或者重新构建新的镜像(推荐, 所有配置都明确在dockerfile里), 使用新镜像重建容器.<br>建议使用方式2.</li>
+</ol>
 <h2 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h2><ul>
 <li><p>通过源文件Dockerfile构建镜像</p>
 <ul>
@@ -8554,6 +8568,17 @@ DEVICE  TYPE      STATE         CONNECTION
 ens33   ethernet  connected     ens33
 lo      lookback  unmanaged     --<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li>验证网络状态: 成功<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ping</span> baidu.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<h2 id="如何查看TCP连接创建的时间"><a href="#如何查看TCP连接创建的时间" class="headerlink" title="如何查看TCP连接创建的时间"></a>如何查看TCP连接创建的时间</h2><p>在排查TCP连接异常时, 某个长连接经常莫名其妙断连, 需要判断连接的建立时间:</p>
+<ol>
+<li><p>查看进程的TCP连接, 获取具体的本地端口号${port_no}</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">lsof</span> -p <span class="token variable">$&#123;pid&#125;</span> -nP <span class="token operator">|</span> <span class="token function">fgrep</span> TCP <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>查看本地端口对应的TCP连接详情, PID与FD</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">lsof</span> -i:<span class="token variable">$&#123;port_no&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>查看文件创建时间<br>如下, 文件创建时间即TCP连接建立时间</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ls</span> -l /proc/<span class="token variable">$&#123;pid&#125;</span>/fd/<span class="token variable">$&#123;fd&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
 ]]></content>
       <tags>

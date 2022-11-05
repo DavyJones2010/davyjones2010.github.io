@@ -31,7 +31,7 @@
 <meta property="og:description" content="ARP协议查看ARP缓存表davywalker@davywalker-ThinkPad-X1-Carbon-4th:~&#x2F;PlayGround&#x2F;nat$ arp -v Address                  HWtype  HWaddress           Flags Mask            Iface _gateway                 ether   c0:">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-05T09:46:04.502Z">
+<meta property="article:modified_time" content="2022-11-05T14:17:56.743Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="code-snippets">
 <meta property="article:tag" content="linux">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ARP%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">ARP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BARP%E7%BC%93%E5%AD%98%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">查看ARP缓存表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E7%BD%91%E5%8D%A1%E7%9A%84arp%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.</span> <span class="nav-text">查看某个网卡的arp缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.3.</span> <span class="nav-text">参数详解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5"><span class="nav-number">2.</span> <span class="nav-text">网桥</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E6%A1%A5"><span class="nav-number">2.1.</span> <span class="nav-text">查看网桥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bveth-pair"><span class="nav-number">2.2.</span> <span class="nav-text">查看veth pair</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CAM%E8%A1%A8%EF%BC%88MAC-Learning-Table%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">CAM表（MAC Learning Table）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-number">4.</span> <span class="nav-text">路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%B7%AF%E7%94%B1%E8%A1%A8"><span class="nav-number">4.1.</span> <span class="nav-text">查看路由表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NAT-x2F-iptables"><span class="nav-number">5.</span> <span class="nav-text">NAT&#x2F;iptables</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS"><span class="nav-number">6.</span> <span class="nav-text">DNS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.</span> <span class="nav-text">DNS缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E4%B8%8A%E6%9F%A5%E7%9C%8BDNS%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.1.</span> <span class="nav-text">Linux上查看DNS缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2016%E5%B9%B4%E5%89%8D"><span class="nav-number">6.1.1.1.</span> <span class="nav-text">2016年前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2016%E5%B9%B4%E5%90%8E"><span class="nav-number">6.1.1.2.</span> <span class="nav-text">2016年后</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome%E4%B8%8A%E6%9F%A5%E7%9C%8BDNS%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.2.</span> <span class="nav-text">Chrome上查看DNS缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Firefox%E4%B8%8A%E6%9F%A5%E7%9C%8BDNS%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.3.</span> <span class="nav-text">Firefox上查看DNS缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%8E%92%E6%9F%A5"><span class="nav-number">6.2.</span> <span class="nav-text">DNS域名解析排查</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%B0%E6%9F%90%E4%B8%AAIP%E7%9A%84%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF"><span class="nav-number">7.</span> <span class="nav-text">查看到某个IP的路由信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">8.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E4%B8%8A%EF%BC%8C%E5%A4%9A%E4%B8%AA%E7%BD%91%E5%8D%A1%EF%BC%8C%E8%AF%B7%E6%B1%82%E5%88%B0%E6%9F%90%E4%B8%AA%E7%BD%91%E5%8D%A1%E4%B9%8B%E5%90%8E%EF%BC%8C%E6%98%AF%E5%A6%82%E4%BD%95%E8%BD%AC%E5%8F%91%E5%88%B0%E5%85%B6%E4%BB%96%E7%BD%91%E5%8D%A1%E7%9A%84%EF%BC%9F"><span class="nav-number">8.1.</span> <span class="nav-text">路由器上，多个网卡，请求到某个网卡之后，是如何转发到其他网卡的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%BD%91%E5%8D%A1%E7%8A%B6%E6%80%81-%E5%B9%B6%E5%B0%86%E6%9F%90%E4%B8%AA%E7%BD%91%E5%8D%A1%E8%AE%BE%E7%BD%AE%E4%B8%BA%E9%BB%98%E8%AE%A4%E5%90%AF%E5%8A%A8"><span class="nav-number">8.2.</span> <span class="nav-text">centos如何查看网卡状态, 并将某个网卡设置为默认启动</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ARP%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">ARP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BARP%E7%BC%93%E5%AD%98%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">查看ARP缓存表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E7%BD%91%E5%8D%A1%E7%9A%84arp%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.</span> <span class="nav-text">查看某个网卡的arp缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.3.</span> <span class="nav-text">参数详解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5"><span class="nav-number">2.</span> <span class="nav-text">网桥</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E6%A1%A5"><span class="nav-number">2.1.</span> <span class="nav-text">查看网桥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bveth-pair"><span class="nav-number">2.2.</span> <span class="nav-text">查看veth pair</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CAM%E8%A1%A8%EF%BC%88MAC-Learning-Table%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">CAM表（MAC Learning Table）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-number">4.</span> <span class="nav-text">路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%B7%AF%E7%94%B1%E8%A1%A8"><span class="nav-number">4.1.</span> <span class="nav-text">查看路由表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NAT-x2F-iptables"><span class="nav-number">5.</span> <span class="nav-text">NAT&#x2F;iptables</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS"><span class="nav-number">6.</span> <span class="nav-text">DNS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.</span> <span class="nav-text">DNS缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E4%B8%8A%E6%9F%A5%E7%9C%8BDNS%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.1.</span> <span class="nav-text">Linux上查看DNS缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2016%E5%B9%B4%E5%89%8D"><span class="nav-number">6.1.1.1.</span> <span class="nav-text">2016年前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2016%E5%B9%B4%E5%90%8E"><span class="nav-number">6.1.1.2.</span> <span class="nav-text">2016年后</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome%E4%B8%8A%E6%9F%A5%E7%9C%8BDNS%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.2.</span> <span class="nav-text">Chrome上查看DNS缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Firefox%E4%B8%8A%E6%9F%A5%E7%9C%8BDNS%E7%BC%93%E5%AD%98"><span class="nav-number">6.1.3.</span> <span class="nav-text">Firefox上查看DNS缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%8E%92%E6%9F%A5"><span class="nav-number">6.2.</span> <span class="nav-text">DNS域名解析排查</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%B0%E6%9F%90%E4%B8%AAIP%E7%9A%84%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF"><span class="nav-number">7.</span> <span class="nav-text">查看到某个IP的路由信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">8.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E4%B8%8A%EF%BC%8C%E5%A4%9A%E4%B8%AA%E7%BD%91%E5%8D%A1%EF%BC%8C%E8%AF%B7%E6%B1%82%E5%88%B0%E6%9F%90%E4%B8%AA%E7%BD%91%E5%8D%A1%E4%B9%8B%E5%90%8E%EF%BC%8C%E6%98%AF%E5%A6%82%E4%BD%95%E8%BD%AC%E5%8F%91%E5%88%B0%E5%85%B6%E4%BB%96%E7%BD%91%E5%8D%A1%E7%9A%84%EF%BC%9F"><span class="nav-number">8.1.</span> <span class="nav-text">路由器上，多个网卡，请求到某个网卡之后，是如何转发到其他网卡的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%BD%91%E5%8D%A1%E7%8A%B6%E6%80%81-%E5%B9%B6%E5%B0%86%E6%9F%90%E4%B8%AA%E7%BD%91%E5%8D%A1%E8%AE%BE%E7%BD%AE%E4%B8%BA%E9%BB%98%E8%AE%A4%E5%90%AF%E5%8A%A8"><span class="nav-number">8.2.</span> <span class="nav-text">centos如何查看网卡状态, 并将某个网卡设置为默认启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8BTCP%E8%BF%9E%E6%8E%A5%E5%88%9B%E5%BB%BA%E7%9A%84%E6%97%B6%E9%97%B4"><span class="nav-number">8.3.</span> <span class="nav-text">如何查看TCP连接创建的时间</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -258,7 +258,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-05 17:46:04" itemprop="dateModified" datetime="2022-11-05T17:46:04+08:00">2022-11-05</time>
+      <time title="修改时间：2022-11-05 22:17:56" itemprop="dateModified" datetime="2022-11-05T22:17:56+08:00">2022-11-05</time>
     </span>
 
   
@@ -268,14 +268,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>8.1k</span>
+      <span>8.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -499,6 +499,17 @@ ens33   ethernet  connected     ens33
 lo      lookback  unmanaged     --<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li>验证网络状态: 成功<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ping</span> baidu.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
+<h2 id="如何查看TCP连接创建的时间"><a href="#如何查看TCP连接创建的时间" class="headerlink" title="如何查看TCP连接创建的时间"></a>如何查看TCP连接创建的时间</h2><p>在排查TCP连接异常时, 某个长连接经常莫名其妙断连, 需要判断连接的建立时间:</p>
+<ol>
+<li><p>查看进程的TCP连接, 获取具体的本地端口号${port_no}</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">lsof</span> -p <span class="token variable">$&#123;pid&#125;</span> -nP <span class="token operator">|</span> <span class="token function">fgrep</span> TCP <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>查看本地端口对应的TCP连接详情, PID与FD</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">lsof</span> -i:<span class="token variable">$&#123;port_no&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>查看文件创建时间<br>如下, 文件创建时间即TCP连接建立时间</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ls</span> -l /proc/<span class="token variable">$&#123;pid&#125;</span>/fd/<span class="token variable">$&#123;fd&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
 
     </div>
 
@@ -561,7 +572,7 @@ lo      lookback  unmanaged     --<span aria-hidden="true" class="line-numbers-r
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">250k</span>
+    <span title="站点总字数">251k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
