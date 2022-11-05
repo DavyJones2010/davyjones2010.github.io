@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">167</span>
+        <span class="site-state-item-count">171</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -210,6 +210,137 @@
   
   
 
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-02-13-maven-multi-module-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-02-13-maven-multi-module-test/" class="post-title-link" itemprop="url">SpringBoot+Maven多模块项目测试最佳实践</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-14 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-14T00:00:00+08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中为了整体代码的高内聚与可移植性, 按照maven-module的方式对代码进行了拆分, 样例如下: </p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span> root<span class="token punctuation">-</span>module
+  <span class="token punctuation">-</span> shared<span class="token punctuation">-</span>common<span class="token punctuation">-</span>module
+  <span class="token punctuation">-</span> middleware<span class="token punctuation">-</span>module
+    <span class="token punctuation">-</span> cache<span class="token punctuation">-</span>module
+      <span class="token punctuation">-</span> cache<span class="token punctuation">-</span>api
+      <span class="token punctuation">-</span> cache<span class="token punctuation">-</span>local<span class="token punctuation">-</span>impl
+      <span class="token punctuation">-</span> cache<span class="token punctuation">-</span>redis<span class="token punctuation">-</span>impl
+    <span class="token punctuation">-</span> persistence<span class="token punctuation">-</span>module
+      <span class="token punctuation">-</span> persistence<span class="token punctuation">-</span>api
+      <span class="token punctuation">-</span> persistence<span class="token punctuation">-</span>mysql
+      <span class="token punctuation">-</span> persistence<span class="token punctuation">-</span>oracle
+  <span class="token punctuation">-</span> biz<span class="token punctuation">-</span>module
+    <span class="token punctuation">-</span> controller<span class="token punctuation">-</span>module
+    <span class="token punctuation">-</span> service<span class="token punctuation">-</span>module<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="基本规范"><a href="#基本规范" class="headerlink" title="基本规范"></a>基本规范</h1><h2 id="root-module-pom文件有两个作用"><a href="#root-module-pom文件有两个作用" class="headerlink" title="root-module pom文件有两个作用:"></a>root-module pom文件有两个作用:</h2><ol>
+<li>作为parent module, 管理各个子模块, 便于resolve自身各个模块之间的依赖关系. 如下, biz_module依赖(GAV)middleware-module + shared-common-module; middleware-module依赖(GAV)shared-common-module:</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>modules</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span><span class="token punctuation">></span></span>shared-common-module<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>module</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span><span class="token punctuation">></span></span>middleware-module<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>module</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span><span class="token punctuation">></span></span>biz-module<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>module</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>modules</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="2">
+<li>作为parent pom, 统一管理各个子模块的Maven依赖, 同时默认引入通用的maven依赖(例如apache-commons, guava等), 而无需子模块重复引入.</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencyManagement</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencyManagement</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="子模块之间依赖关系"><a href="#子模块之间依赖关系" class="headerlink" title="子模块之间依赖关系"></a>子模块之间依赖关系</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-02-13-maven-multi-module-test/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-02-01-maven-deps-failure/">
 
@@ -247,7 +378,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -369,7 +500,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -467,7 +598,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -580,7 +711,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -599,7 +730,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>951</span>
+      <span>991</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -653,6 +784,7 @@
 <li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/35026475/">山月记</a> </li>
 <li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/35669245/">乾隆: 政治, 爱情与性格</a> -20221029 done</li>
 <li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/26768309/">查令十字街84号</a> -20221031 done</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a></li>
 </ul>
 <h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
@@ -738,7 +870,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -880,7 +1012,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1011,7 +1143,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1120,7 +1252,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1266,7 +1398,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1383,7 +1515,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1495,7 +1627,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1607,7 +1739,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1706,7 +1838,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1804,7 +1936,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1937,7 +2069,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2121,7 +2253,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2261,7 +2393,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2398,7 +2530,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2535,7 +2667,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2655,7 +2787,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2770,7 +2902,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2968,7 +3100,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3107,7 +3239,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3218,7 +3350,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3333,7 +3465,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3604,7 +3736,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3708,7 +3840,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3877,7 +4009,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -4004,7 +4136,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -4261,7 +4393,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -4419,7 +4551,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -4536,114 +4668,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-physical-psychological/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-09-08-physical-psychological/" class="post-title-link" itemprop="url">精神训练与身体训练</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>291</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
-</blockquote>
-<blockquote>
-<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
-</blockquote>
-<blockquote>
-<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
-</blockquote>
-<p>所以要注意加强锻炼身体哦~</p>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-09-08-physical-psychological/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4669,14 +4693,14 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">247k</span>
+    <span title="站点总字数">250k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:45</span>
+    <span title="站点阅读时长">3:48</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

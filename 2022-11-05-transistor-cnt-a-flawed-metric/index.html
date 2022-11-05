@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="0x00: Intro最近在看 The Basic Principles of Computers for Everyone 这本书, 从   与非门(NAND) 开始, 加上非门, 构建与门 4个NAND构建一位带开关的存储单元(M);  8个存储单元(M)构建1Byte的存储(B) 8个与门构建一个8位的Enabler(E) B+E 构建一个 8位 寄存器(R) + 总线 8个与门+3个非门构">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="十万个为什么--用晶体管数量衡量芯片的先进性">
+<meta property="og:url" content="https://davyjones2010.github.io/2022-11-05-transistor-cnt-a-flawed-metric/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="0x00: Intro最近在看 The Basic Principles of Computers for Everyone 这本书, 从   与非门(NAND) 开始, 加上非门, 构建与门 4个NAND构建一位带开关的存储单元(M);  8个存储单元(M)构建1Byte的存储(B) 8个与门构建一个8位的Enabler(E) B+E 构建一个 8位 寄存器(R) + 总线 8个与门+3个非门构">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.realworldtech.com/wp-content/uploads/2020/05/Table1.png?x97168">
+<meta property="article:published_time" content="2022-11-05T02:55:04.000Z">
+<meta property="article:modified_time" content="2022-11-05T08:51:49.614Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="semi-conductor">
+<meta property="article:tag" content="cpu">
+<meta property="article:tag" content="hardware">
+<meta property="article:tag" content="chip">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.realworldtech.com/wp-content/uploads/2020/05/Table1.png?x97168">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2022-11-05-transistor-cnt-a-flawed-metric/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-11-05-transistor-cnt-a-flawed-metric/","path":"/2022-11-05-transistor-cnt-a-flawed-metric/","title":"十万个为什么--用晶体管数量衡量芯片的先进性"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>十万个为什么--用晶体管数量衡量芯片的先进性 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme.html" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-Intro"><span class="nav-number">1.</span> <span class="nav-text">0x00: Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-%E6%99%B6%E4%BD%93%E7%AE%A1%E6%95%B0%E9%87%8F%E6%98%AF%E6%95%B0%E4%B8%8D%E5%87%86%E7%9A%84"><span class="nav-number">2.</span> <span class="nav-text">0x01: 晶体管数量是数不准的!!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%8A%AF%E7%89%87-%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87%E6%98%AF%E6%9C%89%E5%B7%AE%E5%BC%82%E7%9A%84-%E4%B8%8D%E4%BC%9A%E4%B8%80%E5%91%B3%E8%BF%BD%E6%B1%82%E9%AB%98%E5%AF%86%E5%BA%A6"><span class="nav-number">3.</span> <span class="nav-text">0x02: 不同类型的芯片, 设计目标是有差异的, 不会一味追求高密度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-%E8%8A%AF%E7%89%87%E4%B8%AD%E4%B8%8D%E5%90%8C%E5%8A%9F%E8%83%BD%E5%8C%BA%E5%9F%9F%E5%AF%86%E5%BA%A6%E4%B8%8D%E5%90%8C"><span class="nav-number">4.</span> <span class="nav-text">0x03. 芯片中不同功能区域密度不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-%E5%AE%9E%E9%99%85%E6%9C%89%E5%BE%88%E5%A4%9A%E6%97%A0%E6%95%88%E7%9A%84%E6%99%B6%E4%BD%93%E7%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">0x04: 实际有很多无效的晶体管</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x05-%E6%99%B6%E4%BD%93%E7%AE%A1%E4%B8%8D%E8%B4%B5%E5%A4%9A%E8%80%8C%E8%B4%B5%E5%9C%A8%E7%B2%BE"><span class="nav-number">6.</span> <span class="nav-text">0x05. 晶体管不贵多而贵在精</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x06-%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">0x06: 总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0XFF-%E5%85%B6%E4%BB%96%E4%B8%80%E4%BA%9B%E5%A5%BD%E7%8E%A9%E5%84%BF%E7%9A%84%E7%A7%91%E6%99%AE"><span class="nav-number">8.</span> <span class="nav-text">0XFF:其他一些好玩儿的科普</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">171</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-11-05-transistor-cnt-a-flawed-metric/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="十万个为什么--用晶体管数量衡量芯片的先进性 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          十万个为什么--用晶体管数量衡量芯片的先进性
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-05 10:55:04 / 修改时间：16:51:49" itemprop="dateCreated datePublished" datetime="2022-11-05T10:55:04+08:00">2022-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88/" itemprop="url" rel="index"><span itemprop="name">十万个为什么</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="0x00-Intro"><a href="#0x00-Intro" class="headerlink" title="0x00: Intro"></a>0x00: Intro</h1><p>最近在看 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a> 这本书, 从 </p>
+<ul>
+<li>与非门(NAND) 开始, 加上非门, 构建与门</li>
+<li>4个NAND构建一位带开关的存储单元(M); </li>
+<li>8个存储单元(M)构建1Byte的存储(B)</li>
+<li>8个与门构建一个8位的Enabler(E)</li>
+<li>B+E 构建一个 8位 <strong>寄存器(R)</strong> + 总线</li>
+<li>8个与门+3个非门构建一个 <strong>3X8译码器(Decoder)</strong></li>
+<li>1个8位寄存器&amp;2个4X16译码器(用于寻址) + 256个1位寄存器(R)&amp;3个与门(用于存数) 构建 256位 的RAM<br>等等, 非常深入浅出. 后边会把读书笔记补充上来.</li>
+</ul>
+<p>忍不住思维跳跃了下, 构建一个256位的RAM至少需要((4*8+8) + (4+16) + (4+1)*256 + 3 &#x3D; 1343)个门(4个MOS管构建出一个与非门, 但当前主流的都是FinFET, 场效应晶体管). 虽然是RAM的实现, 与实际CPU上L1&#x2F;L2&#x2F;L3Cache的实现方式不同, 但也能基本说明点儿问题, 就是我们构建CPU&#x2F;DRAM等都需要庞大数量的晶体管.</p>
+<p>想起苹果2021发布的M1 Max芯片, <a target="_blank" rel="noopener" href="https://www.apple.com/hk/en/newsroom/2021/10/introducing-m1-pro-and-m1-max-the-most-powerful-chips-apple-has-ever-built/">晶体管数量是570亿, 57 billion transistors</a>, 例如自己在用的<code>Intel Xeon E5 2660 V3</code>, 也有2.6 billion个transistors. 这种庞大的数字, 总是让人很震撼. 也无外乎厂商会用这个数字来吹嘘, 来作为重要指标, 说明自己的CPU&#x2F;芯片有多复杂多先进. 毕竟芯片面积总共就那么大, 10倍晶体管数量的提升, 基本就只能提升密度了, 也就是得靠先进制程等. </p>
+<p>但我们技术人都要有批判性思维, 仔细再想下, CPU中<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31422201">几乎一半的面积都是L3 Cache</a>, Cache的电路设计并不复杂, 因此都是先进制程带来的红利么? 晶体管数量庞大, 真的能说明技术NB么?</p>
+<p>遂搜索了下资料, 发现果然有人砸场子的, <a target="_blank" rel="noopener" href="https://www.realworldtech.com/transistor-count-flawed-metric/">Transistor Count: A Flawed Metric</a>, 在标题里就明确之处, <strong>晶体管数量来衡量CPU性能&#x2F;先进性是一个有缺陷的指标</strong>. 详细阅读了之后, 我试着总结下作者的几个理由.</p>
+<h1 id="0x01-晶体管数量是数不准的"><a href="#0x01-晶体管数量是数不准的" class="headerlink" title="0x01: 晶体管数量是数不准的!!"></a>0x01: 晶体管数量是数不准的!!</h1><hr>
+<p>厂商给出的晶体管数量都是一个近似值. 同样的设计, 晶体管数量会有33%到37%的误差. 为啥呢? 摘录 <a target="_blank" rel="noopener" href="https://www.eet-china.com/news/202009071737.html">为什么说Intel的10nm工艺比别家7nm更先进？</a> 中的片段:</p>
+<blockquote>
+<p>比较古老的一种计量密度的方法，其实是用 CPP（contacted poly pitch，即 gate pitch，栅间距）去乘以 metal pitch 最小金属间距。<br>到了 FinFET 晶体管时期，增加 fin（鳍）高度、减少 fin 之间的间距就能有效增加驱动电流。驱动电流上去之后，就可以减少 fin 的数量——一个单元减少 fin 的数量，也就实现了金属 track 的减少，可以降低动态功耗，与此同时确保性能，甚至还能通过一些优化手法来提升速度。<br>在金属 track 减少之后，传统计算密度的方法其实就不怎么准确了，因为它其实不能反映单元高度减少这样的实际结构变化。所以后来有方法是 CPP 乘以 MMP（最小金属间距），再乘以 Track 数。<br>但更多的结构优化，比如后文会提到的 COAG 技术进一步降低了单元高度，同时采用 dummy gate 来缩减单元的宽度。那么在单元宽度、高度同时降低的情况下，上面这种计算方法就又不准确了。<br>所以如今的晶体管数字，更多的应当作为一种参考来看，毕竟晶体管并不是以均匀的方式分布在 die 上的。</p>
+</blockquote>
+<h1 id="0x02-不同类型的芯片-设计目标是有差异的-不会一味追求高密度"><a href="#0x02-不同类型的芯片-设计目标是有差异的-不会一味追求高密度" class="headerlink" title="0x02: 不同类型的芯片, 设计目标是有差异的, 不会一味追求高密度"></a>0x02: 不同类型的芯片, 设计目标是有差异的, 不会一味追求高密度</h1><hr>
+<p>例如</p>
+<ul>
+<li>ASCI芯片, 只需要达到目标的吞吐量即可, 不需要追求高主频. 例如<code>Cisco Silicon One</code>, 只需要达到目标的400Gbps以太网吞吐量即可. 因此ASCI设计团队更倾向于 1. 使用自动化设计工具 2. 更少的定制电路 3. 更高密度晶体管(单Fin的FinFET晶体管). </li>
+<li>服务器芯片追求更高频率, 例如<code>Xeon 8268</code>和<code>Xeon 8260</code>都有24 Core, 但8268的频率是2.9GHz, 8260是2.4GHz, 价格相差了$1600. 因此服务器芯片设计更倾向于 1. 更多的定制电路 2. 更大的晶体管(2Fin, 3Fin甚至更多Fin的FinFET晶体管)<blockquote>
+<p>TODO: FinFET中Fin数量与主频的关系是?</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="0x03-芯片中不同功能区域密度不同"><a href="#0x03-芯片中不同功能区域密度不同" class="headerlink" title="0x03. 芯片中不同功能区域密度不同"></a>0x03. 芯片中不同功能区域密度不同</h1><hr>
+<p>处理器组成部分:</p>
+<ol>
+<li>CPU Cores, 包含 cores, L1 Cache, L2 Cache</li>
+<li>L3 Cache</li>
+<li>System Interface</li>
+<li>I&#x2F;O, 包含 QPI, DIMM<br>如下两个处理器, 都是for服务器场景:<br><img data-src="https://www.realworldtech.com/wp-content/uploads/2020/05/Table1.png?x97168" alt="Table 1. Transistor count and density for major regions for the Poulson and Tukwila generations of Itanium processors"><br>如上图, CPU 不同区域, 密度差异能高达20倍. 例如Poulson的L3 Cache密度是13.33Mtr&#x2F;mm2, 但IO区域密度是0.65Mtr&#x2F;mm2<blockquote>
+<p>Naturally, the cache region which primarily comprises ultra-dense SRAM is the densest and makes up most of the transistors in each design.<br>The I&#x2F;O is the least dense portion of the two designs, because it contains many delicate analog circuits such as PLLs and DLLs, digital filters, and the large, high-voltage I&#x2F;O transistors that are used to transmit and receive off-chip data.</p>
+</blockquote>
+</li>
+</ol>
+<p>如果只追求高密度, 庞大数量, 直接堆L3Cache就行了.</p>
+<h1 id="0x04-实际有很多无效的晶体管"><a href="#0x04-实际有很多无效的晶体管" class="headerlink" title="0x04: 实际有很多无效的晶体管"></a>0x04: 实际有很多无效的晶体管</h1><hr>
+<p>正常工作的叫做active transistors, 但实际上, 生产出来的芯片里还会包含: </p>
+<ol>
+<li>dummy transistors: 主要用来提升良品率, 但数量不算那么庞大.</li>
+<li>decap transistors(decoupling capacitors): 数量就比较巨大了.<blockquote>
+<p>To ensure yield, the die must be relatively uniform and the whitespace cannot be truly empty. Many designs will fill the whitespace with decap cells to provide decoupling capacitance for power delivery and thereby improve operating frequency.</p>
+</blockquote>
+</li>
+</ol>
+<p>实际上无效晶体管数量占到了20%~30%, 甚至更多.</p>
+<blockquote>
+<p>They found that in the small sampled regions that the active transistors were between 70-80% of the total, and the remaining 20-30% of layout transistors were decap and dummy devices.</p>
+</blockquote>
+<h1 id="0x05-晶体管不贵多而贵在精"><a href="#0x05-晶体管不贵多而贵在精" class="headerlink" title="0x05. 晶体管不贵多而贵在精"></a>0x05. 晶体管不贵多而贵在精</h1><hr>
+<p>例如 AMD Radeon VII 比 RX 5700多了28%的transistors, 但是两者性能差不多. 部分原因是RX 5700使用了更加先进的架构, 而且RX 5700要便宜很多.</p>
+<blockquote>
+<p>When it comes to actual value to customers, it’s not about the transistor count, but how the transistors are used.</p>
+</blockquote>
+<h1 id="0x06-总结"><a href="#0x06-总结" class="headerlink" title="0x06: 总结"></a>0x06: 总结</h1><p>所以, 这东西就跟娱乐大师跑分一样, 只作为一个参考项, 不要作为唯一指标. 不能一叶障目不见泰山.</p>
+<p>更重要的是, 我们技术人, <strong>需要保持独立思考能力</strong>, 知其然, 也要知其所以然, 不要被厂商忽悠了. </p>
+<h1 id="0XFF-其他一些好玩儿的科普"><a href="#0XFF-其他一些好玩儿的科普" class="headerlink" title="0XFF:其他一些好玩儿的科普"></a>0XFF:其他一些好玩儿的科普</h1><ol>
+<li>L3 Cache为啥不能做得更大一些? 直接替换掉RAM不行么?</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/semi-conductor/" rel="tag"># semi-conductor</a>
+              <a href="/tags/cpu/" rel="tag"># cpu</a>
+              <a href="/tags/hardware/" rel="tag"># hardware</a>
+              <a href="/tags/chip/" rel="tag"># chip</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022-11-02-k8s-play-with-minikube/" rel="prev" title="玩转minikube">
+                  <i class="fa fa-chevron-left"></i> 玩转minikube
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">250k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:48</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

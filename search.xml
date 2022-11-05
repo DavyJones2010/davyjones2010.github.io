@@ -4039,6 +4039,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><a href="https://book.douban.com/subject/35026475/">山月记</a> </li>
 <li><a href="https://book.douban.com/subject/35669245/">乾隆: 政治, 爱情与性格</a> -20221029 done</li>
 <li><a href="https://book.douban.com/subject/26768309/">查令十字街84号</a> -20221031 done</li>
+<li><a href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a></li>
 </ul>
 <h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
 <li><a href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
@@ -7686,6 +7687,89 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
+    <title>MySQL连接池重要参数配置原理研究</title>
+    <url>//2022-06-05-mysql-conn-params/</url>
+    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
+<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
+<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
+<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
+<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
+<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
+<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
+<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
+<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
+</ul>
+<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
+<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
+</ul>
+<ol>
+<li>即客户端从连接池中获取connection的最大等待时长</li>
+<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
+<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
+    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
+    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
+    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<ul>
+<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
+<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
+</ul>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
+<li>initialSize: 100</li>
+<li>maxActive: 200</li>
+<li>minIdle: 100</li>
+<li>maxWait: 6000</li>
+</ul>
+<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
+<ul>
+<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
+<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
+</ul>
+<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
+<li>initialSize: 未配置</li>
+<li>maxActive: 300</li>
+<li>minIdle: 30</li>
+<li>maxWait: 60000</li>
+</ul>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
+<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
+<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
+<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
+</ol>
+</li>
+<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
+<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
+<li>取决于物理机&#x2F;虚拟机的配置.</li>
+</ol>
+</li>
+<li>什么是MySQL的session? 与connection是啥关系?<ol>
+<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
+<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
+<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>mysql</tag>
+        <tag>database</tag>
+        <tag>connection-pool</tag>
+        <tag>druid</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot Transactional AOP 实现原理研究</title>
     <url>//2022-06-06-spring-tx-annonation/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>书接上回 <a href="https://davyjones2010.github.io/2022-06-03-spring-annotation-on-interface/">SpringBoot基于Interface的Annotation在AOP中如何生效I</a>,<br>里边只是简略地说明了Spring中 @Transactional 只能在jdk proxy场景下生效, 在cglib场景下不生效, 但没有研究具体代码实现.<br>本文详细探究下.</p>
@@ -7809,89 +7893,6 @@ public synchronized void close() throws SQLException &#123;
         <tag>tools</tag>
         <tag>asciinema</tag>
         <tag>svg</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL连接池重要参数配置原理研究</title>
-    <url>//2022-06-05-mysql-conn-params/</url>
-    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
-<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
-<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
-<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
-<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
-<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
-<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
-<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
-<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
-</ul>
-<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
-<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
-</ul>
-<ol>
-<li>即客户端从连接池中获取connection的最大等待时长</li>
-<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
-<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
-    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
-    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
-    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<ul>
-<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
-<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
-</ul>
-<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
-<li>initialSize: 100</li>
-<li>maxActive: 200</li>
-<li>minIdle: 100</li>
-<li>maxWait: 6000</li>
-</ul>
-<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
-<ul>
-<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
-<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
-</ul>
-<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
-<li>initialSize: 未配置</li>
-<li>maxActive: 300</li>
-<li>minIdle: 30</li>
-<li>maxWait: 60000</li>
-</ul>
-<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
-<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
-<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
-<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
-</ol>
-</li>
-<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
-<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
-<li>取决于物理机&#x2F;虚拟机的配置.</li>
-</ol>
-</li>
-<li>什么是MySQL的session? 与connection是啥关系?<ol>
-<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
-<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
-<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>mysql</tag>
-        <tag>database</tag>
-        <tag>connection-pool</tag>
-        <tag>druid</tag>
       </tags>
   </entry>
   <entry>
@@ -10606,6 +10607,83 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <tag>k8s</tag>
         <tag>kubectl</tag>
         <tag>minikube</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>十万个为什么--用晶体管数量衡量芯片的先进性</title>
+    <url>//2022-11-05-transistor-cnt-a-flawed-metric/</url>
+    <content><![CDATA[<h1 id="0x00-Intro"><a href="#0x00-Intro" class="headerlink" title="0x00: Intro"></a>0x00: Intro</h1><p>最近在看 <a href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a> 这本书, 从 </p>
+<ul>
+<li>与非门(NAND) 开始, 加上非门, 构建与门</li>
+<li>4个NAND构建一位带开关的存储单元(M); </li>
+<li>8个存储单元(M)构建1Byte的存储(B)</li>
+<li>8个与门构建一个8位的Enabler(E)</li>
+<li>B+E 构建一个 8位 <strong>寄存器(R)</strong> + 总线</li>
+<li>8个与门+3个非门构建一个 <strong>3X8译码器(Decoder)</strong></li>
+<li>1个8位寄存器&amp;2个4X16译码器(用于寻址) + 256个1位寄存器(R)&amp;3个与门(用于存数) 构建 256位 的RAM<br>等等, 非常深入浅出. 后边会把读书笔记补充上来.</li>
+</ul>
+<p>忍不住思维跳跃了下, 构建一个256位的RAM至少需要((4*8+8) + (4+16) + (4+1)*256 + 3 &#x3D; 1343)个门(4个MOS管构建出一个与非门, 但当前主流的都是FinFET, 场效应晶体管). 虽然是RAM的实现, 与实际CPU上L1&#x2F;L2&#x2F;L3Cache的实现方式不同, 但也能基本说明点儿问题, 就是我们构建CPU&#x2F;DRAM等都需要庞大数量的晶体管.</p>
+<p>想起苹果2021发布的M1 Max芯片, <a href="https://www.apple.com/hk/en/newsroom/2021/10/introducing-m1-pro-and-m1-max-the-most-powerful-chips-apple-has-ever-built/">晶体管数量是570亿, 57 billion transistors</a>, 例如自己在用的<code>Intel Xeon E5 2660 V3</code>, 也有2.6 billion个transistors. 这种庞大的数字, 总是让人很震撼. 也无外乎厂商会用这个数字来吹嘘, 来作为重要指标, 说明自己的CPU&#x2F;芯片有多复杂多先进. 毕竟芯片面积总共就那么大, 10倍晶体管数量的提升, 基本就只能提升密度了, 也就是得靠先进制程等. </p>
+<p>但我们技术人都要有批判性思维, 仔细再想下, CPU中<a href="https://zhuanlan.zhihu.com/p/31422201">几乎一半的面积都是L3 Cache</a>, Cache的电路设计并不复杂, 因此都是先进制程带来的红利么? 晶体管数量庞大, 真的能说明技术NB么?</p>
+<p>遂搜索了下资料, 发现果然有人砸场子的, <a href="https://www.realworldtech.com/transistor-count-flawed-metric/">Transistor Count: A Flawed Metric</a>, 在标题里就明确之处, <strong>晶体管数量来衡量CPU性能&#x2F;先进性是一个有缺陷的指标</strong>. 详细阅读了之后, 我试着总结下作者的几个理由.</p>
+<h1 id="0x01-晶体管数量是数不准的"><a href="#0x01-晶体管数量是数不准的" class="headerlink" title="0x01: 晶体管数量是数不准的!!"></a>0x01: 晶体管数量是数不准的!!</h1><hr>
+<p>厂商给出的晶体管数量都是一个近似值. 同样的设计, 晶体管数量会有33%到37%的误差. 为啥呢? 摘录 <a href="https://www.eet-china.com/news/202009071737.html">为什么说Intel的10nm工艺比别家7nm更先进？</a> 中的片段:</p>
+<blockquote>
+<p>比较古老的一种计量密度的方法，其实是用 CPP（contacted poly pitch，即 gate pitch，栅间距）去乘以 metal pitch 最小金属间距。<br>到了 FinFET 晶体管时期，增加 fin（鳍）高度、减少 fin 之间的间距就能有效增加驱动电流。驱动电流上去之后，就可以减少 fin 的数量——一个单元减少 fin 的数量，也就实现了金属 track 的减少，可以降低动态功耗，与此同时确保性能，甚至还能通过一些优化手法来提升速度。<br>在金属 track 减少之后，传统计算密度的方法其实就不怎么准确了，因为它其实不能反映单元高度减少这样的实际结构变化。所以后来有方法是 CPP 乘以 MMP（最小金属间距），再乘以 Track 数。<br>但更多的结构优化，比如后文会提到的 COAG 技术进一步降低了单元高度，同时采用 dummy gate 来缩减单元的宽度。那么在单元宽度、高度同时降低的情况下，上面这种计算方法就又不准确了。<br>所以如今的晶体管数字，更多的应当作为一种参考来看，毕竟晶体管并不是以均匀的方式分布在 die 上的。</p>
+</blockquote>
+<h1 id="0x02-不同类型的芯片-设计目标是有差异的-不会一味追求高密度"><a href="#0x02-不同类型的芯片-设计目标是有差异的-不会一味追求高密度" class="headerlink" title="0x02: 不同类型的芯片, 设计目标是有差异的, 不会一味追求高密度"></a>0x02: 不同类型的芯片, 设计目标是有差异的, 不会一味追求高密度</h1><hr>
+<p>例如</p>
+<ul>
+<li>ASCI芯片, 只需要达到目标的吞吐量即可, 不需要追求高主频. 例如<code>Cisco Silicon One</code>, 只需要达到目标的400Gbps以太网吞吐量即可. 因此ASCI设计团队更倾向于 1. 使用自动化设计工具 2. 更少的定制电路 3. 更高密度晶体管(单Fin的FinFET晶体管). </li>
+<li>服务器芯片追求更高频率, 例如<code>Xeon 8268</code>和<code>Xeon 8260</code>都有24 Core, 但8268的频率是2.9GHz, 8260是2.4GHz, 价格相差了$1600. 因此服务器芯片设计更倾向于 1. 更多的定制电路 2. 更大的晶体管(2Fin, 3Fin甚至更多Fin的FinFET晶体管)<blockquote>
+<p>TODO: FinFET中Fin数量与主频的关系是?</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="0x03-芯片中不同功能区域密度不同"><a href="#0x03-芯片中不同功能区域密度不同" class="headerlink" title="0x03. 芯片中不同功能区域密度不同"></a>0x03. 芯片中不同功能区域密度不同</h1><hr>
+<p>处理器组成部分:</p>
+<ol>
+<li>CPU Cores, 包含 cores, L1 Cache, L2 Cache</li>
+<li>L3 Cache</li>
+<li>System Interface</li>
+<li>I&#x2F;O, 包含 QPI, DIMM<br>如下两个处理器, 都是for服务器场景:<br><img data-src="https://www.realworldtech.com/wp-content/uploads/2020/05/Table1.png?x97168" alt="Table 1. Transistor count and density for major regions for the Poulson and Tukwila generations of Itanium processors"><br>如上图, CPU 不同区域, 密度差异能高达20倍. 例如Poulson的L3 Cache密度是13.33Mtr&#x2F;mm2, 但IO区域密度是0.65Mtr&#x2F;mm2<blockquote>
+<p>Naturally, the cache region which primarily comprises ultra-dense SRAM is the densest and makes up most of the transistors in each design.<br>The I&#x2F;O is the least dense portion of the two designs, because it contains many delicate analog circuits such as PLLs and DLLs, digital filters, and the large, high-voltage I&#x2F;O transistors that are used to transmit and receive off-chip data.</p>
+</blockquote>
+</li>
+</ol>
+<p>如果只追求高密度, 庞大数量, 直接堆L3Cache就行了.</p>
+<h1 id="0x04-实际有很多无效的晶体管"><a href="#0x04-实际有很多无效的晶体管" class="headerlink" title="0x04: 实际有很多无效的晶体管"></a>0x04: 实际有很多无效的晶体管</h1><hr>
+<p>正常工作的叫做active transistors, 但实际上, 生产出来的芯片里还会包含: </p>
+<ol>
+<li>dummy transistors: 主要用来提升良品率, 但数量不算那么庞大.</li>
+<li>decap transistors(decoupling capacitors): 数量就比较巨大了.<blockquote>
+<p>To ensure yield, the die must be relatively uniform and the whitespace cannot be truly empty. Many designs will fill the whitespace with decap cells to provide decoupling capacitance for power delivery and thereby improve operating frequency.</p>
+</blockquote>
+</li>
+</ol>
+<p>实际上无效晶体管数量占到了20%~30%, 甚至更多.</p>
+<blockquote>
+<p>They found that in the small sampled regions that the active transistors were between 70-80% of the total, and the remaining 20-30% of layout transistors were decap and dummy devices.</p>
+</blockquote>
+<h1 id="0x05-晶体管不贵多而贵在精"><a href="#0x05-晶体管不贵多而贵在精" class="headerlink" title="0x05. 晶体管不贵多而贵在精"></a>0x05. 晶体管不贵多而贵在精</h1><hr>
+<p>例如 AMD Radeon VII 比 RX 5700多了28%的transistors, 但是两者性能差不多. 部分原因是RX 5700使用了更加先进的架构, 而且RX 5700要便宜很多.</p>
+<blockquote>
+<p>When it comes to actual value to customers, it’s not about the transistor count, but how the transistors are used.</p>
+</blockquote>
+<h1 id="0x06-总结"><a href="#0x06-总结" class="headerlink" title="0x06: 总结"></a>0x06: 总结</h1><p>所以, 这东西就跟娱乐大师跑分一样, 只作为一个参考项, 不要作为唯一指标. 不能一叶障目不见泰山.</p>
+<p>更重要的是, 我们技术人, <strong>需要保持独立思考能力</strong>, 知其然, 也要知其所以然, 不要被厂商忽悠了. </p>
+<h1 id="0XFF-其他一些好玩儿的科普"><a href="#0XFF-其他一些好玩儿的科普" class="headerlink" title="0XFF:其他一些好玩儿的科普"></a>0XFF:其他一些好玩儿的科普</h1><ol>
+<li>L3 Cache为啥不能做得更大一些? 直接替换掉RAM不行么?</li>
+</ol>
+]]></content>
+      <categories>
+        <category>十万个为什么</category>
+      </categories>
+      <tags>
+        <tag>semi-conductor</tag>
+        <tag>cpu</tag>
+        <tag>hardware</tag>
+        <tag>chip</tag>
       </tags>
   </entry>
 </search>

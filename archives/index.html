@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">167</span>
+        <span class="site-state-item-count">171</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,122 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-11-05-transistor-cnt-a-flawed-metric/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-11-05-transistor-cnt-a-flawed-metric/" class="post-title-link" itemprop="url">十万个为什么--用晶体管数量衡量芯片的先进性</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-05 10:55:04 / 修改时间：16:51:49" itemprop="dateCreated datePublished" datetime="2022-11-05T10:55:04+08:00">2022-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88/" itemprop="url" rel="index"><span itemprop="name">十万个为什么</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="0x00-Intro"><a href="#0x00-Intro" class="headerlink" title="0x00: Intro"></a>0x00: Intro</h1><p>最近在看 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a> 这本书, 从 </p>
+<ul>
+<li>与非门(NAND) 开始, 加上非门, 构建与门</li>
+<li>4个NAND构建一位带开关的存储单元(M); </li>
+<li>8个存储单元(M)构建1Byte的存储(B)</li>
+<li>8个与门构建一个8位的Enabler(E)</li>
+<li>B+E 构建一个 8位 <strong>寄存器(R)</strong> + 总线</li>
+<li>8个与门+3个非门构建一个 <strong>3X8译码器(Decoder)</strong></li>
+<li>1个8位寄存器&amp;2个4X16译码器(用于寻址) + 256个1位寄存器(R)&amp;3个与门(用于存数) 构建 256位 的RAM<br>等等, 非常深入浅出. 后边会把读书笔记补充上来.</li>
+</ul>
+<p>忍不住思维跳跃了下, 构建一个256位的RAM至少需要((4*8+8) + (4+16) + (4+1)*256 + 3 &#x3D; 1343)个门(4个MOS管构建出一个与非门, 但当前主流的都是FinFET, 场效应晶体管). 虽然是RAM的实现, 与实际CPU上L1&#x2F;L2&#x2F;L3Cache的实现方式不同, 但也能基本说明点儿问题, 就是我们构建CPU&#x2F;DRAM等都需要庞大数量的晶体管.</p>
+<p>想起苹果2021发布的M1 Max芯片, <a target="_blank" rel="noopener" href="https://www.apple.com/hk/en/newsroom/2021/10/introducing-m1-pro-and-m1-max-the-most-powerful-chips-apple-has-ever-built/">晶体管数量是570亿, 57 billion transistors</a>, 例如自己在用的<code>Intel Xeon E5 2660 V3</code>, 也有2.6 billion个transistors. 这种庞大的数字, 总是让人很震撼. 也无外乎厂商会用这个数字来吹嘘, 来作为重要指标, 说明自己的CPU&#x2F;芯片有多复杂多先进. 毕竟芯片面积总共就那么大, 10倍晶体管数量的提升, 基本就只能提升密度了, 也就是得靠先进制程等. </p>
+<p>但我们技术人都要有批判性思维, 仔细再想下, CPU中<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31422201">几乎一半的面积都是L3 Cache</a>, Cache的电路设计并不复杂, 因此都是先进制程带来的红利么? 晶体管数量庞大, 真的能说明技术NB么?</p>
+<p>遂搜索了下资料, 发现果然有人砸场子的, <a target="_blank" rel="noopener" href="https://www.realworldtech.com/transistor-count-flawed-metric/">Transistor Count: A Flawed Metric</a>, 在标题里就明确之处, <strong>晶体管数量来衡量CPU性能&#x2F;先进性是一个有缺陷的指标</strong>. 详细阅读了之后, 我试着总结下作者的几个理由.</p>
+<h1 id="0x01-晶体管数量是数不准的"><a href="#0x01-晶体管数量是数不准的" class="headerlink" title="0x01: 晶体管数量是数不准的!!"></a>0x01: 晶体管数量是数不准的!!</h1><hr>
+<p>厂商给出的晶体管数量都是一个近似值. 同样的设计, 晶体管数量会有33%到37%的误差. 为啥呢? 摘录 <a target="_blank" rel="noopener" href="https://www.eet-china.com/news/202009071737.html">为什么说Intel的10nm工艺比别家7nm更先进？</a> 中的片段:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-11-05-transistor-cnt-a-flawed-metric/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-11-02-k8s-play-with-minikube/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +363,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -351,7 +467,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -484,7 +600,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -612,7 +728,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -800,7 +916,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -927,7 +1043,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1059,7 +1175,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1189,7 +1305,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1354,7 +1470,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1459,7 +1575,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1572,7 +1688,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1683,7 +1799,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1821,7 +1937,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -1920,7 +2036,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2031,7 +2147,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2146,7 +2262,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2291,7 +2407,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2414,7 +2530,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2535,7 +2651,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2648,7 +2764,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2757,7 +2873,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2864,7 +2980,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -2983,7 +3099,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3104,7 +3220,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3215,7 +3331,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3338,7 +3454,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3478,7 +3594,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3582,7 +3698,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3693,7 +3809,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3820,7 +3936,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -3923,7 +4039,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
+      <time title="修改时间：2022-11-05 16:51:49" itemprop="dateModified" datetime="2022-11-05T16:51:49+08:00">2022-11-05</time>
     </span>
 
   
@@ -4010,116 +4126,6 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-23-scheduler-api-design/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-05-23-scheduler-api-design/" class="post-title-link" itemprop="url">资源调度API设计的思考</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-24T00:00:00+08:00">2022-05-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-04 01:27:02" itemprop="dateModified" datetime="2022-11-04T01:27:02+08:00">2022-11-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>722</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀.</p>
-<h1 id="批量调度"><a href="#批量调度" class="headerlink" title="批量调度"></a>批量调度</h1><h2 id="amount-amp-minAmount-模式"><a href="#amount-amp-minAmount-模式" class="headerlink" title="amount &amp; minAmount 模式:"></a>amount &amp; minAmount 模式:</h2><h3 id="模式解释"><a href="#模式解释" class="headerlink" title="模式解释"></a>模式解释</h3><p>样例请求如下:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">BatchParam</span> <span class="token punctuation">&#123;</span>
-    <span class="token class-name">Integer</span> minAmount<span class="token punctuation">;</span>
-    <span class="token class-name">Integer</span> amount<span class="token punctuation">;</span>    
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>语义解释: </p>
-<ul>
-<li>minAmount: 代表请求方需求的最小的资源量. </li>
-<li>amount: 代表请求方需要的最大资源量.</li>
-</ul>
-<p>有点儿抽象, 我们站在scheduler的角度看.<br>批量调度资源, 资源不一定总会满足用户需求的资源, 此时就需要做个妥协,<br>如果能调度出来的资源量(realAmount)范围:</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-05-23-scheduler-api-design/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4145,14 +4151,14 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">247k</span>
+    <span title="站点总字数">250k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:45</span>
+    <span title="站点阅读时长">3:48</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
