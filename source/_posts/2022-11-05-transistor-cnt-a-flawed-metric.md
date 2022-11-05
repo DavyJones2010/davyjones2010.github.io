@@ -73,7 +73,8 @@ tags: [semi-conductor, cpu, hardware, chip]
 > They found that in the small sampled regions that the active transistors were between 70-80% of the total, and the remaining 20-30% of layout transistors were decap and dummy devices.
 
 # 0x05. 晶体管不贵多而贵在精
----****
+---
+
 例如 AMD Radeon VII 比 RX 5700多了28%的transistors, 但是两者性能差不多. 部分原因是RX 5700使用了更加先进的架构, 而且RX 5700要便宜很多.
 
 > When it comes to actual value to customers, it’s not about the transistor count, but how the transistors are used.
