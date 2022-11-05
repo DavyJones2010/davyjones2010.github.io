@@ -13,7 +13,8 @@ tags: [semi-conductor, cpu, hardware, chip]
 - 8个与门构建一个8位的Enabler(E)
 - B+E 构建一个 8位 **寄存器(R)** + 总线
 - 8个与门+3个非门构建一个 **3X8译码器(Decoder)**
-- 1个8位寄存器&2个4X16译码器(用于寻址) + 256个1位寄存器(R)&3个与门(用于存数) 构建 256位 的RAM
+- 1个8位寄存器&2个4X16译码器(用于寻址) + 256个1位寄存器(R)&3个与门(用于存数) 构建 256位 的RAM 
+
 等等, 非常深入浅出. 后边会把读书笔记补充上来. 
 
 忍不住思维跳跃了下, 构建一个256位的RAM至少需要((4*8+8) + (4+16) + (4+1)*256 + 3 = 1343)个门(4个MOS管构建出一个与非门, 但当前主流的都是FinFET, 场效应晶体管). 虽然是RAM的实现, 与实际CPU上L1/L2/L3Cache的实现方式不同, 但也能基本说明点儿问题, 就是我们构建CPU/DRAM等都需要庞大数量的晶体管.
@@ -22,7 +23,7 @@ tags: [semi-conductor, cpu, hardware, chip]
 
 但我们技术人都要有批判性思维, 仔细再想下, CPU中[几乎一半的面积都是L3 Cache](https://zhuanlan.zhihu.com/p/31422201), Cache的电路设计并不复杂, 因此都是先进制程带来的红利么? 晶体管数量庞大, 真的能说明技术NB么?
 
-遂搜索了下资料, 发现果然有人砸场子的, [Transistor Count: A Flawed Metric](https://www.realworldtech.com/transistor-count-flawed-metric/), 在标题里就明确之处, **晶体管数量来衡量CPU性能/先进性是一个有缺陷的指标**. 详细阅读了之后, 我试着总结下作者的几个理由.
+遂搜索了下资料, 发现果然有人砸场子的, [Transistor Count: A Flawed Metric](https://www.realworldtech.com/transistor-count-flawed-metric/), 在标题里就明确之处, **晶体管数量是一个有缺陷的指标**. 详细阅读了之后, 我试着总结下作者的几个理由.
 
 # 0x01: 晶体管数量是数不准的!!
 ---
@@ -43,13 +44,16 @@ tags: [semi-conductor, cpu, hardware, chip]
 
 # 0x03. 芯片中不同功能区域密度不同
 ---
-处理器组成部分:
+![](https://plantegg.github.io/images/951413iMgBlog/4Z1nU.png)
+如上图, 处理器组成部分:
 1. CPU Cores, 包含 cores, L1 Cache, L2 Cache
 2. L3 Cache
 3. System Interface
 4. I/O, 包含 QPI, DIMM
+
 如下两个处理器, 都是for服务器场景:
 ![Table 1. Transistor count and density for major regions for the Poulson and Tukwila generations of Itanium processors](https://www.realworldtech.com/wp-content/uploads/2020/05/Table1.png?x97168)
+
 如上图, CPU 不同区域, 密度差异能高达20倍. 例如Poulson的L3 Cache密度是13.33Mtr/mm2, 但IO区域密度是0.65Mtr/mm2
 > Naturally, the cache region which primarily comprises ultra-dense SRAM is the densest and makes up most of the transistors in each design.
 > The I/O is the least dense portion of the two designs, because it contains many delicate analog circuits such as PLLs and DLLs, digital filters, and the large, high-voltage I/O transistors that are used to transmit and receive off-chip data.
@@ -61,6 +65,7 @@ tags: [semi-conductor, cpu, hardware, chip]
 正常工作的叫做active transistors, 但实际上, 生产出来的芯片里还会包含: 
 1. dummy transistors: 主要用来提升良品率, 但数量不算那么庞大.
 2. decap transistors(decoupling capacitors): 数量就比较巨大了.
+
 > To ensure yield, the die must be relatively uniform and the whitespace cannot be truly empty. Many designs will fill the whitespace with decap cells to provide decoupling capacitance for power delivery and thereby improve operating frequency.
 
 实际上无效晶体管数量占到了20%~30%, 甚至更多.
@@ -68,7 +73,7 @@ tags: [semi-conductor, cpu, hardware, chip]
 > They found that in the small sampled regions that the active transistors were between 70-80% of the total, and the remaining 20-30% of layout transistors were decap and dummy devices.
 
 # 0x05. 晶体管不贵多而贵在精
----
+---****
 例如 AMD Radeon VII 比 RX 5700多了28%的transistors, 但是两者性能差不多. 部分原因是RX 5700使用了更加先进的架构, 而且RX 5700要便宜很多.
 
 > When it comes to actual value to customers, it’s not about the transistor count, but how the transistors are used.
