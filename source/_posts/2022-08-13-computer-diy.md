@@ -47,9 +47,10 @@ x99含义
 {% endnote %}
 
 其他细节: 
-- CPU插槽: 单路; LGA2011, 因此是2011个针脚;
+- CPU插槽: 单路; LGA2011 
+  - LGA代表LGA(Land Grid Array)封装类型, 即CPU上只有触点, 没有针; 与之对应的是PGA(Pin Grid Array)封装类型, 即CPU上有针(印象中老式的CPU都是这种类型), 更容易折断; 两者优缺点参见:[LGA vs PGA CPU Sockets: What’s the Difference?](https://techedged.com/lga-vs-pga/), 非常详细了. TODO: 啥时候翻译出来.
+  - 2011代表是2011个针脚; [CPU底部的小块是干什么用？为什么CPU这么多电源引脚？](https://zhuanlan.zhihu.com/p/48593932) 
 - CPU只支持DDR4内存, 但主板支持DDR3(问了店家, 主板同时也支持DDR4), 现在DDR4普遍价格比较贵, 没办法使用闲鱼上价格巨便宜的DDR3 ECC内存.
-- 
 
 ## 其他
 
