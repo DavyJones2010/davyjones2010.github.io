@@ -10289,9 +10289,12 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 
 <p>其他细节: </p>
 <ul>
-<li>CPU插槽: 单路; LGA2011, 因此是2011个针脚;</li>
+<li>CPU插槽: 单路; LGA2011 <ul>
+<li>LGA代表LGA(Land Grid Array)封装类型, 即CPU上只有触点, 没有针; 与之对应的是PGA(Pin Grid Array)封装类型, 即CPU上有针(印象中老式的CPU都是这种类型), 更容易折断; 两者优缺点参见:<a href="https://techedged.com/lga-vs-pga/">LGA vs PGA CPU Sockets: What’s the Difference?</a>, 非常详细了. TODO: 啥时候翻译出来.</li>
+<li>2011代表是2011个针脚; <a href="https://zhuanlan.zhihu.com/p/48593932">CPU底部的小块是干什么用？为什么CPU这么多电源引脚？</a></li>
+</ul>
+</li>
 <li>CPU只支持DDR4内存, 但主板支持DDR3(问了店家, 主板同时也支持DDR4), 现在DDR4普遍价格比较贵, 没办法使用闲鱼上价格巨便宜的DDR3 ECC内存.</li>
-<li></li>
 </ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="CPU型号"><a href="#CPU型号" class="headerlink" title="CPU型号"></a>CPU型号</h3><p>买的时候没有看清楚CPU型号, 以为是 <code>E5-2630 V3</code>, 结果实际是 <code>E5-2630L V3</code>, 才知道多了的这个<code>L</code>代表<mark>低功耗(Low Power)</mark>, 基频只有<code>1.8GHz</code>不能忍.<br>因此就又淘了如下两个能够适配X99主板的CPU, 准备到时候各自对比测试下:</p>
 <table>
