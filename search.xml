@@ -4072,6 +4072,8 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><a href="https://movie.douban.com/subject/2347485/">天道</a></li>
 <li><a href="https://movie.douban.com/subject/35118256/">赛博朋克：边缘行者</a></li>
 <li><a href="https://movie.douban.com/subject/1424406/">星际牛仔</a></li>
+<li><a href="https://movie.douban.com/subject/30198955/">边缘世界</a></li>
+<li><a href="https://movie.douban.com/subject/30285826/">风骚律师-第五季</a></li>
 </ul>
 <h1 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h1><hr>
 <ul>
@@ -10101,6 +10103,26 @@ baidu.com.		<span class="token number">1</span>	IN	A	<span class="token number">
 <li>实践参照: <a href="https://davyjones2010.github.io/2022-08-09-nginx-scripts/#%E5%8D%95Host%E5%A4%9A%E5%9F%9F%E5%90%8D-%E4%B8%8D%E5%90%8C%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1">Nginx配置-单Host多域名, 不同域名访问不同服务
 </a></li>
 </ul>
+<h3 id="nslookup-如何指定-nameserver"><a href="#nslookup-如何指定-nameserver" class="headerlink" title="nslookup 如何指定 nameserver?"></a>nslookup 如何指定 nameserver?</h3><ul>
+<li><p>如下, 指定 <code>ns7.taobao.com.</code> 为查询 <code>taobao.com</code> 域名的ns</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nslookup</span> taobao.com ns7.taobao.com.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>完整的nslookup命令参见: <a href="https://phoenixnap.com/kb/nslookup-command">How to Use the nslookup Command</a></p>
+</li>
+</ul>
+<h3 id="“Non-authoritative-answer”-代表啥意思"><a href="#“Non-authoritative-answer”-代表啥意思" class="headerlink" title="“Non-authoritative answer” 代表啥意思?"></a>“Non-authoritative answer” 代表啥意思?</h3><p>如下,  “Non-authoritative answer” 代表请求不是由对应的权威服务器返回, 而是由本地或者其他DNS缓存的结果.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> google.com
+Server:  one.one.one.one
+Address:  <span class="token number">1.1</span>.1.1
+
+Non-authoritative answer:
+google.com      MX preference <span class="token operator">=</span> <span class="token number">10</span>, mail exchanger <span class="token operator">=</span> aspmx.l.google.com
+google.com      MX preference <span class="token operator">=</span> <span class="token number">20</span>, mail exchanger <span class="token operator">=</span> alt1.aspmx.l.google.com
+google.com      MX preference <span class="token operator">=</span> <span class="token number">30</span>, mail exchanger <span class="token operator">=</span> alt2.aspmx.l.google.com
+google.com      MX preference <span class="token operator">=</span> <span class="token number">40</span>, mail exchanger <span class="token operator">=</span> alt3.aspmx.l.google.com
+google.com      MX preference <span class="token operator">=</span> <span class="token number">50</span>, mail exchanger <span class="token operator">=</span> alt4.aspmx.l.google.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
 <li><a href="https://www.cloudflare.com/learning/dns/dns-server-types/">https://www.cloudflare.com/learning/dns/dns-server-types/</a></li>
 <li><a href="https://www.jianshu.com/p/f6ef04bf6af2">https://www.jianshu.com/p/f6ef04bf6af2</a></li>
