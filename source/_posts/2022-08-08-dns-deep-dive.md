@@ -236,6 +236,31 @@ baidu.com.		1	IN	A	39.156.66.10
 - 实践参照: [Nginx配置-单Host多域名, 不同域名访问不同服务
   ](https://davyjones2010.github.io/2022-08-09-nginx-scripts/#%E5%8D%95Host%E5%A4%9A%E5%9F%9F%E5%90%8D-%E4%B8%8D%E5%90%8C%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E4%B8%8D%E5%90%8C%E6%9C%8D%E5%8A%A1) 
 
+### nslookup 如何指定 nameserver? 
+- 如下, 指定 `ns7.taobao.com.` 为查询 `taobao.com` 域名的ns
+```shell
+nslookup taobao.com ns7.taobao.com.
+```
+
+- 完整的nslookup命令参见: [How to Use the nslookup Command](https://phoenixnap.com/kb/nslookup-command)
+
+
+### "Non-authoritative answer" 代表啥意思?
+如下,  "Non-authoritative answer" 代表请求不是由对应的权威服务器返回, 而是由本地或者其他DNS缓存的结果.
+```shell
+> google.com
+Server:  one.one.one.one
+Address:  1.1.1.1
+
+Non-authoritative answer:
+google.com      MX preference = 10, mail exchanger = aspmx.l.google.com
+google.com      MX preference = 20, mail exchanger = alt1.aspmx.l.google.com
+google.com      MX preference = 30, mail exchanger = alt2.aspmx.l.google.com
+google.com      MX preference = 40, mail exchanger = alt3.aspmx.l.google.com
+google.com      MX preference = 50, mail exchanger = alt4.aspmx.l.google.com
+```
+
+
 # Refs
 - https://www.cloudflare.com/learning/dns/dns-server-types/
 - https://www.jianshu.com/p/f6ef04bf6af2
