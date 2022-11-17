@@ -10477,10 +10477,11 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
   <entry>
     <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
     <url>//2022-08-30-disk-partition/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问</p>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问: </p>
 <ul>
 <li>为什么磁盘需要进行分区, 不分区直接按照文件夹划分有啥问题? 这个在Windows下尤其有疑问.</li>
-<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下?</li>
+<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下? </li>
+<li>分区与格式化以及文件系统有啥关系与区别? 是一对一的么? 一个分区下只能有一个文件系统么? 一个文件系统下只能有一个分区么?</li>
 </ul>
 <h1 id="为啥需要分区"><a href="#为啥需要分区" class="headerlink" title="为啥需要分区?"></a>为啥需要分区?</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>习惯了使用Linux&#x2F;Mac之后, 完全没有分区的概念了.</p>
 <ul>
@@ -10531,7 +10532,8 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <blockquote>
 <p>所以在Windows下, 还是老老实实分区吧! 当然在严肃的企业场景, 也推荐按照系统盘与数据盘进行下区分.</p>
 </blockquote>
-<h1 id="为啥需要挂载"><a href="#为啥需要挂载" class="headerlink" title="为啥需要挂载?"></a>为啥需要挂载?</h1><h1 id="磁盘-amp-文件系统的扩展知识"><a href="#磁盘-amp-文件系统的扩展知识" class="headerlink" title="磁盘&amp;文件系统的扩展知识"></a>磁盘&amp;文件系统的扩展知识</h1><h2 id="磁盘-分区-文件系统-关系"><a href="#磁盘-分区-文件系统-关系" class="headerlink" title="磁盘, 分区, 文件系统 关系"></a>磁盘, 分区, 文件系统 关系</h2><p>如下: </p>
+<h1 id="为啥需要挂载"><a href="#为啥需要挂载" class="headerlink" title="为啥需要挂载?"></a>为啥需要挂载?</h1><p>尤其是在Linux下, 设备可以从 &#x2F;dev&#x2F;sda[b] 路径下获取, 为啥不能直接操作这些设备? 还需要挂载(mount)下?</p>
+<h1 id="磁盘-amp-文件系统的扩展知识"><a href="#磁盘-amp-文件系统的扩展知识" class="headerlink" title="磁盘&amp;文件系统的扩展知识"></a>磁盘&amp;文件系统的扩展知识</h1><h2 id="磁盘-分区-文件系统-关系"><a href="#磁盘-分区-文件系统-关系" class="headerlink" title="磁盘, 分区, 文件系统 关系"></a>磁盘, 分区, 文件系统 关系</h2><p>如下: </p>
 <pre class="mermaid">erDiagram
     DiskDevice ||--|{ Partition : contain
     Partition ||--|| FileSystem : format</pre>
@@ -10737,6 +10739,174 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <tag>cpu</tag>
         <tag>hardware</tag>
         <tag>chip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux磁盘与分区的常用命令</title>
+    <url>//2022-11-16-disk-partition-2/</url>
+    <content><![CDATA[<h1 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h1><h2 id="查看当前系统块设备列表"><a href="#查看当前系统块设备列表" class="headerlink" title="查看当前系统块设备列表"></a>查看当前系统块设备列表</h2><h3 id="fdisk-l"><a href="#fdisk-l" class="headerlink" title="fdisk -l"></a>fdisk -l</h3><p>如下, <code>fdisk -l</code> 命令, 可以显示出:</p>
+<ol>
+<li>当前系统存在2块块设备, 分别是 &#x2F;dev&#x2F;sda 与 &#x2F;dev&#x2F;sdb, 大小分别为 21.5GB 与 31.5GB</li>
+<li>&#x2F;dev&#x2F;sda 磁盘, 划为两个分区, 分别是 &#x2F;dev&#x2F;sda1 &#x2F;dev&#x2F;sda2, 其中 &#x2F;dev&#x2F;sda2 为LVM文件系统类型</li>
+<li>&#x2F;dev&#x2F;sdb 磁盘(个人知道是U盘), 划分为1个分区 &#x2F;dev&#x2F;sdb1 , 文件系统类型是 <code>W95 FAT32</code></li>
+<li>TODO: 疑问1  <code>/dev/mapper/centos-root</code> <code>/dev/mapper/centos-swap</code> 分别都是啥? 个人已知是在 &#x2F;dev&#x2F;sda2 下继续分区出来的, 如下 <code>lsblk</code> 命令指示. 但为啥这里没有</li>
+<li>TODO: 疑问2 <code>Linux LVM</code> 具体是啥文件系统类型?</li>
+</ol>
+<blockquote>
+<p>SATA device names follow the pattern &#x2F;dev&#x2F;sd[a-z]<br>while NVMe device names have the following pattern &#x2F;dev&#x2F;nvme[1-9]n[1-9]</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># fdisk -l</span>
+Disk /dev/sda: <span class="token number">21.5</span> GB, <span class="token number">21474836480</span> bytes, <span class="token number">41943040</span> sectors
+Units <span class="token operator">=</span> sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+Disk label type: dos
+Disk identifier: 0x000b7bb1
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        <span class="token number">2048</span>     <span class="token number">2099199</span>     <span class="token number">1048576</span>   <span class="token number">83</span>  Linux
+/dev/sda2         <span class="token number">2099200</span>    <span class="token number">41943039</span>    <span class="token number">19921920</span>   8e  Linux LVM
+
+Disk /dev/mapper/centos-root: <span class="token number">18.2</span> GB, <span class="token number">18249416704</span> bytes, <span class="token number">35643392</span> sectors
+Units <span class="token operator">=</span> sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+
+Disk /dev/mapper/centos-swap: <span class="token number">2147</span> MB, <span class="token number">2147483648</span> bytes, <span class="token number">4194304</span> sectors
+Units <span class="token operator">=</span> sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+
+Disk /dev/sdb: <span class="token number">31.5</span> GB, <span class="token number">31457280000</span> bytes, <span class="token number">61440000</span> sectors
+Units <span class="token operator">=</span> sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+Disk label type: dos
+Disk identifier: 0x1c9aed9e
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1   *          <span class="token number">64</span>    <span class="token number">61439999</span>    <span class="token number">30719968</span>    b  W95 FAT32<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="lsblk"><a href="#lsblk" class="headerlink" title="lsblk"></a>lsblk</h3><ul>
+<li>如下, 类型为”disk”的有两个, sda sdb</li>
+<li>sda 被划分为了2个分区, sda1 与 sda2</li>
+<li>sdb 被划分为了1个分区, sdb1</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk</span>
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               <span class="token number">8</span>:0    <span class="token number">0</span>   20G  <span class="token number">0</span> disk
+├─sda1            <span class="token number">8</span>:1    <span class="token number">0</span>    1G  <span class="token number">0</span> part /boot
+└─sda2            <span class="token number">8</span>:2    <span class="token number">0</span>   19G  <span class="token number">0</span> part
+  ├─centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   17G  <span class="token number">0</span> lvm  /
+  └─centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span>
+sdb               <span class="token number">8</span>:16   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> disk
+└─sdb1            <span class="token number">8</span>:17   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> part<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="查看设备的文件系统类型"><a href="#查看设备的文件系统类型" class="headerlink" title="查看设备的文件系统类型"></a>查看设备的文件系统类型</h2><h3 id="不挂载查看-fdisk-l"><a href="#不挂载查看-fdisk-l" class="headerlink" title="不挂载查看: fdisk -l"></a>不挂载查看: fdisk -l</h3><p>如上, </p>
+<h3 id="不挂载查看-blkid"><a href="#不挂载查看-blkid" class="headerlink" title="不挂载查看: blkid"></a>不挂载查看: blkid</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sda2</span>
+/dev/sda2: <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"xb72qt-XG0d-7jNA-VOEC-z3jt-y7bz-mtye35"</span> <span class="token assign-left variable">TYPE</span><span class="token operator">=</span><span class="token string">"LVM2_member"</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/mapper/centos-root</span>
+/dev/mapper/centos-root: <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"a30443bd-8ab9-4869-917d-fe51b512b993"</span> <span class="token assign-left variable">TYPE</span><span class="token operator">=</span><span class="token string">"xfs"</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sdb1</span>
+/dev/sdb1: <span class="token assign-left variable">LABEL</span><span class="token operator">=</span><span class="token string">"DISK_IMG"</span> <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"1C9A-ED9E"</span> <span class="token assign-left variable">TYPE</span><span class="token operator">=</span><span class="token string">"vfat"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="挂载后查看-df-hT"><a href="#挂载后查看-df-hT" class="headerlink" title="挂载后查看: df -hT"></a>挂载后查看: df -hT</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># df -hT</span>
+Filesystem              Type      Size  Used Avail Use% Mounted on
+devtmpfs                devtmpfs  475M     <span class="token number">0</span>  475M   <span class="token number">0</span>% /dev
+tmpfs                   tmpfs     487M     <span class="token number">0</span>  487M   <span class="token number">0</span>% /dev/shm
+tmpfs                   tmpfs     487M  <span class="token number">7</span>.7M  479M   <span class="token number">2</span>% /run
+tmpfs                   tmpfs     487M     <span class="token number">0</span>  487M   <span class="token number">0</span>% /sys/fs/cgroup
+/dev/mapper/centos-root xfs        17G  <span class="token number">1</span>.4G   16G   <span class="token number">9</span>% /
+/dev/sda1               xfs      1014M  138M  877M  <span class="token number">14</span>% /boot
+tmpfs                   tmpfs      98M     <span class="token number">0</span>   98M   <span class="token number">0</span>% /run/user/0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看所有已挂载的分区与挂载点文件系统等信息-findmnt"><a href="#查看所有已挂载的分区与挂载点文件系统等信息-findmnt" class="headerlink" title="查看所有已挂载的分区与挂载点文件系统等信息 findmnt"></a>查看所有已挂载的分区与挂载点文件系统等信息 findmnt</h3><p>如下: </p>
+<ol>
+<li><code>/dev/mapper/centos-root</code> 分区挂载在 <code>/</code> 目录下, 文件系统类型是<code>xfs</code></li>
+<li><code>/dev/sda1</code> 分区挂载在 <code>/boot/</code> 目录下, 文件系统类型是<code>xfs</code></li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># findmnt</span>
+TARGET                                SOURCE                  FSTYPE     OPTIONS
+/                                     /dev/mapper/centos-root xfs        rw,relatime,seclabel,attr2,inode64,noquota
+├─/sys                                sysfs                   sysfs      rw,nosuid,nodev,noexec,relatime,seclabel
+│ ├─/sys/kernel/security              securityfs              securityfs rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/fs/cgroup                    tmpfs                   tmpfs      ro,nosuid,nodev,noexec,seclabel,mode<span class="token operator">=</span><span class="token number">755</span>
+│ │ ├─/sys/fs/cgroup/systemd          cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,xattr,release_agent<span class="token operator">=</span>/usr/lib/systemd/systemd-cgroups-agent,name<span class="token operator">=</span>systemd
+│ │ ├─/sys/fs/cgroup/memory           cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,memory
+│ │ ├─/sys/fs/cgroup/blkio            cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,blkio
+│ │ ├─/sys/fs/cgroup/cpuset           cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,cpuset
+│ │ ├─/sys/fs/cgroup/perf_event       cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,perf_event
+│ │ ├─/sys/fs/cgroup/net_cls,net_prio cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,net_prio,net_cls
+│ │ ├─/sys/fs/cgroup/devices          cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,devices
+│ │ ├─/sys/fs/cgroup/cpu,cpuacct      cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,cpuacct,cpu
+│ │ ├─/sys/fs/cgroup/hugetlb          cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,hugetlb
+│ │ ├─/sys/fs/cgroup/freezer          cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,freezer
+│ │ └─/sys/fs/cgroup/pids             cgroup                  cgroup     rw,nosuid,nodev,noexec,relatime,seclabel,pids
+│ ├─/sys/fs/pstore                    pstore                  pstore     rw,nosuid,nodev,noexec,relatime
+│ ├─/sys/kernel/config                configfs                configfs   rw,relatime
+│ ├─/sys/fs/selinux                   selinuxfs               selinuxfs  rw,relatime
+│ └─/sys/kernel/debug                 debugfs                 debugfs    rw,relatime
+├─/proc                               proc                    proc       rw,nosuid,nodev,noexec,relatime
+│ └─/proc/sys/fs/binfmt_misc          systemd-1               autofs     rw,relatime,fd<span class="token operator">=</span><span class="token number">26</span>,pgrp<span class="token operator">=</span><span class="token number">1</span>,timeout<span class="token operator">=</span><span class="token number">0</span>,minproto<span class="token operator">=</span><span class="token number">5</span>,maxproto<span class="token operator">=</span><span class="token number">5</span>,direct,pipe_ino<span class="token operator">=</span><span class="token number">13709</span>
+├─/dev                                devtmpfs                devtmpfs   rw,nosuid,seclabel,size<span class="token operator">=</span>485840k,nr_inodes<span class="token operator">=</span><span class="token number">121460</span>,mode<span class="token operator">=</span><span class="token number">755</span>
+│ ├─/dev/shm                          tmpfs                   tmpfs      rw,nosuid,nodev,seclabel
+│ ├─/dev/pts                          devpts                  devpts     rw,nosuid,noexec,relatime,seclabel,gid<span class="token operator">=</span><span class="token number">5</span>,mode<span class="token operator">=</span><span class="token number">620</span>,ptmxmode<span class="token operator">=</span>000
+│ ├─/dev/hugepages                    hugetlbfs               hugetlbfs  rw,relatime,seclabel
+│ └─/dev/mqueue                       mqueue                  mqueue     rw,relatime,seclabel
+├─/run                                tmpfs                   tmpfs      rw,nosuid,nodev,seclabel,mode<span class="token operator">=</span><span class="token number">755</span>
+│ └─/run/user/0                       tmpfs                   tmpfs      rw,nosuid,nodev,relatime,seclabel,size<span class="token operator">=</span>99568k,mode<span class="token operator">=</span><span class="token number">700</span>
+└─/boot                               /dev/sda1               xfs        rw,relatime,seclabel,attr2,inode64,noquota<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h2><h3 id="划分分区-fdisk-n"><a href="#划分分区-fdisk-n" class="headerlink" title="划分分区: fdisk n"></a>划分分区: fdisk n</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># fdisk /dev/sdb</span>
+Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>: n
+Partition type:
+   p   primary <span class="token punctuation">(</span><span class="token number">0</span> primary, <span class="token number">0</span> extended, <span class="token number">4</span> <span class="token function">free</span><span class="token punctuation">)</span>
+   e   extended
+Select <span class="token punctuation">(</span>default p<span class="token punctuation">)</span>: p
+Partition number <span class="token punctuation">(</span><span class="token number">1</span>-4, default <span class="token number">1</span><span class="token punctuation">)</span>:
+First sector <span class="token punctuation">(</span><span class="token number">2048</span>-61439999, default <span class="token number">2048</span><span class="token punctuation">)</span>:
+Using default value <span class="token number">2048</span>
+Last sector, +sectors or +size<span class="token punctuation">&#123;</span>K,M,G<span class="token punctuation">&#125;</span> <span class="token punctuation">(</span><span class="token number">2048</span>-61439999, default <span class="token number">61439999</span><span class="token punctuation">)</span>:
+Using default value <span class="token number">61439999</span>
+Partition <span class="token number">1</span> of <span class="token builtin class-name">type</span> Linux and of size <span class="token number">29.3</span> GiB is <span class="token builtin class-name">set</span>
+
+Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>: w
+The partition table has been altered<span class="token operator">!</span>
+
+Calling ioctl<span class="token punctuation">(</span><span class="token punctuation">)</span> to re-read partition table.
+Syncing disks.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="删除分区-fdisk-d"><a href="#删除分区-fdisk-d" class="headerlink" title="删除分区 fdisk d"></a>删除分区 fdisk d</h3><h3 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h3><h3 id="卸载分区"><a href="#卸载分区" class="headerlink" title="卸载分区"></a>卸载分区</h3><h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><h3 id="不分区-直接格式化整个设备"><a href="#不分区-直接格式化整个设备" class="headerlink" title="不分区, 直接格式化整个设备"></a>不分区, 直接格式化整个设备</h3><ul>
+<li>如下, 直接把U盘格式化为xfs文件系统, 之后使用 <code>blkid</code> 查看设备的文件系统类型: <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># mkfs.xfs -f /dev/sdb</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sdb</span>
+/dev/sdb: <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"b3841552-6b45-4e76-980a-911a107fbade"</span> <span class="token assign-left variable">TYPE</span><span class="token operator">=</span><span class="token string">"xfs"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3 id="分区-格式化分区"><a href="#分区-格式化分区" class="headerlink" title="分区, 格式化分区"></a>分区, 格式化分区</h3><ul>
+<li><p>如下, <code>/dev/sdb</code>U盘分成1个分区, 但不对分区进行格式化, blkid 查看到的信息为空</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># fdisk -l</span>
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1            <span class="token number">2048</span>    <span class="token number">61439999</span>    <span class="token number">30718976</span>   <span class="token number">83</span>  Linux
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sdb</span>
+/dev/sdb: <span class="token assign-left variable">PTTYPE</span><span class="token operator">=</span><span class="token string">"dos"</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sdb1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>将分区格式化之后, blkid 查看到具体分区文件系统类型信息:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># mkfs.xfs -f /dev/sdb1</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sdb1</span>
+/dev/sdb1: <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"6c3bcc54-b925-4e3c-a101-6edf5ca28268"</span> <span class="token assign-left variable">TYPE</span><span class="token operator">=</span><span class="token string">"xfs"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://linux.cn/article-10194-1.html">如何在 Linux 中查看已挂载的文件系统类型</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>常用命令</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>disk</tag>
+        <tag>os</tag>
       </tags>
   </entry>
 </search>

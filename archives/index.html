@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -211,6 +211,169 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-11-16-disk-partition-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-11-16-disk-partition-2/" class="post-title-link" itemprop="url">Linux磁盘与分区的常用命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-17 00:00:00" itemprop="dateCreated datePublished" datetime="2022-11-17T00:00:00+08:00">2022-11-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">常用命令</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h1><h2 id="查看当前系统块设备列表"><a href="#查看当前系统块设备列表" class="headerlink" title="查看当前系统块设备列表"></a>查看当前系统块设备列表</h2><h3 id="fdisk-l"><a href="#fdisk-l" class="headerlink" title="fdisk -l"></a>fdisk -l</h3><p>如下, <code>fdisk -l</code> 命令, 可以显示出:</p>
+<ol>
+<li>当前系统存在2块块设备, 分别是 &#x2F;dev&#x2F;sda 与 &#x2F;dev&#x2F;sdb, 大小分别为 21.5GB 与 31.5GB</li>
+<li>&#x2F;dev&#x2F;sda 磁盘, 划为两个分区, 分别是 &#x2F;dev&#x2F;sda1 &#x2F;dev&#x2F;sda2, 其中 &#x2F;dev&#x2F;sda2 为LVM文件系统类型</li>
+<li>&#x2F;dev&#x2F;sdb 磁盘(个人知道是U盘), 划分为1个分区 &#x2F;dev&#x2F;sdb1 , 文件系统类型是 <code>W95 FAT32</code></li>
+<li>TODO: 疑问1  <code>/dev/mapper/centos-root</code> <code>/dev/mapper/centos-swap</code> 分别都是啥? 个人已知是在 &#x2F;dev&#x2F;sda2 下继续分区出来的, 如下 <code>lsblk</code> 命令指示. 但为啥这里没有</li>
+<li>TODO: 疑问2 <code>Linux LVM</code> 具体是啥文件系统类型?</li>
+</ol>
+<blockquote>
+<p>SATA device names follow the pattern &#x2F;dev&#x2F;sd[a-z]<br>while NVMe device names have the following pattern &#x2F;dev&#x2F;nvme[1-9]n[1-9]</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># fdisk -l</span>
+Disk /dev/sda: <span class="token number">21.5</span> GB, <span class="token number">21474836480</span> bytes, <span class="token number">41943040</span> sectors
+Units <span class="token operator">=</span> sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+Disk label type: dos
+Disk identifier: 0x000b7bb1
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        <span class="token number">2048</span>     <span class="token number">2099199</span>     <span class="token number">1048576</span>   <span class="token number">83</span>  Linux
+/dev/sda2         <span class="token number">2099200</span>    <span class="token number">41943039</span>    <span class="token number">19921920</span>   8e  Linux LVM
+
+Disk /dev/mapper/centos-root: <span class="token number">18.2</span> GB, <span class="token number">18249416704</span> bytes, <span class="token number">35643392</span> sectors
+Units <span class="token operator">=</span> sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+
+Disk /dev/mapper/centos-swap: <span class="token number">2147</span> MB, <span class="token number">2147483648</span> bytes, <span class="token number">4194304</span> sectors
+Units <span class="token operator">=</span> sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+
+Disk /dev/sdb: <span class="token number">31.5</span> GB, <span class="token number">31457280000</span> bytes, <span class="token number">61440000</span> sectors
+Units <span class="token operator">=</span> sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+Disk label type: dos
+Disk identifier: 0x1c9aed9e
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1   *          <span class="token number">64</span>    <span class="token number">61439999</span>    <span class="token number">30719968</span>    b  W95 FAT32<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="lsblk"><a href="#lsblk" class="headerlink" title="lsblk"></a>lsblk</h3><ul>
+<li>如下, 类型为”disk”的有两个, sda sdb</li>
+<li>sda 被划分为了2个分区, sda1 与 sda2</li>
+<li>sdb 被划分为了1个分区, sdb1</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk</span>
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               <span class="token number">8</span>:0    <span class="token number">0</span>   20G  <span class="token number">0</span> disk
+├─sda1            <span class="token number">8</span>:1    <span class="token number">0</span>    1G  <span class="token number">0</span> part /boot
+└─sda2            <span class="token number">8</span>:2    <span class="token number">0</span>   19G  <span class="token number">0</span> part
+  ├─centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   17G  <span class="token number">0</span> lvm  /
+  └─centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span>
+sdb               <span class="token number">8</span>:16   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> disk
+└─sdb1            <span class="token number">8</span>:17   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> part<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-11-16-disk-partition-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-11-05-transistor-cnt-a-flawed-metric/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +410,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -369,7 +532,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -473,7 +636,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -606,7 +769,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -625,7 +788,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -643,10 +806,11 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问</p>
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问: </p>
 <ul>
 <li>为什么磁盘需要进行分区, 不分区直接按照文件夹划分有啥问题? 这个在Windows下尤其有疑问.</li>
-<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下?</li>
+<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下? </li>
+<li>分区与格式化以及文件系统有啥关系与区别? 是一对一的么? 一个分区下只能有一个文件系统么? 一个文件系统下只能有一个分区么?</li>
 </ul>
 <h1 id="为啥需要分区"><a href="#为啥需要分区" class="headerlink" title="为啥需要分区?"></a>为啥需要分区?</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>习惯了使用Linux&#x2F;Mac之后, 完全没有分区的概念了.</p>
 <ul>
@@ -734,7 +898,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -922,7 +1086,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1049,7 +1213,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1181,7 +1345,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1311,7 +1475,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1476,7 +1640,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -1581,7 +1745,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -1694,7 +1858,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -1805,7 +1969,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -1943,7 +2107,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2042,7 +2206,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2153,7 +2317,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2268,7 +2432,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2413,7 +2577,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2536,7 +2700,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2657,7 +2821,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2770,7 +2934,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2879,7 +3043,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -2986,7 +3150,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -3105,7 +3269,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -3226,7 +3390,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -3337,7 +3501,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -3460,7 +3624,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -3600,7 +3764,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -3704,7 +3868,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -3815,7 +3979,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -3942,7 +4106,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -4001,137 +4165,6 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-23-java-db-connection-transaction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-05-23-java-db-connection-transaction/" class="post-title-link" itemprop="url">Java中常用的数据库连接池以及事务框架的原理探究</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-24T00:00:00+08:00">2022-05-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="思考1-Spring里各种事务隔离级别-本质上是如何实现的"><a href="#思考1-Spring里各种事务隔离级别-本质上是如何实现的" class="headerlink" title="思考1: Spring里各种事务隔离级别, 本质上是如何实现的?"></a>思考1: Spring里各种事务隔离级别, 本质上是如何实现的?</h1><p>很有意思的一个问题. 单个connection或者DB原生是无法实现的, 本质上是通过不同的connection来实现的.</p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/19526604/how-does-transaction-suspension-work-in-spring">https://stackoverflow.com/questions/19526604/how-does-transaction-suspension-work-in-spring</a></p>
-<blockquote>
-<p>The point of suspending a transaction is to change the current transaction for a thread to a new one. This would NOT line up with the semantics of nested transactions because the new and suspended transactions are completely independent of each other. There is no connection-level API to support suspending transactions so this has to be done by using a different connection. If you are using JTA with Spring, this is done by the JTA transaction manager. If you are using DataSourceTransactionManager, you can look in the code and see that it will be saving off the current connection as a “suspended resource” and grabbing a new connection from the data source for the new transaction.</p>
-</blockquote>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://wiyi.org/physical-and-logical-transactions.html">https://wiyi.org/physical-and-logical-transactions.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://wiyi.org/how-does-transaction-suspension-in-spring.html">https://wiyi.org/how-does-transaction-suspension-in-spring.html</a></li>
-</ul>
-<h2 id="简化后的样例"><a href="#简化后的样例" class="headerlink" title="简化后的样例"></a>简化后的样例</h2><h3 id="REQUIRES-NEW"><a href="#REQUIRES-NEW" class="headerlink" title="REQUIRES_NEW"></a>REQUIRES_NEW</h3><ul>
-<li>新建事务，如果当前存在事务，则把当前事务挂起</li>
-<li>这个方法会独立提交事务，不受调用者的事务影响，父级异常，它也是正常提交</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; 假定为REQUIRE_NEW传播类型
-&#x2F;&#x2F; 1. 外部事务执行
-Connection conn &#x3D; getConnection(); &#x2F;&#x2F; 这里是新建connection
-Statement stmt &#x3D; conn.createStatement();
-stmt.execute(&quot;update xxx set xxx &#x3D; xxx&quot;);
-
-&#x2F;&#x2F; 2. 到这里, 内部事务开始, 需要执行方法2, REQUIRE_NEW传播级别, 那本质上是新建了个connection. 在Spring里, 其实就是suspend(), 即将上一个conn从ThreadLocal里移除; 然后把conn2放入ThreadLocal里.
-Connection conn2 &#x3D; getConnection(); &#x2F;&#x2F; 这个conn2与上边的conn是不同的连接
-Statement stmt2 &#x3D; conn.createStatement();
-stmt2.execute(&quot;update xxx set xxx &#x3D; xxx&quot;);
-conn2.commit(); &#x2F;&#x2F; 这里内部事务执行commit();
-stmt2.close();
-conn2.close();
-
-&#x2F;&#x2F; 3. 外部事务继续执行
-stmt.execute(&quot;update xxx set xxx&#x3D;xxx&quot;);
-conn.commit();  &#x2F;&#x2F; 这里外部事务执行commit();
-stmt.close();
-conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="PROPAGATION-REQUIRED"><a href="#PROPAGATION-REQUIRED" class="headerlink" title="PROPAGATION_REQUIRED"></a>PROPAGATION_REQUIRED</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-05-23-java-db-connection-transaction/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4157,14 +4190,14 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">252k</span>
+    <span title="站点总字数">258k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:49</span>
+    <span title="站点阅读时长">3:55</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

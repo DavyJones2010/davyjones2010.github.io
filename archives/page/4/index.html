@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -211,6 +211,167 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-09-08-kube-scheduler-queue/" class="post-title-link" itemprop="url">kube-scheduler笔记之Queue研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type PriorityQueue struct &#123;
+
+   &#x2F;&#x2F; backoff队列
+   podBackoff *util.PodBackoff
+   &#x2F;&#x2F; backoff队列, 与podBackoff区别?
+   podBackoffQ *util.Heap
+  
+   &#x2F;&#x2F; activeQ is heap structure that scheduler actively looks at to find pods to
+   &#x2F;&#x2F; schedule. Head of heap is the highest priority pod.
+   activeQ *util.Heap
+
+   &#x2F;&#x2F; unschedulable队列
+   unschedulableQ *UnschedulablePodsMap
+  
+   &#x2F;&#x2F; 抢占式调度成功后, 将preemptor放到nominatedPodMap里
+   nominatedPods *nominatedPodMap
+  
+   &#x2F;&#x2F; 全局调度周期的递增序号，当pod pop的时候会递增
+   schedulingCycle int64
+   &#x2F;&#x2F; 当未调度的pod重新被添加到activeQueue中会保存schedulingCycle到moveRequestCycle中
+   moveRequestCycle int64
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="核心解读"><a href="#核心解读" class="headerlink" title="核心解读"></a>核心解读</h2><ol>
+<li>Heap结构, 即为最大堆.</li>
+<li>activeQ: 存储所有等待调度的Pod的队列, 根据pod.Spec.Priority来构建最大堆</li>
+<li>podBackoffQ: 存储在多个schedulingCycle中依旧调度失败的情况下，则会通过之前说的backOff机制，延迟等待调度的时间. 但该backoffQ是纯的PodHeap, 并没有存储pod的backOff的具体信息</li>
+<li>podBackoff: 类似一个记分板, backoff的计数器，最后一次更新的时间等</li>
+<li>unschedulableQ: 本质上是&lt;podName, podInfo&gt;的map, 而不是一个队列.</li>
+</ol>
+<h2 id="重点疑问"><a href="#重点疑问" class="headerlink" title="重点疑问"></a>重点疑问</h2><ol>
+<li><p>在什么时候Pod被加入到activeQ中? 何时加入podBackoffQ中? 何时加入unschedulableQ中? Pod在这几个Q中间是如何变化的?</p>
+<ol>
+<li></li>
+</ol>
+</li>
+<li><p>podBackoffQ是按照什么来划分优先级的?</p>
+<ol>
+<li>如果仍然是按照优先级来, 如何防止高优先级Pod反复拉起, 反复失败?</li>
+<li>应该是按照调度失败次数? 还是调度等待时长?</li>
+<li>根据podsCompareBackoffCompleted, 按照podBackoffTime, 即调度失败次数. 调度等待时长与调度失败次数有一个函数关系.<ol>
+<li>如果pod从podBackoffQ中移入到activeQ中, 接下来调度失败, 重新移入podBackoffQ中, 此时podBackoffTime会重置么?</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>从unschedulableQ中移出pod的优先级是怎样的?</p>
+<ol>
+<li></li>
+</ol>
+</li>
+<li><p>Pod调度失败的终止条件是什么? 还是说没有终止条件? 始终在几个Queue中打转?</p>
+<ol>
+<li>对的. 除非显式调用api删除掉该Pod</li>
+</ol>
+</li>
+<li><p>各个队列有大小限制么? 如何防止Pod请求积压过多导致Queue(内存)满了?</p>
+</li>
+</ol>
+<p><img data-src="https://bbsmax.ikafan.com/static/L3Byb3h5L2h0dHBzL2ltZzIwMTguY25ibG9ncy5jb20vYmxvZy8xNTA2NzI0LzIwMjAwMS8xNTA2NzI0LTIwMjAwMTEzMTEwMzU5Mzg1LTM2MDkzMzYzNS5wbmc=.jpg" alt="img"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://www.shuzhiduo.com/A/rV576rRXJP/">https://www.shuzhiduo.com/A/rV576rRXJP/</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-09-08-kube-scheduler-queue/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-physical-psychological/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +408,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -355,7 +516,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -467,7 +628,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -572,7 +733,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -682,7 +843,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -788,7 +949,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -888,7 +1049,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -1010,7 +1171,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -1112,7 +1273,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -1247,7 +1408,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1360,7 +1521,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
 
   
@@ -1496,7 +1657,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-15 23:31:02" itemprop="dateModified" datetime="2022-11-15T23:31:02+08:00">2022-11-15</time>
+      <time title="修改时间：2022-11-18 00:25:13" itemprop="dateModified" datetime="2022-11-18T00:25:13+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1604,14 +1765,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">252k</span>
+    <span title="站点总字数">258k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:49</span>
+    <span title="站点阅读时长">3:55</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
