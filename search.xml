@@ -10533,6 +10533,24 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <p>所以在Windows下, 还是老老实实分区吧! 当然在严肃的企业场景, 也推荐按照系统盘与数据盘进行下区分.</p>
 </blockquote>
 <h1 id="为啥需要挂载"><a href="#为啥需要挂载" class="headerlink" title="为啥需要挂载?"></a>为啥需要挂载?</h1><p>尤其是在Linux下, 设备可以从 &#x2F;dev&#x2F;sda[b] 路径下获取, 为啥不能直接操作这些设备? 还需要挂载(mount)下?</p>
+<h2 id="为啥磁盘需要挂载才能使用"><a href="#为啥磁盘需要挂载才能使用" class="headerlink" title="为啥磁盘需要挂载才能使用?"></a>为啥磁盘需要挂载才能使用?</h2><h3 id="为啥不能直接操作-dev-sda-b-等裸设备"><a href="#为啥不能直接操作-dev-sda-b-等裸设备" class="headerlink" title="为啥不能直接操作/dev/sda[b]等裸设备?"></a>为啥不能直接操作<code>/dev/sda[b]</code>等裸设备?</h3><h3 id="挂载具体做了啥"><a href="#挂载具体做了啥" class="headerlink" title="挂载具体做了啥?"></a>挂载具体做了啥?</h3><p>本质上, Windows下也是有挂载这一步的, 本质上挂载就是把分区&#x2F;磁盘格式化之后的文件系统, 挂载到操作系统文件树下, 映射到某个目录,<br>便于操作系统</p>
+<h3 id="Windows下也有挂载么"><a href="#Windows下也有挂载么" class="headerlink" title="Windows下也有挂载么?"></a>Windows下也有挂载么?</h3><p>是的. Windows下</p>
+<h2 id="为啥不能像Windows一样-插入设备直接默认挂载"><a href="#为啥不能像Windows一样-插入设备直接默认挂载" class="headerlink" title="为啥不能像Windows一样, 插入设备直接默认挂载?"></a>为啥不能像Windows一样, 插入设备直接默认挂载?</h2><p>这个搜索了知乎, <a href="https://www.zhihu.com/question/524667726/answer/2437578886">得到的结论</a>是: </p>
+<ol>
+<li><p>Unix-like的操作系统不支持自动mount原因是为了权限控制</p>
+<blockquote>
+<p>POSIX权限的概念出现的很早，Unix、Linux都是支持POSIX权限的。<br>那么对于一个新设备来说，操作系统不是很确定是不是所有用户都对这个设备有访问权限，<br>这种情况下，如果自动mount，那么这个设备的内容就可能会被所有用户看到，<br>这样会有安全的隐患。所以Unix和Linux才要求必须先mount，<br>并且mount命令必须要用root权限，也就是说对于一个未知的设备，<br>必须由root来决定是不是可用的。</p>
+<p>所以，这种设计的原因已经很清晰了，就是为了权限控制。</p>
+</blockquote>
+</li>
+<li><p>Windows不需要这个机制，是因为Windows是从DOS发展过来的，这个过程中一直没有权限控制，</p>
+<blockquote>
+<p>所以Windows也不需要mount</p>
+</blockquote>
+</li>
+<li><p>Linux也可以做到自动挂载, 例如Ubuntu就是自动挂载的</p>
+</li>
+</ol>
 <h1 id="磁盘-amp-文件系统的扩展知识"><a href="#磁盘-amp-文件系统的扩展知识" class="headerlink" title="磁盘&amp;文件系统的扩展知识"></a>磁盘&amp;文件系统的扩展知识</h1><h2 id="磁盘-分区-文件系统-关系"><a href="#磁盘-分区-文件系统-关系" class="headerlink" title="磁盘, 分区, 文件系统 关系"></a>磁盘, 分区, 文件系统 关系</h2><p>如下: </p>
 <pre class="mermaid">erDiagram
     DiskDevice ||--|{ Partition : contain
@@ -10584,7 +10602,11 @@ Change: <span class="token number">2022</span>-06-26 <span class="token number">
 <div class="note warning"><p>TODO: 自己找个U盘试下划分成多个分区, 每个分区不同的文件系统类型?</p>
 </div>
 
-<h2 id="为啥磁盘需要挂载才能使用"><a href="#为啥磁盘需要挂载才能使用" class="headerlink" title="为啥磁盘需要挂载才能使用?"></a>为啥磁盘需要挂载才能使用?</h2>]]></content>
+
+
+
+
+]]></content>
       <categories>
         <category>十万个为什么</category>
       </categories>
