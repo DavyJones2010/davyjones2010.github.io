@@ -4039,7 +4039,8 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><a href="https://book.douban.com/subject/35026475/">山月记</a> </li>
 <li><a href="https://book.douban.com/subject/35669245/">乾隆: 政治, 爱情与性格</a> -20221029 done</li>
 <li><a href="https://book.douban.com/subject/26768309/">查令十字街84号</a> -20221031 done</li>
-<li><a href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a> -20221111 done</li>
+<li><a href="https://book.douban.com/subject/35731316/">文件系统技术内幕</a> <a href="https://www.bilibili.com/video/av889477532/">B站视频</a></li>
 </ul>
 <h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
 <li><a href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
@@ -10768,10 +10769,10 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
     <url>//2022-11-16-disk-partition-2/</url>
     <content><![CDATA[<h1 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h1><h2 id="查看当前系统块设备列表"><a href="#查看当前系统块设备列表" class="headerlink" title="查看当前系统块设备列表"></a>查看当前系统块设备列表</h2><h3 id="fdisk-l"><a href="#fdisk-l" class="headerlink" title="fdisk -l"></a>fdisk -l</h3><p>如下, <code>fdisk -l</code> 命令, 可以显示出:</p>
 <ol>
-<li>当前系统存在2块块设备, 分别是 &#x2F;dev&#x2F;sda 与 &#x2F;dev&#x2F;sdb, 大小分别为 21.5GB 与 31.5GB</li>
-<li>&#x2F;dev&#x2F;sda 磁盘, 划为两个分区, 分别是 &#x2F;dev&#x2F;sda1 &#x2F;dev&#x2F;sda2, 其中 &#x2F;dev&#x2F;sda2 为LVM文件系统类型</li>
-<li>&#x2F;dev&#x2F;sdb 磁盘(个人知道是U盘), 划分为1个分区 &#x2F;dev&#x2F;sdb1 , 文件系统类型是 <code>W95 FAT32</code></li>
-<li>TODO: 疑问1  <code>/dev/mapper/centos-root</code> <code>/dev/mapper/centos-swap</code> 分别都是啥? 个人已知是在 &#x2F;dev&#x2F;sda2 下继续分区出来的, 如下 <code>lsblk</code> 命令指示. 但为啥这里没有</li>
+<li>当前系统存在2块块设备, 分别是 <code>/dev/sda</code> 与 <code>/dev/sdb</code>, 大小分别为 21.5GB 与 31.5GB</li>
+<li><code>/dev/sda</code> 磁盘, 划为两个分区, 分别是 <code>/dev/sda1</code> <code>/dev/sda2</code>, 其中 <code>/dev/sda2</code> 为LVM文件系统类型</li>
+<li><code>/dev/sdb</code> 磁盘(个人知道是U盘), 划分为1个分区 <code>/dev/sdb1</code> , 文件系统类型是 <code>W95 FAT32</code></li>
+<li>TODO: 疑问1  <code>/dev/mapper/centos-root</code> <code>/dev/mapper/centos-swap</code> 分别都是啥? 个人已知是在 <code>/dev/sda2</code> 下继续分区出来的, 如下 <code>lsblk</code> 命令指示. 但为啥这里没有</li>
 <li>TODO: 疑问2 <code>Linux LVM</code> 具体是啥文件系统类型?</li>
 </ol>
 <blockquote>
@@ -10823,7 +10824,6 @@ sda               <span class="token number">8</span>:0    <span class="token nu
   └─centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span>
 sdb               <span class="token number">8</span>:16   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> disk
 └─sdb1            <span class="token number">8</span>:17   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> part<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
 <h2 id="查看设备的文件系统类型"><a href="#查看设备的文件系统类型" class="headerlink" title="查看设备的文件系统类型"></a>查看设备的文件系统类型</h2><h3 id="不挂载查看-fdisk-l"><a href="#不挂载查看-fdisk-l" class="headerlink" title="不挂载查看: fdisk -l"></a>不挂载查看: fdisk -l</h3><p>如上, </p>
 <h3 id="不挂载查看-blkid"><a href="#不挂载查看-blkid" class="headerlink" title="不挂载查看: blkid"></a>不挂载查看: blkid</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sda2</span>
@@ -10899,10 +10899,82 @@ The partition table has been altered<span class="token operator">!</span>
 Calling ioctl<span class="token punctuation">(</span><span class="token punctuation">)</span> to re-read partition table.
 Syncing disks.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="删除分区-fdisk-d"><a href="#删除分区-fdisk-d" class="headerlink" title="删除分区 fdisk d"></a>删除分区 fdisk d</h3><h3 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h3><h3 id="卸载分区"><a href="#卸载分区" class="headerlink" title="卸载分区"></a>卸载分区</h3><h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><h3 id="不分区-直接格式化整个设备"><a href="#不分区-直接格式化整个设备" class="headerlink" title="不分区, 直接格式化整个设备"></a>不分区, 直接格式化整个设备</h3><ul>
-<li>如下, 直接把U盘格式化为xfs文件系统, 之后使用 <code>blkid</code> 查看设备的文件系统类型: <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># mkfs.xfs -f /dev/sdb</span>
+<h3 id="删除分区-fdisk-d"><a href="#删除分区-fdisk-d" class="headerlink" title="删除分区 fdisk d"></a>删除分区 fdisk d</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># fdisk /dev/sdb</span>
+命令<span class="token punctuation">(</span>输入 m 获取帮助<span class="token punctuation">)</span>：d
+分区号 <span class="token punctuation">(</span><span class="token number">1</span>-3，默认 <span class="token number">3</span><span class="token punctuation">)</span>：
+分区 <span class="token number">3</span> 已删除
+
+命令<span class="token punctuation">(</span>输入 m 获取帮助<span class="token punctuation">)</span>：w
+The partition table has been altered<span class="token operator">!</span>
+
+Calling ioctl<span class="token punctuation">(</span><span class="token punctuation">)</span> to re-read partition table.
+正在同步磁盘。
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk -p</span>
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+/dev/sda                      <span class="token number">8</span>:0    <span class="token number">0</span>   20G  <span class="token number">0</span> disk
+├─/dev/sda1                   <span class="token number">8</span>:1    <span class="token number">0</span>    1G  <span class="token number">0</span> part /boot
+└─/dev/sda2                   <span class="token number">8</span>:2    <span class="token number">0</span>   19G  <span class="token number">0</span> part
+  ├─/dev/mapper/centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   17G  <span class="token number">0</span> lvm  /
+  └─/dev/mapper/centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span>
+/dev/sdb                      <span class="token number">8</span>:16   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> disk
+├─/dev/sdb1                   <span class="token number">8</span>:17   <span class="token number">1</span>   10G  <span class="token number">0</span> part
+└─/dev/sdb2                   <span class="token number">8</span>:18   <span class="token number">1</span>    4G  <span class="token number">0</span> part
+/dev/sr0                     <span class="token number">11</span>:0    <span class="token number">1</span>  973M  <span class="token number">0</span> rom<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="挂载分区-mount"><a href="#挂载分区-mount" class="headerlink" title="挂载分区 mount"></a>挂载分区 mount</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># mount /dev/sdb1 /root/movie</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># mount /dev/sdb2 /root/book</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># df -h</span>
+文件系统                 容量  已用  可用 已用% 挂载点
+/dev/sdb1                 10G   33M   10G    <span class="token number">1</span>% /root/movie
+/dev/sdb2                <span class="token number">4</span>.0G   33M  <span class="token number">4</span>.0G    <span class="token number">1</span>% /root/book
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk -p</span>
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+/dev/sdb                      <span class="token number">8</span>:16   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> disk
+├─/dev/sdb1                   <span class="token number">8</span>:17   <span class="token number">1</span>   10G  <span class="token number">0</span> part /root/movie
+└─/dev/sdb2                   <span class="token number">8</span>:18   <span class="token number">1</span>    4G  <span class="token number">0</span> part /root/book<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h3 id="卸载分区-umount"><a href="#卸载分区-umount" class="headerlink" title="卸载分区 umount"></a>卸载分区 umount</h3><blockquote>
+<p>本质上与Windows上弹出U盘(设备)是一样道理, 底层就是将该设备从文件树中删除.<br>因此如果操作系统正在访问&#x2F;占用该设备, 会卸载&#x2F;弹出失败.</p>
+</blockquote>
+<p>卸载方式: </p>
+<ul>
+<li>通过挂载点卸载</li>
+<li>通过设备名卸载</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># umount -v /root/movie #通过挂载点卸载</span>
+umount: /root/movie <span class="token punctuation">(</span>/dev/sdb1<span class="token punctuation">)</span> 已卸载
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># umount -v /dev/sdb2 #通过设备名卸载</span>
+umount: /root/book <span class="token punctuation">(</span>/dev/sdb2<span class="token punctuation">)</span> 已卸载
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk -p</span>
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+/dev/sdb                      <span class="token number">8</span>:16   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> disk
+├─/dev/sdb1                   <span class="token number">8</span>:17   <span class="token number">1</span>   10G  <span class="token number">0</span> part
+└─/dev/sdb2                   <span class="token number">8</span>:18   <span class="token number">1</span>    4G  <span class="token number">0</span> part
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># df -h</span>
+文件系统                 容量  已用  可用 已用% 挂载点
+devtmpfs                 475M     <span class="token number">0</span>  475M    <span class="token number">0</span>% /dev
+/dev/mapper/centos-root   17G  <span class="token number">1</span>.4G   16G    <span class="token number">9</span>% /
+/dev/sda1               1014M  138M  877M   <span class="token number">14</span>% /boot<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>卸载之后, 重新挂载:</p>
+<ol>
+<li>不要求新的挂载点与之前一直. 例如之前<code>/dev/sdb2</code>挂载到<code>/root/book</code>目录下, 卸载之后重新挂载, <code>/dev/sdb2</code>可以挂载到 <code>/root/movie</code> 目录下</li>
+<li>分区里边的内容仍然是保留的. 例如 <code>/dev/sdb2</code> 分区卸载重新挂载到其他目录, 该分区下的内容仍然是保留的, 能从新的目录下访问到该内容.</li>
+</ol>
+<h1 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h1><h2 id="为磁盘格式化文件系统"><a href="#为磁盘格式化文件系统" class="headerlink" title="为磁盘格式化文件系统"></a>为磁盘格式化文件系统</h2><h3 id="不分区-直接格式化整个设备"><a href="#不分区-直接格式化整个设备" class="headerlink" title="不分区, 直接格式化整个设备"></a>不分区, 直接格式化整个设备</h3><ul>
+<li>如下, 直接把U盘格式化为xfs文件系统, 之后使用 <code>blkid</code> 查看设备的文件系统类型, 使用<code>lsblk</code>只能看到该设备是裸设备: <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># mkfs.xfs -f /dev/sdb</span>
 <span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sdb</span>
-/dev/sdb: <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"b3841552-6b45-4e76-980a-911a107fbade"</span> <span class="token assign-left variable">TYPE</span><span class="token operator">=</span><span class="token string">"xfs"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+/dev/sdb: <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"b3841552-6b45-4e76-980a-911a107fbade"</span> <span class="token assign-left variable">TYPE</span><span class="token operator">=</span><span class="token string">"xfs"</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk -p</span>
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+/dev/sda                      <span class="token number">8</span>:0    <span class="token number">0</span>   20G  <span class="token number">0</span> disk
+├─/dev/sda1                   <span class="token number">8</span>:1    <span class="token number">0</span>    1G  <span class="token number">0</span> part /boot
+└─/dev/sda2                   <span class="token number">8</span>:2    <span class="token number">0</span>   19G  <span class="token number">0</span> part
+  ├─/dev/mapper/centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   17G  <span class="token number">0</span> lvm  /
+  └─/dev/mapper/centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span>
+/dev/sdb                      <span class="token number">8</span>:16   <span class="token number">1</span> <span class="token number">29</span>.3G  <span class="token number">0</span> disk
+/dev/sr0                     <span class="token number">11</span>:0    <span class="token number">1</span>  973M  <span class="token number">0</span> rom<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h3 id="分区-格式化分区"><a href="#分区-格式化分区" class="headerlink" title="分区, 格式化分区"></a>分区, 格式化分区</h3><ul>
 <li><p>如下, <code>/dev/sdb</code>U盘分成1个分区, 但不对分区进行格式化, blkid 查看到的信息为空</p>
@@ -10918,17 +10990,221 @@ Syncing disks.<span aria-hidden="true" class="line-numbers-rows"><span></span><s
 <span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># blkid /dev/sdb1</span>
 /dev/sdb1: <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"6c3bcc54-b925-4e3c-a101-6edf5ca28268"</span> <span class="token assign-left variable">TYPE</span><span class="token operator">=</span><span class="token string">"xfs"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 </ul>
+<h2 id="扩容-x2F-缩容分区"><a href="#扩容-x2F-缩容分区" class="headerlink" title="扩容&#x2F;缩容分区"></a>扩容&#x2F;缩容分区</h2><h3 id="普通类型分区"><a href="#普通类型分区" class="headerlink" title="普通类型分区"></a>普通类型分区</h3><p>可以无损扩容缩容么? </p>
+<h3 id="LVM类型"><a href="#LVM类型" class="headerlink" title="LVM类型"></a>LVM类型</h3><p>参照: <a href="https://zhuanlan.zhihu.com/p/450057653">centos7扩容根目录</a><br>自己使用的虚拟机是20G硬盘. 想要扩容下根目录, 扩容到32G, 即如下的 <code>MOUNTPOINT /</code>: </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk -p</span>
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+/dev/sda                      <span class="token number">8</span>:0    <span class="token number">0</span>   20G  <span class="token number">0</span> disk
+├─/dev/sda1                   <span class="token number">8</span>:1    <span class="token number">0</span>    1G  <span class="token number">0</span> part /boot
+└─/dev/sda2                   <span class="token number">8</span>:2    <span class="token number">0</span>   19G  <span class="token number">0</span> part
+  ├─/dev/mapper/centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   17G  <span class="token number">0</span> lvm  /
+  └─/dev/mapper/centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="VMWare-Fusion中修改磁盘大小"><a href="#VMWare-Fusion中修改磁盘大小" class="headerlink" title="VMWare Fusion中修改磁盘大小"></a>VMWare Fusion中修改磁盘大小</h4><p>操作方式比较简单, 直接在控制面板修改文件大小即可.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211222348543.png"></p>
+<ul>
+<li>该步骤结束后, 效果:<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk -p</span>
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+/dev/sda                      <span class="token number">8</span>:0    <span class="token number">0</span>   32G  <span class="token number">0</span> disk
+├─/dev/sda1                   <span class="token number">8</span>:1    <span class="token number">0</span>    1G  <span class="token number">0</span> part /boot
+└─/dev/sda2                   <span class="token number">8</span>:2    <span class="token number">0</span>   19G  <span class="token number">0</span> part
+  ├─/dev/mapper/centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   17G  <span class="token number">0</span> lvm  /
+  └─/dev/mapper/centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h4 id="将新增的空间新建一个LVM类型分区-fdisk"><a href="#将新增的空间新建一个LVM类型分区-fdisk" class="headerlink" title="将新增的空间新建一个LVM类型分区(fdisk)"></a>将新增的空间新建一个LVM类型分区(fdisk)</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># fdisk /dev/sda</span>
+命令<span class="token punctuation">(</span>输入 m 获取帮助<span class="token punctuation">)</span>：n
+Partition type:
+   p   primary <span class="token punctuation">(</span><span class="token number">2</span> primary, <span class="token number">0</span> extended, <span class="token number">2</span> <span class="token function">free</span><span class="token punctuation">)</span>
+   e   extended
+Select <span class="token punctuation">(</span>default p<span class="token punctuation">)</span>:
+Using default response p
+分区号 <span class="token punctuation">(</span><span class="token number">3,4</span>，默认 <span class="token number">3</span><span class="token punctuation">)</span>：
+起始 扇区 <span class="token punctuation">(</span><span class="token number">41943040</span>-67108863，默认为 <span class="token number">41943040</span><span class="token punctuation">)</span>：
+将使用默认值 <span class="token number">41943040</span>
+Last 扇区, +扇区 or +size<span class="token punctuation">&#123;</span>K,M,G<span class="token punctuation">&#125;</span> <span class="token punctuation">(</span><span class="token number">41943040</span>-67108863，默认为 <span class="token number">67108863</span><span class="token punctuation">)</span>：
+将使用默认值 <span class="token number">67108863</span>
+分区 <span class="token number">3</span> 已设置为 Linux 类型，大小设为 <span class="token number">12</span> GiB
+
+命令<span class="token punctuation">(</span>输入 m 获取帮助<span class="token punctuation">)</span>：p
+
+磁盘 /dev/sda：34.4 GB, <span class="token number">34359738368</span> 字节，67108864 个扇区
+Units <span class="token operator">=</span> 扇区 of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+扇区大小<span class="token punctuation">(</span>逻辑/物理<span class="token punctuation">)</span>：512 字节 / <span class="token number">512</span> 字节
+I/O 大小<span class="token punctuation">(</span>最小/最佳<span class="token punctuation">)</span>：512 字节 / <span class="token number">512</span> 字节
+磁盘标签类型：dos
+磁盘标识符：0x000b7bb1
+
+   设备 Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        <span class="token number">2048</span>     <span class="token number">2099199</span>     <span class="token number">1048576</span>   <span class="token number">83</span>  Linux
+/dev/sda2         <span class="token number">2099200</span>    <span class="token number">41943039</span>    <span class="token number">19921920</span>   8e  Linux LVM
+/dev/sda3        <span class="token number">41943040</span>    <span class="token number">67108863</span>    <span class="token number">12582912</span>   <span class="token number">83</span>  Linux
+
+命令<span class="token punctuation">(</span>输入 m 获取帮助<span class="token punctuation">)</span>：t
+分区号 <span class="token punctuation">(</span><span class="token number">1</span>-3，默认 <span class="token number">3</span><span class="token punctuation">)</span>：3
+Hex 代码<span class="token punctuation">(</span>输入 L 列出所有代码<span class="token punctuation">)</span>：L
+Hex 代码<span class="token punctuation">(</span>输入 L 列出所有代码<span class="token punctuation">)</span>：8e
+已将分区“Linux”的类型更改为“Linux LVM”
+
+命令<span class="token punctuation">(</span>输入 m 获取帮助<span class="token punctuation">)</span>：w
+The partition table has been altered<span class="token operator">!</span>
+正在同步磁盘。
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># partprobe</span>
+Warning: 无法以读写方式打开 /dev/sr0 <span class="token punctuation">(</span>只读文件系统<span class="token punctuation">)</span>。/dev/sr0 已按照只读方式打开。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>该步骤结束后, 效果如下, 看到多了一块分区<code>/dev/sda3</code>, TODO: 为啥这里看到的类型还是<code>part</code>??</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk</span>
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               <span class="token number">8</span>:0    <span class="token number">0</span>   32G  <span class="token number">0</span> disk
+├─sda1            <span class="token number">8</span>:1    <span class="token number">0</span>    1G  <span class="token number">0</span> part /boot
+├─sda2            <span class="token number">8</span>:2    <span class="token number">0</span>   19G  <span class="token number">0</span> part
+│ ├─centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   17G  <span class="token number">0</span> lvm  /
+│ └─centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span>
+└─sda3            <span class="token number">8</span>:3    <span class="token number">0</span>   12G  <span class="token number">0</span> part
+sr0              <span class="token number">11</span>:0    <span class="token number">1</span>  973M  <span class="token number">0</span> rom<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="将该LVM分区添加到pv-group下-并扩展原来的Logical-volume-实现逻辑卷扩容"><a href="#将该LVM分区添加到pv-group下-并扩展原来的Logical-volume-实现逻辑卷扩容" class="headerlink" title="将该LVM分区添加到pv group下, 并扩展原来的Logical volume, 实现逻辑卷扩容"></a>将该LVM分区添加到pv group下, 并扩展原来的Logical volume, 实现逻辑卷扩容</h4><ol>
+<li><p>将该LVM分区添加到pv group下, <code>vgextend</code>:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lvm</span>
+lvm<span class="token operator">></span> pvcreate /dev/sda3
+  Physical volume <span class="token string">"/dev/sda3"</span> successfully created.
+lvm<span class="token operator">></span> pvdisplay
+  --- Physical volume ---
+  PV Name               /dev/sda2
+  VG Name               centos
+  PV Size               <span class="token operator">&lt;</span><span class="token number">19.00</span> GiB / not usable <span class="token number">3.00</span> MiB
+  Allocatable           <span class="token function">yes</span> <span class="token punctuation">(</span>but full<span class="token punctuation">)</span>
+  PE Size               <span class="token number">4.00</span> MiB
+  Total PE              <span class="token number">4863</span>
+  Free PE               <span class="token number">0</span>
+  Allocated PE          <span class="token number">4863</span>
+  PV UUID               xb72qt-XG0d-7jNA-VOEC-z3jt-y7bz-mtye35
+
+  <span class="token string">"/dev/sda3"</span> is a new physical volume of <span class="token string">"12.00 GiB"</span>
+  --- NEW Physical volume ---
+  PV Name               /dev/sda3
+  VG Name
+  PV Size               <span class="token number">12.00</span> GiB
+  Allocatable           NO
+  PE Size               <span class="token number">0</span>
+  Total PE              <span class="token number">0</span>
+  Free PE               <span class="token number">0</span>
+  Allocated PE          <span class="token number">0</span>
+  PV UUID               f71O6u-tlAf-F2Cr-rTyy-zGcq-YqE2-PvO5Ri
+
+lvm<span class="token operator">></span> vgdisplay 
+  --- Volume group ---
+  VG Name               centos
+  System ID
+  Format                lvm2
+  Metadata Areas        <span class="token number">1</span>
+  Metadata Sequence No  <span class="token number">3</span>
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                <span class="token number">0</span>
+  Cur LV                <span class="token number">2</span>
+  Open LV               <span class="token number">2</span>
+  Max PV                <span class="token number">0</span>
+  Cur PV                <span class="token number">1</span>
+  Act PV                <span class="token number">1</span>
+  VG Size               <span class="token operator">&lt;</span><span class="token number">19.00</span> GiB
+  PE Size               <span class="token number">4.00</span> MiB
+  Total PE              <span class="token number">4863</span>
+  Alloc PE / Size       <span class="token number">4863</span> / <span class="token operator">&lt;</span><span class="token number">19.00</span> GiB
+  Free  PE / Size       <span class="token number">0</span> / <span class="token number">0</span>
+  VG UUID               seZW4N-tjt9-C5Qg-UFYp-z0uY-TZgq-2F94Hd
+
+lvm<span class="token operator">></span> vgextend centos /dev/sda3 <span class="token comment"># 将该LVM分区添加到pv group下</span>
+  Volume group <span class="token string">"centos"</span> successfully extended<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>扩展原始的Logical Volume, <code>lvextend</code>:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">lvm<span class="token operator">></span> lvdisplay
+  --- Logical volume ---
+  LV Path                /dev/centos/swap
+  LV Name                swap
+  VG Name                centos
+  LV UUID                wltk2Z-WIJW-vB6N-en6c-z5kg-U1IV-MWF7iX
+  LV Write Access        read/write
+  LV Creation host, <span class="token function">time</span> localhost, <span class="token number">2022</span>-10-22 07:51:02 -0400
+  LV Status              available
+  <span class="token comment"># open                 2</span>
+  LV Size                <span class="token number">2.00</span> GiB
+  Current LE             <span class="token number">512</span>
+  Segments               <span class="token number">1</span>
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently <span class="token builtin class-name">set</span> to     <span class="token number">8192</span>
+  Block device           <span class="token number">253</span>:1
+lvm<span class="token operator">></span> lvextend -l +100%FREE /dev/centos/root
+  Size of logical volume centos/root changed from <span class="token operator">&lt;</span><span class="token number">17.00</span> GiB <span class="token punctuation">(</span><span class="token number">4351</span> extents<span class="token punctuation">)</span> to <span class="token number">28.99</span> GiB <span class="token punctuation">(</span><span class="token number">7422</span> extents<span class="token punctuation">)</span>.
+  Logical volume centos/root successfully resized.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>该步骤结束后, 效果如下:</p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># lsblk -p</span>
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+/dev/sda                      <span class="token number">8</span>:0    <span class="token number">0</span>   32G  <span class="token number">0</span> disk
+├─/dev/sda1                   <span class="token number">8</span>:1    <span class="token number">0</span>    1G  <span class="token number">0</span> part /boot
+├─/dev/sda2                   <span class="token number">8</span>:2    <span class="token number">0</span>   19G  <span class="token number">0</span> part
+│ ├─/dev/mapper/centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   29G  <span class="token number">0</span> lvm  /
+│ └─/dev/mapper/centos-swap <span class="token number">253</span>:1    <span class="token number">0</span>    2G  <span class="token number">0</span> lvm  <span class="token punctuation">[</span>SWAP<span class="token punctuation">]</span>
+└─/dev/sda3                   <span class="token number">8</span>:3    <span class="token number">0</span>   12G  <span class="token number">0</span> part
+  └─/dev/mapper/centos-root <span class="token number">253</span>:0    <span class="token number">0</span>   29G  <span class="token number">0</span> lvm  /<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="同步到文件系统-实现根目录扩容"><a href="#同步到文件系统-实现根目录扩容" class="headerlink" title="同步到文件系统, 实现根目录扩容"></a>同步到文件系统, 实现根目录扩容</h4><p>注意, 这里的 <code>/dev/centos/root</code> 是<code>Logical volume</code>的<code>LV Path</code>, 即使用 <code>lvdisplay</code> 之后显示的<code>LV Path</code><br>而不是 <code>/dev/mapper/centos-root</code> 这个路径.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># xfs_growfs /dev/centos/root</span>
+meta-data<span class="token operator">=</span>/dev/mapper/centos-root <span class="token assign-left variable">isize</span><span class="token operator">=</span><span class="token number">512</span>    <span class="token assign-left variable">agcount</span><span class="token operator">=</span><span class="token number">4</span>, <span class="token assign-left variable">agsize</span><span class="token operator">=</span><span class="token number">1113856</span> blks
+         <span class="token operator">=</span>                       <span class="token assign-left variable">sectsz</span><span class="token operator">=</span><span class="token number">512</span>   <span class="token assign-left variable">attr</span><span class="token operator">=</span><span class="token number">2</span>, <span class="token assign-left variable">projid32bit</span><span class="token operator">=</span><span class="token number">1</span>
+         <span class="token operator">=</span>                       <span class="token assign-left variable">crc</span><span class="token operator">=</span><span class="token number">1</span>        <span class="token assign-left variable">finobt</span><span class="token operator">=</span><span class="token number">0</span> <span class="token assign-left variable">spinodes</span><span class="token operator">=</span><span class="token number">0</span>
+data     <span class="token operator">=</span>                       <span class="token assign-left variable">bsize</span><span class="token operator">=</span><span class="token number">4096</span>   <span class="token assign-left variable">blocks</span><span class="token operator">=</span><span class="token number">4455424</span>, <span class="token assign-left variable">imaxpct</span><span class="token operator">=</span><span class="token number">25</span>
+         <span class="token operator">=</span>                       <span class="token assign-left variable">sunit</span><span class="token operator">=</span><span class="token number">0</span>      <span class="token assign-left variable">swidth</span><span class="token operator">=</span><span class="token number">0</span> blks
+naming   <span class="token operator">=</span>version <span class="token number">2</span>              <span class="token assign-left variable">bsize</span><span class="token operator">=</span><span class="token number">4096</span>   ascii-ci<span class="token operator">=</span><span class="token number">0</span> <span class="token assign-left variable">ftype</span><span class="token operator">=</span><span class="token number">1</span>
+log      <span class="token operator">=</span>internal               <span class="token assign-left variable">bsize</span><span class="token operator">=</span><span class="token number">4096</span>   <span class="token assign-left variable">blocks</span><span class="token operator">=</span><span class="token number">2560</span>, <span class="token assign-left variable">version</span><span class="token operator">=</span><span class="token number">2</span>
+         <span class="token operator">=</span>                       <span class="token assign-left variable">sectsz</span><span class="token operator">=</span><span class="token number">512</span>   <span class="token assign-left variable">sunit</span><span class="token operator">=</span><span class="token number">0</span> blks, lazy-count<span class="token operator">=</span><span class="token number">1</span>
+realtime <span class="token operator">=</span>none                   <span class="token assign-left variable">extsz</span><span class="token operator">=</span><span class="token number">4096</span>   <span class="token assign-left variable">blocks</span><span class="token operator">=</span><span class="token number">0</span>, <span class="token assign-left variable">rtextents</span><span class="token operator">=</span><span class="token number">0</span>
+data blocks changed from <span class="token number">4455424</span> to <span class="token number">7600128</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>该步骤结束后, 效果如下: <pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# lsblk -p
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+&#x2F;dev&#x2F;sda                      8:0    0   32G  0 disk
+├─&#x2F;dev&#x2F;sda1                   8:1    0    1G  0 part &#x2F;boot
+├─&#x2F;dev&#x2F;sda2                   8:2    0   19G  0 part
+│ ├─&#x2F;dev&#x2F;mapper&#x2F;centos-root 253:0    0   29G  0 lvm  &#x2F;
+│ └─&#x2F;dev&#x2F;mapper&#x2F;centos-swap 253:1    0    2G  0 lvm  [SWAP]
+└─&#x2F;dev&#x2F;sda3                   8:3    0   12G  0 part
+  └─&#x2F;dev&#x2F;mapper&#x2F;centos-root 253:0    0   29G  0 lvm  &#x2F;
+
+[root@localhost ~]# df -h
+文件系统                 容量  已用  可用 已用% 挂载点
+&#x2F;dev&#x2F;mapper&#x2F;centos-root   29G  1.4G   28G    5% &#x2F;
+&#x2F;dev&#x2F;sda1               1014M  138M  877M   14% &#x2F;boot<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h1 id="总结-amp-思考"><a href="#总结-amp-思考" class="headerlink" title="总结&amp;思考"></a>总结&amp;思考</h1><p>深刻体会到了磁盘与文件系统的关系, 如知乎某位大神所言, <strong>根本没有关系!</strong> </p>
+<ul>
+<li>一个磁盘(块设备)可以分为多个分区, 每个分区都可以分别格式化为不同的文件系统, 然后分别挂载在不同的目录下.</li>
+<li>裸设备也可以不分区, 直接格式化为文件系统.</li>
+<li>文件系统里一个文件可以作为(虚拟化为)一个块设备使用 </li>
+<li>多个磁盘&#x2F;多个分区也可以共同组成一个设备, 该设备使用一个分区&#x2F;文件系统类型.</li>
+</ul>
+<p>TODO: </p>
+<ol>
+<li>研究下LVM吧, 不求源码级别的深入, 但原理与实践需要跟上.</li>
+<li>分区与文件系统格式方案的最佳实践是啥?</li>
+</ol>
 <h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
 <li><a href="https://linux.cn/article-10194-1.html">如何在 Linux 中查看已挂载的文件系统类型</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/450057653">centos7扩容根目录（&#x2F;dev&#x2F;mapper&#x2F;centos-root）</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>常用命令</category>
+        <category>Linux常用命令</category>
       </categories>
       <tags>
         <tag>linux</tag>
         <tag>disk</tag>
         <tag>os</tag>
+        <tag>file-system</tag>
       </tags>
   </entry>
 </search>
