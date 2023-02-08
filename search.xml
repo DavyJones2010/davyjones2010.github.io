@@ -10483,57 +10483,6 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
       </tags>
   </entry>
   <entry>
-    <title>K8s部署使用错误排查</title>
-    <url>//2022-11-01-k8s-trouble-shooting/</url>
-    <content><![CDATA[<h1 id="ImagePullBackOff"><a href="#ImagePullBackOff" class="headerlink" title="ImagePullBackOff"></a>ImagePullBackOff</h1><h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><hr>
-<p>在mac上使用minikube, 创建pod出现如下 ImagePullBackOff:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Normal   Pulling    8s               kubelet            Pulling image <span class="token string">"docker.io/nginx:1.23"</span>
-Warning  Failed     8s               kubelet            Failed to pull image <span class="token string">"docker.io/nginx:1.23"</span><span class="token builtin class-name">:</span> rpc error: code <span class="token operator">=</span> Unknown desc <span class="token operator">=</span> Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving
-Warning  Failed     8s               kubelet            Error: ErrImagePull
-Normal   BackOff    6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Back-off pulling image <span class="token string">"docker.io/nginx:1.23"</span>
-Warning  Failed     6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Error: ImagePullBackOff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><hr>
-<p>参见: <a href="https://github.com/docker/for-mac/issues/1317">解决方案</a></p>
-<ol>
-<li><p>登录minikube的节点</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ minikube <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>在minikube node上手动 pull docker image, 如下, 发现问题仍然重现</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx
-Using default tag: latest
-Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改minikube node上的resolv.conf文件的nameserver:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">vi</span> /etc/resolv.conf
-nameserver <span class="token number">8.8</span>.8.8
-search <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>重新尝试手动pull image, 发现问题解决:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx:1.23
-<span class="token number">1.23</span>: Pulling from library/nginx
-Digest: sha256:943c25b4b66b332184d5ba6bb18234273551593016c0e0ae906bab111548239f
-Status: Downloaded newer image <span class="token keyword">for</span> nginx:1.23
-docker.io/library/nginx:1.23<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>退出node, 在Mac上重新检查pod状态, 问题解决🎉🎉🎉:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMacBook-Pro:~ davywalker$ k get po
-NAME                              READY   STATUS    RESTARTS   AGE
-hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          87s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<h2 id="为啥叫”ImagePullBackOff”"><a href="#为啥叫”ImagePullBackOff”" class="headerlink" title="为啥叫”ImagePullBackOff”??"></a>为啥叫”ImagePullBackOff”??</h2><hr>
-<p>参见文章 <a href="https://www.tutorialworks.com/kubernetes-imagepullbackoff/">Kubernetes ImagePullBackOff error: what you need to know</a> 说明.</p>
-<blockquote>
-<p>The status ImagePullBackOff means that a Pod couldn’t start,<br>because Kubernetes couldn’t pull a container image.<br>The ‘BackOff’ part means that Kubernetes will keep trying to pull the image,<br>with an increasing delay (‘back-off’).</p>
-</blockquote>
-<p>这里的”BackOff”就是”退避”的意思, 当拉取失败时, kubelet应该有个退避算法来重试拉取. 具体退避算法是啥, 有待后续钻研. 🤔</p>
-]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>kubectl</tag>
-        <tag>trouble-shooting</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
     <url>//2022-08-30-disk-partition/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问: </p>
@@ -10673,6 +10622,57 @@ Change: <span class="token number">2022</span>-06-26 <span class="token number">
         <tag>linux</tag>
         <tag>disk</tag>
         <tag>os</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s部署使用错误排查</title>
+    <url>//2022-11-01-k8s-trouble-shooting/</url>
+    <content><![CDATA[<h1 id="ImagePullBackOff"><a href="#ImagePullBackOff" class="headerlink" title="ImagePullBackOff"></a>ImagePullBackOff</h1><h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><hr>
+<p>在mac上使用minikube, 创建pod出现如下 ImagePullBackOff:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Normal   Pulling    8s               kubelet            Pulling image <span class="token string">"docker.io/nginx:1.23"</span>
+Warning  Failed     8s               kubelet            Failed to pull image <span class="token string">"docker.io/nginx:1.23"</span><span class="token builtin class-name">:</span> rpc error: code <span class="token operator">=</span> Unknown desc <span class="token operator">=</span> Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving
+Warning  Failed     8s               kubelet            Error: ErrImagePull
+Normal   BackOff    6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Back-off pulling image <span class="token string">"docker.io/nginx:1.23"</span>
+Warning  Failed     6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Error: ImagePullBackOff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><hr>
+<p>参见: <a href="https://github.com/docker/for-mac/issues/1317">解决方案</a></p>
+<ol>
+<li><p>登录minikube的节点</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ minikube <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>在minikube node上手动 pull docker image, 如下, 发现问题仍然重现</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx
+Using default tag: latest
+Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改minikube node上的resolv.conf文件的nameserver:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">vi</span> /etc/resolv.conf
+nameserver <span class="token number">8.8</span>.8.8
+search <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>重新尝试手动pull image, 发现问题解决:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx:1.23
+<span class="token number">1.23</span>: Pulling from library/nginx
+Digest: sha256:943c25b4b66b332184d5ba6bb18234273551593016c0e0ae906bab111548239f
+Status: Downloaded newer image <span class="token keyword">for</span> nginx:1.23
+docker.io/library/nginx:1.23<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>退出node, 在Mac上重新检查pod状态, 问题解决🎉🎉🎉:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMacBook-Pro:~ davywalker$ k get po
+NAME                              READY   STATUS    RESTARTS   AGE
+hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          87s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h2 id="为啥叫”ImagePullBackOff”"><a href="#为啥叫”ImagePullBackOff”" class="headerlink" title="为啥叫”ImagePullBackOff”??"></a>为啥叫”ImagePullBackOff”??</h2><hr>
+<p>参见文章 <a href="https://www.tutorialworks.com/kubernetes-imagepullbackoff/">Kubernetes ImagePullBackOff error: what you need to know</a> 说明.</p>
+<blockquote>
+<p>The status ImagePullBackOff means that a Pod couldn’t start,<br>because Kubernetes couldn’t pull a container image.<br>The ‘BackOff’ part means that Kubernetes will keep trying to pull the image,<br>with an increasing delay (‘back-off’).</p>
+</blockquote>
+<p>这里的”BackOff”就是”退避”的意思, 当拉取失败时, kubelet应该有个退避算法来重试拉取. 具体退避算法是啥, 有待后续钻研. 🤔</p>
+]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>kubectl</tag>
+        <tag>trouble-shooting</tag>
       </tags>
   </entry>
   <entry>
@@ -11377,6 +11377,9 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 <h1 id="酬乐天咏老见示"><a href="#酬乐天咏老见示" class="headerlink" title="酬乐天咏老见示"></a>酬乐天咏老见示</h1><p>刘禹锡 〔唐代〕</p>
 <p>人谁不顾老，老去有谁怜。<br>身瘦带频减，发稀冠自偏。<br>废书缘惜眼，多灸为随年。<br>经事还谙事，阅人如阅川。<br>细思皆幸矣，下此便翛然。<br>莫道桑榆晚，为霞尚满天。</p>
 <p>阅人如阅川：意谓阅历人生如同积水成川一样。语出陆机《叹逝赋》：“阅水以成川，水滔滔而日度；世阅人而为世，人冉冉而行暮。”阅，经历。</p>
+<h1 id="偶作寄朗之"><a href="#偶作寄朗之" class="headerlink" title="偶作寄朗之"></a>偶作寄朗之</h1><p>白居易 〔唐代〕</p>
+<p>历想为官日，无如刺史时。<br>欢娱接宾客，饱暖及妻儿。<br>自到东都后，安闲更得宜。<br>分司胜刺史，致仕胜分司。<br>何况园林下，欣然得朗之。<br>仰名同旧识，为乐即新知。<br>有雪先相访，无花不作期。<br>斗醲干酿酒，夸妙细吟诗。<br>里巷千来往，都门五别离。<br>岐分两回首，书到一开眉。<br>叶落槐亭院，冰生竹阁池。<br>雀罗谁问讯，鹤氅罢追随。<br>身与心俱病，容将力共衰。<br>老来多健忘，唯不忘相思。</p>
+<h2 id="译文-2"><a href="#译文-2" class="headerlink" title="译文"></a>译文</h2><p>回想为官时的日子，没有比做刺史时更快意舒畅了。<br>欢乐的接待来访的宾客，妻儿的生活能够得到保障。<br>自从来到东都以后，生活清闲更胜从前。<br>做分司时清闲的生活胜过刺史，辞去官职后生活清闲胜过分司。<br>更不说是在这偏远的家乡，能收到你的书信非常欣喜。<br>仰慕你的大名就像与你相识已久，一起做乐曲就像是新得的知己。<br>下雪时就先到朗之家里拜访，不是花开时节不相约。<br>边畅饮着自己酿造的美酒，边细细品味所作的诗句。<br>作为邻里已来往无数遍，在那京都城门也已分别五次。<br>翘首以盼你的来信，书信到时方能舒展眉头。<br>槐亭院中已满是落叶，竹阁池中的水也结满冰霜。<br>门庭冷落无处询问讯息，只得放弃追问。<br>身体病痛增多，容貌与体力也在逐渐衰退。<br>虽已年老记忆减退，但你我间那些相处场景仍历历在目从未忘却。</p>
 ]]></content>
       <categories>
         <category>诗词</category>
