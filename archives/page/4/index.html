@@ -156,12 +156,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">177</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,559 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-affinity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-09-08-kube-scheduler-affinity/" class="post-title-link" itemprop="url">kube-scheduler笔记之亲和性调度</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/k8s-source-code-analysis/blob/master/core/scheduler/affinity.md">https://github.com/DavyJones2010/k8s-source-code-analysis/blob/master/core/scheduler/affinity.md</a></p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>分为如下几种: </p>
+<ul>
+<li><p>NodeSelector</p>
+</li>
+<li><p>NodeAffinity</p>
+<ul>
+<li>preferredDuringSchedulingIgnoredDuringExecution: 软约束</li>
+<li>requiredDuringSchedulingIgnoredDuringExecution: 硬约束</li>
+</ul>
+</li>
+<li><p>PodAffinity:</p>
+<ul>
+<li>preferredDuringSchedulingIgnoredDuringExecution: 软约束</li>
+<li>requiredDuringSchedulingIgnoredDuringExecution: 硬约束</li>
+</ul>
+</li>
+<li><p>requiredDuringSchedulingIgnoredDuringExecution</p>
+<ul>
+<li><p>与 NodeSelector 或者 LabelSelector 有啥区别? 都是硬约束, 都会导致Node被筛除掉</p>
+<ul>
+<li><p>区别在于: LabelSelector 只能判断 “a.label.equals(b.label)”, 而NodeSelector支持完整的表达式, 例如</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+        <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> kubernetes.io/e2e<span class="token punctuation">-</span>az<span class="token punctuation">-</span>name
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az1
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az2
+      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">preference</span><span class="token punctuation">:</span>
+          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>key
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>“IgnoredDuringExecution”部分意味着，类似于 <code>nodeSelector</code> 的工作原理，如果节点的标签在运行时发生变更，从而不再满足 pod 上的亲和规则，那么 pod 将仍然继续在该节点上运行。也就是onetime的原则, 只会在调度时关注该标签, 后续节点标签变化, 不会重调度.</p>
+</li>
+</ul>
+<h2 id="实现研究"><a href="#实现研究" class="headerlink" title="实现研究"></a>实现研究</h2><h3 id="NodeAffinity"><a href="#NodeAffinity" class="headerlink" title="NodeAffinity"></a>NodeAffinity</h3><p>代码样例</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+        <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> kubernetes.io/e2e<span class="token punctuation">-</span>az<span class="token punctuation">-</span>name
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az1
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az2
+      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">preference</span><span class="token punctuation">:</span>
+          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>key
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="RequiredDuringSchedulingIgnoredDuringExecution-硬约束"><a href="#RequiredDuringSchedulingIgnoredDuringExecution-硬约束" class="headerlink" title="RequiredDuringSchedulingIgnoredDuringExecution(硬约束)"></a>RequiredDuringSchedulingIgnoredDuringExecution(硬约束)</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-09-08-kube-scheduler-affinity/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-09-08-kube-scheduler-cache/" class="post-title-link" itemprop="url">kube-scheduler笔记之SchedulerCache研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="源码路径"><a href="#源码路径" class="headerlink" title="源码路径"></a>源码路径</h1><pre class="line-numbers language-none"><code class="language-none">kubernetes&#x2F;pkg&#x2F;scheduler&#x2F;internal&#x2F;cache&#x2F;cache.go<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="结构详解"><a href="#结构详解" class="headerlink" title="结构详解"></a>结构详解</h1><h2 id="SchedulerCache"><a href="#SchedulerCache" class="headerlink" title="SchedulerCache"></a>SchedulerCache</h2><h3 id="结构代码"><a href="#结构代码" class="headerlink" title="结构代码"></a>结构代码</h3><pre class="line-numbers language-none"><code class="language-none">type schedulerCache struct &#123;
+
+	&#x2F;&#x2F; 锁信息
+	&#x2F;&#x2F; This mutex guards all fields within this cache struct.
+	mu sync.RWMutex
+	
+	&#x2F;&#x2F; Pod信息(重要)
+	&#x2F;&#x2F; a set of assumed pod keys.
+	&#x2F;&#x2F; The key could further be used to get an entry in podStates.
+	assumedPods map[string]bool
+	&#x2F;&#x2F; a map from pod key to podState.
+	podStates map[string]*podState
+	
+	&#x2F;&#x2F; Node信息(重要)
+	nodes     map[string]*nodeInfoListItem
+	&#x2F;&#x2F; headNode points to the most recently updated NodeInfo in &quot;nodes&quot;. It is the
+	&#x2F;&#x2F; head of the linked list.
+	headNode *nodeInfoListItem
+	nodeTree *NodeTree
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>是调度决策的资源信息核心. 包括如下重要部分:</p>
+<ul>
+<li>headNode *nodeInfoListItem: 指向nodeInfo链表的头部指针</li>
+<li>nodes map[string]*nodeInfoListItem: nodeInfo的组合, key: nodeName, value: nodeInfo</li>
+<li>nodeTree *NodeTree: 按zone打散的node结构.</li>
+</ul>
+<h3 id="核心操作"><a href="#核心操作" class="headerlink" title="核心操作"></a>核心操作</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-09-08-kube-scheduler-cache/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-filter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-09-08-kube-scheduler-filter/" class="post-title-link" itemprop="url">kube-scheduler笔记之filter</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li>Predicates Policies就是提供给Scheduler用来过滤出满足所定义条件的Nodes，<strong>并发的</strong>(最多16个goroutine)对每个Node启动所有Predicates Policies的遍历Filter，看其是否都满足配置的Predicates Policies，若有一个Policy不满足，则直接被淘汰。</li>
+</ul>
+<h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Filters the nodes to find the ones that fit based on the given predicate functions</span>
+<span class="token comment">// Each node is passed through the predicate functions to determine if it is a fit</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>g <span class="token operator">*</span>genericScheduler<span class="token punctuation">)</span> <span class="token function">findNodesThatFit</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> nodes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">,</span> FailedPredicateMap<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> filtered <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node
+	failedPredicateMap <span class="token operator">:=</span> FailedPredicateMap<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span>predicates<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+		filtered <span class="token operator">=</span> nodes
+	<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+		allNodes <span class="token operator">:=</span> <span class="token function">int32</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span>cache<span class="token punctuation">.</span><span class="token function">NodeTree</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">NumNodes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		numNodesToFind <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">numFeasibleNodesToFind</span><span class="token punctuation">(</span>allNodes<span class="token punctuation">)</span>
+
+		<span class="token comment">// Create filtered list with enough space to avoid growing it</span>
+		<span class="token comment">// and allow assigning.</span>
+		filtered <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">,</span> numNodesToFind<span class="token punctuation">)</span>
+		errs <span class="token operator">:=</span> errors<span class="token punctuation">.</span>MessageCountMap<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+		<span class="token keyword">var</span> <span class="token punctuation">(</span>
+			predicateResultLock sync<span class="token punctuation">.</span>Mutex
+			filteredLen         <span class="token builtin">int32</span>
+		<span class="token punctuation">)</span>
+
+		ctx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+		<span class="token comment">// We can use the same metadata producer for all nodes.</span>
+		meta <span class="token operator">:=</span> g<span class="token punctuation">.</span><span class="token function">predicateMetaProducer</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">)</span>
+
+		checkNode <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			nodeName <span class="token operator">:=</span> g<span class="token punctuation">.</span>cache<span class="token punctuation">.</span><span class="token function">NodeTree</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			fits<span class="token punctuation">,</span> failedPredicates<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">podFitsOnNode</span><span class="token punctuation">(</span>
+				pod<span class="token punctuation">,</span>
+				meta<span class="token punctuation">,</span>
+				g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">[</span>nodeName<span class="token punctuation">]</span><span class="token punctuation">,</span>
+				g<span class="token punctuation">.</span>predicates<span class="token punctuation">,</span>
+				g<span class="token punctuation">.</span>schedulingQueue<span class="token punctuation">,</span>
+				g<span class="token punctuation">.</span>alwaysCheckAllPredicates<span class="token punctuation">,</span>
+			<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+				predicateResultLock<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				errs<span class="token punctuation">[</span>err<span class="token punctuation">.</span><span class="token function">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">++</span>
+				predicateResultLock<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token keyword">return</span>
+			<span class="token punctuation">&#125;</span>
+			<span class="token keyword">if</span> fits <span class="token punctuation">&#123;</span>
+				length <span class="token operator">:=</span> atomic<span class="token punctuation">.</span><span class="token function">AddInt32</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>filteredLen<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+				<span class="token keyword">if</span> length <span class="token operator">></span> numNodesToFind <span class="token punctuation">&#123;</span>
+					<span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+					atomic<span class="token punctuation">.</span><span class="token function">AddInt32</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>filteredLen<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+				<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+					filtered<span class="token punctuation">[</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">[</span>nodeName<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token punctuation">&#125;</span>
+			<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+				predicateResultLock<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				failedPredicateMap<span class="token punctuation">[</span>nodeName<span class="token punctuation">]</span> <span class="token operator">=</span> failedPredicates
+				predicateResultLock<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+
+		<span class="token comment">// Stops searching for more nodes once the configured number of feasible nodes</span>
+		<span class="token comment">// are found.</span>
+		workqueue<span class="token punctuation">.</span><span class="token function">ParallelizeUntil</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token function">int</span><span class="token punctuation">(</span>allNodes<span class="token punctuation">)</span><span class="token punctuation">,</span> checkNode<span class="token punctuation">)</span>
+
+		filtered <span class="token operator">=</span> filtered<span class="token punctuation">[</span><span class="token punctuation">:</span>filteredLen<span class="token punctuation">]</span>
+		<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>errs<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> FailedPredicateMap<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> errors<span class="token punctuation">.</span><span class="token function">CreateAggregateFromMessageCountMap</span><span class="token punctuation">(</span>errs<span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>filtered<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token function">len</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span>extenders<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> extender <span class="token operator">:=</span> <span class="token keyword">range</span> g<span class="token punctuation">.</span>extenders <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> <span class="token operator">!</span>extender<span class="token punctuation">.</span><span class="token function">IsInterested</span><span class="token punctuation">(</span>pod<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				<span class="token keyword">continue</span>
+			<span class="token punctuation">&#125;</span>
+			filteredList<span class="token punctuation">,</span> failedMap<span class="token punctuation">,</span> err <span class="token operator">:=</span> extender<span class="token punctuation">.</span><span class="token function">Filter</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> filtered<span class="token punctuation">,</span> g<span class="token punctuation">.</span>nodeInfoSnapshot<span class="token punctuation">.</span>NodeInfoMap<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+				<span class="token keyword">if</span> extender<span class="token punctuation">.</span><span class="token function">IsIgnorable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+					klog<span class="token punctuation">.</span><span class="token function">Warningf</span><span class="token punctuation">(</span><span class="token string">"Skipping extender %v as it returned error %v and has ignorable flag set"</span><span class="token punctuation">,</span>
+						extender<span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+					<span class="token keyword">continue</span>
+				<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+					<span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> FailedPredicateMap<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> err
+				<span class="token punctuation">&#125;</span>
+			<span class="token punctuation">&#125;</span>
+
+			<span class="token keyword">for</span> failedNodeName<span class="token punctuation">,</span> failedMsg <span class="token operator">:=</span> <span class="token keyword">range</span> failedMap <span class="token punctuation">&#123;</span>
+				<span class="token keyword">if</span> <span class="token boolean">_</span><span class="token punctuation">,</span> found <span class="token operator">:=</span> failedPredicateMap<span class="token punctuation">[</span>failedNodeName<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">!</span>found <span class="token punctuation">&#123;</span>
+					failedPredicateMap<span class="token punctuation">[</span>failedNodeName<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+				<span class="token punctuation">&#125;</span>
+				failedPredicateMap<span class="token punctuation">[</span>failedNodeName<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>failedPredicateMap<span class="token punctuation">[</span>failedNodeName<span class="token punctuation">]</span><span class="token punctuation">,</span> predicates<span class="token punctuation">.</span><span class="token function">NewFailureReason</span><span class="token punctuation">(</span>failedMsg<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token punctuation">&#125;</span>
+			filtered <span class="token operator">=</span> filteredList
+			<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>filtered<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+				<span class="token keyword">break</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> filtered<span class="token punctuation">,</span> failedPredicateMap<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h3 id="PodFitsOnNode"><a href="#PodFitsOnNode" class="headerlink" title="PodFitsOnNode"></a>PodFitsOnNode</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">podFitsOnNode</span><span class="token punctuation">(</span>
+	pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span>
+	meta predicates<span class="token punctuation">.</span>PredicateMetadata<span class="token punctuation">,</span>
+	info <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>NodeInfo<span class="token punctuation">,</span>
+	predicateFuncs <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>FitPredicate<span class="token punctuation">,</span>
+	queue internalqueue<span class="token punctuation">.</span>SchedulingQueue<span class="token punctuation">,</span>
+	alwaysCheckAllPredicates <span class="token builtin">bool</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> failedPredicates <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason
+
+	podsAdded <span class="token operator">:=</span> <span class="token boolean">false</span>
+
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+		metaToUse <span class="token operator">:=</span> meta
+		nodeInfoToUse <span class="token operator">:=</span> info
+		<span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+			podsAdded<span class="token punctuation">,</span> metaToUse<span class="token punctuation">,</span> nodeInfoToUse <span class="token operator">=</span> <span class="token function">addNominatedPods</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> meta<span class="token punctuation">,</span> info<span class="token punctuation">,</span> queue<span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token operator">!</span>podsAdded <span class="token operator">||</span> <span class="token function">len</span><span class="token punctuation">(</span>failedPredicates<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">break</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> predicateKey <span class="token operator">:=</span> <span class="token keyword">range</span> predicates<span class="token punctuation">.</span><span class="token function">Ordering</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">var</span> <span class="token punctuation">(</span>
+				fit     <span class="token builtin">bool</span>
+				reasons <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason
+				err     <span class="token builtin">error</span>
+			<span class="token punctuation">)</span>
+			
+			<span class="token keyword">if</span> predicate<span class="token punctuation">,</span> exist <span class="token operator">:=</span> predicateFuncs<span class="token punctuation">[</span>predicateKey<span class="token punctuation">]</span><span class="token punctuation">;</span> exist <span class="token punctuation">&#123;</span>
+				fit<span class="token punctuation">,</span> reasons<span class="token punctuation">,</span> err <span class="token operator">=</span> <span class="token function">predicate</span><span class="token punctuation">(</span>pod<span class="token punctuation">,</span> metaToUse<span class="token punctuation">,</span> nodeInfoToUse<span class="token punctuation">)</span>
+				<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+					<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>predicates<span class="token punctuation">.</span>PredicateFailureReason<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> err
+				<span class="token punctuation">&#125;</span>
+
+				<span class="token keyword">if</span> <span class="token operator">!</span>fit <span class="token punctuation">&#123;</span>
+					<span class="token comment">// eCache is available and valid, and predicates result is unfit, record the fail reasons</span>
+					failedPredicates <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>failedPredicates<span class="token punctuation">,</span> reasons<span class="token operator">...</span><span class="token punctuation">)</span>
+					<span class="token comment">// if alwaysCheckAllPredicates is false, short circuit all predicates when one predicate fails.</span>
+					<span class="token keyword">if</span> <span class="token operator">!</span>alwaysCheckAllPredicates <span class="token punctuation">&#123;</span>
+						klog<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Infoln</span><span class="token punctuation">(</span><span class="token string">"since alwaysCheckAllPredicates has not been set, the predicate "</span> <span class="token operator">+</span>
+							<span class="token string">"evaluation is short circuited and there are chances "</span> <span class="token operator">+</span>
+							<span class="token string">"of other predicates failing as well."</span><span class="token punctuation">)</span>
+						<span class="token keyword">break</span>
+					<span class="token punctuation">&#125;</span>
+				<span class="token punctuation">&#125;</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>failedPredicates<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> failedPredicates<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="NominatedPods"><a href="#NominatedPods" class="headerlink" title="NominatedPods"></a>NominatedPods</h3><p>当enable PodPriority feature gate后，scheduler会在集群资源资源不足时为preemptor抢占低优先级的Pods（成为victims）的资源，然后preemptor会再次入调度队列，等待下次victims的优雅终止并进行下一次调度。</p>
+<p>为了尽量避免从preemptor抢占资源到真正再次执行调度这个时间段的scheduler能感知到那些资源已经被抢占，在scheduler调度其他更低优先级的Pods时考虑这些资源已经被抢占，因此在抢占阶段，为给preemptor设置<code>pod.Status.NominatedNodeName</code>，表示在NominatedNodeName上发生了抢占，preemptor期望调度在该node上。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-09-08-kube-scheduler-filter/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +800,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -405,7 +958,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -566,7 +1119,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -674,7 +1227,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -786,7 +1339,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -891,7 +1444,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -1001,7 +1554,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -1107,7 +1660,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -1207,7 +1760,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -1329,7 +1882,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -1431,7 +1984,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -1566,7 +2119,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1679,7 +2232,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
 
   
@@ -1815,7 +2368,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-01 23:18:22" itemprop="dateModified" datetime="2023-02-01T23:18:22+08:00">2023-02-01</time>
+      <time title="修改时间：2023-02-08 22:13:14" itemprop="dateModified" datetime="2023-02-08T22:13:14+08:00">2023-02-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1923,14 +2476,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">266k</span>
+    <span title="站点总字数">274k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:01</span>
+    <span title="站点阅读时长">4:09</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

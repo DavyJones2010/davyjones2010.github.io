@@ -10483,6 +10483,57 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
       </tags>
   </entry>
   <entry>
+    <title>K8s部署使用错误排查</title>
+    <url>//2022-11-01-k8s-trouble-shooting/</url>
+    <content><![CDATA[<h1 id="ImagePullBackOff"><a href="#ImagePullBackOff" class="headerlink" title="ImagePullBackOff"></a>ImagePullBackOff</h1><h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><hr>
+<p>在mac上使用minikube, 创建pod出现如下 ImagePullBackOff:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Normal   Pulling    8s               kubelet            Pulling image <span class="token string">"docker.io/nginx:1.23"</span>
+Warning  Failed     8s               kubelet            Failed to pull image <span class="token string">"docker.io/nginx:1.23"</span><span class="token builtin class-name">:</span> rpc error: code <span class="token operator">=</span> Unknown desc <span class="token operator">=</span> Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving
+Warning  Failed     8s               kubelet            Error: ErrImagePull
+Normal   BackOff    6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Back-off pulling image <span class="token string">"docker.io/nginx:1.23"</span>
+Warning  Failed     6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Error: ImagePullBackOff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><hr>
+<p>参见: <a href="https://github.com/docker/for-mac/issues/1317">解决方案</a></p>
+<ol>
+<li><p>登录minikube的节点</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ minikube <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>在minikube node上手动 pull docker image, 如下, 发现问题仍然重现</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx
+Using default tag: latest
+Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改minikube node上的resolv.conf文件的nameserver:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">vi</span> /etc/resolv.conf
+nameserver <span class="token number">8.8</span>.8.8
+search <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>重新尝试手动pull image, 发现问题解决:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx:1.23
+<span class="token number">1.23</span>: Pulling from library/nginx
+Digest: sha256:943c25b4b66b332184d5ba6bb18234273551593016c0e0ae906bab111548239f
+Status: Downloaded newer image <span class="token keyword">for</span> nginx:1.23
+docker.io/library/nginx:1.23<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>退出node, 在Mac上重新检查pod状态, 问题解决🎉🎉🎉:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMacBook-Pro:~ davywalker$ k get po
+NAME                              READY   STATUS    RESTARTS   AGE
+hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          87s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h2 id="为啥叫”ImagePullBackOff”"><a href="#为啥叫”ImagePullBackOff”" class="headerlink" title="为啥叫”ImagePullBackOff”??"></a>为啥叫”ImagePullBackOff”??</h2><hr>
+<p>参见文章 <a href="https://www.tutorialworks.com/kubernetes-imagepullbackoff/">Kubernetes ImagePullBackOff error: what you need to know</a> 说明.</p>
+<blockquote>
+<p>The status ImagePullBackOff means that a Pod couldn’t start,<br>because Kubernetes couldn’t pull a container image.<br>The ‘BackOff’ part means that Kubernetes will keep trying to pull the image,<br>with an increasing delay (‘back-off’).</p>
+</blockquote>
+<p>这里的”BackOff”就是”退避”的意思, 当拉取失败时, kubelet应该有个退避算法来重试拉取. 具体退避算法是啥, 有待后续钻研. 🤔</p>
+]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>kubectl</tag>
+        <tag>trouble-shooting</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
     <url>//2022-08-30-disk-partition/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问: </p>
@@ -10622,57 +10673,6 @@ Change: <span class="token number">2022</span>-06-26 <span class="token number">
         <tag>linux</tag>
         <tag>disk</tag>
         <tag>os</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>K8s部署使用错误排查</title>
-    <url>//2022-11-01-k8s-trouble-shooting/</url>
-    <content><![CDATA[<h1 id="ImagePullBackOff"><a href="#ImagePullBackOff" class="headerlink" title="ImagePullBackOff"></a>ImagePullBackOff</h1><h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><hr>
-<p>在mac上使用minikube, 创建pod出现如下 ImagePullBackOff:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Normal   Pulling    8s               kubelet            Pulling image <span class="token string">"docker.io/nginx:1.23"</span>
-Warning  Failed     8s               kubelet            Failed to pull image <span class="token string">"docker.io/nginx:1.23"</span><span class="token builtin class-name">:</span> rpc error: code <span class="token operator">=</span> Unknown desc <span class="token operator">=</span> Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving
-Warning  Failed     8s               kubelet            Error: ErrImagePull
-Normal   BackOff    6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Back-off pulling image <span class="token string">"docker.io/nginx:1.23"</span>
-Warning  Failed     6s <span class="token punctuation">(</span>x2 over 7s<span class="token punctuation">)</span>  kubelet            Error: ImagePullBackOff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><hr>
-<p>参见: <a href="https://github.com/docker/for-mac/issues/1317">解决方案</a></p>
-<ol>
-<li><p>登录minikube的节点</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ minikube <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>在minikube node上手动 pull docker image, 如下, 发现问题仍然重现</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx
-Using default tag: latest
-Error response from daemon: Get <span class="token string">"https://registry-1.docker.io/v2/"</span><span class="token builtin class-name">:</span> dial tcp: lookup registry-1.docker.io on <span class="token number">192.168</span>.64.1:53: server misbehaving<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改minikube node上的resolv.conf文件的nameserver:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">vi</span> /etc/resolv.conf
-nameserver <span class="token number">8.8</span>.8.8
-search <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>重新尝试手动pull image, 发现问题解决:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> pull docker.io/nginx:1.23
-<span class="token number">1.23</span>: Pulling from library/nginx
-Digest: sha256:943c25b4b66b332184d5ba6bb18234273551593016c0e0ae906bab111548239f
-Status: Downloaded newer image <span class="token keyword">for</span> nginx:1.23
-docker.io/library/nginx:1.23<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>退出node, 在Mac上重新检查pod状态, 问题解决🎉🎉🎉:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalkerdeMacBook-Pro:~ davywalker$ k get po
-NAME                              READY   STATUS    RESTARTS   AGE
-hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          87s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<h2 id="为啥叫”ImagePullBackOff”"><a href="#为啥叫”ImagePullBackOff”" class="headerlink" title="为啥叫”ImagePullBackOff”??"></a>为啥叫”ImagePullBackOff”??</h2><hr>
-<p>参见文章 <a href="https://www.tutorialworks.com/kubernetes-imagepullbackoff/">Kubernetes ImagePullBackOff error: what you need to know</a> 说明.</p>
-<blockquote>
-<p>The status ImagePullBackOff means that a Pod couldn’t start,<br>because Kubernetes couldn’t pull a container image.<br>The ‘BackOff’ part means that Kubernetes will keep trying to pull the image,<br>with an increasing delay (‘back-off’).</p>
-</blockquote>
-<p>这里的”BackOff”就是”退避”的意思, 当拉取失败时, kubelet应该有个退避算法来重试拉取. 具体退避算法是啥, 有待后续钻研. 🤔</p>
-]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>kubectl</tag>
-        <tag>trouble-shooting</tag>
       </tags>
   </entry>
   <entry>
@@ -11261,6 +11261,9 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 <li>CKA</li>
 <li>IELTS</li>
 </ul>
+<h1 id="Blogs"><a href="#Blogs" class="headerlink" title="Blogs"></a>Blogs</h1><ul>
+<li>Jenkins Core&amp;Cloud系列博客</li>
+</ul>
 <h1 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h1><ul>
 <li>[zlib替代](<a href="https://search.zhelper.net/?%5B">https://search.zhelper.net/?[</a></li>
 </ul>
@@ -11271,6 +11274,150 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       <tags>
         <tag>books</tag>
         <tag>2023</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宋词集锦&amp;赏析</title>
+    <url>//2023-02-08-songci/</url>
+    <content><![CDATA[<h1 id="行香子·过七里濑"><a href="#行香子·过七里濑" class="headerlink" title="行香子·过七里濑"></a>行香子·过七里濑</h1><p>宋 · 苏轼<br>一叶舟轻，双桨鸿惊。水天清、影湛波平。鱼翻藻鉴，鹭点烟汀。过沙溪急，霜溪冷，月溪明。<br>重重似画，曲曲如屏。算当年、虚老严陵。君臣一梦，今古空名。但远山长，云山乱，晓山青。</p>
+<p>这首词作于公元1073年（宋神宗熙宁六年）春二月。苏轼时任杭州通判，巡查富阳，由新城至桐庐，乘舟富春江，经过七里濑时作此词。</p>
+<p>七里濑：又名七里滩、七里泷，在今浙江省桐庐县城南三十里。钱塘江两岸山峦夹峙，水流湍急，连绵七里，故名七里濑。濑，沙石上流过的急水。</p>
+<p>严陵：即严光，字子陵，东汉人，曾与<a href="https://so.gushiwen.cn/authorv_0ef2b626111d.aspx">刘秀</a>同学，并帮助刘秀打天下。刘秀称帝后，他改名隐居。刘秀三次派人才把他召到京师。授谏议大夫，他不肯接受，归隐富春江，终日钓鱼。</p>
+<p>接下来“过沙溪急，霜溪冷，月溪明”三句，节奏轻快。沙溪，是白天之溪，清澈而见沙底；霜溪，是清晓之溪，清冷而有霜意；月溪，乃是月下之溪，是明亮的水晶世界。词人用蒙太奇手法，剪接了三个不同时辰的舟行之景。既写出了船之行程，也创造出清寒凄美的意境，由此引出一股人生的况味，为下片抒写人生感慨作了铺垫。</p>
+<p>“算当年，虚老严陵。”东汉初年的严子陵，隐居不仕，垂钓富春江上。昔人多说严光垂钓实是“钓名”，东坡在此，也笑严光当年白白在此终老，不曾真正领略到山水佳处。“君臣一梦，今古空名”，表达出浮生若梦的感慨：皇帝和隐士，而今也已如梦一般消失，只留下空名而已。那么真正能永恒留传的实体是什么呢？“但远山长，云山乱，晓山青。”只有远山连绵，重峦叠嶂；山间白云，缭绕变形；晓山晨曦，青翠欲滴。意思是说，只有大自然才是永恒的，只有大自然之美才是永恒的。这是<a href="https://so.gushiwen.cn/authorv_3b99a16ff2dd.aspx">苏轼</a>的一贯思想，正如他在《前赤壁赋》中所感叹的：“惟江上之清风，与山间之明月，耳得之而为声，目遇之而成色，取之无禁，用之不竭……”</p>
+<hr>
+<h1 id="临安春雨初霁"><a href="#临安春雨初霁" class="headerlink" title="临安春雨初霁"></a>临安春雨初霁</h1><p>宋 · 陆游</p>
+<p>世味年来薄似纱，谁令骑马客京华。<br>小楼一夜听春雨，深巷明朝卖杏花。<br>矮纸斜行闲作草，晴窗细乳戏分茶。<br>素衣莫起风尘叹，犹及清明可到家。</p>
+<p>孩儿巷里的南宋慢生活</p>
+<p>我们的故事从杭城闹市区的一幢小楼说起。</p>
+<p>南宋偏安一隅，临安城的人们有了短暂的慢生活时光。陆游在起起伏伏的仕途中间，也得以钱塘江边观潮、西子湖上泛舟、冷泉亭中饮酒、深巷小楼戏分茶。最让如今杭州人乐道的莫过于他和一条小巷一座小楼的传说。</p>
+<p>孩儿巷98号，陆游回到杭州做军器少监，就寓居于这幢小楼里，而他办公的地方位于现在的百井坊巷一带，每天他或走路或乘轿或骑马去上班。</p>
+<p>小楼现在是陆游纪念馆，白墙黛瓦，岁月斑驳的痕迹很显眼，这里虽然是清末建筑，没有留下他的任何痕迹，但一首《临安春雨初霁》足矣。</p>
+<p>处于闹市中的孩儿巷当时甚是热闹。七夕，孩子们会买泥土做的玩具，手持新鲜的荷叶嬉戏；除夕，家庭主妇们会在供桌上摆放泥娃娃，用红色的绒线给泥娃娃系一个钱币，以求早生贵子；平日里，这条巷子就成了擅长捏塑泥孩儿的民间艺人的天堂，泥偶铺子甚多，且生意兴隆。所以哪怕是陆游夜班后回到小楼，巷子也是“近坊灯火如昼明，十里东风吹市声。”</p>
+<p>初春，淅淅沥沥的雨声浸满了二楼的书房， “小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。”虽然诗、酒、花、茶一应俱全，但陆游难以入眠，因为他花甲之年还没实现自己的英雄梦——“上马击狂胡,下马草军书”，收复中原。</p>
+<p>据史料记载，陆游一生多次来杭，并居住在保和坊，宋时的保和坊就是现在的孩儿巷，俗称砖街巷。在陆游的眼中，孩儿巷是极富诗意的：夜色灿烂、静寂如野。“近坊灯火如昼明，十里杀风吹市声”、“谁家小楼歌恼侬，余响缥缈萦帘栊。”等诗句就是陆游笔下的孩儿巷。这位深切关注国家命运的豪迈诗人，竟将孩儿巷的市井风貌观察、描写得如此生动，实为不易，陆游为孩儿巷的传神写照，一直流传至今。</p>
+<p>孩儿巷的重要历史文化价值，还在于南宋爱国诗人陆游曾写下了名闻遐迩的不朽诗篇：“世味年来薄似纱，谁令骑马客京华。小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。素衣莫起风尘叹，犹及清明可到家。” 现在的孩儿巷98号，设有<a href="https://baike.baidu.com/item/%E9%99%86%E6%B8%B8%E7%BA%AA%E5%BF%B5%E9%A6%86/6426661?fromModule=lemma_inlink">陆游纪念馆</a>。</p>
+<p>陆游62岁时任除军器少监（唐宋时期的官职名，监督兵器、旗帜、戎帐等物品的造作），就住在孩儿巷内的南楼，在不眠之夜听了春雨之后，写下了著名的《<a href="https://baike.baidu.com/item/%E4%B8%B4%E5%AE%89%E6%98%A5%E9%9B%A8%E5%88%9D%E9%9C%81/7331905?fromModule=lemma_inlink">临安春雨初霁</a>》：世味年来薄似纱，谁令骑马客京华？小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。素衣莫起风尘叹，犹及清明可到家。</p>
+<hr>
+<h1 id="看梅绝句"><a href="#看梅绝句" class="headerlink" title="看梅绝句"></a>看梅绝句</h1><p>陆游 〔宋代〕</p>
+<p>老子舞时不须拍，梅花乱插乌巾香。<br>樽前作剧莫相笑，我死诸君思此狂。</p>
+<hr>
+<h1 id="六月二十七日望湖楼醉书-之一"><a href="#六月二十七日望湖楼醉书-之一" class="headerlink" title="六月二十七日望湖楼醉书 之一"></a>六月二十七日望湖楼醉书 之一</h1><p>宋 · 苏轼<br>黑云翻墨未遮山，白雨跳珠乱入船。<br>卷地风来忽吹散，望湖楼下水如天。</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>六月二十七日：指宋神宗熙宁五年（1072）六月二十七日。<br>望湖楼：古建筑名，又叫看经楼。位于杭州西湖畔，五代时吴越王钱弘俶所建。</p>
+<h2 id="赏析"><a href="#赏析" class="headerlink" title="赏析"></a>赏析</h2><p>公元1072年（宋神宗熙宁五年），作者在杭州任通判。这年六月二十七日，他游览西湖，在船上看到奇妙的湖光山色，再到望湖楼上喝酒，写下这五首七言绝句。本诗是其第一首。</p>
+<p>此诗描绘了望湖楼的美丽雨景。才思敏捷的诗人用诗句捕捉到西子湖这一番别具风味的“即兴表演”，绘成一幅“西湖骤雨图”。乌云骤聚，大雨突降，倾刻又雨过天晴，水天一色。又是山，又是水，又是船，这就突出了泛舟西湖的特点。其次，作者用“黑云翻墨”，“白雨跳珠”形成强烈的色彩对比，给人以很强的质感。再次，用“翻墨”写云的来势，用“跳珠”描绘雨点飞溅的情态，以动词前移的句式使比喻运用得灵活生动却不露痕迹。而“卷地风来忽吹散，望湖楼下水如天”两句又把天气由骤雨到晴朗前转变之快描绘得令人心清气爽，眼前陡然一亮，境界大开。</p>
+<p>诗人将一场变幻的风雨写得十分生动。他那时是坐在船上。船正好划到望湖楼下，忽见远处天上涌起来一片黑云，就像泼翻了一盆墨汁，半边天空霎时昏暗。这片黑云不偏不倚，直向湖上奔来，一眨眼间，便泼下一场倾盆大雨。只见湖面上溅起无数水花，那雨点足有黄豆大小，纷纷打到船上来，就像天老爷把千万颗珍珠一齐撒下，船篷船板，全是一片乒乒乓乓的声响。船上有人吓慌了，嚷着要靠岸。可是诗人朝远处一看，却知道这不过是一场过眼云雨，转眼就收场了。远处的群山依然映着阳光，全无半点雨意。事实上也确实是如此。这片黑云，顺着风势吹来，也顺着风势移去。还不到半盏茶工夫，雨过天晴，依旧是一片平静。水映着天，天照着水，碧波如镜，又是一派温柔明媚的风光。</p>
+<p>诗人先在船中，后在楼头，迅速捕捉住湖上急剧变化的自然景物：云翻、雨泻、风卷、天晴，写得有远有近，有动有静，有声有色，有景有情。抓住几个要点，把一场忽然而来又忽然而去的骤雨，写得非常鲜明，富于情趣，颇见功夫。诗用“翻墨”写出云的来势，用“跳珠”描绘雨的特点，说明是骤雨而不是久雨。“未遮山”是骤雨才有的景象。“卷地风”说明雨过得快的原因，都是如实描写，却分插在第一、第三句中，彼此呼应，烘托得好。</p>
+<p>最后用“水如天”写一场骤雨的结束，又有悠然不尽的情致。句中又用“白雨”和“黑云”映衬，用“水如天”和“卷地风”对照，用“乱入船“与“未遮山”比较，都显出作者构思时的用心。这二十八个字，随笔挥洒，信手拈来，显示出作者功力的深厚，只是在表面上不着痕迹罢了。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>奥运会解说那个，我记得东京奥运会皮划艇有个比赛因为下雨推迟了，然后开始时雨还没有完全停，屏幕上能看到雨点撞击的样子，然后解说来了句黑云翻墨未遮山白雨跳珠乱入船</p>
+<hr>
+<h1 id="六月二十七日望湖楼醉书-之五"><a href="#六月二十七日望湖楼醉书-之五" class="headerlink" title="六月二十七日望湖楼醉书 之五"></a>六月二十七日望湖楼醉书 之五</h1><p>宋 · 苏轼</p>
+<p>未成小隐聊中隐，可得长闲胜暂闲。<br>我本无家更安往，故乡无此好湖山。</p>
+<p>做不到隐居山林，暂时先做个闲官吧，这样尚可得到长期的悠闲胜过暂时的休闲。<br>我本来就没有家，不安身在这里又能到哪里去呢?何况就算是故乡，也没有像这里这样优美的湖光山色。</p>
+<hr>
+<h1 id="湖州"><a href="#湖州" class="headerlink" title="湖州"></a>湖州</h1><p>【作者】戴表元【朝代】宋</p>
+<p>山从天目成群出，水傍太湖分港流。<br>行遍江南清丽地，人生只合住湖州。</p>
+]]></content>
+      <categories>
+        <category>诗词</category>
+      </categories>
+      <tags>
+        <tag>诗词</tag>
+        <tag>宋词</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>唐诗集锦&amp;赏析</title>
+    <url>//2023-02-08-tangshi/</url>
+    <content><![CDATA[<h1 id="忆秦娥"><a href="#忆秦娥" class="headerlink" title="忆秦娥"></a>忆秦娥</h1><p>李白</p>
+<p>箫声咽，秦娥梦断秦楼月。秦楼月，年年柳色，灞陵伤别。</p>
+<p>乐游原上清秋节，咸阳古道音尘绝。音尘绝，西风残照，汉家陵阙。</p>
+<hr>
+<h1 id="杂咏三首"><a href="#杂咏三首" class="headerlink" title="杂咏三首"></a>杂咏三首</h1><p>王维</p>
+<p>家住孟津河，门对孟津口。<br>常有江南船，寄书家中否。</p>
+<p>君自故乡来，应知故乡事。<br>来日绮窗前，寒梅著花未。</p>
+<p>已见寒梅发，复闻啼鸟声。<br>心心视春草，畏向阶前生。</p>
+<p>孟津河：指河南洛阳北部的黄河南岸一带，是“武王伐纣，与八百诸侯会盟”之地，为古代交通要道。</p>
+<hr>
+<h1 id="游洞庭湖五首·其二"><a href="#游洞庭湖五首·其二" class="headerlink" title="游洞庭湖五首·其二"></a>游洞庭湖五首·其二</h1><p>（唐）李白</p>
+<p>南湖秋水夜无烟，耐可乘流直上天。<br>且就洞庭赊月色，将船买酒白云边。</p>
+<h2 id="赏析"><a href="#赏析" class="headerlink" title="赏析"></a>赏析</h2><p>诗人为我们描绘了月夜泛舟的情形：明月皎皎，湖水悠悠。洞庭秋水澄澈无烟，水月相映，清辉怡人。</p>
+<p>诗人与友人（此处，我们不妨把其族叔也当作友人）泛舟湖上，与清风朗月为伴，不由生出遗世独立、羽化登仙的“上天”之念。但乘流上天终不可得，诗人也只好收起这份不羁的想象，姑且向洞庭湖赊几分月色，痛快地赏月喝酒。</p>
+<p>首句写景，同时点出秋游洞庭事。“南湖秋水夜无烟”，初读平淡无奇，似是全不费力，脱口而出，实则极具表现力：月夜泛舟，洞庭湖水全不似白日烟波浩渺、水汽蒸腾之气象。波澜不惊，澄澈如画。无烟水愈清，水清月更明。溶溶月色溶于水，悠悠湖光悠月明。这种景象，这种意味，非置身其中不可得，非写意简笔不可得。诗人虽然没有精工细绘，但读者心中自会涌现出一幅水天一色的美好图景。</p>
+<hr>
+<h1 id="送柴侍御"><a href="#送柴侍御" class="headerlink" title="送柴侍御"></a>送柴侍御</h1><p>（唐）王昌龄</p>
+<p>沅水通波接武冈，送君不觉有离伤。<br>青山一道同云雨，明月何曾是两乡。</p>
+<p>典型王昌龄风格的送别诗。<br>王昌龄一生官场沉浮(以沉为主)，交友广阔，诗文题材涉猎颇多，尤擅边塞、宫怨、离别。</p>
+<p>可能是因为大部分时间不是被贬，就是谪居，一生高开低走，所以老王非常珍惜朋友之间的温暖情意。王昌龄的送别诗，首先是构思新颖，不落窠臼，看似轻描淡写，其实情意浓厚。其次是不重离别场景，多描绘别后情景。重点是，不伤离别而多慰别，但却回味颇深。</p>
+<p>回到这首诗，前两句先说沅水通波，淡化距离感(目测龙标到武冈，好像也不近)，顺理成章的找了理由，随口说没觉得有啥离愁。稍微有点心眼都能看出来，那么大的诗人，说得越无所谓，其实越当回事儿。</p>
+<p>下一句就看出功夫了，青山一道同云雨，就七个字，信息量超级大。青山一道，没有特指哪座山，说明同游过不止一座山，爱好相同，有点携手踏遍青山的意思。同云雨就不说了，至少共同经历了各种天气变化，说明相处时间不短(想污了的自己面壁去)。</p>
+<p>最后一句，明月何曾是两乡，戏肉来了。第一层意思，借明月同天，再次拉近彼此距离，是为慰别——千里共婵娟。第二层意思，毕竟38万公里乘以2，说不远。。。真不远吗？是为忍别——道是无晴却有晴。第三层意思，从此以后，日踏青山，夜望明月，没有了你，却全都是你，是为难别——醒也无聊，醉也无聊。。。</p>
+<p>老王同学，浪漫豪情不及李白，才华横溢不及王维，侠之大者不及杜甫，但是其情景妙合，意与境浑，委婉含蓄，意境深远，堪称大家。</p>
+<hr>
+<h1 id="酬中都小吏携斗酒双鱼于逆旅见赠"><a href="#酬中都小吏携斗酒双鱼于逆旅见赠" class="headerlink" title="酬中都小吏携斗酒双鱼于逆旅见赠"></a>酬中都小吏携斗酒双鱼于逆旅见赠</h1><p><a href="https://so.gushiwen.cn/authorv_b90660e3e492.aspx">李白</a> <a href="https://so.gushiwen.cn/shiwens/default.aspx?cstr=%E5%94%90%E4%BB%A3">〔唐代〕</a></p>
+<p>鲁酒若琥珀，汶鱼紫锦鳞。<br>山东豪吏有俊气，手携此物赠远人。<br>意气相倾两相顾，斗酒双鱼表情素。<br>双鳃呀呷鳍鬣张，拨剌银盘欲飞去。<br>呼儿拂几霜刃挥，红肌花落白雪霏。<br>为君下箸一餐饱，醉著金鞍上马归。</p>
+<h2 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h2><p>鲁地的酒色如琥珀，汶水鱼紫鳞似锦。<br>山东小吏豪爽俊逸．提来这两样东西送给客人。<br>二人意气相投，两相顾惜，两条鱼一杯酒以表情意。<br>鱼儿吞吐双鳃，振起鳍鬣，跋刺一声，要从银盘中跳去。<br>唤儿擦净几案挥刀割肉，红的如同花落，白的好似雪飞。<br>为你下箸吃足了酒，著鞍上马，醉蒙蒙地归去。</p>
+<p>鳍（qí）鬣（liè）：鱼的背鳍为鳍，胸鳍为鬣。</p>
+<h2 id="创作背景"><a href="#创作背景" class="headerlink" title="创作背景"></a>创作背景</h2><p>公元746年（天宝五年），<a href="https://so.gushiwen.cn/authorv_b90660e3e492.aspx">李白</a>卧病任城很久，秋天，病稍好，又去游览鲁郡，到达中都。中都一位久仰李白盛名的小官携斗酒双鱼到旅馆拜访李白。席中，李白诗兴大发，作此诗以酬谢。</p>
+<h2 id="赏析-1"><a href="#赏析-1" class="headerlink" title="赏析"></a>赏析</h2><p>这首诗记述诗人在浪迹江湖的旅途中，收到中都一小吏赠送的酒、鱼，便豪兴大发，烹鱼煮酒，二人对酌，直到酒酣饭饱，才“醉著金鞍上马归”。<br>“鲁酒若琥珀，汶鱼紫锦鳞，”是盛赞中都小吏礼物的珍贵。以“斗酒诗百篇”而著称的“谪仙人”<a href="https://so.gushiwen.cn/authorv_b90660e3e492.aspx">李白</a>，对山东名酒素有特殊的感情，曾经为此写下热情洋溢的诗句：“兰陵美酒郁金香，玉碗盛来琥珀光，但使主人能醉客，不知何处是他乡。”中都小吏带来的美酒也是光“若琥珀”，这就使李白愈感谢小吏的情意。<br>中都小吏能以名贵的贡品金赤鳞赠送李白，可见其情深意长。李白在诗的头两句首先从光彩色泽上对鲁酒，汶鱼进行点染，说明礼物的名贵，为下文抒写小吏对诗人的挚情做好铺垫。“山东豪吏有俊气，手携此物赠远人”直抒胸臆，热情赞美中都小吏高尚的心灵，赞美小吏对李白这异乡“远人”的深情厚谊。第三句中诗人不用“小吏”而用“豪吏”，既是对小吏的尊重，又暗示出李白对中都小吏位虽卑，德却高的赞赏，换句话说，“小吏”德本高位却卑，说明封建社会的黑暗。<br>“意气相倾两相顾，斗酒双鱼表情素。”在这两句诗中，直接吟咏彼此之间的真挚的友谊。中都小吏和诗人的“两相顾”，因为二人的意气之“相倾”。而二人“意气相倾”的力量支点又都在于有不肯摧眉折腰事权贵的崇高心灵。正由于有了这共通的价值观，因此中都小吏对“赐金放还”的李白不但不鄙弃，相反，还“意气相倾”地“携斗酒双鱼于逆旅”来拜访。也正由于有了相通的心灵，因此李白对小吏那不附炎趋势的高尚品格才愈加钦佩，“斗酒双鱼表情素”一句是对“意气相倾两相顾”的补充，“斗酒双鱼”原本是中都小吏为“表情素”赠予诗人的礼物，但在“恨相逢之晚”的氛围中，诗人却将“斗酒双鱼”“借花献佛”般地反赠小吏，表达了诗人对小吏由衷敬慕的“情素”。<br>“双鳃呀呷鳍鬣张，跋刺银盘欲飞去”两句。是写赤鳞鱼出水后的神态：赤鳞鱼发着呀呷的声音，鳍鬣都大张开来，在盘中激烈地翻滚着几欲飞走。“呼儿拂几霜刃挥，红肥花落白雪霏”两句，重在描写宰鱼，做鱼的过程，意思是招呼孩子擦净桌案挥刀宰鱼，雪白肥嫩的鱼肉呈现在眼前。这里“呼”、“拂”、“挥”三个动词给人以欢快之感，使诗句的内在节奏感迅速加快；而“红”、“花”、“白”三种鲜亮的色彩，也给人以赏心悦目的感觉。这些充满动感和色彩感的字词的巧妙间用，显示出李白及其家人酬谢中都小吏时轻松快捷的心情。<br>结句“为君下筯一餐饱，醉著金鞍上马归”，意思是希望小吏开怀畅饮，之后再上马酣然归去。这首诗歌虽然不象《赠汪伦》、《黄鹤楼送<a href="https://so.gushiwen.cn/authorv_3811e4e1f460.aspx">孟浩然</a>之广陵》等诗作一样著名，但在李白描写友情的诗歌中仍不失为一首佳作。它体现了诗人对下层百姓的深挚友情。<br>李白自离长安后，饱览世态之炎凉，倍尝势力小人的鄙视。困窘之时，素昧平生的中都小吏能毅然冲破世俗樊篱，“携斗酒双鱼于逆旅”拜访李白，更显其心灵之美。同时通过揭露小吏的位卑与心灵的高洁之间所存在的矛盾，控诉摧残人才的封建社会。另外，此诗写鱼酒活灵活现，跃然纸上，而李白豪爽坦诚、热情待人的音容笑貌，也宛然可接。<br>“意气相倾两相顾”，也显示了一代大诗人与下层社会一小吏意气相投的真挚友谊及心心相印的心灵之美</p>
+<hr>
+<h1 id="剑客-x2F-述剑"><a href="#剑客-x2F-述剑" class="headerlink" title="剑客 &#x2F; 述剑"></a>剑客 &#x2F; 述剑</h1><p>（唐）贾岛</p>
+<p>十年磨一剑，霜刃未曾试。<br>今日把示君，谁有不平事？</p>
+<hr>
+<h1 id="短歌行"><a href="#短歌行" class="headerlink" title="短歌行"></a>短歌行</h1><p>（唐）李白</p>
+<p>白日何短短，百年苦易满。<br>苍穹浩茫茫，万劫太极长。<br>麻姑垂两鬓，一半已成霜。<br>天公见玉女，大笑亿千场。<br>吾欲揽六龙，回车挂扶桑。<br>北斗酌美酒，劝龙各一觞。<br>富贵非所愿，与人驻颜光。</p>
+<hr>
+<h1 id="侠客行"><a href="#侠客行" class="headerlink" title="侠客行"></a>侠客行</h1><p>李白〔唐代〕</p>
+<p>赵客缦胡缨，吴钩霜雪明。<br>银鞍照白马，飒沓如流星。<br>十步杀一人，千里不留行。<br>事了拂衣去，深藏身与名。<br>闲过信陵饮，脱剑膝前横。<br>将炙啖朱亥，持觞劝侯嬴。<br>三杯吐然诺，五岳倒为轻。<br>眼花耳热后，意气素霓生。<br>救赵挥金槌，邯郸先震惊。<br>千秋二壮士，烜赫大梁城。<br>纵死侠骨香，不惭世上英。<br>谁能书阁下，白首太玄经。</p>
+<h2 id="译文-1"><a href="#译文-1" class="headerlink" title="译文"></a>译文</h2><p>燕赵的侠士，头上系着侠士的武缨，腰佩吴越闪亮的弯刀。<br>骑着银鞍白马，在大街上驰骋就像天上的流星一样迅疾。<br>他们武艺盖世，十步可斩杀一人，千里之行，无人可挡。<br>他们大事做成后，拂袖而去将功劳和美名隐藏起来。<br>想当年，侯嬴、朱亥与信陵君结交，与之脱剑横膝，交相欢饮。<br>与朱亥、侯赢一同大口吃肉，大碗饮酒。<br>几杯热酒下肚，便慷慨许诺，愿为知己两肋插刀，一诺重于泰山。<br>酒后眼花耳热，意气勃勃劲生，感动苍天，可贯长虹。<br>朱亥为信陵君救赵，挥起了金椎，使赵都邯郸上下，都为之震惊。<br>二位壮士的豪举，千秋之后仍然在大梁城传为美谈。<br>他们纵然死去而侠骨犹香，不愧为一世英豪。<br>谁能像扬雄一样，在书阁里研究《太玄经》到老，而一辈子无所作为呢？</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>信陵：信陵君，战国四公子之一，为人礼贤下士，门下食客三千余人。<br>朱亥、侯嬴：都是信陵君的门客。朱本是一屠夫，侯原是魏国都城大梁东门的门官，两人都受到信陵君的礼遇，都为信陵君所用。炙，烤肉。啖，吃。<br>啖朱亥：让朱亥来吃。<br>“三杯”两句：说几杯酒下肚就作出了承诺，并且把承诺看得比五岳还重。<br>素霓：白虹。古人认为，凡要出现不寻常的大事，就会有不寻常的天象出现，如“白虹贯日”。<br>烜赫：形容声名盛大。大梁城：魏国都城，今河南开封。<br>太玄经：西汉扬雄的一部哲学著作。扬雄曾在皇帝藏书的天禄阁任校刊工作。</p>
+<hr>
+<h1 id="咏老赠梦得"><a href="#咏老赠梦得" class="headerlink" title="咏老赠梦得"></a>咏老赠梦得</h1><p>[ 唐 ]  白居易<br>与君俱老也，自问老何如。<br>眼涩夜先卧，头慵朝未梳。<br>有时扶杖出，尽日闭门居。<br>懒照新磨镜，休看小字书。<br>情于故人重，迹共少年疏。<br>唯是闲谈兴，相逢尚有馀。</p>
+<hr>
+<h1 id="酬乐天咏老见示"><a href="#酬乐天咏老见示" class="headerlink" title="酬乐天咏老见示"></a>酬乐天咏老见示</h1><p>刘禹锡 〔唐代〕</p>
+<p>人谁不顾老，老去有谁怜。<br>身瘦带频减，发稀冠自偏。<br>废书缘惜眼，多灸为随年。<br>经事还谙事，阅人如阅川。<br>细思皆幸矣，下此便翛然。<br>莫道桑榆晚，为霞尚满天。</p>
+<p>阅人如阅川：意谓阅历人生如同积水成川一样。语出陆机《叹逝赋》：“阅水以成川，水滔滔而日度；世阅人而为世，人冉冉而行暮。”阅，经历。</p>
+]]></content>
+      <categories>
+        <category>诗词</category>
+      </categories>
+      <tags>
+        <tag>诗词</tag>
+        <tag>唐诗</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>主席诗词集锦&amp;赏析</title>
+    <url>//2023-02-08-zhuxishici/</url>
+    <content><![CDATA[<h1 id="水调歌头·重上井冈山"><a href="#水调歌头·重上井冈山" class="headerlink" title="水调歌头·重上井冈山"></a>水调歌头·重上井冈山</h1><p>久有凌云志，重上井冈山。<br>千里来寻故地，旧貌变新颜。<br>到处莺歌燕舞，更有潺潺流水，高路入云端。<br>过了黄洋界，险处不须看。<br>风雷动，旌旗奋，是人寰。<br>三十八年过去，弹指一挥间。<br>可上九天揽月，可下五洋捉鳖，谈笑凯歌还。<br>世上无难事，只要肯登攀！</p>
+<hr>
+<h1 id="忆秦娥·娄山关"><a href="#忆秦娥·娄山关" class="headerlink" title="忆秦娥·娄山关"></a>忆秦娥·娄山关</h1><p>西风烈，长空雁叫霜晨月。霜晨月，马蹄声碎，喇叭声咽。</p>
+<p>雄关漫道真如铁，而今迈步从头越。从头越，苍山如海，残阳如血。</p>
+<hr>
+<h1 id="清平乐·六盘山"><a href="#清平乐·六盘山" class="headerlink" title="清平乐·六盘山"></a>清平乐·六盘山</h1><p>天高云淡，望断南飞雁。不到长城非好汉，屈指行程二万。</p>
+<p>六盘山上高峰，红旗漫卷西风。今日长缨在手，何时缚住苍龙？</p>
+<hr>
+<h1 id="七律·和柳亚子先生"><a href="#七律·和柳亚子先生" class="headerlink" title="七律·和柳亚子先生"></a>七律·和柳亚子先生</h1><p>饮茶粤海未能忘，索句渝州叶正黄。</p>
+<p>三十一年还旧国，落花时节读华章。</p>
+<p>牢骚太盛防肠断，风物长宜放眼量。</p>
+<p>莫道昆明池水浅，观鱼胜过富春江。</p>
+<hr>
+<h1 id="七律·人民解放军占领南京"><a href="#七律·人民解放军占领南京" class="headerlink" title="七律·人民解放军占领南京"></a>七律·人民解放军占领南京</h1><p>钟山风雨起苍黄，百万雄师过大江。<br>虎踞龙盘今胜昔，天翻地覆慨而慷。<br>宜将剩勇追穷寇，不可沽名学霸王。<br>天若有情天亦老，人间正道是沧桑。</p>
+<h2 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h2><p>自然界如果有知，它会体察到兴盛与衰败这条不可改变的法则。事物不断的向前发展更新和变化，这是必然的规律。</p>
+<h2 id="创作背景"><a href="#创作背景" class="headerlink" title="创作背景"></a>创作背景</h2><p>1949年4月21日，毛泽东主席和朱德总司令发出《向全国进军的命令》，号令全军坚决、彻底、干净、全部地歼灭中国境内一切敢于抵抗的国民党反动派，解放全中国。中国人民解放军百万大军于4月23日占领国民党反动政府的“首都”南京。毛泽东同志在北平香山双清别墅得到占领南京的捷报，心情振奋，写下了这首诗。</p>
+<hr>
+<h1 id="七律二首·送瘟神"><a href="#七律二首·送瘟神" class="headerlink" title="七律二首·送瘟神"></a>七律二首·送瘟神</h1><p>读六月三十日《人民日报》，余江县消灭了血吸虫。浮想联翩，夜不能寐。微风拂煦，旭日临窗，遥望南天，欣然命笔。</p>
+<p>绿水青山枉自多，华佗无奈小虫何！<br>千村薜荔人遗矢，万户萧疏鬼唱歌。<br>坐地日行八万里，巡天遥看一千河。<br>牛郎欲问瘟神事，一样悲欢逐逝波。</p>
+<p>春风杨柳万千条，六亿神州尽舜尧。<br>红雨随心翻作浪，青山着意化为桥。<br>天连五岭银锄落，地动三河铁臂摇。<br>借问瘟君欲何往，纸船明烛照天烧。</p>
+<h2 id="译文-1"><a href="#译文-1" class="headerlink" title="译文"></a>译文</h2><p>祖国大地上白白有这么多的绿水青山，连神医华佗拿小小的血吸虫也没有根治的办法。<br>许多村庄荒草丛生，杳无人迹，瘟疫无情蔓延，千门万户家破人亡，听到的只是鬼在唱歌。<br>坐在地球上每天行走八万里的路程，沿着天路遥遥地看过浩渺的银河。<br>牛郎如问起血吸虫病的事，一切悲欢离合都已随着时光的流逝而成为过去。</p>
+<p>春风吹拂杨柳新绿，新中国一片春意盎然，六亿人民意气风发，个个都像古代的尧舜一样。<br>落花随着自己的心意翻波逐浪，青山有意化崎岖险阻为康庄大道。<br>人民群众挥动银光闪闪的铁锄，挥舞着坚实的臂膀，兴修水利，整治山河，使大地都为之颤动。<br>试问瘟神啊，你要往哪里去？人们焚化纸钱，点起明烛，火光明亮，照耀天空，以此来送走瘟神。</p>
+]]></content>
+      <categories>
+        <category>诗词</category>
+      </categories>
+      <tags>
+        <tag>诗词</tag>
+        <tag>主席诗词</tag>
       </tags>
   </entry>
 </search>
