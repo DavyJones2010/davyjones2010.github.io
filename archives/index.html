@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">177</span>
+        <span class="site-state-item-count">178</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,115 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-02-09-dubbo-heartbeat-fail/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-02-09-dubbo-heartbeat-fail/" class="post-title-link" itemprop="url">一次心跳导致dubbo调用偶现失败问题排查</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-02-09 21:18:02 / 修改时间：21:34:46" itemprop="dateCreated datePublished" datetime="2023-02-09T21:18:02+08:00">2023-02-09</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h2 id="应用拓扑"><a href="#应用拓扑" class="headerlink" title="应用拓扑"></a>应用拓扑</h2><ul>
+<li>SystemA作为client, 通过dubbo接口调用SystemB提供的某个服务</li>
+<li>SystemB由2台机器组成一个集群, 即 SystemB.45 SystemB.46</li>
+</ul>
+<pre class="mermaid">graph TD
+    A[SystemA] --> |dubbo| B[SystemB.45];
+        A[SystemA] --> |dubbo| C[SystemB.46];</pre>
+
+
+<h2 id="详细问题"><a href="#详细问题" class="headerlink" title="详细问题"></a>详细问题</h2><p>SystemA调用SystemB的服务时:</p>
+<ol>
+<li><p>SystemA日志中持续性出现调用SystemB失败, 详细错误信息如下:</p>
+</li>
+<li><p>且<strong>SystemA报错日志都固定出现在SystemB.46这台机器上</strong></p>
+</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092122356.png"></p>
+<h1 id="问题1-为啥出现”channel-is-closed”错误-从而导致调用失败"><a href="#问题1-为啥出现”channel-is-closed”错误-从而导致调用失败" class="headerlink" title="问题1: 为啥出现”channel is closed”错误, 从而导致调用失败?"></a>问题1: 为啥出现”channel is closed”错误, 从而导致调用失败?</h1><h2 id="现象"><a href="#现象" class="headerlink" title="现象:"></a>现象:</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-02-09-dubbo-heartbeat-fail/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-02-08-zhuxishici/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +356,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -360,7 +469,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -474,7 +583,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -588,7 +697,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -712,7 +821,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -875,7 +984,7 @@ sdb               <span class="token number">8</span>:16   <span class="token nu
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -997,7 +1106,7 @@ sdb               <span class="token number">8</span>:16   <span class="token nu
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -1101,7 +1210,7 @@ sdb               <span class="token number">8</span>:16   <span class="token nu
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -1234,7 +1343,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1363,7 +1472,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1551,7 +1660,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1678,7 +1787,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1810,7 +1919,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1940,7 +2049,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2105,7 +2214,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -2210,7 +2319,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -2323,7 +2432,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -2434,7 +2543,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -2572,7 +2681,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -2671,7 +2780,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -2782,7 +2891,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -2897,7 +3006,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3042,7 +3151,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3165,7 +3274,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3286,7 +3395,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3399,7 +3508,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3508,7 +3617,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3615,7 +3724,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3734,7 +3843,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3855,7 +3964,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -3966,7 +4075,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
     </span>
 
   
@@ -4045,146 +4154,6 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-05-mysql-conn-params/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-06-05-mysql-conn-params/" class="post-title-link" itemprop="url">MySQL连接池重要参数配置原理研究</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-06 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-06T00:00:00+08:00">2022-06-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 17:14:21" itemprop="dateModified" datetime="2023-02-09T17:14:21+08:00">2023-02-09</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
-<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
-<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
-<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
-<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
-<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
-<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
-<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
-<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
-</ul>
-<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
-<li>参数释义: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
-</ul>
-<ol>
-<li>即客户端从连接池中获取connection的最大等待时长</li>
-<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
-<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
-    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
-    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
-    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<ul>
-<li>maxWait参数的坑: <a target="_blank" rel="noopener" href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
-<li>扩展阅读: Druid锁的公平模式, <a target="_blank" rel="noopener" href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
-</ul>
-<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
-<li>initialSize: 100</li>
-<li>maxActive: 200</li>
-<li>minIdle: 100</li>
-<li>maxWait: 6000</li>
-</ul>
-<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-06-05-mysql-conn-params/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4210,14 +4179,14 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">274k</span>
+    <span title="站点总字数">280k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:09</span>
+    <span title="站点阅读时长">4:14</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

@@ -4363,6 +4363,79 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       </tags>
   </entry>
   <entry>
+    <title>记一次Maven传递依赖失效问题排查</title>
+    <url>//2022-02-01-maven-deps-failure/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在test-scheduler项目中, 代码按照maven模块(module)组织, 如下:</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">- test-scheduler
+---- shared-common
+---- resource-manage
+---- persistence<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中<br>resource-manage模块在pom中依赖了shared-common模块</p>
+<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><h2 id="错误信息是怎样的"><a href="#错误信息是怎样的" class="headerlink" title="错误信息是怎样的?"></a>错误信息是怎样的?</h2><p>在运行resource-manage模块的ut时, 报错信息如下:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Caused</span> by<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>NoClassDefFoundError</span><span class="token operator">:</span> com<span class="token operator">/</span>xxx<span class="token operator">/</span>xxx<span class="token operator">/</span>manager<span class="token operator">/</span><span class="token class-name">ManagerListener</span>
+	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span>MetaPushConsumer</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token class-name">MetaPushConsumer</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">338</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span></span>CommonMetaPushConsumer</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token class-name">CommonMetaPushConsumer</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">23</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke0</span><span class="token punctuation">(</span><span class="token class-name">Native</span> <span class="token class-name">Method</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">NativeMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">62</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">43</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>Method</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Method</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">498</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">invokeCustomInitMethod</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1930</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">invokeInitMethods</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1872</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">initializeBean</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1800</span><span class="token punctuation">)</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token number">42</span> more
+<span class="token class-name">Caused</span> by<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassNotFoundException</span><span class="token operator">:</span> <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>manager<span class="token punctuation">.</span></span>ManagerListener</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span>URLClassLoader</span><span class="token punctuation">.</span><span class="token function">findClass</span><span class="token punctuation">(</span><span class="token class-name">URLClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">382</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">418</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>Launcher</span>$<span class="token class-name">AppClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">Launcher</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">355</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">351</span><span class="token punctuation">)</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token number">51</span> more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="丢失的类是在哪里的"><a href="#丢失的类是在哪里的" class="headerlink" title="丢失的类是在哪里的?"></a>丢失的类是在哪里的?</h2><p>经分析, com.xxx.xxx.manager.ManagerListener 类是在如下GAV中引入:<br><dependency><br><groupId>com.xxx.xxx</groupId><br><artifactId>diamond-client</artifactId><br><version>3.9.2</version><br></dependency></p>
+<h2 id="理论上传递依赖是怎样的"><a href="#理论上传递依赖是怎样的" class="headerlink" title="理论上传递依赖是怎样的?"></a>理论上传递依赖是怎样的?</h2><p>经分析, diamond-client 是由 shared-common 模块直接依赖的.<br>由于maven有传递依赖的特性, 因此依赖图如下:</p>
+<pre class="line-numbers language-none"><code class="language-none">resource-manage --依赖--&gt; shared-common --依赖--&gt; diamond-client<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>因此resource-manage应该依赖到了diamond-client, 但实际在intellij里查看依赖图, 发现并没有传递依赖进来!</p>
+<h2 id="为什么传递依赖没有生效"><a href="#为什么传递依赖没有生效" class="headerlink" title="为什么传递依赖没有生效?"></a>为什么传递依赖没有生效?</h2><p>经分析发现, 在 test-scheduler 的pom里, 对 shared-common 的依赖进行了裁剪, 将 diamond-client exclude 出去了.</p>
+<p>而 resource-manage 等模块, 都是继承了 test-scheduler 的父pom. 因此resource-manange声明依赖了全量的 shared-common 模块如下:</p>
+<p>但实际生效的仍是 test-scheduler pom中声明的 shared-common 依赖, 即排除掉了 diamond-client 依赖.</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>至此解决问题就很简单了. 在 test-scheduler 的pom中, 对 shared-common 依赖的声明, 删除掉如下片段即可:<br><exclusion><br><artifactId>diamond-client</artifactId><br><groupId>com.xxx.diamond</groupId><br></exclusion><br>这样就解决问题了</p>
+<h1 id="扩展研究"><a href="#扩展研究" class="headerlink" title="扩展研究"></a>扩展研究</h1><h2 id="传递依赖失效的其他场景"><a href="#传递依赖失效的其他场景" class="headerlink" title="传递依赖失效的其他场景"></a>传递依赖失效的其他场景</h2><h3 id="scope问题"><a href="#scope问题" class="headerlink" title="scope问题"></a>scope问题</h3><ol>
+<li>由于本问题中是在UT运行时发生的CNFE(ClassNotFoundException), 因此基本可以排除由于scope的原因. </li>
+<li>但如果是在运行时发生了CNFE, 则需要看下是否使用了<scope>test&#x2F;provided&#x2F;system</scope>等标签</li>
+</ol>
+<h3 id="optional问题"><a href="#optional问题" class="headerlink" title="optional问题"></a>optional问题</h3><ul>
+<li><p>如果optional为false, 则代表引用该pom的项目, 不会间接依赖到该GAV</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>net.biancheng.www<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>X<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.0-SNAPSHOT<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!--设置可选依赖  --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>optional</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>optional</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>关于 optional 元素及可选依赖说明如下：</p>
+</li>
+</ul>
+<ol>
+<li>可选依赖用来控制当前依赖是否向下传递成为间接依赖；</li>
+<li>optional 默认值为 false，表示可以向下传递称为间接依赖；</li>
+<li>若 optional 元素取值为 true，则表示当前依赖不能向下传递成为间接依赖。</li>
+<li>仅适用于 项目的单纯依赖关系，不适合 父子工程。假设A工程是 parent，那么A工程即便加上了 optinal，子项目也将继承父工程的所有依赖关系。</li>
+</ol>
+<ul>
+<li>在什么场景下, 会把<optional>true</optional>设置为true?<br>假设一个关于数据库持久化的项目(Project C), 为了适配更多类型的数据库持久化设计，比如 Mysql 持久化设计(Project A) 和 Oracle 持久化设计(Project B)，</li>
+<li>当我们的项目(Project D) 要用的 Project C 的持久化设计，不可能既引入 mysql 驱动又引入 oracle 驱动吧，所以我们要显式指定一个，就是这个道理了</li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://www.cnblogs.com/cy0628/p/15034450.html#:~:text=Maven%20%E7%9A%84%E4%BE%9D%E8%B5%96%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6,%E4%B8%8A%E7%AE%80%E5%8C%96POM%20%E7%9A%84%E9%85%8D%E7%BD%AE%E3%80%82">Maven依赖传递,排除依赖和可选依赖</a></li>
+<li><a href="https://juejin.cn/post/6844903987322290189">Maven optional关键字透彻图解</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>maven</tag>
+        <tag>transitive dependency</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot+Maven多模块项目测试最佳实践</title>
     <url>//2022-02-13-maven-multi-module-test/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中为了整体代码的高内聚与可移植性, 按照maven-module的方式对代码进行了拆分, 样例如下: </p>
@@ -4486,146 +4559,10 @@ spring.datasource.driver.initialSize&#x3D;20<span aria-hidden="true" class="line
 <h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>其实整体与SpringBoot的分层测试思路很像.</p>
 <h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1>]]></content>
       <tags>
-        <tag>springboot</tag>
         <tag>maven</tag>
+        <tag>springboot</tag>
         <tag>maven-module</tag>
         <tag>maven test</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记一次Maven传递依赖失效问题排查</title>
-    <url>//2022-02-01-maven-deps-failure/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在test-scheduler项目中, 代码按照maven模块(module)组织, 如下:</p>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">- test-scheduler
----- shared-common
----- resource-manage
----- persistence<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其中<br>resource-manage模块在pom中依赖了shared-common模块</p>
-<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><h2 id="错误信息是怎样的"><a href="#错误信息是怎样的" class="headerlink" title="错误信息是怎样的?"></a>错误信息是怎样的?</h2><p>在运行resource-manage模块的ut时, 报错信息如下:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Caused</span> by<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>NoClassDefFoundError</span><span class="token operator">:</span> com<span class="token operator">/</span>xxx<span class="token operator">/</span>xxx<span class="token operator">/</span>manager<span class="token operator">/</span><span class="token class-name">ManagerListener</span>
-	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span>MetaPushConsumer</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token class-name">MetaPushConsumer</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">338</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span></span>CommonMetaPushConsumer</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token class-name">CommonMetaPushConsumer</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">23</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke0</span><span class="token punctuation">(</span><span class="token class-name">Native</span> <span class="token class-name">Method</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">NativeMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">62</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">43</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>Method</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Method</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">498</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">invokeCustomInitMethod</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1930</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">invokeInitMethods</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1872</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span>AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span><span class="token function">initializeBean</span><span class="token punctuation">(</span><span class="token class-name">AbstractAutowireCapableBeanFactory</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1800</span><span class="token punctuation">)</span>
-	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token number">42</span> more
-<span class="token class-name">Caused</span> by<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassNotFoundException</span><span class="token operator">:</span> <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>xxx<span class="token punctuation">.</span>manager<span class="token punctuation">.</span></span>ManagerListener</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span>URLClassLoader</span><span class="token punctuation">.</span><span class="token function">findClass</span><span class="token punctuation">(</span><span class="token class-name">URLClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">382</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">418</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>Launcher</span>$<span class="token class-name">AppClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">Launcher</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">355</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassLoader</span><span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">351</span><span class="token punctuation">)</span>
-	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token number">51</span> more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="丢失的类是在哪里的"><a href="#丢失的类是在哪里的" class="headerlink" title="丢失的类是在哪里的?"></a>丢失的类是在哪里的?</h2><p>经分析, com.xxx.xxx.manager.ManagerListener 类是在如下GAV中引入:<br><dependency><br><groupId>com.xxx.xxx</groupId><br><artifactId>diamond-client</artifactId><br><version>3.9.2</version><br></dependency></p>
-<h2 id="理论上传递依赖是怎样的"><a href="#理论上传递依赖是怎样的" class="headerlink" title="理论上传递依赖是怎样的?"></a>理论上传递依赖是怎样的?</h2><p>经分析, diamond-client 是由 shared-common 模块直接依赖的.<br>由于maven有传递依赖的特性, 因此依赖图如下:</p>
-<pre class="line-numbers language-none"><code class="language-none">resource-manage --依赖--&gt; shared-common --依赖--&gt; diamond-client<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>因此resource-manage应该依赖到了diamond-client, 但实际在intellij里查看依赖图, 发现并没有传递依赖进来!</p>
-<h2 id="为什么传递依赖没有生效"><a href="#为什么传递依赖没有生效" class="headerlink" title="为什么传递依赖没有生效?"></a>为什么传递依赖没有生效?</h2><p>经分析发现, 在 test-scheduler 的pom里, 对 shared-common 的依赖进行了裁剪, 将 diamond-client exclude 出去了.</p>
-<p>而 resource-manage 等模块, 都是继承了 test-scheduler 的父pom. 因此resource-manange声明依赖了全量的 shared-common 模块如下:</p>
-<p>但实际生效的仍是 test-scheduler pom中声明的 shared-common 依赖, 即排除掉了 diamond-client 依赖.</p>
-<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>至此解决问题就很简单了. 在 test-scheduler 的pom中, 对 shared-common 依赖的声明, 删除掉如下片段即可:<br><exclusion><br><artifactId>diamond-client</artifactId><br><groupId>com.xxx.diamond</groupId><br></exclusion><br>这样就解决问题了</p>
-<h1 id="扩展研究"><a href="#扩展研究" class="headerlink" title="扩展研究"></a>扩展研究</h1><h2 id="传递依赖失效的其他场景"><a href="#传递依赖失效的其他场景" class="headerlink" title="传递依赖失效的其他场景"></a>传递依赖失效的其他场景</h2><h3 id="scope问题"><a href="#scope问题" class="headerlink" title="scope问题"></a>scope问题</h3><ol>
-<li>由于本问题中是在UT运行时发生的CNFE(ClassNotFoundException), 因此基本可以排除由于scope的原因. </li>
-<li>但如果是在运行时发生了CNFE, 则需要看下是否使用了<scope>test&#x2F;provided&#x2F;system</scope>等标签</li>
-</ol>
-<h3 id="optional问题"><a href="#optional问题" class="headerlink" title="optional问题"></a>optional问题</h3><ul>
-<li><p>如果optional为false, 则代表引用该pom的项目, 不会间接依赖到该GAV</p>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>net.biancheng.www<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>X<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.0-SNAPSHOT<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-    <span class="token comment">&lt;!--设置可选依赖  --></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>optional</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>optional</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>关于 optional 元素及可选依赖说明如下：</p>
-</li>
-</ul>
-<ol>
-<li>可选依赖用来控制当前依赖是否向下传递成为间接依赖；</li>
-<li>optional 默认值为 false，表示可以向下传递称为间接依赖；</li>
-<li>若 optional 元素取值为 true，则表示当前依赖不能向下传递成为间接依赖。</li>
-<li>仅适用于 项目的单纯依赖关系，不适合 父子工程。假设A工程是 parent，那么A工程即便加上了 optinal，子项目也将继承父工程的所有依赖关系。</li>
-</ol>
-<ul>
-<li>在什么场景下, 会把<optional>true</optional>设置为true?<br>假设一个关于数据库持久化的项目(Project C), 为了适配更多类型的数据库持久化设计，比如 Mysql 持久化设计(Project A) 和 Oracle 持久化设计(Project B)，</li>
-<li>当我们的项目(Project D) 要用的 Project C 的持久化设计，不可能既引入 mysql 驱动又引入 oracle 驱动吧，所以我们要显式指定一个，就是这个道理了</li>
-</ul>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://www.cnblogs.com/cy0628/p/15034450.html#:~:text=Maven%20%E7%9A%84%E4%BE%9D%E8%B5%96%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6,%E4%B8%8A%E7%AE%80%E5%8C%96POM%20%E7%9A%84%E9%85%8D%E7%BD%AE%E3%80%82">Maven依赖传递,排除依赖和可选依赖</a></li>
-<li><a href="https://juejin.cn/post/6844903987322290189">Maven optional关键字透彻图解</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>maven</tag>
-        <tag>transitive dependency</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RAM的基础概念与实践</title>
-    <url>//2022-02-28-aliyun-ram-openapi/</url>
-    <content><![CDATA[<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念:"></a>重要概念:</h2><p>RAM用户:</p>
-<ul>
-<li>主账号</li>
-<li>子账号</li>
-</ul>
-<p>用户组: </p>
-<ul>
-<li>与传统RBAC里的角色对应.</li>
-</ul>
-<p>RAM角色: </p>
-<ul>
-<li>RAM里的角色与普通RBAC里的角色是不一样的, 这里的角色相当于是一个虚拟实体(虚拟用户), 没有ak&#x2F;sk, 因此不能被直接使用. </li>
-<li>但可以被ram用户(子账号或主账号或者云产品云服务等)扮演(assume), 一旦扮演完成, 即可拥有该角色上的所有权限.</li>
-</ul>
-<h2 id="重要属性"><a href="#重要属性" class="headerlink" title="重要属性"></a>重要属性</h2><ul>
-<li>权限管理: 用来设置该角色拥有哪些权限.</li>
-<li>信任策略管理: 用来管理哪些RAM用户&#x2F;服务能够扮演(assume)该角色</li>
-</ul>
-<h2 id="角色分类"><a href="#角色分类" class="headerlink" title="角色分类"></a>角色分类</h2><h3 id="普通角色"><a href="#普通角色" class="headerlink" title="普通角色"></a>普通角色</h3><ul>
-<li>用户可以自己创建角色, 并设置”信任策略管理”</li>
-<li>也可以由用户开通云服务时, 授权云服务来为用户创建该角色, 并把云服务加入到”信任策略”里. 从而云服务可以扮演该角色.</li>
-</ul>
-<h3 id="SLR-ServiceLinkedRole-服务关联角色"><a href="#SLR-ServiceLinkedRole-服务关联角色" class="headerlink" title="SLR(ServiceLinkedRole, 服务关联角色)"></a>SLR(ServiceLinkedRole, 服务关联角色)</h3><p>相当于普通角色的升级版, 主要是给云服务使用.<br>与普通角色的区别是: SLR一旦创建成功, 用户不能再添加&#x2F;修改SLR的 “权限管理” 以及 “信任策略管理”. 只能删除.<br>优点是防止用户误修改权限&#x2F;信任策略, 导致云服务无法正常扮演, 提供服务.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218061.png"></p>
-<h1 id="基本API使用"><a href="#基本API使用" class="headerlink" title="基本API使用"></a>基本API使用</h1><h2 id="方式1-直接使用AK-x2F-SK"><a href="#方式1-直接使用AK-x2F-SK" class="headerlink" title="方式1: 直接使用AK&#x2F;SK"></a>方式1: 直接使用AK&#x2F;SK</h2><h3 id="使用样例"><a href="#使用样例" class="headerlink" title="使用样例:"></a>使用样例:</h3><ul>
-<li>使用主账号的AK&#x2F;SK</li>
-<li>使用子账号的AK&#x2F;SK</li>
-</ul>
-<h3 id="适用场景分析"><a href="#适用场景分析" class="headerlink" title="适用场景分析"></a>适用场景分析</h3><p>直接用ak&#x2F;sk, 是非常常见的方案. 但带来的问题: </p>
-<ol>
-<li>SK泄露安全问题: 由于SK是不变的, 因此如果SK泄露, 相当于密码泄露, 即永久地拥有了该账号所有的权限.</li>
-<li>SK永久有效问题: 主账号的SK是永久有效的, 无法类似stsToken一样设置有效期, 到期之后需要重新续期.</li>
-</ol>
-<h2 id="方式2-扮演RAM角色-使用RAM角色的STSToken"><a href="#方式2-扮演RAM角色-使用RAM角色的STSToken" class="headerlink" title="方式2: 扮演RAM角色, 使用RAM角色的STSToken"></a>方式2: 扮演RAM角色, 使用RAM角色的STSToken</h2><h3 id="使用样例-1"><a href="#使用样例-1" class="headerlink" title="使用样例"></a>使用样例</h3><h3 id="使用场景分析"><a href="#使用场景分析" class="headerlink" title="使用场景分析"></a>使用场景分析</h3><p>由于stsToken有效期用户是可以设置的, 因此风险有限.</p>
-<h2 id="方式3-内部调用使用innerAPI"><a href="#方式3-内部调用使用innerAPI" class="headerlink" title="方式3: 内部调用使用innerAPI"></a>方式3: 内部调用使用innerAPI</h2><h3 id="使用场景分析-1"><a href="#使用场景分析-1" class="headerlink" title="使用场景分析"></a>使用场景分析</h3><p>为二方&#x2F;云产品颁发一个授信的AK&#x2F;SK, 在调用API时, 可以传入 (ak, sk, realUserId) 来代理用户执行操作</p>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
-<li>安全要求高: <ul>
-<li>链路安全需要保障: 一定要保障API链路是走的安全链路或者内网通道, 不要开放在公网.</li>
-<li>云产品ak&#x2F;sk需要保障: 不要放在客户端, 一定要放在服务端. API只能<code>服务端-服务端</code>调用</li>
-</ul>
-</li>
-<li>流控方式: 需要按照&lt;api, realUserId, channel&gt;为粒度进行流控.<ul>
-<li>如果按照&lt;api, 云产品UID&gt;进行流控, 云产品如果代理的realUserId数量增加, 会很容易到达限流瓶颈. </li>
-<li>如果按照&lt;api, realUserId&gt;进行流控, 在云产品错误调用量很大时, 会导致影响用户正常的api调用</li>
-</ul>
-</li>
-</ul>
-<h1 id="其他思考"><a href="#其他思考" class="headerlink" title="其他思考"></a>其他思考</h1><h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
-<li>一定要用子账号的ak&#x2F;sk, 不能用主账号. 子账号ak&#x2F;sk泄露, 可以通过主账号进行禁用等. 一旦主账号sk泄露, 就彻底没有了防线.</li>
-<li>作为第三方服务开发者, 一定要使用SLR来请求进行授权, 而不能直接索要用户的ak&#x2F;sk, 或者请求用户添加子账号之类.</li>
-</ol>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://next.api.aliyun.com/document/Rds/2014-08-15/CreateServiceLinkedRole">CreateServiceLinkedRole</a></li>
-<li><a href="https://developer.aliyun.com/ask/213942?spm=5176.21213303.J_6704733920.26.5c103eda7AvbNH&scm=20140722.S_community@@%E9%97%AE%E7%AD%94@@213942._.ID_community@@%E9%97%AE%E7%AD%94@@213942-RL_sts%20token-LOC_main-OR_ser-V_2-P0_6">Java SDK：使用STS Token进行访问</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>ram</tag>
       </tags>
   </entry>
   <entry>
@@ -4871,6 +4808,69 @@ spring.datasource.driver.initialSize&#x3D;20<span aria-hidden="true" class="line
       </tags>
   </entry>
   <entry>
+    <title>RAM的基础概念与实践</title>
+    <url>//2022-02-28-aliyun-ram-openapi/</url>
+    <content><![CDATA[<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念:"></a>重要概念:</h2><p>RAM用户:</p>
+<ul>
+<li>主账号</li>
+<li>子账号</li>
+</ul>
+<p>用户组: </p>
+<ul>
+<li>与传统RBAC里的角色对应.</li>
+</ul>
+<p>RAM角色: </p>
+<ul>
+<li>RAM里的角色与普通RBAC里的角色是不一样的, 这里的角色相当于是一个虚拟实体(虚拟用户), 没有ak&#x2F;sk, 因此不能被直接使用. </li>
+<li>但可以被ram用户(子账号或主账号或者云产品云服务等)扮演(assume), 一旦扮演完成, 即可拥有该角色上的所有权限.</li>
+</ul>
+<h2 id="重要属性"><a href="#重要属性" class="headerlink" title="重要属性"></a>重要属性</h2><ul>
+<li>权限管理: 用来设置该角色拥有哪些权限.</li>
+<li>信任策略管理: 用来管理哪些RAM用户&#x2F;服务能够扮演(assume)该角色</li>
+</ul>
+<h2 id="角色分类"><a href="#角色分类" class="headerlink" title="角色分类"></a>角色分类</h2><h3 id="普通角色"><a href="#普通角色" class="headerlink" title="普通角色"></a>普通角色</h3><ul>
+<li>用户可以自己创建角色, 并设置”信任策略管理”</li>
+<li>也可以由用户开通云服务时, 授权云服务来为用户创建该角色, 并把云服务加入到”信任策略”里. 从而云服务可以扮演该角色.</li>
+</ul>
+<h3 id="SLR-ServiceLinkedRole-服务关联角色"><a href="#SLR-ServiceLinkedRole-服务关联角色" class="headerlink" title="SLR(ServiceLinkedRole, 服务关联角色)"></a>SLR(ServiceLinkedRole, 服务关联角色)</h3><p>相当于普通角色的升级版, 主要是给云服务使用.<br>与普通角色的区别是: SLR一旦创建成功, 用户不能再添加&#x2F;修改SLR的 “权限管理” 以及 “信任策略管理”. 只能删除.<br>优点是防止用户误修改权限&#x2F;信任策略, 导致云服务无法正常扮演, 提供服务.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218061.png"></p>
+<h1 id="基本API使用"><a href="#基本API使用" class="headerlink" title="基本API使用"></a>基本API使用</h1><h2 id="方式1-直接使用AK-x2F-SK"><a href="#方式1-直接使用AK-x2F-SK" class="headerlink" title="方式1: 直接使用AK&#x2F;SK"></a>方式1: 直接使用AK&#x2F;SK</h2><h3 id="使用样例"><a href="#使用样例" class="headerlink" title="使用样例:"></a>使用样例:</h3><ul>
+<li>使用主账号的AK&#x2F;SK</li>
+<li>使用子账号的AK&#x2F;SK</li>
+</ul>
+<h3 id="适用场景分析"><a href="#适用场景分析" class="headerlink" title="适用场景分析"></a>适用场景分析</h3><p>直接用ak&#x2F;sk, 是非常常见的方案. 但带来的问题: </p>
+<ol>
+<li>SK泄露安全问题: 由于SK是不变的, 因此如果SK泄露, 相当于密码泄露, 即永久地拥有了该账号所有的权限.</li>
+<li>SK永久有效问题: 主账号的SK是永久有效的, 无法类似stsToken一样设置有效期, 到期之后需要重新续期.</li>
+</ol>
+<h2 id="方式2-扮演RAM角色-使用RAM角色的STSToken"><a href="#方式2-扮演RAM角色-使用RAM角色的STSToken" class="headerlink" title="方式2: 扮演RAM角色, 使用RAM角色的STSToken"></a>方式2: 扮演RAM角色, 使用RAM角色的STSToken</h2><h3 id="使用样例-1"><a href="#使用样例-1" class="headerlink" title="使用样例"></a>使用样例</h3><h3 id="使用场景分析"><a href="#使用场景分析" class="headerlink" title="使用场景分析"></a>使用场景分析</h3><p>由于stsToken有效期用户是可以设置的, 因此风险有限.</p>
+<h2 id="方式3-内部调用使用innerAPI"><a href="#方式3-内部调用使用innerAPI" class="headerlink" title="方式3: 内部调用使用innerAPI"></a>方式3: 内部调用使用innerAPI</h2><h3 id="使用场景分析-1"><a href="#使用场景分析-1" class="headerlink" title="使用场景分析"></a>使用场景分析</h3><p>为二方&#x2F;云产品颁发一个授信的AK&#x2F;SK, 在调用API时, 可以传入 (ak, sk, realUserId) 来代理用户执行操作</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>安全要求高: <ul>
+<li>链路安全需要保障: 一定要保障API链路是走的安全链路或者内网通道, 不要开放在公网.</li>
+<li>云产品ak&#x2F;sk需要保障: 不要放在客户端, 一定要放在服务端. API只能<code>服务端-服务端</code>调用</li>
+</ul>
+</li>
+<li>流控方式: 需要按照&lt;api, realUserId, channel&gt;为粒度进行流控.<ul>
+<li>如果按照&lt;api, 云产品UID&gt;进行流控, 云产品如果代理的realUserId数量增加, 会很容易到达限流瓶颈. </li>
+<li>如果按照&lt;api, realUserId&gt;进行流控, 在云产品错误调用量很大时, 会导致影响用户正常的api调用</li>
+</ul>
+</li>
+</ul>
+<h1 id="其他思考"><a href="#其他思考" class="headerlink" title="其他思考"></a>其他思考</h1><h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li>一定要用子账号的ak&#x2F;sk, 不能用主账号. 子账号ak&#x2F;sk泄露, 可以通过主账号进行禁用等. 一旦主账号sk泄露, 就彻底没有了防线.</li>
+<li>作为第三方服务开发者, 一定要使用SLR来请求进行授权, 而不能直接索要用户的ak&#x2F;sk, 或者请求用户添加子账号之类.</li>
+</ol>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://next.api.aliyun.com/document/Rds/2014-08-15/CreateServiceLinkedRole">CreateServiceLinkedRole</a></li>
+<li><a href="https://developer.aliyun.com/ask/213942?spm=5176.21213303.J_6704733920.26.5c103eda7AvbNH&scm=20140722.S_community@@%E9%97%AE%E7%AD%94@@213942._.ID_community@@%E9%97%AE%E7%AD%94@@213942-RL_sts%20token-LOC_main-OR_ser-V_2-P0_6">Java SDK：使用STS Token进行访问</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>ram</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot+MyBatis使用XML配置方案</title>
     <url>//2022-03-03-springboot-mybatis-xml/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目代码之前是基于ibatis, 而且SQL语句是基于sqlmap.xml文件的.<br>现在升级到mybatis 3.4.2, 但mybatis的默认方案是基于annotation的.<br>个人非常不习惯annotation的方式, 每次排查问题拼接SQL, 以及后续修改SQL, 极其麻烦, 不直观.<br>因此想要使用xml的方式配置. 在这个过程中踩了很多坑, 现在记录下来.</p>
@@ -4958,6 +4958,107 @@ spring.datasource.driver.initialSize&#x3D;20<span aria-hidden="true" class="line
         <tag>springboot</tag>
         <tag>mybatis</tag>
         <tag>xml</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>异步HttpClient使用Netty作为SocketChannel的Provider</title>
+    <url>//2022-03-14-http-client-netty/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>ning<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>async<span class="token operator">-</span>http<span class="token operator">-</span>client<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">1.9</span><span class="token number">.40</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>io<span class="token punctuation">.</span>netty<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>netty<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">3.10</span><span class="token number">.6</span><span class="token punctuation">.</span>Final<span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="AsyncHttpClient-重要参数与使用指南"><a href="#AsyncHttpClient-重要参数与使用指南" class="headerlink" title="AsyncHttpClient 重要参数与使用指南"></a>AsyncHttpClient 重要参数与使用指南</h1><h2 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h2><h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><h3 id="IO线程池最好不要用CachedThreadPool–-gt-此处存疑-暂时无法复现任务被Rejected场景"><a href="#IO线程池最好不要用CachedThreadPool–-gt-此处存疑-暂时无法复现任务被Rejected场景" class="headerlink" title="IO线程池最好不要用CachedThreadPool–&gt;此处存疑, 暂时无法复现任务被Rejected场景"></a>IO线程池最好不要用CachedThreadPool–&gt;此处存疑, 暂时无法复现任务被Rejected场景</h3><ul>
+<li>如下样例, ioThread线程池只有10, 并发的请求有100, 由于<code>Executors.newCachedThreadPool</code>内部使用<code>SynchronousQueue</code>, 从而导致突发的请求会被Reject掉.</li>
+<li>如果要用也要评估好容量, size一定要大于, 防止Reject请求??</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ExecutorService</span> ioThreadPool<span class="token operator">=</span><span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DefaultThreadFactory</span><span class="token punctuation">(</span>workerThreadPoolName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        builder<span class="token punctuation">.</span><span class="token function">setExecutorService</span><span class="token punctuation">(</span>ioThreadPool<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// boss</span>
+        <span class="token class-name">String</span> bossThreadPoolName<span class="token operator">=</span><span class="token string">"AsyncHttpClient-Dispatcher"</span><span class="token punctuation">;</span>
+        <span class="token class-name">ExecutorService</span> bossThreadPool<span class="token operator">=</span><span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">DefaultThreadFactory</span><span class="token punctuation">(</span>bossThreadPoolName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">NioClientSocketChannelFactory</span> socketChannelFactory<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">NioClientSocketChannelFactory</span><span class="token punctuation">(</span>
+        bossThreadPool<span class="token punctuation">,</span>ioThreadPool<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// ...</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">"http://www.baidu.com/"</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">doAsyncGet</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100000L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h3 id="单独定义Worker线程池-与IO线程池分开"><a href="#单独定义Worker线程池-与IO线程池分开" class="headerlink" title="单独定义Worker线程池, 与IO线程池分开"></a>单独定义Worker线程池, 与IO线程池分开</h3><p>如下, 在<code>onCompleted()</code>里执行时, 本质上还是在IO线程里执行, 此时TCP连接仍然是ESTABLISHED状态.<br>只有当<code>onCompleted()</code>方法执行完成, 底层的TCP连接才会或者放回连接池中(allowPoolingConnections&#x3D;true, 以便其他请求复用), 或者关闭(allowPoolingConnections&#x3D;false)<br>如果在<code>onCompleted()</code>里执行很耗时的操作, 就会</p>
+<ol>
+<li>占用着TCP连接无法复用&#x2F;关闭, 造成资源浪费.</li>
+<li>占用IO线程, 导致其他IO任务等待.<br>由于此时http response已经完全读取完毕, 因此可以将response丢进worker线程池中, 执行耗时的业务操作. 从而把TCP连接复用&#x2F;关闭.<br>如下样例, 导致100个TCP连接一直处于ESTABLISHED状态</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">CommonCallback</span> <span class="token keyword">extends</span> <span class="token class-name">AsyncCompletionHandler</span> <span class="token punctuation">&#123;</span>
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">onCompleted</span><span class="token punctuation">(</span><span class="token class-name">Response</span> response<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> <span class="token class-name">Calendar</span><span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTimeInMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 此时TCP连接仍然是ESTABLISHED状态</span>
+    <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">1000L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> response<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218576.png"></p>
+<h3 id="当设置了maxConnectionsPerHost时-allowPoolingConnections最好设置为true-并且请求最好不要瞬时并发"><a href="#当设置了maxConnectionsPerHost时-allowPoolingConnections最好设置为true-并且请求最好不要瞬时并发" class="headerlink" title="当设置了maxConnectionsPerHost时, allowPoolingConnections最好设置为true, 并且请求最好不要瞬时并发"></a>当设置了maxConnectionsPerHost时, allowPoolingConnections最好设置为true, 并且请求最好不要瞬时并发</h3><p>否则如下例子, 请求就不会排队了, TCP连接也无法重用, 直接进入了Handler的<code>onThrowable()</code>方法里</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">doAsyncGet</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 这里最好根据平均处理时长, 设置一个sleep时长, 便于TCP连接回收回池子里, 从而不超过maxConnectionsPerHost阈值</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="AsyncHttpClient-参数适用场景"><a href="#AsyncHttpClient-参数适用场景" class="headerlink" title="AsyncHttpClient 参数适用场景"></a>AsyncHttpClient 参数适用场景</h1><h2 id="场景1-与较少数量的Server-通信频繁或者有大量数据要传输-需要维持TCP长连接"><a href="#场景1-与较少数量的Server-通信频繁或者有大量数据要传输-需要维持TCP长连接" class="headerlink" title="场景1: 与较少数量的Server, 通信频繁或者有大量数据要传输, 需要维持TCP长连接"></a>场景1: 与较少数量的Server, 通信频繁或者有大量数据要传输, 需要维持TCP长连接</h2><ul>
+<li>本质上来说就是<ul>
+<li>当建立&#x2F;维持TCP连接的成本高于传输成本时, 可以选择长连. 不论是TCP长连接, 还是HttpClient基于TCP的连接复用.</li>
+<li>需要服务端需要不定期向客户端推送数据.</li>
+</ul>
+</li>
+<li>实际场景: <ul>
+<li>大文件的下载(基于HTTP&#x2F;TCP协议)</li>
+<li>HTTP&#x2F;1.1, 即访问某个网站时, 短时间内需要往该Host发送N多HTTP请求.</li>
+<li>K8S Watch机制, 使用的是HTTP Streaming机制或者WebSocket机制, 本质上还是TCP长连接.</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">;</span> <span class="token comment">// 设定池子里空闲TCP连接的保持时间, 大于该时长, 则TCP连接被关闭, 从连接池中移除</span>
+<span class="token comment">// maxConnectionsPerHost = 100; // 设定往每个HOST的最大可以连接数量, 大于该连接的请求, 会进入到Handler的onThrowable里 (这里HOST是&#123;HOST_IP, PORT&#125; 还是 HOST_IP? 待验证)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="场景2-与较多数量的Server-每个Server传输较少的数据-可以不用连接复用-使用TCP短连接"><a href="#场景2-与较多数量的Server-每个Server传输较少的数据-可以不用连接复用-使用TCP短连接" class="headerlink" title="场景2: 与较多数量的Server, 每个Server传输较少的数据, 可以不用连接复用, 使用TCP短连接"></a>场景2: 与较多数量的Server, 每个Server传输较少的数据, 可以不用连接复用, 使用TCP短连接</h2><ul>
+<li>实际场景: <ul>
+<li>爬虫, 需要爬取N多个Server的标题&#x2F;概要信息, 构成网站地图, 每个Server&#x2F;Host的内容量较少. (当然如果是单个Server有N多内容要爬取, 也可以使用长连接)</li>
+</ul>
+</li>
+<li>实际参数:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 没必要把TCP连接放进池子里, 因为后续短期大概率就不会再跟该Host建立TCP连接</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="AsyncHttpClient-amp-Netty"><a href="#AsyncHttpClient-amp-Netty" class="headerlink" title="AsyncHttpClient &amp; Netty"></a>AsyncHttpClient &amp; Netty</h1><h1 id="AsyncHttpClient-amp-其他Provider"><a href="#AsyncHttpClient-amp-其他Provider" class="headerlink" title="AsyncHttpClient &amp; 其他Provider"></a>AsyncHttpClient &amp; 其他Provider</h1><h2 id="AsyncHttpClient-amp-JDK"><a href="#AsyncHttpClient-amp-JDK" class="headerlink" title="AsyncHttpClient &amp; JDK"></a>AsyncHttpClient &amp; JDK</h2><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li>详细的测试样例: <a href="https://gitee.com/null_894_2517/test-core/blob/d504b14564ef7d6e2ee4a2b3a8379f62cdf894ee/src/test/java/edu/xmu/test/javaweb/httpclient/HttpAsyncClientTest.java">HttpAsyncClientTest.java</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>httpclient</tag>
+        <tag>asynchttpclient</tag>
+        <tag>netty</tag>
       </tags>
   </entry>
   <entry>
@@ -5350,107 +5451,6 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
-    <title>异步HttpClient使用Netty作为SocketChannel的Provider</title>
-    <url>//2022-03-14-http-client-netty/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
-    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>ning<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>async<span class="token operator">-</span>http<span class="token operator">-</span>client<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
-    <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">1.9</span><span class="token number">.40</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
-<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
-    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>io<span class="token punctuation">.</span>netty<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>netty<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
-    <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">3.10</span><span class="token number">.6</span><span class="token punctuation">.</span>Final<span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="AsyncHttpClient-重要参数与使用指南"><a href="#AsyncHttpClient-重要参数与使用指南" class="headerlink" title="AsyncHttpClient 重要参数与使用指南"></a>AsyncHttpClient 重要参数与使用指南</h1><h2 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h2><h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><h3 id="IO线程池最好不要用CachedThreadPool–-gt-此处存疑-暂时无法复现任务被Rejected场景"><a href="#IO线程池最好不要用CachedThreadPool–-gt-此处存疑-暂时无法复现任务被Rejected场景" class="headerlink" title="IO线程池最好不要用CachedThreadPool–&gt;此处存疑, 暂时无法复现任务被Rejected场景"></a>IO线程池最好不要用CachedThreadPool–&gt;此处存疑, 暂时无法复现任务被Rejected场景</h3><ul>
-<li>如下样例, ioThread线程池只有10, 并发的请求有100, 由于<code>Executors.newCachedThreadPool</code>内部使用<code>SynchronousQueue</code>, 从而导致突发的请求会被Reject掉.</li>
-<li>如果要用也要评估好容量, size一定要大于, 防止Reject请求??</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">ExecutorService</span> ioThreadPool<span class="token operator">=</span><span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DefaultThreadFactory</span><span class="token punctuation">(</span>workerThreadPoolName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">setExecutorService</span><span class="token punctuation">(</span>ioThreadPool<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment">// boss</span>
-        <span class="token class-name">String</span> bossThreadPoolName<span class="token operator">=</span><span class="token string">"AsyncHttpClient-Dispatcher"</span><span class="token punctuation">;</span>
-        <span class="token class-name">ExecutorService</span> bossThreadPool<span class="token operator">=</span><span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">DefaultThreadFactory</span><span class="token punctuation">(</span>bossThreadPoolName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token class-name">NioClientSocketChannelFactory</span> socketChannelFactory<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">NioClientSocketChannelFactory</span><span class="token punctuation">(</span>
-        bossThreadPool<span class="token punctuation">,</span>ioThreadPool<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// ...</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">"http://www.baidu.com/"</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">doAsyncGet</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100000L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<h3 id="单独定义Worker线程池-与IO线程池分开"><a href="#单独定义Worker线程池-与IO线程池分开" class="headerlink" title="单独定义Worker线程池, 与IO线程池分开"></a>单独定义Worker线程池, 与IO线程池分开</h3><p>如下, 在<code>onCompleted()</code>里执行时, 本质上还是在IO线程里执行, 此时TCP连接仍然是ESTABLISHED状态.<br>只有当<code>onCompleted()</code>方法执行完成, 底层的TCP连接才会或者放回连接池中(allowPoolingConnections&#x3D;true, 以便其他请求复用), 或者关闭(allowPoolingConnections&#x3D;false)<br>如果在<code>onCompleted()</code>里执行很耗时的操作, 就会</p>
-<ol>
-<li>占用着TCP连接无法复用&#x2F;关闭, 造成资源浪费.</li>
-<li>占用IO线程, 导致其他IO任务等待.<br>由于此时http response已经完全读取完毕, 因此可以将response丢进worker线程池中, 执行耗时的业务操作. 从而把TCP连接复用&#x2F;关闭.<br>如下样例, 导致100个TCP连接一直处于ESTABLISHED状态</li>
-</ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">CommonCallback</span> <span class="token keyword">extends</span> <span class="token class-name">AsyncCompletionHandler</span> <span class="token punctuation">&#123;</span>
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">onCompleted</span><span class="token punctuation">(</span><span class="token class-name">Response</span> response<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
-    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> <span class="token class-name">Calendar</span><span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTimeInMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 此时TCP连接仍然是ESTABLISHED状态</span>
-    <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">1000L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> response<span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218576.png"></p>
-<h3 id="当设置了maxConnectionsPerHost时-allowPoolingConnections最好设置为true-并且请求最好不要瞬时并发"><a href="#当设置了maxConnectionsPerHost时-allowPoolingConnections最好设置为true-并且请求最好不要瞬时并发" class="headerlink" title="当设置了maxConnectionsPerHost时, allowPoolingConnections最好设置为true, 并且请求最好不要瞬时并发"></a>当设置了maxConnectionsPerHost时, allowPoolingConnections最好设置为true, 并且请求最好不要瞬时并发</h3><p>否则如下例子, 请求就不会排队了, TCP连接也无法重用, 直接进入了Handler的<code>onThrowable()</code>方法里</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">doAsyncGet</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 这里最好根据平均处理时长, 设置一个sleep时长, 便于TCP连接回收回池子里, 从而不超过maxConnectionsPerHost阈值</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="AsyncHttpClient-参数适用场景"><a href="#AsyncHttpClient-参数适用场景" class="headerlink" title="AsyncHttpClient 参数适用场景"></a>AsyncHttpClient 参数适用场景</h1><h2 id="场景1-与较少数量的Server-通信频繁或者有大量数据要传输-需要维持TCP长连接"><a href="#场景1-与较少数量的Server-通信频繁或者有大量数据要传输-需要维持TCP长连接" class="headerlink" title="场景1: 与较少数量的Server, 通信频繁或者有大量数据要传输, 需要维持TCP长连接"></a>场景1: 与较少数量的Server, 通信频繁或者有大量数据要传输, 需要维持TCP长连接</h2><ul>
-<li>本质上来说就是<ul>
-<li>当建立&#x2F;维持TCP连接的成本高于传输成本时, 可以选择长连. 不论是TCP长连接, 还是HttpClient基于TCP的连接复用.</li>
-<li>需要服务端需要不定期向客户端推送数据.</li>
-</ul>
-</li>
-<li>实际场景: <ul>
-<li>大文件的下载(基于HTTP&#x2F;TCP协议)</li>
-<li>HTTP&#x2F;1.1, 即访问某个网站时, 短时间内需要往该Host发送N多HTTP请求.</li>
-<li>K8S Watch机制, 使用的是HTTP Streaming机制或者WebSocket机制, 本质上还是TCP长连接.</li>
-</ul>
-</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">;</span> <span class="token comment">// 设定池子里空闲TCP连接的保持时间, 大于该时长, 则TCP连接被关闭, 从连接池中移除</span>
-<span class="token comment">// maxConnectionsPerHost = 100; // 设定往每个HOST的最大可以连接数量, 大于该连接的请求, 会进入到Handler的onThrowable里 (这里HOST是&#123;HOST_IP, PORT&#125; 还是 HOST_IP? 待验证)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="场景2-与较多数量的Server-每个Server传输较少的数据-可以不用连接复用-使用TCP短连接"><a href="#场景2-与较多数量的Server-每个Server传输较少的数据-可以不用连接复用-使用TCP短连接" class="headerlink" title="场景2: 与较多数量的Server, 每个Server传输较少的数据, 可以不用连接复用, 使用TCP短连接"></a>场景2: 与较多数量的Server, 每个Server传输较少的数据, 可以不用连接复用, 使用TCP短连接</h2><ul>
-<li>实际场景: <ul>
-<li>爬虫, 需要爬取N多个Server的标题&#x2F;概要信息, 构成网站地图, 每个Server&#x2F;Host的内容量较少. (当然如果是单个Server有N多内容要爬取, 也可以使用长连接)</li>
-</ul>
-</li>
-<li>实际参数:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">allowPoolingConnections <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 没必要把TCP连接放进池子里, 因为后续短期大概率就不会再跟该Host建立TCP连接</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="AsyncHttpClient-amp-Netty"><a href="#AsyncHttpClient-amp-Netty" class="headerlink" title="AsyncHttpClient &amp; Netty"></a>AsyncHttpClient &amp; Netty</h1><h1 id="AsyncHttpClient-amp-其他Provider"><a href="#AsyncHttpClient-amp-其他Provider" class="headerlink" title="AsyncHttpClient &amp; 其他Provider"></a>AsyncHttpClient &amp; 其他Provider</h1><h2 id="AsyncHttpClient-amp-JDK"><a href="#AsyncHttpClient-amp-JDK" class="headerlink" title="AsyncHttpClient &amp; JDK"></a>AsyncHttpClient &amp; JDK</h2><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li>详细的测试样例: <a href="https://gitee.com/null_894_2517/test-core/blob/d504b14564ef7d6e2ee4a2b3a8379f62cdf894ee/src/test/java/edu/xmu/test/javaweb/httpclient/HttpAsyncClientTest.java">HttpAsyncClientTest.java</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>httpclient</tag>
-        <tag>asynchttpclient</tag>
-        <tag>netty</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>容器生态的一些研究与对比</title>
     <url>//2022-03-27-container-ecosystem/</url>
     <content><![CDATA[<h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><table>
@@ -5570,17 +5570,6 @@ pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="t
       </tags>
   </entry>
   <entry>
-    <title>OpenAPI设计之ClientToken</title>
-    <url>//2022-03-28-openapi-clienttoken/</url>
-    <content><![CDATA[<h1 id="ClientToken作用"><a href="#ClientToken作用" class="headerlink" title="ClientToken作用"></a>ClientToken作用</h1>]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>java</tag>
-        <tag>client-token</tag>
-        <tag>openapi</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s statefulset的研究与实践</title>
     <url>//2022-03-27-k8s-stateful-set/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
@@ -5628,6 +5617,17 @@ pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="t
       <tags>
         <tag>k8s</tag>
         <tag>stateful-set</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAPI设计之ClientToken</title>
+    <url>//2022-03-28-openapi-clienttoken/</url>
+    <content><![CDATA[<h1 id="ClientToken作用"><a href="#ClientToken作用" class="headerlink" title="ClientToken作用"></a>ClientToken作用</h1>]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>java</tag>
+        <tag>client-token</tag>
+        <tag>openapi</tag>
       </tags>
   </entry>
   <entry>
@@ -9271,6 +9271,126 @@ Property settings:
       </tags>
   </entry>
   <entry>
+    <title>Linux网络之HTTP Proxy原理与实现分析</title>
+    <url>//2022-07-10-linux-network-http-proxy/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用apache的HttpClient时(获取其他常用的httpclient), 经常会发现初始化时可以配置http proxy. 但有些疑问:</p>
+<ol>
+<li>在什么场景下需要使用http proxy?</li>
+<li>具体http proxy怎么配置?</li>
+<li>具体http proxy的实现原理是啥? 包括 httpClient 如何使用这个proxy? 具体的httpProxy怎么处理这种包?</li>
+</ol>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>docker</li>
+<li>ubuntu</li>
+</ul>
+<h2 id="http-proxy-服务端部署"><a href="#http-proxy-服务端部署" class="headerlink" title="http proxy 服务端部署"></a>http proxy 服务端部署</h2><p>Nginx通常是作为反向代理, 但其实也可以作为正向代理使用:  <a href="https://github.com/reiz/nginx_proxy">nginx_proxy</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run -d -p <span class="token number">9999</span>:8888 -v <span class="token variable">$&#123;<span class="token environment constant">PWD</span>&#125;</span>/nginx_allowlist.conf:/usr/local/nginx/conf/nginx.conf reiz/nginx_proxy:0.0.3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="http-proxy-客户端配置"><a href="#http-proxy-客户端配置" class="headerlink" title="http proxy 客户端配置"></a>http proxy 客户端配置</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span><span class="token class-name">HostConfiguration</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span><span class="token class-name">HttpClient</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span>methods<span class="token punctuation">.</span></span><span class="token class-name">GetMethod</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span>params<span class="token punctuation">.</span></span><span class="token class-name">HttpMethodParams</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span><span class="token class-name">Test</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HttpClientTest</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> ENCODING <span class="token operator">=</span> <span class="token string">"UTF-8"</span><span class="token punctuation">;</span>
+    
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">"https://www.google.com"</span><span class="token punctuation">;</span>
+        
+        <span class="token class-name">HttpClient</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">HostConfiguration</span> hostConfiguration <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HostConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        hostConfiguration<span class="token punctuation">.</span><span class="token function">setProxy</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span> <span class="token number">9999</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        client<span class="token punctuation">.</span><span class="token function">setHostConfiguration</span><span class="token punctuation">(</span>hostConfiguration<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        client<span class="token punctuation">.</span><span class="token function">getParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setParameter</span><span class="token punctuation">(</span>
+            <span class="token class-name">HttpMethodParams</span><span class="token punctuation">.</span>HTTP_CONTENT_CHARSET<span class="token punctuation">,</span> ENCODING<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">GetMethod</span> method <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GetMethod</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> i <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">executeMethod</span><span class="token punctuation">(</span>method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Code: "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">String</span> response <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">getResponseBodyAsString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="客户端请求分析"><a href="#客户端请求分析" class="headerlink" title="客户端请求分析"></a>客户端请求分析</h2><p>不配置proxy:</p>
+<ul>
+<li>client —http get—&gt; <a href="http://www.google.com/">www.google.com</a></li>
+</ul>
+<p>配置了proxy:</p>
+<ul>
+<li>client — tcp —&gt; proxy — http get —&gt;  <a href="http://www.google.com/">www.google.com</a></li>
+</ul>
+<p>可以看到, client.executeMethod实质上是:</p>
+<ol>
+<li>client先与proxy建立了TCP连接.</li>
+<li>然后将HTTP报文, 包括目标域名(即GET <a href="http://www.google.com/">http://www.google.com</a>), 作为TCP的output stream传给proxy</li>
+<li>proxy解析tcp报文, 获取到真正的目标域名, 查找DNS获取到google.com的ip地址.</li>
+<li>proxy与google.com建立TCP连接, 发送报文body等.</li>
+</ol>
+<p>这种也叫: relay, 即中继.</p>
+<h2 id="实际连接分析"><a href="#实际连接分析" class="headerlink" title="实际连接分析"></a>实际连接分析</h2><h3 id="host上，-LISTEN了9999端口"><a href="#host上，-LISTEN了9999端口" class="headerlink" title="host上， LISTEN了9999端口"></a>host上， LISTEN了9999端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/PlayGround/docker/nginx-forward-proxy$ <span class="token function">netstat</span> -natp <span class="token operator">|</span> <span class="token function">fgrep</span> <span class="token number">9999</span>
+<span class="token punctuation">(</span>Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.<span class="token punctuation">)</span>
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:9999            <span class="token number">0.0</span>.0.0:*               LISTEN      -                   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="容器内部，-LISTEN了8888端口"><a href="#容器内部，-LISTEN了8888端口" class="headerlink" title="容器内部， LISTEN了8888端口"></a>容器内部， LISTEN了8888端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@84129a407795:/app<span class="token comment"># netstat -nat | fgrep 8888</span>
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:8888            <span class="token number">0.0</span>.0.0:*               LISTEN     <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="在Host上某个java进程发起一个HTTP请求之后"><a href="#在Host上某个java进程发起一个HTTP请求之后" class="headerlink" title="在Host上某个java进程发起一个HTTP请求之后"></a>在Host上某个java进程发起一个HTTP请求之后</h3><ul>
+<li><p>HOST上 Java 进程</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/Downloads/Clash-Linux$ <span class="token function">netstat</span> -natp <span class="token operator">|</span> <span class="token function">fgrep</span> <span class="token number">9999</span>
+<span class="token punctuation">(</span>Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.<span class="token punctuation">)</span>
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:9999            <span class="token number">0.0</span>.0.0:*               LISTEN      -                   
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">127.0</span>.0.1:9999          <span class="token number">127.0</span>.0.1:42261         TIME_WAIT   -                   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>容器内部</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@84129a407795:/app<span class="token comment"># netstat -nat | fgrep 8888</span>
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:8888            <span class="token number">0.0</span>.0.0:*               LISTEN     
+tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">172.17</span>.0.4:8888         <span class="token number">172.17</span>.0.1:51960        TIME_WAIT  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<p>TODO:</p>
+<ul>
+<li>在访问<code>http://www.google.com</code>时，Java测试代码正常返回结果。</li>
+<li>在访问<code>http://www.baidu.com</code>时， Java会出现如下异常，理论上由于不在nginx的白名单里应该被block的，但为啥会抛出异常？<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>IOException</span><span class="token operator">:</span> <span class="token class-name">Stream</span> closed
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>BufferedInputStream</span><span class="token punctuation">.</span><span class="token function">getBufIfOpen</span><span class="token punctuation">(</span><span class="token class-name">BufferedInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">170</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>BufferedInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">BufferedInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">336</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>WireLogInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">WireLogInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">69</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>ContentLengthInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">ContentLengthInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">170</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>FilterInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">FilterInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">133</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>AutoCloseInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">AutoCloseInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">108</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>FilterInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">FilterInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">107</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>AutoCloseInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">AutoCloseInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">127</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpMethodBase</span><span class="token punctuation">.</span><span class="token function">getResponseBody</span><span class="token punctuation">(</span><span class="token class-name">HttpMethodBase</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">690</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpMethodBase</span><span class="token punctuation">.</span><span class="token function">getResponseBodyAsString</span><span class="token punctuation">(</span><span class="token class-name">HttpMethodBase</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">803</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>test<span class="token punctuation">.</span>javaweb<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpClientProxyTest</span><span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token class-name">HttpClientProxyTest</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><h1 id="再回到实践中"><a href="#再回到实践中" class="headerlink" title="再回到实践中"></a>再回到实践中</h1><h2 id="实践1：-DNS劫持-正向代理过滤域名"><a href="#实践1：-DNS劫持-正向代理过滤域名" class="headerlink" title="实践1： DNS劫持+正向代理过滤域名"></a>实践1： DNS劫持+正向代理过滤域名</h2><p>通过DNS劫持，将所有HTTP请求都定位到正向代理中，在正向代理里进行代理域名的黑白名单控制。</p>
+<ul>
+<li>缺点：<ul>
+<li>DNS劫持可以被手动禁用，也可以手动指定<code>8.8.8.8</code>绕过DNS服务器（当然如果DNS请求直接都被劫持，）。</li>
+<li>只针对HTTP请求有效，如果知道目标的IP, 可以通过IP直连上。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>iaas</tag>
+        <tag>network</tag>
+        <tag>cloud-computing</tag>
+        <tag>http-proxy</tag>
+        <tag>proxy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>由ZK的SID/ZXID与snowflake算法引发的ID生成算法探讨</title>
     <url>//2022-07-11-zk-uuid-gen/</url>
     <content><![CDATA[<h1 id="几种生成算法"><a href="#几种生成算法" class="headerlink" title="几种生成算法"></a>几种生成算法</h1><h2 id="zk里的sid生成算法"><a href="#zk里的sid生成算法" class="headerlink" title="zk里的sid生成算法"></a>zk里的sid生成算法</h2><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
@@ -9659,126 +9779,6 @@ osxkeychain<span aria-hidden="true" class="line-numbers-rows"><span></span><span
         <tag>distributed-system</tag>
         <tag>login</tag>
         <tag>token</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux网络之HTTP Proxy原理与实现分析</title>
-    <url>//2022-07-10-linux-network-http-proxy/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用apache的HttpClient时(获取其他常用的httpclient), 经常会发现初始化时可以配置http proxy. 但有些疑问:</p>
-<ol>
-<li>在什么场景下需要使用http proxy?</li>
-<li>具体http proxy怎么配置?</li>
-<li>具体http proxy的实现原理是啥? 包括 httpClient 如何使用这个proxy? 具体的httpProxy怎么处理这种包?</li>
-</ol>
-<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
-<li>docker</li>
-<li>ubuntu</li>
-</ul>
-<h2 id="http-proxy-服务端部署"><a href="#http-proxy-服务端部署" class="headerlink" title="http proxy 服务端部署"></a>http proxy 服务端部署</h2><p>Nginx通常是作为反向代理, 但其实也可以作为正向代理使用:  <a href="https://github.com/reiz/nginx_proxy">nginx_proxy</a></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run -d -p <span class="token number">9999</span>:8888 -v <span class="token variable">$&#123;<span class="token environment constant">PWD</span>&#125;</span>/nginx_allowlist.conf:/usr/local/nginx/conf/nginx.conf reiz/nginx_proxy:0.0.3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="http-proxy-客户端配置"><a href="#http-proxy-客户端配置" class="headerlink" title="http proxy 客户端配置"></a>http proxy 客户端配置</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span><span class="token class-name">HostConfiguration</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span><span class="token class-name">HttpClient</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span>methods<span class="token punctuation">.</span></span><span class="token class-name">GetMethod</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span>params<span class="token punctuation">.</span></span><span class="token class-name">HttpMethodParams</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span><span class="token class-name">Test</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HttpClientTest</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> ENCODING <span class="token operator">=</span> <span class="token string">"UTF-8"</span><span class="token punctuation">;</span>
-    
-    <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">"https://www.google.com"</span><span class="token punctuation">;</span>
-        
-        <span class="token class-name">HttpClient</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">HostConfiguration</span> hostConfiguration <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HostConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        hostConfiguration<span class="token punctuation">.</span><span class="token function">setProxy</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span> <span class="token number">9999</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        client<span class="token punctuation">.</span><span class="token function">setHostConfiguration</span><span class="token punctuation">(</span>hostConfiguration<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        client<span class="token punctuation">.</span><span class="token function">getParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setParameter</span><span class="token punctuation">(</span>
-            <span class="token class-name">HttpMethodParams</span><span class="token punctuation">.</span>HTTP_CONTENT_CHARSET<span class="token punctuation">,</span> ENCODING<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">GetMethod</span> method <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GetMethod</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">int</span> i <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">executeMethod</span><span class="token punctuation">(</span>method<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Code: "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token class-name">String</span> response <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">getResponseBodyAsString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="客户端请求分析"><a href="#客户端请求分析" class="headerlink" title="客户端请求分析"></a>客户端请求分析</h2><p>不配置proxy:</p>
-<ul>
-<li>client —http get—&gt; <a href="http://www.google.com/">www.google.com</a></li>
-</ul>
-<p>配置了proxy:</p>
-<ul>
-<li>client — tcp —&gt; proxy — http get —&gt;  <a href="http://www.google.com/">www.google.com</a></li>
-</ul>
-<p>可以看到, client.executeMethod实质上是:</p>
-<ol>
-<li>client先与proxy建立了TCP连接.</li>
-<li>然后将HTTP报文, 包括目标域名(即GET <a href="http://www.google.com/">http://www.google.com</a>), 作为TCP的output stream传给proxy</li>
-<li>proxy解析tcp报文, 获取到真正的目标域名, 查找DNS获取到google.com的ip地址.</li>
-<li>proxy与google.com建立TCP连接, 发送报文body等.</li>
-</ol>
-<p>这种也叫: relay, 即中继.</p>
-<h2 id="实际连接分析"><a href="#实际连接分析" class="headerlink" title="实际连接分析"></a>实际连接分析</h2><h3 id="host上，-LISTEN了9999端口"><a href="#host上，-LISTEN了9999端口" class="headerlink" title="host上， LISTEN了9999端口"></a>host上， LISTEN了9999端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/PlayGround/docker/nginx-forward-proxy$ <span class="token function">netstat</span> -natp <span class="token operator">|</span> <span class="token function">fgrep</span> <span class="token number">9999</span>
-<span class="token punctuation">(</span>Not all processes could be identified, non-owned process info
- will not be shown, you would have to be root to see it all.<span class="token punctuation">)</span>
-tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:9999            <span class="token number">0.0</span>.0.0:*               LISTEN      -                   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="容器内部，-LISTEN了8888端口"><a href="#容器内部，-LISTEN了8888端口" class="headerlink" title="容器内部， LISTEN了8888端口"></a>容器内部， LISTEN了8888端口</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@84129a407795:/app<span class="token comment"># netstat -nat | fgrep 8888</span>
-tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:8888            <span class="token number">0.0</span>.0.0:*               LISTEN     <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h3 id="在Host上某个java进程发起一个HTTP请求之后"><a href="#在Host上某个java进程发起一个HTTP请求之后" class="headerlink" title="在Host上某个java进程发起一个HTTP请求之后"></a>在Host上某个java进程发起一个HTTP请求之后</h3><ul>
-<li><p>HOST上 Java 进程</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/Downloads/Clash-Linux$ <span class="token function">netstat</span> -natp <span class="token operator">|</span> <span class="token function">fgrep</span> <span class="token number">9999</span>
-<span class="token punctuation">(</span>Not all processes could be identified, non-owned process info
- will not be shown, you would have to be root to see it all.<span class="token punctuation">)</span>
-tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:9999            <span class="token number">0.0</span>.0.0:*               LISTEN      -                   
-tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">127.0</span>.0.1:9999          <span class="token number">127.0</span>.0.1:42261         TIME_WAIT   -                   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>容器内部</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@84129a407795:/app<span class="token comment"># netstat -nat | fgrep 8888</span>
-tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">0.0</span>.0.0:8888            <span class="token number">0.0</span>.0.0:*               LISTEN     
-tcp        <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">172.17</span>.0.4:8888         <span class="token number">172.17</span>.0.1:51960        TIME_WAIT  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<p>TODO:</p>
-<ul>
-<li>在访问<code>http://www.google.com</code>时，Java测试代码正常返回结果。</li>
-<li>在访问<code>http://www.baidu.com</code>时， Java会出现如下异常，理论上由于不在nginx的白名单里应该被block的，但为啥会抛出异常？<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>IOException</span><span class="token operator">:</span> <span class="token class-name">Stream</span> closed
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>BufferedInputStream</span><span class="token punctuation">.</span><span class="token function">getBufIfOpen</span><span class="token punctuation">(</span><span class="token class-name">BufferedInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">170</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>BufferedInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">BufferedInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">336</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>WireLogInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">WireLogInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">69</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>ContentLengthInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">ContentLengthInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">170</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>FilterInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">FilterInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">133</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>AutoCloseInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">AutoCloseInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">108</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>FilterInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">FilterInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">107</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>AutoCloseInputStream</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token class-name">AutoCloseInputStream</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">127</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpMethodBase</span><span class="token punctuation">.</span><span class="token function">getResponseBody</span><span class="token punctuation">(</span><span class="token class-name">HttpMethodBase</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">690</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpMethodBase</span><span class="token punctuation">.</span><span class="token function">getResponseBodyAsString</span><span class="token punctuation">(</span><span class="token class-name">HttpMethodBase</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">803</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>test<span class="token punctuation">.</span>javaweb<span class="token punctuation">.</span>httpclient<span class="token punctuation">.</span></span>HttpClientProxyTest</span><span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token class-name">HttpClientProxyTest</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><h1 id="再回到实践中"><a href="#再回到实践中" class="headerlink" title="再回到实践中"></a>再回到实践中</h1><h2 id="实践1：-DNS劫持-正向代理过滤域名"><a href="#实践1：-DNS劫持-正向代理过滤域名" class="headerlink" title="实践1： DNS劫持+正向代理过滤域名"></a>实践1： DNS劫持+正向代理过滤域名</h2><p>通过DNS劫持，将所有HTTP请求都定位到正向代理中，在正向代理里进行代理域名的黑白名单控制。</p>
-<ul>
-<li>缺点：<ul>
-<li>DNS劫持可以被手动禁用，也可以手动指定<code>8.8.8.8</code>绕过DNS服务器（当然如果DNS请求直接都被劫持，）。</li>
-<li>只针对HTTP请求有效，如果知道目标的IP, 可以通过IP直连上。</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>iaas</tag>
-        <tag>network</tag>
-        <tag>cloud-computing</tag>
-        <tag>http-proxy</tag>
-        <tag>proxy</tag>
       </tags>
   </entry>
   <entry>
@@ -11423,6 +11423,207 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       <tags>
         <tag>诗词</tag>
         <tag>主席诗词</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一次心跳导致dubbo调用偶现失败问题排查</title>
+    <url>//2023-02-09-dubbo-heartbeat-fail/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h2 id="应用拓扑"><a href="#应用拓扑" class="headerlink" title="应用拓扑"></a>应用拓扑</h2><ul>
+<li>SystemA作为client, 通过dubbo接口调用SystemB提供的某个服务</li>
+<li>SystemB由2台机器组成一个集群, 即 SystemB.45 SystemB.46</li>
+</ul>
+<pre class="mermaid">graph TD
+    A[SystemA] --> |dubbo| B[SystemB.45];
+        A[SystemA] --> |dubbo| C[SystemB.46];</pre>
+
+
+<h2 id="详细问题"><a href="#详细问题" class="headerlink" title="详细问题"></a>详细问题</h2><p>SystemA调用SystemB的服务时:</p>
+<ol>
+<li><p>SystemA日志中持续性出现调用SystemB失败, 详细错误信息如下:</p>
+</li>
+<li><p>且<strong>SystemA报错日志都固定出现在SystemB.46这台机器上</strong></p>
+</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092122356.png"></p>
+<h1 id="问题1-为啥出现”channel-is-closed”错误-从而导致调用失败"><a href="#问题1-为啥出现”channel-is-closed”错误-从而导致调用失败" class="headerlink" title="问题1: 为啥出现”channel is closed”错误, 从而导致调用失败?"></a>问题1: 为啥出现”channel is closed”错误, 从而导致调用失败?</h1><h2 id="现象"><a href="#现象" class="headerlink" title="现象:"></a>现象:</h2><p>根据源代码分析只有底层TCP连接关闭, 才会有该错误报出. 但为啥TCP连接会关闭?</p>
+<ol>
+<li>是因为网络闪断么? 理论上内网环境下, 链路可靠, 不应该频繁发生.</li>
+<li>是客户端主动关闭? or 服务端主动关闭?</li>
+</ol>
+<p>按照100ms一次打印某个dubbo服务的TCP连接状态. 发现每隔2~5min, dubbo的TCP连接就会重建. 而且观察到重建时是Provider处于TIME_WAIT状态, 也就知道是Provider主动关闭连接的.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092124462.png"><br>基本可以确认, TCP连接是服务端主动关闭的.</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因:"></a>原因:</h2><ol>
+<li><strong>因为provider主动把连接空闲关闭掉了</strong></li>
+</ol>
+<p>查看服务端hsf-remoting.log, 发现如下频繁的关闭TCP日志.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092126521.png"></p>
+<ol start="2">
+<li>Provider的HSF版本2.2.10.1, 查看对应代码, 发现使用的是Netty io.netty.handler.timeout.IdleStateHandler 方式进行链路空闲检测, 默认超过 90s 没有数据传输, Provider就会主动关闭TCP连接.</li>
+<li>Consumer侧, 抛错的地点是: com.alibaba.dubbo.remoting.transport.AbstractClient#send , 即在发送数据包时发现TCP连接已关闭, 抛出异常.</li>
+</ol>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决:"></a>解决:</h2><p>方案1: 增加如下启动参数, 扩大服务端空闲时长, 15min; 一般SystemA调用不太会15min都没有请求, 每次业务请求进来, 也都会重置时间, 基本能保证TCP长连不断.</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">-</span><span class="token class-name">Dhsf</span><span class="token punctuation">.</span>server<span class="token punctuation">.</span>idle<span class="token punctuation">.</span>time<span class="token operator">=</span><span class="token number">900</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>增加参数之后, 查看 hsf-remoting.log, 就没有频繁的CloseIdle日志了, 查看TCP连接, 发现连接端口长期保持稳定, 没有再发生重建, 查看线上错误日志, 发现该错误消失, 问题解决.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092127153.png"></p>
+<p>方案2: 减小客户端心跳发送间隔. (dubbo 默认心跳包间隔为 60s) –&gt; 更推荐使用该方式.</p>
+<h1 id="问题2-为啥channel-is-closed异常信息中-总是集中在某个特定provider-channel-closed"><a href="#问题2-为啥channel-is-closed异常信息中-总是集中在某个特定provider-channel-closed" class="headerlink" title="问题2: 为啥channel is closed异常信息中, 总是集中在某个特定provider channel closed?"></a>问题2: 为啥channel is closed异常信息中, 总是集中在某个特定provider channel closed?</h1><h2 id="现象-1"><a href="#现象-1" class="headerlink" title="现象:"></a>现象:</h2><p>如 cn-chengdu, SystemA调用SystemB日志, 总是说 SystemB.46:12200 的channel closed, 而另外一个provider SystemB.45:12200 从来没有抛出异常.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092128763.png"></p>
+<ol>
+<li><p>难道说只有SystemB.46的TCP连接会Idle重建, SystemB.45 就不会重建么?</p>
+<ol>
+<li>并不是, 查看 SystemB.45 的 hsf-remoting.log 日志, 发现与 46 基本相同, TCP连接会频繁重建.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092129160.png"></li>
+</ol>
+</li>
+<li><p>为啥没有报出: SystemB.45 channel is closed 呢?</p>
+</li>
+</ol>
+<h2 id="原因-1"><a href="#原因-1" class="headerlink" title="原因:"></a>原因:</h2><ul>
+<li>根本原因是dubbo client发起RPC调用前 连接状态检测 + failover策略 导致的:</li>
+</ul>
+<ol>
+<li><p>dubbo client发起调用时, com.alibaba.dubbo.rpc.cluster.support.FailoverClusterInvoker#doInvoke</p>
+</li>
+<li><p>会使用 com.alibaba.dubbo.rpc.cluster.support.AbstractClusterInvoker#select 来选择一个合适的provider(代码里叫invokers), 核心逻辑如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092130342.png"></p>
+</li>
+<li><p>loadbalance.select(invokers, getUrl(), invocation); 随机选择一个provider(例如 SystemB.45 ), selected为null, 如果 SystemB.45对应的TCP连接关闭, 则 invoker.isAvailable() 为false, 从而进入 reselect流程, 如果 46对应的TCP连接也关闭, 则 reselect 返回的rinvoker为null, 从而进入</p>
+</li>
+<li><p>所有可能case如下, 可以知道抛出异常时, 肯定错误信息是46失败, 因此就解释了上边的问题.</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>45机器状态</th>
+<th>46机器状态</th>
+<th>loadbalance结果</th>
+<th>最终AbstractClusterInvoker#select结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45 TCP正常</td>
+<td>46 TCP正常</td>
+<td>选中45</td>
+<td>直接使用45作为provider, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP正常</td>
+<td>46 TCP正常</td>
+<td>选中46</td>
+<td>直接使用46作为provider, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP正常</td>
+<td>46 TCP异常</td>
+<td>选中45</td>
+<td>直接使用45作为provider, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP正常</td>
+<td>46 TCP异常</td>
+<td>选中46</td>
+<td>调用前reselect到45, 从而调用成功, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP异常</td>
+<td>46 TCP正常</td>
+<td>选中45</td>
+<td>调用前reselect到46, 从而调用成功, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP异常</td>
+<td>46 TCP正常</td>
+<td>选中46</td>
+<td>直接使用46作为provider, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP异常</td>
+<td>46 TCP异常</td>
+<td>选中45</td>
+<td>由于45的index为0, index+1, 从而就尝试failover到46, 返回46. 后续在invoke时, 由于46也是关闭, 因此抛出46失败.</td>
+</tr>
+<tr>
+<td>45 TCP异常</td>
+<td>46 TCP异常</td>
+<td>选中46</td>
+<td>由于46的index为1, 不再index+1(否则就IndexOutOfBoundsException啦), 从而返回46. 后续在invoke时, 由于46也是关闭的, 因此抛出46失败.</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>由此可以下结论, 当providers数量&gt;&#x3D;2时, 在发生该异常时, 报错信息里必然不会有第一个provider, 因为第一个provider失败, 会index+1, 返回第2个. 以同样抛错的”SystemC”为例进行观察, 验证了该猜想:<ol>
+<li>抛出的channel is closed信息中, provider只有, “SystemC.40”  “SystemC.173” “SystemC.240” “SystemC.17” “SystemC.174” , 而没有排在第一个   SystemC.183 这个provider.</li>
+</ol>
+</li>
+</ol>
+<h1 id="问题3-为啥channel会空闲被关闭-心跳保活机制失效了么"><a href="#问题3-为啥channel会空闲被关闭-心跳保活机制失效了么" class="headerlink" title="问题3: 为啥channel会空闲被关闭? 心跳保活机制失效了么?"></a>问题3: 为啥channel会空闲被关闭? 心跳保活机制失效了么?</h1><p>dubboclient, 默认会60s发送一次心跳包, 所以服务端空闲timeout是90s&gt;60s, 理论上链路应该一直保活, 但为啥?</p>
+<h2 id="现象-2"><a href="#现象-2" class="headerlink" title="现象"></a>现象</h2><p>实际用tcpdump查看了下, 发现稳定是2min一次的心跳, 为啥不是1min一次?<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092131119.png"></p>
+<ul>
+<li>上边tcpdump出来的确定是心跳包么?</li>
+<li>是心跳包! 如下TCP包数据段内容为: dabbe200000000000005d772000000014e 查看代码:<br><em>com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec#encodeRequest</em>, 可知内容符合dubbo心跳包协议:</li>
+</ul>
+<ol>
+<li>以 0xdabb 为开头</li>
+<li>isTwoWay, isEvent都为true; 因此按照如下运算可知, 第三个字节是 0xe2</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">header<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>FLAG_REQUEST <span class="token operator">|</span> serialization<span class="token punctuation">.</span><span class="token function">getContentTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">isTwoWay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> header<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">|=</span> FLAG_TWOWAY<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">isEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> header<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">|=</span> FLAG_EVENT<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>心跳包的mData为null, 通过hessian2序列化之后, <em>com.alibaba.com.caucho.hessian.io.Hessian2Output#writeNull</em>, null占用一个字节, 会被默认写作 N</li>
+<li>整个TCP Payload为17个字节, 包括 16个字节的dubbo协议头 +  1个字节的0x4e(即为N的ASCII码), 符合实际抓包情况.</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092131065.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092132229.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092133191.png"></p>
+<h2 id="原因-2"><a href="#原因-2" class="headerlink" title="原因"></a>原因</h2><ul>
+<li>根本原因是 com.alibaba.dubbo.remoting.exchange.support.header.HeartBeatTask 设计缺陷导致.</li>
+</ul>
+<ol>
+<li>HeartBeatTask 是在com.alibaba.dubbo.remoting.exchange.support.header.HeaderExchangeServer#startHeatbeatTimer进行启动, 使用ScheduledExecutorService, 定时执行间隔时间为heartbeat值, 即为60s(60000ms)一次.</li>
+<li>HeartBeatTask 执行具体实现(删除了与本问题不相关的代码):</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> now <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span> <span class="token class-name">Channel</span> channel <span class="token operator">:</span> channelProvider<span class="token punctuation">.</span><span class="token function">getChannels</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Long</span> lastRead <span class="token operator">=</span> <span class="token punctuation">(</span> <span class="token class-name">Long</span> <span class="token punctuation">)</span> channel<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span>
+                <span class="token class-name">HeaderExchangeHandler</span><span class="token punctuation">.</span>KEY_READ_TIMESTAMP <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Long</span> lastWrite <span class="token operator">=</span> <span class="token punctuation">(</span> <span class="token class-name">Long</span> <span class="token punctuation">)</span> channel<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span>
+                <span class="token class-name">HeaderExchangeHandler</span><span class="token punctuation">.</span>KEY_WRITE_TIMESTAMP <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span> lastRead <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> now <span class="token operator">-</span> lastRead <span class="token operator">></span> heartbeat <span class="token punctuation">)</span> <span class="token comment">// 注意: 这里的heartbeat是60000ms</span>
+                <span class="token operator">||</span> <span class="token punctuation">(</span> lastWrite <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> now <span class="token operator">-</span> lastWrite <span class="token operator">></span> heartbeat <span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Request</span> req <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            req<span class="token punctuation">.</span><span class="token function">setVersion</span><span class="token punctuation">(</span> <span class="token string">"2.0.0"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            req<span class="token punctuation">.</span><span class="token function">setTwoWay</span><span class="token punctuation">(</span> <span class="token boolean">true</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            req<span class="token punctuation">.</span><span class="token function">setEvent</span><span class="token punctuation">(</span> <span class="token class-name">Request</span><span class="token punctuation">.</span>HEARTBEAT_EVENT <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            channel<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span> req <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span> logger<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                logger<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span> <span class="token string">"Send heartbeat to remote channel "</span> <span class="token operator">+</span> channel<span class="token punctuation">.</span><span class="token function">getRemoteAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                                      <span class="token operator">+</span> <span class="token string">", cause: The channel has no data-transmission exceeds a heartbeat period: "</span> <span class="token operator">+</span> heartbeat <span class="token operator">+</span> <span class="token string">"ms"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>问题复现:<ol>
+<li>2022年09月27日18:53:00,000 触发一次HeartBeatTask, 假设本次执行到 channel.send(req), 即发送了心跳包.</li>
+<li>由于发送了心跳包, 因此channel的 lastWrite 会被更新 假设被更新为 2022年09月27日18:53:00,001 (注意这个时间与执行HeartBeatTask会有几毫秒差异, 因为netty处理会耗时)</li>
+<li>2022年09月27日18:54:00,000 再次触发一次HeartBeatTask, 当前时间(即为2022年09月27日18:54:00,000) - lastWrite(2022年09月27日18:53:00,001) 为 59999ms &lt; 60000ms, 因此本次不再发送心跳包.</li>
+<li>2022年09月27日18:55:00,000 再次触发一次HeartBeatTask, 当前时间(即为2022年09月27日18:55:00,000) - lastWrite(2022年09月27日18:53:00,001) 为 119999ms &gt; 60000ms, 因此本次发送心跳包.  从上次心跳包到这次, 刚好间隔为2min.</li>
+</ol>
+</li>
+<li>因此在链路空闲时, <strong>两次心跳的间隔稳定为120s &gt; HSF服务端的90s</strong>, 因此服务端会频繁地关闭连接!</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>dubboclient在进行failover之后, 报错信息不直观, 一直在报46调用失败, 从而导致以为只有46这台provider有问题, 从而以为是单台机器的问题, 从而误导了排查方向(例如46这台机器load, 网络等有啥特殊问题). 如果failover逻辑中, 不是简单地按照index+1, 而是使用环形数组, 这样报错信息会报出45, 46有问题, 从而不会误导排查方向.</li>
+<li>该问题只有在dubboclient与所有的provider的TCP连接都关闭, 从而failover失败, 从而抛出异常. 因此较为偶现, 导致无法稳定复现以及保存现场. (当然现在知道了原因, 就可以通过iptables来模拟重现该问题).</li>
+<li>根本原因还是HSF服务端对与dubboclient的适配不好:<ol>
+<li>默认参数90s+dubboclient默认的60s, 在小流量情况下完全是坑爹, 在大流量情况下, 由于业务请求一直会有, 相当于通过业务请求来进行保活了, 因此不会有本文的问题.</li>
+<li>HSF作为dubbo服务端阉割掉了dubbo原生服务端的反向保活能力(provider-&gt;client), 从而变成了单向心跳(client-&gt;provider), 可靠性差很多.</li>
+<li>心跳保活作为RPC框架的基础, 出现问题通常是最后怀疑的点. 而如果用dubbo作为服务端, 要可靠得多, 有双向保活机制, 具体可以参照: <a href="https://dubbo.apache.org/zh/blog/2018/08/19/dubbo-%E7%8E%B0%E6%9C%89%E5%BF%83%E8%B7%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93%E4%BB%A5%E5%8F%8A%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE/?spm=ata.21736010.0.0.318e4799tOQZt9">dubbo-现有心跳方案总结以及改进建议</a></li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>dubbo</tag>
+        <tag>heartbeat</tag>
       </tags>
   </entry>
 </search>

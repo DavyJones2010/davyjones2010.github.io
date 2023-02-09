@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景应用拓扑 SystemA作为client, 通过dubbo接口调用SystemB提供的某个服务 SystemB由2台机器组成一个集群, 即 SystemB.45 SystemB.46  graph TD     A[SystemA] --&gt; |dubbo| B[SystemB.45];         A[SystemA] --&gt; |dubbo| C[SystemB.46];   详细问题Sy">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="一次心跳导致dubbo调用偶现失败问题排查">
+<meta property="og:url" content="https://davyjones2010.github.io/2023-02-09-dubbo-heartbeat-fail/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景应用拓扑 SystemA作为client, 通过dubbo接口调用SystemB提供的某个服务 SystemB由2台机器组成一个集群, 即 SystemB.45 SystemB.46  graph TD     A[SystemA] --&gt; |dubbo| B[SystemB.45];         A[SystemA] --&gt; |dubbo| C[SystemB.46];   详细问题Sy">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092122356.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092124462.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092126521.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092127153.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092128763.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092129160.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092130342.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092131119.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092131065.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092132229.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092133191.png">
+<meta property="article:published_time" content="2023-02-09T13:18:02.000Z">
+<meta property="article:modified_time" content="2023-02-09T13:34:46.884Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="dubbo">
+<meta property="article:tag" content="heartbeat">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092122356.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2023-02-09-dubbo-heartbeat-fail/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2023-02-09-dubbo-heartbeat-fail/","path":"/2023-02-09-dubbo-heartbeat-fail/","title":"一次心跳导致dubbo调用偶现失败问题排查"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一次心跳导致dubbo调用偶现失败问题排查 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme.html" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%8B%93%E6%89%91"><span class="nav-number">1.1.</span> <span class="nav-text">应用拓扑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">详细问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%981-%E4%B8%BA%E5%95%A5%E5%87%BA%E7%8E%B0%E2%80%9Dchannel-is-closed%E2%80%9D%E9%94%99%E8%AF%AF-%E4%BB%8E%E8%80%8C%E5%AF%BC%E8%87%B4%E8%B0%83%E7%94%A8%E5%A4%B1%E8%B4%A5"><span class="nav-number">2.</span> <span class="nav-text">问题1: 为啥出现”channel is closed”错误, 从而导致调用失败?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E8%B1%A1"><span class="nav-number">2.1.</span> <span class="nav-text">现象:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.2.</span> <span class="nav-text">原因:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3"><span class="nav-number">2.3.</span> <span class="nav-text">解决:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%982-%E4%B8%BA%E5%95%A5channel-is-closed%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF%E4%B8%AD-%E6%80%BB%E6%98%AF%E9%9B%86%E4%B8%AD%E5%9C%A8%E6%9F%90%E4%B8%AA%E7%89%B9%E5%AE%9Aprovider-channel-closed"><span class="nav-number">3.</span> <span class="nav-text">问题2: 为啥channel is closed异常信息中, 总是集中在某个特定provider channel closed?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E8%B1%A1-1"><span class="nav-number">3.1.</span> <span class="nav-text">现象:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0-1"><span class="nav-number">3.2.</span> <span class="nav-text">原因:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%983-%E4%B8%BA%E5%95%A5channel%E4%BC%9A%E7%A9%BA%E9%97%B2%E8%A2%AB%E5%85%B3%E9%97%AD-%E5%BF%83%E8%B7%B3%E4%BF%9D%E6%B4%BB%E6%9C%BA%E5%88%B6%E5%A4%B1%E6%95%88%E4%BA%86%E4%B9%88"><span class="nav-number">4.</span> <span class="nav-text">问题3: 为啥channel会空闲被关闭? 心跳保活机制失效了么?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E8%B1%A1-2"><span class="nav-number">4.1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0-2"><span class="nav-number">4.2.</span> <span class="nav-text">原因</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">178</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-02-09-dubbo-heartbeat-fail/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="一次心跳导致dubbo调用偶现失败问题排查 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一次心跳导致dubbo调用偶现失败问题排查
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-02-09 21:18:02 / 修改时间：21:34:46" itemprop="dateCreated datePublished" datetime="2023-02-09T21:18:02+08:00">2023-02-09</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h2 id="应用拓扑"><a href="#应用拓扑" class="headerlink" title="应用拓扑"></a>应用拓扑</h2><ul>
+<li>SystemA作为client, 通过dubbo接口调用SystemB提供的某个服务</li>
+<li>SystemB由2台机器组成一个集群, 即 SystemB.45 SystemB.46</li>
+</ul>
+<pre class="mermaid">graph TD
+    A[SystemA] --> |dubbo| B[SystemB.45];
+        A[SystemA] --> |dubbo| C[SystemB.46];</pre>
+
+
+<h2 id="详细问题"><a href="#详细问题" class="headerlink" title="详细问题"></a>详细问题</h2><p>SystemA调用SystemB的服务时:</p>
+<ol>
+<li><p>SystemA日志中持续性出现调用SystemB失败, 详细错误信息如下:</p>
+</li>
+<li><p>且<strong>SystemA报错日志都固定出现在SystemB.46这台机器上</strong></p>
+</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092122356.png"></p>
+<h1 id="问题1-为啥出现”channel-is-closed”错误-从而导致调用失败"><a href="#问题1-为啥出现”channel-is-closed”错误-从而导致调用失败" class="headerlink" title="问题1: 为啥出现”channel is closed”错误, 从而导致调用失败?"></a>问题1: 为啥出现”channel is closed”错误, 从而导致调用失败?</h1><h2 id="现象"><a href="#现象" class="headerlink" title="现象:"></a>现象:</h2><p>根据源代码分析只有底层TCP连接关闭, 才会有该错误报出. 但为啥TCP连接会关闭?</p>
+<ol>
+<li>是因为网络闪断么? 理论上内网环境下, 链路可靠, 不应该频繁发生.</li>
+<li>是客户端主动关闭? or 服务端主动关闭?</li>
+</ol>
+<p>按照100ms一次打印某个dubbo服务的TCP连接状态. 发现每隔2~5min, dubbo的TCP连接就会重建. 而且观察到重建时是Provider处于TIME_WAIT状态, 也就知道是Provider主动关闭连接的.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092124462.png"><br>基本可以确认, TCP连接是服务端主动关闭的.</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因:"></a>原因:</h2><ol>
+<li><strong>因为provider主动把连接空闲关闭掉了</strong></li>
+</ol>
+<p>查看服务端hsf-remoting.log, 发现如下频繁的关闭TCP日志.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092126521.png"></p>
+<ol start="2">
+<li>Provider的HSF版本2.2.10.1, 查看对应代码, 发现使用的是Netty io.netty.handler.timeout.IdleStateHandler 方式进行链路空闲检测, 默认超过 90s 没有数据传输, Provider就会主动关闭TCP连接.</li>
+<li>Consumer侧, 抛错的地点是: com.alibaba.dubbo.remoting.transport.AbstractClient#send , 即在发送数据包时发现TCP连接已关闭, 抛出异常.</li>
+</ol>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决:"></a>解决:</h2><p>方案1: 增加如下启动参数, 扩大服务端空闲时长, 15min; 一般SystemA调用不太会15min都没有请求, 每次业务请求进来, 也都会重置时间, 基本能保证TCP长连不断.</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">-</span><span class="token class-name">Dhsf</span><span class="token punctuation">.</span>server<span class="token punctuation">.</span>idle<span class="token punctuation">.</span>time<span class="token operator">=</span><span class="token number">900</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>增加参数之后, 查看 hsf-remoting.log, 就没有频繁的CloseIdle日志了, 查看TCP连接, 发现连接端口长期保持稳定, 没有再发生重建, 查看线上错误日志, 发现该错误消失, 问题解决.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092127153.png"></p>
+<p>方案2: 减小客户端心跳发送间隔. (dubbo 默认心跳包间隔为 60s) –&gt; 更推荐使用该方式.</p>
+<h1 id="问题2-为啥channel-is-closed异常信息中-总是集中在某个特定provider-channel-closed"><a href="#问题2-为啥channel-is-closed异常信息中-总是集中在某个特定provider-channel-closed" class="headerlink" title="问题2: 为啥channel is closed异常信息中, 总是集中在某个特定provider channel closed?"></a>问题2: 为啥channel is closed异常信息中, 总是集中在某个特定provider channel closed?</h1><h2 id="现象-1"><a href="#现象-1" class="headerlink" title="现象:"></a>现象:</h2><p>如 cn-chengdu, SystemA调用SystemB日志, 总是说 SystemB.46:12200 的channel closed, 而另外一个provider SystemB.45:12200 从来没有抛出异常.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092128763.png"></p>
+<ol>
+<li><p>难道说只有SystemB.46的TCP连接会Idle重建, SystemB.45 就不会重建么?</p>
+<ol>
+<li>并不是, 查看 SystemB.45 的 hsf-remoting.log 日志, 发现与 46 基本相同, TCP连接会频繁重建.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092129160.png"></li>
+</ol>
+</li>
+<li><p>为啥没有报出: SystemB.45 channel is closed 呢?</p>
+</li>
+</ol>
+<h2 id="原因-1"><a href="#原因-1" class="headerlink" title="原因:"></a>原因:</h2><ul>
+<li>根本原因是dubbo client发起RPC调用前 连接状态检测 + failover策略 导致的:</li>
+</ul>
+<ol>
+<li><p>dubbo client发起调用时, com.alibaba.dubbo.rpc.cluster.support.FailoverClusterInvoker#doInvoke</p>
+</li>
+<li><p>会使用 com.alibaba.dubbo.rpc.cluster.support.AbstractClusterInvoker#select 来选择一个合适的provider(代码里叫invokers), 核心逻辑如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092130342.png"></p>
+</li>
+<li><p>loadbalance.select(invokers, getUrl(), invocation); 随机选择一个provider(例如 SystemB.45 ), selected为null, 如果 SystemB.45对应的TCP连接关闭, 则 invoker.isAvailable() 为false, 从而进入 reselect流程, 如果 46对应的TCP连接也关闭, 则 reselect 返回的rinvoker为null, 从而进入</p>
+</li>
+<li><p>所有可能case如下, 可以知道抛出异常时, 肯定错误信息是46失败, 因此就解释了上边的问题.</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>45机器状态</th>
+<th>46机器状态</th>
+<th>loadbalance结果</th>
+<th>最终AbstractClusterInvoker#select结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45 TCP正常</td>
+<td>46 TCP正常</td>
+<td>选中45</td>
+<td>直接使用45作为provider, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP正常</td>
+<td>46 TCP正常</td>
+<td>选中46</td>
+<td>直接使用46作为provider, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP正常</td>
+<td>46 TCP异常</td>
+<td>选中45</td>
+<td>直接使用45作为provider, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP正常</td>
+<td>46 TCP异常</td>
+<td>选中46</td>
+<td>调用前reselect到45, 从而调用成功, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP异常</td>
+<td>46 TCP正常</td>
+<td>选中45</td>
+<td>调用前reselect到46, 从而调用成功, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP异常</td>
+<td>46 TCP正常</td>
+<td>选中46</td>
+<td>直接使用46作为provider, 不会抛出异常.</td>
+</tr>
+<tr>
+<td>45 TCP异常</td>
+<td>46 TCP异常</td>
+<td>选中45</td>
+<td>由于45的index为0, index+1, 从而就尝试failover到46, 返回46. 后续在invoke时, 由于46也是关闭, 因此抛出46失败.</td>
+</tr>
+<tr>
+<td>45 TCP异常</td>
+<td>46 TCP异常</td>
+<td>选中46</td>
+<td>由于46的index为1, 不再index+1(否则就IndexOutOfBoundsException啦), 从而返回46. 后续在invoke时, 由于46也是关闭的, 因此抛出46失败.</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>由此可以下结论, 当providers数量&gt;&#x3D;2时, 在发生该异常时, 报错信息里必然不会有第一个provider, 因为第一个provider失败, 会index+1, 返回第2个. 以同样抛错的”SystemC”为例进行观察, 验证了该猜想:<ol>
+<li>抛出的channel is closed信息中, provider只有, “SystemC.40”  “SystemC.173” “SystemC.240” “SystemC.17” “SystemC.174” , 而没有排在第一个   SystemC.183 这个provider.</li>
+</ol>
+</li>
+</ol>
+<h1 id="问题3-为啥channel会空闲被关闭-心跳保活机制失效了么"><a href="#问题3-为啥channel会空闲被关闭-心跳保活机制失效了么" class="headerlink" title="问题3: 为啥channel会空闲被关闭? 心跳保活机制失效了么?"></a>问题3: 为啥channel会空闲被关闭? 心跳保活机制失效了么?</h1><p>dubboclient, 默认会60s发送一次心跳包, 所以服务端空闲timeout是90s&gt;60s, 理论上链路应该一直保活, 但为啥?</p>
+<h2 id="现象-2"><a href="#现象-2" class="headerlink" title="现象"></a>现象</h2><p>实际用tcpdump查看了下, 发现稳定是2min一次的心跳, 为啥不是1min一次?<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092131119.png"></p>
+<ul>
+<li>上边tcpdump出来的确定是心跳包么?</li>
+<li>是心跳包! 如下TCP包数据段内容为: dabbe200000000000005d772000000014e 查看代码:<br><em>com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec#encodeRequest</em>, 可知内容符合dubbo心跳包协议:</li>
+</ul>
+<ol>
+<li>以 0xdabb 为开头</li>
+<li>isTwoWay, isEvent都为true; 因此按照如下运算可知, 第三个字节是 0xe2</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">header<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>FLAG_REQUEST <span class="token operator">|</span> serialization<span class="token punctuation">.</span><span class="token function">getContentTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">isTwoWay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> header<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">|=</span> FLAG_TWOWAY<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">isEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> header<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">|=</span> FLAG_EVENT<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>心跳包的mData为null, 通过hessian2序列化之后, <em>com.alibaba.com.caucho.hessian.io.Hessian2Output#writeNull</em>, null占用一个字节, 会被默认写作 N</li>
+<li>整个TCP Payload为17个字节, 包括 16个字节的dubbo协议头 +  1个字节的0x4e(即为N的ASCII码), 符合实际抓包情况.</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092131065.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092132229.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302092133191.png"></p>
+<h2 id="原因-2"><a href="#原因-2" class="headerlink" title="原因"></a>原因</h2><ul>
+<li>根本原因是 com.alibaba.dubbo.remoting.exchange.support.header.HeartBeatTask 设计缺陷导致.</li>
+</ul>
+<ol>
+<li>HeartBeatTask 是在com.alibaba.dubbo.remoting.exchange.support.header.HeaderExchangeServer#startHeatbeatTimer进行启动, 使用ScheduledExecutorService, 定时执行间隔时间为heartbeat值, 即为60s(60000ms)一次.</li>
+<li>HeartBeatTask 执行具体实现(删除了与本问题不相关的代码):</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> now <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span> <span class="token class-name">Channel</span> channel <span class="token operator">:</span> channelProvider<span class="token punctuation">.</span><span class="token function">getChannels</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Long</span> lastRead <span class="token operator">=</span> <span class="token punctuation">(</span> <span class="token class-name">Long</span> <span class="token punctuation">)</span> channel<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span>
+                <span class="token class-name">HeaderExchangeHandler</span><span class="token punctuation">.</span>KEY_READ_TIMESTAMP <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Long</span> lastWrite <span class="token operator">=</span> <span class="token punctuation">(</span> <span class="token class-name">Long</span> <span class="token punctuation">)</span> channel<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span>
+                <span class="token class-name">HeaderExchangeHandler</span><span class="token punctuation">.</span>KEY_WRITE_TIMESTAMP <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span> lastRead <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> now <span class="token operator">-</span> lastRead <span class="token operator">></span> heartbeat <span class="token punctuation">)</span> <span class="token comment">// 注意: 这里的heartbeat是60000ms</span>
+                <span class="token operator">||</span> <span class="token punctuation">(</span> lastWrite <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> now <span class="token operator">-</span> lastWrite <span class="token operator">></span> heartbeat <span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Request</span> req <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            req<span class="token punctuation">.</span><span class="token function">setVersion</span><span class="token punctuation">(</span> <span class="token string">"2.0.0"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            req<span class="token punctuation">.</span><span class="token function">setTwoWay</span><span class="token punctuation">(</span> <span class="token boolean">true</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            req<span class="token punctuation">.</span><span class="token function">setEvent</span><span class="token punctuation">(</span> <span class="token class-name">Request</span><span class="token punctuation">.</span>HEARTBEAT_EVENT <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            channel<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span> req <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span> logger<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                logger<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span> <span class="token string">"Send heartbeat to remote channel "</span> <span class="token operator">+</span> channel<span class="token punctuation">.</span><span class="token function">getRemoteAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                                      <span class="token operator">+</span> <span class="token string">", cause: The channel has no data-transmission exceeds a heartbeat period: "</span> <span class="token operator">+</span> heartbeat <span class="token operator">+</span> <span class="token string">"ms"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>问题复现:<ol>
+<li>2022年09月27日18:53:00,000 触发一次HeartBeatTask, 假设本次执行到 channel.send(req), 即发送了心跳包.</li>
+<li>由于发送了心跳包, 因此channel的 lastWrite 会被更新 假设被更新为 2022年09月27日18:53:00,001 (注意这个时间与执行HeartBeatTask会有几毫秒差异, 因为netty处理会耗时)</li>
+<li>2022年09月27日18:54:00,000 再次触发一次HeartBeatTask, 当前时间(即为2022年09月27日18:54:00,000) - lastWrite(2022年09月27日18:53:00,001) 为 59999ms &lt; 60000ms, 因此本次不再发送心跳包.</li>
+<li>2022年09月27日18:55:00,000 再次触发一次HeartBeatTask, 当前时间(即为2022年09月27日18:55:00,000) - lastWrite(2022年09月27日18:53:00,001) 为 119999ms &gt; 60000ms, 因此本次发送心跳包.  从上次心跳包到这次, 刚好间隔为2min.</li>
+</ol>
+</li>
+<li>因此在链路空闲时, <strong>两次心跳的间隔稳定为120s &gt; HSF服务端的90s</strong>, 因此服务端会频繁地关闭连接!</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>dubboclient在进行failover之后, 报错信息不直观, 一直在报46调用失败, 从而导致以为只有46这台provider有问题, 从而以为是单台机器的问题, 从而误导了排查方向(例如46这台机器load, 网络等有啥特殊问题). 如果failover逻辑中, 不是简单地按照index+1, 而是使用环形数组, 这样报错信息会报出45, 46有问题, 从而不会误导排查方向.</li>
+<li>该问题只有在dubboclient与所有的provider的TCP连接都关闭, 从而failover失败, 从而抛出异常. 因此较为偶现, 导致无法稳定复现以及保存现场. (当然现在知道了原因, 就可以通过iptables来模拟重现该问题).</li>
+<li>根本原因还是HSF服务端对与dubboclient的适配不好:<ol>
+<li>默认参数90s+dubboclient默认的60s, 在小流量情况下完全是坑爹, 在大流量情况下, 由于业务请求一直会有, 相当于通过业务请求来进行保活了, 因此不会有本文的问题.</li>
+<li>HSF作为dubbo服务端阉割掉了dubbo原生服务端的反向保活能力(provider-&gt;client), 从而变成了单向心跳(client-&gt;provider), 可靠性差很多.</li>
+<li>心跳保活作为RPC框架的基础, 出现问题通常是最后怀疑的点. 而如果用dubbo作为服务端, 要可靠得多, 有双向保活机制, 具体可以参照: <a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/blog/2018/08/19/dubbo-%E7%8E%B0%E6%9C%89%E5%BF%83%E8%B7%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93%E4%BB%A5%E5%8F%8A%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE/?spm=ata.21736010.0.0.318e4799tOQZt9">dubbo-现有心跳方案总结以及改进建议</a></li>
+</ol>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/dubbo/" rel="tag"># dubbo</a>
+              <a href="/tags/heartbeat/" rel="tag"># heartbeat</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023-02-08-zhuxishici/" rel="prev" title="主席诗词集锦&赏析">
+                  <i class="fa fa-chevron-left"></i> 主席诗词集锦&赏析
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">280k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:14</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
