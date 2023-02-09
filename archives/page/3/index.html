@@ -211,6 +211,116 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-03-27-k8s-stateful-set/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-03-27-k8s-stateful-set/" class="post-title-link" itemprop="url">k8s statefulset的研究与实践</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-28T00:00:00+08:00">2022-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
+<ul>
+<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
+<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
+<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
+</ul>
+<p>这样就保证了Pod销毁重建之后: </p>
+<ul>
+<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
+<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
+</ul>
+<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-03-27-k8s-stateful-set/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-03-24-random-snippets/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +357,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -355,7 +465,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -509,7 +619,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -644,7 +754,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -762,7 +872,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -877,7 +987,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -994,7 +1104,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -1125,7 +1235,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -1247,7 +1357,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -1345,7 +1455,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -1458,7 +1568,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1618,7 +1728,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1760,7 +1870,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -1891,7 +2001,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -2000,7 +2110,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -2146,7 +2256,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -2263,7 +2373,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -2375,7 +2485,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -2487,7 +2597,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -2586,7 +2696,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -2684,7 +2794,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -2817,7 +2927,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -3001,7 +3111,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -3141,7 +3251,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -3278,7 +3388,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -3415,7 +3525,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -3535,7 +3645,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -3650,7 +3760,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -3848,7 +3958,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -3987,7 +4097,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -4098,7 +4208,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
+      <time title="修改时间：2023-02-09 22:13:54" itemprop="dateModified" datetime="2023-02-09T22:13:54+08:00">2023-02-09</time>
     </span>
 
   
@@ -4169,277 +4279,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-10-08-simple-fork-join-framework/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-10-08-simple-fork-join-framework/" class="post-title-link" itemprop="url">一个简单的Fork&Join框架实现</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-10-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-10-09T00:00:00+08:00">2021-10-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-09 21:34:46" itemprop="dateModified" datetime="2023-02-09T21:34:46+08:00">2023-02-09</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>13k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>12 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在代码里, 经常需要类似fork&amp;join的方式来并行完成一些耗时的任务, 并将结果聚合起来.<br>通常有如下几种方式来实现:</p>
-<h1 id="常用实现方式"><a href="#常用实现方式" class="headerlink" title="常用实现方式"></a>常用实现方式</h1><h2 id="countdown-latch"><a href="#countdown-latch" class="headerlink" title="countdown latch"></a>countdown latch</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">davyjones2010<span class="token punctuation">.</span>github<span class="token punctuation">.</span>io<span class="token punctuation">.</span>concurrent</span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">CountDownLatch</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">ExecutorService</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">LinkedBlockingDeque</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">ThreadPoolExecutor</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">TimeUnit</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>common<span class="token punctuation">.</span>base<span class="token punctuation">.</span></span><span class="token class-name">Splitter</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>common<span class="token punctuation">.</span>collect<span class="token punctuation">.</span></span><span class="token class-name">Lists</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>lang3<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">BasicThreadFactory</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span><span class="token class-name">Test</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token keyword">static</span> <span class="token import static"><span class="token namespace">davyjones2010<span class="token punctuation">.</span>github<span class="token punctuation">.</span>io<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">CustomForkJoinService</span><span class="token punctuation">.</span><span class="token static">CORE_SIZE</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token keyword">static</span> <span class="token import static"><span class="token namespace">davyjones2010<span class="token punctuation">.</span>github<span class="token punctuation">.</span>io<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">CustomForkJoinService</span><span class="token punctuation">.</span><span class="token static">POOL_NAME</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomForkJoinServiceTest</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">countDownLatchTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 1. 创建线程池</span>
-        <span class="token class-name">ExecutorService</span> executorService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>CORE_SIZE<span class="token punctuation">,</span> CORE_SIZE<span class="token punctuation">,</span> <span class="token number">0L</span><span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
-            <span class="token keyword">new</span> <span class="token class-name">LinkedBlockingDeque</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">BasicThreadFactory<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">namingPattern</span><span class="token punctuation">(</span>POOL_NAME <span class="token operator">+</span> <span class="token string">"-%d"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">final</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> validStrs <span class="token operator">=</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newCopyOnWriteArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment">// 2. 创建&amp;提交任务</span>
-        <span class="token keyword">long</span> start <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">final</span> <span class="token class-name">CountDownLatch</span> latch <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CountDownLatch</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">40</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token class-name">String</span> str <span class="token operator">=</span> <span class="token string">"hello-"</span> <span class="token operator">+</span> i<span class="token punctuation">;</span>
-            executorService<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-                    <span class="token class-name">Task</span> t <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Task</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token keyword">if</span> <span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token function">isValid</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                        validStrs<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">&#125;</span>
-                <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
-                    latch<span class="token punctuation">.</span><span class="token function">countDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-            latch<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>SECONDS<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"countDownLatchTest finished. validStrs: %s cost: %d \n"</span><span class="token punctuation">,</span> validStrs<span class="token punctuation">,</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Task</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">public</span> <span class="token class-name">Boolean</span> <span class="token function">isValid</span><span class="token punctuation">(</span><span class="token class-name">String</span> str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">long</span> start <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment">// 这里模拟耗时操作</span>
-            <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">long</span> l <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"echo finished. cost: %d \n"</span><span class="token punctuation">,</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token class-name">Splitter</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token char">'-'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">splitToList</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">7</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ul>
-<li>优点:<ul>
-<li>实现很简单</li>
-<li>很容易实现超时机制, 防止木桶效应造成过大影响(如上边例子, 最大100s返回)</li>
-</ul>
-</li>
-<li>缺点: <ul>
-<li>必须使用一个线程安全的容器来保存每个任务分片的结果(如上边例子的CopyOnWriteArrayList), 如果使用线程不安全的容器例如HashMap, ArrayList, 很容易造成问题, 所以编码很容易踩坑.<ul>
-<li>例如如果不使用CopyOnWriteArrayList, 而使用ArrayList, 并发add, 会造成<a target="_blank" rel="noopener" href="https://blogs.sap.com/2017/03/04/arraylist-in-multi-thread-context/">IndexOutOfBoundsException</a></li>
-<li>例如如果不使用ConcurrentHashMap, 而使用HashMap, 并发add, 会造成<a target="_blank" rel="noopener" href="https://www.pixelstech.net/article/1585457836-Why-accessing-Java-HashMap-may-cause-infinite-loop-in-concurrent-environment">InfinityLoop</a></li>
-</ul>
-</li>
-<li>由于使用了共享容器, 在线程竞争激烈的情况下, 效率必然会受到影响</li>
-<li>通常是需要在需要多线程的类里来管理线程池(ExecutorService), 因此造成线程池遍地飞的场景, 不好几种管理.</li>
-</ul>
-</li>
-</ul>
-<h2 id="future-get"><a href="#future-get" class="headerlink" title="future.get"></a>future.get</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">davyjones2010<span class="token punctuation">.</span>github<span class="token punctuation">.</span>io<span class="token punctuation">.</span>concurrent</span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">CountDownLatch</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">ExecutorService</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">Future</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">LinkedBlockingDeque</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">ThreadPoolExecutor</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">TimeUnit</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>common<span class="token punctuation">.</span>base<span class="token punctuation">.</span></span><span class="token class-name">Splitter</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>common<span class="token punctuation">.</span>collect<span class="token punctuation">.</span></span><span class="token class-name">Lists</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>commons<span class="token punctuation">.</span>lang3<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">BasicThreadFactory</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span><span class="token class-name">Test</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token keyword">static</span> <span class="token import static"><span class="token namespace">davyjones2010<span class="token punctuation">.</span>github<span class="token punctuation">.</span>io<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">CustomForkJoinService</span><span class="token punctuation">.</span><span class="token static">CORE_SIZE</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token keyword">static</span> <span class="token import static"><span class="token namespace">davyjones2010<span class="token punctuation">.</span>github<span class="token punctuation">.</span>io<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">CustomForkJoinService</span><span class="token punctuation">.</span><span class="token static">POOL_NAME</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomForkJoinServiceTest</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">futureTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 1. 创建线程池</span>
-        <span class="token class-name">ExecutorService</span> executorService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>CORE_SIZE<span class="token punctuation">,</span> CORE_SIZE<span class="token punctuation">,</span> <span class="token number">0L</span><span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
-            <span class="token keyword">new</span> <span class="token class-name">LinkedBlockingDeque</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">BasicThreadFactory<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">namingPattern</span><span class="token punctuation">(</span>POOL_NAME <span class="token operator">+</span> <span class="token string">"-%d"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment">// 2. 创建&amp;提交任务</span>
-        <span class="token keyword">long</span> start <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Future</span><span class="token punctuation">&lt;</span><span class="token class-name">Boolean</span><span class="token punctuation">></span><span class="token punctuation">></span></span> futures <span class="token operator">=</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">40</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token class-name">String</span> str <span class="token operator">=</span> <span class="token string">"hello-"</span> <span class="token operator">+</span> i<span class="token punctuation">;</span>
-            <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Boolean</span><span class="token punctuation">></span></span> submit <span class="token operator">=</span> executorService<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-                    <span class="token class-name">Task</span> t <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Task</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token keyword">if</span> <span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token function">isValid</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">&#125;</span>
-                <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                    e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span>
-                <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            futures<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>submit<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Boolean</span><span class="token punctuation">></span></span> future <span class="token operator">:</span> futures<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-                <span class="token class-name">Boolean</span> aBoolean <span class="token operator">=</span> future<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">""</span> <span class="token operator">+</span> aBoolean<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"skipped."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"futureTest finished. cost: %d \n"</span><span class="token punctuation">,</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Task</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">public</span> <span class="token class-name">Boolean</span> <span class="token function">isValid</span><span class="token punctuation">(</span><span class="token class-name">String</span> str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">long</span> start <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment">// 这里模拟耗时操作</span>
-            <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">long</span> l <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"echo finished. cost: %d \n"</span><span class="token punctuation">,</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token class-name">Splitter</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token char">'-'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">splitToList</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">7</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>优点:<ul>
-<li>实现很简单快捷</li>
-</ul>
-</li>
-<li>缺点:<ul>
-<li>效率不如countdownlatch方式, 由于最终结果还是串行通过future.get拿到的. 如果前边几个future.get耗时很久(或者超时), 那么很容易造成方法瓶颈. </li>
-<li>不太容易实现部分成功, 返回部分成功结果</li>
-<li>返回结果需要封装: 如上边例子, 很难知道哪个String是valid的, 必须再对结果进行一层封装, 这样增加了实现的复杂度.</li>
-</ul>
-</li>
-</ul>
-<h2 id="java原生的fork-amp-join框架"><a href="#java原生的fork-amp-join框架" class="headerlink" title="java原生的fork&amp;join框架"></a>java原生的fork&amp;join框架</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-10-08-simple-fork-join-framework/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4465,14 +4304,14 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">280k</span>
+    <span title="站点总字数">281k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:14</span>
+    <span title="站点阅读时长">4:15</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
