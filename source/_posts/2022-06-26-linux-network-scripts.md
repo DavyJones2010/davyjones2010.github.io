@@ -332,3 +332,37 @@ sudo lsof -i:${port_no}
 sudo ls -l /proc/${pid}/fd/${fd}
 ```
 
+# SSH Server
+便于客户端能通过SSH连接到该服务器上
+
+## Ubuntu
+```shell
+# 安装SSH Server
+sudo apt-get install openssh-server -y
+
+# 查看是否安装成功
+sudo dpkg -l | fgrep openssh-server
+
+# 确认ssh进程已启动
+sudo systemctl status ssh
+ps -e | grep ssh
+
+# 启动ssh进程
+sudo service ssh start
+# 或者
+sudo /etc/init.d/ssh start
+# 或者
+sudo systemctl start ssh
+
+# 停止ssh进程
+sudo systemctl stop ssh
+
+# 开机自动启动ssh
+sudo systemctl enable ssh
+
+# 关闭开机自动启动ssh
+sudo systemctl disable ssh
+
+# 安装ifconfig
+sudo apt install net-tools -y
+```
