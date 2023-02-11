@@ -22,6 +22,8 @@ tags: [ubuntu, system-init, system-config]
 sudo apt-cache search jdk
 # 安装软件
 sudo apt-get install openjdk-8-jdk
+# 查看软件安装状态
+sudo dpkg -l | fgrep openjdk-8-jdk
 ```
 
 ## deb软件包管理
@@ -33,6 +35,10 @@ sudo dpkg -i xxx.deb
 
 # 必装软件
 ## 开发软件
+* SSH-Server
+
+安装命令参见 [常用的Linux命令之网络相关命令](https://davyjones2010.github.io/2022-06-25-linux-network-scripts/#Ubuntu)
+
 * JDK
 ```shell
 sudo add-apt-repository ppa:openjdk-r/ppa
@@ -55,7 +61,7 @@ sudo apt-get install openjdk-8-jdk
 
 ```shell
 sudo apt install net-tools traceroute
--- 安装之后就可以执行 route -n 命令查看路由表信息，执行 traceroute 追踪实际路由信息
+# 安装之后就可以执行 route -n 命令查看路由表信息，执行 traceroute 追踪实际路由信息
 ```
 
 * Docker
@@ -75,7 +81,7 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys xxx
 * 修改apt软件源
 
 ```shell
--- vim /etc/apt/sources.list
+# vim /etc/apt/sources.list
 deb http://mirrors.163.com/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ focal-security main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ focal-updates main restricted universe multiverse
@@ -98,11 +104,11 @@ deb http://ftp.sjtu.edu.cn/ubuntu/ focal main universe restricted multiverse
 * 截图
 
 ```
--- 保存到 ~/Pictures/ 目录下
+# 保存到 ~/Pictures/ 目录下
 Alt + PrintScreen # 截取选中的窗口
 Shift + PrintScreen # 自由选取
 
--- 保存到剪贴板
+# 保存到剪贴板
 Ctrl + Alt + PrintScreen # 截取选中的窗口
 Shift + Ctrl + PrintScreen # 自由选取
 ```
