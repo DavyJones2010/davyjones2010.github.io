@@ -6877,38 +6877,6 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
       </tags>
   </entry>
   <entry>
-    <title>记SpringBootCache使用的问题总结</title>
-    <url>//2022-05-18-springboot-cache/</url>
-    <content><![CDATA[<h1 id="Cacheable-无参方法"><a href="#Cacheable-无参方法" class="headerlink" title="@Cacheable 无参方法"></a>@Cacheable 无参方法</h1><p>有些无参方法, 也需要被SpringBoot @Cacheable 进行cache, 如下代码样例:  </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">listAllUids</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>有如下需要注意的点:</p>
-<ul>
-<li>可以不写 <code>key=xxx</code>, 这样默认的key就是<code>SimpleType []</code></li>
-<li>SpringBoot官方建议<a href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/cache.html">使用方法名作为key</a>, 如下:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key <span class="token operator">=</span> <span class="token string">"#root.method.name"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>也可以hardcode一个key, 这样更易于查找, 如下:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token string">"'my_key'"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>要注意key里的常量, <font color='red'>一定要用单引号括起来</font>, 否则会<a href="https://stackoverflow.com/questions/33383366/cacheble-annotation-on-no-parameter-method">报错如下</a>: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>expression<span class="token punctuation">.</span>spel<span class="token punctuation">.</span></span>SpelEvaluationException</span><span class="token operator">:</span> EL1008E<span class="token operator">:</span><span class="token punctuation">(</span>pos <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Property</span> or field my_key cannot be found on object of type '<span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>interceptor<span class="token punctuation">.</span></span>CacheExpressionRootObject</span>' <span class="token operator">-</span> maybe not <span class="token keyword">public</span><span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>java</tag>
-        <tag>springboot</tag>
-        <tag>spring-cache</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RPC调用异常行为与处理方案总结</title>
     <url>//2022-05-18-rpc-exception-handling/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用IAcsClient或者dubbo进行rpc调用时, 异常情况总是不可避免的.<br>这里总结下各种异常, 以及对应的表现形式与处理方式.</p>
@@ -6972,6 +6940,38 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <tag>java</tag>
         <tag>rpc</tag>
         <tag>exception</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记SpringBootCache使用的问题总结</title>
+    <url>//2022-05-18-springboot-cache/</url>
+    <content><![CDATA[<h1 id="Cacheable-无参方法"><a href="#Cacheable-无参方法" class="headerlink" title="@Cacheable 无参方法"></a>@Cacheable 无参方法</h1><p>有些无参方法, 也需要被SpringBoot @Cacheable 进行cache, 如下代码样例:  </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">listAllUids</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有如下需要注意的点:</p>
+<ul>
+<li>可以不写 <code>key=xxx</code>, 这样默认的key就是<code>SimpleType []</code></li>
+<li>SpringBoot官方建议<a href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/cache.html">使用方法名作为key</a>, 如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key <span class="token operator">=</span> <span class="token string">"#root.method.name"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>也可以hardcode一个key, 这样更易于查找, 如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token string">"'my_key'"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>要注意key里的常量, <font color='red'>一定要用单引号括起来</font>, 否则会<a href="https://stackoverflow.com/questions/33383366/cacheble-annotation-on-no-parameter-method">报错如下</a>: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>expression<span class="token punctuation">.</span>spel<span class="token punctuation">.</span></span>SpelEvaluationException</span><span class="token operator">:</span> EL1008E<span class="token operator">:</span><span class="token punctuation">(</span>pos <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Property</span> or field my_key cannot be found on object of type '<span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>interceptor<span class="token punctuation">.</span></span>CacheExpressionRootObject</span>' <span class="token operator">-</span> maybe not <span class="token keyword">public</span><span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>java</tag>
+        <tag>springboot</tag>
+        <tag>spring-cache</tag>
       </tags>
   </entry>
   <entry>
@@ -8590,7 +8590,35 @@ lo      lookback  unmanaged     --<span aria-hidden="true" class="line-numbers-r
 <li><p>查看文件创建时间<br>如下, 文件创建时间即TCP连接建立时间</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ls</span> -l /proc/<span class="token variable">$&#123;pid&#125;</span>/fd/<span class="token variable">$&#123;fd&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
-]]></content>
+<h1 id="SSH-Server"><a href="#SSH-Server" class="headerlink" title="SSH Server"></a>SSH Server</h1><p>便于客户端能通过SSH连接到该服务器上</p>
+<h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装SSH Server</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> openssh-server -y
+
+<span class="token comment"># 查看是否安装成功</span>
+<span class="token function">sudo</span> dpkg -l <span class="token operator">|</span> <span class="token function">fgrep</span> openssh-server
+
+<span class="token comment"># 确认ssh进程已启动</span>
+<span class="token function">sudo</span> systemctl status <span class="token function">ssh</span>
+<span class="token function">ps</span> -e <span class="token operator">|</span> <span class="token function">grep</span> <span class="token function">ssh</span>
+
+<span class="token comment"># 启动ssh进程</span>
+<span class="token function">sudo</span> <span class="token function">service</span> <span class="token function">ssh</span> start
+<span class="token comment"># 或者</span>
+<span class="token function">sudo</span> /etc/init.d/ssh start
+<span class="token comment"># 或者</span>
+<span class="token function">sudo</span> systemctl start <span class="token function">ssh</span>
+
+<span class="token comment"># 停止ssh进程</span>
+<span class="token function">sudo</span> systemctl stop <span class="token function">ssh</span>
+
+<span class="token comment"># 开机自动启动ssh</span>
+<span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> <span class="token function">ssh</span>
+
+<span class="token comment"># 关闭开机自动启动ssh</span>
+<span class="token function">sudo</span> systemctl disable <span class="token function">ssh</span>
+
+<span class="token comment"># 安装ifconfig</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> net-tools -y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
       <tags>
         <tag>code-snippets</tag>
         <tag>linux</tag>
