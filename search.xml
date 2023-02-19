@@ -2614,13 +2614,12 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
 <h3 id="删除默认英文输入法"><a href="#删除默认英文输入法" class="headerlink" title="删除默认英文输入法"></a>删除默认英文输入法</h3><ol>
 <li>关闭SIP</li>
 <li>使用PlistEdit Pro 编辑 <code>~/Library/Preferences/com.apple.HIToolbox.plist</code></li>
-<li>删除 ABC的选项(或者U.S):<br><img data-src="/../_assets/img/20211107-mac-init-delete-input-method.png" alt="20211107-mac-init-delete-input-method.png"></li>
+<li>删除 ABC的选项(或者U.S): <img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302191145532.png"></li>
 <li>再次重启电脑</li>
 </ol>
 <h4 id="参照"><a href="#参照" class="headerlink" title="参照"></a>参照</h4><p><a href="https://blog.csdn.net/fgx_123456/article/details/87815697">完美删除Mac Os自带输入法</a></p>
 <h3 id="使用bash-替换掉默认的zsh"><a href="#使用bash-替换掉默认的zsh" class="headerlink" title="使用bash, 替换掉默认的zsh"></a>使用bash, 替换掉默认的zsh</h3><h4 id="全局账号"><a href="#全局账号" class="headerlink" title="全局账号"></a>全局账号</h4><p>参考: <a href="https://support.apple.com/zh-cn/guide/terminal/trml113/2.11/mac/11.0">在 Mac 上的“终端”中更改默认 shell</a></p>
-<h4 id="iterm"><a href="#iterm" class="headerlink" title="iterm"></a>iterm</h4><p><code>iTerm2-&gt;Preferences-&gt;Profiles-&gt;Command</code></p>
-<p><img data-src="/../_assets/img/20211107-mac-init-iterm-bash.png" alt="20211107-mac-init-iterm-bash.png"></p>
+<h4 id="iterm"><a href="#iterm" class="headerlink" title="iterm"></a>iterm</h4><p><code>iTerm2-&gt;Preferences-&gt;Profiles-&gt;Command</code><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302191145530.png"></p>
 <h3 id="去除掉zsh烦人的提示"><a href="#去除掉zsh烦人的提示" class="headerlink" title="去除掉zsh烦人的提示"></a>去除掉zsh烦人的提示</h3><h4 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">The default interactive shell is now zsh.
 To update your account to use zsh, please run <span class="token variable"><span class="token variable">`</span>chsh -s /bin/zsh<span class="token variable">`</span></span><span class="token builtin class-name">.</span>
 For <span class="token function">more</span> details, please visit https://support.apple.com/kb/HT208050.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -2644,9 +2643,20 @@ For <span class="token function">more</span> details, please visit https://suppo
 <span class="token function">git</span> config --global --unset https.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>参考 <a href="https://blog.csdn.net/qq_37555071/article/details/114260533">OpenSSL SSL_connect: Connection was reset in connection to github.com:443</a></p>
 <h2 id="iTerm2配置-Option-←-Option-→-按单词快速移动"><a href="#iTerm2配置-Option-←-Option-→-按单词快速移动" class="headerlink" title="iTerm2配置 Option+← Option+→ 按单词快速移动"></a>iTerm2配置 Option+← Option+→ 按单词快速移动</h2><p>路径: iTerm2-&gt;Preferences-&gt;Profiles-&gt;Keys-&gt;Key Mappings</p>
-<p><img data-src="/../_assets/2021-11-07-mac-init-iterm/img.png" alt="img.png"></p>
-<p><img data-src="/../_assets/2021-11-07-mac-init-iterm/img_1.png" alt="img_1.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302191146635.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302191146635.png"></p>
 <p>参考 <a href="https://blog.csdn.net/skyyws/article/details/78480132">Mac下iTerm2光标按照单词快速移动设置</a></p>
+<h2 id="iTerm2快速分屏"><a href="#iTerm2快速分屏" class="headerlink" title="iTerm2快速分屏"></a>iTerm2快速分屏</h2><ul>
+<li><code>⌘ + N</code> for a new window</li>
+<li><code>⌘ + T</code> for a new tab</li>
+<li><code>⌘ + D</code> to split my pane vertically</li>
+<li><code>⌘ + ⇧ + D</code> to split it horizontally</li>
+<li>同时需要保持新拆分出的窗口目录与当前文件目录保持一致: <a href="https://apple.stackexchange.com/questions/337377/iterm2-split-vertically-with-current-profile-with-same-working-directory">iterm2-split-vertically-with-current-profile-with-same-working-directory</a></li>
+</ul>
+<h2 id="iTerm2分屏导航"><a href="#iTerm2分屏导航" class="headerlink" title="iTerm2分屏导航"></a>iTerm2分屏导航</h2><ul>
+<li><strong>cmd-opt-arrow</strong> 进行分屏导航</li>
+<li><strong>cmd-1&#x2F;2&#x2F;3</strong> 或者 <strong>cmd-arrow</strong> 进行Tab导航</li>
+</ul>
 <h2 id="git配置SSHKey访问"><a href="#git配置SSHKey访问" class="headerlink" title="git配置SSHKey访问"></a>git配置SSHKey访问</h2><p>参见<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">Connect with SSH</a></p>
 <h2 id="Maven设置阿里云镜像"><a href="#Maven设置阿里云镜像" class="headerlink" title="Maven设置阿里云镜像"></a>Maven设置阿里云镜像</h2><p>Copy From <a href="https://zhuanlan.zhihu.com/p/71998219">将maven源改为国内阿里云镜像</a></p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>settings</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://maven.apache.org/SETTINGS/1.0.0<span class="token punctuation">"</span></span>
