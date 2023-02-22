@@ -11901,4 +11901,16 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
         <tag>mysql</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java线程状态与jstack线程栈分析实战</title>
+    <url>//2023-02-22-java-jstack-thread-status/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>某次机房间光纤被挖断, 导致跨机房通信网络丢包率高. </p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>TODO: 补充</p>
+]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>java</tag>
+        <tag>jstack</tag>
+      </tags>
+  </entry>
 </search>
