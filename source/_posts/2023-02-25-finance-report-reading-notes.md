@@ -4,6 +4,7 @@ date: 2023-02-25 00:00:16
 tags: [note, book-list, finance]
 ---
 
+{% markmap 400px 4 %}
 
 # 一本书读懂财报
 
@@ -436,3 +437,4 @@ tags: [note, book-list, finance]
 ###### 表外负债:
 
 ## 第三张表: 现金流量表
+{% endmarkmap %}
