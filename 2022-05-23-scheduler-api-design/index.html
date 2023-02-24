@@ -31,7 +31,7 @@
 <meta property="og:description" content="前言记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀. 批量调度amount &amp; minAmount 模式:模式解释样例请求如下: class BatchParam &amp;#123;     Integer minAmount;     Integer amount;     &amp;#125;  语义解释:   minAmount: 代表请求方需求的最小的资源量.  amount:">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-02-22T15:45:37.084Z">
+<meta property="article:modified_time" content="2023-02-24T16:03:30.214Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="scheduler-design">
 <meta property="article:tag" content="api-design">
@@ -256,7 +256,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -309,7 +309,7 @@
 </ul>
 <p>而实际应用上, 阿里云的API <a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/63440.html">RunInstances</a> 也是如此设计的.</p>
 <h2 id="tryBest-amp-allOrNothing-模式"><a href="#tryBest-amp-allOrNothing-模式" class="headerlink" title="tryBest &amp; allOrNothing 模式:"></a>tryBest &amp; allOrNothing 模式:</h2><p>本质上可以用上边的 <code>minAmount, amount</code> 两个参数进行描述, 更加优雅与灵活.</p>
-<h2 id="批量调度性能优化的思考"><a href="#批量调度性能优化的思考" class="headerlink" title="批量调度性能优化的思考"></a>批量调度性能优化的思考</h2>
+<h2 id="批量调度性能优化的思考"><a href="#批量调度性能优化的思考" class="headerlink" title="批量调度性能优化的思考"></a>批量调度性能优化的思考</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
     </div>
 
     

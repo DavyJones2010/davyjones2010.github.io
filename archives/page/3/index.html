@@ -211,6 +211,122 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-04-05-k8s-list-watch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-04-05-k8s-list-watch/" class="post-title-link" itemprop="url">k8s基础架构笔记--list&watch机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-06 00:00:00" itemprop="dateCreated datePublished" datetime="2022-04-06T00:00:00+08:00">2022-04-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>360</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本质上:  </p>
+<ul>
+<li>list: 就是一个GET的HTTP操作, 请求到apiserver, 是个短连接. list结束, 连接就关闭.</li>
+<li>watch: 是一个基于<code>Transfer-Encoding: chunked</code>的<a target="_blank" rel="noopener" href="https://imququ.com/post/transfer-encoding-header-in-http.html">HTTP长连接</a>, apiserver作为http server, kube-proxy&#x2F;kubelet&#x2F;kube-scheduler等作为http client.</li>
+</ul>
+<p>这样: </p>
+<ul>
+<li>list: 来实现kube-proxy, kubelet, kube-scheduler等角色启动初始化时, 存量数据的一次拉取.</li>
+<li>watch: 来实现后续各种资源的增量更新</li>
+</ul>
+<p>扩展: </p>
+<ul>
+<li>watch: <ul>
+<li>k8s java client中watch机制, 是基于OkHttpClient. &#x2F;&#x2F; TODO: 补上具体实现例子</li>
+<li>watch机制也可以基于websocket来实现</li>
+</ul>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-04-05-k8s-list-watch/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-04-04-good-design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +363,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -361,7 +477,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -389,7 +505,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="ClientToken作用"><a href="#ClientToken作用" class="headerlink" title="ClientToken作用"></a>ClientToken作用</h1>
+          <h1 id="ClientToken作用"><a href="#ClientToken作用" class="headerlink" title="ClientToken作用"></a>ClientToken作用</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022-03-28-openapi-clienttoken/#more" rel="contents">
@@ -459,7 +575,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -589,7 +705,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -778,7 +894,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -888,7 +1004,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -926,7 +1042,7 @@
 <li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
 <li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
 </ol>
-
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022-03-24-random-snippets/#more" rel="contents">
@@ -996,7 +1112,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -1150,7 +1266,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -1285,7 +1401,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -1403,7 +1519,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -1518,7 +1634,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -1635,7 +1751,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -1766,7 +1882,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -1888,7 +2004,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -1916,7 +2032,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1>
+          <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022-01-31-jetty-monitor-oom-bug/#more" rel="contents">
@@ -1986,7 +2102,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -2099,7 +2215,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2259,7 +2375,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2401,7 +2517,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -2462,7 +2578,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 </ul>
 </li>
 </ul>
-
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-12-17-java-nio/#more" rel="contents">
@@ -2532,7 +2648,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -2641,7 +2757,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -2787,7 +2903,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -2904,7 +3020,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -3016,7 +3132,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -3128,7 +3244,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -3157,7 +3273,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
     
     <div class="post-body" itemprop="articleBody">
           <p>CPU芯片中vendor_id:<br>intel –&gt; Genuine Intel<br>amd –&gt; Authentic AMD<br>哈哈, 为啥都加个”真实的”呢? 生怕别人伪造么?</p>
-
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-11-22-random-snippets/#more" rel="contents">
@@ -3227,7 +3343,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -3255,7 +3371,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="设备与在Linux中文件名"><a href="#设备与在Linux中文件名" class="headerlink" title="设备与在Linux中文件名"></a>设备与在Linux中文件名</h1>
+          <h1 id="设备与在Linux中文件名"><a href="#设备与在Linux中文件名" class="headerlink" title="设备与在Linux中文件名"></a>设备与在Linux中文件名</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-11-18-Linux-Basic/#more" rel="contents">
@@ -3325,7 +3441,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -3458,7 +3574,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -3642,7 +3758,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -3712,7 +3828,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Instance</span><span class="token punctuation">></span></span> instanceMap <span class="token operator">=</span> instances<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span><span class="token class-name">Instance</span><span class="token operator">::</span><span class="token function">getInstanceId</span><span class="token punctuation">,</span> e <span class="token operator">-></span> e<span class="token punctuation">,</span> <span class="token punctuation">(</span>k1<span class="token punctuation">,</span> k2<span class="token punctuation">)</span> <span class="token operator">-></span> k2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/blueheart20/article/details/106326548/">https://blog.csdn.net/blueheart20/article/details/106326548/</a></p>
-
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-11-15-java-lambda-list-to-map/#more" rel="contents">
@@ -3782,7 +3898,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -3849,7 +3965,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li><p>什么是POSIX接口? 为啥</p>
 </li>
 </ul>
-
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-11-13-GFS-thesis/#more" rel="contents">
@@ -3919,7 +4035,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -4056,7 +4172,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -4110,121 +4226,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-11-06-mac-init/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-11-06-resolution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-11-06-resolution/" class="post-title-link" itemprop="url">关于分辨率的常识</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-07T00:00:00+08:00">2021-11-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>148</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
-<li>480P: 720*480</li>
-<li>720P: 1280x720</li>
-<li>1080P: 1920x1080</li>
-<li>2K: 2560x1440</li>
-<li>4K:</li>
-<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
-</ul>
-<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
-<li>字母P代表: Progressive Scan, 即逐行扫描</li>
-<li>480P代表:</li>
-</ul>
-<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
-<li>30Hz</li>
-<li>60Hz</li>
-<li></li>
-</ul>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-11-06-resolution/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

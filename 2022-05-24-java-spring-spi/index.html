@@ -31,7 +31,7 @@
 <meta property="og:description" content="背景项目中用到了SPI机制, 使用过程也走了一些弯路. 这里记录下来.  几种SPI方式Java中SPI机制使用方式实际应用场景 jdbc驱动, 例如mysql-connector-java.jar中, 就在META-INF&#x2F;services&#x2F;java.sql.Driver  问题比较严重的一个问题是, 这些SPI的Bean游离于Spring容器外.SPI中引入的对象(Bean">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-02-22T15:45:37.084Z">
+<meta property="article:modified_time" content="2023-02-24T16:03:30.214Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
@@ -257,7 +257,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-22 23:45:37" itemprop="dateModified" datetime="2023-02-22T23:45:37+08:00">2023-02-22</time>
+      <time title="修改时间：2023-02-25 00:03:30" itemprop="dateModified" datetime="2023-02-25T00:03:30+08:00">2023-02-25</time>
     </span>
 
   
@@ -292,7 +292,7 @@
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>比较严重的一个问题是, 这些SPI的Bean游离于Spring容器外.<br>SPI中引入的对象(Bean)没有被Spring容器管理起来.<br>从而这些Bean如果依赖到了Spring容器中其他Bean, 就只能手动从Spring容器中拿出来复制, 即手动注入.<br>太麻烦了. </p>
 <h2 id="Service-Loader-Spring-integration"><a href="#Service-Loader-Spring-integration" class="headerlink" title="Service Loader Spring integration"></a>Service Loader Spring integration</h2><h2 id="Spring-Factories-Loader"><a href="#Spring-Factories-Loader" class="headerlink" title="Spring Factories Loader"></a>Spring Factories Loader</h2><h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h2 id="在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥"><a href="#在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥" class="headerlink" title="在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?"></a>在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?</h2><p>个人理解, 最大的优点是编译期与实现类&#x2F;包解耦. </p>
 <h2 id="Spring-Factories-Loader在Starter的应用场景-优势是啥"><a href="#Spring-Factories-Loader在Starter的应用场景-优势是啥" class="headerlink" title="Spring Factories Loader在Starter的应用场景, 优势是啥?"></a>Spring Factories Loader在Starter的应用场景, 优势是啥?</h2><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a target="_blank" rel="noopener" href="https://dzone.com/articles/java-service-loader-vs-spring-factories-loader">Java Service Loader vs. Spring Factories Loader</a></p>
-
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
     </div>
 
     
