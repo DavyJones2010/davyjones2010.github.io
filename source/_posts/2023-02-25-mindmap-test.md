@@ -1,10 +1,10 @@
 ---
-title: mindmap插件测试
+title: 一本书读懂财报笔记
 date: 2023-02-25 00:00:16
-tags:
+tags: [note, book-list, finance]
 ---
 
-{% pullquote mindmap mindmap-md %}
+
 # 一本书读懂财报
 
 ## 企业活动
@@ -436,4 +436,3 @@ tags:
 ###### 表外负债:
 
 ## 第三张表: 现金流量表
-{% endpullquote %}
