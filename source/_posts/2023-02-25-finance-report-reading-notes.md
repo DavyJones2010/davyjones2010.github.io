@@ -4,7 +4,7 @@ date: 2023-02-25 00:00:16
 tags: [note, book-list, finance]
 ---
 
-{% markmap 400px 4 %}
+{% markmap 2000px 4 %}
 
 # 一本书读懂财报
 
