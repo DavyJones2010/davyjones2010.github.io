@@ -7,7 +7,7 @@ tags: [java, javase, thread, sync, concurrent, know-why]
 # 背景
 上次机房断网的jstack分析之后, 发现其实个人并没有深入理解Java中线程的如下两个状态的区别: 
 - "BLOCKED"
-- "WAITING/TIMED_WAITING"
+- "WAITING"
 或者, 都是线程被阻塞无法运行(让出了CPU的时间片)的状态:
 - 问题1: 这两个状态具体有啥区别? 
 - 问题2: JVM为什么要进行上边两个状态的区分? 为什么不只用一个状态标识?
@@ -228,26 +228,142 @@ synchronized(o) {
 
 因此也就从根本上解释了本文开头的第一个问题 `问题1: 这两个状态具体有啥区别?`
 
-### 线程可能得状态变化
-`wait set`  -> `block set`
-`block set` -> `wait set`
-`block set` -> `RUNNABLE`
+### 总结线程可能的状态变化
+
+- `RUNNABLE` -> `block set`: 卡在synchronized
+- `RUNNABLE` -> `wait set`: 卡在synchronized里wait
+- `wait set`  -> `block set`: wait之后被其他线程调用的notify唤醒
+- `block set` -> `wait set`: 不存在该链路, 可能当前线程在block set, 但被赋予object monitor之后, 肯定进入了RUNNABLE状态. 可能RUNNABLE之后主动调用了wait, 但也不是直接从`blocked set`到`wait set`
+- `block set` -> `RUNNABLE`: 其他线程wait之后, 自动释放掉object monitor, 当前线程可以继续执行
+
+```mermaid
+stateDiagram
+    [*] --> CREATED: new Thread
+    CREATED --> RUNNABLE: Thread.start()
+    RUNNABLE --> BLOCKED: synchronized()
+    RUNNABLE --> WAITING: wait()
+    BLOCKED --> RUNNABLE: 其他线程wait()
+    WAITING --> BLOCKED: 其他线程调用notify()
+    RUNNABLE --> DESTROYED: run执行结束, 或者抛出异常退出
+    DESTROYED --> [*]: 结束
+
+```
 
 ## wait/notify/synchronized实战
 此时就很容易根据三个概念的流转, 来分析下上文的 `变体写法-1` 的执行流程, 也就明白为啥也可以work了.
 本文就不再赘述了.
 
-## 变体写法
+## 变体写法-2
+如下例子中, 基于`变体写法-1`把`synchronized(lock)`放在`while(true)`外层, 会正常执行么? 可以先试着自己分析下(详细分析如下). 
 
+```java
+// consumer
+synchronized (lock) { // 1. 获取object monitor
+    while (true) {
+        while (isEmpty) {
+            System.out.println("consumer is waiting");
+            lock.wait();  // 3. 把自己放到wait set里, 释放object monitor; 5. JVM把consumer从wait set里移出, 移入到block set里; 8. JVM把consumer从block set里移出, consumer获取object monitor
+        }
+        lock.notify(); // 9. 通知JVM把producer从wait set里移出, 移入到block set里; consumer继续往下执行(仍然保有object monitor)
+        
+        System.out.println("start consuming");
+        Thread.sleep((long) (Math.random() * 10000L));
+        System.out.println("finished consuming");
+        isEmpty = true; // 10. consumer消费完成, 继续执行到第3步, 依次循环.
+    }
+}
 
-## 更加风骚的写法
+// producer
+synchronized (lock) { // 2. 把自己放到block set里, 等待获取object monitor; 4. 从block set移出, 获取 object monitor
+    while (true) {
+        while (!isEmpty) {
+            System.out.println("producer is waiting"); 
+            lock.wait(); // 7. 把自己放到wait set里, 释放object monitor; 9. JVM把producer从wait set里移出, 移入到block set里; 4.2 producer从block set移出, 获取 object monitor
+        }
+        lock.notify(); // 5. 通知JVM把consumer从wait set里移出, 移入到block set里; producer继续往下执行(仍然保有object monitor)
 
-## 分析线程状态
+        System.out.println("start producing");
+        Thread.sleep((long) (Math.random() * 10000L));
+        isEmpty = false;  // 6. producer开始生产
+        System.out.println("finished producing");
+    }
+}
 
-# 实际生产中
+```
+
+> 答案揭晓: 没啥区别, 正常执行.
+
+# 实际生产应用
+
+// TODO: 
+
+# 其他
+
+## WAITING与TIMED_WAITING区别
+
+## Object.wait() 与 Thread.sleep() 的区别
+又是面试常问的一道题.  
+通过上边分析可知
+
+行为上区别: 
+- Object.wait()之后:
+  1. 把当前线程移到wait set里 
+  2. 释放掉object monitor
+  3. 线程暂停执行, 让出CPU时间片
+- Thread.sleep()之后:
+  1. 线程暂停执行, 让出CPU时间片; 不会有1, 2的操作.
+
+结果上区别: 
+- Object.wait()之后: 线程进入 WAITING (on object monitor) 或者 TIMED_WAITING (on object monitor) 状态 
+- Thread.sleep()之后: 线程进入 TIMED_WAITING (sleeping) 状态
+
+## 其他几种情况
+除了本文, 其实还会有多种情况会导致线程进入`BLOCKED`, `WAITING`状态, 如下: 
+![](https://www.baeldung.com/wp-content/uploads/2018/02/Life_cycle_of_a_Thread_in_Java.jpg)
+
+但本质已经讲清楚了, 大家其实可以看下`Thread.join()`的源代码, 分析下当主线程调用`t.join()`与`t.join(30000L)`时, 主线程的状态应该是什么?
+
+```java
+@Test
+public void name() throws InterruptedException {
+    MyThread t = new MyThread(); // run()里边就是
+    t.start();
+//    t.join();
+//    t.join(30000L);
+}
+
+static class MyThread extends Thread {
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(100000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+
+> 答案: t.join()时, 主线程是WAITING (on object monitor); t.join(30000L)时, 主线程状态是TIMED_WAITING(on object monitor) 
+
+原因: 源代码分析即可
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302252202526.png)
 
 # 总结
-借此机会, 也解释了自己内心以来的长久疑惑. 
+几点感想: 
+1. 借此机会, 解释了自己内心以来的长久的疑惑, 感觉很通透. 
+   1. 根本原因: JVM/OS封装了太多东西, 例如本文内容, 如果不知道有上边三种东西, 根本无法under the hood彻底解释清楚问题.
+   2. 最好方式: 还是自己去翻源代码; 
+   3. 其次: 就是看官方手册. 这次官方doc其实讲得也非常清晰.
+   4. 最后: 工科一定要去实践, 自己写一些小demo打打jstack很多问题一下子就清晰了.
+2. 针对Java中线程状态切换, 很多资料其实讲得并不好, 认识都很浅显, 甚至有极大的误导性. 大家引以为戒.
+例如: [Thread States in Java](https://www.javatpoint.com/thread-states-in-java) 的状态机图, 存在如下几个问题: 
+   1. 在实际生产中, 我们的jstack里, 永远不会看到`RUNNING`状态的线程, 都是处于`RUNNABLE`的. 参见 [JavaSE Spec](https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr034.html)
+   2. 没有详细区分`BLOCKED`与`WAITING`这两种状态, 而这两个状态也是我们在jstack里常见的, 也是大家都会有疑惑的, 也是希望本文给大家阐述清晰的.
+
+例如: [Difference Between BLOCKED, WAITING, And TIMED_WAITING? Explained Through Real-Life Examples](https://dzone.com/articles/difference-between-blocked-waiting-timed-waiting-e)
+    1. 虽然是基于生活的情况进行类比, 但还是没有根本性第解释清楚这三种状态的根本区别. 看完仍是一头雾水.
+    2. **一定要对于这种使用类比来解释技术问题的文章抱有高度警惕**. 例如把docker类比集装箱, 把HTTP协议类比俩人谈话等. 都是know what的, 但know why与know how的知识才是我们真正应该掌握的.
 
 
 # Refs
