@@ -11933,7 +11933,7 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>上次机房断网的jstack分析之后, 发现其实个人并没有深入理解Java中线程的如下两个状态的区别: </p>
 <ul>
 <li>“BLOCKED”</li>
-<li>“WAITING&#x2F;TIMED_WAITING”<br>或者, 都是线程被阻塞无法运行(让出了CPU的时间片)的状态:</li>
+<li>“WAITING”<br>或者, 都是线程被阻塞无法运行(让出了CPU的时间片)的状态:</li>
 <li>问题1: 这两个状态具体有啥区别? </li>
 <li>问题2: JVM为什么要进行上边两个状态的区分? 为什么不只用一个状态标识?</li>
 </ul>
@@ -12179,9 +12179,122 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 <li>在<code>blocked set</code>里: <code>BLOCKED</code>状态</li>
 </ul>
 <p>因此也就从根本上解释了本文开头的第一个问题 <code>问题1: 这两个状态具体有啥区别?</code></p>
-<h3 id="线程可能得状态变化"><a href="#线程可能得状态变化" class="headerlink" title="线程可能得状态变化"></a>线程可能得状态变化</h3><p><code>wait set</code>  -&gt; <code>block set</code><br><code>block set</code> -&gt; <code>wait set</code><br><code>block set</code> -&gt; <code>RUNNABLE</code></p>
+<h3 id="总结线程可能的状态变化"><a href="#总结线程可能的状态变化" class="headerlink" title="总结线程可能的状态变化"></a>总结线程可能的状态变化</h3><ul>
+<li><code>RUNNABLE</code> -&gt; <code>block set</code>: 卡在synchronized</li>
+<li><code>RUNNABLE</code> -&gt; <code>wait set</code>: 卡在synchronized里wait</li>
+<li><code>wait set</code>  -&gt; <code>block set</code>: wait之后被其他线程调用的notify唤醒</li>
+<li><code>block set</code> -&gt; <code>wait set</code>: 不存在该链路, 可能当前线程在block set, 但被赋予object monitor之后, 肯定进入了RUNNABLE状态. 可能RUNNABLE之后主动调用了wait, 但也不是直接从<code>blocked set</code>到<code>wait set</code></li>
+<li><code>block set</code> -&gt; <code>RUNNABLE</code>: 其他线程wait之后, 自动释放掉object monitor, 当前线程可以继续执行</li>
+</ul>
+<pre class="mermaid">stateDiagram
+    [*] --> CREATED: new Thread
+    CREATED --> RUNNABLE: Thread.start()
+    RUNNABLE --> BLOCKED: synchronized()
+    RUNNABLE --> WAITING: wait()
+    BLOCKED --> RUNNABLE: 其他线程wait()
+    WAITING --> BLOCKED: 其他线程调用notify()
+    RUNNABLE --> DESTROYED: run执行结束, 或者抛出异常退出
+    DESTROYED --> [*]: 结束</pre>
+
 <h2 id="wait-x2F-notify-x2F-synchronized实战"><a href="#wait-x2F-notify-x2F-synchronized实战" class="headerlink" title="wait&#x2F;notify&#x2F;synchronized实战"></a>wait&#x2F;notify&#x2F;synchronized实战</h2><p>此时就很容易根据三个概念的流转, 来分析下上文的 <code>变体写法-1</code> 的执行流程, 也就明白为啥也可以work了.<br>本文就不再赘述了.</p>
-<h2 id="变体写法"><a href="#变体写法" class="headerlink" title="变体写法"></a>变体写法</h2><h2 id="更加风骚的写法"><a href="#更加风骚的写法" class="headerlink" title="更加风骚的写法"></a>更加风骚的写法</h2><h2 id="分析线程状态"><a href="#分析线程状态" class="headerlink" title="分析线程状态"></a>分析线程状态</h2><h1 id="实际生产中"><a href="#实际生产中" class="headerlink" title="实际生产中"></a>实际生产中</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>借此机会, 也解释了自己内心以来的长久疑惑. </p>
+<h2 id="变体写法-2"><a href="#变体写法-2" class="headerlink" title="变体写法-2"></a>变体写法-2</h2><p>如下例子中, 基于<code>变体写法-1</code>把<code>synchronized(lock)</code>放在<code>while(true)</code>外层, 会正常执行么? 可以先试着自己分析下(详细分析如下). </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// consumer</span>
+<span class="token keyword">synchronized</span> <span class="token punctuation">(</span>lock<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 1. 获取object monitor</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>isEmpty<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"consumer is waiting"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            lock<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 3. 把自己放到wait set里, 释放object monitor; 5. JVM把consumer从wait set里移出, 移入到block set里; 8. JVM把consumer从block set里移出, consumer获取object monitor</span>
+        <span class="token punctuation">&#125;</span>
+        lock<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 9. 通知JVM把producer从wait set里移出, 移入到block set里; consumer继续往下执行(仍然保有object monitor)</span>
+        
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"start consuming"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">10000L</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"finished consuming"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        isEmpty <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">// 10. consumer消费完成, 继续执行到第3步, 依次循环.</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// producer</span>
+<span class="token keyword">synchronized</span> <span class="token punctuation">(</span>lock<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 2. 把自己放到block set里, 等待获取object monitor; 4. 从block set移出, 获取 object monitor</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>isEmpty<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"producer is waiting"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+            lock<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 7. 把自己放到wait set里, 释放object monitor; 9. JVM把producer从wait set里移出, 移入到block set里; 4.2 producer从block set移出, 获取 object monitor</span>
+        <span class="token punctuation">&#125;</span>
+        lock<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 5. 通知JVM把consumer从wait set里移出, 移入到block set里; producer继续往下执行(仍然保有object monitor)</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"start producing"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">10000L</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        isEmpty <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>  <span class="token comment">// 6. producer开始生产</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"finished producing"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>答案揭晓: 没啥区别, 正常执行.</p>
+</blockquote>
+<h1 id="实际生产应用"><a href="#实际生产应用" class="headerlink" title="实际生产应用"></a>实际生产应用</h1><p>&#x2F;&#x2F; TODO: </p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="WAITING与TIMED-WAITING区别"><a href="#WAITING与TIMED-WAITING区别" class="headerlink" title="WAITING与TIMED_WAITING区别"></a>WAITING与TIMED_WAITING区别</h2><h2 id="Object-wait-与-Thread-sleep-的区别"><a href="#Object-wait-与-Thread-sleep-的区别" class="headerlink" title="Object.wait() 与 Thread.sleep() 的区别"></a>Object.wait() 与 Thread.sleep() 的区别</h2><p>又是面试常问的一道题.<br>通过上边分析可知</p>
+<p>行为上区别: </p>
+<ul>
+<li>Object.wait()之后:<ol>
+<li>把当前线程移到wait set里 </li>
+<li>释放掉object monitor</li>
+<li>线程暂停执行, 让出CPU时间片</li>
+</ol>
+</li>
+<li>Thread.sleep()之后:<ol>
+<li>线程暂停执行, 让出CPU时间片; 不会有1, 2的操作.</li>
+</ol>
+</li>
+</ul>
+<p>结果上区别: </p>
+<ul>
+<li>Object.wait()之后: 线程进入 WAITING (on object monitor) 或者 TIMED_WAITING (on object monitor) 状态 </li>
+<li>Thread.sleep()之后: 线程进入 TIMED_WAITING (sleeping) 状态</li>
+</ul>
+<h2 id="其他几种情况"><a href="#其他几种情况" class="headerlink" title="其他几种情况"></a>其他几种情况</h2><p>除了本文, 其实还会有多种情况会导致线程进入<code>BLOCKED</code>, <code>WAITING</code>状态, 如下:<br><img data-src="https://www.baeldung.com/wp-content/uploads/2018/02/Life_cycle_of_a_Thread_in_Java.jpg"></p>
+<p>但本质已经讲清楚了, 大家其实可以看下<code>Thread.join()</code>的源代码, 分析下当主线程调用<code>t.join()</code>与<code>t.join(30000L)</code>时, 主线程的状态应该是什么?</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">MyThread</span> t <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// run()里边就是</span>
+    t<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//    t.join();</span>
+<span class="token comment">//    t.join(30000L);</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">MyThread</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100000L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>答案: t.join()时, 主线程是WAITING (on object monitor); t.join(30000L)时, 主线程状态是TIMED_WAITING(on object monitor) </p>
+</blockquote>
+<p>原因: 源代码分析即可<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302252202526.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>几点感想: </p>
+<ol>
+<li>借此机会, 解释了自己内心以来的长久的疑惑, 感觉很通透. <ol>
+<li>根本原因: JVM&#x2F;OS封装了太多东西, 例如本文内容, 如果不知道有上边三种东西, 根本无法under the hood彻底解释清楚问题.</li>
+<li>最好方式: 还是自己去翻源代码; </li>
+<li>其次: 就是看官方手册. 这次官方doc其实讲得也非常清晰.</li>
+<li>最后: 工科一定要去实践, 自己写一些小demo打打jstack很多问题一下子就清晰了.</li>
+</ol>
+</li>
+<li>针对Java中线程状态切换, 很多资料其实讲得并不好, 认识都很浅显, 甚至有极大的误导性. 大家引以为戒.<br>例如: <a href="https://www.javatpoint.com/thread-states-in-java">Thread States in Java</a> 的状态机图, 存在如下几个问题: <ol>
+<li>在实际生产中, 我们的jstack里, 永远不会看到<code>RUNNING</code>状态的线程, 都是处于<code>RUNNABLE</code>的. 参见 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr034.html">JavaSE Spec</a></li>
+<li>没有详细区分<code>BLOCKED</code>与<code>WAITING</code>这两种状态, 而这两个状态也是我们在jstack里常见的, 也是大家都会有疑惑的, 也是希望本文给大家阐述清晰的.</li>
+</ol>
+</li>
+</ol>
+<p>例如: <a href="https://dzone.com/articles/difference-between-blocked-waiting-timed-waiting-e">Difference Between BLOCKED, WAITING, And TIMED_WAITING? Explained Through Real-Life Examples</a><br>    1. 虽然是基于生活的情况进行类比, 但还是没有根本性第解释清楚这三种状态的根本区别. 看完仍是一头雾水.<br>    2. <strong>一定要对于这种使用类比来解释技术问题的文章抱有高度警惕</strong>. 例如把docker类比集装箱, 把HTTP协议类比俩人谈话等. 都是know what的, 但know why与know how的知识才是我们真正应该掌握的.</p>
 <h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
 <li><a href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-17.html">Java Language Specification - Chapter 17. Threads and Locks</a></li>
 <li><a href="https://stackoverflow.com/questions/39927299/in-java-if-a-thread-calls-notify-before-wait-how-does-this-not-cause-the-se">SoF上一个有意思的wait-notify问题</a></li>
