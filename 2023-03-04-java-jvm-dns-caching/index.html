@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景某次jstack发现应用卡在DNS解析上, 发现应用为了做负载均衡, 故意将JVM DNS Cache失效时间设置为了0, 即永不缓存.这才知道原来还有这个参数. 因此借此机会就查阅资料, 详细研究下. Java DNS流程流程详解当我们调用如下方式解析域名时, 经过了如下流程:  String hostname &#x3D; &quot;www.baidu.com&quot;; InetAddress addr &#x3D; In">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="关于JVM DNS Cache问题的研究">
+<meta property="og:url" content="https://davyjones2010.github.io/2023-03-04-java-jvm-dns-caching/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景某次jstack发现应用卡在DNS解析上, 发现应用为了做负载均衡, 故意将JVM DNS Cache失效时间设置为了0, 即永不缓存.这才知道原来还有这个参数. 因此借此机会就查阅资料, 详细研究下. Java DNS流程流程详解当我们调用如下方式解析域名时, 经过了如下流程:  String hostname &#x3D; &quot;www.baidu.com&quot;; InetAddress addr &#x3D; In">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041111414.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041108536.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041147157.png">
+<meta property="article:published_time" content="2023-03-04T02:59:10.000Z">
+<meta property="article:modified_time" content="2023-03-04T04:07:52.285Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="dns">
+<meta property="article:tag" content="jvm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041111414.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2023-03-04-java-jvm-dns-caching/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2023-03-04-java-jvm-dns-caching/","path":"/2023-03-04-java-jvm-dns-caching/","title":"关于JVM DNS Cache问题的研究"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>关于JVM DNS Cache问题的研究 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme.html" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-DNS%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">Java DNS流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.1.</span> <span class="nav-text">流程详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E8%A7%A3%E6%9E%90%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">具体解析实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E5%8F%82%E6%95%B0"><span class="nav-number">2.3.</span> <span class="nav-text">重要参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E4%B8%8A%E8%BF%B0%E5%8F%82%E6%95%B0"><span class="nav-number">2.4.</span> <span class="nav-text">如何设置上述参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%881-JVM%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0"><span class="nav-number">2.4.1.</span> <span class="nav-text">方案1: JVM启动参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%882-%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E5%90%8E%E8%AE%BE%E7%BD%AE%E5%8F%98%E9%87%8F"><span class="nav-number">2.4.2.</span> <span class="nav-text">方案2: 应用启动后设置变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%883-%E8%AE%BE%E7%BD%AEJVM%E9%85%8D%E7%BD%AE"><span class="nav-number">2.4.3.</span> <span class="nav-text">方案3: 设置JVM配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E9%87%8D%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">问题重现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E7%A6%81%E7%94%A8negative"><span class="nav-number">3.1.</span> <span class="nav-text">不禁用negative</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%81%E7%94%A8negative"><span class="nav-number">3.2.</span> <span class="nav-text">禁用negative</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EJava-DNS%E8%A7%A3%E6%9E%90%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%90%90%E6%A7%BD"><span class="nav-number">4.1.</span> <span class="nav-text">关于Java DNS解析实现的吐槽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%9C%A83%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="nav-number">4.1.1.</span> <span class="nav-text">存在3个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E8%80%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">4.1.2.</span> <span class="nav-text">作者的解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E9%85%8D%E7%BD%AEJVM-DNS%E7%BC%93%E5%AD%98%E7%94%9F%E6%95%88%E6%83%85%E5%86%B5%E9%97%AE%E9%A2%98"><span class="nav-number">4.2.</span> <span class="nav-text">关于配置JVM DNS缓存生效情况问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">5.</span> <span class="nav-text">Refs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-03-04-java-jvm-dns-caching/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="关于JVM DNS Cache问题的研究 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于JVM DNS Cache问题的研究
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-03-04 10:59:10 / 修改时间：12:07:52" itemprop="dateCreated datePublished" datetime="2023-03-04T10:59:10+08:00">2023-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>某次jstack发现应用卡在DNS解析上, 发现应用为了做负载均衡, 故意将JVM DNS Cache失效时间设置为了0, 即永不缓存.<br>这才知道原来还有这个参数. 因此借此机会就查阅资料, 详细研究下.</p>
+<h1 id="Java-DNS流程"><a href="#Java-DNS流程" class="headerlink" title="Java DNS流程"></a>Java DNS流程</h1><h2 id="流程详解"><a href="#流程详解" class="headerlink" title="流程详解"></a>流程详解</h2><p>当我们调用如下方式解析域名时, 经过了如下流程: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> hostname <span class="token operator">=</span> <span class="token string">"www.baidu.com"</span><span class="token punctuation">;</span>
+<span class="token class-name">InetAddress</span> addr <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getByName</span><span class="token punctuation">(</span>hostname<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041111414.png"></p>
+<p>看了上图, 估计会有几个疑问: </p>
+<ol>
+<li>通常域名会对应多个IP, 为啥Java中<code>InetAddress.getByName</code>解析只返回一个IP? 具体是怎么实现的?</li>
+<li>DNS具体实现是怎么做的呢?<br>带着疑问往下看吧.</li>
+</ol>
+<h2 id="具体解析实现"><a href="#具体解析实现" class="headerlink" title="具体解析实现"></a>具体解析实现</h2><p>具体解析实现, 参见上图的<code>getaddrinfo</code>. 该方法是POSIX协议的标准, 由各个操作系统来实现.<br><a target="_blank" rel="noopener" href="https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird/">详细点此</a></p>
+<p>getaddrinfo is part of a library called libc which is the standard C library.<br>There are at least 3 versions of libc:</p>
+<ul>
+<li>glibc (GNU libc)</li>
+<li>musl libc</li>
+<li>the Mac OS version of libc (I don’t know if this has a name)</li>
+</ul>
+<p>真正的实现就更多啦. 有些在 <code>getaddrinfo</code> 里有缓存, 有些没有, 这点要依据自己的平台注意研究.<br>之所以我们设置, 是因为线上使用了自研的dnsClient, 相当于重写了<code>getaddrinfo</code>, 是没有缓存的. 因此JVM设置缓存未0也就能生效.  </p>
+<h2 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h2><p>注意上图中, “in cache?” 代表的是域名对应的IP是否已经在JVM的缓存中了.<br>既然涉及到缓存, 就必然涉及到失效时间的问题. 因此JVM提供了如下2个参数:</p>
+<ul>
+<li>networkaddress.cache.ttl (default: -1): 代表DNS解析成功时, hostName-&gt;ip 的缓存失效时间. 默认-1代表永不失效. </li>
+<li>networkaddress.cache.negative.ttl (default: 10): 代表DNS解析失败时, hostName-&gt;空缓存 的失效时间. 默认为10s. 就是为了做空查询保护.</li>
+</ul>
+<h2 id="如何设置上述参数"><a href="#如何设置上述参数" class="headerlink" title="如何设置上述参数"></a>如何设置上述参数</h2><h3 id="方案1-JVM启动参数"><a href="#方案1-JVM启动参数" class="headerlink" title="方案1: JVM启动参数"></a>方案1: JVM启动参数</h3><p>在应用启动时, 设置启动参数:<br><code>-Dsun.net.inetaddr.ttl=0 -Dsun.net.inetaddr.negative.ttl=0</code></p>
+<h3 id="方案2-应用启动后设置变量"><a href="#方案2-应用启动后设置变量" class="headerlink" title="方案2: 应用启动后设置变量"></a>方案2: 应用启动后设置变量</h3><p>在应用启动后, 设置参数: (注意参数名与启动参数名称不同)</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span>Security</span><span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"networkaddress.cache.ttl"</span> <span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span>Security</span><span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"networkaddress.cache.negative.ttl"</span> <span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="方案3-设置JVM配置"><a href="#方案3-设置JVM配置" class="headerlink" title="方案3: 设置JVM配置"></a>方案3: 设置JVM配置</h3><p>编辑<code>$JRE_HOME/lib/security/java.security</code> 文件, 增加如下配置: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">networkaddress<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">0</span>
+networkaddress<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>negative<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h1 id="问题重现"><a href="#问题重现" class="headerlink" title="问题重现"></a>问题重现</h1><p>为了模拟重现当时网络不稳定的情况, 设置某个不存在的域名, 这样解析需要花时间. </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/test-core/blob/master/src/test/java/edu/xmu/test/dns/DnsCachingTest.java">测试代码</a></li>
+</ul>
+<h2 id="不禁用negative"><a href="#不禁用negative" class="headerlink" title="不禁用negative"></a>不禁用negative</h2><p>发现大部分线程卡在访问DNS缓存上, 达不到重现的效果:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041108536.png"></p>
+<h2 id="禁用negative"><a href="#禁用negative" class="headerlink" title="禁用negative"></a>禁用negative</h2><p>这下就重现的当时的情况, 大部分线程都卡在真正解析域名上(或者叫<code>getaddrinfo</code>系统调用上):<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041147157.png"></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="关于Java-DNS解析实现的吐槽"><a href="#关于Java-DNS解析实现的吐槽" class="headerlink" title="关于Java DNS解析实现的吐槽"></a>关于Java DNS解析实现的吐槽</h2><p>关于Java域名解析问题, 即<code>InetAddress.getByName()</code>实现, 发现了很有趣的一篇小文:<br><a target="_blank" rel="noopener" href="https://blog.bmarwell.de/2020/09/23/javas-dns-resolution-is-so-90ies.html">Java’s DNS resolution is so 90ies! Java的DNS解析实现仍然停留在90年代!</a></p>
+<h3 id="存在3个问题"><a href="#存在3个问题" class="headerlink" title="存在3个问题"></a>存在3个问题</h3><ol>
+<li>首先, 虽然DNS会返回多个IP, 但<code>InetAddress.getByName()</code>只会返回第一个IP. </li>
+<li>其次, 返回的IP并且不会保证这个IP能不能连通.</li>
+<li>最后, <code>InetAddress</code> 所有实现方法都是<code>non-public</code>的, 导致扩展&#x2F;修复极为困难!<blockquote>
+<p>Wow, that is remarkably simple! How do we know that this IP will be reachable? Well, we do not! If there are more IPs in the answer section, they are just being ignored.</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="作者的解决方案"><a href="#作者的解决方案" class="headerlink" title="作者的解决方案"></a>作者的解决方案</h3><ol>
+<li>通过JavaAgent解决了<code>InetAddress</code>难以扩展的问题</li>
+<li>通过类似python中的方案, DNS获取到IpList之后, 会尝试连接ip 3次(timeout 100ms), 直到获取可以连通的ip, 再返回.</li>
+<li>详细代码参见: [bmarwell&#x2F;nameserviceagent]<a target="_blank" rel="noopener" href="https://github.com/bmarwell/nameserviceagent">https://github.com/bmarwell/nameserviceagent</a><br>我就喜欢这种能喷能干的实干家:)</li>
+</ol>
+<h2 id="关于配置JVM-DNS缓存生效情况问题"><a href="#关于配置JVM-DNS缓存生效情况问题" class="headerlink" title="关于配置JVM DNS缓存生效情况问题"></a>关于配置JVM DNS缓存生效情况问题</h2><ol>
+<li><p>实际在Mac上设置JVM DNS缓存都为0, 发现并不生效. 例如<code>www.baidu.com</code>其实返回了2个IP, 但测试代码一直返回1个.<br>这是由于 Mac OS has DNS caching, 即把上述 <code>getaddrinfo</code> 的系统调用也进行了缓存. </p>
+</li>
+<li><p>而Linux上 <code>getaddrinfo</code> 不一定会有缓存, 除非使用<code>systemd-resolved</code>等工具</p>
+<blockquote>
+<p>Linux doesn’t necessarily unless you use systemd-resolved or something</p>
+</blockquote>
+</li>
+</ol>
+<p>所以在配置JVM DNS参数前, 也请务必确认好自己的OS环境以及各自实现.</p>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://maheshsenniappan.medium.com/host-name-resolution-in-java-80301fea465a">Host name resolution in Java</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/1256556/how-to-make-java-honor-the-dns-caching-timeout">How to make Java honor the DNS Caching Timeout?</a></li>
+<li><a target="_blank" rel="noopener" href="https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird/">Some things about getaddrinfo that surprised me</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/dns/" rel="tag"># dns</a>
+              <a href="/tags/jvm/" rel="tag"># jvm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023-02-25-java-thread-sync-deep-dive/" rel="prev" title="Java线程BLOCKED与WAITING状态深入研究">
+                  <i class="fa fa-chevron-left"></i> Java线程BLOCKED与WAITING状态深入研究
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">297k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

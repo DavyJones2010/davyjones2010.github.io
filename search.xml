@@ -12309,4 +12309,81 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
         <tag>know-why</tag>
       </tags>
   </entry>
+  <entry>
+    <title>关于JVM DNS Cache问题的研究</title>
+    <url>//2023-03-04-java-jvm-dns-caching/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>某次jstack发现应用卡在DNS解析上, 发现应用为了做负载均衡, 故意将JVM DNS Cache失效时间设置为了0, 即永不缓存.<br>这才知道原来还有这个参数. 因此借此机会就查阅资料, 详细研究下.</p>
+<h1 id="Java-DNS流程"><a href="#Java-DNS流程" class="headerlink" title="Java DNS流程"></a>Java DNS流程</h1><h2 id="流程详解"><a href="#流程详解" class="headerlink" title="流程详解"></a>流程详解</h2><p>当我们调用如下方式解析域名时, 经过了如下流程: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> hostname <span class="token operator">=</span> <span class="token string">"www.baidu.com"</span><span class="token punctuation">;</span>
+<span class="token class-name">InetAddress</span> addr <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getByName</span><span class="token punctuation">(</span>hostname<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041111414.png"></p>
+<p>看了上图, 估计会有几个疑问: </p>
+<ol>
+<li>通常域名会对应多个IP, 为啥Java中<code>InetAddress.getByName</code>解析只返回一个IP? 具体是怎么实现的?</li>
+<li>DNS具体实现是怎么做的呢?<br>带着疑问往下看吧.</li>
+</ol>
+<h2 id="具体解析实现"><a href="#具体解析实现" class="headerlink" title="具体解析实现"></a>具体解析实现</h2><p>具体解析实现, 参见上图的<code>getaddrinfo</code>. 该方法是POSIX协议的标准, 由各个操作系统来实现.<br><a href="https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird/">详细点此</a></p>
+<p>getaddrinfo is part of a library called libc which is the standard C library.<br>There are at least 3 versions of libc:</p>
+<ul>
+<li>glibc (GNU libc)</li>
+<li>musl libc</li>
+<li>the Mac OS version of libc (I don’t know if this has a name)</li>
+</ul>
+<p>真正的实现就更多啦. 有些在 <code>getaddrinfo</code> 里有缓存, 有些没有, 这点要依据自己的平台注意研究.<br>之所以我们设置, 是因为线上使用了自研的dnsClient, 相当于重写了<code>getaddrinfo</code>, 是没有缓存的. 因此JVM设置缓存未0也就能生效.  </p>
+<h2 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h2><p>注意上图中, “in cache?” 代表的是域名对应的IP是否已经在JVM的缓存中了.<br>既然涉及到缓存, 就必然涉及到失效时间的问题. 因此JVM提供了如下2个参数:</p>
+<ul>
+<li>networkaddress.cache.ttl (default: -1): 代表DNS解析成功时, hostName-&gt;ip 的缓存失效时间. 默认-1代表永不失效. </li>
+<li>networkaddress.cache.negative.ttl (default: 10): 代表DNS解析失败时, hostName-&gt;空缓存 的失效时间. 默认为10s. 就是为了做空查询保护.</li>
+</ul>
+<h2 id="如何设置上述参数"><a href="#如何设置上述参数" class="headerlink" title="如何设置上述参数"></a>如何设置上述参数</h2><h3 id="方案1-JVM启动参数"><a href="#方案1-JVM启动参数" class="headerlink" title="方案1: JVM启动参数"></a>方案1: JVM启动参数</h3><p>在应用启动时, 设置启动参数:<br><code>-Dsun.net.inetaddr.ttl=0 -Dsun.net.inetaddr.negative.ttl=0</code></p>
+<h3 id="方案2-应用启动后设置变量"><a href="#方案2-应用启动后设置变量" class="headerlink" title="方案2: 应用启动后设置变量"></a>方案2: 应用启动后设置变量</h3><p>在应用启动后, 设置参数: (注意参数名与启动参数名称不同)</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span>Security</span><span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"networkaddress.cache.ttl"</span> <span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span>Security</span><span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"networkaddress.cache.negative.ttl"</span> <span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="方案3-设置JVM配置"><a href="#方案3-设置JVM配置" class="headerlink" title="方案3: 设置JVM配置"></a>方案3: 设置JVM配置</h3><p>编辑<code>$JRE_HOME/lib/security/java.security</code> 文件, 增加如下配置: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">networkaddress<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">0</span>
+networkaddress<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>negative<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h1 id="问题重现"><a href="#问题重现" class="headerlink" title="问题重现"></a>问题重现</h1><p>为了模拟重现当时网络不稳定的情况, 设置某个不存在的域名, 这样解析需要花时间. </p>
+<ul>
+<li><a href="https://github.com/DavyJones2010/test-core/blob/master/src/test/java/edu/xmu/test/dns/DnsCachingTest.java">测试代码</a></li>
+</ul>
+<h2 id="不禁用negative"><a href="#不禁用negative" class="headerlink" title="不禁用negative"></a>不禁用negative</h2><p>发现大部分线程卡在访问DNS缓存上, 达不到重现的效果:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041108536.png"></p>
+<h2 id="禁用negative"><a href="#禁用negative" class="headerlink" title="禁用negative"></a>禁用negative</h2><p>这下就重现的当时的情况, 大部分线程都卡在真正解析域名上(或者叫<code>getaddrinfo</code>系统调用上):<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041147157.png"></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="关于Java-DNS解析实现的吐槽"><a href="#关于Java-DNS解析实现的吐槽" class="headerlink" title="关于Java DNS解析实现的吐槽"></a>关于Java DNS解析实现的吐槽</h2><p>关于Java域名解析问题, 即<code>InetAddress.getByName()</code>实现, 发现了很有趣的一篇小文:<br><a href="https://blog.bmarwell.de/2020/09/23/javas-dns-resolution-is-so-90ies.html">Java’s DNS resolution is so 90ies! Java的DNS解析实现仍然停留在90年代!</a></p>
+<h3 id="存在3个问题"><a href="#存在3个问题" class="headerlink" title="存在3个问题"></a>存在3个问题</h3><ol>
+<li>首先, 虽然DNS会返回多个IP, 但<code>InetAddress.getByName()</code>只会返回第一个IP. </li>
+<li>其次, 返回的IP并且不会保证这个IP能不能连通.</li>
+<li>最后, <code>InetAddress</code> 所有实现方法都是<code>non-public</code>的, 导致扩展&#x2F;修复极为困难!<blockquote>
+<p>Wow, that is remarkably simple! How do we know that this IP will be reachable? Well, we do not! If there are more IPs in the answer section, they are just being ignored.</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="作者的解决方案"><a href="#作者的解决方案" class="headerlink" title="作者的解决方案"></a>作者的解决方案</h3><ol>
+<li>通过JavaAgent解决了<code>InetAddress</code>难以扩展的问题</li>
+<li>通过类似python中的方案, DNS获取到IpList之后, 会尝试连接ip 3次(timeout 100ms), 直到获取可以连通的ip, 再返回.</li>
+<li>详细代码参见: [bmarwell&#x2F;nameserviceagent]<a href="https://github.com/bmarwell/nameserviceagent">https://github.com/bmarwell/nameserviceagent</a><br>我就喜欢这种能喷能干的实干家:)</li>
+</ol>
+<h2 id="关于配置JVM-DNS缓存生效情况问题"><a href="#关于配置JVM-DNS缓存生效情况问题" class="headerlink" title="关于配置JVM DNS缓存生效情况问题"></a>关于配置JVM DNS缓存生效情况问题</h2><ol>
+<li><p>实际在Mac上设置JVM DNS缓存都为0, 发现并不生效. 例如<code>www.baidu.com</code>其实返回了2个IP, 但测试代码一直返回1个.<br>这是由于 Mac OS has DNS caching, 即把上述 <code>getaddrinfo</code> 的系统调用也进行了缓存. </p>
+</li>
+<li><p>而Linux上 <code>getaddrinfo</code> 不一定会有缓存, 除非使用<code>systemd-resolved</code>等工具</p>
+<blockquote>
+<p>Linux doesn’t necessarily unless you use systemd-resolved or something</p>
+</blockquote>
+</li>
+</ol>
+<p>所以在配置JVM DNS参数前, 也请务必确认好自己的OS环境以及各自实现.</p>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://maheshsenniappan.medium.com/host-name-resolution-in-java-80301fea465a">Host name resolution in Java</a></li>
+<li><a href="https://stackoverflow.com/questions/1256556/how-to-make-java-honor-the-dns-caching-timeout">How to make Java honor the DNS Caching Timeout?</a></li>
+<li><a href="https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird/">Some things about getaddrinfo that surprised me</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>dns</tag>
+        <tag>jvm</tag>
+      </tags>
+  </entry>
 </search>
