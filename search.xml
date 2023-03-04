@@ -8572,7 +8572,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 <span class="token number">172.17</span>.0.0      <span class="token number">0.0</span>.0.0         <span class="token number">255.255</span>.0.0     U     <span class="token number">0</span>      <span class="token number">0</span>        <span class="token number">0</span> docker0
 <span class="token number">192.168</span>.3.0     <span class="token number">0.0</span>.0.0         <span class="token number">255.255</span>.255.0   U     <span class="token number">600</span>    <span class="token number">0</span>        <span class="token number">0</span> wlp4s0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
-<h2 id="centos如何查看网卡状态-并将某个网卡设置为默认启动"><a href="#centos如何查看网卡状态-并将某个网卡设置为默认启动" class="headerlink" title="centos如何查看网卡状态, 并将某个网卡设置为默认启动"></a>centos如何查看网卡状态, 并将某个网卡设置为默认启动</h2><p>使用<code>VMware Fusion</code>安装好了<code>CentOS 7</code>虚拟机之后, 发现网络怎么都不通.</p>
+<h2 id="centos-7-如何查看网卡状态-并将某个网卡设置为默认启动"><a href="#centos-7-如何查看网卡状态-并将某个网卡设置为默认启动" class="headerlink" title="centos 7 如何查看网卡状态, 并将某个网卡设置为默认启动"></a>centos 7 如何查看网卡状态, 并将某个网卡设置为默认启动</h2><p>使用<code>VMware Fusion</code>安装好了<code>CentOS 7</code>虚拟机之后, 发现网络怎么都不通.</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ping</span> baidu.com
 ping: baidu.com: Name or <span class="token function">service</span> not known
 
@@ -8593,6 +8593,32 @@ DEVICE  TYPE      STATE         CONNECTION
 ens33   ethernet  connected     ens33
 lo      lookback  unmanaged     --<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li>验证网络状态: 成功<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ping</span> baidu.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<h2 id="centos-7-如何设置固定IP"><a href="#centos-7-如何设置固定IP" class="headerlink" title="centos 7 如何设置固定IP"></a>centos 7 如何设置固定IP</h2><p>使用<code>VMware Fusion</code>安装好了<code>CentOS 7</code>虚拟机之后, 发现每次虚拟机启动都会DHCP自动重新分配个IP, 导致配置免登比较麻烦.<br>因此需要设置虚拟机固定IP. 使用如下步骤来: </p>
+<ol>
+<li><p>首先查看网卡, 可知网卡名称是 <code>ens33</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost network-scripts<span class="token punctuation">]</span><span class="token comment"># ifconfig</span>
+ens33: <span class="token assign-left variable">flags</span><span class="token operator">=</span><span class="token number">416</span><span class="token operator"><span class="token file-descriptor important">3</span>&lt;</span>UP,BROADCAST,RUNNING,MULTICAST<span class="token operator">></span>  mtu <span class="token number">1500</span>
+        inet <span class="token number">192.168</span>.230.130  netmask <span class="token number">255.255</span>.255.0  broadcast <span class="token number">192.168</span>.230.255
+        inet6 fe80::28f7:8740:599:2a5c  prefixlen <span class="token number">64</span>  scopeid 0x2<span class="token operator"><span class="token file-descriptor important">0</span>&lt;</span>link<span class="token operator">></span>
+        ether 00:0c:29:a2:4d:53  txqueuelen <span class="token number">1000</span>  <span class="token punctuation">(</span>Ethernet<span class="token punctuation">)</span>
+        RX packets <span class="token number">19066</span>  bytes <span class="token number">24766708</span> <span class="token punctuation">(</span><span class="token number">23.6</span> MiB<span class="token punctuation">)</span>
+        RX errors <span class="token number">0</span>  dropped <span class="token number">0</span>  overruns <span class="token number">0</span>  frame <span class="token number">0</span>
+        TX packets <span class="token number">3695</span>  bytes <span class="token number">352775</span> <span class="token punctuation">(</span><span class="token number">344.5</span> KiB<span class="token punctuation">)</span>
+        TX errors <span class="token number">0</span>  dropped <span class="token number">0</span> overruns <span class="token number">0</span>  carrier <span class="token number">0</span>  collisions <span class="token number">0</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改网卡配置<br>如下, 修改dhcp为static, 增加<code>GATEWAY</code>(即当前网络中家用路由器的IP) <code>IPADDR</code>(即需要使用的固定IP) <code>NETMASK</code> <code>DNS1</code> <code>DNS2</code> 等 </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">vi</span> /etc/sysconfig/network-scripts/ifcfg-ens33
+<span class="token comment"># BOOTPROTO=dhcp</span>
+<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static
+<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">192.168</span>.230.1
+<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.230.130
+<span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0
+<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">192.168</span>.230.1
+<span class="token assign-left variable">DNS2</span><span class="token operator">=</span><span class="token number">8.8</span>.8.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>重启网络服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> /etc/init.d/network restart<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
 <h2 id="如何查看TCP连接创建的时间"><a href="#如何查看TCP连接创建的时间" class="headerlink" title="如何查看TCP连接创建的时间"></a>如何查看TCP连接创建的时间</h2><p>在排查TCP连接异常时, 某个长连接经常莫名其妙断连, 需要判断连接的建立时间:</p>
 <ol>
