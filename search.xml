@@ -3622,7 +3622,11 @@ Number  Start   End     Size    File system  Name  Flags
  <span class="token number">5</span>      275GB   413GB   137GB   ext4
  <span class="token number">6</span>      413GB   500GB   <span class="token number">87</span>.2GB  ext4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="为块设备分区"><a href="#为块设备分区" class="headerlink" title="为块设备分区"></a>为块设备分区</h2><h2 id="为分区格式化文件系统类型"><a href="#为分区格式化文件系统类型" class="headerlink" title="为分区格式化文件系统类型"></a>为分区格式化文件系统类型</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+<h2 id="为块设备分区"><a href="#为块设备分区" class="headerlink" title="为块设备分区"></a>为块设备分区</h2><h2 id="为分区格式化文件系统类型"><a href="#为分区格式化文件系统类型" class="headerlink" title="为分区格式化文件系统类型"></a>为分区格式化文件系统类型</h2><h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="查看centos版本"><a href="#查看centos版本" class="headerlink" title="查看centos版本"></a>查看centos版本</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># rpm --query centos-release</span>
+centos-release-7-9.2009.0.el7.centos.x86_64<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="查看Linux内核版本"><a href="#查看Linux内核版本" class="headerlink" title="查看Linux内核版本"></a>查看Linux内核版本</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># uname -a</span>
+Linux localhost.localdomain <span class="token number">3.10</span>.0-1160.el7.x86_64 <span class="token comment">#1 SMP Mon Oct 19 16:18:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>code-snippets</tag>
         <tag>linux</tag>
@@ -8608,18 +8612,48 @@ ens33: <span class="token assign-left variable">flags</span><span class="token o
         TX errors <span class="token number">0</span>  dropped <span class="token number">0</span> overruns <span class="token number">0</span>  carrier <span class="token number">0</span>  collisions <span class="token number">0</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>修改网卡配置<br>如下, 修改dhcp为static, 增加<code>GATEWAY</code>(即当前网络中家用路由器的IP) <code>IPADDR</code>(即需要使用的固定IP) <code>NETMASK</code> <code>DNS1</code> <code>DNS2</code> 等 </p>
+<li><p>查看<code>VMWare Fusion</code>配置为子网配置的DNS路由器地址与网关地址<br>由于使用的网络模式是<code>NAT模式</code>, 即虚拟机与Mac所在的子网是不同的.<br>虚拟机子网网段是<code>192.168.230.0/24</code>, 而Mac宿主机所在的网段是<code>192.168.3.0/24</code>. 所以需要在Mac上查看: </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">cat</span> /Library/Preferences/VMware<span class="token punctuation">\</span> Fusion/vmnet8/dhcpd.conf
+subnet <span class="token number">192.168</span>.230.0 netmask <span class="token number">255.255</span>.255.0 <span class="token punctuation">&#123;</span>
+	range <span class="token number">192.168</span>.230.128 <span class="token number">192.168</span>.230.254<span class="token punctuation">;</span>
+	option broadcast-address <span class="token number">192.168</span>.230.255<span class="token punctuation">;</span>
+	option domain-name-servers <span class="token number">192.168</span>.230.2<span class="token punctuation">;</span>
+	option domain-name localdomain<span class="token punctuation">;</span>
+	default-lease-time <span class="token number">1800</span><span class="token punctuation">;</span>                <span class="token comment"># default is 30 minutes</span>
+	max-lease-time <span class="token number">7200</span><span class="token punctuation">;</span>                    <span class="token comment"># default is 2 hours</span>
+	option netbios-name-servers <span class="token number">192.168</span>.230.2<span class="token punctuation">;</span>
+	option routers <span class="token number">192.168</span>.230.2<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>根据上述信息可知, 虚拟机子网的DNS服务器地址为<code>192.168.230.2</code>, 网关地址为<code>192.168.230.2</code></p>
+</li>
+<li><p>修改网卡配置<br>如下, 修改dhcp为static, 增加<code>GATEWAY</code>(即上一步查出来的网关地址) <code>IPADDR</code>(即需要使用的固定IP) <code>NETMASK</code> <code>DNS1</code>(即上一步查出的DNS服务器地址) <code>DNS2</code> 等 </p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">vi</span> /etc/sysconfig/network-scripts/ifcfg-ens33
 <span class="token comment"># BOOTPROTO=dhcp</span>
 <span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static
-<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">192.168</span>.230.1
+<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">192.168</span>.230.2
 <span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.230.130
 <span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0
-<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">192.168</span>.230.1
+<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">192.168</span>.230.2
 <span class="token assign-left variable">DNS2</span><span class="token operator">=</span><span class="token number">8.8</span>.8.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>重启网络服务</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> /etc/init.d/network restart<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> /etc/init.d/network restart
+$ <span class="token function">sudo</span> <span class="token function">service</span> network restart<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>验证网络能通</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ping baidu.com</span>
+PING baidu.com <span class="token punctuation">(</span><span class="token number">110.242</span>.68.66<span class="token punctuation">)</span> <span class="token number">56</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span> bytes of data.
+<span class="token number">64</span> bytes from <span class="token number">110.242</span>.68.66 <span class="token punctuation">(</span><span class="token number">110.242</span>.68.66<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">128</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">35.9</span> ms
+^C
+--- baidu.com <span class="token function">ping</span> statistics ---
+<span class="token number">1</span> packets transmitted, <span class="token number">1</span> received, <span class="token number">0</span>% packet loss, <span class="token function">time</span> 0ms
+rtt min/avg/max/mdev <span class="token operator">=</span> <span class="token number">35.915</span>/35.915/35.915/0.000 ms<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
+<p>这里插播一句, 第4步配置时: </p>
+<ul>
+<li>DNS与GATEWAY都配置错误, 配置成了<code>192.168.230.1</code>, 导致ping完全不通, 都没解析出IP</li>
+<li>DNS配置正确, 但GATEWAY配置错误, 只配置了DNS为<code>192.168.230.2</code>, 而GATEWAY想当然地配置为了<code>192.168.230.1</code>, 结果导致ping的时候, 域名能解析出来, 但100%丢包, 即网络不通.</li>
+<li>最后两者都配置正确, 网络才通.</li>
+</ul>
 <h2 id="如何查看TCP连接创建的时间"><a href="#如何查看TCP连接创建的时间" class="headerlink" title="如何查看TCP连接创建的时间"></a>如何查看TCP连接创建的时间</h2><p>在排查TCP连接异常时, 某个长连接经常莫名其妙断连, 需要判断连接的建立时间:</p>
 <ol>
 <li><p>查看进程的TCP连接, 获取具体的本地端口号${port_no}</p>
