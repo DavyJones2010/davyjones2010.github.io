@@ -275,7 +275,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 192.168.3.0     0.0.0.0         255.255.255.0   U     600    0        0 wlp4s0
 ```
 
-## centos如何查看网卡状态, 并将某个网卡设置为默认启动
+## centos 7 如何查看网卡状态, 并将某个网卡设置为默认启动
 使用`VMware Fusion`安装好了`CentOS 7`虚拟机之后, 发现网络怎么都不通.
 ```shell
 $ ping baidu.com
@@ -312,6 +312,40 @@ lo      lookback  unmanaged     --
 5. 验证网络状态: 成功
 ```shell
 $ ping baidu.com
+```
+
+## centos 7 如何设置固定IP
+使用`VMware Fusion`安装好了`CentOS 7`虚拟机之后, 发现每次虚拟机启动都会DHCP自动重新分配个IP, 导致配置免登比较麻烦. 
+因此需要设置虚拟机固定IP. 使用如下步骤来: 
+1. 首先查看网卡, 可知网卡名称是 `ens33`
+```shell
+[root@localhost network-scripts]# ifconfig
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.230.130  netmask 255.255.255.0  broadcast 192.168.230.255
+        inet6 fe80::28f7:8740:599:2a5c  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:a2:4d:53  txqueuelen 1000  (Ethernet)
+        RX packets 19066  bytes 24766708 (23.6 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 3695  bytes 352775 (344.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+```
+
+2. 修改网卡配置
+如下, 修改dhcp为static, 增加`GATEWAY`(即当前网络中家用路由器的IP) `IPADDR`(即需要使用的固定IP) `NETMASK` `DNS1` `DNS2` 等 
+```shell
+$ sudo vi /etc/sysconfig/network-scripts/ifcfg-ens33
+# BOOTPROTO=dhcp
+BOOTPROTO=static
+GATEWAY=192.168.230.1
+IPADDR=192.168.230.130
+NETMASK=255.255.255.0
+DNS1=192.168.230.1
+DNS2=8.8.8.8
+```
+3. 重启网络服务
+```shell
+$ sudo /etc/init.d/network restart
 ```
 
 ## 如何查看TCP连接创建的时间
