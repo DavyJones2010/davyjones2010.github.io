@@ -331,22 +331,57 @@ ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 ```
 
-2. 修改网卡配置
-如下, 修改dhcp为static, 增加`GATEWAY`(即当前网络中家用路由器的IP) `IPADDR`(即需要使用的固定IP) `NETMASK` `DNS1` `DNS2` 等 
+2. 查看`VMWare Fusion`配置为子网配置的DNS路由器地址与网关地址
+由于使用的网络模式是`NAT模式`, 即虚拟机与Mac所在的子网是不同的. 
+虚拟机子网网段是`192.168.230.0/24`, 而Mac宿主机所在的网段是`192.168.3.0/24`. 所以需要在Mac上查看: 
+```shell
+$ cat /Library/Preferences/VMware\ Fusion/vmnet8/dhcpd.conf
+subnet 192.168.230.0 netmask 255.255.255.0 {
+	range 192.168.230.128 192.168.230.254;
+	option broadcast-address 192.168.230.255;
+	option domain-name-servers 192.168.230.2;
+	option domain-name localdomain;
+	default-lease-time 1800;                # default is 30 minutes
+	max-lease-time 7200;                    # default is 2 hours
+	option netbios-name-servers 192.168.230.2;
+	option routers 192.168.230.2;
+}
+```
+根据上述信息可知, 虚拟机子网的DNS服务器地址为`192.168.230.2`, 网关地址为`192.168.230.2`
+
+4. 修改网卡配置
+如下, 修改dhcp为static, 增加`GATEWAY`(即上一步查出来的网关地址) `IPADDR`(即需要使用的固定IP) `NETMASK` `DNS1`(即上一步查出的DNS服务器地址) `DNS2` 等 
 ```shell
 $ sudo vi /etc/sysconfig/network-scripts/ifcfg-ens33
 # BOOTPROTO=dhcp
 BOOTPROTO=static
-GATEWAY=192.168.230.1
+GATEWAY=192.168.230.2
 IPADDR=192.168.230.130
 NETMASK=255.255.255.0
-DNS1=192.168.230.1
+DNS1=192.168.230.2
 DNS2=8.8.8.8
 ```
-3. 重启网络服务
+5. 重启网络服务
 ```shell
 $ sudo /etc/init.d/network restart
+$ sudo service network restart
 ```
+
+6. 验证网络能通
+```shell
+[root@localhost ~]# ping baidu.com
+PING baidu.com (110.242.68.66) 56(84) bytes of data.
+64 bytes from 110.242.68.66 (110.242.68.66): icmp_seq=1 ttl=128 time=35.9 ms
+^C
+--- baidu.com ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 35.915/35.915/35.915/0.000 ms
+```
+
+这里插播一句, 第4步配置时: 
+- DNS与GATEWAY都配置错误, 配置成了`192.168.230.1`, 导致ping完全不通, 都没解析出IP
+- DNS配置正确, 但GATEWAY配置错误, 只配置了DNS为`192.168.230.2`, 而GATEWAY想当然地配置为了`192.168.230.1`, 结果导致ping的时候, 域名能解析出来, 但100%丢包, 即网络不通.
+- 最后两者都配置正确, 网络才通.
 
 ## 如何查看TCP连接创建的时间
 在排查TCP连接异常时, 某个长连接经常莫名其妙断连, 需要判断连接的建立时间:

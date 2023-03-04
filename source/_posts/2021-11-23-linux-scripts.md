@@ -207,3 +207,15 @@ Number  Start   End     Size    File system  Name  Flags
 
 ## 为分区格式化文件系统类型
 
+# 其他
+## 查看centos版本
+```shell
+[root@localhost ~]# rpm --query centos-release
+centos-release-7-9.2009.0.el7.centos.x86_64
+```
+
+## 查看Linux内核版本
+```shell
+[root@localhost ~]# uname -a
+Linux localhost.localdomain 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+```
