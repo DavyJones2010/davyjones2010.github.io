@@ -12473,9 +12473,15 @@ networkaddress<span class="token punctuation">.</span>cache<span class="token pu
 <li><a href="https://pandoc.org/installing.html">pandoc</a></li>
 </ul>
 <p>刚好自己平时要做PPT, 但作为程序员, 又十分抵触内容与样式不分离的方式, 制作起来也耗时.<br>借鉴这种方案, 轻松写出专业且简约的PPT.</p>
-<h1 id="安装-amp-配置"><a href="#安装-amp-配置" class="headerlink" title="安装&amp;配置"></a>安装&amp;配置</h1><ul>
+<h1 id="安装-amp-配置"><a href="#安装-amp-配置" class="headerlink" title="安装&amp;配置"></a>安装&amp;配置</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
 <li>revealjs: <a href="https://revealjs.com/installation/#full-setup">安装手册</a></li>
 <li>pandoc: 把markdown转成revealjs的html, <a href="https://pandoc.org/installing.html">安装手册</a></li>
+<li><a href="https://tailwindcss.com/">tailwind css</a>: JYY老师的, 个人还在研究中</li>
+</ul>
+<h2 id="revealjs个人配置"><a href="#revealjs个人配置" class="headerlink" title="revealjs个人配置"></a>revealjs个人配置</h2><ul>
+<li>Enable <a href="https://revealjs.com/slide-numbers/">Slide Numbers</a></li>
+<li>Disable <a href="https://revealjs.com/config/">Vertical centering of slides</a></li>
+<li>Disable <a href="https://revealjs.com/config/">controlsTutorial</a></li>
 </ul>
 <h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
 <li><p>revealjs</p>
@@ -12492,6 +12498,7 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="t
 <li><code>o</code> 进入缩略图模式.</li>
 <li><code>b</code> 屏蔽当前PPT</li>
 <li><code>f</code> 进入全屏模式</li>
+<li><code>ctrl+shift+f</code>: 全局搜索</li>
 </ul>
 <h1 id="showcase"><a href="#showcase" class="headerlink" title="showcase"></a>showcase</h1><h2 id="self-explained"><a href="#self-explained" class="headerlink" title="self-explained"></a>self-explained</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052309110.png"></p>
 <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><h2 id="样式优化"><a href="#样式优化" class="headerlink" title="样式优化"></a>样式优化</h2><p>与JYY老师相比, 页面还是过于简陋</p>
@@ -12499,9 +12506,10 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="t
 <li>Header: 类似markdown的分隔符</li>
 <li>Image: 图片有些显示不全❗</li>
 <li>Align: 字默认居中, 需要<font color='red'><strong>居左</strong></font></li>
-<li>Syntax Highlighting: 现在<strong>太丑</strong>🔴</li>
-<li>Citation: 也<strong>太丑</strong>🔴</li>
+<li>Syntax Highlighting: 现在<strong>太丑</strong></li>
+<li>Citation&#x2F;Quote: 也<strong>太丑</strong></li>
 </ul>
+<h2 id="参数生成"><a href="#参数生成" class="headerlink" title="参数生成"></a>参数生成</h2><p>pandoc转html时, 如何支持配置revealjs init参数? </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>工程提效工具</category>
