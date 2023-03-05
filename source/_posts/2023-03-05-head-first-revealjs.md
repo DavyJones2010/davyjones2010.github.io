@@ -35,8 +35,16 @@ categories: 工程提效工具
 借鉴这种方案, 轻松写出专业且简约的PPT.
 
 # 安装&配置
+
+## 安装
 - revealjs: [安装手册](https://revealjs.com/installation/#full-setup)
 - pandoc: 把markdown转成revealjs的html, [安装手册](https://pandoc.org/installing.html)
+- [tailwind css](https://tailwindcss.com/): JYY老师的, 个人还在研究中 
+
+## revealjs个人配置
+- Enable [Slide Numbers](https://revealjs.com/slide-numbers/)
+- Disable [Vertical centering of slides](https://revealjs.com/config/)
+- Disable [controlsTutorial](https://revealjs.com/config/)
 
 # 实践
 ## 命令
@@ -59,6 +67,7 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V theme=white --
 - `o` 进入缩略图模式.
 - `b` 屏蔽当前PPT
 - `f` 进入全屏模式
+- `ctrl+shift+f`: 全局搜索
 
 # showcase
 
@@ -73,5 +82,6 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V theme=white --
 - Header: 类似markdown的分隔符
 - Image: 图片有些显示不全❗
 - Align: 字默认居中, 需要<font color='red'>**居左**</font>
-- Syntax Highlighting: 现在**太丑**🔴
-- Citation: 也**太丑**🔴
+- Syntax Highlighting: 现在**太丑**
+- Citation/Quote: 也**太丑**
+- 
