@@ -73,4 +73,5 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V theme=white --
 - Header: 类似markdown
 - Image: 图片有些显示不全
 - Align: 字默认居中, 需要居左
-
+- Syntax Highlighting: 现在**太丑**
+- Citation: 也**太丑**
