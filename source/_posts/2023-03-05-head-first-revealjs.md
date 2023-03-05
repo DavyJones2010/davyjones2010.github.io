@@ -84,4 +84,6 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V theme=white --
 - Align: 字默认居中, 需要<font color='red'>**居左**</font>
 - Syntax Highlighting: 现在**太丑**
 - Citation/Quote: 也**太丑**
-- 
+
+## 参数生成
+pandoc转html时, 如何支持配置revealjs init参数? 
