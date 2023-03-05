@@ -12491,8 +12491,10 @@ networkaddress<span class="token punctuation">.</span>cache<span class="token pu
 <span class="token function">npm</span> start -- --port<span class="token operator">=</span><span class="token number">8001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>pandoc</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># md to html. 注意需要设置 --slide-level=2 参数. 把一级标题设置horizontal大类, 二级标题内容为vertical子类. </span>
-pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white --slide-level<span class="token operator">=</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># md to html. 注意需要设置 --slide-level=2 参数. 一级标题设置horizontal大类, 二级标题内容为vertical子类. </span>
+pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white --slide-level<span class="token operator">=</span><span class="token number">2</span>
+<span class="token comment"># 所有revealjs的参数, 都可以通过 -V xxx=xxx 来设置</span>
+pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white -V <span class="token assign-left variable">center</span><span class="token operator">=</span>false -V <span class="token assign-left variable">controlsTutorial</span><span class="token operator">=</span>false -V <span class="token assign-left variable">slideNumber</span><span class="token operator">=</span>true --slide-level<span class="token operator">=</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><ul>
 <li><code>o</code> 进入缩略图模式.</li>
@@ -12509,7 +12511,6 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="t
 <li>Syntax Highlighting: 现在<strong>太丑</strong></li>
 <li>Citation&#x2F;Quote: 也<strong>太丑</strong></li>
 </ul>
-<h2 id="参数生成"><a href="#参数生成" class="headerlink" title="参数生成"></a>参数生成</h2><p>pandoc转html时, 如何支持配置revealjs init参数? </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>工程提效工具</category>
