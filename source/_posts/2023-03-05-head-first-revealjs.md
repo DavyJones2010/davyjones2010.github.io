@@ -59,8 +59,10 @@ npm start -- --port=8001
 
 - pandoc
 ```shell
-# md to html. 注意需要设置 --slide-level=2 参数. 把一级标题设置horizontal大类, 二级标题内容为vertical子类. 
+# md to html. 注意需要设置 --slide-level=2 参数. 一级标题设置horizontal大类, 二级标题内容为vertical子类. 
 pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V theme=white --slide-level=2
+# 所有revealjs的参数, 都可以通过 -V xxx=xxx 来设置
+pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V theme=white -V center=false -V controlsTutorial=false -V slideNumber=true --slide-level=2
 ```
 
 ## 快捷键
@@ -84,6 +86,3 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V theme=white --
 - Align: 字默认居中, 需要<font color='red'>**居左**</font>
 - Syntax Highlighting: 现在**太丑**
 - Citation/Quote: 也**太丑**
-
-## 参数生成
-pandoc转html时, 如何支持配置revealjs init参数? 
