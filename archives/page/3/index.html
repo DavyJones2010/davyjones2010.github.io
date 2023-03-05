@@ -156,12 +156,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">193</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,112 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-04-05-k8s-common-sense/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-04-05-k8s-common-sense/" class="post-title-link" itemprop="url">k8s基础架构笔记--一些必知的基础数据</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-06 00:00:00" itemprop="dateCreated datePublished" datetime="2022-04-06T00:00:00+08:00">2022-04-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>121</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="内存空间占用"><a href="#内存空间占用" class="headerlink" title="内存空间占用"></a>内存空间占用</h1><ul>
+<li>一个node数据对象的json格式大小约为28KB</li>
+<li>一个pod的数据对象的json格式大小约为40KB</li>
+</ul>
+<h1 id="规模"><a href="#规模" class="headerlink" title="规模"></a>规模</h1><p>瓶颈主要在watch&amp;list导致apiserver压力巨大上.</p>
+<ul>
+<li>单cluster 5000个Node, 25000个Pod</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-04-05-k8s-common-sense/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-04-05-k8s-kube-proxy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +353,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -369,7 +475,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -479,7 +585,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -595,7 +701,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -709,7 +815,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -807,7 +913,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -937,7 +1043,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -1126,7 +1232,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -1236,7 +1342,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -1344,7 +1450,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -1498,7 +1604,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -1633,7 +1739,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -1751,7 +1857,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -1866,7 +1972,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -1983,7 +2089,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -2114,7 +2220,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -2236,7 +2342,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -2334,7 +2440,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -2447,7 +2553,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2607,7 +2713,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2749,7 +2855,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -2880,7 +2986,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -2989,7 +3095,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -3135,7 +3241,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -3252,7 +3358,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -3364,7 +3470,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -3476,7 +3582,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -3575,7 +3681,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -3673,7 +3779,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -3806,7 +3912,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -3990,7 +4096,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 23:16:40" itemprop="dateModified" datetime="2023-03-05T23:16:40+08:00">2023-03-05</time>
     </span>
 
   
@@ -4064,143 +4170,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-11-15-java-lambda-list-to-map/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-11-13-GFS-thesis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-11-13-GFS-thesis/" class="post-title-link" itemprop="url">GFS论文笔记与思考</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-14 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-14T00:00:00+08:00">2021-11-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 23:20:49" itemprop="dateModified" datetime="2023-03-04T23:20:49+08:00">2023-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>381</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>笔记:</p>
-<ul>
-<li>面向的批处理, 因此更加关注节点间的带宽稳定性, 而不是低延时.</li>
-</ul>
-<p>一些思考:</p>
-<ul>
-<li><p>操作系统的基本元素:</p>
-<ul>
-<li>处理机管理: 对中央处理机进行使用和分配的管理?? 这个具体指的是啥? 与作业管理有啥区别?</li>
-<li>文件管理: 对文件的存放、检索、更新、共享和保护进行管理，为用户提供方便有效的文件使用方法. 文件系统</li>
-<li>内存管理: 用某种数据结构t记录主存的使用情况，按照一定的策略对存储器进行分配和保护</li>
-<li>设备管理: 管理各类外围设备，包括中断处理，输入输出程序设计，设备的驱动，外围设备的分配</li>
-<li>任务调度&#x2F;作业管理: 为用户提供”作业控制语言””命令语言”,按一定策略对作业进行调度,控制.</li>
-</ul>
-</li>
-<li><p>分布式的操作系统需要哪些元素?</p>
-<ul>
-<li>文件系统: GFS&#x2F;HDFS</li>
-<li>资源&amp;任务调度系统: Yarn</li>
-</ul>
-</li>
-<li><p>一些存储设备</p>
-<ul>
-<li>块存储<ul>
-<li>aws的ebs</li>
-</ul>
-</li>
-<li>文件存储<ul>
-<li>OSS</li>
-<li>NAS??</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>文件系统与存储设备是啥关系?</p>
-</li>
-<li><p>什么是POSIX接口? 为啥</p>
-</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-11-13-GFS-thesis/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

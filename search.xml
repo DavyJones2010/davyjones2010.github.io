@@ -12446,4 +12446,70 @@ networkaddress<span class="token punctuation">.</span>cache<span class="token pu
         <tag>jvm</tag>
       </tags>
   </entry>
+  <entry>
+    <title>revealjs制作PPT笔记</title>
+    <url>//2023-03-05-head-first-revealjs/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近在B站学习蒋炎岩老师的OS: </p>
+<ul>
+<li>内容自是不必多说, 干货满满.</li>
+<li>对课件PPT更是十分欣赏. </li>
+<li><a href="https://jyywiki.cn/OS/2022/slides/3.slides#/">实际样例</a></li>
+</ul>
+<h2 id="特点1-导航清晰"><a href="#特点1-导航清晰" class="headerlink" title="特点1: 导航清晰"></a>特点1: 导航清晰</h2><p>风格简约专业:</p>
+<ul>
+<li>横向导航区分大类</li>
+<li>纵向导航来区分小类</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052225650.png"></p>
+<h2 id="特点2-管理轻量"><a href="#特点2-管理轻量" class="headerlink" title="特点2: 管理轻量"></a>特点2: 管理轻量</h2><ul>
+<li>基于代码生成与管理(支持Markdown), 不使用笨重的Microsoft PPT. </li>
+<li>可以使用git进行版本管理(例如showcase中本文就会转成ppt).</li>
+</ul>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><blockquote>
+<p>revealjs + pandoc 组合神器</p>
+</blockquote>
+<ul>
+<li><a href="https://revealjs.com/markdown/">revealjs</a></li>
+<li><a href="https://pandoc.org/installing.html">pandoc</a></li>
+</ul>
+<p>刚好自己平时要做PPT, 但作为程序员, 又十分抵触内容与样式不分离的方式, 制作起来也耗时.<br>借鉴这种方案, 轻松写出专业且简约的PPT.</p>
+<h1 id="安装-amp-配置"><a href="#安装-amp-配置" class="headerlink" title="安装&amp;配置"></a>安装&amp;配置</h1><ul>
+<li>revealjs: <a href="https://revealjs.com/installation/#full-setup">安装手册</a></li>
+<li>pandoc: 把markdown转成revealjs的html, <a href="https://pandoc.org/installing.html">安装手册</a></li>
+</ul>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
+<li><p>revealjs</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认8000端口</span>
+<span class="token function">npm</span> start
+<span class="token comment"># 指定8001端口</span>
+<span class="token function">npm</span> start -- --port<span class="token operator">=</span><span class="token number">8001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>pandoc</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># md to html. 注意需要设置 --slide-level=2 参数. 把一级标题设置horizontal大类, 二级标题内容为vertical子类. </span>
+pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white --slide-level<span class="token operator">=</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><ul>
+<li><code>o</code> 进入缩略图模式.</li>
+<li><code>b</code> 屏蔽当前PPT</li>
+<li><code>f</code> 进入全屏模式</li>
+</ul>
+<h1 id="showcase"><a href="#showcase" class="headerlink" title="showcase"></a>showcase</h1><h2 id="self-explained"><a href="#self-explained" class="headerlink" title="self-explained"></a>self-explained</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052309110.png"></p>
+<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><h2 id="样式优化"><a href="#样式优化" class="headerlink" title="样式优化"></a>样式优化</h2><p>与JYY老师相比, 页面还是过于简陋</p>
+<ul>
+<li>Header: 类似markdown的分隔符</li>
+<li>Image: 图片有些显示不全❗</li>
+<li>Align: 字默认居中, 需要<font color='red'><strong>居左</strong></font></li>
+<li>Syntax Highlighting: 现在<strong>太丑</strong>🔴</li>
+<li>Citation: 也<strong>太丑</strong>🔴</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>工程提效工具</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+        <tag>ppt</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
 </search>
