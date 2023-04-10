@@ -39,19 +39,20 @@ tags: [soft-skills, diagrams, software-engineering, best-practice]
 ## 工具比较
 
 
-| 名称                                            | Diagrams As Code | 是否收费(by 20230314) | 优势                    | 缺点                                               | 推荐优先级           |
-|-----------------------------------------------| ---------------- | --------------------- | ----------------------- | -------------------------------------------------- | -------------------- |
-| [mermaid](https://mermaid.js.org/intro/)      | Y                | N                     | DAS, 项目活跃, 审美在线 | 支持图类型少(有潜力)                               | **高**: 设计文档优先 |
-| [draw.io](https://app.diagrams.net/)          | N                | N                     | 图类型全                | 非DAS, <font color='red'>**注意保留源文件**</font> | **高**: 设计文档优先 |
-| [语雀画板](https://aliyuque.antfin.com/dashboard) | N                | N                     | 图类型全, 审美在线      | 非DAS; 模板样例较少                                | **高**: 设计文档优先 |
-| PPT/WPS                                       | N                | Y                     |                         |                                                    | **高**: 汇报文档优先 |
-| xmind                                         | N                | Y                     | 方便易用, 审美在线      | 适用范围窄: 只适合画思维导图                       | 中                   |
-| [ggplot2](https://ggplot2.tidyverse.org/)     | N                | N                     |                         | 适用范围窄: 只适合数学统计类                       | 统计类高优推荐       |
-| [Aliyun ROS Visual Editor]()                  | Y                | N                     | DAS                     | 适用范围窄: 只适用云上部署图                       | 云上部署类高优       |
-| ~~[plantml](https://plantuml.com/zh/)~~       | ~~Y~~            | ~~N~~                 | ~~DAS, 图类型全~~       | ~~过于陈旧, 废弃不用.~~                            | ~~废弃~~             |
-| ~~gliffy~~                                    | N                | Y                     | ~~轻量~~                | ~~废弃~~                                           | ~~废弃~~             |
-| ~~[processon](https://www.processon.com/)~~   | N                | Y                     | ~~模板样例多~~          |                                                    | ~~废弃~~             |
-| ~~staruml~~                                   | N                | Y                     |                         |                                                    | ~~废弃~~             |
+| 名称                                            | Diagrams As Code | 是否收费(by 20230314) | 优势              | 缺点                                         | 推荐优先级         |
+|-----------------------------------------------|------------------| --------------------- |-----------------|--------------------------------------------|---------------|
+| [mermaid](https://mermaid.js.org/intro/)      | Y                | N                     | DAS, 项目活跃, 审美在线 | 支持图类型少(有潜力)                                | **高**: 设计文档优先 |
+| [draw.io](https://app.diagrams.net/)          | N                | N                     | 图类型全            | 非DAS, <font color='red'>**注意保留源文件**</font> | **高**: 设计文档优先 |
+| [语雀画板](https://aliyuque.antfin.com/dashboard) | N                | N                     | 图类型全, 审美在线      | 非DAS; 模板样例较少                               | **高**: 设计文档优先 |
+| PPT/WPS                                       | N                | Y                     |                 |                                            | **高**: 汇报文档优先 |
+| xmind                                         | N                | Y                     | 方便易用, 审美在线      | 适用范围窄: 只适合画思维导图                            | 中             |
+| [ggplot2](https://ggplot2.tidyverse.org/)     | N                | N                     |                 | 适用范围窄: 只适合数学统计类                            | 统计类高优推荐       |
+| [Rapid Tables Line Graph Maker](https://www.rapidtables.com/tools/line-graph.html)  | N                | N                     | 坐标轴图可以用数字精确表示   | 适用范围窄: 只适用坐标轴图  | 数字坐标轴类高优      |
+| [Aliyun ROS Visual Editor]()                  | Y                | N                     | DAS             | 适用范围窄: 只适用云上部署图                            | 云上部署类高优       |
+| ~~[plantml](https://plantuml.com/zh/)~~       | ~~Y~~            | ~~N~~                 | ~~DAS, 图类型全~~   | ~~过于陈旧, 废弃不用.~~                            | ~~废弃~~        |
+| ~~gliffy~~                                    | N                | Y                     | ~~轻量~~          | ~~废弃~~                                     | ~~废弃~~        |
+| ~~[processon](https://www.processon.com/)~~   | N                | Y                     | ~~模板样例多~~       |                                            | ~~废弃~~        |
+| ~~staruml~~                                   | N                | Y                     |                 |                                            | ~~废弃~~        |
 
 
 
@@ -102,9 +103,10 @@ tags: [soft-skills, diagrams, software-engineering, best-practice]
 ## 坐标轴图(axis)
 
 - 场景: PPT汇报里, 属于"逻辑示意图"的子类.
-- 工具: draw.io > 语雀画板. 暂时没有数字描述的坐标图工具.
+- 工具: [Line graph maker](https://www.rapidtables.com/tools/line-graph.html) >> draw.io > 语雀画板. 暂时没有数字描述的坐标图工具.
 - 样例:
 
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304110029478.png)
 ![draw-axis](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102239302.png)
 
 
