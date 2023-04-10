@@ -25,13 +25,13 @@
 
     <meta name="description" content="Java&amp;JVM打 HeapDumpjmap -dump:live,file&#x3D;heapdump.phrof $pid  或者 jmap -dump:live,file&#x3D;heapdump.phrof -F $pid   一般情况下，尽量不要使用-F参数。 因为-F使用的是Linux操作系统层面的实现，而不是JVM层面的实现，会导致 打印堆信息很慢。如果提示第一种方式打印不出来堆的信息，需要增">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Java&amp;JVM&amp;OQL 常用命令与脚本总结">
+<meta property="og:title" content="Java&amp;JVM&amp;OQL&amp;MVN 常用命令与脚本总结">
 <meta property="og:url" content="https://davyjones2010.github.io/2022-07-01-java-jvm/">
 <meta property="og:site_name" content="Coders@Work">
 <meta property="og:description" content="Java&amp;JVM打 HeapDumpjmap -dump:live,file&#x3D;heapdump.phrof $pid  或者 jmap -dump:live,file&#x3D;heapdump.phrof -F $pid   一般情况下，尽量不要使用-F参数。 因为-F使用的是Linux操作系统层面的实现，而不是JVM层面的实现，会导致 打印堆信息很慢。如果提示第一种方式打印不出来堆的信息，需要增">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-10T15:49:38.518Z">
+<meta property="article:modified_time" content="2023-04-10T16:19:48.918Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="code-snippets">
 <meta property="article:tag" content="java">
@@ -43,10 +43,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-07-01-java-jvm/","path":"/2022-07-01-java-jvm/","title":"Java&JVM&OQL 常用命令与脚本总结"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2022-07-01-java-jvm/","path":"/2022-07-01-java-jvm/","title":"Java&JVM&OQL&MVN 常用命令与脚本总结"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Java&JVM&OQL 常用命令与脚本总结 | Coders@Work</title>
+<title>Java&JVM&OQL&MVN 常用命令与脚本总结 | Coders@Work</title>
   
 
 
@@ -149,7 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-amp-JVM"><span class="nav-number">1.</span> <span class="nav-text">Java&amp;JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93-HeapDump"><span class="nav-number">1.1.</span> <span class="nav-text">打 HeapDump</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93-ThreadDump"><span class="nav-number">1.2.</span> <span class="nav-text">打 ThreadDump</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%B6%88%E8%80%97CPU%E6%97%B6%E9%97%B4%E7%89%87%E6%9C%80%E5%A4%9A%E7%9A%84%E7%BA%BF%E7%A8%8B%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.</span> <span class="nav-text">查看消耗CPU时间片最多的线程信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BJVM%E9%BB%98%E8%AE%A4HeapSize"><span class="nav-number">1.4.</span> <span class="nav-text">查看JVM默认HeapSize</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OQL"><span class="nav-number">2.</span> <span class="nav-text">OQL</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-amp-JVM"><span class="nav-number">1.</span> <span class="nav-text">Java&amp;JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93-HeapDump"><span class="nav-number">1.1.</span> <span class="nav-text">打 HeapDump</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93-ThreadDump"><span class="nav-number">1.2.</span> <span class="nav-text">打 ThreadDump</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%B6%88%E8%80%97CPU%E6%97%B6%E9%97%B4%E7%89%87%E6%9C%80%E5%A4%9A%E7%9A%84%E7%BA%BF%E7%A8%8B%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.</span> <span class="nav-text">查看消耗CPU时间片最多的线程信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BJVM%E9%BB%98%E8%AE%A4HeapSize"><span class="nav-number">1.4.</span> <span class="nav-text">查看JVM默认HeapSize</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OQL"><span class="nav-number">2.</span> <span class="nav-text">OQL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Maven"><span class="nav-number">3.</span> <span class="nav-text">Maven</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -233,12 +233,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Java&JVM&OQL 常用命令与脚本总结 | Coders@Work">
+      <meta itemprop="name" content="Java&JVM&OQL&MVN 常用命令与脚本总结 | Coders@Work">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Java&JVM&OQL 常用命令与脚本总结
+          Java&JVM&OQL&MVN 常用命令与脚本总结
         </h1>
 
         <div class="post-meta-container">
@@ -256,7 +256,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-04-10 23:49:38" itemprop="dateModified" datetime="2023-04-10T23:49:38+08:00">2023-04-10</time>
+      <time title="修改时间：2023-04-11 00:19:48" itemprop="dateModified" datetime="2023-04-11T00:19:48+08:00">2023-04-11</time>
     </span>
 
   
@@ -266,14 +266,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.8k</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -407,6 +407,50 @@ Property settings:
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t <span class="token keyword">where</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>hostType<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"ddh.ebmec3metest"</span>
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t <span class="token keyword">where</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"28745-27"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 </ul>
+<h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><ul>
+<li><p>下载源代码. 有时候IDE无法自动下载jar包的源代码, 此时使用如下命令就能下载</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn dependency:sources<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>编译源码.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean compile -DskipTests<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>编译源码, 且把编译的jar包等产物安装到本地Repo中.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean <span class="token function">install</span> -DskipTests<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>强制重新下载SNAPSHOT包</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean compile -U<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>不再联网下载依赖, 即offline mode</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 先验证所有依赖都下载到了本地</span>
+<span class="token comment"># mvn dependency:go-offline</span>
+
+<span class="token comment"># 2. 再执行如下命令, 开启offline编译模式</span>
+<span class="token comment"># mvn -o install</span>
+<span class="token comment"># mvn -offline install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>依赖解析相关</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 把依赖树打印出来</span>
+<span class="token comment"># mvn dependency:tree</span>
+
+<span class="token comment"># 分析无用的依赖</span>
+<span class="token comment"># mvn dependency: analyze</span>
+
+<span class="token comment"># 分析重复的依赖</span>
+<span class="token comment"># mvn dependency:analyze-duplicate</span>
+
+<span class="token comment"># 当使用shell脚本执行jar命令启动项目时, 需要把项目依赖的jar包都放到classpath参数下. </span>
+<span class="token comment"># 但人肉一个一个加很麻烦, 执行这个命令就把所有jar包全路径都拼接打印出来. </span>
+<span class="token comment"># mvn dependency:build-classpath</span>
+
+<span class="token comment"># 把所有解析好的依赖, 平铺打印</span>
+<span class="token comment"># mvn dependency:resolve</span>
+
+<span class="token comment"># 列出所有配置好的remote repo</span>
+<span class="token comment"># mvn dependency:list-repositories</span>
+
+<span class="token comment"># 把项目所有依赖的jar包都拷贝到目标目录下</span>
+<span class="token comment"># mvn dependency:copy-dependencies -DoutputDirectory="~/lib/"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
     </div>
 
@@ -474,7 +518,7 @@ Property settings:
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:36</span>
+    <span title="站点阅读时长">4:37</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

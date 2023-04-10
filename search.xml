@@ -8383,6 +8383,239 @@ yum <span class="token function">install</span> bridge-utils -y<span aria-hidden
       </tags>
   </entry>
   <entry>
+    <title>Linux网络之原理探讨与疑问总结</title>
+    <url>//2022-06-29-linux-network-faq/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="网卡混杂模式"><a href="#网卡混杂模式" class="headerlink" title="网卡混杂模式"></a>网卡混杂模式</h2><ul>
+<li><p>啥是网卡混杂模式？</p>
+</li>
+<li><p>正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。</p>
+</li>
+<li><p>开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。</p>
+</li>
+<li><p>啥时候需要开启？</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO:</p>
+</li>
+<li><p>如何开启？</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 开启混杂模式
+<span class="token function">ifconfig</span> eth0 promisc
+// 取消混杂模式
+<span class="token function">ifconfig</span> eth0 -promisc
+// 内核判断网卡是否处于混杂模式是看如下标识，如果置位了0x100，则处于混杂模式
+<span class="token function">cat</span> /sys/class/net/eth0/flags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>是否开启了混杂模式，就能嗅探局域网（二层网）内的所有数据包了？</p>
+</li>
+<li><p>不一定。</p>
+</li>
+<li><p>针对二层如果是集线器模式，可以嗅探到。</p>
+</li>
+<li><p>但现在大部分二层都是交换机模式。即交换机会根据CAM表，往对应的端口转发，不会无脑地全部端口都转发，因此嗅探不到。</p>
+</li>
+<li><p>开启混杂模式的例子</p>
+</li>
+<li><p>如下，docker0网桥就开启了混杂模式。</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO: 为啥docker0网桥开启混杂模式？具体怎么用的？</p>
+</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">cat</span> /sys/class/net/docker0/flags 
+0x1003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="路由器与NAT设备的关联与区别"><a href="#路由器与NAT设备的关联与区别" class="headerlink" title="路由器与NAT设备的关联与区别"></a>路由器与NAT设备的关联与区别</h2><h3 id="路由器工作原理："><a href="#路由器工作原理：" class="headerlink" title="路由器工作原理："></a>路由器工作原理：</h3><p>主要用来联通连个不同的网段，<mark>只修改sourceMac与targetMac，不修改sourceIp与targetIp</mark></p>
+<ol>
+<li>根据传入包指定的targetIp（传入包的MAC地址是路由器当前网卡的MAC地址，IP地址是真正的IP地址）</li>
+<li>查询自身路由表，查找到最近的下一跳的IP地址。<code>route -n</code></li>
+<li>再根据下一跳的IP地址，查找到对应的MAC地址。arp缓存表</li>
+<li>修改数据包的targetMAC地址为下一跳的MAC地址，sourceMAC为当前网卡出口的mac地址</li>
+<li>将数据包从对应网卡送出去。</li>
+</ol>
+<blockquote>
+<p>路由器的核心是路由表的维护，能生成最短最优路径。<br/><br>从sourceIp到targetIp的路由路径，很可能与回包，即从targetIp返回到sourceIp的路由路径不一样。<br>取决于当时的路径中路由器的路由表情况。</p>
+</blockquote>
+<h3 id="NAT工作原理："><a href="#NAT工作原理：" class="headerlink" title="NAT工作原理："></a>NAT工作原理：</h3><ul>
+<li><p>原理<br>需要修改sourceMac与targetMac。<br>同时如果是SNAT，则还要修改sourceIp。<br>如果是DNAT，则还要修改targetIp。</p>
+</li>
+<li><p>实现方式:<br>通过iptables可以设置nat表。<br>snat作用在postrouting阶段，dnat作用在prerouting阶段。<br>回包由内核的conntrack模块负责，不再由iptables负责。<br>详细参见 <a href="https://davyjones2010.github.io/2022-06-23-linux-network-nat">NAT之端口映射(PAT)原理总结&amp;实践</a></p>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>由此可知，家用的路由器，是附带了SNAT（也可以配置DNAT）功能的路由器。</p>
+<h2 id="ip-forwarding"><a href="#ip-forwarding" class="headerlink" title="ip_forwarding"></a>ip_forwarding</h2><h3 id="MAC地址匹配-但IP地址不匹配"><a href="#MAC地址匹配-但IP地址不匹配" class="headerlink" title="MAC地址匹配, 但IP地址不匹配"></a>MAC地址匹配, 但IP地址不匹配</h3><p>网卡会不会收到MAC地址与当前网卡MAC地址匹配, 但IP地址与当前网卡的IP不匹配的IP包?<br>具体咋处理? 直接丢弃? 还是可以使用?</p>
+<ul>
+<li>会收到。</li>
+<li>如果开启了ip_forwarding，则会进入FORWARD&#x2F;ROUTE阶段，查看本地 route 表，进入路由与postrouting阶段，找到对应的出口网卡，将包转发出去。与路由器的功能完全一致了。</li>
+<li>如果未开启ip_forwarding，则直接丢弃该包。</li>
+<li>所以，NAT模式下，必须要开启ip_forwarding。</li>
+</ul>
+<h3 id="iptables工作原理图"><a href="#iptables工作原理图" class="headerlink" title="iptables工作原理图"></a>iptables工作原理图</h3><p>此图摘自 <a href="https://wiki.archlinux.org/title/Iptables">Archlinux 文档</a></p>
+<pre class="line-numbers language-none"><code class="language-none">                               XXXXXXXXXXXXXXXXXX
+                             XXX     Network    XXX
+                               XXXXXXXXXXXXXXXXXX
+                                       +
+                                       |
+                                       v
+ +-------------+              +------------------+
+ |table: filter| &lt;---+        | table: nat&#x2F;dnat  |
+ |chain: INPUT |     |        | chain: PREROUTING|
+ +-----+-------+     |        +--------+---------+
+       |             |                 |
+       v             |                 v
+ [local process]     |           ****************          +--------------+
+       |             +---------+ Routing decision +------&gt; |table: filter |
+       v                         ****************          |chain: FORWARD|
+****************                                           +------+-------+
+Routing decision                                                  |
+****************                                                  |
+       |                                                          |
+       v                        ****************                  |
++-------------+       +------&gt;  Routing decision  &lt;---------------+
+|table: nat   |       |         ****************
+|chain: OUTPUT|       |               +
++-----+-------+       |               |
+      |               |               v
+      v               |      +-------------------+
++--------------+      |      | table: nat&#x2F;snat   |
+|table: filter | +----+      | chain: POSTROUTING|
+|chain: OUTPUT |             +--------+----------+
++--------------+                      |
+                                      v
+                               XXXXXXXXXXXXXXXXXX
+                             XXX    Network     XXX
+                               XXXXXXXXXXXXXXXXXX<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="为啥Linux默认不开启ip-forwarding"><a href="#为啥Linux默认不开启ip-forwarding" class="headerlink" title="为啥Linux默认不开启ip_forwarding?"></a>为啥Linux默认不开启ip_forwarding?</h3><p>因为在默认情况下，host只是扮演在网络中的一台主机的角色，根本不需要ip_forwarding的功能。</p>
+<blockquote>
+<p>A Linux machine acting as an ordinary host would not need to have IP forwarding enabled,<br>because it just generates and receives IP traffic for its own purposes</p>
+</blockquote>
+<h3 id="如何开启ip-forwarding"><a href="#如何开启ip-forwarding" class="headerlink" title="如何开启ip_forwarding?"></a>如何开启ip_forwarding?</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token number">1</span> <span class="token operator">></span> /proc/sys/net/ipv4/ip_forward<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>所以开启了ip_forwarding，相当于本机就具备一台路由器的能力了。<br/><br>如果再通过iptables配置了相应的nat规则，就相当于一台家用的路由器了。</p>
+<h2 id="本地多网卡curl公网地址问题"><a href="#本地多网卡curl公网地址问题" class="headerlink" title="本地多网卡curl公网地址问题"></a>本地多网卡curl公网地址问题</h2><ul>
+<li>如果本机有私网网卡virbr0, 公网网卡en0, 且开启了virbr0网段的SNAT规则. 则在本地curl公网地址, 则curl的出口网卡是啥? </li>
+<li>是通过virbr0, 然后走SNAT到en0出去么?</li>
+<li>还是直接通过en0出去?</li>
+</ul>
+<ol>
+<li><p>curl 支持指定出口网卡如下(实际只是使用了对应网卡的ip地址作为SIP): 如果不指定, 则使用默认网卡. </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// curl指定网卡出口
+<span class="token function">curl</span> --interface virbr0 http://www.baidu.com
+// mac上查看默认网卡: 
+route -n get <span class="token number">0.0</span>.0.0 <span class="token operator">|</span> <span class="token function">grep</span> interface<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>The –interface options is used to figure determine what address on the system will be used as the source IP. <br/><br>It doesn’t magically change anything about routing.</p>
+</blockquote>
+</li>
+<li><p>参见<a href="#iptables%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE">iptables工作原理图</a>, 可知从curl公网地址, 就是从local process出去, 接下来会走route, 即查看Host的路由表, 确定出口网卡与网关信息.</p>
+</li>
+<li><p>接下来进入postrouting(SNAT)阶段, 如果配置有SNAT规则, 且刚好命中, 则执行SNAT.</p>
+</li>
+<li><p>所以结论是出口网卡是en0, 而不会经过virbr0(即使指定了<code>--interface virbr0</code>).</p>
+</li>
+<li><p>是否会SNAT, 取决于是否指定了<code>--interface virbr0</code>, 指定了, 则会走SNAT; 未指定, 则不需要走SNAT.</p>
+</li>
+</ol>
+<h2 id="本地多网卡Java应用获取HostIp问题"><a href="#本地多网卡Java应用获取HostIp问题" class="headerlink" title="本地多网卡Java应用获取HostIp问题"></a>本地多网卡Java应用获取HostIp问题</h2><ul>
+<li>如果本机有多块网卡, 在Java中如何获取到这些IP地址? </li>
+<li>我们通常使用获取本机IP的方式如下: <mark>当Host多块网卡时, 不好兼容, 存在严重缺陷, 尤其是在线上服务器网卡堆叠场景下!</mark></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InetAddress</span> ip <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> hostname <span class="token operator">=</span> ip<span class="token punctuation">.</span><span class="token function">getHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>解决方案: </li>
+<li>方案1: 使用 <code>NetworkInterface.getNetworkInterfaces()</code> 接口, 获取所有网卡, 然后逐个获取IP信息.</li>
+<li>方案2: 获取本机的FQDN, 然后使用<code>InetAddress.getByName(FQDN)</code>来获取主网卡的IP信息.<ul>
+<li>本机的FQDN可以写在配置文件里.</li>
+</ul>
+</li>
+<li>Ref: <a href="https://crunchify.com/how-to-get-server-ip-address-and-hostname-in-java/">How to get Server IP Address and Hostname in Java</a></li>
+</ul>
+<h2 id="IP隧道"><a href="#IP隧道" class="headerlink" title="IP隧道"></a>IP隧道</h2><h2 id="LVS"><a href="#LVS" class="headerlink" title="LVS"></a>LVS</h2><h3 id="LVS-v-s-iptables-x2F-netfilters"><a href="#LVS-v-s-iptables-x2F-netfilters" class="headerlink" title="LVS v.s. iptables&#x2F;netfilters"></a>LVS v.s. iptables&#x2F;netfilters</h3><p>本质上, 两个都可以做四层的DNAT, 都是工作在内核空间. </p>
+<ul>
+<li>LVS: 更侧重于LoadBalancing, 实现上使用hash查表, 而不是iptables的顺序查询. 效率更高. </li>
+<li>iptables:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png"></p>
+<ul>
+<li>可以看到, LVS本质上是与iptables配合使用</li>
+<li>客户访问虚拟 IP（VIP）时，数据包先在主机内核空间被 PREROUTING 链检测，根据数据包的目标地址进行路由判断，若目标地址是本地，则交由 INPUT 链进行处理。</li>
+<li>IPVS 工作于 INPUT 链，当数据包到达 INPUT 链时，会先由 IPVS 进行检查，并根据负载均衡算法选出真实服务器 IP。</li>
+<li>IPVS 转发模式为 NAT 模式时，将数据包由 FORWARD 链进行处理后由 POST-ROUTING 链发送给真实服务器。</li>
+<li>IPVS 转发模式为非 NAT 模式时，则将数据包由 POST-ROUTING 链发送给真实服务器。</li>
+</ul>
+<h3 id="LVS的几种模式分析"><a href="#LVS的几种模式分析" class="headerlink" title="LVS的几种模式分析"></a>LVS的几种模式分析</h3><p><a href="https://blog.csdn.net/Splend520/article/details/104587149">linux LVS负载均衡原理 NAT DR TUN FULLNAT 模式</a></p>
+<h4 id="LVS-NAT-–-gt-NAT-x2F-DNAT"><a href="#LVS-NAT-–-gt-NAT-x2F-DNAT" class="headerlink" title="LVS-NAT –&gt; NAT&#x2F;DNAT"></a>LVS-NAT –&gt; NAT&#x2F;DNAT</h4><p>本质是类似iptables的端口映射(PAT)–&gt; 注意这里全程没有DIP的参与.</p>
+<ul>
+<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
+<li>Client请求: {CIP, VIP}</li>
+<li>LVS映射: 修改目标IP, VIP-&gt;RIP, 构建新的请求: {CIP, RIP}</li>
+<li>Server处理: 完成后发送回包, {RIP, CIP}; 由于CIP与RIP不在同一个网段, 因此发送到网关(即LVS)</li>
+<li>LVS映射: 修改源IP, RIP-&gt;VIP, 构建新的响应: {VIP, CIP}</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052223099.png"></p>
+<ul>
+<li>缺点: <ul>
+<li>需要RS与DS在同一个二层网络里, 且需要把DS&#x2F;DIP配置为RS的网关.</li>
+</ul>
+</li>
+<li>优点: <ul>
+<li>&#x2F;&#x2F; TODO:</li>
+</ul>
+</li>
+</ul>
+<h4 id="LVS-NAT-–-gt-FullNAT"><a href="#LVS-NAT-–-gt-FullNAT" class="headerlink" title="LVS-NAT –&gt; FullNAT"></a>LVS-NAT –&gt; FullNAT</h4><ul>
+<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
+<li>Client请求: {CIP, VIP}</li>
+<li>LVS映射: 修改目标IP, VIP-&gt;RIP(RealServerIP); 修改源IP, CIP-&gt;DIP; 构建新的请求: {DIP, RIP}</li>
+<li>RealServer处理: 完成后发送回包, {RIP, DIP} (FullNAT模式, 不需要LVS必须是网关, 只要三层IP可达即可)</li>
+<li>LVS映射: 修改源IP, RIP-&gt;VIP; 通过conntrack查表, 修改目标IP, DIP-&gt;CIP; 构建新的响应: {VIP, CIP}</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052218872.png"></p>
+<ul>
+<li><p>注意: LVS 本身不支持 FULLNAT 模式，需要额外对内核打补丁后才能使用。</p>
+</li>
+<li><p>缺点: </p>
+<ul>
+<li>不管是请求数据包还是响应数据包，都要经过负载均衡器。但是响应数据包一般要比请求数据包大很多，这可能会成为系统的瓶颈。</li>
+</ul>
+</li>
+<li><p>优点:</p>
+<ul>
+<li>如上图, RealServer(DIP)不需要跟LVS在同一个网段, 只要IP包(三层路由)可达, 就能完成FullNAT</li>
+</ul>
+</li>
+</ul>
+<h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><h4 id="LVS-TUN"><a href="#LVS-TUN" class="headerlink" title="LVS-TUN"></a>LVS-TUN</h4><h4 id="实际"><a href="#实际" class="headerlink" title="实际"></a>实际</h4><ul>
+<li><a href="https://help.aliyun.com/document_detail/27544.html">阿里云CLB</a>使用的是哪种模式? NAT?<ul>
+<li>四层采用开源软件LVS（Linux Virtual Server）+ keepalived的方式实现负载均衡</li>
+<li>LVS应该使用的是NAT模式. 但如果是NAT模式, 则必须把LVS作为ECS的网关. &#x2F;&#x2F;TODO: 待验证</li>
+</ul>
+</li>
+</ul>
+<h1 id="HTTP-代理"><a href="#HTTP-代理" class="headerlink" title="HTTP 代理"></a>HTTP 代理</h1><h1 id="什么是”冷土豆路由”与”热土豆路由”"><a href="#什么是”冷土豆路由”与”热土豆路由”" class="headerlink" title="什么是”冷土豆路由”与”热土豆路由”?"></a>什么是”冷土豆路由”与”热土豆路由”?</h1><ul>
+<li>参见: <a href="https://docs.microsoft.com/zh-cn/azure/virtual-network/ip-services/routing-preference-overview">冷土豆路由&amp;热土豆路由</a></li>
+<li>热土豆:<ul>
+<li>入口流量: 如果来自新加坡的用户访问托管在芝加哥的 Azure 资源，则流量将通过公共 Internet 传输，并进入芝加哥的 Microsoft 全球网络。</li>
+<li>出口流量: 出口流量遵循相同的原则。 流量会在托管服务的同一区域退出 Microsoft 网络。 例如，如果来自 Azure 芝加哥服务的流量最终传输给来自新加坡的用户，流量将离开芝加哥的 Microsoft 网络，并通过公共 Internet 传输给新加坡的用户。</li>
+</ul>
+</li>
+<li>冷土豆:<ul>
+<li>入口流量: 如果来自新加坡的用户访问托管在美国芝加哥的 Azure 资源，则流量将进入位于新加坡 Edge POP 的 Microsoft 全球网络，并通过 Microsoft 网络传输到托管在芝加哥的服务。</li>
+<li>出口流量: 如果来自 Azure 芝加哥的流量最终传输给来自新加坡的用户，那么流量就会通过 Microsoft 网络从芝加哥传输到新加坡，并退出位于新加坡 Edge POP 的 Microsoft 网络。</li>
+</ul>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>iaas</tag>
+        <tag>network</tag>
+        <tag>cloud-computing</tag>
+        <tag>nat</tag>
+        <tag>pat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常用的Linux命令之网络相关命令</title>
     <url>//2022-06-25-linux-network-scripts/</url>
     <content><![CDATA[<h1 id="ARP协议"><a href="#ARP协议" class="headerlink" title="ARP协议"></a>ARP协议</h1><h2 id="查看ARP缓存表"><a href="#查看ARP缓存表" class="headerlink" title="查看ARP缓存表"></a>查看ARP缓存表</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/PlayGround/nat$ arp -v
@@ -8703,240 +8936,7 @@ rtt min/avg/max/mdev <span class="token operator">=</span> <span class="token nu
       </tags>
   </entry>
   <entry>
-    <title>Linux网络之原理探讨与疑问总结</title>
-    <url>//2022-06-29-linux-network-faq/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="网卡混杂模式"><a href="#网卡混杂模式" class="headerlink" title="网卡混杂模式"></a>网卡混杂模式</h2><ul>
-<li><p>啥是网卡混杂模式？</p>
-</li>
-<li><p>正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。</p>
-</li>
-<li><p>开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。</p>
-</li>
-<li><p>啥时候需要开启？</p>
-</li>
-<li><p>&#x2F;&#x2F; TODO:</p>
-</li>
-<li><p>如何开启？</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 开启混杂模式
-<span class="token function">ifconfig</span> eth0 promisc
-// 取消混杂模式
-<span class="token function">ifconfig</span> eth0 -promisc
-// 内核判断网卡是否处于混杂模式是看如下标识，如果置位了0x100，则处于混杂模式
-<span class="token function">cat</span> /sys/class/net/eth0/flags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>是否开启了混杂模式，就能嗅探局域网（二层网）内的所有数据包了？</p>
-</li>
-<li><p>不一定。</p>
-</li>
-<li><p>针对二层如果是集线器模式，可以嗅探到。</p>
-</li>
-<li><p>但现在大部分二层都是交换机模式。即交换机会根据CAM表，往对应的端口转发，不会无脑地全部端口都转发，因此嗅探不到。</p>
-</li>
-<li><p>开启混杂模式的例子</p>
-</li>
-<li><p>如下，docker0网桥就开启了混杂模式。</p>
-</li>
-<li><p>&#x2F;&#x2F; TODO: 为啥docker0网桥开启混杂模式？具体怎么用的？</p>
-</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">cat</span> /sys/class/net/docker0/flags 
-0x1003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h2 id="路由器与NAT设备的关联与区别"><a href="#路由器与NAT设备的关联与区别" class="headerlink" title="路由器与NAT设备的关联与区别"></a>路由器与NAT设备的关联与区别</h2><h3 id="路由器工作原理："><a href="#路由器工作原理：" class="headerlink" title="路由器工作原理："></a>路由器工作原理：</h3><p>主要用来联通连个不同的网段，<mark>只修改sourceMac与targetMac，不修改sourceIp与targetIp</mark></p>
-<ol>
-<li>根据传入包指定的targetIp（传入包的MAC地址是路由器当前网卡的MAC地址，IP地址是真正的IP地址）</li>
-<li>查询自身路由表，查找到最近的下一跳的IP地址。<code>route -n</code></li>
-<li>再根据下一跳的IP地址，查找到对应的MAC地址。arp缓存表</li>
-<li>修改数据包的targetMAC地址为下一跳的MAC地址，sourceMAC为当前网卡出口的mac地址</li>
-<li>将数据包从对应网卡送出去。</li>
-</ol>
-<blockquote>
-<p>路由器的核心是路由表的维护，能生成最短最优路径。<br/><br>从sourceIp到targetIp的路由路径，很可能与回包，即从targetIp返回到sourceIp的路由路径不一样。<br>取决于当时的路径中路由器的路由表情况。</p>
-</blockquote>
-<h3 id="NAT工作原理："><a href="#NAT工作原理：" class="headerlink" title="NAT工作原理："></a>NAT工作原理：</h3><ul>
-<li><p>原理<br>需要修改sourceMac与targetMac。<br>同时如果是SNAT，则还要修改sourceIp。<br>如果是DNAT，则还要修改targetIp。</p>
-</li>
-<li><p>实现方式:<br>通过iptables可以设置nat表。<br>snat作用在postrouting阶段，dnat作用在prerouting阶段。<br>回包由内核的conntrack模块负责，不再由iptables负责。<br>详细参见 <a href="https://davyjones2010.github.io/2022-06-23-linux-network-nat">NAT之端口映射(PAT)原理总结&amp;实践</a></p>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>由此可知，家用的路由器，是附带了SNAT（也可以配置DNAT）功能的路由器。</p>
-<h2 id="ip-forwarding"><a href="#ip-forwarding" class="headerlink" title="ip_forwarding"></a>ip_forwarding</h2><h3 id="MAC地址匹配-但IP地址不匹配"><a href="#MAC地址匹配-但IP地址不匹配" class="headerlink" title="MAC地址匹配, 但IP地址不匹配"></a>MAC地址匹配, 但IP地址不匹配</h3><p>网卡会不会收到MAC地址与当前网卡MAC地址匹配, 但IP地址与当前网卡的IP不匹配的IP包?<br>具体咋处理? 直接丢弃? 还是可以使用?</p>
-<ul>
-<li>会收到。</li>
-<li>如果开启了ip_forwarding，则会进入FORWARD&#x2F;ROUTE阶段，查看本地 route 表，进入路由与postrouting阶段，找到对应的出口网卡，将包转发出去。与路由器的功能完全一致了。</li>
-<li>如果未开启ip_forwarding，则直接丢弃该包。</li>
-<li>所以，NAT模式下，必须要开启ip_forwarding。</li>
-</ul>
-<h3 id="iptables工作原理图"><a href="#iptables工作原理图" class="headerlink" title="iptables工作原理图"></a>iptables工作原理图</h3><p>此图摘自 <a href="https://wiki.archlinux.org/title/Iptables">Archlinux 文档</a></p>
-<pre class="line-numbers language-none"><code class="language-none">                               XXXXXXXXXXXXXXXXXX
-                             XXX     Network    XXX
-                               XXXXXXXXXXXXXXXXXX
-                                       +
-                                       |
-                                       v
- +-------------+              +------------------+
- |table: filter| &lt;---+        | table: nat&#x2F;dnat  |
- |chain: INPUT |     |        | chain: PREROUTING|
- +-----+-------+     |        +--------+---------+
-       |             |                 |
-       v             |                 v
- [local process]     |           ****************          +--------------+
-       |             +---------+ Routing decision +------&gt; |table: filter |
-       v                         ****************          |chain: FORWARD|
-****************                                           +------+-------+
-Routing decision                                                  |
-****************                                                  |
-       |                                                          |
-       v                        ****************                  |
-+-------------+       +------&gt;  Routing decision  &lt;---------------+
-|table: nat   |       |         ****************
-|chain: OUTPUT|       |               +
-+-----+-------+       |               |
-      |               |               v
-      v               |      +-------------------+
-+--------------+      |      | table: nat&#x2F;snat   |
-|table: filter | +----+      | chain: POSTROUTING|
-|chain: OUTPUT |             +--------+----------+
-+--------------+                      |
-                                      v
-                               XXXXXXXXXXXXXXXXXX
-                             XXX    Network     XXX
-                               XXXXXXXXXXXXXXXXXX<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="为啥Linux默认不开启ip-forwarding"><a href="#为啥Linux默认不开启ip-forwarding" class="headerlink" title="为啥Linux默认不开启ip_forwarding?"></a>为啥Linux默认不开启ip_forwarding?</h3><p>因为在默认情况下，host只是扮演在网络中的一台主机的角色，根本不需要ip_forwarding的功能。</p>
-<blockquote>
-<p>A Linux machine acting as an ordinary host would not need to have IP forwarding enabled,<br>because it just generates and receives IP traffic for its own purposes</p>
-</blockquote>
-<h3 id="如何开启ip-forwarding"><a href="#如何开启ip-forwarding" class="headerlink" title="如何开启ip_forwarding?"></a>如何开启ip_forwarding?</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token number">1</span> <span class="token operator">></span> /proc/sys/net/ipv4/ip_forward<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>所以开启了ip_forwarding，相当于本机就具备一台路由器的能力了。<br/><br>如果再通过iptables配置了相应的nat规则，就相当于一台家用的路由器了。</p>
-<h2 id="本地多网卡curl公网地址问题"><a href="#本地多网卡curl公网地址问题" class="headerlink" title="本地多网卡curl公网地址问题"></a>本地多网卡curl公网地址问题</h2><ul>
-<li>如果本机有私网网卡virbr0, 公网网卡en0, 且开启了virbr0网段的SNAT规则. 则在本地curl公网地址, 则curl的出口网卡是啥? </li>
-<li>是通过virbr0, 然后走SNAT到en0出去么?</li>
-<li>还是直接通过en0出去?</li>
-</ul>
-<ol>
-<li><p>curl 支持指定出口网卡如下(实际只是使用了对应网卡的ip地址作为SIP): 如果不指定, 则使用默认网卡. </p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// curl指定网卡出口
-<span class="token function">curl</span> --interface virbr0 http://www.baidu.com
-// mac上查看默认网卡: 
-route -n get <span class="token number">0.0</span>.0.0 <span class="token operator">|</span> <span class="token function">grep</span> interface<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>The –interface options is used to figure determine what address on the system will be used as the source IP. <br/><br>It doesn’t magically change anything about routing.</p>
-</blockquote>
-</li>
-<li><p>参见<a href="#iptables%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE">iptables工作原理图</a>, 可知从curl公网地址, 就是从local process出去, 接下来会走route, 即查看Host的路由表, 确定出口网卡与网关信息.</p>
-</li>
-<li><p>接下来进入postrouting(SNAT)阶段, 如果配置有SNAT规则, 且刚好命中, 则执行SNAT.</p>
-</li>
-<li><p>所以结论是出口网卡是en0, 而不会经过virbr0(即使指定了<code>--interface virbr0</code>).</p>
-</li>
-<li><p>是否会SNAT, 取决于是否指定了<code>--interface virbr0</code>, 指定了, 则会走SNAT; 未指定, 则不需要走SNAT.</p>
-</li>
-</ol>
-<h2 id="本地多网卡Java应用获取HostIp问题"><a href="#本地多网卡Java应用获取HostIp问题" class="headerlink" title="本地多网卡Java应用获取HostIp问题"></a>本地多网卡Java应用获取HostIp问题</h2><ul>
-<li>如果本机有多块网卡, 在Java中如何获取到这些IP地址? </li>
-<li>我们通常使用获取本机IP的方式如下: <mark>当Host多块网卡时, 不好兼容, 存在严重缺陷, 尤其是在线上服务器网卡堆叠场景下!</mark></li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InetAddress</span> ip <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> hostname <span class="token operator">=</span> ip<span class="token punctuation">.</span><span class="token function">getHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<ul>
-<li>解决方案: </li>
-<li>方案1: 使用 <code>NetworkInterface.getNetworkInterfaces()</code> 接口, 获取所有网卡, 然后逐个获取IP信息.</li>
-<li>方案2: 获取本机的FQDN, 然后使用<code>InetAddress.getByName(FQDN)</code>来获取主网卡的IP信息.<ul>
-<li>本机的FQDN可以写在配置文件里.</li>
-</ul>
-</li>
-<li>Ref: <a href="https://crunchify.com/how-to-get-server-ip-address-and-hostname-in-java/">How to get Server IP Address and Hostname in Java</a></li>
-</ul>
-<h2 id="IP隧道"><a href="#IP隧道" class="headerlink" title="IP隧道"></a>IP隧道</h2><h2 id="LVS"><a href="#LVS" class="headerlink" title="LVS"></a>LVS</h2><h3 id="LVS-v-s-iptables-x2F-netfilters"><a href="#LVS-v-s-iptables-x2F-netfilters" class="headerlink" title="LVS v.s. iptables&#x2F;netfilters"></a>LVS v.s. iptables&#x2F;netfilters</h3><p>本质上, 两个都可以做四层的DNAT, 都是工作在内核空间. </p>
-<ul>
-<li>LVS: 更侧重于LoadBalancing, 实现上使用hash查表, 而不是iptables的顺序查询. 效率更高. </li>
-<li>iptables:</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png"></p>
-<ul>
-<li>可以看到, LVS本质上是与iptables配合使用</li>
-<li>客户访问虚拟 IP（VIP）时，数据包先在主机内核空间被 PREROUTING 链检测，根据数据包的目标地址进行路由判断，若目标地址是本地，则交由 INPUT 链进行处理。</li>
-<li>IPVS 工作于 INPUT 链，当数据包到达 INPUT 链时，会先由 IPVS 进行检查，并根据负载均衡算法选出真实服务器 IP。</li>
-<li>IPVS 转发模式为 NAT 模式时，将数据包由 FORWARD 链进行处理后由 POST-ROUTING 链发送给真实服务器。</li>
-<li>IPVS 转发模式为非 NAT 模式时，则将数据包由 POST-ROUTING 链发送给真实服务器。</li>
-</ul>
-<h3 id="LVS的几种模式分析"><a href="#LVS的几种模式分析" class="headerlink" title="LVS的几种模式分析"></a>LVS的几种模式分析</h3><p><a href="https://blog.csdn.net/Splend520/article/details/104587149">linux LVS负载均衡原理 NAT DR TUN FULLNAT 模式</a></p>
-<h4 id="LVS-NAT-–-gt-NAT-x2F-DNAT"><a href="#LVS-NAT-–-gt-NAT-x2F-DNAT" class="headerlink" title="LVS-NAT –&gt; NAT&#x2F;DNAT"></a>LVS-NAT –&gt; NAT&#x2F;DNAT</h4><p>本质是类似iptables的端口映射(PAT)–&gt; 注意这里全程没有DIP的参与.</p>
-<ul>
-<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
-<li>Client请求: {CIP, VIP}</li>
-<li>LVS映射: 修改目标IP, VIP-&gt;RIP, 构建新的请求: {CIP, RIP}</li>
-<li>Server处理: 完成后发送回包, {RIP, CIP}; 由于CIP与RIP不在同一个网段, 因此发送到网关(即LVS)</li>
-<li>LVS映射: 修改源IP, RIP-&gt;VIP, 构建新的响应: {VIP, CIP}</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052223099.png"></p>
-<ul>
-<li>缺点: <ul>
-<li>需要RS与DS在同一个二层网络里, 且需要把DS&#x2F;DIP配置为RS的网关.</li>
-</ul>
-</li>
-<li>优点: <ul>
-<li>&#x2F;&#x2F; TODO:</li>
-</ul>
-</li>
-</ul>
-<h4 id="LVS-NAT-–-gt-FullNAT"><a href="#LVS-NAT-–-gt-FullNAT" class="headerlink" title="LVS-NAT –&gt; FullNAT"></a>LVS-NAT –&gt; FullNAT</h4><ul>
-<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
-<li>Client请求: {CIP, VIP}</li>
-<li>LVS映射: 修改目标IP, VIP-&gt;RIP(RealServerIP); 修改源IP, CIP-&gt;DIP; 构建新的请求: {DIP, RIP}</li>
-<li>RealServer处理: 完成后发送回包, {RIP, DIP} (FullNAT模式, 不需要LVS必须是网关, 只要三层IP可达即可)</li>
-<li>LVS映射: 修改源IP, RIP-&gt;VIP; 通过conntrack查表, 修改目标IP, DIP-&gt;CIP; 构建新的响应: {VIP, CIP}</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052218872.png"></p>
-<ul>
-<li><p>注意: LVS 本身不支持 FULLNAT 模式，需要额外对内核打补丁后才能使用。</p>
-</li>
-<li><p>缺点: </p>
-<ul>
-<li>不管是请求数据包还是响应数据包，都要经过负载均衡器。但是响应数据包一般要比请求数据包大很多，这可能会成为系统的瓶颈。</li>
-</ul>
-</li>
-<li><p>优点:</p>
-<ul>
-<li>如上图, RealServer(DIP)不需要跟LVS在同一个网段, 只要IP包(三层路由)可达, 就能完成FullNAT</li>
-</ul>
-</li>
-</ul>
-<h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><h4 id="LVS-TUN"><a href="#LVS-TUN" class="headerlink" title="LVS-TUN"></a>LVS-TUN</h4><h4 id="实际"><a href="#实际" class="headerlink" title="实际"></a>实际</h4><ul>
-<li><a href="https://help.aliyun.com/document_detail/27544.html">阿里云CLB</a>使用的是哪种模式? NAT?<ul>
-<li>四层采用开源软件LVS（Linux Virtual Server）+ keepalived的方式实现负载均衡</li>
-<li>LVS应该使用的是NAT模式. 但如果是NAT模式, 则必须把LVS作为ECS的网关. &#x2F;&#x2F;TODO: 待验证</li>
-</ul>
-</li>
-</ul>
-<h1 id="HTTP-代理"><a href="#HTTP-代理" class="headerlink" title="HTTP 代理"></a>HTTP 代理</h1><h1 id="什么是”冷土豆路由”与”热土豆路由”"><a href="#什么是”冷土豆路由”与”热土豆路由”" class="headerlink" title="什么是”冷土豆路由”与”热土豆路由”?"></a>什么是”冷土豆路由”与”热土豆路由”?</h1><ul>
-<li>参见: <a href="https://docs.microsoft.com/zh-cn/azure/virtual-network/ip-services/routing-preference-overview">冷土豆路由&amp;热土豆路由</a></li>
-<li>热土豆:<ul>
-<li>入口流量: 如果来自新加坡的用户访问托管在芝加哥的 Azure 资源，则流量将通过公共 Internet 传输，并进入芝加哥的 Microsoft 全球网络。</li>
-<li>出口流量: 出口流量遵循相同的原则。 流量会在托管服务的同一区域退出 Microsoft 网络。 例如，如果来自 Azure 芝加哥服务的流量最终传输给来自新加坡的用户，流量将离开芝加哥的 Microsoft 网络，并通过公共 Internet 传输给新加坡的用户。</li>
-</ul>
-</li>
-<li>冷土豆:<ul>
-<li>入口流量: 如果来自新加坡的用户访问托管在美国芝加哥的 Azure 资源，则流量将进入位于新加坡 Edge POP 的 Microsoft 全球网络，并通过 Microsoft 网络传输到托管在芝加哥的服务。</li>
-<li>出口流量: 如果来自 Azure 芝加哥的流量最终传输给来自新加坡的用户，那么流量就会通过 Microsoft 网络从芝加哥传输到新加坡，并退出位于新加坡 Edge POP 的 Microsoft 网络。</li>
-</ul>
-</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>iaas</tag>
-        <tag>network</tag>
-        <tag>cloud-computing</tag>
-        <tag>nat</tag>
-        <tag>pat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java&amp;JVM&amp;OQL 常用命令与脚本总结</title>
+    <title>Java&amp;JVM&amp;OQL&amp;MVN 常用命令与脚本总结</title>
     <url>//2022-07-01-java-jvm/</url>
     <content><![CDATA[<h1 id="Java-amp-JVM"><a href="#Java-amp-JVM" class="headerlink" title="Java&amp;JVM"></a>Java&amp;JVM</h1><h2 id="打-HeapDump"><a href="#打-HeapDump" class="headerlink" title="打 HeapDump"></a>打 HeapDump</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jmap -dump:live,file<span class="token operator">=</span>heapdump.phrof <span class="token variable">$pid</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -9060,6 +9060,50 @@ Property settings:
 <li><p>根据条件筛选出对象信息</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t <span class="token keyword">where</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>hostType<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"ddh.ebmec3metest"</span>
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t <span class="token keyword">where</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"28745-27"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ul>
+<h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><ul>
+<li><p>下载源代码. 有时候IDE无法自动下载jar包的源代码, 此时使用如下命令就能下载</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn dependency:sources<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>编译源码.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean compile -DskipTests<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>编译源码, 且把编译的jar包等产物安装到本地Repo中.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean <span class="token function">install</span> -DskipTests<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>强制重新下载SNAPSHOT包</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean compile -U<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>不再联网下载依赖, 即offline mode</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 先验证所有依赖都下载到了本地</span>
+<span class="token comment"># mvn dependency:go-offline</span>
+
+<span class="token comment"># 2. 再执行如下命令, 开启offline编译模式</span>
+<span class="token comment"># mvn -o install</span>
+<span class="token comment"># mvn -offline install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>依赖解析相关</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 把依赖树打印出来</span>
+<span class="token comment"># mvn dependency:tree</span>
+
+<span class="token comment"># 分析无用的依赖</span>
+<span class="token comment"># mvn dependency: analyze</span>
+
+<span class="token comment"># 分析重复的依赖</span>
+<span class="token comment"># mvn dependency:analyze-duplicate</span>
+
+<span class="token comment"># 当使用shell脚本执行jar命令启动项目时, 需要把项目依赖的jar包都放到classpath参数下. </span>
+<span class="token comment"># 但人肉一个一个加很麻烦, 执行这个命令就把所有jar包全路径都拼接打印出来. </span>
+<span class="token comment"># mvn dependency:build-classpath</span>
+
+<span class="token comment"># 把所有解析好的依赖, 平铺打印</span>
+<span class="token comment"># mvn dependency:resolve</span>
+
+<span class="token comment"># 列出所有配置好的remote repo</span>
+<span class="token comment"># mvn dependency:list-repositories</span>
+
+<span class="token comment"># 把项目所有依赖的jar包都拷贝到目标目录下</span>
+<span class="token comment"># mvn dependency:copy-dependencies -DoutputDirectory="~/lib/"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
