@@ -1,7 +1,7 @@
 ---
-title: software-diagrams-summary
+title: 常用软件工程作图工具汇总
 date: 2023-04-10 22:15:16
-tags:
+tags: [soft-skills, diagrams, software-engineering, best-practice]
 ---
 # Intro
 
@@ -96,7 +96,7 @@ tags:
 - 工具: 语雀画板 > draw.io >> mermaid(可用但不灵活, 不美观)
 - 样例:
 
-![](https://cn.dubbo.apache.org/imgs/v3/difference/dubbo-grpc.png)
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102341355.png)
 
 
 ## 坐标轴图(axis)
@@ -138,7 +138,7 @@ timeline
 - 工具: mermaid(不太美观) > 语雀画板 > draw.io
 - Sample:
 
-```{.mermaid format=svg}
+```mermaid
 stateDiagram-v2
       [*] --> Init
       Init --> Processing: process
@@ -213,7 +213,7 @@ gantt
 - 工具: mermaid
 - Sample:
 
-```{.mermaid format=svg}
+```mermaid
 erDiagram
     user_profile_define ||--o{ user_profile : defines
 		user_profile_define {
@@ -258,7 +258,7 @@ erDiagram
 - 使用场景: 研究报告, 汇报PPT
 - 面向对象: 外部
 
-```{.mermaid format=svg}
+```mermaid
 pie title Pets adopted by volunteers
     "Dogs" : 386
     "Cats" : 85
@@ -272,7 +272,7 @@ pie title Pets adopted by volunteers
 - 使用场景: 研究报告, 汇报PPT
 - 面向对象: 内/外部
 
-![ggplot-java-new-array-list](./ggplot-java-new-array-list.png)
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102345217.png)
 
 
 ## 趋势图
@@ -299,7 +299,7 @@ pie title Pets adopted by volunteers
 ## ASCII图
 
 - 场景: CLI/DocFile里无法显示图片, 可以用ASCII图
-- 工具: [asciiflow](https://asciiflow.cn/), 增加文本, 移动等操作不太灵活
+- 工具: [asciiflow](https://asciiflow.cn/) (缺点是: 增加文本, 移动等操作不太灵活)
 - Sample: 
 
 ```
