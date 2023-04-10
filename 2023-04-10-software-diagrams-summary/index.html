@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Intro背景作为程序员, 除了日常敲代码外, 我们通常也要花很多时间在作图上.  汇报或者设计文档中, 一图胜千言. 但不想花过多时间在框框的对齐, 颜色的挑选, 样式的调整, 作图工具的选择上.  因此本文系统总结下自己用的工具与最佳实践.希望可以make our hard life a little easier.  场景 对内&#x2F;非正式: 详细&#x2F;概要设计文档 代码逻辑&amp;#">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="software-diagrams-summary">
+<meta property="og:url" content="https://davyjones2010.github.io/2023-04-10-software-diagrams-summary/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="Intro背景作为程序员, 除了日常敲代码外, 我们通常也要花很多时间在作图上.  汇报或者设计文档中, 一图胜千言. 但不想花过多时间在框框的对齐, 颜色的挑选, 样式的调整, 作图工具的选择上.  因此本文系统总结下自己用的工具与最佳实践.希望可以make our hard life a little easier.  场景 对内&#x2F;非正式: 详细&#x2F;概要设计文档 代码逻辑&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102223182.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102222693.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102227065.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102229011.png">
+<meta property="og:image" content="https://cn.dubbo.apache.org/imgs/v3/difference/dubbo-grpc.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102239302.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102242364.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102245036.png">
+<meta property="og:image" content="https://davyjones2010.github.io/ggplot-java-new-array-list.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102310399.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102316078.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102330899.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102331383.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102331102.png">
+<meta property="article:published_time" content="2023-04-10T14:15:16.000Z">
+<meta property="article:modified_time" content="2023-04-10T15:38:36.076Z">
+<meta property="article:author" content="Davy Walker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102223182.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2023-04-10-software-diagrams-summary/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2023-04-10-software-diagrams-summary/","path":"/2023-04-10-software-diagrams-summary/","title":"software-diagrams-summary"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>software-diagrams-summary | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme.html" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%88%99"><span class="nav-number">1.3.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%AF%94%E8%BE%83"><span class="nav-number">1.4.</span> <span class="nav-text">工具比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E5%9B%BE-architecture"><span class="nav-number">2.</span> <span class="nav-text">架构图(architecture)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Landscape-Eco"><span class="nav-number">2.1.</span> <span class="nav-text">Landscape(Eco)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E5%9B%BE-%E8%B1%86%E8%85%90%E5%9D%97"><span class="nav-number">2.2.</span> <span class="nav-text">业务架构图(豆腐块)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%E5%9B%BE"><span class="nav-number">2.3.</span> <span class="nav-text">技术架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2%E5%9B%BE-Cloud-Infra"><span class="nav-number">2.4.</span> <span class="nav-text">云上部署图(Cloud Infra)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E7%A4%BA%E6%84%8F%E5%9B%BE-%E9%87%8D%E8%A6%81"><span class="nav-number">2.5.</span> <span class="nav-text">逻辑示意图(重要)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%90%E6%A0%87%E8%BD%B4%E5%9B%BE-axis"><span class="nav-number">2.6.</span> <span class="nav-text">坐标轴图(axis)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E8%BD%B4%E5%9B%BE-timeline"><span class="nav-number">2.7.</span> <span class="nav-text">时间轴图(timeline)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UML"><span class="nav-number">3.</span> <span class="nav-text">UML</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%9B%BE-State-Diagram"><span class="nav-number">3.1.</span> <span class="nav-text">状态图(State Diagram)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%BE-Sequence-Diagram"><span class="nav-number">3.2.</span> <span class="nav-text">时序图(Sequence Diagram)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%B3%E9%81%93%E5%9B%BE-BPM"><span class="nav-number">3.3.</span> <span class="nav-text">泳道图(BPM)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%98%E7%89%B9%E5%9B%BE-Gantt-Chart"><span class="nav-number">3.4.</span> <span class="nav-text">甘特图(Gantt Chart)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ER%E5%9B%BE"><span class="nav-number">3.5.</span> <span class="nav-text">ER图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%9B%BE-Deployment-Diagram"><span class="nav-number">3.6.</span> <span class="nav-text">部署图(Deployment Diagram)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">统计图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A5%BC%E5%9B%BE-Pie-Chart"><span class="nav-number">4.1.</span> <span class="nav-text">饼图(Pie Chart)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E7%82%B9%E5%9B%BE-%E5%B8%A6%E6%8B%9F%E5%90%88"><span class="nav-number">4.2.</span> <span class="nav-text">散点图(带拟合)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%8B%E5%8A%BF%E5%9B%BE"><span class="nav-number">4.3.</span> <span class="nav-text">趋势图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%9B%BE"><span class="nav-number">5.</span> <span class="nav-text">其他图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%91%E5%9B%BE"><span class="nav-number">5.1.</span> <span class="nav-text">脑图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASCII%E5%9B%BE"><span class="nav-number">5.2.</span> <span class="nav-text">ASCII图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.</span> <span class="nav-text">最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%BA%A7%E5%86%85%E5%AE%B9%E4%BC%98%E5%8C%96"><span class="nav-number">6.1.</span> <span class="nav-text">三级内容优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B1%86%E8%85%90%E5%9D%97%E9%85%8D%E8%89%B2%E4%BC%98%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text">豆腐块配色优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E8%89%B2-amp-%E5%AD%97%E4%BD%93-Ubuntu%E9%A3%8E%E6%A0%BC-cont%E2%80%99d"><span class="nav-number">6.3.</span> <span class="nav-text">配色&amp;字体-Ubuntu风格(cont’d)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E8%89%B2-amp-%E5%AD%97%E4%BD%93-SegmentFault%E9%A3%8E%E6%A0%BC"><span class="nav-number">6.4.</span> <span class="nav-text">配色&amp;字体-SegmentFault风格</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">193</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-04-10-software-diagrams-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="software-diagrams-summary | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          software-diagrams-summary
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-04-10 22:15:16 / 修改时间：23:38:36" itemprop="dateCreated datePublished" datetime="2023-04-10T22:15:16+08:00">2023-04-10</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>作为程序员, 除了日常敲代码外, 我们通常也要花很多时间在作图上.</p>
+<ul>
+<li>汇报或者设计文档中, 一图胜千言.</li>
+<li>但不想花过多时间在框框的对齐, 颜色的挑选, 样式的调整, 作图工具的选择上.</li>
+</ul>
+<p>因此本文系统总结下自己用的工具与最佳实践.希望可以<code>make our hard life a little easier</code>. </p>
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><ul>
+<li>对内&#x2F;非正式:<ul>
+<li>详细&#x2F;概要设计文档</li>
+<li>代码逻辑&#x2F;架构梳理</li>
+<li>个人数据分析</li>
+</ul>
+</li>
+<li>对内&#x2F;外, 半正式:<ul>
+<li>技术文章&#x2F;Doc&#x2F;博客</li>
+</ul>
+</li>
+<li>对外&#x2F;正式:<ul>
+<li>向上总结汇报</li>
+<li>项目KO&#x2F;汇报</li>
+</ul>
+</li>
+</ul>
+<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><ul>
+<li>优先: code化(diagrams-as-code), mermaid<ul>
+<li>方便git版本管理</li>
+</ul>
+</li>
+<li>其次: draw.io &gt; yuque 导出图片类型<ul>
+<li>png &gt; svg &gt; jpeg</li>
+</ul>
+</li>
+<li>最终: 美学上要有追求, 如色调风格统一<ul>
+<li>如<a target="_blank" rel="noopener" href="https://cn.dubbo.apache.org/zh-cn/">Dubbo</a>使用蓝紫过渡色调</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102223182.png"></p>
+<h2 id="工具比较"><a href="#工具比较" class="headerlink" title="工具比较"></a>工具比较</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>Diagrams As Code</th>
+<th>是否收费(by 20230314)</th>
+<th>优势</th>
+<th>缺点</th>
+<th>推荐优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://mermaid.js.org/intro/">mermaid</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DAS, 项目活跃, 审美在线</td>
+<td>支持图类型少(有潜力)</td>
+<td><strong>高</strong>: 设计文档优先</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://app.diagrams.net/">draw.io</a></td>
+<td>N</td>
+<td>N</td>
+<td>图类型全</td>
+<td>非DAS, <font color='red'><strong>注意保留源文件</strong></font></td>
+<td><strong>高</strong>: 设计文档优先</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://aliyuque.antfin.com/dashboard">语雀画板</a></td>
+<td>N</td>
+<td>N</td>
+<td>图类型全, 审美在线</td>
+<td>非DAS; 模板样例较少</td>
+<td><strong>高</strong>: 设计文档优先</td>
+</tr>
+<tr>
+<td>PPT&#x2F;WPS</td>
+<td>N</td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td><strong>高</strong>: 汇报文档优先</td>
+</tr>
+<tr>
+<td>xmind</td>
+<td>N</td>
+<td>Y</td>
+<td>方便易用, 审美在线</td>
+<td>适用范围窄: 只适合画思维导图</td>
+<td>中</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://ggplot2.tidyverse.org/">ggplot2</a></td>
+<td>N</td>
+<td>N</td>
+<td></td>
+<td>适用范围窄: 只适合数学统计类</td>
+<td>统计类高优推荐</td>
+</tr>
+<tr>
+<td><a href="">Aliyun ROS Visual Editor</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DAS</td>
+<td>适用范围窄: 只适用云上部署图</td>
+<td>云上部署类高优</td>
+</tr>
+<tr>
+<td><del><a target="_blank" rel="noopener" href="https://plantuml.com/zh/">plantml</a></del></td>
+<td><del>Y</del></td>
+<td><del>N</del></td>
+<td><del>DAS, 图类型全</del></td>
+<td><del>过于陈旧, 废弃不用.</del></td>
+<td><del>废弃</del></td>
+</tr>
+<tr>
+<td><del>gliffy</del></td>
+<td>N</td>
+<td>Y</td>
+<td><del>轻量</del></td>
+<td><del>废弃</del></td>
+<td><del>废弃</del></td>
+</tr>
+<tr>
+<td><del><a target="_blank" rel="noopener" href="https://www.processon.com/">processon</a></del></td>
+<td>N</td>
+<td>Y</td>
+<td><del>模板样例多</del></td>
+<td></td>
+<td><del>废弃</del></td>
+</tr>
+<tr>
+<td><del>staruml</del></td>
+<td>N</td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td><del>废弃</del></td>
+</tr>
+</tbody></table>
+<h1 id="架构图-architecture"><a href="#架构图-architecture" class="headerlink" title="架构图(architecture)"></a>架构图(architecture)</h1><ul>
+<li>特点: 宏观的, 上层的</li>
+<li>使用场景: 汇报PPT</li>
+<li>面向对象: 老板, 外部</li>
+</ul>
+<h2 id="Landscape-Eco"><a href="#Landscape-Eco" class="headerlink" title="Landscape(Eco)"></a>Landscape(Eco)</h2><ul>
+<li>场景: 为了说明某个系统的关联生态</li>
+<li>工具: draw.io</li>
+<li>Tips: 尽量使用Logo + 不规则形状 + 大箭头</li>
+<li>样例:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102222693.png" alt="sentinel-opensource-eco-landscape-en"></li>
+</ul>
+<h2 id="业务架构图-豆腐块"><a href="#业务架构图-豆腐块" class="headerlink" title="业务架构图(豆腐块)"></a>业务架构图(豆腐块)</h2><ul>
+<li>场景: 为了说明某个系统业务架构</li>
+<li>工具: draw.io &gt; 语雀画板</li>
+<li>Tips: 同色, 分层</li>
+<li>样例:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102227065.png" alt="yuque_diagram-biz-arch"></p>
+<h2 id="技术架构图"><a href="#技术架构图" class="headerlink" title="技术架构图"></a>技术架构图</h2><h2 id="云上部署图-Cloud-Infra"><a href="#云上部署图-Cloud-Infra" class="headerlink" title="云上部署图(Cloud Infra)"></a>云上部署图(Cloud Infra)</h2><ul>
+<li>场景: 为了说明某个系统的部署架构</li>
+<li>工具: draw.io&gt; <a target="_blank" rel="noopener" href="https://rosnext.console.aliyun.com/designer">rosdesigner</a> </li>
+<li>Tips: <a target="_blank" rel="noopener" href="https://rosnext.console.aliyun.com/designer">rosdesigner</a> 可以直接可视化编辑, 也可以基于已有实例生成拓扑. 缺点是不太美观.</li>
+<li>样例:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102229011.png"></p>
+<h2 id="逻辑示意图-重要"><a href="#逻辑示意图-重要" class="headerlink" title="逻辑示意图(重要)"></a>逻辑示意图(重要)</h2><ul>
+<li>场景: 为了说明某个工具&#x2F;流程work的机制, 可用于汇报, 也可用于技术文章. 属于最灵活的一类.</li>
+<li>工具: 语雀画板 &gt; draw.io &gt;&gt; mermaid(可用但不灵活, 不美观)</li>
+<li>样例:</li>
+</ul>
+<p><img data-src="https://cn.dubbo.apache.org/imgs/v3/difference/dubbo-grpc.png"></p>
+<h2 id="坐标轴图-axis"><a href="#坐标轴图-axis" class="headerlink" title="坐标轴图(axis)"></a>坐标轴图(axis)</h2><ul>
+<li>场景: PPT汇报里, 属于”逻辑示意图”的子类.</li>
+<li>工具: draw.io &gt; 语雀画板. 暂时没有数字描述的坐标图工具.</li>
+<li>样例:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102239302.png" alt="draw-axis"></p>
+<h2 id="时间轴图-timeline"><a href="#时间轴图-timeline" class="headerlink" title="时间轴图(timeline)"></a>时间轴图(timeline)</h2><ul>
+<li>场景: PPT汇报里, 展示项目整体milestone</li>
+<li>工具: 语雀画板(实际使用脑图实现) &gt; xmind &gt; mermaid(版本需要升级, 且不太美观)</li>
+<li>sample:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102242364.png" alt="yuque-timeline"></p>
+<pre class="mermaid">timeline
+    title History of Social Media Platform
+    2002 : LinkedIn
+    2004 : Facebook
+         : Google
+    2005 : Youtube
+    2006 : Twitter</pre>
+
+<h1 id="UML"><a href="#UML" class="headerlink" title="UML"></a>UML</h1><ul>
+<li>特点: 微观的, 底层的</li>
+<li>使用场景: 软件设计文档</li>
+<li>面向对象: 开发人员, 内部人员</li>
+</ul>
+<h2 id="状态图-State-Diagram"><a href="#状态图-State-Diagram" class="headerlink" title="状态图(State Diagram)"></a>状态图(State Diagram)</h2><ul>
+<li>场景: 描述某个状态机. 例如Java线程, NC状态, VM状态等. <strong>不适合汇报</strong></li>
+<li>工具: mermaid(不太美观) &gt; 语雀画板 &gt; draw.io</li>
+<li>Sample:</li>
+</ul>
+<pre class="line-numbers language-&#123;.mermaid" data-language="&#123;.mermaid"><div class="caption"><span>format</span></div><code class="language-&#123;.mermaid">stateDiagram-v2
+      [*] --&gt; Init
+      Init --&gt; Processing: process
+      Processing --&gt; Success
+      Processing --&gt; Failed
+			Failed --&gt; Init: reinit
+			Success --&gt; Init: reinit
+			Processing --&gt; Init: reinit
+      Success --&gt; [*]
+      Failed --&gt; [*]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="时序图-Sequence-Diagram"><a href="#时序图-Sequence-Diagram" class="headerlink" title="时序图(Sequence Diagram)"></a>时序图(Sequence Diagram)</h2><ul>
+<li>场景: 多个角色&#x2F;系统间接口交互. 与泳道图相比, 更细粒度. <strong>适合代码分析, 不适合汇报</strong></li>
+<li>工具: mermaid</li>
+<li>Sample:</li>
+</ul>
+<pre class="mermaid">sequenceDiagram
+      participant Alice
+      participant John
+      participant Tom
+      Alice->>+John: Hello John, how are you?
+      John->>+Tom: Hello Tom
+      Tom-->>-John: Yes
+      John-->>-Alice: Great!</pre>
+
+
+<h2 id="泳道图-BPM"><a href="#泳道图-BPM" class="headerlink" title="泳道图(BPM)"></a>泳道图(BPM)</h2><ul>
+<li>场景: 多个角色&#x2F;系统间交互, 更多地面向功能. 与时序图相比, 更粗粒度. <strong>适合汇报</strong></li>
+<li>工具: draw.io</li>
+<li>Tips: 增加横向容器, 填充颜色, 线段交叉用arch</li>
+<li>Sample:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102245036.png"></p>
+<h2 id="甘特图-Gantt-Chart"><a href="#甘特图-Gantt-Chart" class="headerlink" title="甘特图(Gantt Chart)"></a>甘特图(Gantt Chart)</h2><ul>
+<li>场景: 方便管理项目规划, 跟踪进展</li>
+<li>工具: mermaid &gt;&gt; 语雀画板 &gt; draw.io</li>
+<li>Tips: 横向section</li>
+<li>Sample:</li>
+</ul>
+<pre class="mermaid">gantt
+    title 灰度计划
+    dateFormat  YYYYMMDD
+    section 测试环境验证
+    Alpha策略验证        :a1, 20230302, 20230310
+        Beta联调验证 		:20230303, 20230312
+    section 海外地域灰度
+    澳洲      :a2, 20230310  , 14d
+    德国      :a3, 20230313 ,10d
+        section 国内地域灰度
+        杭州			:a4, 20230316, 15d
+        深圳			:a5, 20230316, 15d
+        北京			:a6, 20230320, 15d
+        上海			:a7, 20230320, 15d
+        青岛			:a7, 20230320, 15d
+        香港			:a8, 20230322, 15d
+        张北			:a9, 20230322, 15d
+        美西			:a10, 20230322, 15d</pre>
+
+<h2 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h2><ul>
+<li>场景: 技术设计文档中使用, 不适合汇报</li>
+<li>工具: mermaid</li>
+<li>Sample:</li>
+</ul>
+<pre class="line-numbers language-&#123;.mermaid" data-language="&#123;.mermaid"><div class="caption"><span>format</span></div><code class="language-&#123;.mermaid">erDiagram
+    user_profile_define ||--o&#123; user_profile : defines
+		user_profile_define &#123;
+			string profile_type
+			string profile_attr
+		&#125;
+		user_profile &#123;
+			long user_profile_id
+			long uid
+			string location_type
+		&#125;
+    schedule_strategy ||--|&#123; schedule_strategy_binding : bind
+    schedule_strategy_binding &#125;|..|&#123; user_profile : bind
+		schedule_strategy &#123;
+			long strategy_id
+			string strict_expression
+		&#125;
+		schedule_strategy_binding &#123;
+			string strategy_name
+			string user_profile_expression
+		&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="部署图-Deployment-Diagram"><a href="#部署图-Deployment-Diagram" class="headerlink" title="部署图(Deployment Diagram)"></a>部署图(Deployment Diagram)</h2><ul>
+<li>场景: 方便</li>
+<li>工具:</li>
+<li>Sample:</li>
+</ul>
+<h1 id="统计图"><a href="#统计图" class="headerlink" title="统计图"></a>统计图</h1><ul>
+<li>特点: 面向数学统计类</li>
+<li>使用场景: 个人分析, 汇报PPT</li>
+<li>面向对象: 内部, 外部均可</li>
+<li>工具: 推荐使用ggplot</li>
+</ul>
+<h2 id="饼图-Pie-Chart"><a href="#饼图-Pie-Chart" class="headerlink" title="饼图(Pie Chart)"></a>饼图(Pie Chart)</h2><ul>
+<li>工具: mermaid, ggplot2</li>
+<li>使用场景: 研究报告, 汇报PPT</li>
+<li>面向对象: 外部</li>
+</ul>
+<pre class="line-numbers language-&#123;.mermaid" data-language="&#123;.mermaid"><div class="caption"><span>format</span></div><code class="language-&#123;.mermaid">pie title Pets adopted by volunteers
+    &quot;Dogs&quot; : 386
+    &quot;Cats&quot; : 85
+    &quot;Rats&quot; : 15<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="散点图-带拟合"><a href="#散点图-带拟合" class="headerlink" title="散点图(带拟合)"></a>散点图(带拟合)</h2><ul>
+<li>工具: ggplot2</li>
+<li>使用场景: 研究报告, 汇报PPT</li>
+<li>面向对象: 内&#x2F;外部</li>
+</ul>
+<p><img data-src="/./ggplot-java-new-array-list.png" alt="ggplot-java-new-array-list"></p>
+<h2 id="趋势图"><a href="#趋势图" class="headerlink" title="趋势图"></a>趋势图</h2><ul>
+<li>工具: ggplot2</li>
+<li>使用场景: 研究报告, 汇报PPT</li>
+<li>Tips: 拟合</li>
+<li>面向对象: 内&#x2F;外部</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>双轴图</li>
+<li>热力图</li>
+</ul>
+<h1 id="其他图"><a href="#其他图" class="headerlink" title="其他图"></a>其他图</h1><h2 id="脑图"><a href="#脑图" class="headerlink" title="脑图"></a>脑图</h2><ul>
+<li>场景: 业务规划,</li>
+<li>工具: yuque &gt; xmind &gt; mermaid(太丑, 且需要高版本)</li>
+<li>Sample:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102310399.png" alt="yuque_diagram-xmind2"></li>
+</ul>
+<h2 id="ASCII图"><a href="#ASCII图" class="headerlink" title="ASCII图"></a>ASCII图</h2><ul>
+<li>场景: CLI&#x2F;DocFile里无法显示图片, 可以用ASCII图</li>
+<li>工具: <a target="_blank" rel="noopener" href="https://asciiflow.cn/">asciiflow</a>, 增加文本, 移动等操作不太灵活</li>
+<li>Sample:</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">     +-------error---------+
+     |                     |
++----v----+         +------+---+-+         +----------+
+|         |         |          | |         |          |
+|  init   +---------&gt; processing +-success-&gt; finished |
+|         |         |          | |         |          |
++----^----+         +----------+-+         +-----+----+
+     |                                           |
+     |                                           |
+     |                                           |
+     |                                           |
+     +-------------------retry-------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><h2 id="三级内容优化"><a href="#三级内容优化" class="headerlink" title="三级内容优化"></a>三级内容优化</h2><ul>
+<li>分辨率优化: PNG缩放400%, 提升分辨率</li>
+<li>工具熟练: 善用对齐</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102316078.png"></p>
+<h2 id="豆腐块配色优化"><a href="#豆腐块配色优化" class="headerlink" title="豆腐块配色优化"></a>豆腐块配色优化</h2><ul>
+<li>配色从<a target="_blank" rel="noopener" href="https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3">colorbrewer2</a>中选择</li>
+<li>大区域与小区域同色系, 不同深度</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102330899.png"></p>
+<h2 id="配色-amp-字体-Ubuntu风格-cont’d"><a href="#配色-amp-字体-Ubuntu风格-cont’d" class="headerlink" title="配色&amp;字体-Ubuntu风格(cont’d)"></a>配色&amp;字体-Ubuntu风格(cont’d)</h2><ul>
+<li>配色: 不能用白底, 黑底(0x333333) + 绿字(0x33FF33) + 亮海蓝(0x2023A6) + 靛蓝(0x115354) + (0x481036)</li>
+<li>字体: Comic Sans MS</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102331383.png"></p>
+<h2 id="配色-amp-字体-SegmentFault风格"><a href="#配色-amp-字体-SegmentFault风格" class="headerlink" title="配色&amp;字体-SegmentFault风格"></a>配色&amp;字体-SegmentFault风格</h2><ul>
+<li>配色: 白烟色(0xF0F0F0) + 铬绿(0x188D5D) + 薄荷绿(0x199562)  + 暗岩蓝(0xA680B8)</li>
+<li>字体: Verdana字体<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102331102.png"></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023-03-05-head-first-revealjs/" rel="prev" title="revealjs制作PPT笔记">
+                  <i class="fa fa-chevron-left"></i> revealjs制作PPT笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">304k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:36</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
