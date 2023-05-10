@@ -17,7 +17,7 @@ tags: [soft-skills, books, best-practice]
 - 特点: 非技术类或者半技术类; 无需记录太多笔记; 基本无需进行实操; 无需在工作电脑中查看.
 - 限制: **必须使用epub格式.** mobi格式只能在kindle中看, 在mac上, ipad上, 手机上, 都无法解析;
 - 管理流程如下:
-![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305092350118.png)
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305110015750.png)
 
 # 技术类管理方式
 - 特点: 技术类; 需要记录很多笔记; 常常需要实操; 需要在工作电脑中查看.
@@ -26,6 +26,15 @@ tags: [soft-skills, books, best-practice]
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305100008704.png)
 
 # 后续事项
-1. 当前只梳理了如何把书籍同步到各个设备, 但实际上各个设备上的也记录了诸多笔记, 这些笔记如何同步管理也是令人头疼. 初步想法是通过[notion](https://www.notion.so/)来搞, 把书单也一起维护起来, 但也是个不小的工程.
-2. 同步到kindle必须使用USB连接传输, 非常不方便. 虽然可以通过邮件`send to kindle`, 但由于zlib的限制, 以及amazon本身的邮箱白名单限制, 导致搞起来好麻烦.
+1. 笔记同步方案: 当前只梳理了如何把书籍同步到各个设备, 但实际上各个设备上的也记录了诸多笔记, 这些笔记如何同步管理也是令人头疼. 初步想法是通过[notion](https://www.notion.so/)来搞, 把书单也一起维护起来, 但也是个不小的工程.
+2. `send to kindle`下线风险: 虽然可以通过邮件`send to kindle`, 但**[2024 年 6 月 30 日之后，用户将无法使用“发送至 Kindle”功能，也就是无法再通过邮箱等方式将电子书推送到 Kindle。](https://bookfere.com/post/985.html)** 还是要想好迁移方案. 
 总之, 先这样吧, 一个问题一个问题来解决.
+3. 文件格式问题: 很多半技术类的书籍, 都是pdf格式, 压根没有epub. 但pdf在手机&kindle上查看简直是灾难. 没想好咋解决.
+
+# 其他备注
+- [zlib](https://z-lib.is/) 没法用了(by 2023年05月11日), 用 [yibook](https://tool.yibook.org/) 来替代吧, 可以通过百度网盘来传输, 速度嗖嗖地.
+- kindle邮箱备忘:
+```shell
+KindleOasis1: davyjones2010_0312@kindle.cn
+KindleOasis2: davyjones2010_0311@kindle.cn
+```
