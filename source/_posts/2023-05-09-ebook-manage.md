@@ -33,6 +33,7 @@ tags: [soft-skills, books, best-practice]
 
 # 其他备注
 - [zlib](https://z-lib.is/) 没法用了(by 2023年05月11日), 用 [yibook](https://tool.yibook.org/) 来替代吧, 可以通过百度网盘来传输, 速度嗖嗖地.
+- zlib的另外替代: [Kindle 图书资源](https://bookfere.com/ebook#ebook_1)
 - kindle邮箱备忘:
 ```shell
 KindleOasis1: davyjones2010_0312@kindle.cn
