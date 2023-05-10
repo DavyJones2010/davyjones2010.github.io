@@ -1853,33 +1853,6 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       </tags>
   </entry>
   <entry>
-    <title>2021年10月第三周</title>
-    <url>//2021-10-17-weekend-summary/</url>
-    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
-<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
-<blockquote>
-<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
-</blockquote>
-<blockquote>
-<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
-</blockquote>
-<blockquote>
-<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
-</blockquote>
-<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
-<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
-<blockquote>
-<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
-</blockquote>
-<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>weekend</tag>
-        <tag>diary</tag>
-        <tag>books</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一个简单的Fork&amp;Join框架实现</title>
     <url>//2021-10-08-simple-fork-join-framework/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在代码里, 经常需要类似fork&amp;join的方式来并行完成一些耗时的任务, 并将结果聚合起来.<br>通常有如下几种方式来实现:</p>
@@ -2366,6 +2339,33 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
       <tags>
         <tag>code-snippets</tag>
         <tag>concurrent</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2021年10月第三周</title>
+    <url>//2021-10-17-weekend-summary/</url>
+    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
+<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
+<blockquote>
+<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
+</blockquote>
+<blockquote>
+<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
+</blockquote>
+<blockquote>
+<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
+</blockquote>
+<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
+<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
+<blockquote>
+<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
+</blockquote>
+<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>weekend</tag>
+        <tag>diary</tag>
+        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -11407,11 +11407,17 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 <li><input disabled="" type="checkbox"> <a href="https://book.douban.com/subject/36082349/">Chip War</a></li>
 </ul>
 <h1 id="ReadList"><a href="#ReadList" class="headerlink" title="ReadList"></a>ReadList</h1><hr>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://mp.weixin.qq.com/s/EUAN-w14moJiQ0oVUTCtgQ">如何写出一份优秀的设计文档</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://mp.weixin.qq.com/s/YdoxVxz_91ZFemF8JuxRvQ">Koordinator 0.6：企业级容器调度系统解决方案，引入 CPU 精细编排、资源预留与全新的重调度框架</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://mp.weixin.qq.com/s/_ehHZfBo9A6_oq5RaA57Vw">携手15年，语雀创始人玉伯从蚂蚁离职，选择一个人远行</a></li>
+</ul>
 <h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1><hr>
 <h2 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h2><ul>
 <li><input disabled="" type="checkbox"> <a href="https://www.bilibili.com/video/BV1qa4y1j7xk/">2020 南京大学计算机系统基础习题课 (蒋炎岩)</a></li>
 <li><input disabled="" type="checkbox"> <a href="https://www.bilibili.com/video/BV1sR4y1V7T4/">2022 南京大学拔尖计划《操作系统：设计与实现》</a></li>
 <li><input disabled="" type="checkbox"> <a href="https://www.bilibili.com/video/av889477532/">文件系统技术内幕 B站视频</a></li>
+<li><input disabled="" type="checkbox"> <a href="https://time.geekbang.org/column/intro/460?utm_term=zeusXD30A&utm_source=geektime&utm_medium=geektime&utm_campaign=100099801&utm_content=text&tab=comment">郭东白的架构课</a></li>
 </ul>
 <h2 id="娱乐"><a href="#娱乐" class="headerlink" title="娱乐"></a>娱乐</h2><ul>
 <li><input checked="" disabled="" type="checkbox"> <a href="https://movie.douban.com/subject/35465232/">狂飙</a></li>
