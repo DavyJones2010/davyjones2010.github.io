@@ -12973,7 +12973,7 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="t
 <h1 id="小说类管理方式"><a href="#小说类管理方式" class="headerlink" title="小说类管理方式"></a>小说类管理方式</h1><ul>
 <li>特点: 非技术类或者半技术类; 无需记录太多笔记; 基本无需进行实操; 无需在工作电脑中查看.</li>
 <li>限制: <strong>必须使用epub格式.</strong> mobi格式只能在kindle中看, 在mac上, ipad上, 手机上, 都无法解析;</li>
-<li>管理流程如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305092350118.png"></li>
+<li>管理流程如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305110015750.png"></li>
 </ul>
 <h1 id="技术类管理方式"><a href="#技术类管理方式" class="headerlink" title="技术类管理方式"></a>技术类管理方式</h1><ul>
 <li>特点: 技术类; 需要记录很多笔记; 常常需要实操; 需要在工作电脑中查看.</li>
@@ -12981,9 +12981,16 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="t
 <li>管理流程如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305100008704.png"></li>
 </ul>
 <h1 id="后续事项"><a href="#后续事项" class="headerlink" title="后续事项"></a>后续事项</h1><ol>
-<li>当前只梳理了如何把书籍同步到各个设备, 但实际上各个设备上的也记录了诸多笔记, 这些笔记如何同步管理也是令人头疼. 初步想法是通过<a href="https://www.notion.so/">notion</a>来搞, 把书单也一起维护起来, 但也是个不小的工程.</li>
-<li>同步到kindle必须使用USB连接传输, 非常不方便. 虽然可以通过邮件<code>send to kindle</code>, 但由于zlib的限制, 以及amazon本身的邮箱白名单限制, 导致搞起来好麻烦.<br>总之, 先这样吧, 一个问题一个问题来解决.</li>
+<li>笔记同步方案: 当前只梳理了如何把书籍同步到各个设备, 但实际上各个设备上的也记录了诸多笔记, 这些笔记如何同步管理也是令人头疼. 初步想法是通过<a href="https://www.notion.so/">notion</a>来搞, 把书单也一起维护起来, 但也是个不小的工程.</li>
+<li><code>send to kindle</code>下线风险: 虽然可以通过邮件<code>send to kindle</code>, 但**<a href="https://bookfere.com/post/985.html">2024 年 6 月 30 日之后，用户将无法使用“发送至 Kindle”功能，也就是无法再通过邮箱等方式将电子书推送到 Kindle。</a>** 还是要想好迁移方案.<br>总之, 先这样吧, 一个问题一个问题来解决.</li>
+<li>文件格式问题: 很多半技术类的书籍, 都是pdf格式, 压根没有epub. 但pdf在手机&amp;kindle上查看简直是灾难. 没想好咋解决.</li>
 </ol>
+<h1 id="其他备注"><a href="#其他备注" class="headerlink" title="其他备注"></a>其他备注</h1><ul>
+<li><a href="https://z-lib.is/">zlib</a> 没法用了(by 2023年05月11日), 用 <a href="https://tool.yibook.org/">yibook</a> 来替代吧, 可以通过百度网盘来传输, 速度嗖嗖地.</li>
+<li>zlib的另外替代: <a href="https://bookfere.com/ebook#ebook_1">Kindle 图书资源</a></li>
+<li>kindle邮箱备忘:<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">KindleOasis1: davyjones2010_0312@kindle.cn
+KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>books</tag>
