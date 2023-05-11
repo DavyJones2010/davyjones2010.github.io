@@ -105,7 +105,7 @@ sequenceDiagram
     end
     
     Developer ->> User: 问题是否已经解决啦?
-    User --> Developer: 终于解决了, 但你们也太不专业, 太不靠谱了.
+    User -->> Developer: 终于解决了, 但你们也太不专业, 太不靠谱了.
 ```
 
 ## 专业的行为
