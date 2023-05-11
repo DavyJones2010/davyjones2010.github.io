@@ -17,7 +17,7 @@ tags: [soft-skills, books, best-practice]
 - 特点: 非技术类或者半技术类; 无需记录太多笔记; 基本无需进行实操; 无需在工作电脑中查看.
 - 限制: **必须使用epub格式.** mobi格式只能在kindle中看, 在mac上, ipad上, 手机上, 都无法解析;
 - 管理流程如下:
-![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305110015750.png)
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305112245705.png)
 
 # 技术类管理方式
 - 特点: 技术类; 需要记录很多笔记; 常常需要实操; 需要在工作电脑中查看.
