@@ -13129,7 +13129,13 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 <h1 id="思考-如何变得专业"><a href="#思考-如何变得专业" class="headerlink" title="思考: 如何变得专业?"></a>思考: 如何变得专业?</h1><h2 id="如何做一个合格的Developer"><a href="#如何做一个合格的Developer" class="headerlink" title="如何做一个合格的Developer"></a>如何做一个合格的Developer</h2><p>目标: 做到<strong>一言九鼎</strong>(跟用户反馈解决&#x2F;完成, 那就需要保证用户视角下100%是可用了, 不瞎说, 不误导), 少打扰用户.<br>路径: 熟悉自己的产品.</p>
 <h2 id="如何做一个合格的User"><a href="#如何做一个合格的User" class="headerlink" title="如何做一个合格的User"></a>如何做一个合格的User</h2><p>尽量提供足够多的信息, 例如traceId, 发生环境, 发生时间点, 是否必现, 出现路径是怎样的, 使用文本而非截图. </p>
 <p>在系统不完善时, 需要合格的User. 但更重要的是<strong>Developer在设计系统时考虑周全</strong>, 把问题排查(售后)链路纳入考虑范围.<br>之前自己在作为User向中间件团队咨询&#x2F;反馈问题时, 发现很多同学戾气很重, 经常埋怨用户没有提供足够多的信息, 让他们不好排查.<br>有时候我们在吐槽用户给的信息不够多时, 是否可以思考下, 如何不苛求用户? </p>
-<p>“专业”, “靠谱” 是非常严肃的定义, 要达成不易, 希望大家都能做一个专业且靠谱的开发者.</p>
+<p>“专业”, “靠谱” 是非常严肃的定义, 要达成不易, 都需要耗费大量的心力与脑力:  </p>
+<ul>
+<li>系统&#x2F;产品设计时的推演能力</li>
+<li>问题排查时的分析能力</li>
+<li>问题修复后反复确认跟进的能力</li>
+</ul>
+<p>最后, 希望大家都能做一个专业且靠谱的开发者! 共勉!</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>best-practice</tag>
