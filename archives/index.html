@@ -211,6 +211,122 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-05-11-how-to-be-professional/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-05-11-how-to-be-professional/" class="post-title-link" itemprop="url">关于"专业"与"靠谱"的几个案例与思考</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-11 22:46:18" itemprop="dateCreated datePublished" datetime="2023-05-11T22:46:18+08:00">2023-05-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>常常在工作中会遇到一些不靠谱的合作伙伴, 会怒其不争; 也经常会发现与反思自己很多地方做得不靠谱不专业, 会深刻反省.<br>因此积累了一些案例与心得, 本文尝试进行下分享与总结.<br>希望大家看完本文有所收获, 都能做一个专业且靠谱的开发者. </p>
+<h1 id="几个案例"><a href="#几个案例" class="headerlink" title="几个案例"></a>几个案例</h1><h2 id="代码版本依赖问题"><a href="#代码版本依赖问题" class="headerlink" title="代码版本依赖问题"></a>代码版本依赖问题</h2><p>用户反馈<a href>Jenkins插件</a>依赖的fastjson版本太低, 有安全漏洞, 希望我作为maintainer, 能进行升级修复.<br>遂让同学进行跟进修复: </p>
+<ol>
+<li>开发同学确认当前依赖的fastjson版本是低版本; 升级pom依赖, 发版本, 跟用户反馈升级完成.</li>
+<li>用户升级版本后, 发现依赖的版本还是老的. </li>
+<li>开发同学再次确认, 发现是由于隐式引来到另外一个插件, 另外插件中. 修复; 跟用户反馈可用</li>
+<li>用户升级版本后, 发现依赖的版本还是老的.</li>
+<li>开发同学再次确认, 发现是由于真正依赖的是Jenkins框架中的fastjson, 升级Jenkins框架, 修复, 跟用户反馈可用</li>
+</ol>
+<div class="note warning"><p>真的可用了么?<br>专业么?<br>靠谱么?</p>
+</div>
+
+
+<h2 id="资源预留问题"><a href="#资源预留问题" class="headerlink" title="资源预留问题"></a>资源预留问题</h2><p>用户使用预留资源失败: </p>
+<ol>
+<li>排查后发现是问题A(付费类型不匹配)导致, 修复问题A后跟用户反馈可用. </li>
+<li>用户再次尝试, 发现还是不行, 排查后发现是还有问题B(预留资源尚未启用), 修复问题B后跟用户反馈可用.</li>
+<li>用户再次确认, 发现还是不行, 排查后发现是还有问题C(用户Quota不足), 修复问题C后跟用户反馈可用.</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-05-11-how-to-be-professional/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-05-09-ebook-manage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +363,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -282,7 +398,7 @@
 <h1 id="小说类管理方式"><a href="#小说类管理方式" class="headerlink" title="小说类管理方式"></a>小说类管理方式</h1><ul>
 <li>特点: 非技术类或者半技术类; 无需记录太多笔记; 基本无需进行实操; 无需在工作电脑中查看.</li>
 <li>限制: <strong>必须使用epub格式.</strong> mobi格式只能在kindle中看, 在mac上, ipad上, 手机上, 都无法解析;</li>
-<li>管理流程如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305110015750.png"></li>
+<li>管理流程如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305112245705.png"></li>
 </ul>
 <h1 id="技术类管理方式"><a href="#技术类管理方式" class="headerlink" title="技术类管理方式"></a>技术类管理方式</h1><ul>
 <li>特点: 技术类; 需要记录很多笔记; 常常需要实操; 需要在工作电脑中查看.</li>
@@ -364,7 +480,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -499,7 +615,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -622,7 +738,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -730,7 +846,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -871,7 +987,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -973,7 +1089,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -1073,7 +1189,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -1182,7 +1298,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -1281,7 +1397,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -1389,7 +1505,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -1506,7 +1622,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -1621,7 +1737,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1734,7 +1850,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1848,7 +1964,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1962,7 +2078,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2086,7 +2202,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2249,7 +2365,7 @@ sdb               <span class="token number">8</span>:16   <span class="token nu
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2371,7 +2487,7 @@ sdb               <span class="token number">8</span>:16   <span class="token nu
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -2475,7 +2591,7 @@ sdb               <span class="token number">8</span>:16   <span class="token nu
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -2608,7 +2724,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2737,7 +2853,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2925,7 +3041,7 @@ hello-minikube-67b8c7bdfd-965qn   <span class="token number">1</span>/1     Runn
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3052,7 +3168,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3184,7 +3300,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3314,7 +3430,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3479,7 +3595,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -3584,7 +3700,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -3697,7 +3813,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -3808,7 +3924,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -3946,7 +4062,7 @@ server <span class="token punctuation">&#123;</span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
+      <time title="修改时间：2023-05-12 00:41:12" itemprop="dateModified" datetime="2023-05-12T00:41:12+08:00">2023-05-12</time>
     </span>
 
   
@@ -4001,117 +4117,6 @@ server <span class="token punctuation">&#123;</span>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-02-dubbo-app-perf-tunning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-07-02-dubbo-app-perf-tunning/" class="post-title-link" itemprop="url">记一次Dubbo应用性能优化</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-07-03 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-03T00:00:00+08:00">2022-07-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-11 19:45:31" itemprop="dateModified" datetime="2023-05-11T19:45:31+08:00">2023-05-11</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>新的应用以dubbo接口对外暴露调度能力。<br>在上线前需要整体压测，确认下系统能力与瓶颈。</p>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>目标QPS: 500+<br>目标RT: 100ms-</p>
-<h2 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042216549.png"></p>
-<h2 id="应用框架"><a href="#应用框架" class="headerlink" title="应用框架"></a>应用框架</h2><ul>
-<li>SpringBoot 2.5.6</li>
-<li>Druid 1.1.22</li>
-</ul>
-<h2 id="机器配置清单"><a href="#机器配置清单" class="headerlink" title="机器配置清单"></a>机器配置清单</h2><ul>
-<li>ECS规格： ecs.n4.2xlarge</li>
-<li>2台8C16G 独享型</li>
-<li>CPU: 2.5 GHz主频的Intel ® Xeon ®处理器</li>
-<li>JDK 1.8</li>
-<li>网络： 1.2Gbps，即至少支持100MB&#x2F;s的内网带宽</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-07-02-dubbo-app-perf-tunning/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4137,14 +4142,14 @@ server <span class="token punctuation">&#123;</span>
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">305k</span>
+    <span title="站点总字数">309k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:38</span>
+    <span title="站点阅读时长">4:40</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
