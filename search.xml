@@ -13086,7 +13086,7 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
     end
     
     Developer ->> User: 问题是否已经解决啦?
-    User --> Developer: 终于解决了, 但你们也太不专业, 太不靠谱了.</pre>
+    User -->> Developer: 终于解决了, 但你们也太不专业, 太不靠谱了.</pre>
 
 <h2 id="专业的行为"><a href="#专业的行为" class="headerlink" title="专业的行为"></a>专业的行为</h2><p>如下, 整体Developer与User只有<code>1</code>次交互: </p>
 <ol>
