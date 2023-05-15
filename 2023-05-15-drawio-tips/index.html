@@ -23,33 +23,34 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="背景最近在B站学习蒋炎岩老师的OS:   内容自是不必多说, 干货满满. 对课件PPT更是十分欣赏.  实际样例  特点1: 导航清晰风格简约专业:  横向导航区分大类 纵向导航来区分小类   特点2: 管理轻量 基于代码生成与管理(支持Markdown), 不使用笨重的Microsoft PPT.  可以使用git进行版本管理(例如showcase中本文就会转成ppt).  实现方式">
+    <meta name="description" content="前言自从上次发奋要好好学习做图, 做PPT, 数据可视化之后. 近两个月对draw.io进行了深度的使用.学习到了很多技巧, 使用起来更加得心应手, 也逐渐开始享受画图的过程, 做到了Happy diagramming!~这里把使用的一些心得总结下来, 防止以后遗忘. draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.   快捷键 删除 Shapes+Connections: c">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="revealjs制作PPT笔记">
-<meta property="og:url" content="https://davyjones2010.github.io/2023-03-05-head-first-revealjs/">
+<meta property="og:title" content="draw.io使用技巧总结">
+<meta property="og:url" content="https://davyjones2010.github.io/2023-05-15-drawio-tips/">
 <meta property="og:site_name" content="Coders@Work">
-<meta property="og:description" content="背景最近在B站学习蒋炎岩老师的OS:   内容自是不必多说, 干货满满. 对课件PPT更是十分欣赏.  实际样例  特点1: 导航清晰风格简约专业:  横向导航区分大类 纵向导航来区分小类   特点2: 管理轻量 基于代码生成与管理(支持Markdown), 不使用笨重的Microsoft PPT.  可以使用git进行版本管理(例如showcase中本文就会转成ppt).  实现方式">
+<meta property="og:description" content="前言自从上次发奋要好好学习做图, 做PPT, 数据可视化之后. 近两个月对draw.io进行了深度的使用.学习到了很多技巧, 使用起来更加得心应手, 也逐渐开始享受画图的过程, 做到了Happy diagramming!~这里把使用的一些心得总结下来, 防止以后遗忘. draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.   快捷键 删除 Shapes+Connections: c">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052225650.png">
-<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052309110.png">
-<meta property="article:published_time" content="2023-03-05T09:28:22.000Z">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152320352.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152325340.png">
+<meta property="article:published_time" content="2023-05-15T14:24:12.000Z">
 <meta property="article:modified_time" content="2023-05-15T15:30:20.707Z">
 <meta property="article:author" content="Davy Walker">
-<meta property="article:tag" content="tools">
-<meta property="article:tag" content="ppt">
-<meta property="article:tag" content="markdown">
+<meta property="article:tag" content="best-practice">
+<meta property="article:tag" content="software-engineering">
+<meta property="article:tag" content="soft-skills">
+<meta property="article:tag" content="diagrams">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052225650.png">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152320352.png">
 
 
-<link rel="canonical" href="https://davyjones2010.github.io/2023-03-05-head-first-revealjs/">
+<link rel="canonical" href="https://davyjones2010.github.io/2023-05-15-drawio-tips/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2023-03-05-head-first-revealjs/","path":"/2023-03-05-head-first-revealjs/","title":"revealjs制作PPT笔记"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2023-05-15-drawio-tips/","path":"/2023-05-15-drawio-tips/","title":"draw.io使用技巧总结"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>revealjs制作PPT笔记 | Coders@Work</title>
+<title>draw.io使用技巧总结 | Coders@Work</title>
   
 
 
@@ -152,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E7%82%B91-%E5%AF%BC%E8%88%AA%E6%B8%85%E6%99%B0"><span class="nav-number">1.1.</span> <span class="nav-text">特点1: 导航清晰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E7%82%B92-%E7%AE%A1%E7%90%86%E8%BD%BB%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">特点2: 管理轻量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">实现方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-amp-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">安装&amp;配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#revealjs%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">revealjs个人配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.2.</span> <span class="nav-text">快捷键</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#showcase"><span class="nav-number">4.</span> <span class="nav-text">showcase</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#self-explained"><span class="nav-number">4.1.</span> <span class="nav-text">self-explained</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TODO"><span class="nav-number">5.</span> <span class="nav-text">TODO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E4%BC%98%E5%8C%96"><span class="nav-number">5.1.</span> <span class="nav-text">样式优化</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">2.</span> <span class="nav-text">快捷键</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%80%E5%B7%A7"><span class="nav-number">3.</span> <span class="nav-text">技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LineJump"><span class="nav-number">3.1.</span> <span class="nav-text">LineJump</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WayPoint"><span class="nav-number">3.2.</span> <span class="nav-text">WayPoint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Container"><span class="nav-number">3.3.</span> <span class="nav-text">Container</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Floating-amp-Fixed-connectors"><span class="nav-number">3.4.</span> <span class="nav-text">Floating &amp; Fixed connectors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E5%86%B3%E5%AE%9A%E5%B8%83%E5%B1%80-%E5%86%8D%E5%86%B3%E5%AE%9A%E9%A3%8E%E6%A0%BC"><span class="nav-number">3.5.</span> <span class="nav-text">先决定布局, 再决定风格</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">4.</span> <span class="nav-text">Refs</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -223,7 +224,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-03-05-head-first-revealjs/">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-05-15-drawio-tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
@@ -236,12 +237,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="revealjs制作PPT笔记 | Coders@Work">
+      <meta itemprop="name" content="draw.io使用技巧总结 | Coders@Work">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          revealjs制作PPT笔记
+          draw.io使用技巧总结
         </h1>
 
         <div class="post-meta-container">
@@ -251,24 +252,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-03-05 17:28:22" itemprop="dateCreated datePublished" datetime="2023-03-05T17:28:22+08:00">2023-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-15 23:30:20" itemprop="dateModified" datetime="2023-05-15T23:30:20+08:00">2023-05-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E7%A8%8B%E6%8F%90%E6%95%88%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工程提效工具</span></a>
-        </span>
+      <time title="创建时间：2023-05-15 22:24:12 / 修改时间：23:30:20" itemprop="dateCreated datePublished" datetime="2023-05-15T22:24:12+08:00">2023-05-15</time>
     </span>
 
   
@@ -278,7 +264,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>534</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -296,68 +282,31 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近在B站学习蒋炎岩老师的OS: </p>
-<ul>
-<li>内容自是不必多说, 干货满满.</li>
-<li>对课件PPT更是十分欣赏. </li>
-<li><a target="_blank" rel="noopener" href="https://jyywiki.cn/OS/2022/slides/3.slides#/">实际样例</a></li>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自从上次发奋要好好学习做图, 做PPT, 数据可视化之后. 近两个月对draw.io进行了深度的使用.<br>学习到了很多技巧, 使用起来更加得心应手, 也逐渐开始享受画图的过程, 做到了<code>Happy diagramming!~</code><br>这里把使用的一些心得总结下来, 防止以后遗忘.</p>
+<div class="note info"><p>draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.</p>
+</div>
+
+<h1 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.drawio.com/doc/faq/shapes-delete-connections">删除 Shapes+Connections</a>: <code>ctrl/cmd + Delete</code></li>
+<li>选择所有Edges: <code>cmd+shift+e</code></li>
+<li>选择所有Shapes&#x2F;Vertices: <code>cmd+shift+i</code></li>
 </ul>
-<h2 id="特点1-导航清晰"><a href="#特点1-导航清晰" class="headerlink" title="特点1: 导航清晰"></a>特点1: 导航清晰</h2><p>风格简约专业:</p>
-<ul>
-<li>横向导航区分大类</li>
-<li>纵向导航来区分小类</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052225650.png"></p>
-<h2 id="特点2-管理轻量"><a href="#特点2-管理轻量" class="headerlink" title="特点2: 管理轻量"></a>特点2: 管理轻量</h2><ul>
-<li>基于代码生成与管理(支持Markdown), 不使用笨重的Microsoft PPT. </li>
-<li>可以使用git进行版本管理(例如showcase中本文就会转成ppt).</li>
-</ul>
-<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><blockquote>
-<p>revealjs + pandoc 组合神器</p>
-</blockquote>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://revealjs.com/markdown/">revealjs</a></li>
-<li><a target="_blank" rel="noopener" href="https://pandoc.org/installing.html">pandoc</a></li>
-</ul>
-<p>刚好自己平时要做PPT, 但作为程序员, 又十分抵触内容与样式不分离的方式, 制作起来也耗时.<br>借鉴这种方案, 轻松写出专业且简约的PPT.</p>
-<h1 id="安装-amp-配置"><a href="#安装-amp-配置" class="headerlink" title="安装&amp;配置"></a>安装&amp;配置</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
-<li>revealjs: <a target="_blank" rel="noopener" href="https://revealjs.com/installation/#full-setup">安装手册</a></li>
-<li>pandoc: 把markdown转成revealjs的html, <a target="_blank" rel="noopener" href="https://pandoc.org/installing.html">安装手册</a></li>
-<li><a target="_blank" rel="noopener" href="https://tailwindcss.com/">tailwind css</a>: JYY老师的, 个人还在研究中</li>
-</ul>
-<h2 id="revealjs个人配置"><a href="#revealjs个人配置" class="headerlink" title="revealjs个人配置"></a>revealjs个人配置</h2><ul>
-<li>Enable <a target="_blank" rel="noopener" href="https://revealjs.com/slide-numbers/">Slide Numbers</a></li>
-<li>Disable <a target="_blank" rel="noopener" href="https://revealjs.com/config/">Vertical centering of slides</a></li>
-<li>Disable <a target="_blank" rel="noopener" href="https://revealjs.com/config/">controlsTutorial</a></li>
-</ul>
-<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
-<li><p>revealjs</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认8000端口</span>
-<span class="token function">npm</span> start
-<span class="token comment"># 指定8001端口</span>
-<span class="token function">npm</span> start -- --port<span class="token operator">=</span><span class="token number">8001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>pandoc</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># md to html. 注意需要设置 --slide-level=2 参数. 一级标题设置horizontal大类, 二级标题内容为vertical子类. </span>
-pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white --slide-level<span class="token operator">=</span><span class="token number">2</span>
-<span class="token comment"># 所有revealjs的参数, 都可以通过 -V xxx=xxx 来设置</span>
-pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white -V <span class="token assign-left variable">center</span><span class="token operator">=</span>false -V <span class="token assign-left variable">controlsTutorial</span><span class="token operator">=</span>false -V <span class="token assign-left variable">slideNumber</span><span class="token operator">=</span>true --slide-level<span class="token operator">=</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><ul>
-<li><code>o</code> 进入缩略图模式.</li>
-<li><code>b</code> 屏蔽当前PPT</li>
-<li><code>f</code> 进入全屏模式</li>
-<li><code>ctrl+shift+f</code>: 全局搜索</li>
-</ul>
-<h1 id="showcase"><a href="#showcase" class="headerlink" title="showcase"></a>showcase</h1><h2 id="self-explained"><a href="#self-explained" class="headerlink" title="self-explained"></a>self-explained</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052309110.png"></p>
-<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><h2 id="样式优化"><a href="#样式优化" class="headerlink" title="样式优化"></a>样式优化</h2><p>与JYY老师相比, 页面还是过于简陋</p>
-<ul>
-<li>Header: 类似markdown的分隔符</li>
-<li>Image: 图片有些显示不全❗</li>
-<li>Align: 字默认居中, 需要<font color='red'><strong>居左</strong></font></li>
-<li>Syntax Highlighting: 现在<strong>太丑</strong></li>
-<li>Citation&#x2F;Quote: 也<strong>太丑</strong></li>
-</ul>
+<h1 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h1><h2 id="LineJump"><a href="#LineJump" class="headerlink" title="LineJump"></a>LineJump</h2><div class="note info"><p>线段交叉时, 用<code>linejump</code>, 清晰易读</p>
+</div>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152320352.png"></p>
+<h2 id="WayPoint"><a href="#WayPoint" class="headerlink" title="WayPoint"></a>WayPoint</h2><div class="note info"><p>箭头分叉时, 用<code>waypoint</code></p>
+</div>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152325340.png"></p>
+<h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h2><div class="note info"><p>多个Shape组合时, 用<code>container</code></p>
+</div>
+
+
+<h2 id="Floating-amp-Fixed-connectors"><a href="#Floating-amp-Fixed-connectors" class="headerlink" title="Floating &amp; Fixed connectors"></a>Floating &amp; Fixed connectors</h2><p>参见: <a target="_blank" rel="noopener" href="https://www.drawio.com/blog/connectors">Floating &amp; Fixed connectors</a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=xM04I-WVXlE&amp;ab_channel=draw.io">https://www.youtube.com/watch?v=xM04I-WVXlE&amp;ab_channel=draw.io</a></p>
+<h2 id="先决定布局-再决定风格"><a href="#先决定布局-再决定风格" class="headerlink" title="先决定布局, 再决定风格"></a>先决定布局, 再决定风格</h2><p>先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.</p>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><div class="note info"><p>draw.io<a target="_blank" rel="noopener" href="https://drawio-app.com/blog/">官网文档</a>清晰易懂, 是个真正的好产品!</p>
+</div>
+
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
     </div>
 
@@ -369,23 +318,21 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="t
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/tools/" rel="tag"># tools</a>
-              <a href="/tags/ppt/" rel="tag"># ppt</a>
-              <a href="/tags/markdown/" rel="tag"># markdown</a>
+              <a href="/tags/best-practice/" rel="tag"># best-practice</a>
+              <a href="/tags/software-engineering/" rel="tag"># software-engineering</a>
+              <a href="/tags/soft-skills/" rel="tag"># soft-skills</a>
+              <a href="/tags/diagrams/" rel="tag"># diagrams</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023-03-04-java-jvm-dns-caching/" rel="prev" title="关于JVM DNS Cache问题的研究">
-                  <i class="fa fa-chevron-left"></i> 关于JVM DNS Cache问题的研究
+                <a href="/2023-05-11-how-to-be-professional/" rel="prev" title="关于"专业"与"靠谱"的几个案例与思考">
+                  <i class="fa fa-chevron-left"></i> 关于"专业"与"靠谱"的几个案例与思考
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023-04-10-software-diagrams-summary/" rel="next" title="常用软件工程作图工具汇总">
-                  常用软件工程作图工具汇总 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

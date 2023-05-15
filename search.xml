@@ -5895,7 +5895,7 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
   <entry>
     <title>记录一些有趣的产品设计</title>
     <url>//2022-04-04-good-design/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，需要的是克制，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
 <h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
 <li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
 </ul>
@@ -5929,6 +5929,36 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
 <li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
 </li>
 </ul>
+<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
+<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
+</li>
+<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
+</li>
+</ol>
+<ul>
+<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
+<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
+<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
+</ul>
+<ol start="3">
+<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
+</ol>
+<ul>
+<li>最佳实践: 一些使用的小技巧.</li>
+<li>new feature: 新功能的介绍.</li>
+<li>case study: 用户案例.</li>
+<li>event: 线下&#x2F;线上的技术活动介绍.</li>
+<li>竞品比对: 例如与Gliffy,StarUML等.</li>
+<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
+</ul>
+<ol start="4">
+<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
+<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
+<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
+</blockquote>
+</li>
+</ol>
+<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>product-design</tag>
@@ -5969,43 +5999,6 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
       <tags>
         <tag>k8s</tag>
         <tag>k8s-architect</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s基础架构笔记--kube-proxy原理</title>
-    <url>//2022-04-05-k8s-kube-proxy/</url>
-    <content><![CDATA[<h1 id="k8s网络模型"><a href="#k8s网络模型" class="headerlink" title="k8s网络模型"></a>k8s网络模型</h1><p>如下三点是基础要求: </p>
-<pre class="line-numbers language-none"><code class="language-none">1. 容器之间要求不需要任何NAT能直接通信
-2. 容器与Node之间要求不需要任何NAT能直接通信
-3. 容器看到自身的IP和外面看到它的IP必须是一样的, 即不存在IP转化的问题<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="k8s三类IP"><a href="#k8s三类IP" class="headerlink" title="k8s三类IP"></a>k8s三类IP</h1><p>Kubernetes 集群内部存在三类 IP，分别是：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Node IP：宿主机的 IP 地址
-Pod IP：使用网络插件创建的 IP（如 flannel），使跨主机的 Pod 可以互通
-Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>安装 node 节点的时候，节点上的进程是按照 flannel -&gt; docker -&gt; kubelet -&gt; kube-proxy 的顺序启动</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>看了这么多文章, 终于理解了kube-proxy的深入原理以及发展历史:</p>
-<ol>
-<li>本质上是运行在每个host上的proxy流量转发服务. 从集群内部发起时流量转发规则生效.</li>
-<li>注意不是网关!!! 即不能处理k8s集群外部curl serviceip:port&#x2F;xxx 的请求, 只能路由&amp;处理集群内部的请求, 例如从host节点curl, 或者从pod内部curl. 是从AHost转发到BHost的. 这点是一直搞混的~</li>
-<li>历史总结下来:<ol>
-<li>数据面: 核心的转发功能<ol>
-<li>基于iptables+用户空间转发</li>
-<li>基于iptables 即纯内核空间的路由规则</li>
-<li>可以基于ipvs&#x2F;lvs进行路由转发.</li>
-</ol>
-</li>
-<li>控制面: 主要做的是watch apiserver, 随时更新转发规则.</li>
-</ol>
-</li>
-</ol>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071218047.png"><br>因此也明白了官方kube-proxy原理这张图里, 为啥Client始终在Host上.<br>因为client必须在k8s集群里, 而集群里每个node都部署了kube-proxy. 因此client必然在node上, 跟本node的kube-proxy在一起.</p>
-<p>解释清楚了, 为啥要用kube-proxy实现service, 而不是用DNS A记录来实现</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>k8s-architect</tag>
-        <tag>kube-proxy</tag>
       </tags>
   </entry>
   <entry>
@@ -6123,6 +6116,43 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
       <tags>
         <tag>code-snippets</tag>
         <tag>kubectl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记--kube-proxy原理</title>
+    <url>//2022-04-05-k8s-kube-proxy/</url>
+    <content><![CDATA[<h1 id="k8s网络模型"><a href="#k8s网络模型" class="headerlink" title="k8s网络模型"></a>k8s网络模型</h1><p>如下三点是基础要求: </p>
+<pre class="line-numbers language-none"><code class="language-none">1. 容器之间要求不需要任何NAT能直接通信
+2. 容器与Node之间要求不需要任何NAT能直接通信
+3. 容器看到自身的IP和外面看到它的IP必须是一样的, 即不存在IP转化的问题<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="k8s三类IP"><a href="#k8s三类IP" class="headerlink" title="k8s三类IP"></a>k8s三类IP</h1><p>Kubernetes 集群内部存在三类 IP，分别是：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Node IP：宿主机的 IP 地址
+Pod IP：使用网络插件创建的 IP（如 flannel），使跨主机的 Pod 可以互通
+Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>安装 node 节点的时候，节点上的进程是按照 flannel -&gt; docker -&gt; kubelet -&gt; kube-proxy 的顺序启动</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>看了这么多文章, 终于理解了kube-proxy的深入原理以及发展历史:</p>
+<ol>
+<li>本质上是运行在每个host上的proxy流量转发服务. 从集群内部发起时流量转发规则生效.</li>
+<li>注意不是网关!!! 即不能处理k8s集群外部curl serviceip:port&#x2F;xxx 的请求, 只能路由&amp;处理集群内部的请求, 例如从host节点curl, 或者从pod内部curl. 是从AHost转发到BHost的. 这点是一直搞混的~</li>
+<li>历史总结下来:<ol>
+<li>数据面: 核心的转发功能<ol>
+<li>基于iptables+用户空间转发</li>
+<li>基于iptables 即纯内核空间的路由规则</li>
+<li>可以基于ipvs&#x2F;lvs进行路由转发.</li>
+</ol>
+</li>
+<li>控制面: 主要做的是watch apiserver, 随时更新转发规则.</li>
+</ol>
+</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071218047.png"><br>因此也明白了官方kube-proxy原理这张图里, 为啥Client始终在Host上.<br>因为client必须在k8s集群里, 而集群里每个node都部署了kube-proxy. 因此client必然在node上, 跟本node的kube-proxy在一起.</p>
+<p>解释清楚了, 为啥要用kube-proxy实现service, 而不是用DNS A记录来实现</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>k8s-architect</tag>
+        <tag>kube-proxy</tag>
       </tags>
   </entry>
   <entry>
@@ -13132,6 +13162,10 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 <h1 id="思考-如何变得专业"><a href="#思考-如何变得专业" class="headerlink" title="思考: 如何变得专业?"></a>思考: 如何变得专业?</h1><h2 id="如何做一个合格的Developer"><a href="#如何做一个合格的Developer" class="headerlink" title="如何做一个合格的Developer"></a>如何做一个合格的Developer</h2><p>目标: 做到<strong>一言九鼎</strong>(跟用户反馈解决&#x2F;完成, 那就需要保证用户视角下100%是可用了, 不瞎说, 不误导), 少打扰用户.<br>路径: 熟悉自己的产品.</p>
 <h2 id="如何做一个合格的User"><a href="#如何做一个合格的User" class="headerlink" title="如何做一个合格的User"></a>如何做一个合格的User</h2><p>尽量提供足够多的信息, 例如traceId, 发生环境, 发生时间点, 是否必现, 出现路径是怎样的, 使用文本而非截图. </p>
 <p>在系统不完善时, 需要合格的User. 但更重要的是<strong>Developer在设计系统时考虑周全</strong>, 把问题排查(售后)链路纳入考虑范围.<br>之前自己在作为User向中间件团队咨询&#x2F;反馈问题时, 发现很多同学戾气很重, 经常埋怨用户没有提供足够多的信息, 让他们不好排查.<br>有时候我们在吐槽用户给的信息不够多时, 是否可以思考下, 如何不苛求用户? </p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>个人容易忽略的事情: </p>
+<ul>
+<li>给别人发一个报表&#x2F;文档时, 是否把权限给他们打开了?</li>
+</ul>
 <h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>“专业”, “靠谱” 是非常严肃的定义, 要达成不易, 都需要耗费大量的心力与脑力:  </p>
 <ul>
 <li>系统&#x2F;产品设计时的推演能力</li>
@@ -13143,6 +13177,42 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
       <tags>
         <tag>best-practice</tag>
         <tag>soft-skills</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>draw.io使用技巧总结</title>
+    <url>//2023-05-15-drawio-tips/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自从上次发奋要好好学习做图, 做PPT, 数据可视化之后. 近两个月对draw.io进行了深度的使用.<br>学习到了很多技巧, 使用起来更加得心应手, 也逐渐开始享受画图的过程, 做到了<code>Happy diagramming!~</code><br>这里把使用的一些心得总结下来, 防止以后遗忘.</p>
+<div class="note info"><p>draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.</p>
+</div>
+
+<h1 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h1><ul>
+<li><a href="https://www.drawio.com/doc/faq/shapes-delete-connections">删除 Shapes+Connections</a>: <code>ctrl/cmd + Delete</code></li>
+<li>选择所有Edges: <code>cmd+shift+e</code></li>
+<li>选择所有Shapes&#x2F;Vertices: <code>cmd+shift+i</code></li>
+</ul>
+<h1 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h1><h2 id="LineJump"><a href="#LineJump" class="headerlink" title="LineJump"></a>LineJump</h2><div class="note info"><p>线段交叉时, 用<code>linejump</code>, 清晰易读</p>
+</div>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152320352.png"></p>
+<h2 id="WayPoint"><a href="#WayPoint" class="headerlink" title="WayPoint"></a>WayPoint</h2><div class="note info"><p>箭头分叉时, 用<code>waypoint</code></p>
+</div>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152325340.png"></p>
+<h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h2><div class="note info"><p>多个Shape组合时, 用<code>container</code></p>
+</div>
+
+
+<h2 id="Floating-amp-Fixed-connectors"><a href="#Floating-amp-Fixed-connectors" class="headerlink" title="Floating &amp; Fixed connectors"></a>Floating &amp; Fixed connectors</h2><p>参见: <a href="https://www.drawio.com/blog/connectors">Floating &amp; Fixed connectors</a><br><a href="https://www.youtube.com/watch?v=xM04I-WVXlE&amp;ab_channel=draw.io">https://www.youtube.com/watch?v=xM04I-WVXlE&amp;ab_channel=draw.io</a></p>
+<h2 id="先决定布局-再决定风格"><a href="#先决定布局-再决定风格" class="headerlink" title="先决定布局, 再决定风格"></a>先决定布局, 再决定风格</h2><p>先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.</p>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><div class="note info"><p>draw.io<a href="https://drawio-app.com/blog/">官网文档</a>清晰易懂, 是个真正的好产品!</p>
+</div>
+
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>best-practice</tag>
+        <tag>software-engineering</tag>
+        <tag>soft-skills</tag>
+        <tag>diagrams</tag>
       </tags>
   </entry>
 </search>
