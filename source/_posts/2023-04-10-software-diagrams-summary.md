@@ -284,9 +284,23 @@ pie title Pets adopted by volunteers
 - Tips: 拟合
 - 面向对象: 内/外部
 
-## 其他
+
+## 双向柱形图
+
+- 工具: [ggplot2](https://zhuanlan.zhihu.com/p/445273345) >  [bioladder](https://www.bioladder.cn/web/#/pro/index) **可以在线生成, 紧急使用非常方便**
+- 使用场景: 研究报告, 汇报PPT
+- 面向对象: 内/外部
+
+![](https://www.jingege.wang/wp-content/uploads/2022/03/image-5.png)
+
+## 统计类其他图
+{% note info %}
+当想不到该用哪种图来DataViz时, 可以从[AntV](https://antv-2018.alipay.com/zh-cn/vis/chart/index.html)里按照分类进行选取 
+{% endnote %}
+
 - 双轴图
 - 热力图
+
 
 # 其他图
 
