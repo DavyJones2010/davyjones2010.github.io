@@ -42,6 +42,10 @@ draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.
 ## Floating & Fixed connectors
 参见: [Floating & Fixed connectors](https://www.drawio.com/blog/connectors)
 https://www.youtube.com/watch?v=xM04I-WVXlE&ab_channel=draw.io
+- Floating connectors: 连接线前后用`o`标记, 默认的都是Floating connectors.
+- Fixed connectors: 连接线前后用`x`标记
+
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305162239974.png)
 
 ## 先决定布局, 再决定风格
 先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.
