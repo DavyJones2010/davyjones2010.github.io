@@ -47,6 +47,21 @@ https://www.youtube.com/watch?v=xM04I-WVXlE&ab_channel=draw.io
 
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305162239974.png)
 
+## 同时调整多个对象的大小
+1. 使用分组
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305172248220.gif)
+
+2. 多选, Arrange里调整
+[Scaling a group of shapes in Diagramly](https://webapps.stackexchange.com/questions/52230/scaling-a-group-of-shapes-in-diagramly)
+
+3. 使用容器
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305172256303.gif)
+
+{% note warning %}
+善用 **分组** 与 **容器**
+{% endnote %}
+
+
 ## 先决定布局, 再决定风格
 先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.
 
