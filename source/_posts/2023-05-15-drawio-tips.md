@@ -47,6 +47,24 @@ https://www.youtube.com/watch?v=xM04I-WVXlE&ab_channel=draw.io
 
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305162239974.png)
 
+## 调整单个对象的大小
+{% note warning %}
+调整大小时, 保持中心不动, 是非常重要的, 防止结构被破坏. 
+{% endnote %}
+
+- Hold `CMD`, 然后拖动对象大小, 可以保持对象**中心不动**. 
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305182305893.gif)
+
+- Hode `CMD+Shift`, 然后拖动对象大小, 可以保持对象中心不动, 且对象比例等比缩放. --> 非常好用!
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305182306535.gif)
+
+- Copy&Paste Size
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190001415.png)
+
+## 同时选择多个对象
+- 按住 `Option` 然后拖选, 只要触碰到的, 都会被选到(不用把整个对象都包含进去) --> 解救人类!
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190008608.gif)
+
 ## 同时调整多个对象的大小
 1. 使用分组
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305172248220.gif)
@@ -61,9 +79,22 @@ https://www.youtube.com/watch?v=xM04I-WVXlE&ab_channel=draw.io
 善用 **分组** 与 **容器**
 {% endnote %}
 
+## 移动对象
+- 按住 `Shift+CMD` 移动, 把对象限制在水平&垂直方向移动(强约束)
+- 按住 `Shift` 移动, 可以将对象尽量在水平/垂直方向移动(弱约束, 粘性)
 
 ## 先决定布局, 再决定风格
 先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.
+
+# 风格
+## 泳道图
+最好每个泳道设定背景色(LaneColor), 然后里边的各个Task背景白色, 能突出重点, 美观. 对比下: 
+- 未设定Lane Color
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190018059.png)
+
+- 设定了Lane Color
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190017534.png)
+
 
 # Refs
 {% note info %}
