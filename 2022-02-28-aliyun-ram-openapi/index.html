@@ -32,7 +32,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042218061.png">
 <meta property="article:published_time" content="2022-02-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-22T02:14:14.085Z">
+<meta property="article:modified_time" content="2023-05-23T15:48:06.606Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="ram">
@@ -257,7 +257,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-22 10:14:14" itemprop="dateModified" datetime="2023-05-22T10:14:14+08:00">2023-05-22</time>
+      <time title="修改时间：2023-05-23 23:48:06" itemprop="dateModified" datetime="2023-05-23T23:48:06+08:00">2023-05-23</time>
     </span>
 
   
@@ -267,14 +267,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>2.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -312,12 +312,41 @@
 <li>使用主账号的AK&#x2F;SK</li>
 <li>使用子账号的AK&#x2F;SK</li>
 </ul>
+<pre class="mermaid">sequenceDiagram
+      participant UserServer
+      participant AliyunPop
+      UserServer->>UserServer: Stores(AK/SK)
+   UserServer->>UserServer: PrepareRequest(AK/SK)
+   UserServer ->> +AliyunPop: RunInstances(AK, Sign)
+   AliyunPop->>AliyunPop: checkSign(AK, Sign)
+   AliyunPop -->> -UserServer: OK</pre>
+
 <h3 id="适用场景分析"><a href="#适用场景分析" class="headerlink" title="适用场景分析"></a>适用场景分析</h3><p>直接用ak&#x2F;sk, 是非常常见的方案. 但带来的问题: </p>
 <ol>
 <li>SK泄露安全问题: 由于SK是不变的, 因此如果SK泄露, 相当于密码泄露, 即永久地拥有了该账号所有的权限.</li>
 <li>SK永久有效问题: 主账号的SK是永久有效的, 无法类似stsToken一样设置有效期, 到期之后需要重新续期.</li>
 </ol>
-<h2 id="方式2-扮演RAM角色-使用RAM角色的STSToken"><a href="#方式2-扮演RAM角色-使用RAM角色的STSToken" class="headerlink" title="方式2: 扮演RAM角色, 使用RAM角色的STSToken"></a>方式2: 扮演RAM角色, 使用RAM角色的STSToken</h2><h3 id="使用样例-1"><a href="#使用样例-1" class="headerlink" title="使用样例"></a>使用样例</h3><h3 id="使用场景分析"><a href="#使用场景分析" class="headerlink" title="使用场景分析"></a>使用场景分析</h3><p>由于stsToken有效期用户是可以设置的, 因此风险有限.</p>
+<h2 id="方式2-扮演RAM角色-使用RAM角色的STSToken"><a href="#方式2-扮演RAM角色-使用RAM角色的STSToken" class="headerlink" title="方式2: 扮演RAM角色, 使用RAM角色的STSToken"></a>方式2: 扮演RAM角色, 使用RAM角色的STSToken</h2><h3 id="使用样例-1"><a href="#使用样例-1" class="headerlink" title="使用样例"></a>使用样例</h3><pre class="mermaid">sequenceDiagram
+      participant UserServer
+      participant AliyunPop
+   par assumeRole
+      UserServer->>UserServer: Stores(AK/SK)
+   UserServer->>UserServer: PrepareRequest(AK/SK)
+   UserServer ->> +AliyunPop: AssumeRole(AK, Sign)
+   AliyunPop->>AliyunPop: checkSign(AK, Sign)
+   AliyunPop -->> -UserServer: (stsAK, stsSK, stsToken, Expiration)
+   UserServer ->> UserServer: store(stsAK, stsSK, Expiration)
+   end
+
+   par runInstances
+   UserServer->>UserServer: checkExpiration(stsAK, stsSK, Expiration)
+   UserServer->>UserServer: PrepareRequest(stsAK, stsSK, stsToken)
+   UserServer ->> +AliyunPop: RunInstances(stsAK, Sign)
+   AliyunPop->>AliyunPop: checkSign(stsAK, Sign)
+   AliyunPop -->> -UserServer: OK
+   end</pre>
+
+<h3 id="使用场景分析"><a href="#使用场景分析" class="headerlink" title="使用场景分析"></a>使用场景分析</h3><p>由于stsToken有效期用户是可以设置的, 因此风险有限.</p>
 <h2 id="方式3-内部调用使用innerAPI"><a href="#方式3-内部调用使用innerAPI" class="headerlink" title="方式3: 内部调用使用innerAPI"></a>方式3: 内部调用使用innerAPI</h2><h3 id="使用场景分析-1"><a href="#使用场景分析-1" class="headerlink" title="使用场景分析"></a>使用场景分析</h3><p>为二方&#x2F;云产品颁发一个授信的AK&#x2F;SK, 在调用API时, 可以传入 (ak, sk, realUserId) 来代理用户执行操作</p>
 <h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
 <li>安全要求高: <ul>
@@ -405,7 +434,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:42</span>
+    <span title="站点阅读时长">4:43</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
