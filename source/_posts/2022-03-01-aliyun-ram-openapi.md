@@ -39,6 +39,17 @@ RAM角色:
 - 使用主账号的AK/SK
 - 使用子账号的AK/SK 
 
+```mermaid
+sequenceDiagram
+      participant UserServer
+      participant AliyunPop
+      UserServer->>UserServer: Stores(AK/SK)
+   UserServer->>UserServer: PrepareRequest(AK/SK)
+   UserServer ->> +AliyunPop: RunInstances(AK, Sign)
+   AliyunPop->>AliyunPop: checkSign(AK, Sign)
+   AliyunPop -->> -UserServer: OK
+```
+
 ### 适用场景分析
 直接用ak/sk, 是非常常见的方案. 但带来的问题: 
 1. SK泄露安全问题: 由于SK是不变的, 因此如果SK泄露, 相当于密码泄露, 即永久地拥有了该账号所有的权限.
@@ -47,6 +58,27 @@ RAM角色:
 ## 方式2: 扮演RAM角色, 使用RAM角色的STSToken
 
 ### 使用样例
+```mermaid
+sequenceDiagram
+      participant UserServer
+      participant AliyunPop
+   par assumeRole
+      UserServer->>UserServer: Stores(AK/SK)
+   UserServer->>UserServer: PrepareRequest(AK/SK)
+   UserServer ->> +AliyunPop: AssumeRole(AK, Sign)
+   AliyunPop->>AliyunPop: checkSign(AK, Sign)
+   AliyunPop -->> -UserServer: (stsAK, stsSK, stsToken, Expiration)
+   UserServer ->> UserServer: store(stsAK, stsSK, Expiration)
+   end
+
+   par runInstances
+   UserServer->>UserServer: checkExpiration(stsAK, stsSK, Expiration)
+   UserServer->>UserServer: PrepareRequest(stsAK, stsSK, stsToken)
+   UserServer ->> +AliyunPop: RunInstances(stsAK, Sign)
+   AliyunPop->>AliyunPop: checkSign(stsAK, Sign)
+   AliyunPop -->> -UserServer: OK
+   end
+```
 
 ### 使用场景分析
 由于stsToken有效期用户是可以设置的, 因此风险有限.
