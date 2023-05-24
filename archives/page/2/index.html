@@ -211,6 +211,144 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-06-state-machine-in-distributed-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-06-state-machine-in-distributed-system/" class="post-title-link" itemprop="url">记一次分布式场景下状态机设计缺陷导致的问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-07T00:00:00+08:00">2022-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
+<li><p>为某个对象item建模, 有如下几种状态变迁, 在数据库中state字段记录:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072308671.png"></p>
+</li>
+<li><p>其中processing过程可能会持续时间较久, 10min左右</p>
+</li>
+<li><p>在服务端某个线程响应请求, 该对象处于processing过程中时, 服务器发布重启, 导致item状态一直卡在processing </p>
+</li>
+<li><p>而processing状态, <strong>本身是中间状态, 无法进行任何人肉干预&#x2F;操作</strong>, 从而导致只能临时提交数据订正, 将状态字段修改回”init”, 然后再执行一次process.</p>
+</li>
+</ul>
+<h1 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h1><p>仔细思考了下, 发现设计的时候, 根本原因是对于中间状态没有做好处理, 如背景中介绍的服务重启的处理.<br>而<mark>在分布式场景下, 服务重启是by design需要被接受的.</mark><br>这里思考了下可能的几种处理方式:</p>
+<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><ul>
+<li>如何区分状态机的中间状态与终态? </li>
+<li>一条原则: <mark>终态-&gt;终态之间, 必须是可以人肉有入口触发的(而不是系统自动触发的); 必须是可重入的.</mark></li>
+</ul>
+<h2 id="方案1-状态机设计修改-把processing作为纯粹的中间状态"><a href="#方案1-状态机设计修改-把processing作为纯粹的中间状态" class="headerlink" title="方案1: 状态机设计修改: 把processing作为纯粹的中间状态"></a>方案1: 状态机设计修改: 把processing作为纯粹的中间状态</h2><ol>
+<li><p>将processing从状态机中删除掉, 如下: <br><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072351350.png"></p>
+</li>
+<li><p>使用 分布式锁&#x2F;db字段锁 来实现排他功能(即item同时只能被一个线程处理, 防止多个线程同时处理一个item导致死锁&#x2F;重复计算等问题).</p>
+<ol>
+<li>在item执行前, 加上锁+锁超时时间(如例子中的10min); 其他线程要执行时, 无法抢到该item的锁. </li>
+<li>item执行完成之后, 状态修改为finished之后, 再释放掉item锁.</li>
+<li>item执行异常中断(例如服务器重启, 线程crash等): 等待锁超时. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+<li>item执行失败: 线程里catch住异常, 主动释放掉该item锁. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+</ol>
+</li>
+<li><p>或者使用事务:(不过本例子中不适合, 因为10min太久了, 其他执行耗时较短30s以内的可以使用该方案)  </p>
+<ol>
+<li>item执行前开启事务;</li>
+<li>执行后修改状态为finished, commit事务.</li>
+<li>item执行异常中断(例如服务器重启, 线程crash等): 事务自动回滚. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+<li>item执行失败: 主动回滚事务. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+</ol>
+</li>
+</ol>
+<h2 id="方案2-状态机设计修改-把processing作为纯粹的终态"><a href="#方案2-状态机设计修改-把processing作为纯粹的终态" class="headerlink" title="方案2: 状态机设计修改: 把processing作为纯粹的终态"></a>方案2: 状态机设计修改: 把processing作为纯粹的终态</h2><ol>
+<li><p>需要设计从processing-&gt;finished&#x2F;init的人肉触发入口.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072354738.png"></p>
+</li>
+<li><p>如何防止多个线程同时触发该item从processing-&gt;finished&#x2F;init的变迁? 参见方案1中锁&#x2F;事务的方式</p>
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-06-state-machine-in-distributed-system/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-03-random-snippets/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +385,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -346,7 +484,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -457,7 +595,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -572,7 +710,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -717,7 +855,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -840,7 +978,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -961,7 +1099,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -1074,7 +1212,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -1183,7 +1321,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -1290,7 +1428,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -1409,7 +1547,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -1530,7 +1668,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -1641,7 +1779,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -1764,7 +1902,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -1904,7 +2042,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -2008,7 +2146,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -2119,7 +2257,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -2246,7 +2384,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -2349,7 +2487,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -2480,7 +2618,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -2590,7 +2728,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -2789,7 +2927,7 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -2930,7 +3068,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3049,7 +3187,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3165,7 +3303,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3287,7 +3425,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3421,7 +3559,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3560,7 +3698,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3668,7 +3806,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3782,7 +3920,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3894,7 +4032,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
+      <time title="修改时间：2023-05-25 00:37:14" itemprop="dateModified" datetime="2023-05-25T00:37:14+08:00">2023-05-25</time>
     </span>
 
   
@@ -3957,118 +4095,6 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-04-29-ubuntu-init/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-04-29-ubuntu-init/" class="post-title-link" itemprop="url">ubuntu初始化配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-30 00:00:00" itemprop="dateCreated datePublished" datetime="2022-04-30T00:00:00+08:00">2022-04-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-23 23:54:24" itemprop="dateModified" datetime="2023-05-23T23:54:24+08:00">2023-05-23</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在内网淘了一个 ThinkPad X1 Carbon Gen4 的老古董，<br>默认是无系统的，也不太想安装毫无设计感，相当丑陋的Windows。<br>还好家里有Ubuntu的安装U盘，就直接拿来装上去了。<br>之前整体对Ubuntu的体验还是不错的，无论是从UI与字体设计上，使用流畅度上，软件齐全度上。<br>本身自己惯用Mac，切换到Ubuntu应该也是无缝的。<br>实际配置下来，发现软件齐全度比6年前自己使用时要多太多太多了，很开心。<br>在上边玩儿docker就更方便了，更好地理解并且折腾清楚原理啦。<br>注意，以下都是基于 Ubuntu 20.04.4 LTS 版本(Focal Fossa)说明的。</p>
-<h1 id="必要熟悉命令"><a href="#必要熟悉命令" class="headerlink" title="必要熟悉命令"></a>必要熟悉命令</h1><h2 id="apt软件包管理"><a href="#apt软件包管理" class="headerlink" title="apt软件包管理"></a>apt软件包管理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 搜索软件</span>
-<span class="token function">sudo</span> <span class="token function">apt-cache</span> search jdk
-<span class="token comment"># 安装软件</span>
-<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> openjdk-8-jdk
-<span class="token comment"># 查看软件安装状态</span>
-<span class="token function">sudo</span> dpkg -l <span class="token operator">|</span> <span class="token function">fgrep</span> openjdk-8-jdk<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="deb软件包管理"><a href="#deb软件包管理" class="headerlink" title="deb软件包管理"></a>deb软件包管理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装.deb软件包</span>
-<span class="token function">sudo</span> dpkg -i xxx.deb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-<h1 id="必装软件"><a href="#必装软件" class="headerlink" title="必装软件"></a>必装软件</h1><h2 id="开发软件"><a href="#开发软件" class="headerlink" title="开发软件"></a>开发软件</h2><ul>
-<li>SSH-Server</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-04-29-ubuntu-init/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4094,14 +4120,14 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">311k</span>
+    <span title="站点总字数">313k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:43</span>
+    <span title="站点阅读时长">4:45</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
