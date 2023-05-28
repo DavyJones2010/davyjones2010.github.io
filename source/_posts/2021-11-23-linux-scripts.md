@@ -89,6 +89,8 @@ du -sh * | sort -nr | fgrep "G" | head
 - 以总共消耗的CPU时间片排序
   - top进入之后，按T 
   - `top -o +TIME`
+- 单独查看某个进程的CPU消耗情况
+`top -p $PID`
 
 #### 线程排序
 - 查看某个进程下各个线程CPU占用情况，倒序排列

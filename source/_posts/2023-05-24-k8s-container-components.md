@@ -56,6 +56,11 @@ CRI接口, 包含如下2个服务:
   - 删除本地镜像
   - 查询镜像占用空间
 
+# Other
+一直以来, 混淆了两个概念, "容器编排" 与 "集群管理". 重新回顾"深入剖析Kubernetes"这本书, 才有了更深刻的理解. 
+- 容器编排: 面向的对象是多个容器/应用之间的依赖关系. 典型实现是Docker公司推出的Compose.
+- 集群管理: 面向的对象是底层的Host, 典型实现是Docker公司推出的Swarm. 
+
 # Refs
 - [容器运行时](https://zhuanlan.zhihu.com/p/577765547)
 - [CRI and ShimV2: A New Idea for Kubernetes Integrating Container Runtime](https://www.alibabacloud.com/blog/cri-and-shimv2-a-new-idea-for-kubernetes-integrating-container-runtime_594783)
