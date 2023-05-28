@@ -3528,6 +3528,7 @@ For <span class="token function">more</span> details, please visit https://suppo
 <li><code>top -o +TIME</code></li>
 </ul>
 </li>
+<li>单独查看某个进程的CPU消耗情况<br><code>top -p $PID</code></li>
 </ul>
 <h4 id="线程排序"><a href="#线程排序" class="headerlink" title="线程排序"></a>线程排序</h4><ul>
 <li>查看某个进程下各个线程CPU占用情况，倒序排列<ul>
@@ -13350,6 +13351,11 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 <li>查询镜像占用空间</li>
 </ul>
 </li>
+</ul>
+<h1 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h1><p>一直以来, 混淆了两个概念, “容器编排” 与 “集群管理”. 重新回顾”深入剖析Kubernetes”这本书, 才有了更深刻的理解. </p>
+<ul>
+<li>容器编排: 面向的对象是多个容器&#x2F;应用之间的依赖关系. 典型实现是Docker公司推出的Compose.</li>
+<li>集群管理: 面向的对象是底层的Host, 典型实现是Docker公司推出的Swarm.</li>
 </ul>
 <h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
 <li><a href="https://zhuanlan.zhihu.com/p/577765547">容器运行时</a></li>
