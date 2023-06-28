@@ -13368,4 +13368,17 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
+  <entry>
+    <title>Spring SPEL语法常用样例</title>
+    <url>//2023-06-28-spring-spel-sample/</url>
+    <content><![CDATA[<p>工作中使用了SpringCache, 因此需要经常写cacheKey的表达式, 而这些表达式就是<a href="https://docs.spring.io/spring-framework/docs/3.0.x/reference/expressions.html">Spring Expression Language (SpEL)</a><br>因此在这里分析了几种常见的SPEL使用方式, 废话不多说, 详细代码测试用例参见: <a href="https://github.com/DavyJones2010/test-core/blob/5f26e5723572575eb020b1fbde5c1f2b1e199082/src/test/java/edu/xmu/test/framework/spring/spel/SpelTest.java">SpelTest.java · GitHub</a></p>
+<p>上述样例, 只是满足了日常功能层面的需求, 记录下来防止遗忘.<br>具体深入的性能以及能力的边界, 暂时不做讨论.</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>spring-cache</tag>
+        <tag>spring</tag>
+        <tag>spring-spel</tag>
+      </tags>
+  </entry>
 </search>

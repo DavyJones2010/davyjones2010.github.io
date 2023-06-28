@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">194</span>
+        <span class="site-state-item-count">195</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -210,6 +210,117 @@
   
   
 
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-10-linux-network-http-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-07-10-linux-network-http-proxy/" class="post-title-link" itemprop="url">Linux网络之HTTP Proxy原理与实现分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-11 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-11T00:00:00+08:00">2022-07-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用apache的HttpClient时(获取其他常用的httpclient), 经常会发现初始化时可以配置http proxy. 但有些疑问:</p>
+<ol>
+<li>在什么场景下需要使用http proxy?</li>
+<li>具体http proxy怎么配置?</li>
+<li>具体http proxy的实现原理是啥? 包括 httpClient 如何使用这个proxy? 具体的httpProxy怎么处理这种包?</li>
+</ol>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>docker</li>
+<li>ubuntu</li>
+</ul>
+<h2 id="http-proxy-服务端部署"><a href="#http-proxy-服务端部署" class="headerlink" title="http proxy 服务端部署"></a>http proxy 服务端部署</h2><p>Nginx通常是作为反向代理, 但其实也可以作为正向代理使用:  <a target="_blank" rel="noopener" href="https://github.com/reiz/nginx_proxy">nginx_proxy</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run -d -p <span class="token number">9999</span>:8888 -v <span class="token variable">$&#123;<span class="token environment constant">PWD</span>&#125;</span>/nginx_allowlist.conf:/usr/local/nginx/conf/nginx.conf reiz/nginx_proxy:0.0.3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="http-proxy-客户端配置"><a href="#http-proxy-客户端配置" class="headerlink" title="http proxy 客户端配置"></a>http proxy 客户端配置</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-07-10-linux-network-http-proxy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-07-06-state-machine-in-distributed-system/">
 
@@ -247,7 +358,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -385,7 +496,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -484,7 +595,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -595,7 +706,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -710,7 +821,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -855,7 +966,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -978,7 +1089,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -1099,7 +1210,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -1212,7 +1323,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -1321,7 +1432,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -1428,7 +1539,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -1547,7 +1658,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -1668,7 +1779,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -1779,7 +1890,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -1902,7 +2013,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -2042,7 +2153,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -2146,7 +2257,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -2257,7 +2368,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -2384,7 +2495,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -2487,7 +2598,7 @@ virbr0		<span class="token number">8000</span>.525400245c90	<span class="token f
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -2618,7 +2729,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -2728,7 +2839,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -2927,7 +3038,7 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3068,7 +3179,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3187,7 +3298,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3303,7 +3414,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3425,7 +3536,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3559,7 +3670,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3698,7 +3809,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3806,7 +3917,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3920,7 +4031,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
+      <time title="修改时间：2023-06-28 23:07:33" itemprop="dateModified" datetime="2023-06-28T23:07:33+08:00">2023-06-28</time>
     </span>
 
   
@@ -3988,115 +4099,8 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-04-29-bad-design/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-04-29-bad-design/" class="post-title-link" itemprop="url">记录一些自认为不好的产品设计</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-30 00:00:00" itemprop="dateCreated datePublished" datetime="2022-04-30T00:00:00+08:00">2022-04-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-28 20:22:09" itemprop="dateModified" datetime="2023-06-28T20:22:09+08:00">2023-06-28</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>253</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一些自己明显感觉退步，不适的设计。引以为戒。</p>
-<h1 id="过多的打扰"><a href="#过多的打扰" class="headerlink" title="过多的打扰"></a>过多的打扰</h1><h2 id="技术文档选中弹框"><a href="#技术文档选中弹框" class="headerlink" title="技术文档选中弹框"></a>技术文档选中弹框</h2><ul>
-<li>阿里云官网技术文档，选中文字之后，会自动弹出“文档反馈”说明，本意是好的，希望得到用户的反馈。但在开发者实际阅读过程中，尤其是大段的技术文档，经常会习惯性地鼠标点选，此时弹出弹框，非常分散注意力。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071159766.png"></li>
-<li>反观海外的云厂商，都非常克制甚至朴素。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071200696.png"></li>
-</ul>
-<h2 id="页面过多堆砌"><a href="#页面过多堆砌" class="headerlink" title="页面过多堆砌"></a>页面过多堆砌</h2><ul>
-<li>阿里云官方技术文档，右上角是一堆营销计划“参与星火赢现金”，“分享助力好礼”；右下角是“销售咨询”，“会员专享”，“文档反馈”。跟牛皮藓一样。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071200169.png"></li>
-<li>反观aws，几乎没有过多打扰。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071201046.png"></li>
-</ul>
-<h1 id="不一的风格"><a href="#不一的风格" class="headerlink" title="不一的风格"></a>不一的风格</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-04-29-bad-design/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
