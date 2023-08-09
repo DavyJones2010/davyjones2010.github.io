@@ -127,9 +127,56 @@ public class UserServiceMockTest {
 }
 ```
 
+# 如何根据不同的输入参数(值), mock不同的输出结果
+> 尤其是在输入参数是个List的时候, 需要mock不同的输出
+
+代码片段如下, 核心是使用Delegate, 完整样例参见:[JMockitTest.java](https://github.com/DavyJones2010/test-core/blob/master/src/test/java/edu/xmu/test/javase/jmockit/JMockitTest.java#L27) 
+```java
+new Expectations() {{
+    // 由于这里 userDao 被mock了, 因此不会真正去执行 userDao.insert 方法
+    userDao.insert((User) any);
+    // 因此使用 Delegate 来根据不同的input来mock userDao.insert的不同output;
+    // 如果output为void, 则使用 Delegate<Void>
+    result = new Delegate<Void>() {
+        // 方法签名需要mock的方法`insert`保持一致
+        void insert(User usr) throws UserException {
+            // 这里根据不同的input(usr), 对 userDao.insert 的结果进行mock
+            if (usr.getName().equalsIgnoreCase("Wang")) {
+                System.out.printf("User is Wang!");
+                throw new UserException();
+            }
+        }
+    };
+}};
+```
+
+# 如何Mock @Injectable的Bean的void且修改了参数的方法
+> 尤其是@Injectable的 Bean 的方法对输入参数执行了init等操作, 之后的步骤里依赖init之后的值
+
+代码片段如下, 核心是使用Delegate, 完整样例参见:[JMockitTest.java](https://github.com/DavyJones2010/test-core/blob/master/src/test/java/edu/xmu/test/javase/jmockit/JMockitTest.java#L59)
+```java
+ new Expectations() {{
+    // 这里没有真正去执行format, 因此没有把age进行规整
+    userDao.format((User) any);
+    // 虽然userDao.format无返回结果且被mock了(未执行), 但这里仍然可以使用 result = new Delegate<Void>() {} 对方法执行内容&结果进行Mock
+    result = new Delegate<Void>() {
+        // 方法签名需要mock的方法`format`保持一致
+        public void format(User usr) {
+            usr.setAge(25);
+        }
+    };
+}};
+```
+
+
 # 如何进行DAO层测试
 数据库测试: [UNITILS库的使用经历](https://www.freesion.com/article/88601080583/)
 
 
 ## 如何防止自动回滚?
 使用 `@Transactional(TransactionMode.COMMIT)`其中 `org.unitils.database.annotations.Transactional`
+
+# 其他
+由于项目历史依赖, 以及自身熟悉程度原因, 使用了 [JMockit - Development history](http://jmockit.github.io/changes.html) 作为Mock测试框架.
+但该项目在2019年12月之后就停止了更新. 事实上也踩了坑, 不支持Mac M1/M2 ARM架构的JDK, 导致只能使用Hack的方式来绕过. 参见 [get java.lang.RuntimeException: java.lang.reflect.InvocationTargetException while run the test · Issue #710 · jmockit/jmockit1 · GitHub](https://github.com/jmockit/jmockit1/issues/710)
+所以针对新的应用, 建议使用 [GitHub - mockito/mockito: Most popular Mocking framework for unit tests written in Java](https://github.com/mockito/mockito), 虽然有一定的学习迁移成本, 但至少至今(2023年08月09日)仍在活跃维护中.
