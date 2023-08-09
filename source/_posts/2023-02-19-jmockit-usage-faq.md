@@ -177,6 +177,6 @@ new Expectations() {{
 使用 `@Transactional(TransactionMode.COMMIT)`其中 `org.unitils.database.annotations.Transactional`
 
 # 其他
-由于项目历史依赖, 以及自身熟悉程度原因, 使用了 [JMockit - Development history](http://jmockit.github.io/changes.html) 作为Mock测试框架.
-但该项目在2019年12月之后就停止了更新. 事实上也踩了坑, 不支持Mac M1/M2 ARM架构的JDK, 导致只能使用Hack的方式来绕过. 参见 [get java.lang.RuntimeException: java.lang.reflect.InvocationTargetException while run the test · Issue #710 · jmockit/jmockit1 · GitHub](https://github.com/jmockit/jmockit1/issues/710)
-所以针对新的应用, 建议使用 [GitHub - mockito/mockito: Most popular Mocking framework for unit tests written in Java](https://github.com/mockito/mockito), 虽然有一定的学习迁移成本, 但至少至今(2023年08月09日)仍在活跃维护中.
+- 由于项目历史依赖, 以及自身熟悉程度原因, 使用了 [JMockit - Development history](http://jmockit.github.io/changes.html) 作为Mock测试框架.
+- 但该项目在2019年12月之后就停止了更新. 事实上也踩了坑, 不支持Mac M1/M2 ARM架构的JDK, 导致只能使用Hack的方式来绕过. 参见 [Issue #710](https://github.com/jmockit/jmockit1/issues/710)
+- 所以针对新的应用, 建议使用 [GitHub - mockito](https://github.com/mockito/mockito), 虽然有一定的学习迁移成本, 但至少至今(2023年08月09日)仍在活跃维护中.
