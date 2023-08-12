@@ -55,6 +55,17 @@ todo:
 jq
 ```
 
+* 计算文件md5值
+- Linux: 
+```shell
+md5sum a.txt
+```
+
+- Mac: 
+```shell
+md5 a.txt
+```
+
 * 创建空的大文件(全被0占据的文件, 而非打洞)
 
 ```shell
