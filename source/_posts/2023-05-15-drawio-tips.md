@@ -16,6 +16,9 @@ draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.
 - [删除 Shapes+Connections](https://www.drawio.com/doc/faq/shapes-delete-connections): `ctrl/cmd + Delete`
 - 选择所有Edges: `cmd+shift+e`
 - 选择所有Shapes/Vertices: `cmd+shift+i`
+- Group: `cmd+g`; Ungroup: `cmd+shift+u`
+- Bring to Front: `ctrl+shift+f`; Send to Back: `ctrl+shfit+b`
+
 
 # 技巧
 ## LineJump
