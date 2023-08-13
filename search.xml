@@ -2719,8 +2719,33 @@ For <span class="token function">more</span> details, please visit https://suppo
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>settings</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-
-
+<h1 id="常用命令-x2F-操作"><a href="#常用命令-x2F-操作" class="headerlink" title="常用命令&#x2F;操作"></a>常用命令&#x2F;操作</h1><h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><ul>
+<li><p>MAC怎么重置SMC&#x2F;NVRAM&#x2F;PRAM</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Option+Command+P+R<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>开机选择启动磁盘</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">按住 option 键<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>重装系统</p>
+<ul>
+<li>安装与你电脑兼容的 macOS 最新版本：Option-Command-R。 </li>
+<li>重新安装你电脑原始版本的 macOS（包括可用的更新）：Option-Shift-Command-R。 </li>
+<li>重新安装当前版本的 macOS：Command-R。</li>
+</ul>
+</li>
+</ul>
+<h2 id="硬件性能相关"><a href="#硬件性能相关" class="headerlink" title="硬件性能相关"></a>硬件性能相关</h2><ul>
+<li>查看CPU型号<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"> <span class="token punctuation">(</span>base<span class="token punctuation">)</span> MacBook:~ davywalker$  sysctl machdep.cpu.brand_string
+machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span class="token punctuation">)</span> Core<span class="token punctuation">(</span>TM<span class="token punctuation">)</span> M-5Y71 CPU @ <span class="token number">1</span>.20GHz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>查看物理内存大小<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>base<span class="token punctuation">)</span> MacBook:~ davywalker$ sysctl -n hw.memsize
+<span class="token number">8589934592</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ul>
+<h1 id="常用链接-amp-工具"><a href="#常用链接-amp-工具" class="headerlink" title="常用链接&amp;工具"></a>常用链接&amp;工具</h1><ul>
+<li>查询MacOS 支持的Mac型号: <a href="https://eshop.macsales.com/guides/Mac_OS_X_Compatibility">Mac OS Compatibility Guide by Mac Model</a></li>
+<li>查询Mac SN号码对应的硬件详细信息: <a href="https://appleserialnumberinfo.com/Desktop/index.php">Apple Serial Number Info</a></li>
+<li>魏老旧Mac安装新的 MacOS 系统: <a href="https://dortania.github.io/OpenCore-Legacy-Patcher/">OpenCore Legacy Patcher</a></li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>新的Mac初始化确实需要花费不少时间. 因此推荐使用TimeMachine来作为备份与迁移工具.<br>单独搞块硬盘用来作为TimeMachine的备份盘吧. 现在硬盘价格也便宜.  </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>mac</tag>
