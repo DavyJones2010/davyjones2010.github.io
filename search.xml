@@ -2627,8 +2627,7 @@ For <span class="token function">more</span> details, please visit https://suppo
 <span class="token builtin class-name">export</span> <span class="token assign-left variable">BASH_SILENCE_DEPRECATION_WARNING</span><span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h4 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h4><p><a href="https://apple.stackexchange.com/questions/371997/suppressing-the-default-interactive-shell-is-now-zsh-message-in-macos-catalina">Suppressing “The default interactive shell is now zsh” message in macOS Catalina</a></p>
 <h3 id="开启触摸板轻点确认"><a href="#开启触摸板轻点确认" class="headerlink" title="开启触摸板轻点确认"></a>开启触摸板轻点确认</h3><p>经常需要在触摸板上点击之类的, 默认是需要按下去, 才算是点击按钮, 但这样太费劲儿.</p>
-<h3 id="开启tab切换对话框选项"><a href="#开启tab切换对话框选项" class="headerlink" title="开启tab切换对话框选项"></a>开启tab切换对话框选项</h3><p>&#x2F;&#x2F; TODO:</p>
-<h1 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h1><h2 id="github连接不上"><a href="#github连接不上" class="headerlink" title="github连接不上"></a>github连接不上</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fatal: unable to access <span class="token string">'https://github.com/DavyJones2010/davyjones2010.github.io.git/'</span><span class="token builtin class-name">:</span> Failed to connect to github.com port <span class="token number">443</span>: Operation timed out<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="开启tab切换对话框选项"><a href="#开启tab切换对话框选项" class="headerlink" title="开启tab切换对话框选项"></a>开启tab切换对话框选项</h3><h1 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h1><h2 id="github连接不上"><a href="#github连接不上" class="headerlink" title="github连接不上"></a>github连接不上</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fatal: unable to access <span class="token string">'https://github.com/DavyJones2010/davyjones2010.github.io.git/'</span><span class="token builtin class-name">:</span> Failed to connect to github.com port <span class="token number">443</span>: Operation timed out<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>或者</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">SSL_ERROR_SYSCALL <span class="token keyword">in</span> connection to github.com:443<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>根本原因是本地启用了VPN(ClashX), 使用如下命令配置git的proxy即可: </p>
@@ -2749,11 +2748,33 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 <h1 id="常用链接-amp-工具"><a href="#常用链接-amp-工具" class="headerlink" title="常用链接&amp;工具"></a>常用链接&amp;工具</h1><ul>
 <li>查询MacOS 支持的Mac型号: <a href="https://eshop.macsales.com/guides/Mac_OS_X_Compatibility">MacOS Compatibility Guide by Mac Model</a></li>
 <li>查询Mac SN号码对应的硬件详细信息: <a href="https://appleserialnumberinfo.com/Desktop/index.php">Apple Serial Number Info</a></li>
-<li>魏老旧Mac安装新的 MacOS 系统: <a href="https://dortania.github.io/OpenCore-Legacy-Patcher/">OpenCore Legacy Patcher</a></li>
+<li>为老旧Mac安装新的 MacOS 系统: <a href="https://dortania.github.io/OpenCore-Legacy-Patcher/">OpenCore Legacy Patcher</a></li>
 <li>MacOS各个版本官方下载地址: <a href="https://support.apple.com/zh-cn/HT211683">如何下载和安装 macOS - 官方 Apple 支持 (中国)</a></li>
 <li>如何创建MacOS磁盘镜像(方便随时重装系统): <a href="https://support.apple.com/zh-cn/HT201372">创建可引导的 macOS 安装器 - 官方 Apple 支持 (中国)</a></li>
 </ul>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>新的Mac初始化确实需要花费不少时间. 因此推荐使用TimeMachine来作为备份与迁移工具.<br>单独搞块硬盘用来作为TimeMachine的备份盘吧. 现在硬盘价格也便宜.  </p>
+<h1 id="新Mac初始化方式"><a href="#新Mac初始化方式" class="headerlink" title="新Mac初始化方式"></a>新Mac初始化方式</h1><p>新的Mac初始化, 按照上边这些步骤一个一个来, 确实需要花费不少时间.<br>尤其是自己喜欢折腾电脑, 这样导致的问题就更严重了.<br>因此调研了下初始化的方式: </p>
+<h2 id="TimeMachine-方式"><a href="#TimeMachine-方式" class="headerlink" title="TimeMachine 方式"></a>TimeMachine 方式</h2><ol>
+<li>优点: 非常方便靠谱, 基本可以 1:1 无损地进行迁移</li>
+<li>缺点: <ol>
+<li>需要单独搞块硬盘用来作为TimeMachine的备份盘. 但现在硬盘价格也便宜, 因此问题倒也不大.</li>
+<li>只支持低版本的TimeMachine迁移到同版本或者高版本的MacOS上.</li>
+</ol>
+</li>
+</ol>
+<p>这个问题就比较严重. 现在自己的TimeMachine是基于Monterey来构建, 但新淘来的15款MacBook12寸, 只能支持到BigSur的MacOS.<br>因此只能使用 <a href="https://dortania.github.io/OpenCore-Legacy-Patcher/">OpenCore Legacy Patcher</a> 来强制升级系统到Monterey; 但性能是否受影响就难说了.</p>
+<h2 id="Dotfile-方式"><a href="#Dotfile-方式" class="headerlink" title="Dotfile 方式"></a>Dotfile 方式</h2><ol>
+<li>优点:<ol>
+<li>github 托管, 无需单独硬盘.</li>
+<li>版本兼容性较好.</li>
+</ol>
+</li>
+<li>缺点:<ol>
+<li>需要长期维护, 新增加啥配置或者软件, 都需要记得更新Dotfile. </li>
+<li>不同Mac版本的兼容性也需要考虑.</li>
+</ol>
+</li>
+</ol>
+<p>自己暂时选用的是TimeMachine方式, 还算靠谱. </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>mac</tag>
