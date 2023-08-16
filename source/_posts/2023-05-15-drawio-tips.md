@@ -18,7 +18,11 @@ draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.
 - 选择所有Shapes/Vertices: `cmd+shift+i`
 - Group: `cmd+g`; Ungroup: `cmd+shift+u`
 - Bring to Front: `ctrl+shift+f`; Send to Back: `ctrl+shfit+b`
-
+- CopySize: `option+shift+x`  pasteSize: `option+shift+v`
+- Duplicate: `cmd+enter` or `cmd+d` --> 比 cmd+c ++ cmd+v 好用多啦!
+- Reset view: `enter`  --> 之前画布拖动太多, 导致图形丢失了. 还得拖动bar来找, 很麻烦, 用这个简直提效神器!
+- Lock Shape: `cmd+l` --> 在多个图形overlap, 需要勾选其中某些的时候, 可以先把不希望选到的图形lock住
+- AutoReset Size: `cmd+shift+y` --> 会把shape的size自动设置为刚好包下里边的Text
 
 # 技巧
 ## LineJump
@@ -61,12 +65,15 @@ https://www.youtube.com/watch?v=xM04I-WVXlE&ab_channel=draw.io
 - Hode `CMD+Shift`, 然后拖动对象大小, 可以保持对象中心不动, 且对象比例等比缩放. --> 非常好用!
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305182306535.gif)
 
-- Copy&Paste Size
+- Copy&Paste Size, 快捷键 copySize: `option+shift+x`; pasteSize: `option+shift+v`
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190001415.png)
 
 ## 同时选择多个对象
 - 按住 `Option` 然后拖选, 只要触碰到的, 都会被选到(不用把整个对象都包含进去) --> 解救人类!
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190008608.gif)
+
+- 但貌似有的时候行为不一致, 按下`Option`然后拖选的行为是防止点选到外部的容器/Shape
+
 
 ## 同时调整多个对象的大小
 1. 使用分组
@@ -85,6 +92,13 @@ https://www.youtube.com/watch?v=xM04I-WVXlE&ab_channel=draw.io
 ## 移动对象
 - 按住 `Shift+CMD` 移动, 把对象限制在水平&垂直方向移动(强约束)
 - 按住 `Shift` 移动, 可以将对象尽量在水平/垂直方向移动(弱约束, 粘性)
+- 防止移动的对象被放入到container里: 拖动对象, 然后按住option
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162219643.gif)
+
+## 旋转Shape里的Text
+- 经常会遇到子图形覆盖掉Parent的Text, 导致可读性很差. 此时可以旋转Parent的 Text 位置到左侧/右侧, 如下样例: 
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162232737.png)
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162231340.gif)
 
 ## 先决定布局, 再决定风格
 先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.
