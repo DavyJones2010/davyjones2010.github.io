@@ -13333,6 +13333,11 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 <li>选择所有Shapes&#x2F;Vertices: <code>cmd+shift+i</code></li>
 <li>Group: <code>cmd+g</code>; Ungroup: <code>cmd+shift+u</code></li>
 <li>Bring to Front: <code>ctrl+shift+f</code>; Send to Back: <code>ctrl+shfit+b</code></li>
+<li>CopySize: <code>option+shift+x</code>  pasteSize: <code>option+shift+v</code></li>
+<li>Duplicate: <code>cmd+enter</code> or <code>cmd+d</code> –&gt; 比 cmd+c ++ cmd+v 好用多啦!</li>
+<li>Reset view: <code>enter</code>  –&gt; 之前画布拖动太多, 导致图形丢失了. 还得拖动bar来找, 很麻烦, 用这个简直提效神器!</li>
+<li>Lock Shape: <code>cmd+l</code> –&gt; 在多个图形overlap, 需要勾选其中某些的时候, 可以先把不希望选到的图形lock住</li>
+<li>AutoReset Size: <code>cmd+shift+y</code> –&gt; 会把shape的size自动设置为刚好包下里边的Text</li>
 </ul>
 <h1 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h1><h2 id="LineJump"><a href="#LineJump" class="headerlink" title="LineJump"></a>LineJump</h2><div class="note info"><p>线段交叉时, 用<code>linejump</code>, 清晰易读</p>
 </div>
@@ -13359,11 +13364,14 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 </li>
 <li><p>Hode <code>CMD+Shift</code>, 然后拖动对象大小, 可以保持对象中心不动, 且对象比例等比缩放. –&gt; 非常好用!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305182306535.gif"></p>
 </li>
-<li><p>Copy&amp;Paste Size<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190001415.png"></p>
+<li><p>Copy&amp;Paste Size, 快捷键 copySize: <code>option+shift+x</code>; pasteSize: <code>option+shift+v</code><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190001415.png"></p>
 </li>
 </ul>
 <h2 id="同时选择多个对象"><a href="#同时选择多个对象" class="headerlink" title="同时选择多个对象"></a>同时选择多个对象</h2><ul>
-<li>按住 <code>Option</code> 然后拖选, 只要触碰到的, 都会被选到(不用把整个对象都包含进去) –&gt; 解救人类!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190008608.gif"></li>
+<li><p>按住 <code>Option</code> 然后拖选, 只要触碰到的, 都会被选到(不用把整个对象都包含进去) –&gt; 解救人类!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190008608.gif"></p>
+</li>
+<li><p>但貌似有的时候行为不一致, 按下<code>Option</code>然后拖选的行为是防止点选到外部的容器&#x2F;Shape</p>
+</li>
 </ul>
 <h2 id="同时调整多个对象的大小"><a href="#同时调整多个对象的大小" class="headerlink" title="同时调整多个对象的大小"></a>同时调整多个对象的大小</h2><ol>
 <li><p>使用分组<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305172248220.gif"></p>
@@ -13379,6 +13387,10 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 <h2 id="移动对象"><a href="#移动对象" class="headerlink" title="移动对象"></a>移动对象</h2><ul>
 <li>按住 <code>Shift+CMD</code> 移动, 把对象限制在水平&amp;垂直方向移动(强约束)</li>
 <li>按住 <code>Shift</code> 移动, 可以将对象尽量在水平&#x2F;垂直方向移动(弱约束, 粘性)</li>
+<li>防止移动的对象被放入到container里: 拖动对象, 然后按住option<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162219643.gif"></li>
+</ul>
+<h2 id="旋转Shape里的Text"><a href="#旋转Shape里的Text" class="headerlink" title="旋转Shape里的Text"></a>旋转Shape里的Text</h2><ul>
+<li>经常会遇到子图形覆盖掉Parent的Text, 导致可读性很差. 此时可以旋转Parent的 Text 位置到左侧&#x2F;右侧, 如下样例:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162232737.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162231340.gif"></li>
 </ul>
 <h2 id="先决定布局-再决定风格"><a href="#先决定布局-再决定风格" class="headerlink" title="先决定布局, 再决定风格"></a>先决定布局, 再决定风格</h2><p>先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.</p>
 <h1 id="风格"><a href="#风格" class="headerlink" title="风格"></a>风格</h1><h2 id="泳道图"><a href="#泳道图" class="headerlink" title="泳道图"></a>泳道图</h2><p>最好每个泳道设定背景色(LaneColor), 然后里边的各个Task背景白色, 能突出重点, 美观. 对比下: </p>
