@@ -2603,6 +2603,7 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
 <li>空气日历</li>
 <li>iShot</li>
 <li>Timeout</li>
+<li><a href="https://picgo.github.io/PicGo-Doc/en/guide/#picgo-is-here">PicGo</a> 图床软件, Blog必备</li>
 </ul>
 <h2 id="HomeBrew安装配置"><a href="#HomeBrew安装配置" class="headerlink" title="HomeBrew安装配置"></a>HomeBrew安装配置</h2><h3 id="安装脚本"><a href="#安装脚本" class="headerlink" title="安装脚本"></a>安装脚本</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/bin/bash -c <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">curl</span> -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/install.sh<span class="token variable">)</span></span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
