@@ -13143,7 +13143,7 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="t
 </ul>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102316078.png"></p>
 <h2 id="豆腐块配色优化"><a href="#豆腐块配色优化" class="headerlink" title="豆腐块配色优化"></a>豆腐块配色优化</h2><ul>
-<li>配色从<a href="https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3">colorbrewer2</a>中选择</li>
+<li>配色从 <a href="https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3"><del>colorbrewer2</del></a> <a href="https://www.colorgg.com/66cc66">ColorGG 颜色搭配</a>中选择</li>
 <li>大区域与小区域同色系, 不同深度</li>
 </ul>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102330899.png"></p>
