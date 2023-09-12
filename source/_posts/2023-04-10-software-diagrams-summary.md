@@ -344,7 +344,7 @@ pie title Pets adopted by volunteers
 
 ## 豆腐块配色优化
 
-- 配色从[colorbrewer2](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)中选择
+- 配色从 [~~colorbrewer2~~](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) [ColorGG 颜色搭配](https://www.colorgg.com/66cc66)中选择
 - 大区域与小区域同色系, 不同深度
 
 ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202304102330899.png)
