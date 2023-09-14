@@ -3699,12 +3699,32 @@ Linux localhost.localdomain <span class="token number">3.10</span>.0-1160.el7.x8
       </tags>
   </entry>
   <entry>
-    <title>一些有意思的记录</title>
+    <title>无用的知识又增加了</title>
     <url>//2021-11-22-random-snippets/</url>
-    <content><![CDATA[<p>CPU芯片中vendor_id:<br>intel –&gt; Genuine Intel<br>amd –&gt; Authentic AMD<br>哈哈, 为啥都加个”真实的”呢? 生怕别人伪造么?</p>
+    <content><![CDATA[<p>CPU芯片中vendor_id:</p>
+<ul>
+<li><code>intel --&gt; Genuine Intel</code></li>
+<li><code>amd --&gt; Authentic AMD</code></li>
+</ul>
+<p>哈哈, 为啥都加个”真实的”呢? 生怕别人伪造么?</p>
+<hr>
+<ul>
+<li>为啥 Java 的 HeapDump 文件后缀是<code>hprof</code>, 例如<code>20230914-tmp.hprof</code>?</li>
+<li>代表<code>Heap Profiling</code>, 即堆内存分析. 也是很早以前JDK提供的工具: <a href="https://www.cnblogs.com/linhaohong/archive/2012/07/12/2588657.html">HPROF: 一个Heap&#x2F;CPU Profiling工具</a></li>
+</ul>
+<hr>
+<ul>
+<li>K8s中各种shim组件, 具体为啥叫 shim ?</li>
+<li>直译过来是<code>垫片</code>, 这是什么鬼? 很难理解. 其实本质就是Adaptor. 当然也有人也有类似的吐槽, 好好地叫adaptor很难么? <a href="https://hackernoon.com/design-patterns-wtf-is-a-shim-la1h338v">Design Patterns: WTF is a Shim?</a></li>
+</ul>
+<hr>
+<ul>
+<li>到底在什么场景下该用<code>java.util.LinkedList</code>? 具体谁用了?</li>
+<li>巧了, LinkedList的作者<code>Joshua Bloch</code>也有同样的困惑. 基本结论, 就是学习思路可以, 但在实际生产环境中就尽量不要用啦.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309142358549.png"></li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>poems</tag>
+        <tag>tech-for-fun</tag>
       </tags>
   </entry>
   <entry>
