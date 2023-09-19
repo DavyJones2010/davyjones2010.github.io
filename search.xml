@@ -3694,8 +3694,8 @@ centos-release-7-9.2009.0.el7.centos.x86_64<span aria-hidden="true" class="line-
 <h2 id="查看Linux内核版本"><a href="#查看Linux内核版本" class="headerlink" title="查看Linux内核版本"></a>查看Linux内核版本</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># uname -a</span>
 Linux localhost.localdomain <span class="token number">3.10</span>.0-1160.el7.x86_64 <span class="token comment">#1 SMP Mon Oct 19 16:18:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>code-snippets</tag>
         <tag>linux</tag>
+        <tag>code-snippets</tag>
       </tags>
   </entry>
   <entry>
@@ -8840,8 +8840,8 @@ rtt min/avg/max/mdev <span class="token operator">=</span> <span class="token nu
 <span class="token comment"># 安装ifconfig</span>
 <span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> net-tools -y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>code-snippets</tag>
         <tag>linux</tag>
+        <tag>code-snippets</tag>
         <tag>network</tag>
         <tag>nat</tag>
         <tag>arp</tag>
@@ -10515,8 +10515,8 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
         <category>技术</category>
       </categories>
       <tags>
-        <tag>mac</tag>
         <tag>linux</tag>
+        <tag>mac</tag>
         <tag>network</tag>
         <tag>nginx</tag>
       </tags>
@@ -12064,8 +12064,8 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>code-snippets</tag>
         <tag>linux</tag>
+        <tag>code-snippets</tag>
         <tag>network</tag>
         <tag>tcpdump</tag>
       </tags>
