@@ -55,3 +55,10 @@ shell 中 if 判断骚操作:
 -w file has write permission (for the user running the test)
 -x file has execute permission (for the user running the test)
 ```
+
+MBR 分区实战
+- 查看第 512Byte 的内容
+```shell
+[root@iZbp1d3afbt50ybdanjugiZ dev]# xxd /dev/vda | less
+```
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309200817651.png)
