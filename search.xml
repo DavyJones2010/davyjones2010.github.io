@@ -2974,8 +2974,23 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
   <entry>
     <title>鸟哥的Linux私房菜笔记</title>
     <url>//2021-11-18-Linux-Basic/</url>
-    <content><![CDATA[<h1 id="设备与在Linux中文件名"><a href="#设备与在Linux中文件名" class="headerlink" title="设备与在Linux中文件名"></a>设备与在Linux中文件名</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+    <content><![CDATA[<h1 id="Linux-中各种文件类型"><a href="#Linux-中各种文件类型" class="headerlink" title="Linux 中各种文件类型"></a>Linux 中各种文件类型</h1><p>经常在<code>ls -ltrh</code>的时候, 出现的文件类型不太认识&#x2F;熟悉, 这里整理下, 详细参见:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252337411.png"></p>
+<p>典型样例: </p>
+<ul>
+<li><p><code>-</code>: 普通文件</p>
+</li>
+<li><p><code>d</code>: 目录<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252339985.png"></p>
+</li>
+<li><p><code>b</code>: 块设备, 都是在<code>/dev/</code>目录下<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252342096.png"></p>
+</li>
+<li><p><code>c</code>: 字符设备, 典型的例如tty, 如 urandom, random<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252352764.png"></p>
+</li>
+<li><p><code>s</code>: socketfile, 用于进程间socket通信. 详细使用方式参见: <a href="https://askubuntu.com/questions/372725/what-are-socket-files">What are socket files?</a>. 另外还可以了解下vsock, 作为host与guestOS通信的常用方案.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252349265.png"></p>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
+        <tag>linux</tag>
         <tag>books</tag>
         <tag>2021</tag>
         <tag>GFS</tag>
@@ -3576,6 +3591,18 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> -sh * <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">head</span>
 <span class="token function">du</span> -sh * <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">fgrep</span> <span class="token string">"G"</span> <span class="token operator">|</span> <span class="token function">head</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>查看目录下特定文件类型</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 使用正则, 如下查找出块设备 </span>
+<span class="token punctuation">[</span>root@localhost dev<span class="token punctuation">]</span><span class="token comment"># ls -ltrh | grep '^b'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>查看当前shell的进程PID</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>base<span class="token punctuation">)</span> MacBook-Pro:qos davywalker$ <span class="token builtin class-name">echo</span> <span class="token variable">$$</span>
+<span class="token number">66549</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h2 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h2><h3 id="top"><a href="#top" class="headerlink" title="top"></a>top</h3><h4 id="进程排序"><a href="#进程排序" class="headerlink" title="进程排序"></a>进程排序</h4><ul>
 <li>以 CPU 占用率大小的顺序排列进程列表 <ul>
@@ -13133,6 +13160,7 @@ pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="t
 <ul>
 <li>双轴图</li>
 <li>热力图</li>
+<li>雷达图: 使用 <a href="https://www.chartjs.org/docs/latest/charts/radar.html">Radar Chart | Chart.js</a> 来在线制作<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252307443.png"></li>
 </ul>
 <h1 id="其他图"><a href="#其他图" class="headerlink" title="其他图"></a>其他图</h1><h2 id="脑图"><a href="#脑图" class="headerlink" title="脑图"></a>脑图</h2><ul>
 <li>场景: 业务规划,</li>

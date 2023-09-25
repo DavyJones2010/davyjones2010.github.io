@@ -23,21 +23,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="设备与在Linux中文件名">
+    <meta name="description" content="Linux 中各种文件类型经常在ls -ltrh的时候, 出现的文件类型不太认识&#x2F;熟悉, 这里整理下, 详细参见: 典型样例:   -: 普通文件  d: 目录  b: 块设备, 都是在&#x2F;dev&#x2F;目录下  c: 字符设备, 典型的例如tty, 如 urandom, random  s: socketfile, 用于进程间socket通信. 详细使用方式参见: What are socke">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="鸟哥的Linux私房菜笔记">
 <meta property="og:url" content="https://davyjones2010.github.io/2021-11-18-Linux-Basic/">
 <meta property="og:site_name" content="Coders@Work">
-<meta property="og:description" content="设备与在Linux中文件名">
+<meta property="og:description" content="Linux 中各种文件类型经常在ls -ltrh的时候, 出现的文件类型不太认识&#x2F;熟悉, 这里整理下, 详细参见: 典型样例:   -: 普通文件  d: 目录  b: 块设备, 都是在&#x2F;dev&#x2F;目录下  c: 字符设备, 典型的例如tty, 如 urandom, random  s: socketfile, 用于进程间socket通信. 详细使用方式参见: What are socke">
 <meta property="og:locale">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252337411.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252339985.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252342096.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252352764.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252349265.png">
 <meta property="article:published_time" content="2021-11-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-20T00:26:01.393Z">
+<meta property="article:modified_time" content="2023-09-25T15:58:40.024Z">
 <meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="linux">
 <meta property="article:tag" content="books">
 <meta property="article:tag" content="2021">
 <meta property="article:tag" content="GFS">
 <meta property="article:tag" content="Google">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252337411.png">
 
 
 <link rel="canonical" href="https://davyjones2010.github.io/2021-11-18-Linux-Basic/">
@@ -150,7 +157,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E4%B8%8E%E5%9C%A8Linux%E4%B8%AD%E6%96%87%E4%BB%B6%E5%90%8D"><span class="nav-number">1.</span> <span class="nav-text">设备与在Linux中文件名</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E4%B8%AD%E5%90%84%E7%A7%8D%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Linux 中各种文件类型</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -257,7 +264,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-20 08:26:01" itemprop="dateModified" datetime="2023-09-20T08:26:01+08:00">2023-09-20</time>
+      <time title="修改时间：2023-09-25 23:58:40" itemprop="dateModified" datetime="2023-09-25T23:58:40+08:00">2023-09-25</time>
     </span>
 
   
@@ -267,7 +274,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>13</span>
+      <span>212</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -285,7 +292,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="设备与在Linux中文件名"><a href="#设备与在Linux中文件名" class="headerlink" title="设备与在Linux中文件名"></a>设备与在Linux中文件名</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+        <h1 id="Linux-中各种文件类型"><a href="#Linux-中各种文件类型" class="headerlink" title="Linux 中各种文件类型"></a>Linux 中各种文件类型</h1><p>经常在<code>ls -ltrh</code>的时候, 出现的文件类型不太认识&#x2F;熟悉, 这里整理下, 详细参见:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252337411.png"></p>
+<p>典型样例: </p>
+<ul>
+<li><p><code>-</code>: 普通文件</p>
+</li>
+<li><p><code>d</code>: 目录<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252339985.png"></p>
+</li>
+<li><p><code>b</code>: 块设备, 都是在<code>/dev/</code>目录下<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252342096.png"></p>
+</li>
+<li><p><code>c</code>: 字符设备, 典型的例如tty, 如 urandom, random<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252352764.png"></p>
+</li>
+<li><p><code>s</code>: socketfile, 用于进程间socket通信. 详细使用方式参见: <a target="_blank" rel="noopener" href="https://askubuntu.com/questions/372725/what-are-socket-files">What are socket files?</a>. 另外还可以了解下vsock, 作为host与guestOS通信的常用方案.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252349265.png"></p>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
     </div>
 
     
@@ -296,6 +317,7 @@
 
     <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
               <a href="/tags/books/" rel="tag"># books</a>
               <a href="/tags/2021/" rel="tag"># 2021</a>
               <a href="/tags/GFS/" rel="tag"># GFS</a>
@@ -346,14 +368,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">317k</span>
+    <span title="站点总字数">318k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:48</span>
+    <span title="站点阅读时长">4:49</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
