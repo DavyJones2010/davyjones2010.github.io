@@ -300,7 +300,8 @@ pie title Pets adopted by volunteers
 
 - 双轴图
 - 热力图
-
+- 雷达图: 使用 [Radar Chart | Chart.js](https://www.chartjs.org/docs/latest/charts/radar.html) 来在线制作
+![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252307443.png)
 
 # 其他图
 

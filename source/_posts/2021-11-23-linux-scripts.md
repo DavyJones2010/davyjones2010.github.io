@@ -88,6 +88,20 @@ du -sh * | sort -nr | head
 du -sh * | sort -nr | fgrep "G" | head
 ```
 
+* 查看目录下特定文件类型
+
+```shell
+# 使用正则, 如下查找出块设备 
+[root@localhost dev]# ls -ltrh | grep '^b'
+```
+
+* 查看当前shell的进程PID
+
+```shell
+(base) MacBook-Pro:qos davywalker$ echo $$
+66549
+```
+
 ## 系统管理
 ### top
 #### 进程排序
