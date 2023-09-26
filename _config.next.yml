@@ -97,7 +97,7 @@ open_graph:
 # External url should start with http:// or https://
 menu:
   Home: / || fa fa-home
-  About: /aboutme.html || fa fa-user
+  About: /aboutme || fa fa-user
 
 # Enable / Disable menu icons / item badges.
 menu_settings:

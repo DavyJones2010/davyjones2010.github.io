@@ -24,5 +24,7 @@ CPU芯片中vendor_id:
 - 巧了, LinkedList的作者`Joshua Bloch`也有同样的困惑. 基本结论, 就是学习思路可以, 但在实际生产环境中就尽量不要用啦.
   ![](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309142358549.png)
 
-
+---
+- linux下对于磁盘常用的工具`dd`全称是啥?
+- google了下, 个人感觉比较靠谱的是: `disk dump`
 
