@@ -28,8 +28,8 @@
         <category>书单</category>
       </categories>
       <tags>
-        <tag>books</tag>
         <tag>2021</tag>
+        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -104,68 +104,6 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       <tags>
         <tag>golang</tag>
         <tag>golang-lib</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s基础架构笔记</title>
-    <url>//2021-08-31-k8s-architect/</url>
-    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
-<li>APIServer<ul>
-<li>认证</li>
-<li>鉴权</li>
-<li>准入控制<ul>
-<li>Quota</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Scheduler</li>
-<li>Kubelet</li>
-<li>Etcd</li>
-<li>Kube-Controller Manager包括<ul>
-<li>ReplicaSet Controller</li>
-<li>CDR的Controller</li>
-<li>AdmissionController </li>
-<li>等</li>
-</ul>
-</li>
-</ul>
-<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
-<li>Cluster-scoped resources<ul>
-<li>如node</li>
-</ul>
-</li>
-<li>Namespace-scoped resources<ul>
-<li>如pod</li>
-</ul>
-</li>
-</ul>
-<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
-<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
-<li>workloads</li>
-</ul>
-<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
-<li>Node</li>
-<li>Pod</li>
-</ul>
-<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
-<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
-<li>Deployment: 后端用ESS, 区别是什么? </li>
-<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
-<li>StatefulSets: </li>
-<li>Job&amp;CronJob:</li>
-</ul>
-<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
-<li>Operator &#x3D; 资源(CRD) + Controller</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>CDR</li>
-<li>OAM</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -397,6 +335,68 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       <tags>
         <tag>golang</tag>
         <tag>golang-lib</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记</title>
+    <url>//2021-08-31-k8s-architect/</url>
+    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
+<li>APIServer<ul>
+<li>认证</li>
+<li>鉴权</li>
+<li>准入控制<ul>
+<li>Quota</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scheduler</li>
+<li>Kubelet</li>
+<li>Etcd</li>
+<li>Kube-Controller Manager包括<ul>
+<li>ReplicaSet Controller</li>
+<li>CDR的Controller</li>
+<li>AdmissionController </li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
+<li>Cluster-scoped resources<ul>
+<li>如node</li>
+</ul>
+</li>
+<li>Namespace-scoped resources<ul>
+<li>如pod</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
+<li>workloads</li>
+</ul>
+<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
+<li>Node</li>
+<li>Pod</li>
+</ul>
+<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
+<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
+<li>Deployment: 后端用ESS, 区别是什么? </li>
+<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
+<li>StatefulSets: </li>
+<li>Job&amp;CronJob:</li>
+</ul>
+<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
+<li>Operator &#x3D; 资源(CRD) + Controller</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>CDR</li>
+<li>OAM</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -1853,6 +1853,33 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       </tags>
   </entry>
   <entry>
+    <title>2021年10月第三周</title>
+    <url>//2021-10-17-weekend-summary/</url>
+    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
+<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
+<blockquote>
+<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
+</blockquote>
+<blockquote>
+<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
+</blockquote>
+<blockquote>
+<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
+</blockquote>
+<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
+<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
+<blockquote>
+<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
+</blockquote>
+<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>books</tag>
+        <tag>weekend</tag>
+        <tag>diary</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一个简单的Fork&amp;Join框架实现</title>
     <url>//2021-10-08-simple-fork-join-framework/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在代码里, 经常需要类似fork&amp;join的方式来并行完成一些耗时的任务, 并将结果聚合起来.<br>通常有如下几种方式来实现:</p>
@@ -2342,33 +2369,6 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
       </tags>
   </entry>
   <entry>
-    <title>2021年10月第三周</title>
-    <url>//2021-10-17-weekend-summary/</url>
-    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
-<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
-<blockquote>
-<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
-</blockquote>
-<blockquote>
-<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
-</blockquote>
-<blockquote>
-<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
-</blockquote>
-<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
-<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
-<blockquote>
-<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
-</blockquote>
-<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>weekend</tag>
-        <tag>diary</tag>
-        <tag>books</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2021年10月第四周</title>
     <url>//2021-10-23-weekend-summary/</url>
     <content><![CDATA[<p>周末, 深秋, 天寒, 江南, 清冷. 因感冒而略微发烧, 咳嗽残病的两天. 在病榻上, 突然想起杜甫在&lt;登高&gt;中所言:</p>
@@ -2396,9 +2396,9 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
 <p>才知道东坡的这首诗, 就是在出任杭州通判时, 从富阳 新登 取道浮云岭, 进入於潜县境”视政”时写的.<br>於潜僧慧觉在於潜县南二里的丰国乡寂照寺出家。寺内有绿筠轩，以竹点缀环境，十分幽雅。苏轼与僧慧觉游绿筠轩时，写下了这首《於潜僧绿筠轩》。<br>具体位置应该是现在杭州市临安区於潜镇附近.<br>有时间可以去找一找. </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
+        <tag>books</tag>
         <tag>weekend</tag>
         <tag>diary</tag>
-        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -2457,9 +2457,9 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
 <p>另外, 附加一个网站, 可以在线看到数据结构的生成逻辑, 十分方便: <a href="https://www.cs.usfca.edu/~galles/visualization/">Data Structure Visualizations</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
+        <tag>books</tag>
         <tag>weekend</tag>
         <tag>diary</tag>
-        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -2913,8 +2913,8 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>books</tag>
         <tag>2021</tag>
+        <tag>books</tag>
         <tag>GFS</tag>
         <tag>Google</tag>
       </tags>
@@ -2991,8 +2991,8 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>linux</tag>
-        <tag>books</tag>
         <tag>2021</tag>
+        <tag>books</tag>
         <tag>GFS</tag>
         <tag>Google</tag>
       </tags>
@@ -3803,8 +3803,8 @@ Linux localhost.localdomain <span class="token number">3.10</span>.0-1160.el7.x8
 </blockquote>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>books</tag>
         <tag>2021</tag>
+        <tag>books</tag>
         <tag>sci-fi</tag>
       </tags>
   </entry>
@@ -7662,6 +7662,23 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
+    <title>爱死机第三季观后感</title>
+    <url>//2022-06-04-love-death-robots/</url>
+    <content><![CDATA[<p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
+<hr>
+<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
+<hr>
+<p>最负盛誉的第九集, Jibaro</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>2022</tag>
+        <tag>movie</tag>
+        <tag>movie-list</tag>
+        <tag>love-death-robots</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot基于Interface的Annotation在AOP中如何生效</title>
     <url>//2022-06-02-spring-annotation-on-interface/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>SpringBoot项目代码里, 新增了一个 <code>@Perf</code> 的annotation, 希望增加该annotation的方法, 能自动打印出方法的执行耗时.<br>实际代码结构中, 使用了FilterChain模式, 会有多个Filter(例如10+个)实现同一个接口.<br>因此想着把 <code>@Perf</code> 打在接口层面, 希望所有实现类都能继承该annotation, 从而不用在每个子类的Filter方法里重复打上annotation.<br>但发现实际没有生效.</p>
@@ -7882,23 +7899,6 @@ public synchronized void close() throws SQLException &#123;
         <tag>spring-boot</tag>
         <tag>aop</tag>
         <tag>interface</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>爱死机第三季观后感</title>
-    <url>//2022-06-04-love-death-robots/</url>
-    <content><![CDATA[<p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
-<hr>
-<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
-<hr>
-<p>最负盛誉的第九集, Jibaro</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>2022</tag>
-        <tag>movie</tag>
-        <tag>movie-list</tag>
-        <tag>love-death-robots</tag>
       </tags>
   </entry>
   <entry>
@@ -8260,9 +8260,9 @@ public synchronized void close() throws SQLException &#123;
 <p>最近也在看&lt;规模&gt;这本书, 城市, 真的会让生活更美好么? </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
+        <tag>books</tag>
         <tag>weekend</tag>
         <tag>diary</tag>
-        <tag>books</tag>
       </tags>
   </entry>
   <entry>
