@@ -9,6 +9,7 @@ subtitle: Why you'd want to go on a date with me
 ---
 我的公开技术文章:
 - [一次访问Redis延时高问题排查与总结](https://mp.weixin.qq.com/s/f3dQIC4DBhWibyXQKBXrzg)
+- [一次访问Redis延时高问题排查与总结（续）](https://mp.weixin.qq.com/s/trbGNYZPEfzaAMz6kZ_YKg)
 - [抢占式实例开放无保护期新模式-阿里云开发者社区](https://developer.aliyun.com/article/778535)
 - [抢占式实例最佳实践——手把手教你快速配置价格监控-阿里云开发者社区](https://developer.aliyun.com/article/757569)
 - [抢占式实例最佳实践——如何选择出价模式-阿里云开发者社区](https://developer.aliyun.com/article/778571)
