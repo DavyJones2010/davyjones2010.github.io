@@ -31,7 +31,7 @@
 <meta property="og:description" content="@Injectable  与 @Mocked 有啥区别?https:&#x2F;&#x2F;www.cnblogs.com&#x2F;shoren&#x2F;p&#x2F;jmokit-summary.html  Injectable只会mock当前实例 Mocked会mock该类下所有实例  针对 @Tested 的类, 所有field必须使用 Injectable 来注入, 使用 Mocked 来标识的properties, 不会被注入. 如">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-19T15:38:39.000Z">
-<meta property="article:modified_time" content="2023-11-01T14:21:13.300Z">
+<meta property="article:modified_time" content="2023-12-05T12:55:44.709Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="jmockit">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Injectable-%E4%B8%8E-Mocked-%E6%9C%89%E5%95%A5%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">@Injectable  与 @Mocked 有啥区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95private%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">如何测试private方法?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95private%E6%96%B9%E6%B3%95-%E5%B9%B6%E4%B8%94%E4%BC%A0%E5%85%A5null%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">如何测试private方法, 并且传入null作为参数?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95mock-static%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">如何mock static方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95mock-Tested%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">如何mock Tested对象的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95mock-Injectable%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">如何mock Injectable对象的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E8%BE%93%E5%85%A5%E5%8F%82%E6%95%B0-%E5%80%BC-mock%E4%B8%8D%E5%90%8C%E7%9A%84%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C"><span class="nav-number">6.</span> <span class="nav-text">如何根据不同的输入参数(值), mock不同的输出结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95Mock-Injectable%E7%9A%84Bean%E7%9A%84void%E4%B8%94%E4%BF%AE%E6%94%B9%E4%BA%86%E5%8F%82%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">如何Mock @Injectable的Bean的void且修改了参数的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8CDAO%E5%B1%82%E6%B5%8B%E8%AF%95"><span class="nav-number">8.</span> <span class="nav-text">如何进行DAO层测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E8%87%AA%E5%8A%A8%E5%9B%9E%E6%BB%9A"><span class="nav-number">8.1.</span> <span class="nav-text">如何防止自动回滚?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">9.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Injectable-%E4%B8%8E-Mocked-%E6%9C%89%E5%95%A5%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">@Injectable  与 @Mocked 有啥区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95private%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">如何测试private方法?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95private%E6%96%B9%E6%B3%95-%E5%B9%B6%E4%B8%94%E4%BC%A0%E5%85%A5null%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">如何测试private方法, 并且传入null作为参数?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95mock-static%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">如何mock static方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95mock-Tested%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">如何mock Tested对象的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95mock-Injectable%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">如何mock Injectable对象的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E8%BE%93%E5%85%A5%E5%8F%82%E6%95%B0-%E5%80%BC-mock%E4%B8%8D%E5%90%8C%E7%9A%84%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C"><span class="nav-number">6.</span> <span class="nav-text">如何根据不同的输入参数(值), mock不同的输出结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95Mock-Injectable%E7%9A%84Bean%E7%9A%84void%E4%B8%94%E4%BF%AE%E6%94%B9%E4%BA%86%E5%8F%82%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">如何Mock @Injectable的Bean的void且修改了参数的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95mock%E9%80%9A%E8%BF%87-Resource%E5%AE%9A%E4%B9%89%E4%BA%86%E5%AE%9E%E9%99%85%E5%90%8D%E7%A7%B0%E7%9A%84Bean"><span class="nav-number">8.</span> <span class="nav-text">如何mock通过@Resource定义了实际名称的Bean</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Troubleshooting"><span class="nav-number">9.</span> <span class="nav-text">Troubleshooting</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java-lang-NoSuchFieldError-MMB"><span class="nav-number">9.1.</span> <span class="nav-text">java.lang.NoSuchFieldError: $MMB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8CDAO%E5%B1%82%E6%B5%8B%E8%AF%95"><span class="nav-number">10.</span> <span class="nav-text">如何进行DAO层测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E8%87%AA%E5%8A%A8%E5%9B%9E%E6%BB%9A"><span class="nav-number">10.1.</span> <span class="nav-text">如何防止自动回滚?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">11.</span> <span class="nav-text">其他</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -258,7 +258,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-01 22:21:13" itemprop="dateModified" datetime="2023-11-01T22:21:13+08:00">2023-11-01</time>
+      <time title="修改时间：2023-12-05 20:55:44" itemprop="dateModified" datetime="2023-12-05T20:55:44+08:00">2023-12-05</time>
     </span>
 
   
@@ -268,7 +268,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.9k</span>
+      <span>4.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -413,7 +413,38 @@
     <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h1 id="如何mock通过-Resource定义了实际名称的Bean"><a href="#如何mock通过-Resource定义了实际名称的Bean" class="headerlink" title="如何mock通过@Resource定义了实际名称的Bean"></a>如何mock通过@Resource定义了实际名称的Bean</h1><ul>
+<li>例如要mock的对象如下: 通过<code>@Resource</code>定义了使用<code>userDaoLocalImpl</code>的实现</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Resource</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"userDaoLocalImpl"</span><span class="token punctuation">)</span>
+    <span class="token class-name">UserDao</span> userDao<span class="token punctuation">;</span>
+<span class="token comment">//    ...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<ul>
+<li>则在mock时, 需要保证<code>@Injectable</code>定义的变量, 变量名称必须与<code>@Resource</code>的<code>name</code>保持一致!</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">JMockit</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JMockitTest</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Tested</span>
+    <span class="token class-name">UserService</span> userService<span class="token punctuation">;</span>
+    
+    <span class="token annotation punctuation">@Injectable</span>
+    <span class="token class-name">UserDao</span> userDaoLocalImpl<span class="token punctuation">;</span> <span class="token comment">// 这里变量名必须为: userDaoLocalImpl</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>否则会报错: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>IllegalStateException</span><span class="token operator">:</span> <span class="token class-name">Missing</span> <span class="token annotation punctuation">@Injectable</span> <span class="token keyword">for</span> field<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>详细参见: <a target="_blank" rel="noopener" href="https://github.com/jmockit/jmockit1/issues/359">Error “Missing @Injectable for field” with @Resource annotation</a></p>
+</li>
+<li><p>其他需要注意的: 在 1.23 及之前版本的jmockit, 没有对这个进行强限制, 即变量名称不与<code>@Resourc</code>的<code>name</code>保持一致也能mock成功; 但在 1.28 版本就进行了强限制.</p>
+</li>
+</ul>
+<h1 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h1><h2 id="java-lang-NoSuchFieldError-MMB"><a href="#java-lang-NoSuchFieldError-MMB" class="headerlink" title="java.lang.NoSuchFieldError: $MMB"></a>java.lang.NoSuchFieldError: $MMB</h2><p>在本地环境无法复现, 但在集成测试环境, 就会偶现该错误.<br>目前看起来没有好的办法, 只能把jmockit版本从 1.23 升级到 1.28, 目前看起来问题已经解决. (果然版本升级大法好? 😂)<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/35275899/jmockit-mockup-getting-error-java-lang-nosuchfielderror-mmb">jmockit mockup, getting error java.lang.NoSuchFieldError: $MMB</a></p>
 <h1 id="如何进行DAO层测试"><a href="#如何进行DAO层测试" class="headerlink" title="如何进行DAO层测试"></a>如何进行DAO层测试</h1><p>数据库测试: <a target="_blank" rel="noopener" href="https://www.freesion.com/article/88601080583/">UNITILS库的使用经历</a></p>
 <h2 id="如何防止自动回滚"><a href="#如何防止自动回滚" class="headerlink" title="如何防止自动回滚?"></a>如何防止自动回滚?</h2><p>使用 <code>@Transactional(TransactionMode.COMMIT)</code>其中 <code>org.unitils.database.annotations.Transactional</code></p>
 <h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>

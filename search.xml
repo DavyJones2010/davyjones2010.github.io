@@ -1853,6 +1853,33 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       </tags>
   </entry>
   <entry>
+    <title>2021年10月第三周</title>
+    <url>//2021-10-17-weekend-summary/</url>
+    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
+<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
+<blockquote>
+<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
+</blockquote>
+<blockquote>
+<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
+</blockquote>
+<blockquote>
+<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
+</blockquote>
+<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
+<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
+<blockquote>
+<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
+</blockquote>
+<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>weekend</tag>
+        <tag>diary</tag>
+        <tag>books</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一个简单的Fork&amp;Join框架实现</title>
     <url>//2021-10-08-simple-fork-join-framework/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在代码里, 经常需要类似fork&amp;join的方式来并行完成一些耗时的任务, 并将结果聚合起来.<br>通常有如下几种方式来实现:</p>
@@ -2342,33 +2369,6 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
       </tags>
   </entry>
   <entry>
-    <title>2021年10月第三周</title>
-    <url>//2021-10-17-weekend-summary/</url>
-    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
-<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
-<blockquote>
-<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
-</blockquote>
-<blockquote>
-<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
-</blockquote>
-<blockquote>
-<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
-</blockquote>
-<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
-<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
-<blockquote>
-<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
-</blockquote>
-<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>weekend</tag>
-        <tag>diary</tag>
-        <tag>books</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2021年10月第四周</title>
     <url>//2021-10-23-weekend-summary/</url>
     <content><![CDATA[<p>周末, 深秋, 天寒, 江南, 清冷. 因感冒而略微发烧, 咳嗽残病的两天. 在病榻上, 突然想起杜甫在&lt;登高&gt;中所言:</p>
@@ -2583,6 +2583,32 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
       </tags>
   </entry>
   <entry>
+    <title>关于分辨率的常识</title>
+    <url>//2021-11-06-resolution/</url>
+    <content><![CDATA[<h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
+<li>480P: 720*480</li>
+<li>720P: 1280x720</li>
+<li>1080P: 1920x1080</li>
+<li>2K: 2560x1440</li>
+<li>4K:</li>
+<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
+</ul>
+<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
+<li>字母P代表: Progressive Scan, 即逐行扫描</li>
+<li>480P代表:</li>
+</ul>
+<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
+<li>30Hz</li>
+<li>60Hz</li>
+<li></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>common-sense</tag>
+        <tag>resolution</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mac初始化配置</title>
     <url>//2021-11-06-mac-init/</url>
     <content><![CDATA[<h1 id="必装软件"><a href="#必装软件" class="headerlink" title="必装软件"></a>必装软件</h1><ul>
@@ -2779,32 +2805,6 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>mac</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于分辨率的常识</title>
-    <url>//2021-11-06-resolution/</url>
-    <content><![CDATA[<h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
-<li>480P: 720*480</li>
-<li>720P: 1280x720</li>
-<li>1080P: 1920x1080</li>
-<li>2K: 2560x1440</li>
-<li>4K:</li>
-<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
-</ul>
-<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
-<li>字母P代表: Progressive Scan, 即逐行扫描</li>
-<li>480P代表:</li>
-</ul>
-<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
-<li>30Hz</li>
-<li>60Hz</li>
-<li></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>common-sense</tag>
-        <tag>resolution</tag>
       </tags>
   </entry>
   <entry>
@@ -7890,23 +7890,6 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
-    <title>爱死机第三季观后感</title>
-    <url>//2022-06-04-love-death-robots/</url>
-    <content><![CDATA[<p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
-<hr>
-<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
-<hr>
-<p>最负盛誉的第九集, Jibaro</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>2022</tag>
-        <tag>movie</tag>
-        <tag>movie-list</tag>
-        <tag>love-death-robots</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL连接池重要参数配置原理研究</title>
     <url>//2022-06-05-mysql-conn-params/</url>
     <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
@@ -7987,6 +7970,23 @@ public synchronized void close() throws SQLException &#123;
         <tag>database</tag>
         <tag>connection-pool</tag>
         <tag>druid</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>爱死机第三季观后感</title>
+    <url>//2022-06-04-love-death-robots/</url>
+    <content><![CDATA[<p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
+<hr>
+<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
+<hr>
+<p>最负盛誉的第九集, Jibaro</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>2022</tag>
+        <tag>movie</tag>
+        <tag>movie-list</tag>
+        <tag>love-death-robots</tag>
       </tags>
   </entry>
   <entry>
@@ -12232,7 +12232,38 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
     <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h1 id="如何mock通过-Resource定义了实际名称的Bean"><a href="#如何mock通过-Resource定义了实际名称的Bean" class="headerlink" title="如何mock通过@Resource定义了实际名称的Bean"></a>如何mock通过@Resource定义了实际名称的Bean</h1><ul>
+<li>例如要mock的对象如下: 通过<code>@Resource</code>定义了使用<code>userDaoLocalImpl</code>的实现</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Resource</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"userDaoLocalImpl"</span><span class="token punctuation">)</span>
+    <span class="token class-name">UserDao</span> userDao<span class="token punctuation">;</span>
+<span class="token comment">//    ...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<ul>
+<li>则在mock时, 需要保证<code>@Injectable</code>定义的变量, 变量名称必须与<code>@Resource</code>的<code>name</code>保持一致!</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">JMockit</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JMockitTest</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Tested</span>
+    <span class="token class-name">UserService</span> userService<span class="token punctuation">;</span>
+    
+    <span class="token annotation punctuation">@Injectable</span>
+    <span class="token class-name">UserDao</span> userDaoLocalImpl<span class="token punctuation">;</span> <span class="token comment">// 这里变量名必须为: userDaoLocalImpl</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>否则会报错: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>IllegalStateException</span><span class="token operator">:</span> <span class="token class-name">Missing</span> <span class="token annotation punctuation">@Injectable</span> <span class="token keyword">for</span> field<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>详细参见: <a href="https://github.com/jmockit/jmockit1/issues/359">Error “Missing @Injectable for field” with @Resource annotation</a></p>
+</li>
+<li><p>其他需要注意的: 在 1.23 及之前版本的jmockit, 没有对这个进行强限制, 即变量名称不与<code>@Resourc</code>的<code>name</code>保持一致也能mock成功; 但在 1.28 版本就进行了强限制.</p>
+</li>
+</ul>
+<h1 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h1><h2 id="java-lang-NoSuchFieldError-MMB"><a href="#java-lang-NoSuchFieldError-MMB" class="headerlink" title="java.lang.NoSuchFieldError: $MMB"></a>java.lang.NoSuchFieldError: $MMB</h2><p>在本地环境无法复现, 但在集成测试环境, 就会偶现该错误.<br>目前看起来没有好的办法, 只能把jmockit版本从 1.23 升级到 1.28, 目前看起来问题已经解决. (果然版本升级大法好? 😂)<br><a href="https://stackoverflow.com/questions/35275899/jmockit-mockup-getting-error-java-lang-nosuchfielderror-mmb">jmockit mockup, getting error java.lang.NoSuchFieldError: $MMB</a></p>
 <h1 id="如何进行DAO层测试"><a href="#如何进行DAO层测试" class="headerlink" title="如何进行DAO层测试"></a>如何进行DAO层测试</h1><p>数据库测试: <a href="https://www.freesion.com/article/88601080583/">UNITILS库的使用经历</a></p>
 <h2 id="如何防止自动回滚"><a href="#如何防止自动回滚" class="headerlink" title="如何防止自动回滚?"></a>如何防止自动回滚?</h2><p>使用 <code>@Transactional(TransactionMode.COMMIT)</code>其中 <code>org.unitils.database.annotations.Transactional</code></p>
 <h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
