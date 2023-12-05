@@ -168,6 +168,45 @@ new Expectations() {{
 }};
 ```
 
+# 如何mock通过@Resource定义了实际名称的Bean
+- 例如要mock的对象如下: 通过`@Resource`定义了使用`userDaoLocalImpl`的实现
+
+```java
+@Service
+public class UserService {
+    @Resource(name = "userDaoLocalImpl")
+    UserDao userDao;
+//    ...
+}
+```
+
+- 则在mock时, 需要保证`@Injectable`定义的变量, 变量名称必须与`@Resource`的`name`保持一致! 
+
+```java
+@RunWith(JMockit.class)
+public class JMockitTest {
+    @Tested
+    UserService userService;
+    
+    @Injectable
+    UserDao userDaoLocalImpl; // 这里变量名必须为: userDaoLocalImpl
+}
+```
+
+- 否则会报错: 
+```java
+java.lang.IllegalStateException: Missing @Injectable for field
+```
+
+- 详细参见: [Error "Missing @Injectable for field" with @Resource annotation](https://github.com/jmockit/jmockit1/issues/359)
+- 其他需要注意的: 在 1.23 及之前版本的jmockit, 没有对这个进行强限制, 即变量名称不与`@Resourc`的`name`保持一致也能mock成功; 但在 1.28 版本就进行了强限制.  
+
+# Troubleshooting
+## java.lang.NoSuchFieldError: $MMB
+在本地环境无法复现, 但在集成测试环境, 就会偶现该错误. 
+目前看起来没有好的办法, 只能把jmockit版本从 1.23 升级到 1.28, 目前看起来问题已经解决. (果然版本升级大法好? 😂)
+[jmockit mockup, getting error java.lang.NoSuchFieldError: $MMB](https://stackoverflow.com/questions/35275899/jmockit-mockup-getting-error-java-lang-nosuchfielderror-mmb)
+
 
 # 如何进行DAO层测试
 数据库测试: [UNITILS库的使用经历](https://www.freesion.com/article/88601080583/)
