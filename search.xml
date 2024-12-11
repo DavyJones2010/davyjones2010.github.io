@@ -471,174 +471,6 @@ fstatus, _ :<span class="token operator">=</span> cmd.Flags<span class="token pu
       </tags>
   </entry>
   <entry>
-    <title>kube-scheduler笔记之亲和性调度</title>
-    <url>//2021-09-08-kube-scheduler-affinity/</url>
-    <content><![CDATA[<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><a href="https://github.com/DavyJones2010/k8s-source-code-analysis/blob/master/core/scheduler/affinity.md">https://github.com/DavyJones2010/k8s-source-code-analysis/blob/master/core/scheduler/affinity.md</a></p>
-<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>分为如下几种: </p>
-<ul>
-<li><p>NodeSelector</p>
-</li>
-<li><p>NodeAffinity</p>
-<ul>
-<li>preferredDuringSchedulingIgnoredDuringExecution: 软约束</li>
-<li>requiredDuringSchedulingIgnoredDuringExecution: 硬约束</li>
-</ul>
-</li>
-<li><p>PodAffinity:</p>
-<ul>
-<li>preferredDuringSchedulingIgnoredDuringExecution: 软约束</li>
-<li>requiredDuringSchedulingIgnoredDuringExecution: 硬约束</li>
-</ul>
-</li>
-<li><p>requiredDuringSchedulingIgnoredDuringExecution</p>
-<ul>
-<li><p>与 NodeSelector 或者 LabelSelector 有啥区别? 都是硬约束, 都会导致Node被筛除掉</p>
-<ul>
-<li><p>区别在于: LabelSelector 只能判断 “a.label.equals(b.label)”, 而NodeSelector支持完整的表达式, 例如</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spec</span><span class="token punctuation">:</span>
-  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
-    <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
-      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
-        <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
-          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> kubernetes.io/e2e<span class="token punctuation">-</span>az<span class="token punctuation">-</span>name
-            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
-            <span class="token key atrule">values</span><span class="token punctuation">:</span>
-            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az1
-            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az2
-      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
-        <span class="token key atrule">preference</span><span class="token punctuation">:</span>
-          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
-          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>key
-            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
-            <span class="token key atrule">values</span><span class="token punctuation">:</span>
-            <span class="token punctuation">-</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>“IgnoredDuringExecution”部分意味着，类似于 <code>nodeSelector</code> 的工作原理，如果节点的标签在运行时发生变更，从而不再满足 pod 上的亲和规则，那么 pod 将仍然继续在该节点上运行。也就是onetime的原则, 只会在调度时关注该标签, 后续节点标签变化, 不会重调度.</p>
-</li>
-</ul>
-<h2 id="实现研究"><a href="#实现研究" class="headerlink" title="实现研究"></a>实现研究</h2><h3 id="NodeAffinity"><a href="#NodeAffinity" class="headerlink" title="NodeAffinity"></a>NodeAffinity</h3><p>代码样例</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spec</span><span class="token punctuation">:</span>
-  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
-    <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
-      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
-        <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
-          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> kubernetes.io/e2e<span class="token punctuation">-</span>az<span class="token punctuation">-</span>name
-            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
-            <span class="token key atrule">values</span><span class="token punctuation">:</span>
-            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az1
-            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az2
-      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
-        <span class="token key atrule">preference</span><span class="token punctuation">:</span>
-          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
-          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>key
-            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
-            <span class="token key atrule">values</span><span class="token punctuation">:</span>
-            <span class="token punctuation">-</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="RequiredDuringSchedulingIgnoredDuringExecution-硬约束"><a href="#RequiredDuringSchedulingIgnoredDuringExecution-硬约束" class="headerlink" title="RequiredDuringSchedulingIgnoredDuringExecution(硬约束)"></a>RequiredDuringSchedulingIgnoredDuringExecution(硬约束)</h4><p>在Filter阶段生效</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>predicates<span class="token operator">/</span>predicates<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">848</span> podMatchesNodeSelectorAndAffinityTerms
-<span class="token keyword">func</span> <span class="token function">podMatchesNodeSelectorAndAffinityTerms</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> node <span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">&#123;</span>
-	<span class="token comment">// NodeSelector, 筛选Node</span>
-  selector <span class="token operator">:=</span> labels<span class="token punctuation">.</span><span class="token function">SelectorFromSet</span><span class="token punctuation">(</span>pod<span class="token punctuation">.</span>Spec<span class="token punctuation">.</span>NodeSelector<span class="token punctuation">)</span>
-  <span class="token keyword">if</span> <span class="token operator">!</span>selector<span class="token punctuation">.</span><span class="token function">Matches</span><span class="token punctuation">(</span>labels<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>Labels<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token boolean">false</span>
-  <span class="token punctuation">&#125;</span>
-  
-  <span class="token comment">// NodeAffinity.requiredDuringSchedulingIgnoredDuringExecution, 硬约束</span>
-  <span class="token keyword">if</span> nodeAffinity<span class="token punctuation">.</span>RequiredDuringSchedulingIgnoredDuringExecution <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
-			nodeSelectorTerms <span class="token operator">:=</span> nodeAffinity<span class="token punctuation">.</span>RequiredDuringSchedulingIgnoredDuringExecution<span class="token punctuation">.</span>NodeSelectorTerms
-			nodeAffinityMatches <span class="token operator">=</span> nodeAffinityMatches <span class="token operator">&amp;&amp;</span> <span class="token function">nodeMatchesNodeSelectorTerms</span><span class="token punctuation">(</span>node<span class="token punctuation">,</span> nodeSelectorTerms<span class="token punctuation">)</span>
-		<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="PreferredDuringSchedulingIgnoredDuringExecution-软约束"><a href="#PreferredDuringSchedulingIgnoredDuringExecution-软约束" class="headerlink" title="PreferredDuringSchedulingIgnoredDuringExecution(软约束)"></a>PreferredDuringSchedulingIgnoredDuringExecution(软约束)</h4><p>在Weighter阶段生效</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>priorities<span class="token operator">/</span>node_affinity<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">34</span> CalculateNodeAffinityPriorityMap
-
-<span class="token keyword">func</span> <span class="token function">CalculateNodeAffinityPriorityMap</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> meta <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> nodeInfo <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>NodeInfo<span class="token punctuation">)</span> <span class="token punctuation">(</span>schedulerapi<span class="token punctuation">.</span>HostPriority<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-   node <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-   affinity <span class="token operator">:=</span> pod<span class="token punctuation">.</span>Spec<span class="token punctuation">.</span>Affinity
-
-   <span class="token keyword">var</span> count <span class="token builtin">int32</span>
-
-  <span class="token comment">// 遍历所有Soft约束</span>
-  <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token keyword">range</span> affinity<span class="token punctuation">.</span>NodeAffinity<span class="token punctuation">.</span>PreferredDuringSchedulingIgnoredDuringExecution <span class="token punctuation">&#123;</span>
-    preferredSchedulingTerm <span class="token operator">:=</span> <span class="token operator">&amp;</span>affinity<span class="token punctuation">.</span>NodeAffinity<span class="token punctuation">.</span>PreferredDuringSchedulingIgnoredDuringExecution<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-
-    <span class="token comment">// 根据表达式生成Selector</span>
-    nodeSelector<span class="token punctuation">,</span> err <span class="token operator">:=</span> v1helper<span class="token punctuation">.</span><span class="token function">NodeSelectorRequirementsAsSelector</span><span class="token punctuation">(</span>preferredSchedulingTerm<span class="token punctuation">.</span>Preference<span class="token punctuation">.</span>MatchExpressions<span class="token punctuation">)</span>
-    <span class="token comment">// 根据Selector计算权重.</span>
-    <span class="token keyword">if</span> nodeSelector<span class="token punctuation">.</span><span class="token function">Matches</span><span class="token punctuation">(</span>labels<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>Labels<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-      count <span class="token operator">+=</span> preferredSchedulingTerm<span class="token punctuation">.</span>Weight
-    <span class="token punctuation">&#125;</span>
-  <span class="token punctuation">&#125;</span>
-
-   <span class="token comment">// 返回计算好的权重</span>
-   <span class="token keyword">return</span> schedulerapi<span class="token punctuation">.</span>HostPriority<span class="token punctuation">&#123;</span>
-      Host<span class="token punctuation">:</span>  node<span class="token punctuation">.</span>Name<span class="token punctuation">,</span>
-      Score<span class="token punctuation">:</span> <span class="token function">int</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">,</span>
-   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h3 id="PodAffinity"><a href="#PodAffinity" class="headerlink" title="PodAffinity"></a>PodAffinity</h3><p>yaml样例</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
-<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
-<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-  <span class="token key atrule">name</span><span class="token punctuation">:</span> with<span class="token punctuation">-</span>pod<span class="token punctuation">-</span>affinity
-  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
-    <span class="token key atrule">app</span><span class="token punctuation">:</span> pod<span class="token punctuation">-</span>affinity<span class="token punctuation">-</span>pod
-<span class="token key atrule">spec</span><span class="token punctuation">:</span>
-  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
-  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> with<span class="token punctuation">-</span>pod<span class="token punctuation">-</span>affinity
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx
-  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
-    <span class="token key atrule">podAffinity</span><span class="token punctuation">:</span>
-      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> <span class="token key atrule">labelSelector</span><span class="token punctuation">:</span>
-          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
-          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> app
-            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
-            <span class="token key atrule">values</span><span class="token punctuation">:</span>
-            <span class="token punctuation">-</span> busybox<span class="token punctuation">-</span>pod
-        <span class="token key atrule">topologyKey</span><span class="token punctuation">:</span> kubernetes.io/hostname
-    <span class="token key atrule">podAntiAffinity</span><span class="token punctuation">:</span>
-      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
-        <span class="token key atrule">podAffinityTerm</span><span class="token punctuation">:</span>
-          <span class="token key atrule">labelSelector</span><span class="token punctuation">:</span>
-            <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
-            <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> app
-              <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
-              <span class="token key atrule">values</span><span class="token punctuation">:</span>
-              <span class="token punctuation">-</span> node<span class="token punctuation">-</span>affinity<span class="token punctuation">-</span>pod
-          <span class="token key atrule">topologyKey</span><span class="token punctuation">:</span> kubernetes.io/hostname<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="RequiredDuringSchedulingIgnoredDuringExecution-硬约束-1"><a href="#RequiredDuringSchedulingIgnoredDuringExecution-硬约束-1" class="headerlink" title="RequiredDuringSchedulingIgnoredDuringExecution(硬约束)"></a>RequiredDuringSchedulingIgnoredDuringExecution(硬约束)</h4><ul>
-<li>在filter阶段生效</li>
-</ul>
-<p>如何实现的podAntiAffinity? 能强保障么? </p>
-<h3 id="Service亲和性"><a href="#Service亲和性" class="headerlink" title="Service亲和性"></a>Service亲和性</h3><p><em>一个服务的第一个Pod被调度到带有Label “region&#x3D;foo”的Nodes（资源集群）上， 那么其服务后面的其它Pod都将调度至Label “region&#x3D;foo”的Nodes。</em></p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.qikqiak.com/post/understand-kubernetes-affinity/">https://www.qikqiak.com/post/understand-kubernetes-affinity/</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>scheduler</tag>
-        <tag>kube-scheduler</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kube-scheduler笔记之SchedulerCache研究</title>
     <url>//2021-09-08-kube-scheduler-cache/</url>
     <content><![CDATA[<h1 id="源码路径"><a href="#源码路径" class="headerlink" title="源码路径"></a>源码路径</h1><pre class="line-numbers language-none"><code class="language-none">kubernetes&#x2F;pkg&#x2F;scheduler&#x2F;internal&#x2F;cache&#x2F;cache.go<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1053,6 +885,174 @@ func (cache *schedulerCache) UpdateNodeInfoSnapshot(nodeSnapshot *NodeInfoSnapsh
         <tag>scheduler</tag>
         <tag>kube-scheduler</tag>
         <tag>kube-scheduler-cache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kube-scheduler笔记之亲和性调度</title>
+    <url>//2021-09-08-kube-scheduler-affinity/</url>
+    <content><![CDATA[<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><a href="https://github.com/DavyJones2010/k8s-source-code-analysis/blob/master/core/scheduler/affinity.md">https://github.com/DavyJones2010/k8s-source-code-analysis/blob/master/core/scheduler/affinity.md</a></p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>分为如下几种: </p>
+<ul>
+<li><p>NodeSelector</p>
+</li>
+<li><p>NodeAffinity</p>
+<ul>
+<li>preferredDuringSchedulingIgnoredDuringExecution: 软约束</li>
+<li>requiredDuringSchedulingIgnoredDuringExecution: 硬约束</li>
+</ul>
+</li>
+<li><p>PodAffinity:</p>
+<ul>
+<li>preferredDuringSchedulingIgnoredDuringExecution: 软约束</li>
+<li>requiredDuringSchedulingIgnoredDuringExecution: 硬约束</li>
+</ul>
+</li>
+<li><p>requiredDuringSchedulingIgnoredDuringExecution</p>
+<ul>
+<li><p>与 NodeSelector 或者 LabelSelector 有啥区别? 都是硬约束, 都会导致Node被筛除掉</p>
+<ul>
+<li><p>区别在于: LabelSelector 只能判断 “a.label.equals(b.label)”, 而NodeSelector支持完整的表达式, 例如</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+        <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> kubernetes.io/e2e<span class="token punctuation">-</span>az<span class="token punctuation">-</span>name
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az1
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az2
+      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">preference</span><span class="token punctuation">:</span>
+          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>key
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>“IgnoredDuringExecution”部分意味着，类似于 <code>nodeSelector</code> 的工作原理，如果节点的标签在运行时发生变更，从而不再满足 pod 上的亲和规则，那么 pod 将仍然继续在该节点上运行。也就是onetime的原则, 只会在调度时关注该标签, 后续节点标签变化, 不会重调度.</p>
+</li>
+</ul>
+<h2 id="实现研究"><a href="#实现研究" class="headerlink" title="实现研究"></a>实现研究</h2><h3 id="NodeAffinity"><a href="#NodeAffinity" class="headerlink" title="NodeAffinity"></a>NodeAffinity</h3><p>代码样例</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+        <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> kubernetes.io/e2e<span class="token punctuation">-</span>az<span class="token punctuation">-</span>name
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az1
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az2
+      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">preference</span><span class="token punctuation">:</span>
+          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>key
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="RequiredDuringSchedulingIgnoredDuringExecution-硬约束"><a href="#RequiredDuringSchedulingIgnoredDuringExecution-硬约束" class="headerlink" title="RequiredDuringSchedulingIgnoredDuringExecution(硬约束)"></a>RequiredDuringSchedulingIgnoredDuringExecution(硬约束)</h4><p>在Filter阶段生效</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>predicates<span class="token operator">/</span>predicates<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">848</span> podMatchesNodeSelectorAndAffinityTerms
+<span class="token keyword">func</span> <span class="token function">podMatchesNodeSelectorAndAffinityTerms</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> node <span class="token operator">*</span>v1<span class="token punctuation">.</span>Node<span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// NodeSelector, 筛选Node</span>
+  selector <span class="token operator">:=</span> labels<span class="token punctuation">.</span><span class="token function">SelectorFromSet</span><span class="token punctuation">(</span>pod<span class="token punctuation">.</span>Spec<span class="token punctuation">.</span>NodeSelector<span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token operator">!</span>selector<span class="token punctuation">.</span><span class="token function">Matches</span><span class="token punctuation">(</span>labels<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>Labels<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span>
+  <span class="token punctuation">&#125;</span>
+  
+  <span class="token comment">// NodeAffinity.requiredDuringSchedulingIgnoredDuringExecution, 硬约束</span>
+  <span class="token keyword">if</span> nodeAffinity<span class="token punctuation">.</span>RequiredDuringSchedulingIgnoredDuringExecution <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+			nodeSelectorTerms <span class="token operator">:=</span> nodeAffinity<span class="token punctuation">.</span>RequiredDuringSchedulingIgnoredDuringExecution<span class="token punctuation">.</span>NodeSelectorTerms
+			nodeAffinityMatches <span class="token operator">=</span> nodeAffinityMatches <span class="token operator">&amp;&amp;</span> <span class="token function">nodeMatchesNodeSelectorTerms</span><span class="token punctuation">(</span>node<span class="token punctuation">,</span> nodeSelectorTerms<span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="PreferredDuringSchedulingIgnoredDuringExecution-软约束"><a href="#PreferredDuringSchedulingIgnoredDuringExecution-软约束" class="headerlink" title="PreferredDuringSchedulingIgnoredDuringExecution(软约束)"></a>PreferredDuringSchedulingIgnoredDuringExecution(软约束)</h4><p>在Weighter阶段生效</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">pkg<span class="token operator">/</span>scheduler<span class="token operator">/</span>algorithm<span class="token operator">/</span>priorities<span class="token operator">/</span>node_affinity<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">34</span> CalculateNodeAffinityPriorityMap
+
+<span class="token keyword">func</span> <span class="token function">CalculateNodeAffinityPriorityMap</span><span class="token punctuation">(</span>pod <span class="token operator">*</span>v1<span class="token punctuation">.</span>Pod<span class="token punctuation">,</span> meta <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> nodeInfo <span class="token operator">*</span>schedulernodeinfo<span class="token punctuation">.</span>NodeInfo<span class="token punctuation">)</span> <span class="token punctuation">(</span>schedulerapi<span class="token punctuation">.</span>HostPriority<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+   node <span class="token operator">:=</span> nodeInfo<span class="token punctuation">.</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+   affinity <span class="token operator">:=</span> pod<span class="token punctuation">.</span>Spec<span class="token punctuation">.</span>Affinity
+
+   <span class="token keyword">var</span> count <span class="token builtin">int32</span>
+
+  <span class="token comment">// 遍历所有Soft约束</span>
+  <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token keyword">range</span> affinity<span class="token punctuation">.</span>NodeAffinity<span class="token punctuation">.</span>PreferredDuringSchedulingIgnoredDuringExecution <span class="token punctuation">&#123;</span>
+    preferredSchedulingTerm <span class="token operator">:=</span> <span class="token operator">&amp;</span>affinity<span class="token punctuation">.</span>NodeAffinity<span class="token punctuation">.</span>PreferredDuringSchedulingIgnoredDuringExecution<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+
+    <span class="token comment">// 根据表达式生成Selector</span>
+    nodeSelector<span class="token punctuation">,</span> err <span class="token operator">:=</span> v1helper<span class="token punctuation">.</span><span class="token function">NodeSelectorRequirementsAsSelector</span><span class="token punctuation">(</span>preferredSchedulingTerm<span class="token punctuation">.</span>Preference<span class="token punctuation">.</span>MatchExpressions<span class="token punctuation">)</span>
+    <span class="token comment">// 根据Selector计算权重.</span>
+    <span class="token keyword">if</span> nodeSelector<span class="token punctuation">.</span><span class="token function">Matches</span><span class="token punctuation">(</span>labels<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>Labels<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      count <span class="token operator">+=</span> preferredSchedulingTerm<span class="token punctuation">.</span>Weight
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+
+   <span class="token comment">// 返回计算好的权重</span>
+   <span class="token keyword">return</span> schedulerapi<span class="token punctuation">.</span>HostPriority<span class="token punctuation">&#123;</span>
+      Host<span class="token punctuation">:</span>  node<span class="token punctuation">.</span>Name<span class="token punctuation">,</span>
+      Score<span class="token punctuation">:</span> <span class="token function">int</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">,</span>
+   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="PodAffinity"><a href="#PodAffinity" class="headerlink" title="PodAffinity"></a>PodAffinity</h3><p>yaml样例</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> with<span class="token punctuation">-</span>pod<span class="token punctuation">-</span>affinity
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> pod<span class="token punctuation">-</span>affinity<span class="token punctuation">-</span>pod
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> with<span class="token punctuation">-</span>pod<span class="token punctuation">-</span>affinity
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx
+  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
+    <span class="token key atrule">podAffinity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">labelSelector</span><span class="token punctuation">:</span>
+          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> app
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> busybox<span class="token punctuation">-</span>pod
+        <span class="token key atrule">topologyKey</span><span class="token punctuation">:</span> kubernetes.io/hostname
+    <span class="token key atrule">podAntiAffinity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">podAffinityTerm</span><span class="token punctuation">:</span>
+          <span class="token key atrule">labelSelector</span><span class="token punctuation">:</span>
+            <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> app
+              <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+              <span class="token key atrule">values</span><span class="token punctuation">:</span>
+              <span class="token punctuation">-</span> node<span class="token punctuation">-</span>affinity<span class="token punctuation">-</span>pod
+          <span class="token key atrule">topologyKey</span><span class="token punctuation">:</span> kubernetes.io/hostname<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="RequiredDuringSchedulingIgnoredDuringExecution-硬约束-1"><a href="#RequiredDuringSchedulingIgnoredDuringExecution-硬约束-1" class="headerlink" title="RequiredDuringSchedulingIgnoredDuringExecution(硬约束)"></a>RequiredDuringSchedulingIgnoredDuringExecution(硬约束)</h4><ul>
+<li>在filter阶段生效</li>
+</ul>
+<p>如何实现的podAntiAffinity? 能强保障么? </p>
+<h3 id="Service亲和性"><a href="#Service亲和性" class="headerlink" title="Service亲和性"></a>Service亲和性</h3><p><em>一个服务的第一个Pod被调度到带有Label “region&#x3D;foo”的Nodes（资源集群）上， 那么其服务后面的其它Pod都将调度至Label “region&#x3D;foo”的Nodes。</em></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.qikqiak.com/post/understand-kubernetes-affinity/">https://www.qikqiak.com/post/understand-kubernetes-affinity/</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>scheduler</tag>
+        <tag>kube-scheduler</tag>
       </tags>
   </entry>
   <entry>
@@ -1853,33 +1853,6 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       </tags>
   </entry>
   <entry>
-    <title>2021年10月第三周</title>
-    <url>//2021-10-17-weekend-summary/</url>
-    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
-<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
-<blockquote>
-<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
-</blockquote>
-<blockquote>
-<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
-</blockquote>
-<blockquote>
-<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
-</blockquote>
-<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
-<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
-<blockquote>
-<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
-</blockquote>
-<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>weekend</tag>
-        <tag>diary</tag>
-        <tag>books</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一个简单的Fork&amp;Join框架实现</title>
     <url>//2021-10-08-simple-fork-join-framework/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在代码里, 经常需要类似fork&amp;join的方式来并行完成一些耗时的任务, 并将结果聚合起来.<br>通常有如下几种方式来实现:</p>
@@ -2369,6 +2342,33 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
       </tags>
   </entry>
   <entry>
+    <title>2021年10月第三周</title>
+    <url>//2021-10-17-weekend-summary/</url>
+    <content><![CDATA[<p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
+<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
+<blockquote>
+<p>东坡的由来 <br/><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
+</blockquote>
+<blockquote>
+<p>月出于东山之上. <br/><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
+</blockquote>
+<blockquote>
+<p>扣舷而歌之 <br/><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
+</blockquote>
+<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
+<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
+<blockquote>
+<p>闇中偷负去，夜半真有力。 <br/><br>何殊病少年，病起头已白。</p>
+</blockquote>
+<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>weekend</tag>
+        <tag>diary</tag>
+        <tag>books</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2021年10月第四周</title>
     <url>//2021-10-23-weekend-summary/</url>
     <content><![CDATA[<p>周末, 深秋, 天寒, 江南, 清冷. 因感冒而略微发烧, 咳嗽残病的两天. 在病榻上, 突然想起杜甫在&lt;登高&gt;中所言:</p>
@@ -2583,32 +2583,6 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
       </tags>
   </entry>
   <entry>
-    <title>关于分辨率的常识</title>
-    <url>//2021-11-06-resolution/</url>
-    <content><![CDATA[<h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
-<li>480P: 720*480</li>
-<li>720P: 1280x720</li>
-<li>1080P: 1920x1080</li>
-<li>2K: 2560x1440</li>
-<li>4K:</li>
-<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
-</ul>
-<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
-<li>字母P代表: Progressive Scan, 即逐行扫描</li>
-<li>480P代表:</li>
-</ul>
-<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
-<li>30Hz</li>
-<li>60Hz</li>
-<li></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>common-sense</tag>
-        <tag>resolution</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>mac初始化配置</title>
     <url>//2021-11-06-mac-init/</url>
     <content><![CDATA[<h1 id="必装软件"><a href="#必装软件" class="headerlink" title="必装软件"></a>必装软件</h1><ul>
@@ -2805,6 +2779,32 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于分辨率的常识</title>
+    <url>//2021-11-06-resolution/</url>
+    <content><![CDATA[<h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
+<li>480P: 720*480</li>
+<li>720P: 1280x720</li>
+<li>1080P: 1920x1080</li>
+<li>2K: 2560x1440</li>
+<li>4K:</li>
+<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
+</ul>
+<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
+<li>字母P代表: Progressive Scan, 即逐行扫描</li>
+<li>480P代表:</li>
+</ul>
+<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
+<li>30Hz</li>
+<li>60Hz</li>
+<li></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>common-sense</tag>
+        <tag>resolution</tag>
       </tags>
   </entry>
   <entry>
@@ -5791,6 +5791,79 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
+    <title>记录一些有趣的产品设计</title>
+    <url>//2022-04-04-good-design/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
+<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
+<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
+</ul>
+<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
+<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
+<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
+</ul>
+<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
+<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
+</li>
+<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
+</li>
+</ul>
+<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
+<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
+</ul>
+<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
+<ul>
+<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
+<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
+</ul>
+<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
+<ol>
+<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
+<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
+</ol>
+<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
+<ul>
+<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
+</li>
+<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
+</li>
+</ul>
+<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
+<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
+</li>
+<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
+</li>
+</ol>
+<ul>
+<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
+<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
+<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
+</ul>
+<ol start="3">
+<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
+</ol>
+<ul>
+<li>最佳实践: 一些使用的小技巧.</li>
+<li>new feature: 新功能的介绍.</li>
+<li>case study: 用户案例.</li>
+<li>event: 线下&#x2F;线上的技术活动介绍.</li>
+<li>竞品比对: 例如与Gliffy,StarUML等.</li>
+<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
+</ul>
+<ol start="4">
+<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
+<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
+<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
+</blockquote>
+</li>
+</ol>
+<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>product-design</tag>
+        <tag>good-design</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenAPI设计之NextToken</title>
     <url>//2022-03-28-openapi-nexttoken/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景:"></a>背景:</h1><p>在API设计时, 如果是<code>list</code>接口, 通常需要对返回的结果进行分页.</p>
@@ -6040,79 +6113,6 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
       </tags>
   </entry>
   <entry>
-    <title>记录一些有趣的产品设计</title>
-    <url>//2022-04-04-good-design/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
-<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
-<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
-</ul>
-<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
-<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
-<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
-</ul>
-<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
-<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
-</li>
-<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
-</li>
-</ul>
-<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
-<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
-</ul>
-<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
-<ul>
-<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
-<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
-</ul>
-<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
-<ol>
-<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
-<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
-</ol>
-<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
-<ul>
-<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
-</li>
-<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
-</li>
-</ul>
-<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
-<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
-</li>
-<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
-</li>
-</ol>
-<ul>
-<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
-<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
-<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
-</ul>
-<ol start="3">
-<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
-</ol>
-<ul>
-<li>最佳实践: 一些使用的小技巧.</li>
-<li>new feature: 新功能的介绍.</li>
-<li>case study: 用户案例.</li>
-<li>event: 线下&#x2F;线上的技术活动介绍.</li>
-<li>竞品比对: 例如与Gliffy,StarUML等.</li>
-<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
-</ul>
-<ol start="4">
-<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
-<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
-<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
-</blockquote>
-</li>
-</ol>
-<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>product-design</tag>
-        <tag>good-design</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>云计算笔记--aws的DefaultVpc实现调研</title>
     <url>//2022-04-05-aws-default-vpc/</url>
     <content><![CDATA[<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html">AWS Default VPCs</a></p>
@@ -6331,25 +6331,6 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>Java中Log4j的最佳实践</title>
-    <url>//2022-04-18-java-log4j-bestpractice/</url>
-    <content><![CDATA[<h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><ul>
-<li>把ThreadName, RequestId放到MDC, 加到pattern里.</li>
-</ul>
-<h2 id="异步日志"><a href="#异步日志" class="headerlink" title="异步日志"></a>异步日志</h2><p>使用 <a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">log4j2 asyncLogger</a> 来异步打印</p>
-<ul>
-<li>不要在pattern里增加location相关信息, 例如class, file, location, line, method等, 因为这些底层需要<a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">打印堆栈</a>, 然后遍历, 性能较差. 尤其是需要使用asyncLogger的场景下</li>
-<li><a href="https://issues.apache.org/jira/browse/LOG4J2-2031">异步日志底层实现原理</a>: 本质是一个RingBuffer, 默认size大约是21w条, 需要注意不要使用DiscardPolicy;</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>log4j</tag>
-        <tag>logging</tag>
-        <tag>best-practice</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s virtual-kubelet的实现原理研究</title>
     <url>//2022-04-18-k8s-virtual-kubelet/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, vk的实现原理, 看官方的文档, 太偏向用户视角,<br>研究了源代码, 工作机制先大概说下: </p>
@@ -6379,6 +6360,25 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
         <tag>k8s</tag>
         <tag>virtual-kubelet</tag>
         <tag>vk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java中Log4j的最佳实践</title>
+    <url>//2022-04-18-java-log4j-bestpractice/</url>
+    <content><![CDATA[<h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><ul>
+<li>把ThreadName, RequestId放到MDC, 加到pattern里.</li>
+</ul>
+<h2 id="异步日志"><a href="#异步日志" class="headerlink" title="异步日志"></a>异步日志</h2><p>使用 <a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">log4j2 asyncLogger</a> 来异步打印</p>
+<ul>
+<li>不要在pattern里增加location相关信息, 例如class, file, location, line, method等, 因为这些底层需要<a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">打印堆栈</a>, 然后遍历, 性能较差. 尤其是需要使用asyncLogger的场景下</li>
+<li><a href="https://issues.apache.org/jira/browse/LOG4J2-2031">异步日志底层实现原理</a>: 本质是一个RingBuffer, 默认size大约是21w条, 需要注意不要使用DiscardPolicy;</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>log4j</tag>
+        <tag>logging</tag>
+        <tag>best-practice</tag>
       </tags>
   </entry>
   <entry>
@@ -7890,6 +7890,23 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
+    <title>爱死机第三季观后感</title>
+    <url>//2022-06-04-love-death-robots/</url>
+    <content><![CDATA[<p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
+<hr>
+<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
+<hr>
+<p>最负盛誉的第九集, Jibaro</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>2022</tag>
+        <tag>movie</tag>
+        <tag>movie-list</tag>
+        <tag>love-death-robots</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL连接池重要参数配置原理研究</title>
     <url>//2022-06-05-mysql-conn-params/</url>
     <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
@@ -7970,23 +7987,6 @@ public synchronized void close() throws SQLException &#123;
         <tag>database</tag>
         <tag>connection-pool</tag>
         <tag>druid</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>爱死机第三季观后感</title>
-    <url>//2022-06-04-love-death-robots/</url>
-    <content><![CDATA[<p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
-<hr>
-<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
-<hr>
-<p>最负盛誉的第九集, Jibaro</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>2022</tag>
-        <tag>movie</tag>
-        <tag>movie-list</tag>
-        <tag>love-death-robots</tag>
       </tags>
   </entry>
   <entry>
@@ -12148,6 +12148,12 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>参见: <a href="https://www.baeldung.com/jmockit-static-method">https://www.baeldung.com/jmockit-static-method</a></p>
+<h1 id="如何mock-static变量"><a href="#如何mock-static变量" class="headerlink" title="如何mock static变量"></a>如何mock static变量</h1><p>当需要mock一些复杂的static变量, 例如下边Executor需要能抛出异常的场景, 就比较复杂, 可以参照如下样例:  </p>
+<script src="https://gist.github.com/DavyJones2010/5097454ac5ce68d2b317cb626850cbf0.js"></script>
+
+<h1 id="如何mock-复杂的成员变量"><a href="#如何mock-复杂的成员变量" class="headerlink" title="如何mock 复杂的成员变量"></a>如何mock 复杂的成员变量</h1><p>当需要mock一些复杂的成员变量, 例如下边Executor需要能抛出异常的场景, 就比较复杂, 可以参照如下样例:</p>
+<script src="https://gist.github.com/DavyJones2010/745d629b457e36fcea0caa585d95dd62.js"></script>
+
 <h1 id="如何mock-Tested对象的方法"><a href="#如何mock-Tested对象的方法" class="headerlink" title="如何mock Tested对象的方法"></a>如何mock Tested对象的方法</h1><p>由于 Tested 的对象, 通常都是当前UT需要测试的对象本身. 在测试的目标方法(如下例子中的calcUserScore), 需要本身依赖到当前类的其他方法, 且逻辑非常复杂(例如下例中的getUserById), 则可以将测试对象本身的部分方法也进行mock. 如下:</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
 <span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">JMockit</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
