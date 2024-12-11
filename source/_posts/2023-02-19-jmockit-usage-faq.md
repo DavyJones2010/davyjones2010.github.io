@@ -70,6 +70,16 @@ new MockUp<EnvUtil>() {
 
 参见: [https://www.baeldung.com/jmockit-static-method](https://www.baeldung.com/jmockit-static-method)
 
+# 如何mock static变量
+当需要mock一些复杂的static变量, 例如下边Executor需要能抛出异常的场景, 就比较复杂, 可以参照如下样例:  
+
+<script src="https://gist.github.com/DavyJones2010/5097454ac5ce68d2b317cb626850cbf0.js"></script>
+
+# 如何mock 复杂的成员变量
+当需要mock一些复杂的成员变量, 例如下边Executor需要能抛出异常的场景, 就比较复杂, 可以参照如下样例:
+
+<script src="https://gist.github.com/DavyJones2010/745d629b457e36fcea0caa585d95dd62.js"></script>
+
 # 如何mock Tested对象的方法
 
 由于 Tested 的对象, 通常都是当前UT需要测试的对象本身. 在测试的目标方法(如下例子中的calcUserScore), 需要本身依赖到当前类的其他方法, 且逻辑非常复杂(例如下例中的getUserById), 则可以将测试对象本身的部分方法也进行mock. 如下:
