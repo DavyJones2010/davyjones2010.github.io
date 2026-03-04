@@ -2,96 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-k8s-pdb/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-k8s-troubleshooting/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-linux-cgroups/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2023-11-06-centos7-init/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2023-11-06-mac-setup/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2023-11-06-cpu-specs/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2023-11-06-minikube-playground/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2023-11-06-my-devices/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2023-11-06-perf-tools/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2023-11-06-qemu-img/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/2023-08-31-vocabulary/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -137,15 +47,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2024-05-16-find-my-passion/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/2024-05-05-nothing-new-under-the-sun/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -155,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2024-05-21-reservation-sched/</loc>
+    <loc>https://davyjones2010.github.io/2024-05-16-find-my-passion/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -173,6 +74,15 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/2024-05-21-reservation-sched/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/2024-07-27-auto-system-test-failed/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -182,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2024-12-05-k8s-cpu-manager-deep-dive/</loc>
+    <loc>https://davyjones2010.github.io/2023-12-31-2024-plans-goals/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -191,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-12-31-2024-plans-goals/</loc>
+    <loc>https://davyjones2010.github.io/2024-12-05-k8s-cpu-manager-deep-dive/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -236,7 +146,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-docker-containerd-cri-deep-dive/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-06-centos7-init/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -245,7 +155,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-cri-containerd-runc-cli/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-06-cpu-specs/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -254,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-docker-deepdive/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-06-minikube-playground/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -263,7 +173,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-go-basics/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-06-mac-setup/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -272,7 +182,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-go-network-socket/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-06-my-devices/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -281,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-go-utils/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-06-perf-tools/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -290,43 +200,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-k8s-cpu-manager-deep-dive/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-k8s-cpumanager-cgroupsv1/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-k8s-deploy-arch/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2026-03-04-k8s-kube-scheduler/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2024-01-24-cri-containerd-runc-cli/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-06-qemu-img/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -353,6 +227,15 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/2024-01-30-go-basics/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/2024-01-30-k8s-kata/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -362,7 +245,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2024-01-30-go-basics/</loc>
+    <loc>https://davyjones2010.github.io/2024-02-20-docker-containerd-cri-deep-dive/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -389,25 +272,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2024-02-20-docker-containerd-cri-deep-dive/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/2024-02-27-k8s-deploy-arch/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2024-03-03-k8s-list-watch/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -426,6 +291,15 @@
   
   <url>
     <loc>https://davyjones2010.github.io/2024-03-05-k8s-client-src-analysis/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2024-03-03-k8s-list-watch/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -524,7 +398,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-11-21-cloudflare-outage-report/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-26-http-post-or-get/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -533,7 +407,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-11-26-http-post-or-get/</loc>
+    <loc>https://davyjones2010.github.io/2023-11-21-cloudflare-outage-report/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -578,7 +452,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-12-12-koordinator-thoughts/</loc>
+    <loc>https://davyjones2010.github.io/2023-12-12-koordinator-src-analysis/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -587,7 +461,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-12-12-koordinator-src-analysis/</loc>
+    <loc>https://davyjones2010.github.io/2023-12-12-koordinator-thoughts/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -606,6 +480,15 @@
   
   <url>
     <loc>https://davyjones2010.github.io/2023-12-21-most-important-decision-i-have-made/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2023-12-31-2024-annual-list/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -650,15 +533,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-12-31-2024-annual-list/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/2024-01-18-linux-cgroups/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -686,7 +560,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-03-05-head-first-revealjs/</loc>
+    <loc>https://davyjones2010.github.io/2024-01-24-cri-containerd-runc-cli/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -696,6 +570,15 @@
   
   <url>
     <loc>https://davyjones2010.github.io/2023-04-10-software-diagrams-summary/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2023-03-05-head-first-revealjs/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -785,6 +668,15 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/2023-10-31-q-and-a-layout/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/2023-10-29-cloudon-or-cloudexit/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -803,7 +695,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-10-31-q-and-a-layout/</loc>
+    <loc>https://davyjones2010.github.io/2023-10-31-sys-stat-page/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -813,15 +705,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/2023-10-31-thoughts-on-ddl/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2023-10-31-sys-stat-page/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -893,7 +776,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-02-08-tangshi/</loc>
+    <loc>https://davyjones2010.github.io/2023-02-08-zhuxishici/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -902,7 +785,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-02-08-zhuxishici/</loc>
+    <loc>https://davyjones2010.github.io/2023-02-08-tangshi/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -974,7 +857,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-03-04-java-jvm-dns-caching/</loc>
+    <loc>https://davyjones2010.github.io/2023-02-25-java-thread-sync-deep-dive/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -983,7 +866,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2023-02-25-java-thread-sync-deep-dive/</loc>
+    <loc>https://davyjones2010.github.io/2023-03-04-java-jvm-dns-caching/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1235,6 +1118,15 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/2022-07-03-random-snippets/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/2022-07-06-state-machine-in-distributed-system/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -1244,7 +1136,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2022-07-03-random-snippets/</loc>
+    <loc>https://davyjones2010.github.io/2022-04-18-java-log4j-bestpractice/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1280,7 +1172,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2022-04-30-cache-incompatible/</loc>
+    <loc>https://davyjones2010.github.io/2022-04-29-ubuntu-init/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1289,7 +1181,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2022-04-29-ubuntu-init/</loc>
+    <loc>https://davyjones2010.github.io/2022-04-30-cache-incompatible/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1343,15 +1235,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2022-05-15-software-enginnering-best-practice/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/2022-05-18-rpc-exception-handling/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -1361,7 +1244,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2022-05-18-springboot-cache/</loc>
+    <loc>https://davyjones2010.github.io/2022-05-15-software-enginnering-best-practice/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1371,6 +1254,15 @@
   
   <url>
     <loc>https://davyjones2010.github.io/2022-05-22-k8s-promethus/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-05-18-springboot-cache/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1397,15 +1289,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2022-05-31-blacklist-or-attribute/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/2022-05-24-java-spring-spi/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -1415,7 +1298,25 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/2022-05-31-blacklist-or-attribute/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/2022-06-02-spring-annotation-on-interface/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-02-01-maven-deps-failure/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1505,6 +1406,15 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/2022-03-28-openapi-nexttoken/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/2022-03-28-openapi-clienttoken/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -1514,7 +1424,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2022-03-28-openapi-nexttoken/</loc>
+    <loc>https://davyjones2010.github.io/2022-04-04-good-design/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1533,15 +1443,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/2022-04-05-k8s-common-sense/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-04-04-good-design/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1569,186 +1470,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/2022-04-05-k8s-list-watch/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-04-18-java-log4j-bestpractice/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-06-resolution/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-13-GFS-thesis/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-08-mysql-unique-index-not-working/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-15-java-lambda-list-to-map/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-18-Linux-Basic/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-18-gpu-heat-dissipation/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-18-throughput/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-22-git/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-22-linux-scripts/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-11-22-random-snippets/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-12-Dune/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-17-java-nio/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-17-tcp-time-wait/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-17-zk-client/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-31-booklist-for-2022/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-01-03-netty/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2021-12-31-summary-for-2021/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-01-31-jetty-monitor-oom-bug/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/2022-02-01-maven-deps-failure/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1802,7 +1523,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2021-09-04-ming-dynasty/</loc>
+    <loc>https://davyjones2010.github.io/2021-09-05-analog-circuit/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1811,7 +1532,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2021-09-05-analog-circuit/</loc>
+    <loc>https://davyjones2010.github.io/2021-09-04-ming-dynasty/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -1946,15 +1667,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/2021-11-03-java-mdc-put-npe/</loc>
-    
-    <lastmod>2026-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/2021-10-30-weekend-summary/</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -1964,7 +1676,178 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/2021-11-03-java-mdc-put-npe/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/2021-11-06-mac-init/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-06-resolution/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-08-mysql-unique-index-not-working/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-13-GFS-thesis/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-15-java-lambda-list-to-map/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-18-Linux-Basic/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-18-gpu-heat-dissipation/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-18-throughput/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-22-git/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-22-linux-scripts/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-11-22-random-snippets/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-12-Dune/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-17-java-nio/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-17-tcp-time-wait/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-17-zk-client/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-31-booklist-for-2022/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2021-12-31-summary-for-2021/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-01-03-netty/</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/2022-01-31-jetty-monitor-oom-bug/</loc>
     
     <lastmod>2026-03-04</lastmod>
     
@@ -2066,20 +1949,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/history/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/ming-dynasty/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/tags/computer/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -2088,6 +1957,20 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/analog-circuit/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/history/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/ming-dynasty/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2241,20 +2124,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/GFS/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/Google/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/tags/mysql/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -2270,6 +2139,20 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/insert-on-duplicate/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/GFS/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/Google/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2346,6 +2229,13 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/tags/year-in-review/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/tags/Netty/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -2361,13 +2251,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/Nio/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/year-in-review/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2507,7 +2390,7 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/client-token/</loc>
+    <loc>https://davyjones2010.github.io/tags/next-token/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2521,7 +2404,21 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/next-token/</loc>
+    <loc>https://davyjones2010.github.io/tags/client-token/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/product-design/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/good-design/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2550,20 +2447,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/vpc/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/product-design/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/good-design/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2654,13 +2537,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/cache/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/tags/ubuntu/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -2676,6 +2552,13 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/system-config/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/cache/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2759,14 +2642,14 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/spring-cache/</loc>
+    <loc>https://davyjones2010.github.io/tags/promethus/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/promethus/</loc>
+    <loc>https://davyjones2010.github.io/tags/spring-cache/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2829,13 +2712,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/black-list/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/tags/spi/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -2844,6 +2720,13 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/service-loader/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/black-list/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2997,6 +2880,13 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/tags/soft-skills/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/tags/state-machine/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -3005,13 +2895,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/lock/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/soft-skills/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3186,6 +3069,13 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/tags/file-system/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/tags/reading/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -3214,13 +3104,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/file-system/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/tags/2023/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -3242,14 +3125,14 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/%E5%94%90%E8%AF%97/</loc>
+    <loc>https://davyjones2010.github.io/tags/%E4%B8%BB%E5%B8%AD%E8%AF%97%E8%AF%8D/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/%E4%B8%BB%E5%B8%AD%E8%AF%97%E8%AF%8D/</loc>
+    <loc>https://davyjones2010.github.io/tags/%E5%94%90%E8%AF%97/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3354,6 +3237,13 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/tags/diagrams/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/tags/ppt/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -3362,13 +3252,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/markdown/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/diagrams/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3487,6 +3370,13 @@
   </url>
   
   <url>
+    <loc>https://davyjones2010.github.io/tags/experience/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://davyjones2010.github.io/tags/cloud-exit/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -3522,7 +3412,14 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/experience/</loc>
+    <loc>https://davyjones2010.github.io/tags/system-design/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/dashboard/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3537,20 +3434,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/deadline/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/system-design/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/dashboard/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3627,14 +3510,14 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/incident-report/</loc>
+    <loc>https://davyjones2010.github.io/tags/http/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/http/</loc>
+    <loc>https://davyjones2010.github.io/tags/incident-report/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3760,13 +3643,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/kata-container/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/tags/programming/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -3775,6 +3651,13 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/basics/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/kata-container/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3809,13 +3692,6 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/informer/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://davyjones2010.github.io/tags/concepts/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -3824,6 +3700,13 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/client-go/</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://davyjones2010.github.io/tags/informer/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3865,14 +3748,14 @@
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/cpu-manager/</loc>
+    <loc>https://davyjones2010.github.io/tags/cfs/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://davyjones2010.github.io/tags/cfs/</loc>
+    <loc>https://davyjones2010.github.io/tags/cpu-manager/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3936,48 +3819,6 @@
   
   <url>
     <loc>https://davyjones2010.github.io/tags/browser-extension/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/cgroupsv1/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/kubelet/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/etcd/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/apiserver/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/pod-disruption-budget/</loc>
-    <lastmod>2026-03-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://davyjones2010.github.io/tags/disk-pressure/</loc>
     <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

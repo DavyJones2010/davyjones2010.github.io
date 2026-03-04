@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">299</span>
+        <span class="site-state-item-count">293</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,1499 +211,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-03-05-k8s-util/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-03-05-k8s-util/" class="post-title-link" itemprop="url">k8s util</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-06 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-06T00:00:00+08:00">2024-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#97;&#x70;&#105;&#x73;&#x65;&#114;&#118;&#101;&#114;&#64;&#118;&#x30;&#46;&#x32;&#x34;&#46;&#x31;&#53;">&#97;&#x70;&#105;&#x73;&#x65;&#114;&#118;&#101;&#114;&#64;&#118;&#x30;&#46;&#x32;&#x34;&#46;&#x31;&#53;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
-</blockquote>
-<p>新建一个协程来启动HTTPServer. </p>
-<p><img data-src="/k8s-util/Untitled.png" alt="Untitled"></p>
-<h1 id="wait机制"><a href="#wait机制" class="headerlink" title="wait机制"></a>wait机制</h1><p><code>k8s.io/apimachinery/pkg/util/wait</code></p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">import</span> <span class="token punctuation">(</span>
-	<span class="token string">"context"</span>
-	<span class="token string">"fmt"</span>
-	<span class="token string">"k8s.io/apimachinery/pkg/util/wait"</span>
-	<span class="token string">"math/rand"</span>
-	<span class="token string">"time"</span>
-<span class="token punctuation">)</span>
-
-<span class="token keyword">func</span> <span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	ctx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-	<span class="token boolean">_</span> <span class="token operator">=</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-	<span class="token punctuation">&#125;</span>
-	rand<span class="token punctuation">.</span><span class="token function">Seed</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">UnixNano</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-	wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">func</span> <span class="token function">doSomething</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"doSomething called"</span><span class="token punctuation">)</span>
-	n <span class="token operator">:=</span> rand<span class="token punctuation">.</span><span class="token function">Intn</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span>
-	time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"Hello"</span><span class="token punctuation">)</span>
-	ctx<span class="token punctuation">.</span><span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><code>wait.UntilWithContext</code>是<code>wait</code>包中的一个函数，它会按指定的时间间隔（本例中为1纳秒）重复执行<code>doSomething</code>函数，直到上下文<code>ctx</code>被取消。由于间隔设置为1纳秒，实际上操作会持续不断地执行，因为1纳秒是极短的时间。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-03-05-k8s-util/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-03-03-k8s-list-watch/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-03-03-k8s-list-watch/" class="post-title-link" itemprop="url">k8s list watch</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-04T00:00:00+08:00">2024-03-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>14</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="k8s-list-watch"><a href="#k8s-list-watch" class="headerlink" title="k8s-list-watch"></a>k8s-list-watch</h1><p><img data-src="/k8s-list-watch/Untitled.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-03-03-k8s-list-watch/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-02-27-k8s-cert/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-02-27-k8s-cert/" class="post-title-link" itemprop="url">k8s cert</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-02-28 00:00:00" itemprop="dateCreated datePublished" datetime="2024-02-28T00:00:00+08:00">2024-02-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>548</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="k8s-cert"><a href="#k8s-cert" class="headerlink" title="k8s-cert"></a>k8s-cert</h1><ol>
-<li>初始化时, cert先后流程是怎样的? </li>
-<li>cert怎么跟service account关联?</li>
-</ol>
-<h1 id="kubeconfig"><a href="#kubeconfig" class="headerlink" title="kubeconfig"></a>kubeconfig</h1><ul>
-<li>kubeconfig.yaml中各个字段含义详解; 以kube-scheduer的kube-config为例:</li>
-</ul>
-<p>certificate-authority-data: 用于验证apiserver服务端证书的CA证书; 所有需要连接apiserver的角色, 都需要配置该CA证书, 且内容都一样. </p>
-<p>client-certificate-data: </p>
-<p>client-key: </p>
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ol>
-<li>生成服务端证书:  certificate-authority-data; </li>
-<li>基于服务端证书, 生成kubelet的客户端证书<ol>
-<li>集群中多个node, 每个node的kubelet客户端证书都一样的么?  —&gt; 实际验证, 每个node的kubelet客户端证书都不一样. </li>
-<li>如果所有node使用一样的证书, 会有啥问题?</li>
-</ol>
-</li>
-<li>kubelet启动时, 配置kubeconfig</li>
-</ol>
-<h1 id="case"><a href="#case" class="headerlink" title="case"></a>case</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-02-27-k8s-cert/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-02-27-k8s-deploy-arch/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-02-27-k8s-deploy-arch/" class="post-title-link" itemprop="url">k8s deploy arch</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-02-28 00:00:00" itemprop="dateCreated datePublished" datetime="2024-02-28T00:00:00+08:00">2024-02-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="k8s-deploy-arch"><a href="#k8s-deploy-arch" class="headerlink" title="k8s-deploy-arch"></a>k8s-deploy-arch</h1><p>对于k8s搭建比较感兴趣: 例如 各个组件如何部署的? 有啥先后顺序? 分别是以啥形态部署等, 以此文详细来分析下.</p>
-<h1 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h1><p>如下图</p>
-<p><img data-src="/k8s-deploy-arch/Untitled.png" alt="Untitled"></p>
-<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><ol>
-<li><p>部署Master节点:</p>
-</li>
-<li><p>手动通过系统服务(centos7u中的sysd service)的方式, 启动 kubelet, containerd 这两个服务, 同时在kubelet启动参数中配置好apiserver&#x2F;etcd的{地址:端口}; —&gt; 注意, 此时由于没有部署apiserver, kubelet默认需要连接apiserver, 此时肯定连不通, kubelet是设计为能够独立于apiserver正常启动并运行的组件.</p>
-</li>
-</ol>
-<aside>
-💡 kubelet是设计为能够独立于apiserver正常启动并运行的组件。以下是kubelet启动成功的原因：
-
-<ol>
-<li><strong>独立运行</strong>：kubelet的设计允许它在没有apiserver可用的情况下独立运行。kubelet负责节点上的容器生命周期管理，包括创建、启动、停止和删除容器。只要它能够与容器运行时（如Docker或containerd）进行通信，它就能管理容器。</li>
-<li><strong>自我修复</strong>：如果kubelet启动时无法连接到apiserver，它会定期重试连接。这种自我修复能力允许kubelet最终建立与apiserver的连接，一旦apiserver变得可用。</li>
-<li><strong>静态Pod管理</strong>：kubelet负责管理那些通过本地文件定义的静态Pod，而不依赖于apiserver。kubelet会定期扫描预配置的本地目录（如<code>/etc/kubernetes/manifests</code>）来启动和管理静态Pod。如果apiserver的manifest文件位于该目录中，kubelet会启动apiserver的Pod，即使它此时无法连接到apiserver。</li>
-<li><strong>容错性</strong>：kubelet的设计中包含了对网络分区和暂时性故障的容忍性。即使kubelet暂时无法连接apiserver，它也会继续保持当前的Pod运行，并按照最后的已知状态进行操作。</li>
-</ol>
-<p>因此，即使在apiserver不可用的情况下，kubelet也能够启动并继续执行其容器管理的职责。一旦apiserver启动并变得可用，kubelet将与之建立连接并加入到Kubernetes集群中，开始接收新的指令和状态更新。</p>
-</aside>
-
-<ol>
-<li>然后通过static pod的方式, 在master节点上启动 etcd kube-scheduler apiserver kube-controller-manager 这四种static pod</li>
-</ol>
-<aside>
-💡 TODO: 
-1. 确认下这几个static pod的pod spec, 对于资源的请求是咋样的? pod的类型是啥? BE or GU or Burstable? 在哪里可以配置? 最佳实践是咋样的?
-2. 这些组件的容灾(例如kube-sched) 怎么做的? 防止这个static pod挂了, 导致业务整体不可用. 
-3. 确认下这几个pod的priority是怎样的? 如何防止Node pressure的时候被逐出?
-
-</aside>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-02-27-k8s-deploy-arch/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-02-20-docker-containerd-cri-deep-dive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-02-20-docker-containerd-cri-deep-dive/" class="post-title-link" itemprop="url">docker containerd cri deep dive</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-02-21 00:00:00" itemprop="dateCreated datePublished" datetime="2024-02-21T00:00:00+08:00">2024-02-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>16k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="docker-containerd-cri-deep-dive"><a href="#docker-containerd-cri-deep-dive" class="headerlink" title="docker-containerd-cri-deep-dive"></a>docker-containerd-cri-deep-dive</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p><img data-src="/docker-containerd-cri-deep-dive/Untitled.png" alt="Untitled"></p>
-<p><img data-src="/docker-containerd-cri-deep-dive/Untitled%201.png" alt="Untitled"></p>
-<p>个人总结下. </p>
-<ul>
-<li>containerd本质就是 runc + image 下载&#x2F;解压</li>
-<li>docker本质就是 containerd + image 构建</li>
-</ul>
-<blockquote>
-<p>Docker was focused on end-user and developer use cases,<br>whereas containerd is focused on operational use cases, such as running containers on servers.<br>Tasks such as building container images are left to other tools.</p>
-</blockquote>
-<ul>
-<li>而根据CRI的接口定义, 也不包含镜像的构建:<ul>
-<li>containerd就是CRI的一个实现.</li>
-<li>cri-o 也是CRI的一个实现.</li>
-<li>但目前主流的都是 containerd</li>
-</ul>
-</li>
-</ul>
-<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><h2 id="CRI-API"><a href="#CRI-API" class="headerlink" title="CRI API"></a>CRI API</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-02-20-docker-containerd-cri-deep-dive/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-02-19-docker-deepdive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-02-19-docker-deepdive/" class="post-title-link" itemprop="url">docker deepdive</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-02-20 00:00:00" itemprop="dateCreated datePublished" datetime="2024-02-20T00:00:00+08:00">2024-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="docker-deepdive"><a href="#docker-deepdive" class="headerlink" title="docker-deepdive"></a>docker-deepdive</h1><h1 id="architecture"><a href="#architecture" class="headerlink" title="architecture"></a>architecture</h1><p>参见官方文档: </p>
-<p><img data-src="/docker-deepdive/Untitled.png" alt="Untitled"></p>
-<ul>
-<li>其中 <code>docker daemon</code> 默认是通过 uds 来listen本地的client请求, 优点是权限好控制. 只允许 <strong>root 用户</strong>在<strong>本机访问</strong></li>
-</ul>
-<aside>
-💡 - By default, the Docker daemon listens for connections on a Unix socket to accept requests from local clients.
-- By default, it will listen on `unix:///var/run/docker.sock` to allow **only local connections by the *root* user**.
-
-</aside>
-
-<ul>
-<li>也可以配置按照TCP方式listen, 从而允许远程来访问, 详细参见: <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/dockerd/#bind-docker-to-another-hostport-or-a-unix-socket">dockerd | Docker Docs</a> 但需要注意安全风险</li>
-</ul>
-<h1 id="docker-sock"><a href="#docker-sock" class="headerlink" title="docker.sock"></a>docker.sock</h1><p>之前不太理解为啥docker要监听在: <code>/run/docker.sock</code>  这个地址上? 对<a href="go-network-socket%20a9506a8dfda64f9aab81c62f89215379.md">uds有了完整的实践与测试</a>之后, 对此有了透彻的认知. </p>
-<p>从而也理解了为啥 <a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/sls/user-guide/use-the-log-service-console-to-collect-container-text-logs-in-daemonset-mode?spm=a2c4g.11186623.0.0.3b131a21Bt0peR">如何创建Logtail配置并以DaemonSet方式采集容器文本日志_日志服务(SLS)-阿里云帮助中心</a> 中, 需要按照 <code>Logtail通过/run/docker.sock访问Docker，请确保该路径存在且具备访问权限。</code> 方式来收集日志. </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-02-19-docker-deepdive/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-30-container-learning-roadmap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-01-30-container-learning-roadmap/" class="post-title-link" itemprop="url">container learning roadmap</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-31 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-31T00:00:00+08:00">2024-01-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>26</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="container-learning-roadmap"><a href="#container-learning-roadmap" class="headerlink" title="container-learning-roadmap"></a>container-learning-roadmap</h1><p><img data-src="/container-learning-roadmap/Untitled.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-01-30-container-learning-roadmap/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-30-k8s-kata/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-01-30-k8s-kata/" class="post-title-link" itemprop="url">k8s kata</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-31 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-31T00:00:00+08:00">2024-01-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>104</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="k8s-kata"><a href="#k8s-kata" class="headerlink" title="k8s-kata"></a>k8s-kata</h1><p>开源的Kata方案是microVM, 但提供的不是底层IAAS的语义(例如createDom等), 而是标准的OCI接口; </p>
-<p>–&gt; TODO: kata提供的接口都有哪些? 具体都是怎么实现的? 研究下</p>
-<p><img data-src="/k8s-kata/Untitled.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-01-30-k8s-kata/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-30-go-basics/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-01-30-go-basics/" class="post-title-link" itemprop="url">go basics</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-31 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-31T00:00:00+08:00">2024-01-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="go-basics"><a href="#go-basics" class="headerlink" title="go-basics"></a>go-basics</h1><aside>
-💡 Happy gopher~
-
-</aside>
-
-<h1 id="string"><a href="#string" class="headerlink" title="string"></a>string</h1><h2 id="fields-amp-maps"><a href="#fields-amp-maps" class="headerlink" title="fields&amp;maps"></a>fields&amp;maps</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">WordCount</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
-	cntMap <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
-	strs <span class="token operator">:=</span> strings<span class="token punctuation">.</span><span class="token function">Fields</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> s <span class="token operator">:=</span> <span class="token keyword">range</span> strs <span class="token punctuation">&#123;</span>
-		i <span class="token operator">:=</span> cntMap<span class="token punctuation">[</span>s<span class="token punctuation">]</span>
-		cntMap<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span>
-	<span class="token punctuation">&#125;</span>
-
-	<span class="token keyword">return</span> cntMap
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>string按空格拆分成列表</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">strs :<span class="token operator">=</span> strings.Fields<span class="token punctuation">(</span>s<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>遍历list</li>
-</ul>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">
-<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> s <span class="token operator">:=</span> <span class="token keyword">range</span> strs <span class="token punctuation">&#123;</span>
- <span class="token comment">// xxx</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>注意: 自加不能赋值(与Java有区别)</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-01-30-go-basics/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-24-cgroup-qemu-cfs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-01-24-cgroup-qemu-cfs/" class="post-title-link" itemprop="url">cgroup qemu cfs</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-25T00:00:00+08:00">2024-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>156</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="20240125-cgroup-qemu-cfs"><a href="#20240125-cgroup-qemu-cfs" class="headerlink" title="20240125-cgroup-qemu-cfs"></a>20240125-cgroup-qemu-cfs</h1><p>针对如何实现CPU的绑核逻辑, 一直有很多疑问. </p>
-<p>今天跟GPT聊了一会儿, 大致勾画出如下: </p>
-<p>本质还是cfs-scheduler的策略, 但通过的方式不同工具&#x2F;方式透出. 基本明了了.</p>
-<p>TODO: 底层还是要研究下cfs-scheduler具体的工作机制, 才能彻底透彻.</p>
-<p><img data-src="/_assets/2024-01-25-cgroup-qemu-cfs/Untitled.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-01-24-cgroup-qemu-cfs/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-24-cri-containerd-runc-cli/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-01-24-cri-containerd-runc-cli/" class="post-title-link" itemprop="url">cri containerd runc cli</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-25T00:00:00+08:00">2024-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="cri-containerd-runc-cli"><a href="#cri-containerd-runc-cli" class="headerlink" title="cri-containerd-runc-cli"></a>cri-containerd-runc-cli</h1><h1 id="crictl"><a href="#crictl" class="headerlink" title="crictl"></a>crictl</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>配置endpoint为containerd</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">runtime<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
-image<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
-timeout<span class="token punctuation">:</span> <span class="token number">10</span>
-debug<span class="token punctuation">:</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>否则会去默认找 docker.sock, 从而报错: </p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">
-WARN<span class="token punctuation">[</span><span class="token number">0000</span><span class="token punctuation">]</span> runtime connect using <span class="token keyword">default</span> endpoints<span class="token punctuation">:</span> <span class="token punctuation">[</span>unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.</span>
-E0125 <span class="token number">15</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">09.340202</span>   <span class="token number">38890</span> remote_runtime<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">277</span><span class="token punctuation">]</span> <span class="token string">"ListPodSandbox with filter from runtime service failed"</span> err<span class="token operator">=</span><span class="token string">"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory\""</span> filter<span class="token operator">=</span><span class="token string">"&amp;PodSandboxFilter&#123;Id:,State:nil,LabelSelector:map[string]string&#123;&#125;,&#125;"</span>
-FATA<span class="token punctuation">[</span><span class="token number">0000</span><span class="token punctuation">]</span> listing pod sandboxes<span class="token punctuation">:</span> rpc <span class="token builtin">error</span><span class="token punctuation">:</span> code <span class="token operator">=</span> Unavailable desc <span class="token operator">=</span> connection <span class="token builtin">error</span><span class="token punctuation">:</span> desc <span class="token operator">=</span> <span class="token string">"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"># 查看所有pods<span class="token operator">/</span>sandbox
-$sudo crictl pods
-POD ID              CREATED             STATE               NAME                       NAMESPACE           ATTEMPT             RUNTIME
-b0a9d72288491       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be03              qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-ebb390f699f40       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be02              qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-2493312953f99       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be                qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-
-# pod<span class="token operator">/</span>sandbox操作
-# 按照podconfig新建pod
-$sudo crictl runp <span class="token punctuation">[</span>POD_CONFIG_JSON<span class="token punctuation">]</span>
-
-# 查看pod详情
-$sudo crictl inspectp b0a9d72288491
-
-# container操作
-# 在pod里新建container
-$sudo crictl create $<span class="token punctuation">&#123;</span>SANDBOX_ID<span class="token punctuation">&#125;</span> container<span class="token punctuation">.</span>json sandbox<span class="token punctuation">.</span>json
-
-# 启动container
-$sudo crictl start $<span class="token punctuation">&#123;</span>CONTAINER_ID<span class="token punctuation">&#125;</span>
-
-# 列出container
-$sudo crictl ps
-
-# 
-#sudo crictl inspect $<span class="token punctuation">&#123;</span>CONTAINER_ID<span class="token punctuation">&#125;</span>
-
-# 拉取镜像
-$sudo crictl pull nginx
-
-# 列出所有镜像
-$sudo crictl images
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="ctr"><a href="#ctr" class="headerlink" title="ctr"></a>ctr</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-01-24-cri-containerd-runc-cli/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-24-k8s-memory-manager-cgroups/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-01-24-k8s-memory-manager-cgroups/" class="post-title-link" itemprop="url">k8s memory manager cgroups</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-25T00:00:00+08:00">2024-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>52</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="k8s-memory-manager-cgroups"><a href="#k8s-memory-manager-cgroups" class="headerlink" title="k8s-memory-manager-cgroups"></a>k8s-memory-manager-cgroups</h1><p>k8s中内存是如何通过底层的cgroups来控制的?</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-01-24-k8s-memory-manager-cgroups/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-20-hushi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024-01-20-hushi/" class="post-title-link" itemprop="url">hushi</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-21 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-21T00:00:00+08:00">2024-01-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>167</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
-<blockquote>
-<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024-01-20-hushi/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-18-linux-cgroups/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1740,7 +247,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -1858,7 +365,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -1963,7 +470,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2080,7 +587,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2187,7 +694,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2296,7 +803,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2433,7 +940,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2553,7 +1060,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2658,7 +1165,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2756,7 +1263,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2882,7 +1389,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -2987,7 +1494,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -3021,106 +1528,6 @@ $sudo crictl images
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023-12-12-koordinator-node-resource-manager/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-12-12-koordinator-thoughts/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023-12-12-koordinator-thoughts/" class="post-title-link" itemprop="url">koordinator thoughts</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-12-13 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T00:00:00+08:00">2023-12-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>58</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="koordinator-thoughts"><a href="#koordinator-thoughts" class="headerlink" title="koordinator-thoughts"></a>koordinator-thoughts</h1><p>koordinator 怎么跟社区进行兼容? </p>
-<p>尤其是有koordlet的情况下?</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023-12-12-koordinator-thoughts/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -3187,7 +1594,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -3256,6 +1663,106 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-12-12-koordinator-thoughts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-12-12-koordinator-thoughts/" class="post-title-link" itemprop="url">koordinator thoughts</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-13 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T00:00:00+08:00">2023-12-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>58</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="koordinator-thoughts"><a href="#koordinator-thoughts" class="headerlink" title="koordinator-thoughts"></a>koordinator-thoughts</h1><p>koordinator 怎么跟社区进行兼容? </p>
+<p>尤其是有koordlet的情况下?</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-12-12-koordinator-thoughts/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-26-http-post-or-get/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3292,7 +1799,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -3398,7 +1905,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -3507,7 +2014,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -3608,7 +2115,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -3714,7 +2221,7 @@ $sudo crictl images
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
     </span>
 
   
@@ -3782,6 +2289,1589 @@ $sudo crictl images
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-thin-client-pitfall/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-thin-client-pitfall/" class="post-title-link" itemprop="url">thin client pitfall</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>824</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="20231107-thin-client-pitfall"><a href="#20231107-thin-client-pitfall" class="headerlink" title="20231107-thin-client-pitfall"></a>20231107-thin-client-pitfall</h1><p>发现在开发很多问题排查&amp;提效工具时, 服务端同学仍然陷入定势思维. 强调服务端优先, 瘦客户端. 从而导致整体实现过为臃肿, 开发&amp;改造周期长, 性能不太好等问题. </p>
+<p>但个人思考, 要跳出定势思维与舒适区, 定义好服务端&amp;客户端的边界. 把很多功能放到 前端 或者 与Alfred整合, 可以很好地解决上边的问题. </p>
+<p>插件&amp;工具 经常会处于鄙视链底端, 大家都想要做平台, 把饼画得大大的. </p>
+<p>但实际上好的插件&amp;工具, . 例如, 支付宝是不是个工具? 微信其实本质也是个工具. 为啥会觉得做工具Low呢?  </p>
+<p>举几个例子: </p>
+<ol>
+<li>Tracing 系统, 关键词过滤</li>
+</ol>
+<p>N多个上下游系统, 通过traceId(UUID)把请求关联. 建设了一个Tracing系统. 具体实现是: </p>
+<p>想要输入某个traceId之后, 会把traceId拼接成SLS SQL, 请求服务端→请求SLS获取结果.</p>
+<p>如果想要基于traceId再添加其他关键词进行进一步筛选: </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-thin-client-pitfall/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-centos7-init/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-centos7-init/" class="post-title-link" itemprop="url">CentOS 7 初始化配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="yum源"><a href="#yum源" class="headerlink" title="yum源"></a>yum源</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-centos7-init/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-cpu-specs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-cpu-specs/" class="post-title-link" itemprop="url">CPU Specs 常用 CPU 规格参考</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Intel-CPU-Suffix"><a href="#Intel-CPU-Suffix" class="headerlink" title="Intel CPU Suffix"></a>Intel CPU Suffix</h1><ul>
+<li><p>Y: M-5Y71 Mobile extremely low power</p>
+</li>
+<li><p>U: 6550U, Mobile power efficient 超低压处理器, for 移动端</p>
+</li>
+<li><p>P: Performance optimized for thin and light laptops</p>
+</li>
+<li><p>H: 9750H, High performance optimized for mobile</p>
+</li>
+<li><p>K: 8700K, Unlocked</p>
+</li>
+<li><p>Q: quad core</p>
+</li>
+<li><p>refs: <a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/support/articles/000058567/processors/intel-core-processors.html">Understanding Intel® Core™ Processor Number</a></p>
+</li>
+</ul>
+<h1 id="Generation"><a href="#Generation" class="headerlink" title="Generation"></a>Generation</h1><table>
+<thead>
+<tr>
+<th>type</th>
+<th>gen</th>
+<th>lithography</th>
+<th>TDP</th>
+<th>L3Cache</th>
+<th>frequency</th>
+<th>cores</th>
+<th>GPU</th>
+<th>official spec</th>
+<th>typical device</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Intel Core M-5Y51</td>
+<td>gen5(broadwell)</td>
+<td>14nm</td>
+<td>4.5W</td>
+<td>4MB</td>
+<td>1.1GHz~2.6GHz</td>
+<td>2C4HT</td>
+<td>Intel HD Graphics 5300</td>
+<td><a target="_blank" rel="noopener" href="https://ark.intel.com/content/www/us/en/ark/products/84669/intel-core-m5y51-processor-4m-cache-up-to-2-60-ghz.html">Intel Core M5Y51 Processor</a></td>
+<td><strong>MacBook 12’’ 2015</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core M-5Y71</td>
+<td>gen5(broadwell)</td>
+<td>14nm</td>
+<td>4.5W</td>
+<td>4MB</td>
+<td>1.2GHz~2.9GHz</td>
+<td>2C4HT</td>
+<td>Intel HD Graphics 5300</td>
+<td><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/products/sku/84672/intel-core-m5y71-processor-4m-cache-up-to-2-90-ghz/specifications.html">Intel® Core™ M-5Y71 Processor</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core i5-5250U</td>
+<td>gen5(broadwell)</td>
+<td>14nm</td>
+<td>15W</td>
+<td>3MB</td>
+<td>1.6GHz~2.7GHz</td>
+<td>2C4HT</td>
+<td>Intel HD Graphics 6000</td>
+<td><a target="_blank" rel="noopener" href="https://ark.intel.com/content/www/us/en/ark/products/84984/intel-core-i55250u-processor-3m-cache-up-to-2-70-ghz.html">Intel Core i55250U Processor</a></td>
+<td><strong>MBA 13’’</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core i7-5600U</td>
+<td>gen5(broadwell)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core i5-6550U</td>
+<td>gen6(skylake)</td>
+<td>14nm</td>
+<td></td>
+<td></td>
+<td></td>
+<td>2C4HT</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core i5-7200U</td>
+<td>gen7(kabylake)</td>
+<td>14nm</td>
+<td></td>
+<td></td>
+<td>2.5GHz~3.1GHz</td>
+<td>2C4HT</td>
+<td></td>
+<td></td>
+<td><strong>thinkpad x1c gen5</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core i5-8250U</td>
+<td>gen8(kayblake)</td>
+<td>14nm</td>
+<td>15W</td>
+<td></td>
+<td>1.6GHz~3.4GHz</td>
+<td>4C8HT</td>
+<td>Intel UHD Graphics 620</td>
+<td><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/products/sku/124967/intel-core-i58250u-processor-6m-cache-up-to-3-40-ghz/specifications.html">Intel® Core™ i5-8250U Processor</a></td>
+<td>- thinkpad x1c gen6</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>- mibook pro 15.6’’</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core i7-8550U</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core i7-8750H</td>
+<td>gen8(coffeelake)</td>
+<td>14nm</td>
+<td>45W</td>
+<td>9MB</td>
+<td>2.2GHz~4.1GHz</td>
+<td>6C12HT</td>
+<td>Intel UHD Graphics 630</td>
+<td><a target="_blank" rel="noopener" href="https://ark.intel.com/content/www/us/en/ark/products/134906/intel-core-i7-8750h-processor-9m-cache-up-to-4-10-ghz.html">Intel Core i78750H Processor 9M Cache up to 4.10 GHz Product Specifications</a></td>
+<td>Mi Gaming Laptop 15.6’’</td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Core i7-9750H</td>
+<td>gen9(coffelake)</td>
+<td>14nm</td>
+<td>45W</td>
+<td></td>
+<td>2.6GHz~4.5GHz</td>
+<td>6C12HT</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/products/sku/191045/intel-core-i79750h-processor-12m-cache-up-to-4-50-ghz/specifications.html?wapkw=%20i7-9750H">Intel® Core™ i7-9750H Processor</a></td>
+<td><strong>MBP 16’’</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Celeron N5105</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-cpu-specs/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-minikube-playground/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-minikube-playground/" class="post-title-link" itemprop="url">Minikube 实验笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li><p>install docker: <a target="_blank" rel="noopener" href="https://www.zhaowenyu.com/docker-doc/ops/docker-install.html">软件获取与安装 · Docker 文档</a></p>
+</li>
+<li><p>install minikube: <a target="_blank" rel="noopener" href="https://www.zhaowenyu.com/minikube-doc/ops/minikube.html">minikube安装Kubernetes · minikube</a></p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.18.1/minikube-linux-amd64 <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x minikube <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">mv</span> minikube /usr/local/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>FXXK!!!</p>
+<h2 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h2><p><img data-src="/_assets/minikube-playground/Untitled.png" alt="Untitled"></p>
+<p><img data-src="/_assets/minikube-playground/Untitled-1.png" alt="Untitled"></p>
+<h2 id="checksum文件下载失败"><a href="#checksum文件下载失败" class="headerlink" title="checksum文件下载失败"></a>checksum文件下载失败</h2><p><img data-src="/_assets/minikube-playground/Untitled-2.png" alt="Untitled"></p>
+<p>修复: </p>
+<p>重新从官方的release中下载最新的binary Lol</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-minikube-playground/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-mac-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-mac-setup/" class="post-title-link" itemprop="url">Mac Setup 初始化配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>108</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>iterm2</p>
+<ol>
+<li>下载使用 <code>HaX0R_GR33N</code> 的主题</li>
+<li>安装 <code>lsd</code> 比 <code>ls</code> 好看太多啦!</li>
+<li>安装 <code>brew install font-hack-nerd-font --cask</code> 不然文件前边会有奇怪的符号</li>
+</ol>
+<p>如下, 确实要美观好多, 可读性也好很多.</p>
+<p><img data-src="/_assets/mac-setup/image.png" alt="image.png"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-mac-setup/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-my-devices/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-my-devices/" class="post-title-link" itemprop="url">My Devices - 设备折腾记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="💻-My-PCs-amp-Devices"><a href="#💻-My-PCs-amp-Devices" class="headerlink" title="💻 My PCs &amp; Devices"></a>💻 My PCs &amp; Devices</h2><h3 id="Surface-Pro-4"><a href="#Surface-Pro-4" class="headerlink" title="Surface Pro 4"></a>Surface Pro 4</h3><p>Battery: 38Wh<br>CPU: Intel Core M3-7Y30 2C4HT<br>kabylake<br>Fans: 0<br>GPU: Intel HD Graphics 515<br>MEM: 0.9GHz~2.2GHz<br>No: 9<br>OS: Windows10<br>OfficialSpec: <a target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75">https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75</a><br>Power: SurfaceConnect<br>Price: 1800<br>ReleaseDate: 2015<br>Review: <a target="_blank" rel="noopener" href="https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html">https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html</a><br>Screen: 12.3’’<br>97% of sRGB<br>Usage: reading<br>Weight: 0.77Kg</p>
+<h3 id="ThinkPad-X1-Carbon-5th"><a href="#ThinkPad-X1-Carbon-5th" class="headerlink" title="ThinkPad X1 Carbon 5th"></a>ThinkPad X1 Carbon 5th</h3><p>CPU: Intel i5-7200U @2.5GHz~3.1GHz<br>Disk: 258GB Nvme<br>Fans: 1<br>GPU: Intel HD Graphics 620<br>Keyboard Travel Distance: 1.8mm<br>MEM: 8GB<br>1867MHz<br>LPDDR3<br>No: 8<br>OS: Windows10<br>CentOS7<br>Power: USB Type-C</p>
+<p>Price: 1000<br>ReleaseDate: 2017<br>Review: <a target="_blank" rel="noopener" href="https://www.laptopmag.com/reviews/laptops/lenovo-thinkpad-x1-carbon-5th-generation">https://www.laptopmag.com/reviews/laptops/lenovo-thinkpad-x1-carbon-5th-generation</a><br>Screen: 14.4’’<br>友达AUO313D;<br>1080P;<br>72% NTSC</p>
+<h3 id="X79"><a href="#X79" class="headerlink" title="X79"></a>X79</h3><p>Fans: 1<br>No: 1<br>OS: Windows10</p>
+<h3 id="X99"><a href="#X99" class="headerlink" title="X99"></a>X99</h3><p>Fans: 1<br>No: 2<br>OS: Windows10</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-my-devices/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-perf-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-perf-tools/" class="post-title-link" itemprop="url">Perf Tools 性能工具速查</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>97</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>cpuz</p>
+<p>gpuz</p>
+<p>crystaldisk</p>
+<h1 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h1><p>cpu:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ sysctl machdep.cpu.brand_string<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>disk: </p>
+<ul>
+<li>Blackmagic Disk Speed  Test</li>
+<li></li>
+</ul>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-perf-tools/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-qemu-img/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-qemu-img/" class="post-title-link" itemprop="url">qemu-img 使用笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>48</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img data-src="/_assets/qemu-img/Untitled.png" alt="Untitled"></p>
+<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-qemu-img/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-05-agile-storys/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-05-agile-storys/" class="post-title-link" itemprop="url">agile storys</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-06 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-06T00:00:00+08:00">2023-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>266</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="20231106-agile-storys"><a href="#20231106-agile-storys" class="headerlink" title="20231106-agile-storys"></a>20231106-agile-storys</h1><p><a target="_blank" rel="noopener" href="https://world.hey.com/dhh/no-one-wants-to-be-a-code-monkey-151478dd">No one wants to be a code monkey</a> </p>
+<blockquote>
+<p>Software developers and designers aren’t happy doing assembly line work.<br>Calling that work “stories” is the great con of many modern agile processes.<br><strong>A story without a beginning, a middle, or an end is a shitty one.</strong><br>It’s more like just a scene, shot out of sequence.</p>
+</blockquote>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-05-agile-storys/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-04-the-good-old-days/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-04-the-good-old-days/" class="post-title-link" itemprop="url">the good old days</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-05 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-05T00:00:00+08:00">2023-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>96</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="20231105-the-good-old-days"><a href="#20231105-the-good-old-days" class="headerlink" title="20231105-the-good-old-days"></a>20231105-the-good-old-days</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kHJ0Nv5QK-k&t=401s&ab_channel=%E9%95%BF%E8%80%85%E6%B1%9F%E6%B3%BD%E6%B0%91-%E5%8A%A0%E5%B7%9E%E7%B2%89%E4%B8%9D%E4%BF%B1%E4%B9%90%E9%83%A8%E3%80%90%E5%AE%98%E6%96%B9%E3%80%91%E6%9C%80%E5%85%A8%E7%9A%84%E9%95%BF%E8%80%85%E8%A7%86%E9%A2%91%E5%BA%93%E3%80%90%E4%BC%9A%E6%B0%B8%E4%B9%85%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E3%80%91%E8%AF%B7%E8%AE%A2%E9%98%85">北京新冠疫情，现回看非典时中央决策的内部会议过程 - YouTube</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Gk2m0CVT2Y0&ab_channel=%E9%95%BF%E8%80%85%E6%B1%9F%E6%B3%BD%E6%B0%91-%E5%8A%A0%E5%B7%9E%E7%B2%89%E4%B8%9D%E4%BF%B1%E4%B9%90%E9%83%A8%E3%80%90%E5%AE%98%E6%96%B9%E3%80%91%E6%9C%80%E5%85%A8%E7%9A%84%E9%95%BF%E8%80%85%E8%A7%86%E9%A2%91%E5%BA%93%E3%80%90%E4%BC%9A%E6%B0%B8%E4%B9%85%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E3%80%91%E8%AF%B7%E8%AE%A2%E9%98%85">(28) 【珍贵罕见资料】朱镕基在麻省理工MIT演讲并回答提问 - YouTube</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-04-the-good-old-days/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-02-apsara-conference/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-02-apsara-conference/" class="post-title-link" itemprop="url">2023 云栖大会观察与思考</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-03 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-03T00:00:00+08:00">2023-11-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="20231103-apsara-conference"><a href="#20231103-apsara-conference" class="headerlink" title="20231103-apsara-conference"></a>20231103-apsara-conference</h1><h1 id="又是一年云起时"><a href="#又是一年云起时" class="headerlink" title="又是一年云起时"></a>又是一年云起时</h1><p>又到了一年一度的<a target="_blank" rel="noopener" href="https://yunqi.aliyun.com/2023/live-aggregation">云栖大会</a>. 赶在最后一天来参加, 主要是一来给友军支持鼓劲儿, 二来想gain some insights of the future. </p>
+<p>全程用心听下来, 技术类的收获较少且较为零碎, 但当我尝试着从另外一些视角来看, 收获很多, 整理在这里. </p>
+<h1 id="演讲人"><a href="#演讲人" class="headerlink" title="演讲人"></a>演讲人</h1><p>我会想, 如果站在台上的人是我, 那么我应该怎么做更好? 庆幸此时作为观众, 作为局外人, 能看清楚很多. </p>
+<ol>
+<li>筛选自己的目标用户, 可以通过几个问题来开场. 或者说明下自己的目标群体, 需要有哪些背景知识. 发现这种临时的meetup, 演讲者与观众, 都是双向不可知的. 即</li>
+<li>需要能提出问题, 让观众思考回答, 提升参与度. 不然就是无趣的讲课了.</li>
+<li>需要说是什么, 但也要说不是什么. 不然就是没啥营养的产品介绍了. </li>
+<li>讲话内容需要与PPT一样, 不能干说, 需要手指在PPT上划出重点. PPT 里只列出需要强调的重点. </li>
+<li>最好能实时演示, 例如在线编程, 在线demo. 一定要防止成为产品介绍</li>
+<li>不要使用页面截图, 太小了, 大家看不清, 也不会耐心去看. –&gt; 突出重点即可. 内容不要堆砌太多, 讲不过来.</li>
+<li>缺少具体数据&amp;实际案例, 比较空<ol>
+<li>资源候补功能, 说了可以用, 但作为听众如果想使用这个功能, 其实更关注候补的成功率, 能否给出数据?</li>
+<li>实时演示页面实在太小了, 根本看不清.</li>
+</ol>
+</li>
+<li>讲清楚 背景, 背景很重要! </li>
+<li>要知道分享的目标是啥: <ol>
+<li>是单纯的秀肌肉么? —&gt; 不能认怂, 嘲讽友军. —&gt; Jobs的经典</li>
+<li>是让观众能学到东西? 能有所收获? —&gt; 内容要通俗易懂, 不要发明新名词, 不要buzzword. 可以认怂, 可以讲走的弯路. </li>
+<li>我个人习惯第二种, 我相信作为观众, 也更喜欢第二种.</li>
+</ol>
+</li>
+<li>架构前后变化点(例如ECI从ImageCache变到支持ImageCache+DataCache), 需要 highlight 出来!</li>
+<li>不要一一列举bulletpoint, 而要有层次地来将为啥有这些, 要关注在why, 而不是what. 例如主动运维的几个状态:<ol>
+<li>Inquiring:</li>
+<li>scheduled</li>
+<li>executing</li>
+<li>avoided:</li>
+<li>…</li>
+<li>可以站在设计者角度: 为啥设计这几种状态, 这几种状态的递进层次是咋样的? 为啥不能有其他状态? 等方式进行讲解. 或者讲清楚背景&amp;问题, 然后问观众, 假如让你来设计, 你会咋样?</li>
+<li>也可以站在使用者角度: 怎么用这几个状态, 能列举出具体的case&#x2F;sample. </li>
+<li>记住: <strong>人一次是记不住超过3项内容的.</strong></li>
+</ol>
+</li>
+<li>PPT里的文档链接地址, 实际上听众是拿不到PPT的, 所以无法访问到. 所以可以说明下, 然后在最后放个群二维码, 拉进群里, 统一把材料分发. </li>
+<li>需要自己把演讲录下来, 然后站在听众的角度来思考来分析. 这样<ol>
+<li></li>
+</ol>
+</li>
+</ol>
+<h1 id="组织者"><a href="#组织者" class="headerlink" title="组织者"></a>组织者</h1><ol>
+<li>中间没有休息, 导致全程听下来三个多小时, 腰酸背痛, 膀胱爆炸, 体验不好. </li>
+<li>没有QA环节, 导致气氛不够活跃.</li>
+<li>要注意多个演讲前后的连贯性, 防止使听众混淆. 例如 最开始A讲了 包年包月需要尽量转成 SP+OD; 但后边B&#x2F;C又开始讲稳态的使用包年包月. 前后打架了.</li>
+<li>排练的时候, 一定要也站在观众角度, 看演讲嘉宾的排练, 能提前发现问题, 给演讲者一些建议.<ol>
+<li>具体方式: 彩排时请组内的同学&#x2F;行业内的人来作为观众, 进行提前预演. 我相信如果是我作为, </li>
+<li>例如: 可以建议不要有API&#x2F;售卖页的实时演示了, 实在看不清. 或者可以提醒进行放大.</li>
+</ol>
+</li>
+<li>是个好的机会, 收集开发者微信(例如红包建群), 可以后续运营&#x2F;沟通, 连接开发者的通道. –&gt; 或者拉进到研发交流群里(例如SPOT交流群)</li>
+</ol>
+<h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-02-apsara-conference/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-01-bot-pitfall/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-01-bot-pitfall/" class="post-title-link" itemprop="url">bot pitfall</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-02 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-02T00:00:00+08:00">2023-11-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>334</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="20231102-bot-pitfall"><a href="#20231102-bot-pitfall" class="headerlink" title="20231102-bot-pitfall"></a>20231102-bot-pitfall</h1><p>想起了之前的一个误区, 很多业务的支持, 都想要通过聊天机器人来让用户实现自运维. </p>
+<p>由于最初的技术实现基本是都基于<strong>关键词提取</strong>, 因此</p>
+<ol>
+<li>要么开发侧: 需要代码&#x2F;复杂的正则等, 识别各种各样奇怪的输入模式. 但也无法穷举. 因此负担很重. </li>
+<li>要么用户侧: 需要严格遵循输入格式与顺序, 尤其是当支持的格式很多的时候, 需要记住各种格式, <strong>有很大的记忆负担</strong>. 让使用者很不安.</li>
+</ol>
+<p>如今回顾, 整体效果其实不好. 不如直接给个webui, 让用户在页面上输入&#x2F;选择 更加方便些. </p>
+<p>当然bot也不是一无是处. 优势是用户与群机器人的对话信息, 相关支持人员也可以看到. </p>
+<p>目前LLM或许可以解决这个问题. 但在具备LLM能力前, 我们还是好好地完善webUI或者API能力吧.</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-01-bot-pitfall/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-10-31-q-and-a-layout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-10-31-q-and-a-layout/" class="post-title-link" itemprop="url">Q&A layout</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-01T00:00:00+08:00">2023-11-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:55:17" itemprop="dateModified" datetime="2026-03-04T22:55:17+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>185</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="20231101-Q-amp-A-layout"><a href="#20231101-Q-amp-A-layout" class="headerlink" title="20231101-Q&amp;A-layout"></a>20231101-Q&amp;A-layout</h1><p>在回顾Hey与Apple的纠纷时, 发现这哥们比较较真, 还做了个网站  <a target="_blank" rel="noopener" href="https://youdownloadtheappanditdoesntwork.com/#qa">You Download the App and it Doesn’t Work</a> 专门来怼 Phil Schiller 或者Apple标准不统一. </p>
+<p>除了看热闹外, 发现网站的设计非常清爽, 尤其是Q&amp;A部分, 之前自己一直纠结如何很好地展现Q&amp;A, 下边的给了个很好的样例:  </p>
+<p><img data-src="/_assets/2023-11-01-q-and-a-layout/Untitled.png" alt="Untitled"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-10-31-q-and-a-layout/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -3807,14 +3897,14 @@ $sudo crictl images
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">499k</span>
+    <span title="站点总字数">443k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:34</span>
+    <span title="站点阅读时长">6:42</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
