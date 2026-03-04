@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="go-basics 💡 Happy gopher~    stringfields&amp;mapsfunc WordCount(s string) map[string]int &amp;#123; 	cntMap :&#x3D; make(map[string]int) 	strs :&#x3D; strings.Fields(s) 	for _, s :&#x3D; range strs &amp;#123; 		i :&#x3D; cntMa">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="go basics">
+<meta property="og:url" content="https://davyjones2010.github.io/2024-01-30-go-basics/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="go-basics 💡 Happy gopher~    stringfields&amp;mapsfunc WordCount(s string) map[string]int &amp;#123; 	cntMap :&#x3D; make(map[string]int) 	strs :&#x3D; strings.Fields(s) 	for _, s :&#x3D; range strs &amp;#123; 		i :&#x3D; cntMa">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davyjones2010.github.io/go-basics/Untitled.png">
+<meta property="article:published_time" content="2024-01-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-04T14:25:18.406Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="basics">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davyjones2010.github.io/go-basics/Untitled.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2024-01-30-go-basics/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2024-01-30-go-basics/","path":"/2024-01-30-go-basics/","title":"go basics"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>go basics | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#go-basics"><span class="nav-number">1.</span> <span class="nav-text">go-basics</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string"><span class="nav-number">2.</span> <span class="nav-text">string</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fields-amp-maps"><span class="nav-number">2.1.</span> <span class="nav-text">fields&amp;maps</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map"><span class="nav-number">3.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#struct"><span class="nav-number">4.</span> <span class="nav-text">struct</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95struct%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">4.1.</span> <span class="nav-text">简单struct初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82struct%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">4.2.</span> <span class="nav-text">复杂struct初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#struct-embedding"><span class="nav-number">4.3.</span> <span class="nav-text">struct embedding</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pointer"><span class="nav-number">5.</span> <span class="nav-text">pointer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#goroutine"><span class="nav-number">6.</span> <span class="nav-text">goroutine</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#go-func"><span class="nav-number">6.1.</span> <span class="nav-text">go func()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go-func-x2F-chan-sample"><span class="nav-number">6.2.</span> <span class="nav-text">go func&#x2F;chan sample</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#routine-tree"><span class="nav-number">6.3.</span> <span class="nav-text">routine tree</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#context"><span class="nav-number">7.</span> <span class="nav-text">context</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#channel"><span class="nav-number">8.</span> <span class="nav-text">channel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%AE%E9%80%9Achannel"><span class="nav-number">8.1.</span> <span class="nav-text">普通channel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buffered-channel"><span class="nav-number">8.2.</span> <span class="nav-text">buffered channel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#channel%E6%96%B9%E5%90%91"><span class="nav-number">8.3.</span> <span class="nav-text">channel方向</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#panic-amp-recover"><span class="nav-number">9.</span> <span class="nav-text">panic&amp;recover</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mod"><span class="nav-number">10.</span> <span class="nav-text">mod</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#go-get-x2F-go-install"><span class="nav-number">10.1.</span> <span class="nav-text">go get&#x2F;go install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go-mod-download"><span class="nav-number">10.2.</span> <span class="nav-text">go mod download</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#other"><span class="nav-number">11.</span> <span class="nav-text">other</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">274</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-01-30-go-basics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="go basics | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          go basics
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-31 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-31T00:00:00+08:00">2024-01-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:25:18" itemprop="dateModified" datetime="2026-03-04T22:25:18+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="go-basics"><a href="#go-basics" class="headerlink" title="go-basics"></a>go-basics</h1><aside>
+💡 Happy gopher~
+
+</aside>
+
+<h1 id="string"><a href="#string" class="headerlink" title="string"></a>string</h1><h2 id="fields-amp-maps"><a href="#fields-amp-maps" class="headerlink" title="fields&amp;maps"></a>fields&amp;maps</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">WordCount</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+	cntMap <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+	strs <span class="token operator">:=</span> strings<span class="token punctuation">.</span><span class="token function">Fields</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> s <span class="token operator">:=</span> <span class="token keyword">range</span> strs <span class="token punctuation">&#123;</span>
+		i <span class="token operator">:=</span> cntMap<span class="token punctuation">[</span>s<span class="token punctuation">]</span>
+		cntMap<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">return</span> cntMap
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>string按空格拆分成列表</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">strs :<span class="token operator">=</span> strings.Fields<span class="token punctuation">(</span>s<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>遍历list</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> s <span class="token operator">:=</span> <span class="token keyword">range</span> strs <span class="token punctuation">&#123;</span>
+ <span class="token comment">// xxx</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>注意: 自加不能赋值(与Java有区别)</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 如下是非法的. </span>
+y <span class="token operator">:=</span> x<span class="token operator">++</span>
+<span class="token comment">// </span>
+x<span class="token operator">++</span>
+y <span class="token operator">=</span> x
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>append</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><aside>
+💡 如何遍历map
+
+</aside>
+
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> core
+
+<span class="token keyword">import</span> <span class="token string">"log"</span>
+
+<span class="token keyword">type</span> NUMANodeMap <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+
+<span class="token keyword">func</span> <span class="token function">iter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	nodeMap <span class="token operator">:=</span> NUMANodeMap<span class="token punctuation">&#123;</span>
+		<span class="token number">1</span><span class="token punctuation">:</span> <span class="token string">"aa"</span><span class="token punctuation">,</span>
+		<span class="token number">2</span><span class="token punctuation">:</span> <span class="token string">"bb"</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">// 遍历key</span>
+	<span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token keyword">range</span> nodeMap <span class="token punctuation">&#123;</span>
+		<span class="token comment">// n 代表key</span>
+		log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+		<span class="token comment">// nodeMap[n] 获取value</span>
+		log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>nodeMap<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> nodeMap <span class="token punctuation">&#123;</span>
+		<span class="token comment">// k 代表key</span>
+		<span class="token comment">// v 代表value</span>
+		log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// map中增加kv</span>
+	nodeMap<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"cc"</span>
+
+	<span class="token comment">// map中移除kv</span>
+	<span class="token function">delete</span><span class="token punctuation">(</span>nodeMap<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>nodeMap<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="struct"><a href="#struct" class="headerlink" title="struct"></a>struct</h1><aside>
+💡 如何初始化struct?
+
+</aside>
+
+<p>参见: <a target="_blank" rel="noopener" href="https://yourbasic.org/golang/structs-explained/">Create, initialize and compare structs · YourBasic Go</a></p>
+<h2 id="简单struct初始化"><a href="#简单struct初始化" class="headerlink" title="简单struct初始化"></a>简单struct初始化</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestVertex_Init</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// 单行初始化, 末尾不用 逗号</span>
+	v <span class="token operator">:=</span> Vertex<span class="token punctuation">&#123;</span><span class="token number">23.2</span><span class="token punctuation">,</span> <span class="token number">22.3</span><span class="token punctuation">&#125;</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+
+	<span class="token comment">// 多行初始化, 末尾需要 逗号</span>
+	vertex <span class="token operator">:=</span> Vertex<span class="token punctuation">&#123;</span>
+		<span class="token number">23.2</span><span class="token punctuation">,</span>
+		<span class="token number">22.3</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>vertex<span class="token punctuation">)</span>
+
+	<span class="token comment">// 部分初始化, 需要指定 name, 末尾需要 逗号</span>
+	vertex2 <span class="token operator">:=</span> Vertex<span class="token punctuation">&#123;</span>
+		X<span class="token punctuation">:</span> <span class="token number">1.2</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>vertex2<span class="token punctuation">)</span>
+
+	<span class="token keyword">var</span> vertexP <span class="token operator">*</span>Vertex
+	vertexP <span class="token operator">=</span> <span class="token function">new</span><span class="token punctuation">(</span>Vertex<span class="token punctuation">)</span>
+	vertexP<span class="token punctuation">.</span>X <span class="token operator">=</span> <span class="token number">1.2</span>
+
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>vertexP<span class="token punctuation">)</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token operator">*</span>vertexP<span class="token punctuation">)</span>
+	assert<span class="token punctuation">.</span><span class="token function">Equal</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> <span class="token operator">*</span>vertexP<span class="token punctuation">,</span> vertex2<span class="token punctuation">)</span>
+	assert<span class="token punctuation">.</span><span class="token function">Equal</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> vertexP<span class="token punctuation">,</span> <span class="token operator">&amp;</span>vertex2<span class="token punctuation">)</span>
+	assert<span class="token punctuation">.</span><span class="token function">False</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> vertexP <span class="token operator">==</span> <span class="token operator">&amp;</span>vertex2<span class="token punctuation">)</span>
+
+	vertexP2 <span class="token operator">:=</span> <span class="token operator">&amp;</span>Vertex<span class="token punctuation">&#123;</span>
+		<span class="token number">1.2</span><span class="token punctuation">,</span>
+		<span class="token number">2.2</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>vertexP2<span class="token punctuation">)</span>
+
+	vertexP3 <span class="token operator">:=</span> <span class="token operator">&amp;</span>Vertex<span class="token punctuation">&#123;</span>
+		Y<span class="token punctuation">:</span> <span class="token number">1.2</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>vertexP3<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="复杂struct初始化"><a href="#复杂struct初始化" class="headerlink" title="复杂struct初始化"></a>复杂struct初始化</h2><p>需要指定内部的struct类型(如下例子中的 Vertext )</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestTriangle_Init</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	v1 <span class="token operator">:=</span> Vertex<span class="token punctuation">&#123;</span><span class="token number">1.2</span><span class="token punctuation">,</span> <span class="token number">2.2</span><span class="token punctuation">&#125;</span>
+
+	triangle <span class="token operator">:=</span> Triangle<span class="token punctuation">&#123;</span>
+		v1<span class="token punctuation">,</span>
+		Vertex<span class="token punctuation">&#123;</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		Vertex<span class="token punctuation">&#123;</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>triangle<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="struct-embedding"><a href="#struct-embedding" class="headerlink" title="struct embedding"></a>struct embedding</h2><p>如下定义的结构代表啥意思? 为啥第一个 <code>*scheduleroptions.Options</code> 没有filedName呢? </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// Options has all the params needed to run a Scheduler
+<span class="token builtin class-name">type</span> Options struct <span class="token punctuation">&#123;</span>
+	*scheduleroptions.Options
+	CombinedInsecureServing *CombinedInsecureServingOptions
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>实际上使用了: <a target="_blank" rel="noopener" href="https://gobyexample.com/struct-embedding">Go by Example: Struct Embedding</a> 方式, 即类似Java的继承</p>
+<h1 id="pointer"><a href="#pointer" class="headerlink" title="pointer"></a>pointer</h1><p>方法定义中, Pointer Receiver 与 普通Receiver, 如下 Scale 与 Scale2, 实际上Scale2是没有生效的, 是没有修改原来的值的. </p>
+<p>所以 </p>
+<ul>
+<li>PointerReceiver: 类似Java类中的普通方法</li>
+<li>普通Receiver: 类似Java类中的Static方法</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Vertex <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	X<span class="token punctuation">,</span> Y <span class="token builtin">float64</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>v <span class="token operator">*</span>Vertex<span class="token punctuation">)</span> <span class="token function">Scale</span><span class="token punctuation">(</span>f <span class="token builtin">float64</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	v<span class="token punctuation">.</span>X <span class="token operator">=</span> v<span class="token punctuation">.</span>X <span class="token operator">*</span> f
+	v<span class="token punctuation">.</span>Y <span class="token operator">=</span> v<span class="token punctuation">.</span>Y <span class="token operator">*</span> f
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>v Vertex<span class="token punctuation">)</span> <span class="token function">Scale2</span><span class="token punctuation">(</span>f <span class="token builtin">float64</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	v<span class="token punctuation">.</span>X <span class="token operator">=</span> v<span class="token punctuation">.</span>X <span class="token operator">*</span> f
+	v<span class="token punctuation">.</span>Y <span class="token operator">=</span> v<span class="token punctuation">.</span>Y <span class="token operator">*</span> f
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h1><p>如何获取到goroutine的ID? </p>
+<p>参见: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/75361134/how-can-i-get-a-goroutines-runtime-id">https://stackoverflow.com/questions/75361134/how-can-i-get-a-goroutines-runtime-id</a> </p>
+<p>故意不让我们获取到. </p>
+<p>注意: 一个goroutine crash, 会导致整个go进程挂掉. 因此需要保护, </p>
+<ul>
+<li>保护方式参见: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/66475482/how-do-you-keep-goroutines-running-if-another-one-crashes">go - How do you keep goroutines running if another one crashes? - Stack Overflow</a></li>
+<li>为啥如此设计: <a target="_blank" rel="noopener" href="https://forum.golangbridge.org/t/why-does-go-terminate-the-whole-process-if-one-goroutine-paincs/27122">Why does Go terminate the whole process if one goroutine paincs? - Technical Discussion - Go Forum</a> 个人理解类似Java的RTE&#x2F;UncatchedException, 如果不catch, 则会导致进程Crash. 但区别是, Java中通常需要进行catch, Go中有类似的方法recover(), 但Go中不推荐.</li>
+</ul>
+<h2 id="go-func"><a href="#go-func" class="headerlink" title="go func()"></a>go func()</h2><p><code>go func()</code> 新建的协程竟然可以直接引用局部变量(而不是通过传参方式). 所以是不是很容易把线程不安全的对象泄露? </p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">localVar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> myVar <span class="token operator">=</span> <span class="token string">"hello"</span>
+	<span class="token comment">//方式1: 临时创建 匿名方法的 routine</span>
+	<span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		myVar <span class="token operator">=</span> <span class="token string">"Nice"</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>myVar<span class="token punctuation">)</span>
+
+	<span class="token comment">//方式2: 直接在方法调用前增加 go 关键词</span>
+	<span class="token keyword">go</span> <span class="token function">localVar2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">localVar2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"localVar2"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="go-func-x2F-chan-sample"><a href="#go-func-x2F-chan-sample" class="headerlink" title="go func&#x2F;chan sample"></a>go func&#x2F;chan sample</h2><p>在k8s代码中, 看到如下代码, 代表啥意思? </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">func SetupSignalHandler<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span>-chan struct<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token punctuation">&#123;</span>
+	<span class="token builtin class-name">return</span> SetupSignalContext<span class="token punctuation">(</span><span class="token punctuation">)</span>.Done<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<aside>
+💡 代表这个方法返回的是 ←chan 类型(即返回的chan是只读的); 且chan里的保存的是 struct{} 类型
+
+</aside>
+
+<p>因此通常的使用方式是: </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"> ctx, cancel :<span class="token operator">=</span> context.WithCancel<span class="token punctuation">(</span>context.Background<span class="token punctuation">(</span><span class="token punctuation">))</span>
+defer cancel<span class="token punctuation">(</span><span class="token punctuation">)</span>
+go <span class="token function-name function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	stopCh :<span class="token operator">=</span> server.SetupSignalHandler<span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token operator">&lt;</span>-stopCh
+	cancel<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="routine-tree"><a href="#routine-tree" class="headerlink" title="routine tree"></a>routine tree</h2><h1 id="context"><a href="#context" class="headerlink" title="context"></a>context</h1><p><a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-use-contexts-in-go#determining-if-a-context-is-done">How To Use Contexts in Go | DigitalOcean</a></p>
+<h1 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h1><pre class="line-numbers language-go" data-language="go"><code class="language-go">
+<span class="token keyword">var</span> msgChan <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">string</span><span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"sayHello started"</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		msgChan <span class="token operator">&lt;-</span> <span class="token string">"ping"</span>
+		log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"ping sent"</span><span class="token punctuation">)</span>
+		msgChan <span class="token operator">&lt;-</span> <span class="token string">"pong"</span>
+		log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"pong sent"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">3</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span>
+
+	msg <span class="token operator">:=</span> <span class="token operator">&lt;-</span>msgChan
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+	msg <span class="token operator">=</span> <span class="token operator">&lt;-</span>msgChan
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"done"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="普通channel"><a href="#普通channel" class="headerlink" title="普通channel"></a>普通channel</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> msgChan <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>普通channel:  只有在收到receive的时候(即receive注册之后), 才会真正send出去. 否则send会一直阻塞. </p>
+<p>By default channels are <em>unbuffered</em>, meaning that they will only accept sends (<code>chan &lt;-</code>) if there is a corresponding receive (<code>&lt;- chan</code>) ready to receive the sent value.</p>
+<p>即类似Java中的synchronirousQueue, 必须消费者注册&#x2F;开始消费的时候, 生产者才能执行. </p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">41</span><span class="token punctuation">:</span><span class="token number">29</span> sayHello started
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">41</span><span class="token punctuation">:</span><span class="token number">32</span> ping sent
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">41</span><span class="token punctuation">:</span><span class="token number">32</span> ping
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">41</span><span class="token punctuation">:</span><span class="token number">32</span> pong sent
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">41</span><span class="token punctuation">:</span><span class="token number">32</span> pong
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">41</span><span class="token punctuation">:</span><span class="token number">32</span> done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="buffered-channel"><a href="#buffered-channel" class="headerlink" title="buffered channel"></a>buffered channel</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> msgChan <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>运行结果如下, 生产者可以直接放进去, 而不用等消费者注册.</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">34</span> sayHello started
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">34</span> ping sent
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">34</span> pong sent
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">37</span> ping
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">37</span> pong
+<span class="token number">2023</span><span class="token operator">/</span><span class="token number">12</span><span class="token operator">/</span><span class="token number">05</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">37</span> done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>如果生产者放入的size大于buffer, 则多余部分会一直卡住. 直到buffer中被消费了1个, 则可以放入1个.</li>
+</ul>
+<h2 id="channel方向"><a href="#channel方向" class="headerlink" title="channel方向"></a>channel方向</h2><p>作为方法参数时,  可以指定channel方向, 这样防止</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">只写<span class="token punctuation">:</span> <span class="token keyword">chan</span><span class="token operator">&lt;-</span>
+只读<span class="token punctuation">:</span> <span class="token operator">&lt;-</span><span class="token keyword">chan</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 只写的channel</span>
+<span class="token comment">// 如果改成 (done &lt;-chan bool) 则会编译错误. </span>
+<span class="token keyword">func</span> <span class="token function">worker</span><span class="token punctuation">(</span>done <span class="token keyword">chan</span><span class="token operator">&lt;-</span> <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"working..."</span><span class="token punctuation">)</span>
+	time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span>
+	log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"done..."</span><span class="token punctuation">)</span>
+	done <span class="token operator">&lt;-</span> <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="panic-amp-recover"><a href="#panic-amp-recover" class="headerlink" title="panic&amp;recover"></a>panic&amp;recover</h1><p>如何手动触发panic: <code>panic(&quot;test&quot;)</code></p>
+<h1 id="mod"><a href="#mod" class="headerlink" title="mod"></a>mod</h1><h2 id="go-get-x2F-go-install"><a href="#go-get-x2F-go-install" class="headerlink" title="go get&#x2F;go install"></a>go get&#x2F;go install</h2><h2 id="go-mod-download"><a href="#go-mod-download" class="headerlink" title="go mod download"></a>go mod download</h2><p>git上checkout下来的项目, 可以直接使用该命令, 把依赖包都下载下来. </p>
+<aside>
+💡 下载到本地的目录为: /usr/local/go/pkg/mod/
+
+</aside>
+
+<p>本地如果有多个go mod工程, 如何进行相互依赖? </p>
+<ol>
+<li>目前看只能使用 <code>replace</code> 的方式. 感觉不太方便. </li>
+<li>否则就只能代码push到地址中, 使用 <code>go mod download</code> 进行下载. 太不方便. </li>
+<li>为啥不能像maven一样, 可以先安装到本地. 然后其他模块依赖本地的即可.</li>
+</ol>
+<h1 id="other"><a href="#other" class="headerlink" title="other"></a>other</h1><ol>
+<li><p>方法名是包级别的. 即一个包下所有的.go文件, 方法不能同名. 而java中是类级别(文件级别)</p>
+</li>
+<li><p>goland不支持go module, 导致依赖无法下载&#x2F;跳转, 需要手动enable下:</p>
+</li>
+</ol>
+<p><img data-src="/go-basics/Untitled.png" alt="Untitled"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/golang/" rel="tag"># golang</a>
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/basics/" rel="tag"># basics</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024-01-30-k8s-kata/" rel="prev" title="k8s kata">
+                  <i class="fa fa-chevron-left"></i> k8s kata
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024-01-30-container-learning-roadmap/" rel="next" title="container learning roadmap">
+                  container learning roadmap <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">580k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:47</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

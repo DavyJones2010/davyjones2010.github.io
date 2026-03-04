@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="k8s-pdb自愿中断&amp;非自愿中断非自愿中断 物理机硬件故障 云厂商故障导致节点消失 —&gt; Spot中断目前应该属于这个的一部分. 由于NodePressure导致的Pod驱逐 (注意, 这个属于非自愿中断)  自愿中断由应用管理员或者集群管理员出发的.   删除deploy&#x2F;其他controller, 下边管控了pod 修改deploy 直接delete pod drai">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="k8s pdb">
+<meta property="og:url" content="https://davyjones2010.github.io/2024-03-27-k8s-pdb/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="k8s-pdb自愿中断&amp;非自愿中断非自愿中断 物理机硬件故障 云厂商故障导致节点消失 —&gt; Spot中断目前应该属于这个的一部分. 由于NodePressure导致的Pod驱逐 (注意, 这个属于非自愿中断)  自愿中断由应用管理员或者集群管理员出发的.   删除deploy&#x2F;其他controller, 下边管控了pod 修改deploy 直接delete pod drai">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davyjones2010.github.io/k8s-pdb/Untitled.png">
+<meta property="og:image" content="https://davyjones2010.github.io/k8s-pdb/Untitled.tif">
+<meta property="og:image" content="https://davyjones2010.github.io/k8s-pdb/Untitled%201.tif">
+<meta property="og:image" content="https://davyjones2010.github.io/k8s-pdb/Untitled%201.png">
+<meta property="og:image" content="https://davyjones2010.github.io/k8s-pdb/Untitled%202.png">
+<meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-04T14:25:18.407Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="pdb">
+<meta property="article:tag" content="high-availability">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davyjones2010.github.io/k8s-pdb/Untitled.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2024-03-27-k8s-pdb/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2024-03-27-k8s-pdb/","path":"/2024-03-27-k8s-pdb/","title":"k8s pdb"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>k8s pdb | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#k8s-pdb"><span class="nav-number">1.</span> <span class="nav-text">k8s-pdb</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E6%84%BF%E4%B8%AD%E6%96%AD-amp-%E9%9D%9E%E8%87%AA%E6%84%BF%E4%B8%AD%E6%96%AD"><span class="nav-number">2.</span> <span class="nav-text">自愿中断&amp;非自愿中断</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E8%87%AA%E6%84%BF%E4%B8%AD%E6%96%AD"><span class="nav-number">2.1.</span> <span class="nav-text">非自愿中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E6%84%BF%E4%B8%AD%E6%96%AD"><span class="nav-number">2.2.</span> <span class="nav-text">自愿中断</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%93%AA%E4%BA%9B%E8%A1%8C%E4%B8%BA%E4%BC%9A%E8%80%83%E8%99%91PDB"><span class="nav-number">3.</span> <span class="nav-text">哪些行为会考虑PDB?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%A0%B7%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">实际样例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAPDB-x2F-Deployment"><span class="nav-number">4.1.</span> <span class="nav-text">创建PDB&#x2F;Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8delete-pod-%E2%86%92-%E4%B8%8D%E5%8F%97PDB%E9%99%90%E5%88%B6"><span class="nav-number">4.2.</span> <span class="nav-text">手动delete pod → 不受PDB限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8drain-node-%E2%80%94-gt-%E5%8F%97PDB%E9%99%90%E5%88%B6"><span class="nav-number">4.3.</span> <span class="nav-text">手动drain node —&gt; 受PDB限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E7%BC%A9%E5%AE%B9deploy-%E2%86%92-%E4%B8%8D%E5%8F%97PDB%E9%99%90%E5%88%B6"><span class="nav-number">4.4.</span> <span class="nav-text">手动缩容deploy → 不受PDB限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E6%89%A9%E5%AE%B9deploy-%E2%86%92-%E4%B8%8D%E5%8F%97PDB%E9%99%90%E5%88%B6"><span class="nav-number">4.5.</span> <span class="nav-text">手动扩容deploy → 不受PDB限制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FAQ"><span class="nav-number">6.</span> <span class="nav-text">FAQ:</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">274</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2024-03-27-k8s-pdb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="k8s pdb | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k8s pdb
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-28T00:00:00+08:00">2024-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:25:18" itemprop="dateModified" datetime="2026-03-04T22:25:18+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="k8s-pdb"><a href="#k8s-pdb" class="headerlink" title="k8s-pdb"></a>k8s-pdb</h1><h1 id="自愿中断-amp-非自愿中断"><a href="#自愿中断-amp-非自愿中断" class="headerlink" title="自愿中断&amp;非自愿中断"></a>自愿中断&amp;非自愿中断</h1><h2 id="非自愿中断"><a href="#非自愿中断" class="headerlink" title="非自愿中断"></a>非自愿中断</h2><ul>
+<li>物理机硬件故障</li>
+<li>云厂商故障导致节点消失 —&gt; Spot中断目前应该属于这个的一部分.</li>
+<li><strong>由于NodePressure导致的Pod驱逐 (注意, 这个属于非自愿中断)</strong></li>
+</ul>
+<h2 id="自愿中断"><a href="#自愿中断" class="headerlink" title="自愿中断"></a>自愿中断</h2><p>由应用管理员或者集群管理员出发的. </p>
+<ul>
+<li>删除deploy&#x2F;其他controller, 下边管控了pod</li>
+<li>修改deploy</li>
+<li>直接delete pod</li>
+<li>drain Node</li>
+<li></li>
+</ul>
+<h1 id="哪些行为会考虑PDB"><a href="#哪些行为会考虑PDB" class="headerlink" title="哪些行为会考虑PDB?"></a>哪些行为会考虑PDB?</h1><ul>
+<li>非自愿中断, 都不会考虑PDB</li>
+<li>自愿中断中, 部分行为会考虑PDB</li>
+</ul>
+<p>Not all voluntary disruptions are constrained by Pod Disruption Budgets. </p>
+<p>For example, deleting deployments or pods bypasses Pod Disruption Budgets.</p>
+<ul>
+<li>只针对如下4个会考虑PDB</li>
+</ul>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">Deployment
+ReplicationController
+ReplicaSet
+StatefulSet<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="实际样例"><a href="#实际样例" class="headerlink" title="实际样例"></a>实际样例</h1><h2 id="创建PDB-x2F-Deployment"><a href="#创建PDB-x2F-Deployment" class="headerlink" title="创建PDB&#x2F;Deployment"></a>创建PDB&#x2F;Deployment</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> policy/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> PodDisruptionBudget
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> myapp<span class="token punctuation">-</span>pdb
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">minAvailable</span><span class="token punctuation">:</span> <span class="token number">4</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> myapp
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> myapp<span class="token punctuation">-</span>deployment
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">5</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> myapp
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> myapp
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> myapp<span class="token punctuation">-</span>container
+        <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="手动delete-pod-→-不受PDB限制"><a href="#手动delete-pod-→-不受PDB限制" class="headerlink" title="手动delete pod → 不受PDB限制"></a>手动delete pod → 不受PDB限制</h2><p>手动删除pod 不受pdb限制.</p>
+<p>但可以安装这个kubectl的增强,<a target="_blank" rel="noopener" href="https://github.com/ueokande/kubectl-evict">https://github.com/ueokande/kubectl-evict</a>  从而可以evict pod, 用来测试PDB</p>
+<h2 id="手动drain-node-—-gt-受PDB限制"><a href="#手动drain-node-—-gt-受PDB限制" class="headerlink" title="手动drain node —&gt; 受PDB限制"></a>手动drain node —&gt; 受PDB限制</h2><p>drain node的时候: </p>
+<ol>
+<li>首先会把node设置为 SchedulingDisabled 状态</li>
+</ol>
+<p><img data-src="/k8s-pdb/Untitled.png" alt="Untitled"></p>
+<p><img data-src="/k8s-pdb/Untitled.tif" alt="Untitled"></p>
+<p><img data-src="/k8s-pdb/Untitled%201.tif" alt="Untitled"></p>
+<ol>
+<li>然后会检查PDB</li>
+</ol>
+<p><img data-src="/k8s-pdb/Untitled%201.png" alt="Untitled"></p>
+<h2 id="手动缩容deploy-→-不受PDB限制"><a href="#手动缩容deploy-→-不受PDB限制" class="headerlink" title="手动缩容deploy → 不受PDB限制"></a>手动缩容deploy → 不受PDB限制</h2><p> 会导致pdb处于unhealthy状态:</p>
+<p><img data-src="/k8s-pdb/Untitled%202.png" alt="Untitled"></p>
+<h2 id="手动扩容deploy-→-不受PDB限制"><a href="#手动扩容deploy-→-不受PDB限制" class="headerlink" title="手动扩容deploy → 不受PDB限制"></a>手动扩容deploy → 不受PDB限制</h2><ul>
+<li>当扩容 deploy之后 ,状态就正常了</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>本质上需要区分2个角色:<ul>
+<li>应用管理员</li>
+<li>集群管理员</li>
+</ul>
+</li>
+<li>而PDB实际就是 集群管理员 与 应用管理员 的一个沟通界面. 假设集群管理员要drain一个node, 但如果没有PDB, 根本无法阻止集群管理员的drain.  从而导致应用受损.</li>
+</ul>
+<h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ:"></a>FAQ:</h1><ul>
+<li><code>maxUnavailable</code> can only be used to control the eviction of pods that have an associated controller managing them.<ul>
+<li>也就是说给单个pod指定了 <code>maxUnavailable=0</code> , 同时drain node, 测试, 实际pod是会忽略掉这个pdb约束的</li>
+<li>pod必须属于某个</li>
+</ul>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/pdb/" rel="tag"># pdb</a>
+              <a href="/tags/high-availability/" rel="tag"># high-availability</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024-03-05-k8s-basis/" rel="prev" title="k8s basis">
+                  <i class="fa fa-chevron-left"></i> k8s basis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024-03-27-dts-pitfall/" rel="next" title="dts pitfall">
+                  dts pitfall <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">580k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:47</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
