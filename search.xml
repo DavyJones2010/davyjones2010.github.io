@@ -28,8 +28,8 @@
         <category>书单</category>
       </categories>
       <tags>
-        <tag>2021</tag>
         <tag>books</tag>
+        <tag>2021</tag>
       </tags>
   </entry>
   <entry>
@@ -104,68 +104,6 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       <tags>
         <tag>golang</tag>
         <tag>golang-lib</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s基础架构笔记</title>
-    <url>//2021-08-31-k8s-architect/</url>
-    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
-<li>APIServer<ul>
-<li>认证</li>
-<li>鉴权</li>
-<li>准入控制<ul>
-<li>Quota</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Scheduler</li>
-<li>Kubelet</li>
-<li>Etcd</li>
-<li>Kube-Controller Manager包括<ul>
-<li>ReplicaSet Controller</li>
-<li>CDR的Controller</li>
-<li>AdmissionController </li>
-<li>等</li>
-</ul>
-</li>
-</ul>
-<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
-<li>Cluster-scoped resources<ul>
-<li>如node</li>
-</ul>
-</li>
-<li>Namespace-scoped resources<ul>
-<li>如pod</li>
-</ul>
-</li>
-</ul>
-<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
-<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
-<li>workloads</li>
-</ul>
-<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
-<li>Node</li>
-<li>Pod</li>
-</ul>
-<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
-<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
-<li>Deployment: 后端用ESS, 区别是什么? </li>
-<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
-<li>StatefulSets: </li>
-<li>Job&amp;CronJob:</li>
-</ul>
-<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
-<li>Operator &#x3D; 资源(CRD) + Controller</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>CDR</li>
-<li>OAM</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -291,6 +229,68 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       <tags>
         <tag>k8s</tag>
         <tag>scheduler</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记</title>
+    <url>//2021-08-31-k8s-architect/</url>
+    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
+<li>APIServer<ul>
+<li>认证</li>
+<li>鉴权</li>
+<li>准入控制<ul>
+<li>Quota</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scheduler</li>
+<li>Kubelet</li>
+<li>Etcd</li>
+<li>Kube-Controller Manager包括<ul>
+<li>ReplicaSet Controller</li>
+<li>CDR的Controller</li>
+<li>AdmissionController </li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
+<li>Cluster-scoped resources<ul>
+<li>如node</li>
+</ul>
+</li>
+<li>Namespace-scoped resources<ul>
+<li>如pod</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
+<li>workloads</li>
+</ul>
+<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
+<li>Node</li>
+<li>Pod</li>
+</ul>
+<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
+<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
+<li>Deployment: 后端用ESS, 区别是什么? </li>
+<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
+<li>StatefulSets: </li>
+<li>Job&amp;CronJob:</li>
+</ul>
+<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
+<li>Operator &#x3D; 资源(CRD) + Controller</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>CDR</li>
+<li>OAM</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -1699,26 +1699,6 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       </tags>
   </entry>
   <entry>
-    <title>精神训练与身体训练</title>
-    <url>//2021-09-08-physical-psychological/</url>
-    <content><![CDATA[<blockquote>
-<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
-</blockquote>
-<blockquote>
-<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
-</blockquote>
-<blockquote>
-<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
-</blockquote>
-<p>所以要注意加强锻炼身体哦~</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>snippets</tag>
-        <tag>physical</tag>
-        <tag>psychological</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kube-scheduler笔记之Queue研究</title>
     <url>//2021-09-08-kube-scheduler-queue/</url>
     <content><![CDATA[<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type PriorityQueue struct &#123;
@@ -1790,6 +1770,26 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
         <tag>scheduler</tag>
         <tag>kube-scheduler</tag>
         <tag>kube-scheduler-queue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>精神训练与身体训练</title>
+    <url>//2021-09-08-physical-psychological/</url>
+    <content><![CDATA[<blockquote>
+<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
+</blockquote>
+<blockquote>
+<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
+</blockquote>
+<blockquote>
+<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
+</blockquote>
+<p>所以要注意加强锻炼身体哦~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>snippets</tag>
+        <tag>physical</tag>
+        <tag>psychological</tag>
       </tags>
   </entry>
   <entry>
@@ -2363,9 +2363,9 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
 <p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>books</tag>
         <tag>weekend</tag>
         <tag>diary</tag>
+        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -2396,9 +2396,9 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
 <p>才知道东坡的这首诗, 就是在出任杭州通判时, 从富阳 新登 取道浮云岭, 进入於潜县境”视政”时写的.<br>於潜僧慧觉在於潜县南二里的丰国乡寂照寺出家。寺内有绿筠轩，以竹点缀环境，十分幽雅。苏轼与僧慧觉游绿筠轩时，写下了这首《於潜僧绿筠轩》。<br>具体位置应该是现在杭州市临安区於潜镇附近.<br>有时间可以去找一找. </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>books</tag>
         <tag>weekend</tag>
         <tag>diary</tag>
+        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -2457,9 +2457,9 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
 <p>另外, 附加一个网站, 可以在线看到数据结构的生成逻辑, 十分方便: <a href="https://www.cs.usfca.edu/~galles/visualization/">Data Structure Visualizations</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>books</tag>
         <tag>weekend</tag>
         <tag>diary</tag>
+        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -2913,8 +2913,8 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>2021</tag>
         <tag>books</tag>
+        <tag>2021</tag>
         <tag>GFS</tag>
         <tag>Google</tag>
       </tags>
@@ -2991,10 +2991,123 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>linux</tag>
-        <tag>2021</tag>
         <tag>books</tag>
+        <tag>2021</tag>
         <tag>GFS</tag>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于GPU封装与散热方式的笔记</title>
+    <url>//2021-11-18-gpu-heat-dissipation/</url>
+    <content><![CDATA[<h1 id="GPU散热方式"><a href="#GPU散热方式" class="headerlink" title="GPU散热方式"></a>GPU散热方式</h1><h2 id="被动散热"><a href="#被动散热" class="headerlink" title="被动散热"></a>被动散热</h2><ul>
+<li><p>1997年, NVIDIA Riva 128显卡</p>
+<ul>
+<li>性能较低, 发热较低, 自然散热</li>
+</ul>
+</li>
+<li><p>1998年, NVIDIA Riva TNT显卡</p>
+<ul>
+<li>性能功耗提升, 铝制散热片, 纯被动散热<br><img data-src="/_assets/2021-11-19-gpu-heat-dissipation/img_1.png" alt="img_1.png"></li>
+<li>铝片工艺<ul>
+<li>挤铝工艺: 一大片铝块高温挤压塑型</li>
+<li>铸造工艺</li>
+<li>铲齿工艺</li>
+<li>切削工艺</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="主动散热-鳍片-风扇"><a href="#主动散热-鳍片-风扇" class="headerlink" title="主动散热: 鳍片+风扇"></a>主动散热: 鳍片+风扇</h2><ul>
+<li>1999年, NVIDIA GeForce 256<ul>
+<li>正式提出了GPU概念</li>
+<li>鳍片 + 4厘米风扇, 主动散热</li>
+</ul>
+</li>
+</ul>
+<h2 id="主动散热-热管-鳍片-风扇"><a href="#主动散热-热管-鳍片-风扇" class="headerlink" title="主动散热: 热管+鳍片+风扇"></a>主动散热: 热管+鳍片+风扇</h2><p><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_3.png" alt="img_3.png"></p>
+<h3 id="热管-HEAT-PIPE"><a href="#热管-HEAT-PIPE" class="headerlink" title="热管(HEAT PIPE)"></a>热管(HEAT PIPE)</h3><h4 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h4><ul>
+<li>中空的铜管</li>
+<li>内部填充相变冷却液</li>
+<li>管子内部是烧结壁, 便于液体蒸发, 到冷区冷凝通过毛细现象返回热区</li>
+<li>主流的热管规格是6mm 或 8mm<ul>
+<li>热承载能力相差将近一倍<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_4.png" alt="img_4.png"></li>
+</ul>
+</li>
+</ul>
+<h4 id="热管数量"><a href="#热管数量" class="headerlink" title="热管数量"></a>热管数量</h4><ul>
+<li>通常越多越好, 但是有边际效应</li>
+</ul>
+<h3 id="鳍片"><a href="#鳍片" class="headerlink" title="鳍片"></a>鳍片</h3><ul>
+<li>热管与鳍片接触方式: <ul>
+<li>方式1: 穿Fin工艺<ul>
+<li>热管直接插入鳍片内</li>
+<li>但长时间使用, 由于鳍片与热管热胀冷缩程度不同导致中间有缝隙, 从而影响散热效果</li>
+<li>工艺简单, 成本较低, 良品率高</li>
+</ul>
+</li>
+<li>方式2: 回流焊工艺<ul>
+<li>直接用金属焊料把热管与鳍片焊接起来<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_5.png" alt="img_5.png"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="热管-amp-GPU核心接触方案"><a href="#热管-amp-GPU核心接触方案" class="headerlink" title="热管&amp;GPU核心接触方案"></a>热管&amp;GPU核心接触方案</h3><ul>
+<li>热管直触方案: <ul>
+<li>问题1: 长时间热胀冷缩会导致空腔, 从而影响散热</li>
+<li>问题2: 热管壁打磨, 导致使用寿命变短<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_6.png" alt="img_6.png"></li>
+</ul>
+</li>
+<li>铜底方案:<ul>
+<li>便于将热量均摊到各个热管上<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_7.png" alt="img_7.png"></li>
+</ul>
+</li>
+<li>均热板方案: <ul>
+<li>板状的热管, 内部也是液体蒸发, 气体冷凝传递热量</li>
+</ul>
+</li>
+</ul>
+<h3 id="风扇"><a href="#风扇" class="headerlink" title="风扇"></a>风扇</h3><h4 id="下压式显卡"><a href="#下压式显卡" class="headerlink" title="下压式显卡"></a>下压式显卡</h4><ul>
+<li>工作方式<ul>
+<li>风扇面吸风</li>
+<li>四周出风</li>
+</ul>
+</li>
+<li>优点:<ul>
+<li>安静</li>
+</ul>
+</li>
+<li>缺点:<ul>
+<li>依赖机箱通风<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_8.png" alt="img_8.png"></li>
+</ul>
+</li>
+</ul>
+<h4 id="涡轮式显卡"><a href="#涡轮式显卡" class="headerlink" title="涡轮式显卡"></a>涡轮式显卡</h4><ul>
+<li>缺点:<ul>
+<li>转速偏高, 噪音偏大</li>
+</ul>
+</li>
+</ul>
+<h2 id="水冷"><a href="#水冷" class="headerlink" title="水冷"></a>水冷</h2><ul>
+<li><p>由于GPU通常都比CPU面积要大, 因此水冷对于GPU相比对于CPU来说, 提升效果更加明显.<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_9.png" alt="img_9.png"></p>
+</li>
+<li><p>英伟达显卡都自带了GPU Boost, 自动超频机制</p>
+<ul>
+<li>出厂1700MHz的显卡, 往往跑在接近2000MHz频率上</li>
+<li>功耗, 电压, 温度</li>
+<li>更好的散热, 能让GPU Boost维持得更加稳定<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_10.png" alt="img_10.png"></li>
+</ul>
+</li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://www.zhihu.com/zvideo/1433777767221071872">全网最详细显卡散热工作原理科普</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>common-sense</tag>
+        <tag>throughput</tag>
       </tags>
   </entry>
   <entry>
@@ -3280,119 +3393,6 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 <li><a href="https://www.jianshu.com/p/1fc8c9926ac1">各种通信接口速率</a></li>
 <li><a href="https://www.zhihu.com/collection/212284966">PCI-E通道是个什么东西？他是干啥的？</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/38984035">CPU总线进化</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>common-sense</tag>
-        <tag>throughput</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于GPU封装与散热方式的笔记</title>
-    <url>//2021-11-18-gpu-heat-dissipation/</url>
-    <content><![CDATA[<h1 id="GPU散热方式"><a href="#GPU散热方式" class="headerlink" title="GPU散热方式"></a>GPU散热方式</h1><h2 id="被动散热"><a href="#被动散热" class="headerlink" title="被动散热"></a>被动散热</h2><ul>
-<li><p>1997年, NVIDIA Riva 128显卡</p>
-<ul>
-<li>性能较低, 发热较低, 自然散热</li>
-</ul>
-</li>
-<li><p>1998年, NVIDIA Riva TNT显卡</p>
-<ul>
-<li>性能功耗提升, 铝制散热片, 纯被动散热<br><img data-src="/_assets/2021-11-19-gpu-heat-dissipation/img_1.png" alt="img_1.png"></li>
-<li>铝片工艺<ul>
-<li>挤铝工艺: 一大片铝块高温挤压塑型</li>
-<li>铸造工艺</li>
-<li>铲齿工艺</li>
-<li>切削工艺</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="主动散热-鳍片-风扇"><a href="#主动散热-鳍片-风扇" class="headerlink" title="主动散热: 鳍片+风扇"></a>主动散热: 鳍片+风扇</h2><ul>
-<li>1999年, NVIDIA GeForce 256<ul>
-<li>正式提出了GPU概念</li>
-<li>鳍片 + 4厘米风扇, 主动散热</li>
-</ul>
-</li>
-</ul>
-<h2 id="主动散热-热管-鳍片-风扇"><a href="#主动散热-热管-鳍片-风扇" class="headerlink" title="主动散热: 热管+鳍片+风扇"></a>主动散热: 热管+鳍片+风扇</h2><p><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_3.png" alt="img_3.png"></p>
-<h3 id="热管-HEAT-PIPE"><a href="#热管-HEAT-PIPE" class="headerlink" title="热管(HEAT PIPE)"></a>热管(HEAT PIPE)</h3><h4 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h4><ul>
-<li>中空的铜管</li>
-<li>内部填充相变冷却液</li>
-<li>管子内部是烧结壁, 便于液体蒸发, 到冷区冷凝通过毛细现象返回热区</li>
-<li>主流的热管规格是6mm 或 8mm<ul>
-<li>热承载能力相差将近一倍<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_4.png" alt="img_4.png"></li>
-</ul>
-</li>
-</ul>
-<h4 id="热管数量"><a href="#热管数量" class="headerlink" title="热管数量"></a>热管数量</h4><ul>
-<li>通常越多越好, 但是有边际效应</li>
-</ul>
-<h3 id="鳍片"><a href="#鳍片" class="headerlink" title="鳍片"></a>鳍片</h3><ul>
-<li>热管与鳍片接触方式: <ul>
-<li>方式1: 穿Fin工艺<ul>
-<li>热管直接插入鳍片内</li>
-<li>但长时间使用, 由于鳍片与热管热胀冷缩程度不同导致中间有缝隙, 从而影响散热效果</li>
-<li>工艺简单, 成本较低, 良品率高</li>
-</ul>
-</li>
-<li>方式2: 回流焊工艺<ul>
-<li>直接用金属焊料把热管与鳍片焊接起来<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_5.png" alt="img_5.png"></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="热管-amp-GPU核心接触方案"><a href="#热管-amp-GPU核心接触方案" class="headerlink" title="热管&amp;GPU核心接触方案"></a>热管&amp;GPU核心接触方案</h3><ul>
-<li>热管直触方案: <ul>
-<li>问题1: 长时间热胀冷缩会导致空腔, 从而影响散热</li>
-<li>问题2: 热管壁打磨, 导致使用寿命变短<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_6.png" alt="img_6.png"></li>
-</ul>
-</li>
-<li>铜底方案:<ul>
-<li>便于将热量均摊到各个热管上<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_7.png" alt="img_7.png"></li>
-</ul>
-</li>
-<li>均热板方案: <ul>
-<li>板状的热管, 内部也是液体蒸发, 气体冷凝传递热量</li>
-</ul>
-</li>
-</ul>
-<h3 id="风扇"><a href="#风扇" class="headerlink" title="风扇"></a>风扇</h3><h4 id="下压式显卡"><a href="#下压式显卡" class="headerlink" title="下压式显卡"></a>下压式显卡</h4><ul>
-<li>工作方式<ul>
-<li>风扇面吸风</li>
-<li>四周出风</li>
-</ul>
-</li>
-<li>优点:<ul>
-<li>安静</li>
-</ul>
-</li>
-<li>缺点:<ul>
-<li>依赖机箱通风<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_8.png" alt="img_8.png"></li>
-</ul>
-</li>
-</ul>
-<h4 id="涡轮式显卡"><a href="#涡轮式显卡" class="headerlink" title="涡轮式显卡"></a>涡轮式显卡</h4><ul>
-<li>缺点:<ul>
-<li>转速偏高, 噪音偏大</li>
-</ul>
-</li>
-</ul>
-<h2 id="水冷"><a href="#水冷" class="headerlink" title="水冷"></a>水冷</h2><ul>
-<li><p>由于GPU通常都比CPU面积要大, 因此水冷对于GPU相比对于CPU来说, 提升效果更加明显.<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_9.png" alt="img_9.png"></p>
-</li>
-<li><p>英伟达显卡都自带了GPU Boost, 自动超频机制</p>
-<ul>
-<li>出厂1700MHz的显卡, 往往跑在接近2000MHz频率上</li>
-<li>功耗, 电压, 温度</li>
-<li>更好的散热, 能让GPU Boost维持得更加稳定<br><img data-src="/../_assets/2021-11-19-gpu-heat-dissipation/img_10.png" alt="img_10.png"></li>
-</ul>
-</li>
-</ul>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://www.zhihu.com/zvideo/1433777767221071872">全网最详细显卡散热工作原理科普</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
@@ -3726,40 +3726,6 @@ Linux localhost.localdomain <span class="token number">3.10</span>.0-1160.el7.x8
       </tags>
   </entry>
   <entry>
-    <title>无用的知识又增加了</title>
-    <url>//2021-11-22-random-snippets/</url>
-    <content><![CDATA[<p>CPU芯片中vendor_id:</p>
-<ul>
-<li><code>intel --&gt; Genuine Intel</code></li>
-<li><code>amd --&gt; Authentic AMD</code></li>
-</ul>
-<p>哈哈, 为啥都加个”真实的”呢? 生怕别人伪造么?</p>
-<hr>
-<ul>
-<li>为啥 Java 的 HeapDump 文件后缀是<code>hprof</code>, 例如<code>20230914-tmp.hprof</code>?</li>
-<li>代表<code>Heap Profiling</code>, 即堆内存分析. 也是很早以前JDK提供的工具: <a href="https://www.cnblogs.com/linhaohong/archive/2012/07/12/2588657.html">HPROF: 一个Heap&#x2F;CPU Profiling工具</a></li>
-</ul>
-<hr>
-<ul>
-<li>K8s中各种shim组件, 具体为啥叫 shim ?</li>
-<li>直译过来是<code>垫片</code>, 这是什么鬼? 很难理解. 其实本质就是Adaptor. 当然也有人也有类似的吐槽, 好好地叫adaptor很难么? <a href="https://hackernoon.com/design-patterns-wtf-is-a-shim-la1h338v">Design Patterns: WTF is a Shim?</a></li>
-</ul>
-<hr>
-<ul>
-<li>到底在什么场景下该用<code>java.util.LinkedList</code>? 具体谁用了?</li>
-<li>巧了, LinkedList的作者<code>Joshua Bloch</code>也有同样的困惑. 基本结论, 就是学习思路可以, 但在实际生产环境中就尽量不要用啦.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309142358549.png"></li>
-</ul>
-<hr>
-<ul>
-<li>linux下对于磁盘常用的工具<code>dd</code>全称是啥?</li>
-<li>google了下, 个人感觉比较靠谱的是: <code>disk dump</code></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>tech-for-fun</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>沙丘 笔记</title>
     <url>//2021-12-12-Dune/</url>
     <content><![CDATA[<hr>
@@ -3808,9 +3774,43 @@ Linux localhost.localdomain <span class="token number">3.10</span>.0-1160.el7.x8
 </blockquote>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>2021</tag>
         <tag>books</tag>
+        <tag>2021</tag>
         <tag>sci-fi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>无用的知识又增加了</title>
+    <url>//2021-11-22-random-snippets/</url>
+    <content><![CDATA[<p>CPU芯片中vendor_id:</p>
+<ul>
+<li><code>intel --&gt; Genuine Intel</code></li>
+<li><code>amd --&gt; Authentic AMD</code></li>
+</ul>
+<p>哈哈, 为啥都加个”真实的”呢? 生怕别人伪造么?</p>
+<hr>
+<ul>
+<li>为啥 Java 的 HeapDump 文件后缀是<code>hprof</code>, 例如<code>20230914-tmp.hprof</code>?</li>
+<li>代表<code>Heap Profiling</code>, 即堆内存分析. 也是很早以前JDK提供的工具: <a href="https://www.cnblogs.com/linhaohong/archive/2012/07/12/2588657.html">HPROF: 一个Heap&#x2F;CPU Profiling工具</a></li>
+</ul>
+<hr>
+<ul>
+<li>K8s中各种shim组件, 具体为啥叫 shim ?</li>
+<li>直译过来是<code>垫片</code>, 这是什么鬼? 很难理解. 其实本质就是Adaptor. 当然也有人也有类似的吐槽, 好好地叫adaptor很难么? <a href="https://hackernoon.com/design-patterns-wtf-is-a-shim-la1h338v">Design Patterns: WTF is a Shim?</a></li>
+</ul>
+<hr>
+<ul>
+<li>到底在什么场景下该用<code>java.util.LinkedList</code>? 具体谁用了?</li>
+<li>巧了, LinkedList的作者<code>Joshua Bloch</code>也有同样的困惑. 基本结论, 就是学习思路可以, 但在实际生产环境中就尽量不要用啦.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309142358549.png"></li>
+</ul>
+<hr>
+<ul>
+<li>linux下对于磁盘常用的工具<code>dd</code>全称是啥?</li>
+<li>google了下, 个人感觉比较靠谱的是: <code>disk dump</code></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>tech-for-fun</tag>
       </tags>
   </entry>
   <entry>
@@ -3854,44 +3854,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <tag>code-snippets</tag>
         <tag>java</tag>
         <tag>nio</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TCP协议中TIME_WAIT疑问与思考</title>
-    <url>//2021-12-17-tcp-time-wait/</url>
-    <content><![CDATA[<hr>
-<p>疑问: 从下图可以看出, 客户端可能会是TIME_WAIT状态. 但如果是服务端主动关闭的呢? 服务端可能会是TIME_WAIT状态么?<br><img data-src="/../_assets/2021-12-18-tcp-time-wait/tcp.png" alt="img.png"></p>
-<p>答案: 是可能的. 服务端主动关闭, 那么四次挥手的过程, 上图中客户端&#x2F;服务端就要翻转下了. </p>
-<hr>
-<p>疑问: 为啥TIME_WAIT要持续2MSL?</p>
-<ul>
-<li>MSL: 最大分段生存期, 指明TCP报文在Internet上最长生存时间，每个具体的TCP实现都必须选择一个确定的MSL值。</li>
-</ul>
-<p>TIME_WAIT状态必须要有一定的持续时间，所以TIME_WAIT也被称为2MSL等待状态，一般持续时间在1分钟到4分钟之间。<br>RFC793定义了MSL为2分钟，Linux设置成了30s</p>
-<p>主要有两个原因：<br>1、我们没有任何机制保证最后的一个ACK能够正常送达, TIME_WAIT确保有足够的时间让对端收到了ACK，<br>    * 如果被动关闭的那方没有收到ACK，就会触发被动端重发Fin，<br>    * 从上图查看, ACK到服务端1个MSL, 服务端如果在MSL里没收到ACK, 则会重发FIN, FIN到达客户端.<br>    * 上边ACK + FIN 耗时, 正好2个MSL；<br>2、有足够的时间让这个连接不会跟后面的连接混在一起（如果连接被重用了，那么这些延迟收到的包就有可能会跟新连接混在一起）。<br>    * </p>
-<p>我们经常就会在服务器上发现有很多的wait_timeout，特别常见的就是http服务器，从上面的描述来看，这个状态应该是主动关闭的一方，才会有的状态，我们有没有想过，就是为什么服务器端会主动断开连接呢？不应该是客户端主动断开吗？</p>
-<p>据说，其实在最初的http协议，服务器在发送完客户端需要的内容后，就主动关闭连接，因为当时的客户端，需要等待所有效果渲染完毕，才会主动断开连接，为了照顾当时性能低下的服务器，更好的服务其他客户，才在协议中这样规定，说到底就是http协议太老了，所以Google才会推他的SPDY协议。</p>
-<hr>
-<p>疑问: 实际上, 我们看到经常服务端会处于CLOSE_WAIT状态, 理论上CLOSE_WAIT应该持续时间很短, 为啥会经常处于这个状态?<br>解释: 出现大量close_wait的现象，主要原因是某种情况下对方关闭了socket链接，但是我方忙与读或者写，没有关闭连接。<br>    就是说CLOSE_WAIT时, 服务端还有数据要写给客户端, 所以没有给客户端发FIN<br>    代码需要判断socket，一旦读到0，断开连接，read返回负，检查一下errno，如果不是AGAIN，就断开连接。</p>
-<hr>
-<p>疑问: 可以从上图看出, 如果客户端在TIME_WAIT内重发了一次ACK, 但ACK还是没有被服务端收到, 那么服务端就会在LAST_ACK状态. 具体LAST_ACK会持续多久?<br>解释: LAST_ACK-&gt;CLOSE不靠超时. 加入服务端发送了FIN之后, 等待LAST_ACK.<br>但客户端回复的ACK丢失了, 在MSL里, 服务端重新发送了FIN, 客户端收到之后, 重新发送ACK, 此时ACK重新丢失.<br>客户端由于2MSL到期, 因此变为CLOSED状态;<br>服务端重新发送FIN, 由于客户端已经处于CLOSED状态, 因此连接丢失, 客户端回复RST, B收到RST进入CLOSED状态.</p>
-<hr>
-<p>疑问: 有啥最佳实践?<br>高并发TCP服务器中进行主动关闭的一方最好是客户端：</p>
-<ul>
-<li>因为对于高并发服务器来说文件描述符资源是很重要的资源，</li>
-<li>如果对于每一个连接都要经历TIME_WAIT这个2MSL的时长，势必造成资源不能立马复用的浪费。</li>
-<li>虽然对于客户端来说TIME_WAIT状态会占用端口和句柄资源，但是客户端一般很少有并发资源限制，所以客户端执行主动关闭是比较合适的。</li>
-</ul>
-<p>服务器端程序最好启用SO_REUSEADDR选项：</p>
-<ul>
-<li>我们想这样做一种情况，如果生产环境中服务端程序由于某种错误操作关闭了，我们肯定是要立马重启服务程序，</li>
-<li>但是TIME_WAIT还在占用着这些地址端口资源让你的服务起不来，那你着不着急。</li>
-<li>SOREUSEADDR这个选项正是允许地址端口的重复绑定。</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>tcp</tag>
-        <tag>timewait</tag>
       </tags>
   </entry>
   <entry>
@@ -4129,6 +4091,44 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <tag>nio</tag>
         <tag>zk-client</tag>
         <tag>zookeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TCP协议中TIME_WAIT疑问与思考</title>
+    <url>//2021-12-17-tcp-time-wait/</url>
+    <content><![CDATA[<hr>
+<p>疑问: 从下图可以看出, 客户端可能会是TIME_WAIT状态. 但如果是服务端主动关闭的呢? 服务端可能会是TIME_WAIT状态么?<br><img data-src="/../_assets/2021-12-18-tcp-time-wait/tcp.png" alt="img.png"></p>
+<p>答案: 是可能的. 服务端主动关闭, 那么四次挥手的过程, 上图中客户端&#x2F;服务端就要翻转下了. </p>
+<hr>
+<p>疑问: 为啥TIME_WAIT要持续2MSL?</p>
+<ul>
+<li>MSL: 最大分段生存期, 指明TCP报文在Internet上最长生存时间，每个具体的TCP实现都必须选择一个确定的MSL值。</li>
+</ul>
+<p>TIME_WAIT状态必须要有一定的持续时间，所以TIME_WAIT也被称为2MSL等待状态，一般持续时间在1分钟到4分钟之间。<br>RFC793定义了MSL为2分钟，Linux设置成了30s</p>
+<p>主要有两个原因：<br>1、我们没有任何机制保证最后的一个ACK能够正常送达, TIME_WAIT确保有足够的时间让对端收到了ACK，<br>    * 如果被动关闭的那方没有收到ACK，就会触发被动端重发Fin，<br>    * 从上图查看, ACK到服务端1个MSL, 服务端如果在MSL里没收到ACK, 则会重发FIN, FIN到达客户端.<br>    * 上边ACK + FIN 耗时, 正好2个MSL；<br>2、有足够的时间让这个连接不会跟后面的连接混在一起（如果连接被重用了，那么这些延迟收到的包就有可能会跟新连接混在一起）。<br>    * </p>
+<p>我们经常就会在服务器上发现有很多的wait_timeout，特别常见的就是http服务器，从上面的描述来看，这个状态应该是主动关闭的一方，才会有的状态，我们有没有想过，就是为什么服务器端会主动断开连接呢？不应该是客户端主动断开吗？</p>
+<p>据说，其实在最初的http协议，服务器在发送完客户端需要的内容后，就主动关闭连接，因为当时的客户端，需要等待所有效果渲染完毕，才会主动断开连接，为了照顾当时性能低下的服务器，更好的服务其他客户，才在协议中这样规定，说到底就是http协议太老了，所以Google才会推他的SPDY协议。</p>
+<hr>
+<p>疑问: 实际上, 我们看到经常服务端会处于CLOSE_WAIT状态, 理论上CLOSE_WAIT应该持续时间很短, 为啥会经常处于这个状态?<br>解释: 出现大量close_wait的现象，主要原因是某种情况下对方关闭了socket链接，但是我方忙与读或者写，没有关闭连接。<br>    就是说CLOSE_WAIT时, 服务端还有数据要写给客户端, 所以没有给客户端发FIN<br>    代码需要判断socket，一旦读到0，断开连接，read返回负，检查一下errno，如果不是AGAIN，就断开连接。</p>
+<hr>
+<p>疑问: 可以从上图看出, 如果客户端在TIME_WAIT内重发了一次ACK, 但ACK还是没有被服务端收到, 那么服务端就会在LAST_ACK状态. 具体LAST_ACK会持续多久?<br>解释: LAST_ACK-&gt;CLOSE不靠超时. 加入服务端发送了FIN之后, 等待LAST_ACK.<br>但客户端回复的ACK丢失了, 在MSL里, 服务端重新发送了FIN, 客户端收到之后, 重新发送ACK, 此时ACK重新丢失.<br>客户端由于2MSL到期, 因此变为CLOSED状态;<br>服务端重新发送FIN, 由于客户端已经处于CLOSED状态, 因此连接丢失, 客户端回复RST, B收到RST进入CLOSED状态.</p>
+<hr>
+<p>疑问: 有啥最佳实践?<br>高并发TCP服务器中进行主动关闭的一方最好是客户端：</p>
+<ul>
+<li>因为对于高并发服务器来说文件描述符资源是很重要的资源，</li>
+<li>如果对于每一个连接都要经历TIME_WAIT这个2MSL的时长，势必造成资源不能立马复用的浪费。</li>
+<li>虽然对于客户端来说TIME_WAIT状态会占用端口和句柄资源，但是客户端一般很少有并发资源限制，所以客户端执行主动关闭是比较合适的。</li>
+</ul>
+<p>服务器端程序最好启用SO_REUSEADDR选项：</p>
+<ul>
+<li>我们想这样做一种情况，如果生产环境中服务端程序由于某种错误操作关闭了，我们肯定是要立马重启服务程序，</li>
+<li>但是TIME_WAIT还在占用着这些地址端口资源让你的服务起不来，那你着不着急。</li>
+<li>SOREUSEADDR这个选项正是允许地址端口的重复绑定。</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>tcp</tag>
+        <tag>timewait</tag>
       </tags>
   </entry>
   <entry>
@@ -6303,25 +6303,6 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>Java中Log4j的最佳实践</title>
-    <url>//2022-04-18-java-log4j-bestpractice/</url>
-    <content><![CDATA[<h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><ul>
-<li>把ThreadName, RequestId放到MDC, 加到pattern里.</li>
-</ul>
-<h2 id="异步日志"><a href="#异步日志" class="headerlink" title="异步日志"></a>异步日志</h2><p>使用 <a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">log4j2 asyncLogger</a> 来异步打印</p>
-<ul>
-<li>不要在pattern里增加location相关信息, 例如class, file, location, line, method等, 因为这些底层需要<a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">打印堆栈</a>, 然后遍历, 性能较差. 尤其是需要使用asyncLogger的场景下</li>
-<li><a href="https://issues.apache.org/jira/browse/LOG4J2-2031">异步日志底层实现原理</a>: 本质是一个RingBuffer, 默认size大约是21w条, 需要注意不要使用DiscardPolicy;</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>log4j</tag>
-        <tag>logging</tag>
-        <tag>best-practice</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s基础架构笔记--list&amp;watch机制</title>
     <url>//2022-04-05-k8s-list-watch/</url>
     <content><![CDATA[<p>本质上:  </p>
@@ -6472,6 +6453,25 @@ kube-dns                             ClusterIP      <span class="token number">1
         <tag>dns</tag>
         <tag>coredns</tag>
         <tag>kube-dns</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java中Log4j的最佳实践</title>
+    <url>//2022-04-18-java-log4j-bestpractice/</url>
+    <content><![CDATA[<h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><ul>
+<li>把ThreadName, RequestId放到MDC, 加到pattern里.</li>
+</ul>
+<h2 id="异步日志"><a href="#异步日志" class="headerlink" title="异步日志"></a>异步日志</h2><p>使用 <a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">log4j2 asyncLogger</a> 来异步打印</p>
+<ul>
+<li>不要在pattern里增加location相关信息, 例如class, file, location, line, method等, 因为这些底层需要<a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">打印堆栈</a>, 然后遍历, 性能较差. 尤其是需要使用asyncLogger的场景下</li>
+<li><a href="https://issues.apache.org/jira/browse/LOG4J2-2031">异步日志底层实现原理</a>: 本质是一个RingBuffer, 默认size大约是21w条, 需要注意不要使用DiscardPolicy;</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>log4j</tag>
+        <tag>logging</tag>
+        <tag>best-practice</tag>
       </tags>
   </entry>
   <entry>
@@ -6814,6 +6814,65 @@ Your CPU does not support KVM extensions<span aria-hidden="true" class="line-num
       </tags>
   </entry>
   <entry>
+    <title>一个通用数据巡检框架的设计</title>
+    <url>//2022-05-15-cruise-framework-design/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在实际项目中, 有许多业务场景, 会存在多张表数据不一致或者脏数据残留的问题,<br>需要定期执行一些SQL来进行数据一致性的巡检与订正, 以实现数据的最终一致性.<br>例如下表, 需要定期查询&amp;统计出’deleted’状态的用户数量, 报警, 并清理这些数据.</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- user表</span>
+user_id<span class="token operator">|</span> age<span class="token operator">|</span> <span class="token keyword">status</span><span class="token operator">|</span>
+<span class="token number">1</span><span class="token operator">|</span> <span class="token number">18</span><span class="token operator">|</span> deleted<span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="初步方案"><a href="#初步方案" class="headerlink" title="初步方案:"></a>初步方案:</h1><p>方案1: 可以针对每个需求, 单独写SQL-&gt;DAO-&gt;Service等, 但带来的问题是: </p>
+<ol>
+<li>开发量大, 每次新的需求, 都需要撸一遍, 重复工作量大.</li>
+<li>SQL-&gt;Service整体功能分散, 不便于维护.<br>方案2: 可以基于此, 抽象出一个面向SQL的通用巡检框架, 便于统一接入与维护.</li>
+</ol>
+<h1 id="架构设计思考"><a href="#架构设计思考" class="headerlink" title="架构设计思考"></a>架构设计思考</h1><p>从用户角度, 可以:<br>定时任务框架: </p>
+<ol>
+<li>创建巡检任务, 与输入自定义的SQL绑定</li>
+<li>定义巡检周期</li>
+<li>手动触发运行(便于首次配置之后调试)</li>
+<li>查看运行记录(便于)</li>
+</ol>
+<p>报警与订正框架: </p>
+<ol>
+<li>定义任务结果筛选与报警条件</li>
+<li>定义任务结果执行的订正Action</li>
+</ol>
+<h2 id="第一部分-定时任务框架"><a href="#第一部分-定时任务框架" class="headerlink" title="第一部分: 定时任务框架"></a>第一部分: 定时任务框架</h2><p>核心就是一个面向SQL的分布式定时任务框架, 调研现有的任务框架实现(例如Quartz): </p>
+<ul>
+<li>任务核心: <ul>
+<li>任务描述与定义(即数据源支持哪些? SQL支持哪些?)</li>
+<li>定时任务的调度与执行</li>
+<li>历史任务运行情况<ul>
+<li>耗时</li>
+<li>WorkerIp</li>
+<li>执行状态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>运维后台: <ul>
+<li>手工触发<ul>
+<li>指定</li>
+</ul>
+</li>
+<li>任务</li>
+</ul>
+</li>
+</ul>
+<h2 id="第二部分-数据订正报警框架"><a href="#第二部分-数据订正报警框架" class="headerlink" title="第二部分: 数据订正报警框架"></a>第二部分: 数据订正报警框架</h2><h1 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h1><p>任务分为 “全量巡检” 与 “增量巡检” 两类.<br>全量巡检: 即每次执行SQL, 对报警结果全量输出.<br>增量巡检: 即每次执行SQL, 只输出与上次执行有差异的(新增的)数据报警.</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>best-practice</tag>
+        <tag>software-engineering</tag>
+        <tag>cruiser</tag>
+        <tag>software-design</tag>
+        <tag>arch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java中配置文件占位符替换的几种模式探讨与分析</title>
     <url>//2022-05-13-java-property-config/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在Java&#x2F;Maven项目中, 经常会有配置文件中配置项, 需要根据环境进行不同的参数变量替换, 如果搞不清楚, 经常会混淆.<br>当前有如下几种方式: </p>
@@ -6980,65 +7039,6 @@ CMD <span class="token punctuation">[</span><span class="token string">"catalina
       </tags>
   </entry>
   <entry>
-    <title>一个通用数据巡检框架的设计</title>
-    <url>//2022-05-15-cruise-framework-design/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在实际项目中, 有许多业务场景, 会存在多张表数据不一致或者脏数据残留的问题,<br>需要定期执行一些SQL来进行数据一致性的巡检与订正, 以实现数据的最终一致性.<br>例如下表, 需要定期查询&amp;统计出’deleted’状态的用户数量, 报警, 并清理这些数据.</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- user表</span>
-user_id<span class="token operator">|</span> age<span class="token operator">|</span> <span class="token keyword">status</span><span class="token operator">|</span>
-<span class="token number">1</span><span class="token operator">|</span> <span class="token number">18</span><span class="token operator">|</span> deleted<span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-<h1 id="初步方案"><a href="#初步方案" class="headerlink" title="初步方案:"></a>初步方案:</h1><p>方案1: 可以针对每个需求, 单独写SQL-&gt;DAO-&gt;Service等, 但带来的问题是: </p>
-<ol>
-<li>开发量大, 每次新的需求, 都需要撸一遍, 重复工作量大.</li>
-<li>SQL-&gt;Service整体功能分散, 不便于维护.<br>方案2: 可以基于此, 抽象出一个面向SQL的通用巡检框架, 便于统一接入与维护.</li>
-</ol>
-<h1 id="架构设计思考"><a href="#架构设计思考" class="headerlink" title="架构设计思考"></a>架构设计思考</h1><p>从用户角度, 可以:<br>定时任务框架: </p>
-<ol>
-<li>创建巡检任务, 与输入自定义的SQL绑定</li>
-<li>定义巡检周期</li>
-<li>手动触发运行(便于首次配置之后调试)</li>
-<li>查看运行记录(便于)</li>
-</ol>
-<p>报警与订正框架: </p>
-<ol>
-<li>定义任务结果筛选与报警条件</li>
-<li>定义任务结果执行的订正Action</li>
-</ol>
-<h2 id="第一部分-定时任务框架"><a href="#第一部分-定时任务框架" class="headerlink" title="第一部分: 定时任务框架"></a>第一部分: 定时任务框架</h2><p>核心就是一个面向SQL的分布式定时任务框架, 调研现有的任务框架实现(例如Quartz): </p>
-<ul>
-<li>任务核心: <ul>
-<li>任务描述与定义(即数据源支持哪些? SQL支持哪些?)</li>
-<li>定时任务的调度与执行</li>
-<li>历史任务运行情况<ul>
-<li>耗时</li>
-<li>WorkerIp</li>
-<li>执行状态</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>运维后台: <ul>
-<li>手工触发<ul>
-<li>指定</li>
-</ul>
-</li>
-<li>任务</li>
-</ul>
-</li>
-</ul>
-<h2 id="第二部分-数据订正报警框架"><a href="#第二部分-数据订正报警框架" class="headerlink" title="第二部分: 数据订正报警框架"></a>第二部分: 数据订正报警框架</h2><h1 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h1><p>任务分为 “全量巡检” 与 “增量巡检” 两类.<br>全量巡检: 即每次执行SQL, 对报警结果全量输出.<br>增量巡检: 即每次执行SQL, 只输出与上次执行有差异的(新增的)数据报警.</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>best-practice</tag>
-        <tag>software-engineering</tag>
-        <tag>cruiser</tag>
-        <tag>software-design</tag>
-        <tag>arch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>软件工程中的一些最佳实践沉淀</title>
     <url>//2022-05-15-software-enginnering-best-practice/</url>
     <content><![CDATA[<h1 id="jar-x2F-maven版本号定义"><a href="#jar-x2F-maven版本号定义" class="headerlink" title="jar&#x2F;maven版本号定义"></a>jar&#x2F;maven版本号定义</h1><p>一般推荐使用 <a href="https://chronver.org/">chronVer</a></p>
@@ -7168,6 +7168,170 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <tag>java</tag>
         <tag>springboot</tag>
         <tag>spring-cache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s生态中promethus的架构与原理研究</title>
+    <url>//2022-05-22-k8s-promethus/</url>
+    <content><![CDATA[<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><p><a href="https://prometheus.io/docs/introduction/faq/">https://prometheus.io/docs/introduction/faq/</a></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122209641.png"></p>
+<p>本质上是类似alimonitor的系统.</p>
+<h1 id="几个细节"><a href="#几个细节" class="headerlink" title="几个细节:"></a>几个细节:</h1><ul>
+<li><p>使用pull模式, 而不是push模式. 即promethus server主动去各个业务方捞取数据, 而不是各个业务方主动往promethus server推送数据.</p>
+<ul>
+<li>为啥使用pull模式? <a href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push</a><ul>
+<li>You can run your monitoring on your laptop when developing changes.</li>
+<li>You can more easily tell if a target is down.</li>
+<li>You can manually go to a target and inspect its health with a web browser.</li>
+</ul>
+</li>
+<li>针对现存的已经有的push模式, 提供了pushgateway方案来兼容. (可以参见上图架构)<ul>
+<li><a href="https://prometheus.io/docs/instrumenting/pushing/">https://prometheus.io/docs/instrumenting/pushing/</a></li>
+<li>pushgateway类似于</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>由于使用了pull模式, 因此会有各种<a href="https://prometheus.io/docs/instrumenting/exporters/">exporter组件</a>, 来适配各个常用监控源, 例如 casandra exporter, ECS Exporter等. 本质上这种exporter是类似一个http服务器, 可以让promethus server来捞取数据.</p>
+</li>
+<li><p>服务发现: 由于使用的是pull模式, 因此promethus需要知道要从哪里捞取各个业务方的metrics, 因此需要一个服务发现机制. 有如下两种:</p>
+<ul>
+<li>静态文件配置(File-Based SD): ip:port</li>
+<li>DNS: nameserver:port <a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config">https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config</a></li>
+<li>HTTP_SD:</li>
+</ul>
+</li>
+<li><p>存储:</p>
+<ul>
+<li>存储介质:<ul>
+<li>默认使用的localstorage, 本地存储</li>
+<li>可以支持remote storage, 但由于各个remote storage的接口&amp;对原生的promethus SQL支持度的不同, 分为read&amp;write能力<ul>
+<li><a href="https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage">remote storage支持列表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据格式:<ul>
+<li>自定义的, 支持压缩的本地存储格式.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HA:</p>
+<ul>
+<li>服务HA:<ul>
+<li><a href="https://www.robustperception.io/scaling-and-federating-prometheus">https://www.robustperception.io/scaling-and-federating-prometheus</a></li>
+<li>默认: 单台server足以支撑1000台server的metrics量.</li>
+<li>方案1: Initial Deployment<ul>
+<li>2个global Prometheus , N个local Promethus, global负责汇聚local数据</li>
+<li>保持2个global, 防止单台宕机.</li>
+</ul>
+</li>
+<li>方案2: Splitting By Use, 按用途垂直拆分<ul>
+<li>promethus前后端分离部署</li>
+<li>按业务域分别部署, 例如为Cassandra服务单独部署一套, 为MySQL服务单独部署一套</li>
+</ul>
+</li>
+<li>方案3: Horizontal Sharding, 水平拆分<ul>
+<li>不推荐多机器部署,</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据HA:<ul>
+<li>localstorage: 无法HA, 因此promethus是推荐使用RAID, 或者定期打快照.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>限制:</p>
+<ul>
+<li>不要用promethus来进行tracing&#x2F;logging, 只能用来做metrics</li>
+</ul>
+</li>
+</ul>
+<h1 id="核心术语-x2F-指标"><a href="#核心术语-x2F-指标" class="headerlink" title="核心术语&#x2F;指标"></a>核心术语&#x2F;指标</h1><p>定义了很好的几种通用指标, 来覆盖metrics各个方面:</p>
+<ol>
+<li><p>counter: <a href="https://www.robustperception.io/how-does-a-prometheus-counter-work">https://www.robustperception.io/how-does-a-prometheus-counter-work</a></p>
+<ol>
+<li>rate</li>
+</ol>
+</li>
+<li><p>gauge</p>
+</li>
+<li><p>histogram, 如下, 按照le&#x3D;”xxx”, le即”less than”, 将latency分成了10个bucket</p>
+<pre class="line-numbers language-none"><code class="language-none">prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.1&quot;&#125; 25547
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.2&quot;&#125; 26688
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.4&quot;&#125; 27760
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;1&quot;&#125; 28641
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;3&quot;&#125; 28782
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;8&quot;&#125; 28844
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;20&quot;&#125; 28855
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;60&quot;&#125; 28860
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;120&quot;&#125; 28860
+prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;+Inf&quot;&#125; 28860<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>summary</p>
+</li>
+</ol>
+<h1 id="核心组件研究"><a href="#核心组件研究" class="headerlink" title="核心组件研究"></a>核心组件研究</h1><h2 id="pushgateway"><a href="#pushgateway" class="headerlink" title="pushgateway"></a>pushgateway</h2><p><a href="https://prometheus.io/docs/practices/pushing/">https://prometheus.io/docs/practices/pushing/</a><br><a href="https://github.com/prometheus/pushgateway">https://github.com/prometheus/pushgateway</a></p>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122209523.png"></p>
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p>Observability的三大部分:</p>
+<table>
+<thead>
+<tr>
+<th>Metrics</th>
+<th>Promethus + Grafana(前端dashboard)</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tracing</td>
+<td>ELK</td>
+<td></td>
+</tr>
+<tr>
+<td>Logging</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122210006.png"><br>**</p>
+<ul>
+<li><p>Metrics比较好理解, 核心可以分为如下几层: <a href="https://codeascraft.com/2011/02/15/measure-anything-measure-everything/">https://codeascraft.com/2011/02/15/measure-anything-measure-everything/</a> metrics are structured by default</p>
+<ul>
+<li>network</li>
+<li>machine: 现成的node exporter, <a href="https://github.com/prometheus/node_exporter">https://github.com/prometheus/node_exporter</a><ul>
+<li>disk&#x2F;io</li>
+<li>cpu&#x2F;mem&#x2F;threads&#x2F;load…</li>
+<li>status, …</li>
+</ul>
+</li>
+<li>application (而通常应用的metrics是最为复杂的), 典型的应用, 已经有promethus的exporter了<ul>
+<li>DB</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Logging:</p>
+</li>
+<li><h2 id="Tracing-类似鹰眼-根据traceId查看"><a href="#Tracing-类似鹰眼-根据traceId查看" class="headerlink" title="Tracing: 类似鹰眼, 根据traceId查看"></a>Tracing: 类似鹰眼, 根据traceId查看</h2></li>
+</ul>
+<h1 id="一些有意思的思考"><a href="#一些有意思的思考" class="headerlink" title="一些有意思的思考"></a>一些有意思的思考</h1><p><a href="https://www.splunk.com/en_us/data-insider/what-is-observability.html">https://www.splunk.com/en_us&#x2F;data-insider&#x2F;what-is-observability.html</a></p>
+<ol>
+<li>monitoring与observability的关系是啥?<ol>
+<li>Monitoring is an action you perform to increase the observability of your system.</li>
+<li>Observability is a property of that system.</li>
+</ol>
+</li>
+<li>Apdex指标: <a href="https://en.wikipedia.org/wiki/Apdex">https://en.wikipedia.org/wiki/Apdex</a></li>
+<li>EKL: Elasticsearch, Logstash, and Kibana</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>promethus</tag>
       </tags>
   </entry>
   <entry>
@@ -7374,167 +7538,21 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
-    <title>k8s生态中promethus的架构与原理研究</title>
-    <url>//2022-05-22-k8s-promethus/</url>
-    <content><![CDATA[<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><p><a href="https://prometheus.io/docs/introduction/faq/">https://prometheus.io/docs/introduction/faq/</a></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122209641.png"></p>
-<p>本质上是类似alimonitor的系统.</p>
-<h1 id="几个细节"><a href="#几个细节" class="headerlink" title="几个细节:"></a>几个细节:</h1><ul>
-<li><p>使用pull模式, 而不是push模式. 即promethus server主动去各个业务方捞取数据, 而不是各个业务方主动往promethus server推送数据.</p>
-<ul>
-<li>为啥使用pull模式? <a href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push</a><ul>
-<li>You can run your monitoring on your laptop when developing changes.</li>
-<li>You can more easily tell if a target is down.</li>
-<li>You can manually go to a target and inspect its health with a web browser.</li>
+    <title>Java与Spring中SPI机制的探讨与思考</title>
+    <url>//2022-05-24-java-spring-spi/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中用到了SPI机制, 使用过程也走了一些弯路. 这里记录下来. </p>
+<h2 id="几种SPI方式"><a href="#几种SPI方式" class="headerlink" title="几种SPI方式"></a>几种SPI方式</h2><h2 id="Java中SPI机制"><a href="#Java中SPI机制" class="headerlink" title="Java中SPI机制"></a>Java中SPI机制</h2><h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><ul>
+<li>jdbc驱动, 例如mysql-connector-java.jar中, 就在META-INF&#x2F;services&#x2F;java.sql.Driver</li>
 </ul>
-</li>
-<li>针对现存的已经有的push模式, 提供了pushgateway方案来兼容. (可以参见上图架构)<ul>
-<li><a href="https://prometheus.io/docs/instrumenting/pushing/">https://prometheus.io/docs/instrumenting/pushing/</a></li>
-<li>pushgateway类似于</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>由于使用了pull模式, 因此会有各种<a href="https://prometheus.io/docs/instrumenting/exporters/">exporter组件</a>, 来适配各个常用监控源, 例如 casandra exporter, ECS Exporter等. 本质上这种exporter是类似一个http服务器, 可以让promethus server来捞取数据.</p>
-</li>
-<li><p>服务发现: 由于使用的是pull模式, 因此promethus需要知道要从哪里捞取各个业务方的metrics, 因此需要一个服务发现机制. 有如下两种:</p>
-<ul>
-<li>静态文件配置(File-Based SD): ip:port</li>
-<li>DNS: nameserver:port <a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config">https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config</a></li>
-<li>HTTP_SD:</li>
-</ul>
-</li>
-<li><p>存储:</p>
-<ul>
-<li>存储介质:<ul>
-<li>默认使用的localstorage, 本地存储</li>
-<li>可以支持remote storage, 但由于各个remote storage的接口&amp;对原生的promethus SQL支持度的不同, 分为read&amp;write能力<ul>
-<li><a href="https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage">remote storage支持列表</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数据格式:<ul>
-<li>自定义的, 支持压缩的本地存储格式.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>HA:</p>
-<ul>
-<li>服务HA:<ul>
-<li><a href="https://www.robustperception.io/scaling-and-federating-prometheus">https://www.robustperception.io/scaling-and-federating-prometheus</a></li>
-<li>默认: 单台server足以支撑1000台server的metrics量.</li>
-<li>方案1: Initial Deployment<ul>
-<li>2个global Prometheus , N个local Promethus, global负责汇聚local数据</li>
-<li>保持2个global, 防止单台宕机.</li>
-</ul>
-</li>
-<li>方案2: Splitting By Use, 按用途垂直拆分<ul>
-<li>promethus前后端分离部署</li>
-<li>按业务域分别部署, 例如为Cassandra服务单独部署一套, 为MySQL服务单独部署一套</li>
-</ul>
-</li>
-<li>方案3: Horizontal Sharding, 水平拆分<ul>
-<li>不推荐多机器部署,</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数据HA:<ul>
-<li>localstorage: 无法HA, 因此promethus是推荐使用RAID, 或者定期打快照.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>限制:</p>
-<ul>
-<li>不要用promethus来进行tracing&#x2F;logging, 只能用来做metrics</li>
-</ul>
-</li>
-</ul>
-<h1 id="核心术语-x2F-指标"><a href="#核心术语-x2F-指标" class="headerlink" title="核心术语&#x2F;指标"></a>核心术语&#x2F;指标</h1><p>定义了很好的几种通用指标, 来覆盖metrics各个方面:</p>
-<ol>
-<li><p>counter: <a href="https://www.robustperception.io/how-does-a-prometheus-counter-work">https://www.robustperception.io/how-does-a-prometheus-counter-work</a></p>
-<ol>
-<li>rate</li>
-</ol>
-</li>
-<li><p>gauge</p>
-</li>
-<li><p>histogram, 如下, 按照le&#x3D;”xxx”, le即”less than”, 将latency分成了10个bucket</p>
-<pre class="line-numbers language-none"><code class="language-none">prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.1&quot;&#125; 25547
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.2&quot;&#125; 26688
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;0.4&quot;&#125; 27760
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;1&quot;&#125; 28641
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;3&quot;&#125; 28782
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;8&quot;&#125; 28844
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;20&quot;&#125; 28855
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;60&quot;&#125; 28860
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;120&quot;&#125; 28860
-prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&quot;,le&#x3D;&quot;+Inf&quot;&#125; 28860<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>summary</p>
-</li>
-</ol>
-<h1 id="核心组件研究"><a href="#核心组件研究" class="headerlink" title="核心组件研究"></a>核心组件研究</h1><h2 id="pushgateway"><a href="#pushgateway" class="headerlink" title="pushgateway"></a>pushgateway</h2><p><a href="https://prometheus.io/docs/practices/pushing/">https://prometheus.io/docs/practices/pushing/</a><br><a href="https://github.com/prometheus/pushgateway">https://github.com/prometheus/pushgateway</a></p>
-<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122209523.png"></p>
-<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p>Observability的三大部分:</p>
-<table>
-<thead>
-<tr>
-<th>Metrics</th>
-<th>Promethus + Grafana(前端dashboard)</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Tracing</td>
-<td>ELK</td>
-<td></td>
-</tr>
-<tr>
-<td>Logging</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207122210006.png"><br>**</p>
-<ul>
-<li><p>Metrics比较好理解, 核心可以分为如下几层: <a href="https://codeascraft.com/2011/02/15/measure-anything-measure-everything/">https://codeascraft.com/2011/02/15/measure-anything-measure-everything/</a> metrics are structured by default</p>
-<ul>
-<li>network</li>
-<li>machine: 现成的node exporter, <a href="https://github.com/prometheus/node_exporter">https://github.com/prometheus/node_exporter</a><ul>
-<li>disk&#x2F;io</li>
-<li>cpu&#x2F;mem&#x2F;threads&#x2F;load…</li>
-<li>status, …</li>
-</ul>
-</li>
-<li>application (而通常应用的metrics是最为复杂的), 典型的应用, 已经有promethus的exporter了<ul>
-<li>DB</li>
-<li></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Logging:</p>
-</li>
-<li><h2 id="Tracing-类似鹰眼-根据traceId查看"><a href="#Tracing-类似鹰眼-根据traceId查看" class="headerlink" title="Tracing: 类似鹰眼, 根据traceId查看"></a>Tracing: 类似鹰眼, 根据traceId查看</h2></li>
-</ul>
-<h1 id="一些有意思的思考"><a href="#一些有意思的思考" class="headerlink" title="一些有意思的思考"></a>一些有意思的思考</h1><p><a href="https://www.splunk.com/en_us/data-insider/what-is-observability.html">https://www.splunk.com/en_us&#x2F;data-insider&#x2F;what-is-observability.html</a></p>
-<ol>
-<li>monitoring与observability的关系是啥?<ol>
-<li>Monitoring is an action you perform to increase the observability of your system.</li>
-<li>Observability is a property of that system.</li>
-</ol>
-</li>
-<li>Apdex指标: <a href="https://en.wikipedia.org/wiki/Apdex">https://en.wikipedia.org/wiki/Apdex</a></li>
-<li>EKL: Elasticsearch, Logstash, and Kibana</li>
-</ol>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>比较严重的一个问题是, 这些SPI的Bean游离于Spring容器外.<br>SPI中引入的对象(Bean)没有被Spring容器管理起来.<br>从而这些Bean如果依赖到了Spring容器中其他Bean, 就只能手动从Spring容器中拿出来复制, 即手动注入.<br>太麻烦了. </p>
+<h2 id="Service-Loader-Spring-integration"><a href="#Service-Loader-Spring-integration" class="headerlink" title="Service Loader Spring integration"></a>Service Loader Spring integration</h2><h2 id="Spring-Factories-Loader"><a href="#Spring-Factories-Loader" class="headerlink" title="Spring Factories Loader"></a>Spring Factories Loader</h2><h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h2 id="在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥"><a href="#在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥" class="headerlink" title="在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?"></a>在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?</h2><p>个人理解, 最大的优点是编译期与实现类&#x2F;包解耦. </p>
+<h2 id="Spring-Factories-Loader在Starter的应用场景-优势是啥"><a href="#Spring-Factories-Loader在Starter的应用场景-优势是啥" class="headerlink" title="Spring Factories Loader在Starter的应用场景, 优势是啥?"></a>Spring Factories Loader在Starter的应用场景, 优势是啥?</h2><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a href="https://dzone.com/articles/java-service-loader-vs-spring-factories-loader">Java Service Loader vs. Spring Factories Loader</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
-        <tag>promethus</tag>
+        <tag>java</tag>
+        <tag>spring</tag>
+        <tag>spi</tag>
+        <tag>service-loader</tag>
       </tags>
   </entry>
   <entry>
@@ -7570,24 +7588,6 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <tag>scheduler-design</tag>
         <tag>api-design</tag>
         <tag>scheduler-api</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java与Spring中SPI机制的探讨与思考</title>
-    <url>//2022-05-24-java-spring-spi/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中用到了SPI机制, 使用过程也走了一些弯路. 这里记录下来. </p>
-<h2 id="几种SPI方式"><a href="#几种SPI方式" class="headerlink" title="几种SPI方式"></a>几种SPI方式</h2><h2 id="Java中SPI机制"><a href="#Java中SPI机制" class="headerlink" title="Java中SPI机制"></a>Java中SPI机制</h2><h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><ul>
-<li>jdbc驱动, 例如mysql-connector-java.jar中, 就在META-INF&#x2F;services&#x2F;java.sql.Driver</li>
-</ul>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>比较严重的一个问题是, 这些SPI的Bean游离于Spring容器外.<br>SPI中引入的对象(Bean)没有被Spring容器管理起来.<br>从而这些Bean如果依赖到了Spring容器中其他Bean, 就只能手动从Spring容器中拿出来复制, 即手动注入.<br>太麻烦了. </p>
-<h2 id="Service-Loader-Spring-integration"><a href="#Service-Loader-Spring-integration" class="headerlink" title="Service Loader Spring integration"></a>Service Loader Spring integration</h2><h2 id="Spring-Factories-Loader"><a href="#Spring-Factories-Loader" class="headerlink" title="Spring Factories Loader"></a>Spring Factories Loader</h2><h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h2 id="在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥"><a href="#在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥" class="headerlink" title="在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?"></a>在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?</h2><p>个人理解, 最大的优点是编译期与实现类&#x2F;包解耦. </p>
-<h2 id="Spring-Factories-Loader在Starter的应用场景-优势是啥"><a href="#Spring-Factories-Loader在Starter的应用场景-优势是啥" class="headerlink" title="Spring Factories Loader在Starter的应用场景, 优势是啥?"></a>Spring Factories Loader在Starter的应用场景, 优势是啥?</h2><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a href="https://dzone.com/articles/java-service-loader-vs-spring-factories-loader">Java Service Loader vs. Spring Factories Loader</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>spring</tag>
-        <tag>spi</tag>
-        <tag>service-loader</tag>
       </tags>
   </entry>
   <entry>
@@ -7664,23 +7664,6 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <tag>good-design</tag>
         <tag>bad-design</tag>
         <tag>black-list</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>爱死机第三季观后感</title>
-    <url>//2022-06-04-love-death-robots/</url>
-    <content><![CDATA[<p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
-<hr>
-<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
-<hr>
-<p>最负盛誉的第九集, Jibaro</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>2022</tag>
-        <tag>movie</tag>
-        <tag>movie-list</tag>
-        <tag>love-death-robots</tag>
       </tags>
   </entry>
   <entry>
@@ -7907,86 +7890,20 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
       </tags>
   </entry>
   <entry>
-    <title>MySQL连接池重要参数配置原理研究</title>
-    <url>//2022-06-05-mysql-conn-params/</url>
-    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
-<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
-<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
-<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
-<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
-<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
-<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
-<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
-<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
-</ul>
-<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
-<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
-</ul>
-<ol>
-<li>即客户端从连接池中获取connection的最大等待时长</li>
-<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
-<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
-    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
-    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
-    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<ul>
-<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
-<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
-</ul>
-<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
-<li>initialSize: 100</li>
-<li>maxActive: 200</li>
-<li>minIdle: 100</li>
-<li>maxWait: 6000</li>
-</ul>
-<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
-<ul>
-<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
-<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
-</ul>
-<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
-<li>initialSize: 未配置</li>
-<li>maxActive: 300</li>
-<li>minIdle: 30</li>
-<li>maxWait: 60000</li>
-</ul>
-<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
-<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
-<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
-<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
-</ol>
-</li>
-<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
-<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
-<li>取决于物理机&#x2F;虚拟机的配置.</li>
-</ol>
-</li>
-<li>什么是MySQL的session? 与connection是啥关系?<ol>
-<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
-<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
-<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
-</ol>
-</li>
-</ol>
+    <title>爱死机第三季观后感</title>
+    <url>//2022-06-04-love-death-robots/</url>
+    <content><![CDATA[<p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
+<hr>
+<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
+<hr>
+<p>最负盛誉的第九集, Jibaro</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>java</tag>
-        <tag>mysql</tag>
-        <tag>database</tag>
-        <tag>connection-pool</tag>
-        <tag>druid</tag>
+        <tag>2022</tag>
+        <tag>movie</tag>
+        <tag>movie-list</tag>
+        <tag>love-death-robots</tag>
       </tags>
   </entry>
   <entry>
@@ -8085,6 +8002,89 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <tag>aop</tag>
         <tag>interface</tag>
         <tag>spring-tx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL连接池重要参数配置原理研究</title>
+    <url>//2022-06-05-mysql-conn-params/</url>
+    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
+<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
+<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
+<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
+<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
+<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
+<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
+<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
+<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
+</ul>
+<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
+<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
+</ul>
+<ol>
+<li>即客户端从连接池中获取connection的最大等待时长</li>
+<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
+<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
+    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
+    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
+    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<ul>
+<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
+<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
+</ul>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
+<li>initialSize: 100</li>
+<li>maxActive: 200</li>
+<li>minIdle: 100</li>
+<li>maxWait: 6000</li>
+</ul>
+<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
+<ul>
+<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
+<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
+</ul>
+<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
+<li>initialSize: 未配置</li>
+<li>maxActive: 300</li>
+<li>minIdle: 30</li>
+<li>maxWait: 60000</li>
+</ul>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
+<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
+<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
+<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
+</ol>
+</li>
+<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
+<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
+<li>取决于物理机&#x2F;虚拟机的配置.</li>
+</ol>
+</li>
+<li>什么是MySQL的session? 与connection是啥关系?<ol>
+<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
+<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
+<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
+</ol>
+</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>mysql</tag>
+        <tag>database</tag>
+        <tag>connection-pool</tag>
+        <tag>druid</tag>
       </tags>
   </entry>
   <entry>
@@ -8232,45 +8232,6 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
       </tags>
   </entry>
   <entry>
-    <title>大学对我的影响</title>
-    <url>//2022-06-17-university-summary/</url>
-    <content><![CDATA[<p>一年一度如火如荼的高考季结束. 蓦然回首, 自己已然高中毕业13年, 大学也毕业9年了.<br>9年时间, 改变了很多, 足以把一个鲜衣怒马, 意气风发, 唇红齿白的少年, 变成而今房贷和车贷缠身, 视力与体力俱下, 惶惶不可终日的油腻中年.</p>
-<p>但最近也一直在酝酿与反思, 这短短四年的大学生活, 究竟带给了我什么?<br>当我在收到外卖, 外卖员说都怪自己没上大学, 才落得今天下苦力.<br>当我在坐网约车, 司机说要不是自己没上大学, 也不至于现在每天被公司压榨.</p>
-<p>四年的生活, 有什么样的魔力, 真的足以把人群完成阶级划分么?<br>现在把杂乱的思绪总结成文, 聊以慰藉.</p>
-<h1 id="一-让我看到了一个更大的世界"><a href="#一-让我看到了一个更大的世界" class="headerlink" title="一: 让我看到了一个更大的世界"></a>一: 让我看到了一个更大的世界</h1><hr>
-<p>这个话说得可能有点儿大, 有点儿虚, 但确实上大学, 让我这个小镇青年, 有机会第一次离开了那个只有60万人口的小城市,<br>进入到一个二三线城市, 看到了一个更大的世界.</p>
-<h2 id="地理上的冲击"><a href="#地理上的冲击" class="headerlink" title="地理上的冲击"></a>地理上的冲击</h2><p>家乡处于豫西北一个不起眼的角落, 三面环山的盆地, 剩余一面被黄河阻隔.<br>伟大的太行山与王屋山交汇于此. <br>而我从小生活在太行山脚下, 听着愚公移山的故事长大. <br>18岁前从来没有离开过那片大山. <br>年少的我一直很好奇山的后边是什么? 会不会是一片蔚蓝色的大海呢? 会不会是一个喧嚣繁华, 高楼林立, 霓虹闪烁的都市呢?<br>曾经跟随奶奶上坟, 翻越了眼前那座大山, 发现在山的后边, 仍然是山, 是无穷无尽绵延不绝的山, 是目之所及毫无颓势的山脉.<br>沮丧至极.  </p>
-<blockquote>
-<p>没有人知道为什么<br>太阳总下到山的那一边<br>没有人能够告诉我<br>山里面有没有住着神仙<br>多少的日子里总是<br>一个人面对着天空发呆<br>就这么好奇就这么幻想<br>这么孤单的童年</p>
-</blockquote>
-<p>而上大学给了我一次机会,<br>能光明正大理直气壮地彻底逃离这片群山,<br>毅然决然地选择离家2000公里外的厦门.</p>
-<p>我来自大山, <br>我要奔赴向大海. </p>
-<p>第一次到海边, 第一次吃到芒果荔枝肯德基麦当劳, </p>
-<blockquote>
-<p>父母在, 不远游.<br>游必有方.</p>
-</blockquote>
-<h2 id="文化上的冲击"><a href="#文化上的冲击" class="headerlink" title="文化上的冲击"></a>文化上的冲击</h2><p>同学都来自五湖四海, </p>
-<h2 id="思想上的冲击"><a href="#思想上的冲击" class="headerlink" title="思想上的冲击"></a>思想上的冲击</h2><p>很快就体会到了贫富差距与阶级差异.<br>当我还在省吃俭用只为买个100多元的<code>蓝魔MP3</code>, 甚至兴奋地睡不着时, 隔壁宿舍的同学就已经开始用<code>iPod touch</code>通过陀螺仪玩赛车游戏了.<br>当我还在用<code>小灵通</code>的时候, 室友就已经开始用<code>iPhone 3Gs</code>了. 当第一次试用, 彻底颠覆了我的想象, 才知道原来手机可以是这样的. </p>
-<blockquote>
-<p>每次室友手机解锁时, 经典的”咔哒”声音, 令我羡慕, 至今仍在我耳边回响, 是我永远逾越不了的鸿沟.</p>
-</blockquote>
-<p>当我为了省钱, 选择花费120元, 硬座坐43小时火车跨越四千里回家, 腰酸背痛, 双腿浮肿时; 室友与爸妈选择坐飞机, 去香港购物度假.<br>当我知道室友原来竟然没有参加高考, 直接通过竞赛保送到大学; 而我却几乎拼出了半条命, 才得以在当年100万考生中杀出了一条血路.<br>当看到室友的班级通讯录里, 前四五十都是清一色的清北浙交; 我们河南的同伴</p>
-<p>很庆幸自己没有因为这些差异导致走向消极与虚无, 走向愤怒与反抗, 而是接受这些冲击, 这就是生活.<br>然后一点一点地再努力一些, </p>
-<p>当然, 外卖员, 网约车司机可能也是一样, 借由来城市打工.</p>
-<h1 id="二-让我拥有了独立思考与探索知识的能力"><a href="#二-让我拥有了独立思考与探索知识的能力" class="headerlink" title="二: 让我拥有了独立思考与探索知识的能力"></a>二: 让我拥有了独立思考与探索知识的能力</h1><hr>
-<p>第一次在同学宿舍, 看到了墙外的世界.<br>批判型思维.<br>成长型思维.</p>
-<h1 id="三-让我拥有了破除任何神话人物的信心与勇气"><a href="#三-让我拥有了破除任何神话人物的信心与勇气" class="headerlink" title="三: 让我拥有了破除任何神话人物的信心与勇气"></a>三: 让我拥有了破除任何神话人物的信心与勇气</h1><hr>
-<p>正是因为接受了思想上的冲击, 所以至今我心底里从不会崇拜或者神话任何一个人.<br>相信自己</p>
-<h1 id="遗憾"><a href="#遗憾" class="headerlink" title="遗憾"></a>遗憾</h1><hr>
-<p>最近也在看&lt;规模&gt;这本书, 城市, 真的会让生活更美好么? </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>books</tag>
-        <tag>weekend</tag>
-        <tag>diary</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux虚拟网络与网络设备</title>
     <url>//2022-06-19-linux-virtual-network/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>使用VMWare或者KVM设置VM网络时, 通常会有几种网络模式: </p>
@@ -8332,6 +8293,45 @@ yum <span class="token function">install</span> bridge-utils -y<span aria-hidden
         <tag>cloud-computing</tag>
         <tag>nat</tag>
         <tag>pat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大学对我的影响</title>
+    <url>//2022-06-17-university-summary/</url>
+    <content><![CDATA[<p>一年一度如火如荼的高考季结束. 蓦然回首, 自己已然高中毕业13年, 大学也毕业9年了.<br>9年时间, 改变了很多, 足以把一个鲜衣怒马, 意气风发, 唇红齿白的少年, 变成而今房贷和车贷缠身, 视力与体力俱下, 惶惶不可终日的油腻中年.</p>
+<p>但最近也一直在酝酿与反思, 这短短四年的大学生活, 究竟带给了我什么?<br>当我在收到外卖, 外卖员说都怪自己没上大学, 才落得今天下苦力.<br>当我在坐网约车, 司机说要不是自己没上大学, 也不至于现在每天被公司压榨.</p>
+<p>四年的生活, 有什么样的魔力, 真的足以把人群完成阶级划分么?<br>现在把杂乱的思绪总结成文, 聊以慰藉.</p>
+<h1 id="一-让我看到了一个更大的世界"><a href="#一-让我看到了一个更大的世界" class="headerlink" title="一: 让我看到了一个更大的世界"></a>一: 让我看到了一个更大的世界</h1><hr>
+<p>这个话说得可能有点儿大, 有点儿虚, 但确实上大学, 让我这个小镇青年, 有机会第一次离开了那个只有60万人口的小城市,<br>进入到一个二三线城市, 看到了一个更大的世界.</p>
+<h2 id="地理上的冲击"><a href="#地理上的冲击" class="headerlink" title="地理上的冲击"></a>地理上的冲击</h2><p>家乡处于豫西北一个不起眼的角落, 三面环山的盆地, 剩余一面被黄河阻隔.<br>伟大的太行山与王屋山交汇于此. <br>而我从小生活在太行山脚下, 听着愚公移山的故事长大. <br>18岁前从来没有离开过那片大山. <br>年少的我一直很好奇山的后边是什么? 会不会是一片蔚蓝色的大海呢? 会不会是一个喧嚣繁华, 高楼林立, 霓虹闪烁的都市呢?<br>曾经跟随奶奶上坟, 翻越了眼前那座大山, 发现在山的后边, 仍然是山, 是无穷无尽绵延不绝的山, 是目之所及毫无颓势的山脉.<br>沮丧至极.  </p>
+<blockquote>
+<p>没有人知道为什么<br>太阳总下到山的那一边<br>没有人能够告诉我<br>山里面有没有住着神仙<br>多少的日子里总是<br>一个人面对着天空发呆<br>就这么好奇就这么幻想<br>这么孤单的童年</p>
+</blockquote>
+<p>而上大学给了我一次机会,<br>能光明正大理直气壮地彻底逃离这片群山,<br>毅然决然地选择离家2000公里外的厦门.</p>
+<p>我来自大山, <br>我要奔赴向大海. </p>
+<p>第一次到海边, 第一次吃到芒果荔枝肯德基麦当劳, </p>
+<blockquote>
+<p>父母在, 不远游.<br>游必有方.</p>
+</blockquote>
+<h2 id="文化上的冲击"><a href="#文化上的冲击" class="headerlink" title="文化上的冲击"></a>文化上的冲击</h2><p>同学都来自五湖四海, </p>
+<h2 id="思想上的冲击"><a href="#思想上的冲击" class="headerlink" title="思想上的冲击"></a>思想上的冲击</h2><p>很快就体会到了贫富差距与阶级差异.<br>当我还在省吃俭用只为买个100多元的<code>蓝魔MP3</code>, 甚至兴奋地睡不着时, 隔壁宿舍的同学就已经开始用<code>iPod touch</code>通过陀螺仪玩赛车游戏了.<br>当我还在用<code>小灵通</code>的时候, 室友就已经开始用<code>iPhone 3Gs</code>了. 当第一次试用, 彻底颠覆了我的想象, 才知道原来手机可以是这样的. </p>
+<blockquote>
+<p>每次室友手机解锁时, 经典的”咔哒”声音, 令我羡慕, 至今仍在我耳边回响, 是我永远逾越不了的鸿沟.</p>
+</blockquote>
+<p>当我为了省钱, 选择花费120元, 硬座坐43小时火车跨越四千里回家, 腰酸背痛, 双腿浮肿时; 室友与爸妈选择坐飞机, 去香港购物度假.<br>当我知道室友原来竟然没有参加高考, 直接通过竞赛保送到大学; 而我却几乎拼出了半条命, 才得以在当年100万考生中杀出了一条血路.<br>当看到室友的班级通讯录里, 前四五十都是清一色的清北浙交; 我们河南的同伴</p>
+<p>很庆幸自己没有因为这些差异导致走向消极与虚无, 走向愤怒与反抗, 而是接受这些冲击, 这就是生活.<br>然后一点一点地再努力一些, </p>
+<p>当然, 外卖员, 网约车司机可能也是一样, 借由来城市打工.</p>
+<h1 id="二-让我拥有了独立思考与探索知识的能力"><a href="#二-让我拥有了独立思考与探索知识的能力" class="headerlink" title="二: 让我拥有了独立思考与探索知识的能力"></a>二: 让我拥有了独立思考与探索知识的能力</h1><hr>
+<p>第一次在同学宿舍, 看到了墙外的世界.<br>批判型思维.<br>成长型思维.</p>
+<h1 id="三-让我拥有了破除任何神话人物的信心与勇气"><a href="#三-让我拥有了破除任何神话人物的信心与勇气" class="headerlink" title="三: 让我拥有了破除任何神话人物的信心与勇气"></a>三: 让我拥有了破除任何神话人物的信心与勇气</h1><hr>
+<p>正是因为接受了思想上的冲击, 所以至今我心底里从不会崇拜或者神话任何一个人.<br>相信自己</p>
+<h1 id="遗憾"><a href="#遗憾" class="headerlink" title="遗憾"></a>遗憾</h1><hr>
+<p>最近也在看&lt;规模&gt;这本书, 城市, 真的会让生活更美好么? </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>weekend</tag>
+        <tag>diary</tag>
+        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -11772,6 +11772,40 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       </tags>
   </entry>
   <entry>
+    <title>主席诗词集锦&amp;赏析</title>
+    <url>//2023-02-08-zhuxishici/</url>
+    <content><![CDATA[<h1 id="水调歌头·重上井冈山"><a href="#水调歌头·重上井冈山" class="headerlink" title="水调歌头·重上井冈山"></a>水调歌头·重上井冈山</h1><p>久有凌云志，重上井冈山。<br>千里来寻故地，旧貌变新颜。<br>到处莺歌燕舞，更有潺潺流水，高路入云端。<br>过了黄洋界，险处不须看。<br>风雷动，旌旗奋，是人寰。<br>三十八年过去，弹指一挥间。<br>可上九天揽月，可下五洋捉鳖，谈笑凯歌还。<br>世上无难事，只要肯登攀！</p>
+<hr>
+<h1 id="忆秦娥·娄山关"><a href="#忆秦娥·娄山关" class="headerlink" title="忆秦娥·娄山关"></a>忆秦娥·娄山关</h1><p>西风烈，长空雁叫霜晨月。霜晨月，马蹄声碎，喇叭声咽。</p>
+<p>雄关漫道真如铁，而今迈步从头越。从头越，苍山如海，残阳如血。</p>
+<hr>
+<h1 id="清平乐·六盘山"><a href="#清平乐·六盘山" class="headerlink" title="清平乐·六盘山"></a>清平乐·六盘山</h1><p>天高云淡，望断南飞雁。不到长城非好汉，屈指行程二万。</p>
+<p>六盘山上高峰，红旗漫卷西风。今日长缨在手，何时缚住苍龙？</p>
+<hr>
+<h1 id="七律·和柳亚子先生"><a href="#七律·和柳亚子先生" class="headerlink" title="七律·和柳亚子先生"></a>七律·和柳亚子先生</h1><p>饮茶粤海未能忘，索句渝州叶正黄。</p>
+<p>三十一年还旧国，落花时节读华章。</p>
+<p>牢骚太盛防肠断，风物长宜放眼量。</p>
+<p>莫道昆明池水浅，观鱼胜过富春江。</p>
+<hr>
+<h1 id="七律·人民解放军占领南京"><a href="#七律·人民解放军占领南京" class="headerlink" title="七律·人民解放军占领南京"></a>七律·人民解放军占领南京</h1><p>钟山风雨起苍黄，百万雄师过大江。<br>虎踞龙盘今胜昔，天翻地覆慨而慷。<br>宜将剩勇追穷寇，不可沽名学霸王。<br>天若有情天亦老，人间正道是沧桑。</p>
+<h2 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h2><p>自然界如果有知，它会体察到兴盛与衰败这条不可改变的法则。事物不断的向前发展更新和变化，这是必然的规律。</p>
+<h2 id="创作背景"><a href="#创作背景" class="headerlink" title="创作背景"></a>创作背景</h2><p>1949年4月21日，毛泽东主席和朱德总司令发出《向全国进军的命令》，号令全军坚决、彻底、干净、全部地歼灭中国境内一切敢于抵抗的国民党反动派，解放全中国。中国人民解放军百万大军于4月23日占领国民党反动政府的“首都”南京。毛泽东同志在北平香山双清别墅得到占领南京的捷报，心情振奋，写下了这首诗。</p>
+<hr>
+<h1 id="七律二首·送瘟神"><a href="#七律二首·送瘟神" class="headerlink" title="七律二首·送瘟神"></a>七律二首·送瘟神</h1><p>读六月三十日《人民日报》，余江县消灭了血吸虫。浮想联翩，夜不能寐。微风拂煦，旭日临窗，遥望南天，欣然命笔。</p>
+<p>绿水青山枉自多，华佗无奈小虫何！<br>千村薜荔人遗矢，万户萧疏鬼唱歌。<br>坐地日行八万里，巡天遥看一千河。<br>牛郎欲问瘟神事，一样悲欢逐逝波。</p>
+<p>春风杨柳万千条，六亿神州尽舜尧。<br>红雨随心翻作浪，青山着意化为桥。<br>天连五岭银锄落，地动三河铁臂摇。<br>借问瘟君欲何往，纸船明烛照天烧。</p>
+<h2 id="译文-1"><a href="#译文-1" class="headerlink" title="译文"></a>译文</h2><p>祖国大地上白白有这么多的绿水青山，连神医华佗拿小小的血吸虫也没有根治的办法。<br>许多村庄荒草丛生，杳无人迹，瘟疫无情蔓延，千门万户家破人亡，听到的只是鬼在唱歌。<br>坐在地球上每天行走八万里的路程，沿着天路遥遥地看过浩渺的银河。<br>牛郎如问起血吸虫病的事，一切悲欢离合都已随着时光的流逝而成为过去。</p>
+<p>春风吹拂杨柳新绿，新中国一片春意盎然，六亿人民意气风发，个个都像古代的尧舜一样。<br>落花随着自己的心意翻波逐浪，青山有意化崎岖险阻为康庄大道。<br>人民群众挥动银光闪闪的铁锄，挥舞着坚实的臂膀，兴修水利，整治山河，使大地都为之颤动。<br>试问瘟神啊，你要往哪里去？人们焚化纸钱，点起明烛，火光明亮，照耀天空，以此来送走瘟神。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>诗词</category>
+      </categories>
+      <tags>
+        <tag>诗词</tag>
+        <tag>主席诗词</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一次心跳导致dubbo调用偶现失败问题排查</title>
     <url>//2023-02-09-dubbo-heartbeat-fail/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h2 id="应用拓扑"><a href="#应用拓扑" class="headerlink" title="应用拓扑"></a>应用拓扑</h2><ul>
@@ -11977,40 +12011,6 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
         <tag>java</tag>
         <tag>dubbo</tag>
         <tag>heartbeat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>主席诗词集锦&amp;赏析</title>
-    <url>//2023-02-08-zhuxishici/</url>
-    <content><![CDATA[<h1 id="水调歌头·重上井冈山"><a href="#水调歌头·重上井冈山" class="headerlink" title="水调歌头·重上井冈山"></a>水调歌头·重上井冈山</h1><p>久有凌云志，重上井冈山。<br>千里来寻故地，旧貌变新颜。<br>到处莺歌燕舞，更有潺潺流水，高路入云端。<br>过了黄洋界，险处不须看。<br>风雷动，旌旗奋，是人寰。<br>三十八年过去，弹指一挥间。<br>可上九天揽月，可下五洋捉鳖，谈笑凯歌还。<br>世上无难事，只要肯登攀！</p>
-<hr>
-<h1 id="忆秦娥·娄山关"><a href="#忆秦娥·娄山关" class="headerlink" title="忆秦娥·娄山关"></a>忆秦娥·娄山关</h1><p>西风烈，长空雁叫霜晨月。霜晨月，马蹄声碎，喇叭声咽。</p>
-<p>雄关漫道真如铁，而今迈步从头越。从头越，苍山如海，残阳如血。</p>
-<hr>
-<h1 id="清平乐·六盘山"><a href="#清平乐·六盘山" class="headerlink" title="清平乐·六盘山"></a>清平乐·六盘山</h1><p>天高云淡，望断南飞雁。不到长城非好汉，屈指行程二万。</p>
-<p>六盘山上高峰，红旗漫卷西风。今日长缨在手，何时缚住苍龙？</p>
-<hr>
-<h1 id="七律·和柳亚子先生"><a href="#七律·和柳亚子先生" class="headerlink" title="七律·和柳亚子先生"></a>七律·和柳亚子先生</h1><p>饮茶粤海未能忘，索句渝州叶正黄。</p>
-<p>三十一年还旧国，落花时节读华章。</p>
-<p>牢骚太盛防肠断，风物长宜放眼量。</p>
-<p>莫道昆明池水浅，观鱼胜过富春江。</p>
-<hr>
-<h1 id="七律·人民解放军占领南京"><a href="#七律·人民解放军占领南京" class="headerlink" title="七律·人民解放军占领南京"></a>七律·人民解放军占领南京</h1><p>钟山风雨起苍黄，百万雄师过大江。<br>虎踞龙盘今胜昔，天翻地覆慨而慷。<br>宜将剩勇追穷寇，不可沽名学霸王。<br>天若有情天亦老，人间正道是沧桑。</p>
-<h2 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h2><p>自然界如果有知，它会体察到兴盛与衰败这条不可改变的法则。事物不断的向前发展更新和变化，这是必然的规律。</p>
-<h2 id="创作背景"><a href="#创作背景" class="headerlink" title="创作背景"></a>创作背景</h2><p>1949年4月21日，毛泽东主席和朱德总司令发出《向全国进军的命令》，号令全军坚决、彻底、干净、全部地歼灭中国境内一切敢于抵抗的国民党反动派，解放全中国。中国人民解放军百万大军于4月23日占领国民党反动政府的“首都”南京。毛泽东同志在北平香山双清别墅得到占领南京的捷报，心情振奋，写下了这首诗。</p>
-<hr>
-<h1 id="七律二首·送瘟神"><a href="#七律二首·送瘟神" class="headerlink" title="七律二首·送瘟神"></a>七律二首·送瘟神</h1><p>读六月三十日《人民日报》，余江县消灭了血吸虫。浮想联翩，夜不能寐。微风拂煦，旭日临窗，遥望南天，欣然命笔。</p>
-<p>绿水青山枉自多，华佗无奈小虫何！<br>千村薜荔人遗矢，万户萧疏鬼唱歌。<br>坐地日行八万里，巡天遥看一千河。<br>牛郎欲问瘟神事，一样悲欢逐逝波。</p>
-<p>春风杨柳万千条，六亿神州尽舜尧。<br>红雨随心翻作浪，青山着意化为桥。<br>天连五岭银锄落，地动三河铁臂摇。<br>借问瘟君欲何往，纸船明烛照天烧。</p>
-<h2 id="译文-1"><a href="#译文-1" class="headerlink" title="译文"></a>译文</h2><p>祖国大地上白白有这么多的绿水青山，连神医华佗拿小小的血吸虫也没有根治的办法。<br>许多村庄荒草丛生，杳无人迹，瘟疫无情蔓延，千门万户家破人亡，听到的只是鬼在唱歌。<br>坐在地球上每天行走八万里的路程，沿着天路遥遥地看过浩渺的银河。<br>牛郎如问起血吸虫病的事，一切悲欢离合都已随着时光的流逝而成为过去。</p>
-<p>春风吹拂杨柳新绿，新中国一片春意盎然，六亿人民意气风发，个个都像古代的尧舜一样。<br>落花随着自己的心意翻波逐浪，青山有意化崎岖险阻为康庄大道。<br>人民群众挥动银光闪闪的铁锄，挥舞着坚实的臂膀，兴修水利，整治山河，使大地都为之颤动。<br>试问瘟神啊，你要往哪里去？人们焚化纸钱，点起明烛，火光明亮，照耀天空，以此来送走瘟神。</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>诗词</category>
-      </categories>
-      <tags>
-        <tag>诗词</tag>
-        <tag>主席诗词</tag>
       </tags>
   </entry>
   <entry>
@@ -13614,6 +13614,35 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
       </tags>
   </entry>
   <entry>
+    <title>上云还是下云？对 Cloud Exit 趋势的思考</title>
+    <url>//2023-10-29-cloudon-or-cloudexit/</url>
+    <content><![CDATA[<h1 id="20231030-CloudOn-or-CloudExit"><a href="#20231030-CloudOn-or-CloudExit" class="headerlink" title="20231030-CloudOn-or-CloudExit?"></a>20231030-CloudOn-or-CloudExit?</h1><p>作为云计算从业者, 始终也是上云的坚定. 也不知道是因为屁股决定态度, 还是”因为相信所以看见”.</p>
+<p>但今天看到一则推送, <a href="https://mp.weixin.qq.com/s/DpTtIjmfS8Nj09etY83svA">马斯克440亿美元收购Twitter一年后：全力“下云”，成本速降60%，功能代码从70万行减少至7万！</a> 真的让自己大跌眼镜, 不得不仔细思考. </p>
+<ul>
+<li>20221019: <a href="https://world.hey.com/dhh/why-we-re-leaving-the-cloud-654b47e0">Why we’re leaving the cloud</a></li>
+<li>20230110: <a href="https://world.hey.com/dhh/the-only-thing-worse-than-cloud-pricing-is-the-enterprisey-alternatives-854e98f3">The only thing worse than cloud pricing is the enterprisey alternatives</a></li>
+<li>20230221: <a href="https://world.hey.com/dhh/we-stand-to-save-7m-over-five-years-from-our-cloud-exit-53996caa">We stand to save $7m over five years from our cloud exit</a></li>
+<li>20230323: <a href="https://world.hey.com/dhh/cut-cloud-before-payroll-a4530ebd">Cut cloud before payroll</a></li>
+<li>20230406: <a href="https://world.hey.com/dhh/the-hardware-we-need-for-our-cloud-exit-has-arrived-99d66966">The hardware we need for our cloud exit has arrived</a></li>
+<li>20230502: <a href="https://world.hey.com/dhh/cloud-exit-pays-off-in-performance-too-4c53b697">Cloud exit pays off in performance too</a></li>
+<li>20230503: <a href="https://world.hey.com/dhh/sovereign-clouds-661eb5e4">Sovereign clouds</a></li>
+<li>20230511: <a href="https://world.hey.com/dhh/it-s-not-just-cloud-costs-that-are-out-of-control-efcd098c">It’s not just cloud costs that are out of control</a></li>
+<li>20230623: <a href="https://world.hey.com/dhh/we-have-left-the-cloud-251760fb">We have left the cloud</a></li>
+<li>20230915: <a href="https://world.hey.com/dhh/our-cloud-exit-has-already-yielded-1m-year-in-savings-db358dea">Our cloud exit has already yielded $1m&#x2F;year in savings</a></li>
+<li>20231027: <a href="https://world.hey.com/dhh/x-celebrates-60-savings-from-cloud-exit-7cc26895">X celebrates 60% savings from cloud exit</a></li>
+</ul>
+<blockquote>
+<p>The cloud excels at two ends of the spectrum.<br>The first end is when your application is so simple and low traffic that you really do save on complexity by starting with fully managed services.<br>The second is when your load is highly irregular.</p>
+</blockquote>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>cloud-computing</tag>
+        <tag>cloud-exit</tag>
+        <tag>thoughts</tag>
+        <tag>architecture</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS 7 systemd 与 SysV init 对比</title>
     <url>//2023-10-20-centos-systemd-sysv/</url>
     <content><![CDATA[<h1 id="20231021-centos-systemd-sysv"><a href="#20231021-centos-systemd-sysv" class="headerlink" title="20231021-centos-systemd-sysv"></a>20231021-centos-systemd-sysv</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>centos7之后, 所有的service都推荐使用systemd&#x2F;systemctl来管理.</p>
@@ -13667,35 +13696,6 @@ Wants&#x3D;sshd-keygen.service
         <tag>systemd</tag>
         <tag>sysv</tag>
         <tag>service-management</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>上云还是下云？对 Cloud Exit 趋势的思考</title>
-    <url>//2023-10-29-cloudon-or-cloudexit/</url>
-    <content><![CDATA[<h1 id="20231030-CloudOn-or-CloudExit"><a href="#20231030-CloudOn-or-CloudExit" class="headerlink" title="20231030-CloudOn-or-CloudExit?"></a>20231030-CloudOn-or-CloudExit?</h1><p>作为云计算从业者, 始终也是上云的坚定. 也不知道是因为屁股决定态度, 还是”因为相信所以看见”.</p>
-<p>但今天看到一则推送, <a href="https://mp.weixin.qq.com/s/DpTtIjmfS8Nj09etY83svA">马斯克440亿美元收购Twitter一年后：全力“下云”，成本速降60%，功能代码从70万行减少至7万！</a> 真的让自己大跌眼镜, 不得不仔细思考. </p>
-<ul>
-<li>20221019: <a href="https://world.hey.com/dhh/why-we-re-leaving-the-cloud-654b47e0">Why we’re leaving the cloud</a></li>
-<li>20230110: <a href="https://world.hey.com/dhh/the-only-thing-worse-than-cloud-pricing-is-the-enterprisey-alternatives-854e98f3">The only thing worse than cloud pricing is the enterprisey alternatives</a></li>
-<li>20230221: <a href="https://world.hey.com/dhh/we-stand-to-save-7m-over-five-years-from-our-cloud-exit-53996caa">We stand to save $7m over five years from our cloud exit</a></li>
-<li>20230323: <a href="https://world.hey.com/dhh/cut-cloud-before-payroll-a4530ebd">Cut cloud before payroll</a></li>
-<li>20230406: <a href="https://world.hey.com/dhh/the-hardware-we-need-for-our-cloud-exit-has-arrived-99d66966">The hardware we need for our cloud exit has arrived</a></li>
-<li>20230502: <a href="https://world.hey.com/dhh/cloud-exit-pays-off-in-performance-too-4c53b697">Cloud exit pays off in performance too</a></li>
-<li>20230503: <a href="https://world.hey.com/dhh/sovereign-clouds-661eb5e4">Sovereign clouds</a></li>
-<li>20230511: <a href="https://world.hey.com/dhh/it-s-not-just-cloud-costs-that-are-out-of-control-efcd098c">It’s not just cloud costs that are out of control</a></li>
-<li>20230623: <a href="https://world.hey.com/dhh/we-have-left-the-cloud-251760fb">We have left the cloud</a></li>
-<li>20230915: <a href="https://world.hey.com/dhh/our-cloud-exit-has-already-yielded-1m-year-in-savings-db358dea">Our cloud exit has already yielded $1m&#x2F;year in savings</a></li>
-<li>20231027: <a href="https://world.hey.com/dhh/x-celebrates-60-savings-from-cloud-exit-7cc26895">X celebrates 60% savings from cloud exit</a></li>
-</ul>
-<blockquote>
-<p>The cloud excels at two ends of the spectrum.<br>The first end is when your application is so simple and low traffic that you really do save on complexity by starting with fully managed services.<br>The second is when your load is highly irregular.</p>
-</blockquote>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>cloud-computing</tag>
-        <tag>cloud-exit</tag>
-        <tag>thoughts</tag>
-        <tag>architecture</tag>
       </tags>
   </entry>
   <entry>
@@ -16908,6 +16908,19 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
   </entry>
   <entry>
     <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Vocabulary-a9c7a8a85746426b855abc5cdd202d97/</url>
+    <content><![CDATA[<h1 id="Vocabulary"><a href="#Vocabulary" class="headerlink" title="Vocabulary"></a>Vocabulary</h1><p><a href="Vocabulary/Sentences%20d52966dbaba349b38217a54cdb44b5fb.md">Sentences</a></p>
+<p><a href="Vocabulary/Vocal-202310%20bc0563e637b84ee9a8b78d2021f0aa11.md">Vocal-202310</a></p>
+<p><a href="Vocabulary/Vocal-202309%2002ae3f1ba17542aaa13181e055fbac6a.md">Vocal-202309</a></p>
+<p><a href="Vocabulary/Vocal-202311%207c1debe7a17c4926ba3139f0ea4544af.md">Vocal-202311</a></p>
+<p><a href="Vocabulary/Vocal-202312%204e0d416ef7624b1781a2373dbf918384.md">Vocal-202312</a></p>
+<p><a href="Vocabulary/Vocal-202404%20a645f8ab4e994c53959fccc2922d1f75.md">Vocal-202404</a></p>
+<p><a href="Vocabulary/Vocal-202405%20b3e506aa2e5c410d82a5fedeff3dfc18.md">Vocal-202405</a></p>
+<p><a href="Vocabulary/202408%20ab9734d8f5fa4347ae179a253ed0bc4d.md">202408</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-64aa002bfff342fdaf571fd6a022727a/</url>
     <content><![CDATA[<h1 id="Thoughts-amp-Discovers"><a href="#Thoughts-amp-Discovers" class="headerlink" title="Thoughts&amp;Discovers"></a>Thoughts&amp;Discovers</h1><p><a href="Thoughts&Discovers/20240121-hushi%20533c643217c14efc8b8983ca514b2e33.md">20240121-hushi</a></p>
 <p><a href="Thoughts&Discovers/20230912-methodology-of-learning%2097bac3be68bb4c27b030b7c56b34da73.md">20230912-methodology-of-learning</a></p>
@@ -16939,19 +16952,6 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
 <p><a href="Thoughts&Discovers/20240522-reservation-sched%20d7ebdc6412114fe09d2a1761145aabea.md">20240522-reservation-sched</a></p>
 <p><a href="Thoughts&Discovers/20240522-sched-scenario%209a2fd25aa11d4a9885b58cca09ea890a.md">20240522-sched-scenario</a></p>
 <p><a href="Thoughts&Discovers/20240728-auto-system-test-failed%20f173234d6d414648beb3ac907ff2cdcc.md">20240728-auto-system-test-failed</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Vocabulary-a9c7a8a85746426b855abc5cdd202d97/</url>
-    <content><![CDATA[<h1 id="Vocabulary"><a href="#Vocabulary" class="headerlink" title="Vocabulary"></a>Vocabulary</h1><p><a href="Vocabulary/Sentences%20d52966dbaba349b38217a54cdb44b5fb.md">Sentences</a></p>
-<p><a href="Vocabulary/Vocal-202310%20bc0563e637b84ee9a8b78d2021f0aa11.md">Vocal-202310</a></p>
-<p><a href="Vocabulary/Vocal-202309%2002ae3f1ba17542aaa13181e055fbac6a.md">Vocal-202309</a></p>
-<p><a href="Vocabulary/Vocal-202311%207c1debe7a17c4926ba3139f0ea4544af.md">Vocal-202311</a></p>
-<p><a href="Vocabulary/Vocal-202312%204e0d416ef7624b1781a2373dbf918384.md">Vocal-202312</a></p>
-<p><a href="Vocabulary/Vocal-202404%20a645f8ab4e994c53959fccc2922d1f75.md">Vocal-202404</a></p>
-<p><a href="Vocabulary/Vocal-202405%20b3e506aa2e5c410d82a5fedeff3dfc18.md">Vocal-202405</a></p>
-<p><a href="Vocabulary/202408%20ab9734d8f5fa4347ae179a253ed0bc4d.md">202408</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -17149,6 +17149,17 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
   </entry>
   <entry>
     <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Playground-play-with-k8s-d929ea8b77f241b89d827d7f7bf875f9/</url>
+    <content><![CDATA[<h1 id="play-with-k8s"><a href="#play-with-k8s" class="headerlink" title="play-with-k8s"></a>play-with-k8s</h1><p>地址: <a href="https://labs.play-with-k8s.com/p/clsiq9a4rl3g008fucqg#clsiq9a4_clsisaa4rl3g008fucsg">https://labs.play-with-k8s.com/p/clsiq9a4rl3g008fucqg#clsiq9a4_clsisaa4rl3g008fucsg</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Playground-play-with-runc-c06d3d89554d4bf99721a1db70c87586/</url>
+    <content><![CDATA[<h1 id="play-with-runc"><a href="#play-with-runc" class="headerlink" title="play-with-runc"></a>play-with-runc</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Playground-minikube-988572790dac4c13b34b3b8aa48095c2/</url>
     <content><![CDATA[<h1 id="minikube"><a href="#minikube" class="headerlink" title="minikube"></a>minikube</h1><ol>
 <li><p>install docker: <a href="https://www.zhaowenyu.com/docker-doc/ops/docker-install.html">软件获取与安装 · Docker 文档</a></p>
@@ -17191,17 +17202,6 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
 <li>安装好之后, 直接 kubectl 就可以连接到minikube集群里了. 不需要再使用 <code>minikube kubectl</code>这种命令</li>
 </ol>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Playground-play-with-k8s-d929ea8b77f241b89d827d7f7bf875f9/</url>
-    <content><![CDATA[<h1 id="play-with-k8s"><a href="#play-with-k8s" class="headerlink" title="play-with-k8s"></a>play-with-k8s</h1><p>地址: <a href="https://labs.play-with-k8s.com/p/clsiq9a4rl3g008fucqg#clsiq9a4_clsisaa4rl3g008fucsg">https://labs.play-with-k8s.com/p/clsiq9a4rl3g008fucqg#clsiq9a4_clsisaa4rl3g008fucsg</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Playground-play-with-runc-c06d3d89554d4bf99721a1db70c87586/</url>
-    <content><![CDATA[<h1 id="play-with-runc"><a href="#play-with-runc" class="headerlink" title="play-with-runc"></a>play-with-runc</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
@@ -17359,12 +17359,6 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Reading-Notes-container-learning-roadmap-d2c338639fa141fd97f9ed815d6129d4/</url>
-    <content><![CDATA[<h1 id="container-learning-roadmap"><a href="#container-learning-roadmap" class="headerlink" title="container-learning-roadmap"></a>container-learning-roadmap</h1><p><img data-src="/container-learning-roadmap/Untitled.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Reading-Notes-cri-containerd-runc-cli-b82e027079204eac9df7e44aeca1b0ec/</url>
     <content><![CDATA[<h1 id="cri-containerd-runc-cli"><a href="#cri-containerd-runc-cli" class="headerlink" title="cri-containerd-runc-cli"></a>cri-containerd-runc-cli</h1><h1 id="crictl"><a href="#crictl" class="headerlink" title="crictl"></a>crictl</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>配置endpoint为containerd</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go">runtime<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
@@ -17452,6 +17446,12 @@ $ sudo runc list
 # now <span class="token builtin">delete</span> the container
 $ sudo runc <span class="token builtin">delete</span> mycontainerid
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Reading-Notes-container-learning-roadmap-d2c338639fa141fd97f9ed815d6129d4/</url>
+    <content><![CDATA[<h1 id="container-learning-roadmap"><a href="#container-learning-roadmap" class="headerlink" title="container-learning-roadmap"></a>container-learning-roadmap</h1><p><img data-src="/container-learning-roadmap/Untitled.png" alt="Untitled"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
@@ -19289,12 +19289,6 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Reading-Notes-k8s-memory-manager-cgroups-e3c0243c248a4a36ad4354ce5abfadd7/</url>
-    <content><![CDATA[<h1 id="k8s-memory-manager-cgroups"><a href="#k8s-memory-manager-cgroups" class="headerlink" title="k8s-memory-manager-cgroups"></a>k8s-memory-manager-cgroups</h1><p>k8s中内存是如何通过底层的cgroups来控制的?</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Reading-Notes-k8s-memory-manager-deep-dive-d2392badf9104305a3c60e2d2ecfde11/</url>
     <content><![CDATA[<h1 id="k8s-memory-manager-deep-dive"><a href="#k8s-memory-manager-deep-dive" class="headerlink" title="k8s-memory-manager-deep-dive"></a>k8s-memory-manager-deep-dive</h1><ul>
 <li>只能针对GU, 不保证burstable的pod是否跨numa访问.</li>
@@ -19319,6 +19313,12 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
 <li><a href="%5Bhttps://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work?">Kubernetes Memory Manager moves to beta | Kubernetes</a>](<a href="https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work">https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work</a>?))</li>
 <li><a href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/1769-memory-manager">enhancements&#x2F;keps&#x2F;sig-node&#x2F;1769-memory-manager&#x2F;mm_tm_diagram.png at master · kubernetes&#x2F;enhancements</a></li>
 </ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Reading-Notes-k8s-memory-manager-cgroups-e3c0243c248a4a36ad4354ce5abfadd7/</url>
+    <content><![CDATA[<h1 id="k8s-memory-manager-cgroups"><a href="#k8s-memory-manager-cgroups" class="headerlink" title="k8s-memory-manager-cgroups"></a>k8s-memory-manager-cgroups</h1><p>k8s中内存是如何通过底层的cgroups来控制的?</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -19388,9 +19388,16 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
   </entry>
   <entry>
     <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Reading-Notes-koordinator-node-resource-manager-a668ef690f1f48639998a9a1005c74b0/</url>
+    <content><![CDATA[<h1 id="koordinator-node-resource-manager"><a href="#koordinator-node-resource-manager" class="headerlink" title="koordinator-node-resource-manager"></a>koordinator-node-resource-manager</h1><p><a href="https://koordinator.sh/zh-Hans/docs/architecture/qos">QoS | Koordinator</a></p>
+<p><a href="https://github.com/containerd/nri/blob/main/README-v0.1.0.md#nri---node-resource-interface"></a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Reading-Notes-k8s-util-020260ace16c42dbb85f2b6ed85d2a25/</url>
     <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#97;&#x70;&#105;&#115;&#x65;&#x72;&#118;&#101;&#114;&#x40;&#x76;&#48;&#x2e;&#50;&#52;&#x2e;&#x31;&#53;">&#97;&#x70;&#105;&#115;&#x65;&#x72;&#118;&#101;&#114;&#x40;&#x76;&#48;&#x2e;&#50;&#52;&#x2e;&#x31;&#53;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#97;&#112;&#105;&#x73;&#x65;&#x72;&#x76;&#x65;&#114;&#x40;&#118;&#48;&#x2e;&#x32;&#x34;&#46;&#x31;&#53;">&#97;&#112;&#105;&#x73;&#x65;&#x72;&#x76;&#x65;&#114;&#x40;&#118;&#48;&#x2e;&#x32;&#x34;&#46;&#x31;&#53;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
 </blockquote>
 <p>新建一个协程来启动HTTPServer. </p>
 <p><img data-src="/k8s-util/Untitled.png" alt="Untitled"></p>
@@ -19432,13 +19439,6 @@ time<span class="token punctuation">.</span><span class="token function">Sleep</
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Reading-Notes-koordinator-node-resource-manager-a668ef690f1f48639998a9a1005c74b0/</url>
-    <content><![CDATA[<h1 id="koordinator-node-resource-manager"><a href="#koordinator-node-resource-manager" class="headerlink" title="koordinator-node-resource-manager"></a>koordinator-node-resource-manager</h1><p><a href="https://koordinator.sh/zh-Hans/docs/architecture/qos">QoS | Koordinator</a></p>
-<p><a href="https://github.com/containerd/nri/blob/main/README-v0.1.0.md#nri---node-resource-interface"></a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Reading-Notes-koordinator-src-analysis-a12b97275b6e4b758e0d023ca838c689/</url>
     <content><![CDATA[<h1 id="koordinator-src-analysis"><a href="#koordinator-src-analysis" class="headerlink" title="koordinator-src-analysis"></a>koordinator-src-analysis</h1><ol>
 <li><p>如何保证Cobra生成的CMD, 拉起之后一直不退出? </p>
@@ -19473,6 +19473,123 @@ time<span class="token punctuation">.</span><span class="token function">Sleep</
 <li><a href="https://zhuanlan.zhihu.com/p/75243145">Linux内核浅析-进程调度的算法和数据结构 - 知乎</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Vocabulary-202408-ab9734d8f5fa4347ae179a253ed0bc4d/</url>
+    <content><![CDATA[<h1 id="202408"><a href="#202408" class="headerlink" title="202408"></a>202408</h1><blockquote>
+<p>make a mockery of</p>
+</blockquote>
+<p>“嘲笑”或“使…显得荒谬”</p>
+<blockquote>
+<p>The new smartphone’s advanced features make a mockery of the outdated technology in older models.</p>
+</blockquote>
+<blockquote>
+<p>His vast knowledge of the subject made a mockery of the professor’s claim to expertise.</p>
+</blockquote>
+<blockquote>
+<p>The artist’s masterpiece made a mockery of the critics who had doubted his talent.</p>
+</blockquote>
+<p>torpedo 鱼雷, 鱼雷攻击</p>
+<blockquote>
+<p>If the Cuban Missile Crisis had resulted in war, the proximate causes could have been the Soviet submarine captain’s decision to fire his torpedoes rather<br>than allow his submarine to sink</p>
+</blockquote>
+<p>plausible </p>
+<p>貌似合理的</p>
+<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token string">"Plausible"</span> 这个词的意思是看似合理或可信的，但并不一定是真实的。它通常用来描述一个论点、解释或故事听起来似乎有道理，但可能缺乏确凿的证据。
+
+以下是一些使用 <span class="token string">"plausible"</span> 的例句：
+
+<span class="token number">1.</span> The suspect provided a plausible alibi <span class="token keyword">for</span> the night <span class="token keyword">of</span> the crime<span class="token punctuation">,</span> but the police were still skeptical<span class="token punctuation">.</span>
+   （嫌疑人为犯罪之夜提供了一个看似合理的不在场证明，但警方仍然持怀疑态度。）
+
+<span class="token number">2.</span> The theory that dinosaurs were wiped out by a meteor impact is plausible<span class="token punctuation">,</span> but more evidence is needed to confirm it<span class="token punctuation">.</span>
+   （恐龙被流星撞击灭绝的理论看似合理，但需要更多证据来证实。）
+
+<span class="token number">3.</span> The politician's explanation <span class="token keyword">for</span> the scandal was plausible<span class="token punctuation">,</span> but many people still questioned his integrity<span class="token punctuation">.</span>
+   （这位政治家对丑闻的解释看似合理，但许多人仍然质疑他的诚信。）
+
+<span class="token number">4.</span> The student's excuse <span class="token keyword">for</span> not completing the assignment was plausible<span class="token punctuation">,</span> but the teacher decided to give him a chance to redo it<span class="token punctuation">.</span>
+   （学生没有完成作业的借口看似合理，但老师决定给他一个重做的机会。）
+
+<span class="token number">5.</span> The company's plausible marketing strategy attracted a lot <span class="token keyword">of</span> <span class="token keyword">new</span> <span class="token class-name">customers<span class="token punctuation">.</span></span>
+   （公司看似合理的营销策略吸引了很多新客户。）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>mundane</p>
+<p>平凡的</p>
+<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token string">"Mundane"</span> 这个词的意思是平凡的、普通的，通常指那些日常的、不特别或不令人兴奋的事物。它可以用来描述人、事物或活动，强调它们的普通性和缺乏新奇或刺激的特质。
+
+以下是一些使用 <span class="token string">"mundane"</span> 的例句：
+
+<span class="token number">1.</span> After the initial excitement <span class="token keyword">of</span> the job wore off<span class="token punctuation">,</span> he found the daily tasks to be quite mundane<span class="token punctuation">.</span>
+   （工作最初的兴奋感消退后，他发现日常任务相当平凡。）
+
+<span class="token number">2.</span> She longed <span class="token keyword">for</span> a life <span class="token keyword">of</span> adventure<span class="token punctuation">,</span> but was stuck <span class="token keyword">in</span> the mundane routine <span class="token keyword">of</span> her office job<span class="token punctuation">.</span>
+   （她渴望冒险的生活，但却被困在办公室工作的平凡日常中。）
+
+<span class="token number">3.</span> The poet tried to find beauty <span class="token keyword">in</span> the mundane aspects <span class="token keyword">of</span> life<span class="token punctuation">,</span> like washing dishes or doing laundry<span class="token punctuation">.</span>
+   （诗人试图在生活的平凡方面，如洗碗或洗衣服中寻找美。）
+
+<span class="token number">4.</span> Despite the mundane appearance <span class="token keyword">of</span> the old man<span class="token punctuation">,</span> he had led an extraordinary life full <span class="token keyword">of</span> adventure<span class="token punctuation">.</span>
+   （尽管这位老人看起来平凡无奇，但他的生活充满了非凡的冒险。）
+
+<span class="token number">5.</span> The mundane chores <span class="token keyword">of</span> cooking and cleaning can be made more enjoyable <span class="token keyword">with</span> a little creativity<span class="token punctuation">.</span>
+   （通过一点创造力，烹饪和清洁这些平凡的家务活可以变得更愉快。）
+
+<span class="token number">6.</span> The novel explores the idea that even the most mundane moments can hold deep significance<span class="token punctuation">.</span>
+   （这部小说探讨了即使是最平凡的时刻也可能具有深远意义的观点。）
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>displacement: 移位, 替代 </p>
+<blockquote>
+<p>The size of China’s displacement of the world balance is such that the world must find a new balance.</p>
+</blockquote>
+<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token string">"Displacement"</span> 这个词在中文中可以翻译为“位移”或“替代”，具体含义取决于上下文。
+
+<span class="token number">1.</span> <span class="token operator">**</span>位移<span class="token operator">**</span>：在物理学中，特别是在力学中，指的是物体从初始位置到最终位置的直线距离，而不考虑路径。
+
+   例句：
+   <span class="token operator">-</span> The boat's displacement is <span class="token number">500</span> tons<span class="token punctuation">.</span>
+     （这艘船的排水量是<span class="token number">500</span>吨。）
+
+   <span class="token operator">-</span> The earthquake caused a displacement <span class="token keyword">of</span> the ground by several meters<span class="token punctuation">.</span>
+     （地震使地面位移了几米。）
+
+<span class="token number">2.</span> <span class="token operator">**</span>替代<span class="token operator">**</span>：在更广泛的语境中，<span class="token string">"displacement"</span> 可以指一个事物或人被另一个事物或人所取代。
+
+   例句：
+   <span class="token operator">-</span> The <span class="token keyword">new</span> <span class="token class-name">software</span> has the potential to displace traditional methods <span class="token keyword">of</span> data analysis<span class="token punctuation">.</span>
+     （这款新软件有潜力取代传统的数据分析方法。）
+
+   <span class="token operator">-</span> The rise <span class="token keyword">of</span> electric vehicles may lead to the displacement <span class="token keyword">of</span> traditional internal combustion engine cars<span class="token punctuation">.</span>
+     （电动汽车的兴起可能会导致传统内燃机汽车的替代。）
+
+在不同的学科和领域中，<span class="token string">"displacement"</span> 可能还有其他特定的含义，但上述两种是最常见的。
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>dismay</p>
+<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token string">"Dismay"</span> 这个词在中文中可以翻译为“沮丧”、“失望”或“惊慌失措”，它描述的是一种因为遇到不期望或不愉快的情况而感到的不安、忧虑或失望的情绪。
+
+以下是一些使用 <span class="token string">"dismay"</span> 的例句：
+
+<span class="token number">1.</span> The sudden announcement <span class="token keyword">of</span> the company's bankruptcy caused dismay among its employees<span class="token punctuation">.</span>
+   （公司突然宣布破产，这让员工们感到非常沮丧。）
+
+<span class="token number">2.</span> The news <span class="token keyword">of</span> the natural disaster filled the community <span class="token keyword">with</span> dismay<span class="token punctuation">.</span>
+   （自然灾害的消息让整个社区感到惊慌失措。）
+
+<span class="token number">3.</span> She looked at the test results <span class="token keyword">with</span> dismay<span class="token punctuation">,</span> realizing she had failed again<span class="token punctuation">.</span>
+   （她看着考试成绩，感到失望，意识到她又没通过。）
+
+<span class="token number">4.</span> The team's dismay was evident when they learned they had been eliminated from the competition<span class="token punctuation">.</span>
+   （当队伍得知他们已经从比赛中被淘汰时，他们的失望情绪显而易见。）
+
+<span class="token number">5.</span> The politician's dismay was palpable when his bill was rejected by the majority<span class="token punctuation">.</span>
+   （当这位政治家的法案被大多数人拒绝时，他的失望情绪是显而易见的。）
+
+<span class="token number">6.</span> The child's dismay turned to joy when he found out the broken toy could be fixed<span class="token punctuation">.</span>
+   （当孩子发现破损的玩具可以修好时，他的失望情绪转为了喜悦。）
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
@@ -19841,123 +19958,6 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
 <li><a href="https://www.ianlewis.org/en/container-runtimes-part-2-anatomy-low-level-contai">Container Runtimes Part 2: Anatomy of a Low-Level Container Runtime</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Vocabulary-202408-ab9734d8f5fa4347ae179a253ed0bc4d/</url>
-    <content><![CDATA[<h1 id="202408"><a href="#202408" class="headerlink" title="202408"></a>202408</h1><blockquote>
-<p>make a mockery of</p>
-</blockquote>
-<p>“嘲笑”或“使…显得荒谬”</p>
-<blockquote>
-<p>The new smartphone’s advanced features make a mockery of the outdated technology in older models.</p>
-</blockquote>
-<blockquote>
-<p>His vast knowledge of the subject made a mockery of the professor’s claim to expertise.</p>
-</blockquote>
-<blockquote>
-<p>The artist’s masterpiece made a mockery of the critics who had doubted his talent.</p>
-</blockquote>
-<p>torpedo 鱼雷, 鱼雷攻击</p>
-<blockquote>
-<p>If the Cuban Missile Crisis had resulted in war, the proximate causes could have been the Soviet submarine captain’s decision to fire his torpedoes rather<br>than allow his submarine to sink</p>
-</blockquote>
-<p>plausible </p>
-<p>貌似合理的</p>
-<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token string">"Plausible"</span> 这个词的意思是看似合理或可信的，但并不一定是真实的。它通常用来描述一个论点、解释或故事听起来似乎有道理，但可能缺乏确凿的证据。
-
-以下是一些使用 <span class="token string">"plausible"</span> 的例句：
-
-<span class="token number">1.</span> The suspect provided a plausible alibi <span class="token keyword">for</span> the night <span class="token keyword">of</span> the crime<span class="token punctuation">,</span> but the police were still skeptical<span class="token punctuation">.</span>
-   （嫌疑人为犯罪之夜提供了一个看似合理的不在场证明，但警方仍然持怀疑态度。）
-
-<span class="token number">2.</span> The theory that dinosaurs were wiped out by a meteor impact is plausible<span class="token punctuation">,</span> but more evidence is needed to confirm it<span class="token punctuation">.</span>
-   （恐龙被流星撞击灭绝的理论看似合理，但需要更多证据来证实。）
-
-<span class="token number">3.</span> The politician's explanation <span class="token keyword">for</span> the scandal was plausible<span class="token punctuation">,</span> but many people still questioned his integrity<span class="token punctuation">.</span>
-   （这位政治家对丑闻的解释看似合理，但许多人仍然质疑他的诚信。）
-
-<span class="token number">4.</span> The student's excuse <span class="token keyword">for</span> not completing the assignment was plausible<span class="token punctuation">,</span> but the teacher decided to give him a chance to redo it<span class="token punctuation">.</span>
-   （学生没有完成作业的借口看似合理，但老师决定给他一个重做的机会。）
-
-<span class="token number">5.</span> The company's plausible marketing strategy attracted a lot <span class="token keyword">of</span> <span class="token keyword">new</span> <span class="token class-name">customers<span class="token punctuation">.</span></span>
-   （公司看似合理的营销策略吸引了很多新客户。）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>mundane</p>
-<p>平凡的</p>
-<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token string">"Mundane"</span> 这个词的意思是平凡的、普通的，通常指那些日常的、不特别或不令人兴奋的事物。它可以用来描述人、事物或活动，强调它们的普通性和缺乏新奇或刺激的特质。
-
-以下是一些使用 <span class="token string">"mundane"</span> 的例句：
-
-<span class="token number">1.</span> After the initial excitement <span class="token keyword">of</span> the job wore off<span class="token punctuation">,</span> he found the daily tasks to be quite mundane<span class="token punctuation">.</span>
-   （工作最初的兴奋感消退后，他发现日常任务相当平凡。）
-
-<span class="token number">2.</span> She longed <span class="token keyword">for</span> a life <span class="token keyword">of</span> adventure<span class="token punctuation">,</span> but was stuck <span class="token keyword">in</span> the mundane routine <span class="token keyword">of</span> her office job<span class="token punctuation">.</span>
-   （她渴望冒险的生活，但却被困在办公室工作的平凡日常中。）
-
-<span class="token number">3.</span> The poet tried to find beauty <span class="token keyword">in</span> the mundane aspects <span class="token keyword">of</span> life<span class="token punctuation">,</span> like washing dishes or doing laundry<span class="token punctuation">.</span>
-   （诗人试图在生活的平凡方面，如洗碗或洗衣服中寻找美。）
-
-<span class="token number">4.</span> Despite the mundane appearance <span class="token keyword">of</span> the old man<span class="token punctuation">,</span> he had led an extraordinary life full <span class="token keyword">of</span> adventure<span class="token punctuation">.</span>
-   （尽管这位老人看起来平凡无奇，但他的生活充满了非凡的冒险。）
-
-<span class="token number">5.</span> The mundane chores <span class="token keyword">of</span> cooking and cleaning can be made more enjoyable <span class="token keyword">with</span> a little creativity<span class="token punctuation">.</span>
-   （通过一点创造力，烹饪和清洁这些平凡的家务活可以变得更愉快。）
-
-<span class="token number">6.</span> The novel explores the idea that even the most mundane moments can hold deep significance<span class="token punctuation">.</span>
-   （这部小说探讨了即使是最平凡的时刻也可能具有深远意义的观点。）
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>displacement: 移位, 替代 </p>
-<blockquote>
-<p>The size of China’s displacement of the world balance is such that the world must find a new balance.</p>
-</blockquote>
-<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token string">"Displacement"</span> 这个词在中文中可以翻译为“位移”或“替代”，具体含义取决于上下文。
-
-<span class="token number">1.</span> <span class="token operator">**</span>位移<span class="token operator">**</span>：在物理学中，特别是在力学中，指的是物体从初始位置到最终位置的直线距离，而不考虑路径。
-
-   例句：
-   <span class="token operator">-</span> The boat's displacement is <span class="token number">500</span> tons<span class="token punctuation">.</span>
-     （这艘船的排水量是<span class="token number">500</span>吨。）
-
-   <span class="token operator">-</span> The earthquake caused a displacement <span class="token keyword">of</span> the ground by several meters<span class="token punctuation">.</span>
-     （地震使地面位移了几米。）
-
-<span class="token number">2.</span> <span class="token operator">**</span>替代<span class="token operator">**</span>：在更广泛的语境中，<span class="token string">"displacement"</span> 可以指一个事物或人被另一个事物或人所取代。
-
-   例句：
-   <span class="token operator">-</span> The <span class="token keyword">new</span> <span class="token class-name">software</span> has the potential to displace traditional methods <span class="token keyword">of</span> data analysis<span class="token punctuation">.</span>
-     （这款新软件有潜力取代传统的数据分析方法。）
-
-   <span class="token operator">-</span> The rise <span class="token keyword">of</span> electric vehicles may lead to the displacement <span class="token keyword">of</span> traditional internal combustion engine cars<span class="token punctuation">.</span>
-     （电动汽车的兴起可能会导致传统内燃机汽车的替代。）
-
-在不同的学科和领域中，<span class="token string">"displacement"</span> 可能还有其他特定的含义，但上述两种是最常见的。
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>dismay</p>
-<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token string">"Dismay"</span> 这个词在中文中可以翻译为“沮丧”、“失望”或“惊慌失措”，它描述的是一种因为遇到不期望或不愉快的情况而感到的不安、忧虑或失望的情绪。
-
-以下是一些使用 <span class="token string">"dismay"</span> 的例句：
-
-<span class="token number">1.</span> The sudden announcement <span class="token keyword">of</span> the company's bankruptcy caused dismay among its employees<span class="token punctuation">.</span>
-   （公司突然宣布破产，这让员工们感到非常沮丧。）
-
-<span class="token number">2.</span> The news <span class="token keyword">of</span> the natural disaster filled the community <span class="token keyword">with</span> dismay<span class="token punctuation">.</span>
-   （自然灾害的消息让整个社区感到惊慌失措。）
-
-<span class="token number">3.</span> She looked at the test results <span class="token keyword">with</span> dismay<span class="token punctuation">,</span> realizing she had failed again<span class="token punctuation">.</span>
-   （她看着考试成绩，感到失望，意识到她又没通过。）
-
-<span class="token number">4.</span> The team's dismay was evident when they learned they had been eliminated from the competition<span class="token punctuation">.</span>
-   （当队伍得知他们已经从比赛中被淘汰时，他们的失望情绪显而易见。）
-
-<span class="token number">5.</span> The politician's dismay was palpable when his bill was rejected by the majority<span class="token punctuation">.</span>
-   （当这位政治家的法案被大多数人拒绝时，他的失望情绪是显而易见的。）
-
-<span class="token number">6.</span> The child's dismay turned to joy when he found out the broken toy could be fixed<span class="token punctuation">.</span>
-   （当孩子发现破损的玩具可以修好时，他的失望情绪转为了喜悦。）
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
@@ -20651,20 +20651,6 @@ Self-sacrifice: 自我牺牲
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20230912-methodology-of-learning-97bac3be68bb4c27b030b7c56b34da73/</url>
-    <content><![CDATA[<h1 id="20230912-methodology-of-learning"><a href="#20230912-methodology-of-learning" class="headerlink" title="20230912-methodology-of-learning"></a>20230912-methodology-of-learning</h1><h1 id="通用方法论"><a href="#通用方法论" class="headerlink" title="通用方法论"></a>通用方法论</h1><p>自己学习一项新的技能的方法论总结: </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309122352915.png"></p>
-<h1 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h1><p>自己以docker, K8s, SpringBoot为例:</p>
-<ol>
-<li>为啥会存在docker&#x2F;k8s? 没有它会有啥问题? 在k8s以前大家都是怎么玩儿的?</li>
-<li>如何去玩转docker&#x2F;k8s? 这一步需要特别注重实践, 最好可以同步去实践下上一代的产品. 从而通过这个过程, 来加深第一个问题的认知.</li>
-<li>它是如何实现的? 架构是怎样的? 从而来加深对第二个问题的认知, 例如如何更好滴来使用? 有那些最佳实践? 需要避免那些坑?</li>
-</ol>
-<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>可以想下, 自己现在对于某个技术, 是处于哪个认知层次?</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231021-centos-systemd-sysv-c71cefc3aa9f4e97a5f18b399a9b13fb/</url>
     <content><![CDATA[<h1 id="20231021-centos-systemd-sysv"><a href="#20231021-centos-systemd-sysv" class="headerlink" title="20231021-centos-systemd-sysv"></a>20231021-centos-systemd-sysv</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>centos7之后, 所有的service都推荐使用systemd&#x2F;systemctl来管理.</p>
 <h1 id="systemctl使用方式"><a href="#systemctl使用方式" class="headerlink" title="systemctl使用方式"></a>systemctl使用方式</h1><ul>
@@ -20710,6 +20696,20 @@ Wants&#x3D;sshd-keygen.service
 <li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units">How To Use Systemctl to Manage Systemd Services and Units | DigitalOcean</a></li>
 <li><a href="https://geekflare.com/systemd-start-services-linux-7/">How to Auto-Start Services on Boot in RHEL&#x2F;CentOS 7?</a></li>
 </ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20230912-methodology-of-learning-97bac3be68bb4c27b030b7c56b34da73/</url>
+    <content><![CDATA[<h1 id="20230912-methodology-of-learning"><a href="#20230912-methodology-of-learning" class="headerlink" title="20230912-methodology-of-learning"></a>20230912-methodology-of-learning</h1><h1 id="通用方法论"><a href="#通用方法论" class="headerlink" title="通用方法论"></a>通用方法论</h1><p>自己学习一项新的技能的方法论总结: </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309122352915.png"></p>
+<h1 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h1><p>自己以docker, K8s, SpringBoot为例:</p>
+<ol>
+<li>为啥会存在docker&#x2F;k8s? 没有它会有啥问题? 在k8s以前大家都是怎么玩儿的?</li>
+<li>如何去玩转docker&#x2F;k8s? 这一步需要特别注重实践, 最好可以同步去实践下上一代的产品. 从而通过这个过程, 来加深第一个问题的认知.</li>
+<li>它是如何实现的? 架构是怎样的? 从而来加深对第二个问题的认知, 例如如何更好滴来使用? 有那些最佳实践? 需要避免那些坑?</li>
+</ol>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>可以想下, 自己现在对于某个技术, 是处于哪个认知层次?</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -20902,6 +20902,20 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231102-bot-pitfall-3c9243d42cd14f89bbc47294726f3339/</url>
+    <content><![CDATA[<h1 id="20231102-bot-pitfall"><a href="#20231102-bot-pitfall" class="headerlink" title="20231102-bot-pitfall"></a>20231102-bot-pitfall</h1><p>想起了之前的一个误区, 很多业务的支持, 都想要通过聊天机器人来让用户实现自运维. </p>
+<p>由于最初的技术实现基本是都基于<strong>关键词提取</strong>, 因此</p>
+<ol>
+<li>要么开发侧: 需要代码&#x2F;复杂的正则等, 识别各种各样奇怪的输入模式. 但也无法穷举. 因此负担很重. </li>
+<li>要么用户侧: 需要严格遵循输入格式与顺序, 尤其是当支持的格式很多的时候, 需要记住各种格式, <strong>有很大的记忆负担</strong>. 让使用者很不安.</li>
+</ol>
+<p>如今回顾, 整体效果其实不好. 不如直接给个webui, 让用户在页面上输入&#x2F;选择 更加方便些. </p>
+<p>当然bot也不是一无是处. 优势是用户与群机器人的对话信息, 相关支持人员也可以看到. </p>
+<p>目前LLM或许可以解决这个问题. 但在具备LLM能力前, 我们还是好好地完善webUI或者API能力吧.</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231103-apsara-conference-4a2a1f9a253943ad8e0bbd3cbac26d7f/</url>
     <content><![CDATA[<h1 id="20231103-apsara-conference"><a href="#20231103-apsara-conference" class="headerlink" title="20231103-apsara-conference"></a>20231103-apsara-conference</h1><h1 id="又是一年云起时"><a href="#又是一年云起时" class="headerlink" title="又是一年云起时"></a>又是一年云起时</h1><p>又到了一年一度的<a href="https://yunqi.aliyun.com/2023/live-aggregation">云栖大会</a>. 赶在最后一天来参加, 主要是一来给友军支持鼓劲儿, 二来想gain some insights of the future. </p>
 <p>全程用心听下来, 技术类的收获较少且较为零碎, 但当我尝试着从另外一些视角来看, 收获很多, 整理在这里. </p>
@@ -20959,20 +20973,6 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231102-bot-pitfall-3c9243d42cd14f89bbc47294726f3339/</url>
-    <content><![CDATA[<h1 id="20231102-bot-pitfall"><a href="#20231102-bot-pitfall" class="headerlink" title="20231102-bot-pitfall"></a>20231102-bot-pitfall</h1><p>想起了之前的一个误区, 很多业务的支持, 都想要通过聊天机器人来让用户实现自运维. </p>
-<p>由于最初的技术实现基本是都基于<strong>关键词提取</strong>, 因此</p>
-<ol>
-<li>要么开发侧: 需要代码&#x2F;复杂的正则等, 识别各种各样奇怪的输入模式. 但也无法穷举. 因此负担很重. </li>
-<li>要么用户侧: 需要严格遵循输入格式与顺序, 尤其是当支持的格式很多的时候, 需要记住各种格式, <strong>有很大的记忆负担</strong>. 让使用者很不安.</li>
-</ol>
-<p>如今回顾, 整体效果其实不好. 不如直接给个webui, 让用户在页面上输入&#x2F;选择 更加方便些. </p>
-<p>当然bot也不是一无是处. 优势是用户与群机器人的对话信息, 相关支持人员也可以看到. </p>
-<p>目前LLM或许可以解决这个问题. 但在具备LLM能力前, 我们还是好好地完善webUI或者API能力吧.</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231105-the-good-old-days-abfbb616fa2d4f1f9b6a82d5a2e8bf53/</url>
     <content><![CDATA[<h1 id="20231105-the-good-old-days"><a href="#20231105-the-good-old-days" class="headerlink" title="20231105-the-good-old-days"></a>20231105-the-good-old-days</h1><ul>
 <li><a href="https://www.youtube.com/watch?v=kHJ0Nv5QK-k&t=401s&ab_channel=%E9%95%BF%E8%80%85%E6%B1%9F%E6%B3%BD%E6%B0%91-%E5%8A%A0%E5%B7%9E%E7%B2%89%E4%B8%9D%E4%BF%B1%E4%B9%90%E9%83%A8%E3%80%90%E5%AE%98%E6%96%B9%E3%80%91%E6%9C%80%E5%85%A8%E7%9A%84%E9%95%BF%E8%80%85%E8%A7%86%E9%A2%91%E5%BA%93%E3%80%90%E4%BC%9A%E6%B0%B8%E4%B9%85%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E3%80%91%E8%AF%B7%E8%AE%A2%E9%98%85">北京新冠疫情，现回看非典时中央决策的内部会议过程 - YouTube</a></li>
@@ -21025,14 +21025,6 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231122-cloudflare-outage-report-d5182c66a5ba403ab786b61e95ba200d/</url>
-    <content><![CDATA[<h1 id="20231122-cloudflare-outage-report"><a href="#20231122-cloudflare-outage-report" class="headerlink" title="20231122-cloudflare-outage-report"></a>20231122-cloudflare-outage-report</h1><p>故障报告该怎么写: </p>
-<p>看下cloudflare的吧: <a href="https://blog.cloudflare.com/post-mortem-on-cloudflare-control-plane-and-analytics-outage/?spm=a1zp2r.20241016.0.0.371b420f4lo01E">Post Mortem on Cloudflare Control Plane and Analytics Outage</a></p>
-<p>不要用 遮丑 的心态对待故障与问题.</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231127-http-post-or-get-414a14c2767b45798170e2f99d1972d7/</url>
     <content><![CDATA[<h1 id="20231127-http-post-or-get"><a href="#20231127-http-post-or-get" class="headerlink" title="20231127-http-post-or-get"></a>20231127-http-post-or-get</h1><p>之前记得网上有过讨论, 有公司让所有请求都用POST. </p>
 <p>结合最近自己的感悟, 说下. </p>
@@ -21042,6 +21034,14 @@ Rework  - Jason Fried
 <li>便于使用Alfred等工具, 一键进入. 提效明显: 例如查询用户信息, url?uid&#x3D;xxx, 这样. 而如果是POST,</li>
 <li></li>
 </ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231122-cloudflare-outage-report-d5182c66a5ba403ab786b61e95ba200d/</url>
+    <content><![CDATA[<h1 id="20231122-cloudflare-outage-report"><a href="#20231122-cloudflare-outage-report" class="headerlink" title="20231122-cloudflare-outage-report"></a>20231122-cloudflare-outage-report</h1><p>故障报告该怎么写: </p>
+<p>看下cloudflare的吧: <a href="https://blog.cloudflare.com/post-mortem-on-cloudflare-control-plane-and-analytics-outage/?spm=a1zp2r.20241016.0.0.371b420f4lo01E">Post Mortem on Cloudflare Control Plane and Analytics Outage</a></p>
+<p>不要用 遮丑 的心态对待故障与问题.</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21086,6 +21086,29 @@ Rework  - Jason Fried
 <li>aws 2023 re:invent 上的 与数据库深度合作的. 相比应用层做了非常大的改造.</li>
 <li></li>
 </ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20240121-hushi-533c643217c14efc8b8983ca514b2e33/</url>
+    <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
+<blockquote>
+<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
+</blockquote>
+<ul>
+<li>胡适<blockquote>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
+</blockquote>
+<ul>
+<li>胡适<blockquote>
+</blockquote>
+</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21181,35 +21204,21 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20240121-hushi-533c643217c14efc8b8983ca514b2e33/</url>
-    <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
-<blockquote>
-<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<p><a href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20240125-cgroup-qemu-cfs-1c540811230f4359a30ed985adf36834/</url>
     <content><![CDATA[<h1 id="20240125-cgroup-qemu-cfs"><a href="#20240125-cgroup-qemu-cfs" class="headerlink" title="20240125-cgroup-qemu-cfs"></a>20240125-cgroup-qemu-cfs</h1><p>针对如何实现CPU的绑核逻辑, 一直有很多疑问. </p>
 <p>今天跟GPT聊了一会儿, 大致勾画出如下: </p>
 <p>本质还是cfs-scheduler的策略, 但通过的方式不同工具&#x2F;方式透出. 基本明了了.</p>
 <p>TODO: 底层还是要研究下cfs-scheduler具体的工作机制, 才能彻底透彻.</p>
 <p><img data-src="/20240125-cgroup-qemu-cfs/Untitled.png" alt="Untitled"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20240401-Humorous-Recruitment-Interview-Anecdotes-06936d86e4244746ad6b385612e890d6/</url>
+    <content><![CDATA[<h1 id="20240401-Humorous-Recruitment-Interview-Anecdotes"><a href="#20240401-Humorous-Recruitment-Interview-Anecdotes" class="headerlink" title="20240401-Humorous-Recruitment-Interview-Anecdotes"></a>20240401-Humorous-Recruitment-Interview-Anecdotes</h1><p><strong>记录下校招面试趣事</strong></p>
+<ul>
+<li>连续面试2个, 资质都非常不错(计算机专业, 985本+海外硕). 笔试时, 让写单元测试, 但<strong>竟然都不知道单元测试是啥</strong>. 后来问了组里的新同学, 才知道原来他那会儿也不知道, 不是个例, 而是普遍现象. 震惊~😱 那么平常写代码, 怎么来保证代码的准确性呢?</li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21222,15 +21231,6 @@ Rework  - Jason Fried
 <li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
 <li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
 </ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Thoughts-Discovers-20240401-Humorous-Recruitment-Interview-Anecdotes-06936d86e4244746ad6b385612e890d6/</url>
-    <content><![CDATA[<h1 id="20240401-Humorous-Recruitment-Interview-Anecdotes"><a href="#20240401-Humorous-Recruitment-Interview-Anecdotes" class="headerlink" title="20240401-Humorous-Recruitment-Interview-Anecdotes"></a>20240401-Humorous-Recruitment-Interview-Anecdotes</h1><p><strong>记录下校招面试趣事</strong></p>
-<ul>
-<li>连续面试2个, 资质都非常不错(计算机专业, 985本+海外硕). 笔试时, 让写单元测试, 但<strong>竟然都不知道单元测试是啥</strong>. 后来问了组里的新同学, 才知道原来他那会儿也不知道, 不是个例, 而是普遍现象. 震惊~😱 那么平常写代码, 怎么来保证代码的准确性呢?</li>
-</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21409,6 +21409,14 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2024-1a6efe0510154e7581b487dd5c9fa679/</url>
+    <content><![CDATA[<h1 id="GameList-2024"><a href="#GameList-2024" class="headerlink" title="GameList-2024"></a>GameList-2024</h1><h2 id="Want-to-Play"><a href="#Want-to-Play" class="headerlink" title="Want to Play"></a>Want to Play</h2><hr>
+<h2 id="Played"><a href="#Played" class="headerlink" title="Played"></a>Played</h2><hr>
+<p><a href="https://www.douban.com/game/35877071/">神都不良探  Underdog Detective (豆瓣)</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Playground-Game-List-%E5%A6%82%E9%BE%99-0-d900bcdef2d349c2b4458394a00f990d/</url>
     <content><![CDATA[<h1 id="如龙-0"><a href="#如龙-0" class="headerlink" title="如龙-0"></a>如龙-0</h1><p>花了断断续续两周时间, 把 21 年 10 月份开始搁置的近 2 年的如龙-0 重拾, 玩通关了. </p>
 <p>存档时, 看到之前存档上分明写着的 21 年, 竟然有一种恍惚感. 哦, 已经过去 2 年了. 2 年前的我, 在玩这个游戏时, 是怎样的心境呢? </p>
@@ -21442,22 +21450,8 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2024-1a6efe0510154e7581b487dd5c9fa679/</url>
-    <content><![CDATA[<h1 id="GameList-2024"><a href="#GameList-2024" class="headerlink" title="GameList-2024"></a>GameList-2024</h1><h2 id="Want-to-Play"><a href="#Want-to-Play" class="headerlink" title="Want to Play"></a>Want to Play</h2><hr>
-<h2 id="Played"><a href="#Played" class="headerlink" title="Played"></a>Played</h2><hr>
-<p><a href="https://www.douban.com/game/35877071/">神都不良探  Underdog Detective (豆瓣)</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-Mac-Mini-61d4c86f481541548847d99bbaaee711/</url>
     <content><![CDATA[<h1 id="Mac-Mini"><a href="#Mac-Mini" class="headerlink" title="Mac Mini"></a>Mac Mini</h1><p>ModelNo: A1347</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-MacBook-12%E2%80%99%E2%80%99-93c31501811048de84d88d8481ab25ad/</url>
-    <content><![CDATA[<h1 id="MacBook-12’’"><a href="#MacBook-12’’" class="headerlink" title="MacBook 12’’"></a>MacBook 12’’</h1><p>Battery: 41.4Wh<br>BuildDate: 201508<br>CPU: Intel Core M-5Y51 1.3GHz 2C4HT<br>Disk: 512GB PCIe Flash<br>Fans: 0<br>GPU: Intel HD Graphics 5300<br>Keyboard Travel Distance: 0.5mm<br>MEM: 8GB<br>1600MHz<br>LPDDR3<br>ModelNo: MacBook8,1<br>No: 6<br>OS: MacOS Monterey<br>Port: 1 USB Type-C<br>Power: USB Type-C<br>30W<br>Price: 1400<br>ReleaseDate: 2017<br>Screen: 2304 x 1440 (226 ppi)<br>Usage: reading<br>Weight: 0.92Kg</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21473,6 +21467,12 @@ Rework  - Jason Fried
 <ul>
 <li>Intel UHD Graphics 630 1536MB<br>Keyboard Travel Distance: 1mm<br>MEM: 8GB * 2<br>2400MHz<br>DDR4<br>SK Hynix<br>ModelNo: MacBookPro15,1<br>A1990<br>No: 3<br>OfficialSpec: <a href="https://support.apple.com/zh-cn/111941">https://support.apple.com/zh-cn/111941</a><br>Port: 4 USB Type-C<br>Power: USB Type-C<br>87W<br>Price: 3300<br>ReleaseDate: 2019<br>Screen: 15.4’’<br>Usage: daily reading<br>Weight: 1.83Kg</li>
 </ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-MacBook-12%E2%80%99%E2%80%99-93c31501811048de84d88d8481ab25ad/</url>
+    <content><![CDATA[<h1 id="MacBook-12’’"><a href="#MacBook-12’’" class="headerlink" title="MacBook 12’’"></a>MacBook 12’’</h1><p>Battery: 41.4Wh<br>BuildDate: 201508<br>CPU: Intel Core M-5Y51 1.3GHz 2C4HT<br>Disk: 512GB PCIe Flash<br>Fans: 0<br>GPU: Intel HD Graphics 5300<br>Keyboard Travel Distance: 0.5mm<br>MEM: 8GB<br>1600MHz<br>LPDDR3<br>ModelNo: MacBook8,1<br>No: 6<br>OS: MacOS Monterey<br>Port: 1 USB Type-C<br>Power: USB Type-C<br>30W<br>Price: 1400<br>ReleaseDate: 2017<br>Screen: 2304 x 1440 (226 ppi)<br>Usage: reading<br>Weight: 0.92Kg</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21508,26 +21508,26 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-Soft-Router-2a83b9968fc3486980272fb44eb6b6c1/</url>
-    <content><![CDATA[<h1 id="Soft-Router"><a href="#Soft-Router" class="headerlink" title="Soft Router"></a>Soft Router</h1><p>CPU: Intel Celeron N5105<br>No: 11</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-Raspberry-PI-4-2fe179ef20424cd49c76f11fe6db6721/</url>
     <content><![CDATA[<h1 id="Raspberry-PI-4"><a href="#Raspberry-PI-4" class="headerlink" title="Raspberry PI 4"></a>Raspberry PI 4</h1><p>No: 12</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-Surface-Pro-4-e29f6b4c7aa54d2d8704b39fcc24c5e5/</url>
-    <content><![CDATA[<h1 id="Surface-Pro-4"><a href="#Surface-Pro-4" class="headerlink" title="Surface Pro 4"></a>Surface Pro 4</h1><p>Battery: 38Wh<br>CPU: Intel Core M3-7Y30 2C4HT<br>kabylake<br>Fans: 0<br>GPU: Intel HD Graphics 515<br>MEM: 0.9GHz~2.2GHz<br>No: 9<br>OS: Windows10<br>OfficialSpec: <a href="https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75">https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75</a><br>Power: SurfaceConnect<br>Price: 1800<br>ReleaseDate: 2015<br>Review: <a href="https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html">https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html</a><br>Screen: 12.3’’<br>97% of sRGB<br>Usage: reading<br>Weight: 0.77Kg</p>
+    <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-Soft-Router-2a83b9968fc3486980272fb44eb6b6c1/</url>
+    <content><![CDATA[<h1 id="Soft-Router"><a href="#Soft-Router" class="headerlink" title="Soft Router"></a>Soft Router</h1><p>CPU: Intel Celeron N5105<br>No: 11</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
     <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-Synology-DS218j-399b21afb1ce40c2a53570ce1e76a0e3/</url>
     <content><![CDATA[<h1 id="Synology-DS218j"><a href="#Synology-DS218j" class="headerlink" title="Synology DS218j"></a>Synology DS218j</h1><p>CPU: Marvell Armada 385 88F6820 Dual Core 1.3 GHz CPU<br>MEM: 512MB DDR3<br>No: 10<br>Power: 60W PIN<br>17.48W (Access)<br>7.03W (HDD Hibernation)</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Playground-MyPCs-Surface-Pro-4-e29f6b4c7aa54d2d8704b39fcc24c5e5/</url>
+    <content><![CDATA[<h1 id="Surface-Pro-4"><a href="#Surface-Pro-4" class="headerlink" title="Surface Pro 4"></a>Surface Pro 4</h1><p>Battery: 38Wh<br>CPU: Intel Core M3-7Y30 2C4HT<br>kabylake<br>Fans: 0<br>GPU: Intel HD Graphics 515<br>MEM: 0.9GHz~2.2GHz<br>No: 9<br>OS: Windows10<br>OfficialSpec: <a href="https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75">https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75</a><br>Power: SurfaceConnect<br>Price: 1800<br>ReleaseDate: 2015<br>Review: <a href="https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html">https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html</a><br>Screen: 12.3’’<br>97% of sRGB<br>Usage: reading<br>Weight: 0.77Kg</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21605,14 +21605,14 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-ArticleList-2023-Pessimism-is-on-the-retreat-b890f002d8154da2ac026e80ab80fce4/</url>
-    <content><![CDATA[<h1 id="Pessimism-is-on-the-retreat"><a href="#Pessimism-is-on-the-retreat" class="headerlink" title="Pessimism is on the retreat"></a>Pessimism is on the retreat</h1><p>Status: Done</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-ArticleList-2023-NUMA%E6%9E%B6%E6%9E%84%E7%9A%84CPU-%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%94%A8%E5%A5%BD%E4%BA%86%E4%B9%88%EF%BC%9F-%E2%80%A2-cenalulu-s-Tech-Blog-a6411cd0d01f485db62ea202b9887a1c/</url>
+    <content><![CDATA[<h1 id="NUMA架构的CPU-–-你真的用好了么？-•-cenalulu’s-Tech-Blog"><a href="#NUMA架构的CPU-–-你真的用好了么？-•-cenalulu’s-Tech-Blog" class="headerlink" title="NUMA架构的CPU – 你真的用好了么？ • cenalulu’s Tech Blog"></a>NUMA架构的CPU – 你真的用好了么？ • cenalulu’s Tech Blog</h1><p>Status: In progress</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-ArticleList-2023-NUMA%E6%9E%B6%E6%9E%84%E7%9A%84CPU-%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%94%A8%E5%A5%BD%E4%BA%86%E4%B9%88%EF%BC%9F-%E2%80%A2-cenalulu-s-Tech-Blog-a6411cd0d01f485db62ea202b9887a1c/</url>
-    <content><![CDATA[<h1 id="NUMA架构的CPU-–-你真的用好了么？-•-cenalulu’s-Tech-Blog"><a href="#NUMA架构的CPU-–-你真的用好了么？-•-cenalulu’s-Tech-Blog" class="headerlink" title="NUMA架构的CPU – 你真的用好了么？ • cenalulu’s Tech Blog"></a>NUMA架构的CPU – 你真的用好了么？ • cenalulu’s Tech Blog</h1><p>Status: In progress</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-ArticleList-2023-Pessimism-is-on-the-retreat-b890f002d8154da2ac026e80ab80fce4/</url>
+    <content><![CDATA[<h1 id="Pessimism-is-on-the-retreat"><a href="#Pessimism-is-on-the-retreat" class="headerlink" title="Pessimism is on the retreat"></a>Pessimism is on the retreat</h1><p>Status: Done</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21691,14 +21691,14 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-The-37signals-Employee-Handbook-88912001db8a478baf51cd2952addb4b/</url>
-    <content><![CDATA[<h1 id="The-37signals-Employee-Handbook"><a href="#The-37signals-Employee-Handbook" class="headerlink" title="The 37signals Employee Handbook"></a>The 37signals Employee Handbook</h1><p>Status: Not started</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-The-Blind-Watchmaker-ce986062f8074072b18cc9f0ea963fb7/</url>
+    <content><![CDATA[<h1 id="The-Blind-Watchmaker"><a href="#The-Blind-Watchmaker" class="headerlink" title="The Blind Watchmaker"></a>The Blind Watchmaker</h1><p>Status: Not started</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-The-Blind-Watchmaker-ce986062f8074072b18cc9f0ea963fb7/</url>
-    <content><![CDATA[<h1 id="The-Blind-Watchmaker"><a href="#The-Blind-Watchmaker" class="headerlink" title="The Blind Watchmaker"></a>The Blind Watchmaker</h1><p>Status: Not started</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-The-37signals-Employee-Handbook-88912001db8a478baf51cd2952addb4b/</url>
+    <content><![CDATA[<h1 id="The-37signals-Employee-Handbook"><a href="#The-37signals-Employee-Handbook" class="headerlink" title="The 37signals Employee Handbook"></a>The 37signals Employee Handbook</h1><p>Status: Not started</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21709,20 +21709,14 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-%E5%A4%AA%E7%99%BD%E9%87%91%E6%98%9F%E6%9C%89%E7%82%B9%E5%84%BF%E7%83%A6-fb381e637574403999cac30257b51234/</url>
-    <content><![CDATA[<h1 id="太白金星有点儿烦"><a href="#太白金星有点儿烦" class="headerlink" title="太白金星有点儿烦"></a>太白金星有点儿烦</h1><p>Status: Done</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-%E6%8B%94%E9%AD%94-28fdd51bbb0546b18c6643d7fc659243/</url>
     <content><![CDATA[<h1 id="拔魔"><a href="#拔魔" class="headerlink" title="拔魔"></a>拔魔</h1><p>Status: Done</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-%E6%97%B6%E7%A9%BA%E7%94%BB%E5%B8%88-db8031ed0277407b97471eead4c476d5/</url>
-    <content><![CDATA[<h1 id="时空画师"><a href="#时空画师" class="headerlink" title="时空画师"></a>时空画师</h1><p>Status: Done</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-%E5%A4%AA%E7%99%BD%E9%87%91%E6%98%9F%E6%9C%89%E7%82%B9%E5%84%BF%E7%83%A6-fb381e637574403999cac30257b51234/</url>
+    <content><![CDATA[<h1 id="太白金星有点儿烦"><a href="#太白金星有点儿烦" class="headerlink" title="太白金星有点儿烦"></a>太白金星有点儿烦</h1><p>Status: Done</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21733,8 +21727,8 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-%E8%BE%B9%E5%9F%8E%E6%B5%AA%E5%AD%90%EF%BC%88%E4%B8%8A%E4%B8%8B%EF%BC%89-%E8%B1%86%E7%93%A3-ac4ae1c2ff29411189b498c62a1aa62d/</url>
-    <content><![CDATA[<h1 id="边城浪子（上下）-豆瓣"><a href="#边城浪子（上下）-豆瓣" class="headerlink" title="边城浪子（上下） (豆瓣)"></a>边城浪子（上下） (豆瓣)</h1><p>Status: In progress</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-%E6%97%B6%E7%A9%BA%E7%94%BB%E5%B8%88-db8031ed0277407b97471eead4c476d5/</url>
+    <content><![CDATA[<h1 id="时空画师"><a href="#时空画师" class="headerlink" title="时空画师"></a>时空画师</h1><p>Status: Done</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21748,6 +21742,12 @@ Rework  - Jason Fried
     <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2024-TheInnovator%E2%80%99sDilemma-Clayton-C-df41c35e3fae4660ab6de98573a1b1f1/</url>
     <content><![CDATA[<h1 id="TheInnovator’sDilemma-Clayton-C"><a href="#TheInnovator’sDilemma-Clayton-C" class="headerlink" title="TheInnovator’sDilemma-Clayton C"></a>TheInnovator’sDilemma-Clayton C</h1><p>Status: In progress</p>
 <p>hristensen</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2023-%E8%BE%B9%E5%9F%8E%E6%B5%AA%E5%AD%90%EF%BC%88%E4%B8%8A%E4%B8%8B%EF%BC%89-%E8%B1%86%E7%93%A3-ac4ae1c2ff29411189b498c62a1aa62d/</url>
+    <content><![CDATA[<h1 id="边城浪子（上下）-豆瓣"><a href="#边城浪子（上下）-豆瓣" class="headerlink" title="边城浪子（上下） (豆瓣)"></a>边城浪子（上下） (豆瓣)</h1><p>Status: In progress</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21854,14 +21854,14 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2024-%E6%A5%9A%E6%B1%89%E5%8F%8C%E9%9B%84-27ea503b9f8f4de7ab8b258b81b90aea/</url>
-    <content><![CDATA[<h1 id="楚汉双雄"><a href="#楚汉双雄" class="headerlink" title="楚汉双雄"></a>楚汉双雄</h1><p>Status: Done</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2024-%E6%9C%AC%E6%BA%90-%E4%B8%B9%C2%B7%E5%B8%83%E6%9C%97-ca5714ccfd524fa5a5603a5af3e90236/</url>
+    <content><![CDATA[<h1 id="本源-–-丹·布朗"><a href="#本源-–-丹·布朗" class="headerlink" title="本源 – 丹·布朗"></a>本源 – 丹·布朗</h1><p>Status: Done</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2024-%E6%9C%AC%E6%BA%90-%E4%B8%B9%C2%B7%E5%B8%83%E6%9C%97-ca5714ccfd524fa5a5603a5af3e90236/</url>
-    <content><![CDATA[<h1 id="本源-–-丹·布朗"><a href="#本源-–-丹·布朗" class="headerlink" title="本源 – 丹·布朗"></a>本源 – 丹·布朗</h1><p>Status: Done</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2024-%E6%A5%9A%E6%B1%89%E5%8F%8C%E9%9B%84-27ea503b9f8f4de7ab8b258b81b90aea/</url>
+    <content><![CDATA[<h1 id="楚汉双雄"><a href="#楚汉双雄" class="headerlink" title="楚汉双雄"></a>楚汉双雄</h1><p>Status: Done</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21914,26 +21914,20 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2024-%E9%A5%A5%E9%A5%BF%E7%9A%84%E7%9B%9B%E4%B8%96-3c27f1dbb6354d1f90097679ad7e02de/</url>
-    <content><![CDATA[<h1 id="饥饿的盛世"><a href="#饥饿的盛世" class="headerlink" title="饥饿的盛世"></a>饥饿的盛世</h1><p>Status: Not started</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2024-%E9%AA%97%E5%B1%80-%E4%B8%B9%C2%B7%E5%B8%83%E6%9C%97-2c271465e2cb422985f763225c8fe252/</url>
     <content><![CDATA[<h1 id="骗局-–-丹·布朗"><a href="#骗局-–-丹·布朗" class="headerlink" title="骗局 – 丹·布朗"></a>骗局 – 丹·布朗</h1><p>Status: Done</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2025-It-Doesn%E2%80%99t-Have-to-Be-Crazy-at-Work-1d3e5b2869fa80acb9fce5f89daa0498/</url>
-    <content><![CDATA[<h1 id="It-Doesn’t-Have-to-Be-Crazy-at-Work"><a href="#It-Doesn’t-Have-to-Be-Crazy-at-Work" class="headerlink" title="It Doesn’t Have to Be Crazy at Work"></a>It Doesn’t Have to Be Crazy at Work</h1><p>Status: In progress</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2024-%E9%A5%A5%E9%A5%BF%E7%9A%84%E7%9B%9B%E4%B8%96-3c27f1dbb6354d1f90097679ad7e02de/</url>
+    <content><![CDATA[<h1 id="饥饿的盛世"><a href="#饥饿的盛世" class="headerlink" title="饥饿的盛世"></a>饥饿的盛世</h1><p>Status: Not started</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2025-P9%E5%B7%A5%E4%BD%9C%E6%B3%95-104e5b2869fa804cb32fe91476d8acd3/</url>
-    <content><![CDATA[<h1 id="P9工作法"><a href="#P9工作法" class="headerlink" title="P9工作法"></a>P9工作法</h1><p>Status: Not started</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2025-It-Doesn%E2%80%99t-Have-to-Be-Crazy-at-Work-1d3e5b2869fa80acb9fce5f89daa0498/</url>
+    <content><![CDATA[<h1 id="It-Doesn’t-Have-to-Be-Crazy-at-Work"><a href="#It-Doesn’t-Have-to-Be-Crazy-at-Work" class="headerlink" title="It Doesn’t Have to Be Crazy at Work"></a>It Doesn’t Have to Be Crazy at Work</h1><p>Status: In progress</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -21950,14 +21944,20 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2025-%E4%B8%83%E6%9D%80%E6%89%8B-228e5b2869fa8038aa8bc045eab61196/</url>
-    <content><![CDATA[<h1 id="七杀手"><a href="#七杀手" class="headerlink" title="七杀手"></a>七杀手</h1><p>Status: Done</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2025-P9%E5%B7%A5%E4%BD%9C%E6%B3%95-104e5b2869fa804cb32fe91476d8acd3/</url>
+    <content><![CDATA[<h1 id="P9工作法"><a href="#P9工作法" class="headerlink" title="P9工作法"></a>P9工作法</h1><p>Status: Not started</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
     <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2025-%E4%B8%83%E4%BE%AF%E7%AC%94%E5%BD%95-%E9%A9%AC%E4%BC%AF%E5%BA%B8-228e5b2869fa80a088c1fddd1a218a85/</url>
     <content><![CDATA[<h1 id="七侯笔录-马伯庸"><a href="#七侯笔录-马伯庸" class="headerlink" title="七侯笔录-马伯庸"></a>七侯笔录-马伯庸</h1><p>Status: Done</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-BookList-2025-%E4%B8%83%E6%9D%80%E6%89%8B-228e5b2869fa8038aa8bc045eab61196/</url>
+    <content><![CDATA[<h1 id="七杀手"><a href="#七杀手" class="headerlink" title="七杀手"></a>七杀手</h1><p>Status: Done</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
@@ -22060,15 +22060,15 @@ Rework  - Jason Fried
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-ThesisList-2024-Challenges-of-Memory-Management-on-Modern-NUMA-Sys-4d6b5cb9b2604378a913333eac9ee81d/</url>
-    <content><![CDATA[<h1 id="Challenges-of-Memory-Management-on-Modern-NUMA-System"><a href="#Challenges-of-Memory-Management-on-Modern-NUMA-System" class="headerlink" title="Challenges of Memory Management on Modern NUMA System"></a>Challenges of Memory Management on Modern NUMA System</h1><p>Status: Not started</p>
-<p><a href="Challenges%20of%20Memory%20Management%20on%20Modern%20NUMA%20Sys/Challenges_of_Memory_Management_on_Modern_NUMA_System.pdf">Challenges of Memory Management on Modern NUMA System.pdf</a></p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-ThesisList-2024-Untitled-12c71ca1fc0e4ef1af4d48f25e9bb4b7/</url>
+    <content><![CDATA[<h1 id="Untitled"><a href="#Untitled" class="headerlink" title="Untitled"></a>Untitled</h1><p>Status: Not started</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
     <title></title>
-    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-ThesisList-2024-Untitled-12c71ca1fc0e4ef1af4d48f25e9bb4b7/</url>
-    <content><![CDATA[<h1 id="Untitled"><a href="#Untitled" class="headerlink" title="Untitled"></a>Untitled</h1><p>Status: Not started</p>
+    <url>//2026-03-04-Coder-in-Garden-Plans-Goals-Book-List-ThesisList-2024-Challenges-of-Memory-Management-on-Modern-NUMA-Sys-4d6b5cb9b2604378a913333eac9ee81d/</url>
+    <content><![CDATA[<h1 id="Challenges-of-Memory-Management-on-Modern-NUMA-System"><a href="#Challenges-of-Memory-Management-on-Modern-NUMA-System" class="headerlink" title="Challenges of Memory Management on Modern NUMA System"></a>Challenges of Memory Management on Modern NUMA System</h1><p>Status: Not started</p>
+<p><a href="Challenges%20of%20Memory%20Management%20on%20Modern%20NUMA%20Sys/Challenges_of_Memory_Management_on_Modern_NUMA_System.pdf">Challenges of Memory Management on Modern NUMA System.pdf</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
   </entry>
   <entry>
