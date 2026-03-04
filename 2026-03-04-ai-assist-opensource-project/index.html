@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景在日常工作中，我经常使用 Copy as Markdown 这款浏览器扩展来复制网页链接为 Markdown 格式。但有一个痛点：复制的 URL 经常包含大量追踪参数（如 spm、utm_* 等），导致生成的链接非常冗长。 例如分享一篇知乎文章： 原始: https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;22646254?utm_campaign">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="使用 AI 辅助修改开源项目的实践：以浏览器插件开发为例">
+<meta property="og:url" content="https://davyjones2010.github.io/2026-03-04-ai-assist-opensource-project/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="背景在日常工作中，我经常使用 Copy as Markdown 这款浏览器扩展来复制网页链接为 Markdown 格式。但有一个痛点：复制的 URL 经常包含大量追踪参数（如 spm、utm_* 等），导致生成的链接非常冗长。 例如分享一篇知乎文章： 原始: https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;22646254?utm_campaign">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-04T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-04T13:12:38.548Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="markdown">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="opensource">
+<meta property="article:tag" content="browser-extension">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2026-03-04-ai-assist-opensource-project/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2026-03-04-ai-assist-opensource-project/","path":"/2026-03-04-ai-assist-opensource-project/","title":"使用 AI 辅助修改开源项目的实践：以浏览器插件开发为例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用 AI 辅助修改开源项目的实践：以浏览器插件开发为例 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E-AI-%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">与 AI 协作的完整流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E8%AE%A9-AI-%E7%90%86%E8%A7%A3%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.1.</span> <span class="nav-text">第一步：让 AI 理解项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%8F%8F%E8%BF%B0%E9%9C%80%E6%B1%82%EF%BC%8C%E8%AE%A9-AI-%E8%A7%84%E5%88%92"><span class="nav-number">2.2.</span> <span class="nav-text">第二步：描述需求，让 AI 规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E9%AA%8C%E8%AF%81%E7%BB%93%E6%9E%9C"><span class="nav-number">2.3.</span> <span class="nav-text">第三步：验证结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9AGit-%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%89%93%E5%8C%85"><span class="nav-number">2.4.</span> <span class="nav-text">第四步：Git 操作与打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E6%8F%90%E4%BA%A4-PR-%E5%88%B0%E5%8E%9F%E5%A7%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.5.</span> <span class="nav-text">第五步：提交 PR 到原始项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">4.</span> <span class="nav-text">人机协作最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%80%82%E5%90%88%E7%94%A8-AI-%E8%BE%85%E5%8A%A9%EF%BC%9F"><span class="nav-number">4.1.</span> <span class="nav-text">什么时候适合用 AI 辅助？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%B8%8E-AI-%E9%AB%98%E6%95%88%E5%8D%8F%E4%BD%9C%EF%BC%9F"><span class="nav-number">4.2.</span> <span class="nav-text">如何与 AI 高效协作？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E7%B1%BB%E9%9C%80%E8%A6%81%E6%8A%8A%E5%85%B3%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.3.</span> <span class="nav-text">人类需要把关什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">199</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-ai-assist-opensource-project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用 AI 辅助修改开源项目的实践：以浏览器插件开发为例 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 AI 辅助修改开源项目的实践：以浏览器插件开发为例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-03-04 10:00:00 / 修改时间：21:12:38" itemprop="dateCreated datePublished" datetime="2026-03-04T10:00:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在日常工作中，我经常使用 <a target="_blank" rel="noopener" href="https://github.com/yorkxin/copy-as-markdown">Copy as Markdown</a> 这款浏览器扩展来复制网页链接为 Markdown 格式。但有一个痛点：复制的 URL 经常包含大量追踪参数（如 <code>spm</code>、<code>utm_*</code> 等），导致生成的链接非常冗长。</p>
+<p>例如分享一篇知乎文章：</p>
+<pre class="line-numbers language-none"><code class="language-none">原始: https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;22646254?utm_campaign&#x3D;official_account&amp;utm_source&#x3D;weibo&amp;utm_medium&#x3D;zhihu&amp;utm_content&#x3D;zhuanlan
+期望: https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;22646254<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>或者复制阿里云产品页：</p>
+<pre class="line-numbers language-none"><code class="language-none">原始: https:&#x2F;&#x2F;www.aliyun.com&#x2F;product&#x2F;ecs?spm&#x3D;5176.19720258.J_3207526240.2.e9392c4axxxxxx
+期望: https:&#x2F;&#x2F;www.aliyun.com&#x2F;product&#x2F;ecs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这是一个典型的「小需求」—— 功能明确、改动不大，但需要理解一个陌生的开源项目。正好用来实践 AI 辅助开发。</p>
+<h2 id="与-AI-协作的完整流程"><a href="#与-AI-协作的完整流程" class="headerlink" title="与 AI 协作的完整流程"></a>与 AI 协作的完整流程</h2><h3 id="第一步：让-AI-理解项目"><a href="#第一步：让-AI-理解项目" class="headerlink" title="第一步：让 AI 理解项目"></a>第一步：让 AI 理解项目</h3><p><strong>我的做法</strong>：直接让 AI 分析项目结构和功能</p>
+<pre class="line-numbers language-none"><code class="language-none">我: 请概述下当前项目功能是干啥的<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>AI 会自动扫描项目目录、阅读 README 和关键源码，然后给出结构化的项目概述，包括：</p>
+<ul>
+<li>项目功能定位</li>
+<li>技术栈（TypeScript、测试框架等）</li>
+<li>代码架构（分层设计、模块划分）</li>
+</ul>
+<p><strong>效果</strong>：几秒钟内就对一个陌生项目有了全局认知，省去了自己翻代码的时间。</p>
+<h3 id="第二步：描述需求，让-AI-规划"><a href="#第二步：描述需求，让-AI-规划" class="headerlink" title="第二步：描述需求，让 AI 规划"></a>第二步：描述需求，让 AI 规划</h3><p><strong>我的做法</strong>：用自然语言描述需求和示例</p>
+<pre class="line-numbers language-none"><code class="language-none">我: 在拷贝当前网址导出为 markdown 格式时，需要去除掉 spm&#x3D;xxx 这个参数。
+    例如 https:&#x2F;&#x2F;www.aliyun.com&#x2F;exp?spm&#x3D;5176.xxx 需要变成 https:&#x2F;&#x2F;www.aliyun.com&#x2F;exp
+    请修改代码实现这个能力<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>AI 会：</p>
+<ol>
+<li>理解需求本质（URL 参数清理）</li>
+<li>自动定位需要修改的代码位置</li>
+<li>制定任务计划（创建工具模块 → 集成到现有服务 → 编写测试）</li>
+<li>逐步执行并展示进度</li>
+</ol>
+<p><strong>效果</strong>：AI 不仅实现了 <code>spm</code> 的清理，还主动扩展支持了 <code>utm_*</code>、<code>fbclid</code>、<code>gclid</code> 等常见追踪参数。</p>
+<h3 id="第三步：验证结果"><a href="#第三步：验证结果" class="headerlink" title="第三步：验证结果"></a>第三步：验证结果</h3><p>AI 完成代码后，自动运行测试验证：</p>
+<pre class="line-numbers language-none"><code class="language-none">✓ 120 个单元测试全部通过
+✓ 其中 25 个是新增的 URL 清理测试<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>我只需要检查测试覆盖的场景是否符合预期。</p>
+<h3 id="第四步：Git-操作与打包"><a href="#第四步：Git-操作与打包" class="headerlink" title="第四步：Git 操作与打包"></a>第四步：Git 操作与打包</h3><p>继续用自然语言指挥：</p>
+<pre class="line-numbers language-none"><code class="language-none">我: 新建一个 feature 分支，把这个功能提交上去
+我: 请编译并打包项目，便于我在 Chrome 里安装<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>AI 自动完成分支创建、代码提交、编译打包，并告知安装方法。</p>
+<h3 id="第五步：提交-PR-到原始项目"><a href="#第五步：提交-PR-到原始项目" class="headerlink" title="第五步：提交 PR 到原始项目"></a>第五步：提交 PR 到原始项目</h3><p>本地验证通过后，继续让 AI 处理 PR 提交：</p>
+<pre class="line-numbers language-none"><code class="language-none">我: 请继续操作，把这个 feature 在原始项目里提交个 PR<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>AI 会自动：</p>
+<ol>
+<li>配置 Git 远程仓库</li>
+<li>处理 SSH 密钥认证（遇到问题时会提示解决方案）</li>
+<li>推送代码到 Fork 仓库</li>
+<li>生成 PR 标题和描述内容</li>
+</ol>
+<p>过程中遇到问题时，AI 会主动分析并提供解决方案：</p>
+<pre class="line-numbers language-none"><code class="language-none"># SSH 认证失败时，AI 自动检测并提示
+&quot;SSH 密钥被 GitHub 拒绝，可能公钥未添加到你的账户。已将公钥复制到剪贴板，请添加到 GitHub Settings...&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>当发现提交存在问题时，用自然语言说明即可：</p>
+<pre class="line-numbers language-none"><code class="language-none">我: 发现 PR 存在问题，第一 commit 压缩成 1 个；第二 排除掉 .idea 目录下与项目无关的修改<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>AI 会自动执行 git rebase、重新组织 commit、force push 更新 PR。</p>
+<p><strong>最终效果</strong>：一个干净的 PR，包含 1 个 commit、仅 5 个相关文件。</p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总耗时</td>
+<td>~30 分钟</td>
+</tr>
+<tr>
+<td>新增代码</td>
+<td>~110 行（含工具函数）</td>
+</tr>
+<tr>
+<td>修改文件</td>
+<td>5 个</td>
+</tr>
+<tr>
+<td>新增测试</td>
+<td>25 个用例</td>
+</tr>
+<tr>
+<td>测试通过率</td>
+<td>100%（120&#x2F;120）</td>
+</tr>
+<tr>
+<td>PR 状态</td>
+<td>已提交到原始项目</td>
+</tr>
+</tbody></table>
+<p>修改后的效果：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>修改前</th>
+<th>修改后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>知乎文章</td>
+<td><code>[文章](https://zhuanlan.zhihu.com/p/xxx?utm_source=weibo&amp;utm_medium=zhihu)</code></td>
+<td><code>[文章](https://zhuanlan.zhihu.com/p/xxx)</code></td>
+</tr>
+<tr>
+<td>阿里云产品</td>
+<td><code>[产品](https://aliyun.com/product?spm=5176.xxx)</code></td>
+<td><code>[产品](https://aliyun.com/product)</code></td>
+</tr>
+</tbody></table>
+<h2 id="人机协作最佳实践"><a href="#人机协作最佳实践" class="headerlink" title="人机协作最佳实践"></a>人机协作最佳实践</h2><h3 id="什么时候适合用-AI-辅助？"><a href="#什么时候适合用-AI-辅助？" class="headerlink" title="什么时候适合用 AI 辅助？"></a>什么时候适合用 AI 辅助？</h3><table>
+<thead>
+<tr>
+<th>适合</th>
+<th>不太适合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需求明确、边界清晰</td>
+<td>需求模糊、需要大量讨论</td>
+</tr>
+<tr>
+<td>修改陌生代码库</td>
+<td>核心业务逻辑设计</td>
+</tr>
+<tr>
+<td>重复性工作（测试、重构）</td>
+<td>需要深度领域知识</td>
+</tr>
+<tr>
+<td>快速原型验证</td>
+<td>安全敏感代码</td>
+</tr>
+</tbody></table>
+<h3 id="如何与-AI-高效协作？"><a href="#如何与-AI-高效协作？" class="headerlink" title="如何与 AI 高效协作？"></a>如何与 AI 高效协作？</h3><p><strong>1. 提供清晰的上下文</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">❌ &quot;帮我改一下这个 bug&quot;
+✅ &quot;复制 URL 时需要去除 spm 参数，例如 xxx 应该变成 yyy&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>2. 让 AI 先理解再动手</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">先问: &quot;请概述下这个项目的架构&quot;
+再说: &quot;请实现 xxx 功能&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>3. 分步验证，及时纠偏</strong></p>
+<ul>
+<li>让 AI 先说方案，确认后再实现</li>
+<li>每完成一步就验证（运行测试）</li>
+<li>发现问题立即反馈</li>
+</ul>
+<p><strong>4. 善用 AI 的延展能力</strong></p>
+<ul>
+<li>我只提了 <code>spm</code>，AI 主动扩展了十几种追踪参数</li>
+<li>我只要求实现功能，AI 自动补充了边界测试</li>
+</ul>
+<h3 id="人类需要把关什么？"><a href="#人类需要把关什么？" class="headerlink" title="人类需要把关什么？"></a>人类需要把关什么？</h3><ol>
+<li><strong>需求理解</strong> - AI 可能过度解读或遗漏细节</li>
+<li><strong>方案合理性</strong> - 检查是否符合项目架构</li>
+<li><strong>测试覆盖</strong> - 确保测试真正验证了业务场景</li>
+<li><strong>安全性</strong> - 涉及敏感操作时要人工审查</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次实践让我体会到 AI 辅助开发的核心价值：</p>
+<blockquote>
+<p><strong>把「理解代码」和「编写代码」的时间成本大幅降低，让开发者专注于「决策」和「验证」。</strong></p>
+</blockquote>
+<p>对于修改开源项目这类场景，AI 特别擅长：</p>
+<ul>
+<li>快速理解陌生代码库的结构</li>
+<li>定位需要修改的位置</li>
+<li>生成符合项目风格的代码</li>
+<li>自动补充测试用例</li>
+<li>处理 Git 操作和 PR 提交</li>
+</ul>
+<p>而人类的价值在于：</p>
+<ul>
+<li>提出真正的需求</li>
+<li>判断方案是否合理</li>
+<li>验证结果是否正确</li>
+<li>决定是否采纳</li>
+</ul>
+<p>这种人机协作模式，让「给开源项目加个小功能」从「半天的事」变成了「半小时的事」。</p>
+<hr>
+<p><strong>原始项目</strong>: <a target="_blank" rel="noopener" href="https://github.com/yorkxin/copy-as-markdown">yorkxin&#x2F;copy-as-markdown</a><br><strong>我的 Fork</strong>: <a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/copy-as-markdown">DavyJones2010&#x2F;copy-as-markdown</a><br><strong>提交的 PR</strong>: <a target="_blank" rel="noopener" href="https://github.com/yorkxin/copy-as-markdown/pull/new/feature/url-tracking-params-cleaner">feat: add URL tracking parameters cleaner</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/markdown/" rel="tag"># markdown</a>
+              <a href="/tags/ai/" rel="tag"># ai</a>
+              <a href="/tags/opensource/" rel="tag"># opensource</a>
+              <a href="/tags/browser-extension/" rel="tag"># browser-extension</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023-06-28-spring-spel-sample/" rel="prev" title="Spring SPEL语法常用样例">
+                  <i class="fa fa-chevron-left"></i> Spring SPEL语法常用样例
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">321k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:52</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
