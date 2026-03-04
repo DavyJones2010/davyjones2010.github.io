@@ -211,7 +211,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-cri-containerd-runc-cli-b82e027079204eac9df7e44aeca1b0ec/">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-13-koordinator-src-analysis-a12b97275b6e4b758e0d023ca838c689/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
@@ -229,7 +229,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-cri-containerd-runc-cli-b82e027079204eac9df7e44aeca1b0ec/" class="post-title-link" itemprop="url">未命名</a>
+          <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-13-koordinator-src-analysis-a12b97275b6e4b758e0d023ca838c689/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta-container">
@@ -240,7 +240,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -250,14 +250,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
+      <span>94</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -268,356 +268,311 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="cri-containerd-runc-cli"><a href="#cri-containerd-runc-cli" class="headerlink" title="cri-containerd-runc-cli"></a>cri-containerd-runc-cli</h1><h1 id="crictl"><a href="#crictl" class="headerlink" title="crictl"></a>crictl</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>配置endpoint为containerd</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">runtime<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
-image<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
-timeout<span class="token punctuation">:</span> <span class="token number">10</span>
-debug<span class="token punctuation">:</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>否则会去默认找 docker.sock, 从而报错: </p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">
-WARN<span class="token punctuation">[</span><span class="token number">0000</span><span class="token punctuation">]</span> runtime connect using <span class="token keyword">default</span> endpoints<span class="token punctuation">:</span> <span class="token punctuation">[</span>unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.</span>
-E0125 <span class="token number">15</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">09.340202</span>   <span class="token number">38890</span> remote_runtime<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">277</span><span class="token punctuation">]</span> <span class="token string">"ListPodSandbox with filter from runtime service failed"</span> err<span class="token operator">=</span><span class="token string">"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory\""</span> filter<span class="token operator">=</span><span class="token string">"&amp;PodSandboxFilter&#123;Id:,State:nil,LabelSelector:map[string]string&#123;&#125;,&#125;"</span>
-FATA<span class="token punctuation">[</span><span class="token number">0000</span><span class="token punctuation">]</span> listing pod sandboxes<span class="token punctuation">:</span> rpc <span class="token builtin">error</span><span class="token punctuation">:</span> code <span class="token operator">=</span> Unavailable desc <span class="token operator">=</span> connection <span class="token builtin">error</span><span class="token punctuation">:</span> desc <span class="token operator">=</span> <span class="token string">"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"># 查看所有pods<span class="token operator">/</span>sandbox
-$sudo crictl pods
-POD ID              CREATED             STATE               NAME                       NAMESPACE           ATTEMPT             RUNTIME
-b0a9d72288491       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be03              qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-ebb390f699f40       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be02              qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-2493312953f99       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be                qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-
-# pod<span class="token operator">/</span>sandbox操作
-# 按照podconfig新建pod
-$sudo crictl runp <span class="token punctuation">[</span>POD_CONFIG_JSON<span class="token punctuation">]</span>
-
-# 查看pod详情
-$sudo crictl inspectp b0a9d72288491
-
-# container操作
-# 在pod里新建container
-$sudo crictl create $<span class="token punctuation">&#123;</span>SANDBOX_ID<span class="token punctuation">&#125;</span> container<span class="token punctuation">.</span>json sandbox<span class="token punctuation">.</span>json
-
-# 启动container
-$sudo crictl start $<span class="token punctuation">&#123;</span>CONTAINER_ID<span class="token punctuation">&#125;</span>
-
-# 列出container
-$sudo crictl ps
-
-# 
-#sudo crictl inspect $<span class="token punctuation">&#123;</span>CONTAINER_ID<span class="token punctuation">&#125;</span>
-
-# 拉取镜像
-$sudo crictl pull nginx
-
-# 列出所有镜像
-$sudo crictl images
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="ctr"><a href="#ctr" class="headerlink" title="ctr"></a>ctr</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Reading-Notes-cri-containerd-runc-cli-b82e027079204eac9df7e44aeca1b0ec/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-docker-containerd-cri-deep-dive-63ca1e4b5ce34f4583870eeed828ae77/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-docker-containerd-cri-deep-dive-63ca1e4b5ce34f4583870eeed828ae77/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>16k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="docker-containerd-cri-deep-dive"><a href="#docker-containerd-cri-deep-dive" class="headerlink" title="docker-containerd-cri-deep-dive"></a>docker-containerd-cri-deep-dive</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p><img data-src="/docker-containerd-cri-deep-dive/Untitled.png" alt="Untitled"></p>
-<p><img data-src="/docker-containerd-cri-deep-dive/Untitled%201.png" alt="Untitled"></p>
-<p>个人总结下. </p>
-<ul>
-<li>containerd本质就是 runc + image 下载&#x2F;解压</li>
-<li>docker本质就是 containerd + image 构建</li>
-</ul>
-<blockquote>
-<p>Docker was focused on end-user and developer use cases,<br>whereas containerd is focused on operational use cases, such as running containers on servers.<br>Tasks such as building container images are left to other tools.</p>
-</blockquote>
-<ul>
-<li>而根据CRI的接口定义, 也不包含镜像的构建:<ul>
-<li>containerd就是CRI的一个实现.</li>
-<li>cri-o 也是CRI的一个实现.</li>
-<li>但目前主流的都是 containerd</li>
-</ul>
+          <h1 id="koordinator-src-analysis"><a href="#koordinator-src-analysis" class="headerlink" title="koordinator-src-analysis"></a>koordinator-src-analysis</h1><ol>
+<li><p>如何保证Cobra生成的CMD, 拉起之后一直不退出? </p>
 </li>
-</ul>
-<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><h2 id="CRI-API"><a href="#CRI-API" class="headerlink" title="CRI API"></a>CRI API</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Reading-Notes-docker-containerd-cri-deep-dive-63ca1e4b5ce34f4583870eeed828ae77/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-e2a260ad0c624d4f84f8d8cf27fc5e85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-e2a260ad0c624d4f84f8d8cf27fc5e85/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>523</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Reading-Notes"><a href="#Reading-Notes" class="headerlink" title="Reading Notes"></a>Reading Notes</h1><p><a href="Reading%20Notes/container-learning-roadmap%20d2c338639fa141fd97f9ed815d6129d4.md">container-learning-roadmap</a></p>
-<p><a href="Reading%20Notes/go-basics%2032fcaa3cacf140c8a0f87ccb4944cff3.md">go-basics</a></p>
-<p><a href="Reading%20Notes/go-utils%208aa981bf263847a4b23f8e5c0d24a759.md">go-utils</a></p>
-<p><a href="Reading%20Notes/go-network-socket%20a9506a8dfda64f9aab81c62f89215379.md">go-network-socket</a></p>
-<p><a href="Reading%20Notes/k8s-basis%20c4d260eb6d974610b003281f7039e8a1.md">k8s-basis</a></p>
-<p><a href="Reading%20Notes/k8s-util%20020260ace16c42dbb85f2b6ed85d2a25.md">k8s-util</a></p>
-<p><a href="Reading%20Notes/k8s-node-drain%20a4b543e0541c4e23913481277a04fa9e.md">k8s-node-drain</a></p>
-<p><a href="Reading%20Notes/k8s-pdb%207a29091ecb014036ba8a915bcdf4bafb.md">k8s-pdb</a></p>
-<p><a href="Reading%20Notes/k8s-list-watch%20261b9681fc2a46cf9ba0dff1ddf3b6c9.md">k8s-list-watch</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Reading-Notes-e2a260ad0c624d4f84f8d8cf27fc5e85/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-container-learning-roadmap-d2c338639fa141fd97f9ed815d6129d4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-container-learning-roadmap-d2c338639fa141fd97f9ed815d6129d4/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>26</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="container-learning-roadmap"><a href="#container-learning-roadmap" class="headerlink" title="container-learning-roadmap"></a>container-learning-roadmap</h1><p><img data-src="/container-learning-roadmap/Untitled.png" alt="Untitled"></p>
+<li><p>GO 的 UT测试框架: 需要熟悉</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/onsi/ginkgo">https://github.com/onsi/ginkgo</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Reading-Notes-container-learning-roadmap-d2c338639fa141fd97f9ed815d6129d4/#more" rel="contents">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-13-koordinator-src-analysis-a12b97275b6e4b758e0d023ca838c689/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-13-koordinator-thoughts-e1c002ff37b24e12944a9ce13b9aed64/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-13-koordinator-thoughts-e1c002ff37b24e12944a9ce13b9aed64/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>58</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="koordinator-thoughts"><a href="#koordinator-thoughts" class="headerlink" title="koordinator-thoughts"></a>koordinator-thoughts</h1><p>koordinator 怎么跟社区进行兼容? </p>
+<p>尤其是有koordlet的情况下?</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-13-koordinator-thoughts-e1c002ff37b24e12944a9ce13b9aed64/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-2024-01-10-k8s-memory-manager-deep-dive-d2392badf9104305a3c60e2d2ecfde11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-2024-01-10-k8s-memory-manager-deep-dive-d2392badf9104305a3c60e2d2ecfde11/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>774</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="k8s-memory-manager-deep-dive"><a href="#k8s-memory-manager-deep-dive" class="headerlink" title="k8s-memory-manager-deep-dive"></a>k8s-memory-manager-deep-dive</h1><ul>
+<li>只能针对GU, 不保证burstable的pod是否跨numa访问.</li>
+<li>kube-scheduler无法感知numa: The default Kubernetes scheduler is not aware of the node’s NUMA topology, and it can be a reason for many admission errors during the pod start.</li>
+</ul>
+<h1 id="疑问汇总"><a href="#疑问汇总" class="headerlink" title="疑问汇总"></a>疑问汇总</h1><ol>
+<li><p>mm怎么跟cadvisor交互, 来获取内存信息? 详细代码实现. ❌</p>
+</li>
+<li><p>如下图, 如果到操作系统来给pod发送OOM, 如何保证 “Low-priority containers are targeted before the high-priority containers”? 在进程优先级上有设定? 底层是怎么实现的? ✅</p>
+</li>
+</ol>
+<p>答案: 参见 <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-out-of-memory-behavior">Node-pressure Eviction | Kubernetes</a> 底层是给不同QoS的Pod设定不同的oom_score_adj, 然后通过Linux的 oom_killer 识别&amp;执行.</p>
+<p><img data-src="/k8s-memory-manager-deep-dive/Untitled.png" alt="Untitled"></p>
+<ol>
+<li>为啥下边的场景, Pod2创建会失败? ❌</li>
+</ol>
+<p><img data-src="/k8s-memory-manager-deep-dive/Untitled%201.png" alt="Untitled"></p>
+<ol>
+<li>怎么跟cpumanager进行交互?</li>
+</ol>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Reading-Notes-2024-01-10-k8s-memory-manager-deep-dive-d2392badf9104305a3c60e2d2ecfde11/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-15-k8s-containerd-src-analysis-75d920d3b10b4cc79a39ca87cfe251d4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-15-k8s-containerd-src-analysis-75d920d3b10b4cc79a39ca87cfe251d4/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>27</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="k8s-containerd-src-analysis"><a href="#k8s-containerd-src-analysis" class="headerlink" title="k8s-containerd-src-analysis"></a>k8s-containerd-src-analysis</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Reading-Notes-2023-12-15-k8s-containerd-src-analysis-75d920d3b10b4cc79a39ca87cfe251d4/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -677,7 +632,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -777,7 +732,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -881,7 +836,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -973,7 +928,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1064,7 +1019,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1129,6 +1084,109 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-minikube-988572790dac4c13b34b3b8aa48095c2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026-03-04-Coder-in-Garden-Playground-minikube-988572790dac4c13b34b3b8aa48095c2/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="minikube"><a href="#minikube" class="headerlink" title="minikube"></a>minikube</h1><ol>
+<li><p>install docker: <a target="_blank" rel="noopener" href="https://www.zhaowenyu.com/docker-doc/ops/docker-install.html">软件获取与安装 · Docker 文档</a></p>
+</li>
+<li><p>install minikube: <a target="_blank" rel="noopener" href="https://www.zhaowenyu.com/minikube-doc/ops/minikube.html">minikube安装Kubernetes · minikube</a></p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.18.1/minikube-linux-amd64 <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x minikube <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">mv</span> minikube /usr/local/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>FXXK!!!</p>
+<h2 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h2><p><img data-src="/minikube/Untitled.png" alt="Untitled"></p>
+<p><img data-src="/minikube/Untitled%201.png" alt="Untitled"></p>
+<h2 id="checksum文件下载失败"><a href="#checksum文件下载失败" class="headerlink" title="checksum文件下载失败"></a>checksum文件下载失败</h2><p><img data-src="/minikube/Untitled%202.png" alt="Untitled"></p>
+<p>修复: </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-minikube-988572790dac4c13b34b3b8aa48095c2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-centos7-init-3b6aa9e3a4054e2ba19d14a6995a63cd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1158,7 +1216,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1249,7 +1307,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1319,109 +1377,6 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-minikube-988572790dac4c13b34b3b8aa48095c2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Playground-minikube-988572790dac4c13b34b3b8aa48095c2/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="minikube"><a href="#minikube" class="headerlink" title="minikube"></a>minikube</h1><ol>
-<li><p>install docker: <a target="_blank" rel="noopener" href="https://www.zhaowenyu.com/docker-doc/ops/docker-install.html">软件获取与安装 · Docker 文档</a></p>
-</li>
-<li><p>install minikube: <a target="_blank" rel="noopener" href="https://www.zhaowenyu.com/minikube-doc/ops/minikube.html">minikube安装Kubernetes · minikube</a></p>
-</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.18.1/minikube-linux-amd64 <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x minikube <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">mv</span> minikube /usr/local/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>FXXK!!!</p>
-<h2 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h2><p><img data-src="/minikube/Untitled.png" alt="Untitled"></p>
-<p><img data-src="/minikube/Untitled%201.png" alt="Untitled"></p>
-<h2 id="checksum文件下载失败"><a href="#checksum文件下载失败" class="headerlink" title="checksum文件下载失败"></a>checksum文件下载失败</h2><p><img data-src="/minikube/Untitled%202.png" alt="Untitled"></p>
-<p>修复: </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-minikube-988572790dac4c13b34b3b8aa48095c2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyPCs-MacBook-Air-13%E2%80%99%E2%80%99-31ae5b19e8df43b1a5b294b45a3974e0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1451,7 +1406,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1543,7 +1498,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1638,7 +1593,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1730,7 +1685,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1825,7 +1780,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -1917,7 +1872,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2013,7 +1968,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2105,7 +2060,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2168,98 +2123,6 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyPCs-Synology-DS218j-399b21afb1ce40c2a53570ce1e76a0e3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Playground-MyPCs-Synology-DS218j-399b21afb1ce40c2a53570ce1e76a0e3/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>123</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Synology-DS218j"><a href="#Synology-DS218j" class="headerlink" title="Synology DS218j"></a>Synology DS218j</h1><p>CPU: Marvell Armada 385 88F6820 Dual Core 1.3 GHz CPU<br>MEM: 512MB DDR3<br>No: 10<br>Power: 60W PIN<br>17.48W (Access)<br>7.03W (HDD Hibernation)</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-MyPCs-Synology-DS218j-399b21afb1ce40c2a53570ce1e76a0e3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyPCs-Surface-Pro-4-e29f6b4c7aa54d2d8704b39fcc24c5e5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2289,7 +2152,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2352,6 +2215,98 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyPCs-Synology-DS218j-399b21afb1ce40c2a53570ce1e76a0e3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026-03-04-Coder-in-Garden-Playground-MyPCs-Synology-DS218j-399b21afb1ce40c2a53570ce1e76a0e3/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>123</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Synology-DS218j"><a href="#Synology-DS218j" class="headerlink" title="Synology DS218j"></a>Synology DS218j</h1><p>CPU: Marvell Armada 385 88F6820 Dual Core 1.3 GHz CPU<br>MEM: 512MB DDR3<br>No: 10<br>Power: 60W PIN<br>17.48W (Access)<br>7.03W (HDD Hibernation)</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-MyPCs-Synology-DS218j-399b21afb1ce40c2a53570ce1e76a0e3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyPCs-ThinkPad-X1-Carbon-5th-d3e0b974290a428bb359897878e54fd5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2381,7 +2336,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2445,98 +2400,6 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyPCs-X79-8dfa03876f2c4daa99d49c795ece1bc1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Playground-MyPCs-X79-8dfa03876f2c4daa99d49c795ece1bc1/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>25</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="X79"><a href="#X79" class="headerlink" title="X79"></a>X79</h1><p>Fans: 1<br>No: 1<br>OS: Windows10</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-MyPCs-X79-8dfa03876f2c4daa99d49c795ece1bc1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyPCs-X99-60c038cd3b364882bce877878bb64013/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2566,7 +2429,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2629,6 +2492,98 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyPCs-X79-8dfa03876f2c4daa99d49c795ece1bc1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026-03-04-Coder-in-Garden-Playground-MyPCs-X79-8dfa03876f2c4daa99d49c795ece1bc1/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>25</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="X79"><a href="#X79" class="headerlink" title="X79"></a>X79</h1><p>Fans: 1<br>No: 1<br>OS: Windows10</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-MyPCs-X79-8dfa03876f2c4daa99d49c795ece1bc1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-MyGameConsoles-b252d521bbbe4034b096b1448d6b9489/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2658,7 +2613,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2798,7 +2753,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2890,7 +2845,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -2953,6 +2908,194 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-Game-List-4c63b2d2bc4040d19c8edf7d43d051c9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026-03-04-Coder-in-Garden-Playground-Game-List-4c63b2d2bc4040d19c8edf7d43d051c9/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>38</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Game-List"><a href="#Game-List" class="headerlink" title="Game List"></a>Game List</h1><p><a href="Game%20List/GameList-2024%201a6efe0510154e7581b487dd5c9fa679.md">GameList-2024</a></p>
+<p><a href="Game%20List/GameList-2023%205cc50855601446db8bf75234ab970545.md">GameList-2023</a></p>
+<p><a href="Game%20List/%E5%A6%82%E9%BE%99-0%20d900bcdef2d349c2b4458394a00f990d.md">如龙-0</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-Game-List-4c63b2d2bc4040d19c8edf7d43d051c9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2024-1a6efe0510154e7581b487dd5c9fa679/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2024-1a6efe0510154e7581b487dd5c9fa679/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>55</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="GameList-2024"><a href="#GameList-2024" class="headerlink" title="GameList-2024"></a>GameList-2024</h1><h2 id="Want-to-Play"><a href="#Want-to-Play" class="headerlink" title="Want to Play"></a>Want to Play</h2><hr>
+<h2 id="Played"><a href="#Played" class="headerlink" title="Played"></a>Played</h2><hr>
+<p><a target="_blank" rel="noopener" href="https://www.douban.com/game/35877071/">神都不良探  Underdog Detective (豆瓣)</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2024-1a6efe0510154e7581b487dd5c9fa679/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2023-5cc50855601446db8bf75234ab970545/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2982,7 +3125,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -3050,100 +3193,6 @@ $sudo crictl images
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2024-1a6efe0510154e7581b487dd5c9fa679/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2024-1a6efe0510154e7581b487dd5c9fa679/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>55</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="GameList-2024"><a href="#GameList-2024" class="headerlink" title="GameList-2024"></a>GameList-2024</h1><h2 id="Want-to-Play"><a href="#Want-to-Play" class="headerlink" title="Want to Play"></a>Want to Play</h2><hr>
-<h2 id="Played"><a href="#Played" class="headerlink" title="Played"></a>Played</h2><hr>
-<p><a target="_blank" rel="noopener" href="https://www.douban.com/game/35877071/">神都不良探  Underdog Detective (豆瓣)</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-Game-List-GameList-2024-1a6efe0510154e7581b487dd5c9fa679/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-Game-List-%E5%A6%82%E9%BE%99-0-d900bcdef2d349c2b4458394a00f990d/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3173,7 +3222,7 @@ $sudo crictl images
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 22:20:00" itemprop="dateCreated datePublished" datetime="2026-03-04T22:20:00+08:00">2026-03-04</time>
     </span>
 
   
@@ -3213,109 +3262,6 @@ $sudo crictl images
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-Game-List-%E5%A6%82%E9%BE%99-0-d900bcdef2d349c2b4458394a00f990d/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Playground-c072de48f7124281bd776365ae2393d9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026-03-04-Coder-in-Garden-Playground-c072de48f7124281bd776365ae2393d9/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-04 22:07:50" itemprop="dateCreated datePublished" datetime="2026-03-04T22:07:50+08:00">2026-03-04</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>123</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Playground"><a href="#Playground" class="headerlink" title="Playground"></a>Playground</h1><aside>
-💡 Keep your hands dirty!!!
-
-</aside>
-
-<p><a href="Playground/Game%20List%204c63b2d2bc4040d19c8edf7d43d051c9.md">Game List</a></p>
-<p><a href="Playground/MyPCs%2095f51bdc3b164825b9d92201be169e90.csv">MyPCs</a></p>
-<p><a href="Playground/MyGameConsoles%20b252d521bbbe4034b096b1448d6b9489.md">MyGameConsoles</a></p>
-<p><a href="Playground/minikube%20988572790dac4c13b34b3b8aa48095c2.md">minikube</a></p>
-<p><a href="Playground/centos7-init%203b6aa9e3a4054e2ba19d14a6995a63cd.md">centos7-init</a></p>
-<p><a href="Playground/qemu-img%2016e4112109594922abea83369a2b9775.md">qemu-img</a></p>
-<p><a href="Playground/play-with-k8s%20d929ea8b77f241b89d827d7f7bf875f9.md">play-with-k8s</a></p>
-<p><a href="Playground/play-with-runc%20c06d3d89554d4bf99721a1db70c87586.md">play-with-runc</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026-03-04-Coder-in-Garden-Playground-c072de48f7124281bd776365ae2393d9/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
