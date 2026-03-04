@@ -25,18 +25,21 @@
 
     <meta name="description" content="k8s-deploy-arch对于k8s搭建比较感兴趣: 例如 各个组件如何部署的? 有啥先后顺序? 分别是以啥形态部署等, 以此文详细来分析下. 总览如下图  分析 部署Master节点:  手动通过系统服务(centos7u中的sysd service)的方式, 启动 kubelet, containerd 这两个服务, 同时在kubelet启动参数中配置好apiserver&#x2F;etc">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="k8s-deploy-arch">
+<meta property="og:title" content="K8s 部署架构详解">
 <meta property="og:url" content="https://davyjones2010.github.io/2026-03-04-k8s-deploy-arch/">
 <meta property="og:site_name" content="Coders@Work">
 <meta property="og:description" content="k8s-deploy-arch对于k8s搭建比较感兴趣: 例如 各个组件如何部署的? 有啥先后顺序? 分别是以啥形态部署等, 以此文详细来分析下. 总览如下图  分析 部署Master节点:  手动通过系统服务(centos7u中的sysd service)的方式, 启动 kubelet, containerd 这两个服务, 同时在kubelet启动参数中配置好apiserver&#x2F;etc">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://davyjones2010.github.io/k8s-deploy-arch/Untitled.png">
 <meta property="article:published_time" content="2026-03-04T13:42:05.000Z">
-<meta property="article:modified_time" content="2026-03-04T13:47:57.792Z">
+<meta property="article:modified_time" content="2026-03-04T13:53:42.172Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="k8s">
-<meta property="article:tag" content="container">
-<meta property="article:tag" content="reading-notes">
+<meta property="article:tag" content="architecture">
+<meta property="article:tag" content="deployment">
+<meta property="article:tag" content="kubelet">
+<meta property="article:tag" content="etcd">
+<meta property="article:tag" content="apiserver">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://davyjones2010.github.io/k8s-deploy-arch/Untitled.png">
 
@@ -45,10 +48,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2026-03-04-k8s-deploy-arch/","path":"/2026-03-04-k8s-deploy-arch/","title":"k8s-deploy-arch"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2026-03-04-k8s-deploy-arch/","path":"/2026-03-04-k8s-deploy-arch/","title":"K8s 部署架构详解"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>k8s-deploy-arch | Coders@Work</title>
+<title>K8s 部署架构详解 | Coders@Work</title>
   
 
 
@@ -171,7 +174,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-count">237</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -235,12 +238,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="k8s-deploy-arch | Coders@Work">
+      <meta itemprop="name" content="K8s 部署架构详解 | Coders@Work">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          k8s-deploy-arch
+          K8s 部署架构详解
         </h1>
 
         <div class="post-meta-container">
@@ -252,7 +255,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2026-03-04 21:42:05 / 修改时间：21:47:57" itemprop="dateCreated datePublished" datetime="2026-03-04T21:42:05+08:00">2026-03-04</time>
+      <time title="创建时间：2026-03-04 21:42:05 / 修改时间：21:53:42" itemprop="dateCreated datePublished" datetime="2026-03-04T21:42:05+08:00">2026-03-04</time>
     </span>
 
   
@@ -417,21 +420,24 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/k8s/" rel="tag"># k8s</a>
-              <a href="/tags/container/" rel="tag"># container</a>
-              <a href="/tags/reading-notes/" rel="tag"># reading-notes</a>
+              <a href="/tags/architecture/" rel="tag"># architecture</a>
+              <a href="/tags/deployment/" rel="tag"># deployment</a>
+              <a href="/tags/kubelet/" rel="tag"># kubelet</a>
+              <a href="/tags/etcd/" rel="tag"># etcd</a>
+              <a href="/tags/apiserver/" rel="tag"># apiserver</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2026-03-04-k8s-kube-scheduler/" rel="prev" title="k8s-kube-scheduler">
-                  <i class="fa fa-chevron-left"></i> k8s-kube-scheduler
+                <a href="/2026-03-04-k8s-kube-scheduler/" rel="prev" title="K8s kube-scheduler 调度流程分析">
+                  <i class="fa fa-chevron-left"></i> K8s kube-scheduler 调度流程分析
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2026-03-04-k8s-cpumanager-cgroupsv1/" rel="next" title="k8s-cpumanager-cgroupsv1">
-                  k8s-cpumanager-cgroupsv1 <i class="fa fa-chevron-right"></i>
+                <a href="/2026-03-04-k8s-cpumanager-cgroupsv1/" rel="next" title="K8s CPU Manager 与 cgroups v1 深度分析">
+                  K8s CPU Manager 与 cgroups v1 深度分析 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
