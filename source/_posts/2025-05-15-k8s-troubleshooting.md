@@ -82,3 +82,10 @@ docker volume prune
     3. 答案是 不会扣减, 但如何防止重新被调度? —> Node会被自动打上 NoSchedule:DiskPressure这个标签, 从而防止被调度. 
 
 # Nameserver limits exceeded
+
+![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled.png)
+![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-1.png)
+![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-2.png)
+![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-3.png)
+![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-4.png)
+![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-5.png)

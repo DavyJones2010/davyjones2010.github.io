@@ -255,3 +255,13 @@ AlignBySocket 选项 与 TopologyManager的 PolicySingleNumaNode 是不兼容的
 - k8s官方文档: [Control CPU Management Policies on the Node | Kubernetes](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/)
 - [K8s 节点 CPU 升级，导致 kubelet 无法启动故障一例](https://mp.weixin.qq.com/s/i0A2thWt1Ut7deDg-fmaog)
 - [Kubernetes 陈年老 bug - 绑核](https://mp.weixin.qq.com/s/QPA-1pf-V_zpcJcdghWHQA)
+
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png)
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-1.png)
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-2.png)
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-3.png)
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-4.png)
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-5.png)
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-6.png)
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-7.png)
+![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-8.png)

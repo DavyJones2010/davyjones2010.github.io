@@ -103,3 +103,9 @@ v1.22
 pkg/scheduler/framework/plugins/noderesources/fit.go:164
 
 // todo: 增加图例
+
+![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled.png)
+![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled-1.png)
+![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled-2.png)
+![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled-3.png)
+![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled-4.png)

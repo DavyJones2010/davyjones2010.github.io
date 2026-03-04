@@ -512,3 +512,7 @@ func (in *instrumentedService) RunPodSandbox(ctx context.Context, r *runtime.Run
 
 - [The differences between Docker, containerd, CRI-O and runc - Tutorial Works](https://www.tutorialworks.com/difference-docker-containerd-runc-crio-oci/)
 - [Container Runtimes Part 4: Kubernetes Container Runtimes & CRI](https://www.ianlewis.org/en/container-runtimes-part-4-kubernetes-container-run)
+
+![Untitled](/_assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled.png)
+![Untitled](/_assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-1.png)
+![Untitled](/_assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-2.png)

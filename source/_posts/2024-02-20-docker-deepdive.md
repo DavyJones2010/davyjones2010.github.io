@@ -87,3 +87,5 @@ tags: [docker, container, architecture, deep-dive]
 > 
 > 为了优化这个过程，通常建议在 `.dockerignore` 文件中列出不需要包括在构建上下文中的文件和目录，类似于 `.gitignore` 文件。这样可以减小 tar 归档的大小，提高构建效率，并且防止不必要的文件被发送到 Docker 守护进程。
 >
+
+![Untitled](/_assets/2024-02-20-docker-deepdive/Untitled.png)

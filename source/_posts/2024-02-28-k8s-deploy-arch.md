@@ -144,3 +144,5 @@ Kubernetes中的某些类型的Pod（例如kube-apiserver、kube-scheduler和kub
 ## kube-proxy与coredns
 
 ## configmap的使用
+
+![Untitled](/_assets/2024-02-28-k8s-deploy-arch/Untitled.png)

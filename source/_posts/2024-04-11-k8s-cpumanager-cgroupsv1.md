@@ -393,3 +393,7 @@ cgroupDriver: systemd
 ## Pod里视角:
 
 Pod会限制每个Container的cpu/mem:
+
+![Untitled](/_assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled.png)
+![Untitled](/_assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-1.png)
+![Untitled](/_assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-2.png)
