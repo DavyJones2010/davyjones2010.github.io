@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="docker-containerd-cri-deep-diveOverview  个人总结下.   containerd本质就是 runc + image 下载&#x2F;解压 docker本质就是 containerd + image 构建   Docker was focused on end-user and developer use cases,whereas containerd is">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="docker-containerd-cri-deep-dive">
+<meta property="og:url" content="https://davyjones2010.github.io/2026-03-04-docker-containerd-cri-deep-dive/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="docker-containerd-cri-deep-diveOverview  个人总结下.   containerd本质就是 runc + image 下载&#x2F;解压 docker本质就是 containerd + image 构建   Docker was focused on end-user and developer use cases,whereas containerd is">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davyjones2010.github.io/docker-containerd-cri-deep-dive/Untitled.png">
+<meta property="og:image" content="https://davyjones2010.github.io/docker-containerd-cri-deep-dive/Untitled%201.png">
+<meta property="og:image" content="https://davyjones2010.github.io/docker-containerd-cri-deep-dive/Untitled%202.png">
+<meta property="article:published_time" content="2026-03-04T13:42:05.000Z">
+<meta property="article:modified_time" content="2026-03-04T13:43:06.396Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="container">
+<meta property="article:tag" content="reading-notes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davyjones2010.github.io/docker-containerd-cri-deep-dive/Untitled.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2026-03-04-docker-containerd-cri-deep-dive/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2026-03-04-docker-containerd-cri-deep-dive/","path":"/2026-03-04-docker-containerd-cri-deep-dive/","title":"docker-containerd-cri-deep-dive"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>docker-containerd-cri-deep-dive | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-containerd-cri-deep-dive"><span class="nav-number">1.</span> <span class="nav-text">docker-containerd-cri-deep-dive</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview"><span class="nav-number">2.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API"><span class="nav-number">3.</span> <span class="nav-text">API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CRI-API"><span class="nav-number">3.1.</span> <span class="nav-text">CRI API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PodSandbox-API"><span class="nav-number">3.1.1.</span> <span class="nav-text">PodSandbox API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Container-API"><span class="nav-number">3.1.2.</span> <span class="nav-text">Container API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image-API"><span class="nav-number">3.1.3.</span> <span class="nav-text">Image API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRI-API%E5%A6%82%E4%BD%95%E7%BC%96%E6%8E%92-%E5%9C%A8%E5%93%AA%E9%87%8C%E7%BC%96%E6%8E%92"><span class="nav-number">3.1.4.</span> <span class="nav-text">CRI-API如何编排? 在哪里编排?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Containerd-API"><span class="nav-number">3.2.</span> <span class="nav-text">Containerd API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sandbox-API"><span class="nav-number">3.2.1.</span> <span class="nav-text">Sandbox API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Containers-API"><span class="nav-number">3.2.2.</span> <span class="nav-text">Containers API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image-API-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">Image API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Snapshot-API"><span class="nav-number">3.2.4.</span> <span class="nav-text">Snapshot API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Task-API"><span class="nav-number">3.2.5.</span> <span class="nav-text">Task API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OCI-API"><span class="nav-number">3.3.</span> <span class="nav-text">OCI API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E4%BA%A4%E4%BA%92%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">总体交互流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86"><span class="nav-number">5.</span> <span class="nav-text">详细</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-number">6.</span> <span class="nav-text">Refs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-docker-containerd-cri-deep-dive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="docker-containerd-cri-deep-dive | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          docker-containerd-cri-deep-dive
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-03-04 21:42:05 / 修改时间：21:43:06" itemprop="dateCreated datePublished" datetime="2026-03-04T21:42:05+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>16k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="docker-containerd-cri-deep-dive"><a href="#docker-containerd-cri-deep-dive" class="headerlink" title="docker-containerd-cri-deep-dive"></a>docker-containerd-cri-deep-dive</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p><img data-src="/docker-containerd-cri-deep-dive/Untitled.png" alt="Untitled"></p>
+<p><img data-src="/docker-containerd-cri-deep-dive/Untitled%201.png" alt="Untitled"></p>
+<p>个人总结下. </p>
+<ul>
+<li>containerd本质就是 runc + image 下载&#x2F;解压</li>
+<li>docker本质就是 containerd + image 构建</li>
+</ul>
+<blockquote>
+<p>Docker was focused on end-user and developer use cases,<br>whereas containerd is focused on operational use cases, such as running containers on servers.<br>Tasks such as building container images are left to other tools.</p>
+</blockquote>
+<ul>
+<li>而根据CRI的接口定义, 也不包含镜像的构建:<ul>
+<li>containerd就是CRI的一个实现.</li>
+<li>cri-o 也是CRI的一个实现.</li>
+<li>但目前主流的都是 containerd</li>
+</ul>
+</li>
+</ul>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><h2 id="CRI-API"><a href="#CRI-API" class="headerlink" title="CRI API"></a>CRI API</h2><p>CRI的API定义: <a target="_blank" rel="noopener" href="https://github.com/kubernetes/cri-api/blob/c75ef5b/pkg/apis/runtime/v1/api.proto">cri-api&#x2F;pkg&#x2F;apis&#x2F;runtime&#x2F;v1&#x2F;api.proto· kubernetes&#x2F;cri-api</a></p>
+<h3 id="PodSandbox-API"><a href="#PodSandbox-API" class="headerlink" title="PodSandbox API"></a>PodSandbox API</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go">
+service RuntimeService <span class="token punctuation">&#123;</span>
+    rpc <span class="token function">RunPodSandbox</span><span class="token punctuation">(</span>RunPodSandboxRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>RunPodSandboxResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    rpc <span class="token function">StopPodSandbox</span><span class="token punctuation">(</span>StopPodSandboxRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>StopPodSandboxResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    rpc <span class="token function">RemovePodSandbox</span><span class="token punctuation">(</span>RemovePodSandboxRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>RemovePodSandboxResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    rpc <span class="token function">PodSandboxStatus</span><span class="token punctuation">(</span>PodSandboxStatusRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>PodSandboxStatusResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    rpc <span class="token function">ListPodSandbox</span><span class="token punctuation">(</span>ListPodSandboxRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ListPodSandboxResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>sandboxConfig里的重要信息: </p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+<span class="token keyword">type</span> PodSandboxConfig <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	Metadata <span class="token operator">*</span>PodSandboxMetadata <span class="token string">`protobuf:"bytes,1,opt,name=metadata,proto3" json:"metadata,omitempty"`</span>
+  Hostname <span class="token builtin">string</span> <span class="token string">`protobuf:"bytes,2,opt,name=hostname,proto3" json:"hostname,omitempty"`</span>
+  LogDirectory <span class="token builtin">string</span> <span class="token string">`protobuf:"bytes,3,opt,name=log_directory,json=logDirectory,proto3" json:"log_directory,omitempty"`</span>
+	DnsConfig <span class="token operator">*</span>DNSConfig <span class="token string">`protobuf:"bytes,4,opt,name=dns_config,json=dnsConfig,proto3" json:"dns_config,omitempty"`</span>
+	PortMappings <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>PortMapping <span class="token string">`protobuf:"bytes,5,rep,name=port_mappings,json=portMappings,proto3" json:"port_mappings,omitempty"`</span>
+  Linux <span class="token operator">*</span>LinuxPodSandboxConfig <span class="token string">`protobuf:"bytes,8,opt,name=linux,proto3" json:"linux,omitempty"`</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> PodSandboxMetadata <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	Name <span class="token builtin">string</span> <span class="token string">`protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`</span>
+	Uid <span class="token builtin">string</span> <span class="token string">`protobuf:"bytes,2,opt,name=uid,proto3" json:"uid,omitempty"`</span>
+	Namespace <span class="token builtin">string</span> <span class="token string">`protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> LinuxPodSandboxConfig <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	CgroupParent <span class="token builtin">string</span> <span class="token string">`protobuf:"bytes,1,opt,name=cgroup_parent,json=cgroupParent,proto3" json:"cgroup_parent,omitempty"`</span>
+	Overhead <span class="token operator">*</span>LinuxContainerResources <span class="token string">`protobuf:"bytes,4,opt,name=overhead,proto3" json:"overhead,omitempty"`</span>
+	Resources            <span class="token operator">*</span>LinuxContainerResources <span class="token string">`protobuf:"bytes,5,opt,name=resources,proto3" json:"resources,omitempty"`</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> LinuxContainerResources <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	CpuPeriod <span class="token builtin">int64</span> <span class="token string">`protobuf:"varint,1,opt,name=cpu_period,json=cpuPeriod,proto3" json:"cpu_period,omitempty"`</span>
+	CpuQuota <span class="token builtin">int64</span> <span class="token string">`protobuf:"varint,2,opt,name=cpu_quota,json=cpuQuota,proto3" json:"cpu_quota,omitempty"`</span>
+	CpuShares <span class="token builtin">int64</span> <span class="token string">`protobuf:"varint,3,opt,name=cpu_shares,json=cpuShares,proto3" json:"cpu_shares,omitempty"`</span>
+	MemoryLimitInBytes <span class="token builtin">int64</span> <span class="token string">`protobuf:"varint,4,opt,name=memory_limit_in_bytes,json=memoryLimitInBytes,proto3" json:"memory_limit_in_bytes,omitempty"`</span>
+	OomScoreAdj <span class="token builtin">int64</span> <span class="token string">`protobuf:"varint,5,opt,name=oom_score_adj,json=oomScoreAdj,proto3" json:"oom_score_adj,omitempty"`</span>
+	CpusetCpus <span class="token builtin">string</span> <span class="token string">`protobuf:"bytes,6,opt,name=cpuset_cpus,json=cpusetCpus,proto3" json:"cpuset_cpus,omitempty"`</span>
+	CpusetMems <span class="token builtin">string</span> <span class="token string">`protobuf:"bytes,7,opt,name=cpuset_mems,json=cpusetMems,proto3" json:"cpuset_mems,omitempty"`</span>
+  <span class="token operator">...</span>
+<span class="token punctuation">&#125;</span>
+
+message RunPodSandboxResponse <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ID of the PodSandbox to run.</span>
+    <span class="token builtin">string</span> pod_sandbox_id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Container-API"><a href="#Container-API" class="headerlink" title="Container API"></a>Container API</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go">service RuntimeService <span class="token punctuation">&#123;</span>
+		<span class="token comment">// CreateContainer creates a new container in specified PodSandbox</span>
+    rpc <span class="token function">CreateContainer</span><span class="token punctuation">(</span>CreateContainerRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>CreateContainerResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// StartContainer starts the container.</span>
+    rpc <span class="token function">StartContainer</span><span class="token punctuation">(</span>StartContainerRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>StartContainerResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// StopContainer stops a running container with a grace period (i.e., timeout).</span>
+    <span class="token comment">// This call is idempotent, and must not return an error if the container has</span>
+    <span class="token comment">// already been stopped.</span>
+    <span class="token comment">// The runtime must forcibly kill the container after the grace period is</span>
+    <span class="token comment">// reached.</span>
+    rpc <span class="token function">StopContainer</span><span class="token punctuation">(</span>StopContainerRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>StopContainerResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// RemoveContainer removes the container. If the container is running, the</span>
+    <span class="token comment">// container must be forcibly removed.</span>
+    <span class="token comment">// This call is idempotent, and must not return an error if the container has</span>
+    <span class="token comment">// already been removed.</span>
+    rpc <span class="token function">RemoveContainer</span><span class="token punctuation">(</span>RemoveContainerRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>RemoveContainerResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// ListContainers lists all containers by filters.</span>
+    rpc <span class="token function">ListContainers</span><span class="token punctuation">(</span>ListContainersRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ListContainersResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// ContainerStatus returns status of the container. If the container is not</span>
+    <span class="token comment">// present, returns an error.</span>
+    rpc <span class="token function">ContainerStatus</span><span class="token punctuation">(</span>ContainerStatusRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ContainerStatusResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// UpdateContainerResources updates ContainerConfig of the container synchronously.</span>
+    <span class="token comment">// If runtime fails to transactionally update the requested resources, an error is returned.</span>
+    rpc <span class="token function">UpdateContainerResources</span><span class="token punctuation">(</span>UpdateContainerResourcesRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>UpdateContainerResourcesResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// ReopenContainerLog asks runtime to reopen the stdout/stderr log file</span>
+    <span class="token comment">// for the container. This is often called after the log file has been</span>
+    <span class="token comment">// rotated. If the container is not running, container runtime can choose</span>
+    <span class="token comment">// to either create a new log file and return nil, or return an error.</span>
+    <span class="token comment">// Once it returns error, new container log file MUST NOT be created.</span>
+    rpc <span class="token function">ReopenContainerLog</span><span class="token punctuation">(</span>ReopenContainerLogRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ReopenContainerLogResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Image-API"><a href="#Image-API" class="headerlink" title="Image API"></a>Image API</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// ImageService defines the public APIs for managing images.</span>
+service ImageService <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ListImages lists existing images.</span>
+    rpc <span class="token function">ListImages</span><span class="token punctuation">(</span>ListImagesRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ListImagesResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// ImageStatus returns the status of the image. If the image is not</span>
+    <span class="token comment">// present, returns a response with ImageStatusResponse.Image set to</span>
+    <span class="token comment">// nil.</span>
+    rpc <span class="token function">ImageStatus</span><span class="token punctuation">(</span>ImageStatusRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ImageStatusResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// PullImage pulls an image with authentication config.</span>
+    rpc <span class="token function">PullImage</span><span class="token punctuation">(</span>PullImageRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>PullImageResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// RemoveImage removes the image.</span>
+    <span class="token comment">// This call is idempotent, and must not return an error if the image has</span>
+    <span class="token comment">// already been removed.</span>
+    rpc <span class="token function">RemoveImage</span><span class="token punctuation">(</span>RemoveImageRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>RemoveImageResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// ImageFSInfo returns information of the filesystem that is used to store images.</span>
+    rpc <span class="token function">ImageFsInfo</span><span class="token punctuation">(</span>ImageFsInfoRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ImageFsInfoResponse<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="CRI-API如何编排-在哪里编排"><a href="#CRI-API如何编排-在哪里编排" class="headerlink" title="CRI-API如何编排? 在哪里编排?"></a>CRI-API如何编排? 在哪里编排?</h3><ul>
+<li>上边几个API如何编排? 样例如下:</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 第一步: 先拉取镜像</span>
+ImageService<span class="token punctuation">.</span><span class="token function">PullImage</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>image<span class="token punctuation">:</span> <span class="token string">"image1"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+ImageService<span class="token punctuation">.</span><span class="token function">PullImage</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>image<span class="token punctuation">:</span> <span class="token string">"image2"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 第二步: 创建sandbox/pod</span>
+podID <span class="token operator">=</span> RuntimeService<span class="token punctuation">.</span><span class="token function">RunPodSandbox</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>name<span class="token punctuation">:</span> <span class="token string">"mypod"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 第三步: 在sandbox里创建container</span>
+id1 <span class="token operator">=</span> RuntimeService<span class="token punctuation">.</span><span class="token function">CreateContainer</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  pod<span class="token punctuation">:</span> podID<span class="token punctuation">,</span>
+  name<span class="token punctuation">:</span> <span class="token string">"container1"</span><span class="token punctuation">,</span>
+  image<span class="token punctuation">:</span> <span class="token string">"image1"</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+id2 <span class="token operator">=</span> RuntimeService<span class="token punctuation">.</span><span class="token function">CreateContainer</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  pod<span class="token punctuation">:</span> podID<span class="token punctuation">,</span>
+  name<span class="token punctuation">:</span> <span class="token string">"container2"</span><span class="token punctuation">,</span>
+  image<span class="token punctuation">:</span> <span class="token string">"image2"</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 第四步: 启动容器</span>
+RuntimeService<span class="token punctuation">.</span><span class="token function">StartContainer</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>id<span class="token punctuation">:</span> id1<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+RuntimeService<span class="token punctuation">.</span><span class="token function">StartContainer</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>id<span class="token punctuation">:</span> id2<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>实际是在kubelet里进行编排, 代码如下:</li>
+</ul>
+<aside>
+💡 - pkg/kubelet/kuberuntime/kuberuntime_manager.go:1054 `SyncPod` 通过调用CRI实现, 创建sandbox
+- pkg/kubelet/kuberuntime/kuberuntime_container.go:179 `startContainer` 通过调用CRI实现, 来在sandbox里拉取镜像/创建/启动容器
+
+</aside>
+
+<ul>
+<li>当然自己也可以使用 crictl 来手动编排, 创建个自己的容器, 参见: <a href="cri-containerd-runc-cli%20b82e027079204eac9df7e44aeca1b0ec.md">cri-containerd-cli</a></li>
+</ul>
+<h2 id="Containerd-API"><a href="#Containerd-API" class="headerlink" title="Containerd API"></a>Containerd API</h2><p>即containerd提供的一系列API, 用于底层runtime来实现. containerd会通过调用这些API, 来完成一系列操作. </p>
+<p>&#x2F;&#x2F; TODO: 感觉与CRI API基本一致, 为啥还要单独定义呢? </p>
+<h3 id="Sandbox-API"><a href="#Sandbox-API" class="headerlink" title="Sandbox API"></a>Sandbox API</h3><p>设计参见: </p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+<span class="token comment">// sandboxer必须实现 SandboxServer, 以grpc形式提供出来. </span>
+<span class="token keyword">type</span> SandboxServer <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// CreateSandbox will be called right after sandbox shim instance launched.</span>
+	<span class="token comment">// It is a good place to initialize sandbox environment.</span>
+	<span class="token function">CreateSandbox</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>CreateSandboxRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>CreateSandboxResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token comment">// StartSandbox will start a previously created sandbox.</span>
+	<span class="token function">StartSandbox</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>StartSandboxRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>StartSandboxResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token comment">// Platform queries the platform the sandbox is going to run containers on.</span>
+	<span class="token comment">// containerd will use this to generate a proper OCI spec.</span>
+	<span class="token function">Platform</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>PlatformRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>PlatformResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token comment">// StopSandbox will stop existing sandbox instance</span>
+	<span class="token function">StopSandbox</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>StopSandboxRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>StopSandboxResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token comment">// WaitSandbox blocks until sandbox exits.</span>
+	<span class="token function">WaitSandbox</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>WaitSandboxRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>WaitSandboxResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token comment">// SandboxStatus will return current status of the running sandbox instance</span>
+	<span class="token function">SandboxStatus</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>SandboxStatusRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>SandboxStatusResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token comment">// PingSandbox is a lightweight API call to check whether sandbox alive.</span>
+	<span class="token function">PingSandbox</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>PingRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>PingResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token comment">// ShutdownSandbox must shutdown shim instance.</span>
+	<span class="token function">ShutdownSandbox</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>ShutdownSandboxRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>ShutdownSandboxResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token comment">// SandboxMetrics retrieves metrics about a sandbox instance.</span>
+	<span class="token function">SandboxMetrics</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> <span class="token operator">*</span>SandboxMetricsRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>SandboxMetricsResponse<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+	<span class="token function">mustEmbedUnimplementedSandboxServer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Containers-API"><a href="#Containers-API" class="headerlink" title="Containers API"></a>Containers API</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go">service Containers <span class="token punctuation">&#123;</span>
+	rpc <span class="token function">Get</span><span class="token punctuation">(</span>GetContainerRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>GetContainerResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">List</span><span class="token punctuation">(</span>ListContainersRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ListContainersResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">ListStream</span><span class="token punctuation">(</span>ListContainersRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>stream ListContainerMessage<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Create</span><span class="token punctuation">(</span>CreateContainerRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>CreateContainerResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Update</span><span class="token punctuation">(</span>UpdateContainerRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>UpdateContainerResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Delete</span><span class="token punctuation">(</span>DeleteContainerRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+message Container <span class="token punctuation">&#123;</span>
+	<span class="token comment">// ID is the user-specified identifier.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// This field may not be updated.</span>
+	<span class="token builtin">string</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Labels provides an area to include arbitrary data on containers.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// The combined size of a key/value pair cannot exceed 4096 bytes.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// Note that to add a new value to this field, read the existing set and</span>
+	<span class="token comment">// include the entire result in the update call.</span>
+	<span class="token keyword">map</span><span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">string</span><span class="token operator">></span> labels  <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Image contains the reference of the image used to build the</span>
+	<span class="token comment">// specification and snapshots for running this container.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// If this field is updated, the spec and rootfs needed to updated, as well.</span>
+	<span class="token builtin">string</span> image <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+	message Runtime <span class="token punctuation">&#123;</span>
+		<span class="token comment">// Name is the name of the runtime.</span>
+		<span class="token builtin">string</span> name <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token comment">// Options specify additional runtime initialization options.</span>
+		google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Any options <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">// Runtime specifies which runtime to use for executing this container.</span>
+	Runtime runtime <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Spec to be used when creating the container. This is runtime specific.</span>
+	google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Any spec <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Snapshotter specifies the snapshotter name used for rootfs</span>
+	<span class="token builtin">string</span> snapshotter <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// SnapshotKey specifies the snapshot key to use for the container's root</span>
+	<span class="token comment">// filesystem. When starting a task from this container, a caller should</span>
+	<span class="token comment">// look up the mounts from the snapshot service and include those on the</span>
+	<span class="token comment">// task create request.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// Snapshots referenced in this field will not be garbage collected.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// This field is set to empty when the rootfs is not a snapshot.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// This field may be updated.</span>
+	<span class="token builtin">string</span> snapshot_key <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// CreatedAt is the time the container was first created.</span>
+	google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Timestamp created_at <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// UpdatedAt is the last time the container was mutated.</span>
+	google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Timestamp updated_at <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Extensions allow clients to provide zero or more blobs that are directly</span>
+	<span class="token comment">// associated with the container. One may provide protobuf, json, or other</span>
+	<span class="token comment">// encoding formats. The primary use of this is to further decorate the</span>
+	<span class="token comment">// container object with fields that may be specific to a client integration.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// The key portion of this map should identify a "name" for the extension</span>
+	<span class="token comment">// that should be unique against other extensions. When updating extension</span>
+	<span class="token comment">// data, one should only update the specified extension using field paths</span>
+	<span class="token comment">// to select a specific map key.</span>
+	<span class="token keyword">map</span><span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Any<span class="token operator">></span> extensions <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Sandbox ID this container belongs to.</span>
+	<span class="token builtin">string</span> sandbox <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Image-API-1"><a href="#Image-API-1" class="headerlink" title="Image API"></a>Image API</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go">service Images <span class="token punctuation">&#123;</span>
+	<span class="token comment">// Get returns an image by name.</span>
+	rpc <span class="token function">Get</span><span class="token punctuation">(</span>GetImageRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>GetImageResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// List returns a list of all images known to containerd.</span>
+	rpc <span class="token function">List</span><span class="token punctuation">(</span>ListImagesRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ListImagesResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Create an image record in the metadata store.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// The name of the image must be unique.</span>
+	rpc <span class="token function">Create</span><span class="token punctuation">(</span>CreateImageRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>CreateImageResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Update assigns the name to a given target image based on the provided</span>
+	<span class="token comment">// image.</span>
+	rpc <span class="token function">Update</span><span class="token punctuation">(</span>UpdateImageRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>UpdateImageResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Delete deletes the image by name.</span>
+	rpc <span class="token function">Delete</span><span class="token punctuation">(</span>DeleteImageRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+message Image <span class="token punctuation">&#123;</span>
+	<span class="token comment">// Name provides a unique name for the image.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// Containerd treats this as the primary identifier.</span>
+	<span class="token builtin">string</span> name <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Labels provides free form labels for the image. These are runtime only</span>
+	<span class="token comment">// and do not get inherited into the package image in any way.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// Labels may be updated using the field mask.</span>
+	<span class="token comment">// The combined size of a key/value pair cannot exceed 4096 bytes.</span>
+	<span class="token keyword">map</span><span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">string</span><span class="token operator">></span> labels <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Snapshot-API"><a href="#Snapshot-API" class="headerlink" title="Snapshot API"></a>Snapshot API</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Snapshot service manages snapshots</span>
+service Snapshots <span class="token punctuation">&#123;</span>
+	rpc <span class="token function">Prepare</span><span class="token punctuation">(</span>PrepareSnapshotRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>PrepareSnapshotResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">View</span><span class="token punctuation">(</span>ViewSnapshotRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ViewSnapshotResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Mounts</span><span class="token punctuation">(</span>MountsRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>MountsResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Commit</span><span class="token punctuation">(</span>CommitSnapshotRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Remove</span><span class="token punctuation">(</span>RemoveSnapshotRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Stat</span><span class="token punctuation">(</span>StatSnapshotRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>StatSnapshotResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Update</span><span class="token punctuation">(</span>UpdateSnapshotRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>UpdateSnapshotResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">List</span><span class="token punctuation">(</span>ListSnapshotsRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>stream ListSnapshotsResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Usage</span><span class="token punctuation">(</span>UsageRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>UsageResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rpc <span class="token function">Cleanup</span><span class="token punctuation">(</span>CleanupRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+message PrepareSnapshotRequest <span class="token punctuation">&#123;</span>
+	<span class="token builtin">string</span> snapshotter <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token builtin">string</span> key <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+	<span class="token builtin">string</span> parent <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Labels are arbitrary data on snapshots.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// The combined size of a key/value pair cannot exceed 4096 bytes.</span>
+	<span class="token keyword">map</span><span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">string</span><span class="token operator">></span> labels  <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Task-API"><a href="#Task-API" class="headerlink" title="Task API"></a>Task API</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go">service Tasks <span class="token punctuation">&#123;</span>
+	<span class="token comment">// Create a task.</span>
+	rpc <span class="token function">Create</span><span class="token punctuation">(</span>CreateTaskRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>CreateTaskResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Start a process.</span>
+	rpc <span class="token function">Start</span><span class="token punctuation">(</span>StartRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>StartResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Delete a task and on disk state.</span>
+	rpc <span class="token function">Delete</span><span class="token punctuation">(</span>DeleteTaskRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>DeleteResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">DeleteProcess</span><span class="token punctuation">(</span>DeleteProcessRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>DeleteResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">Get</span><span class="token punctuation">(</span>GetRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>GetResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">List</span><span class="token punctuation">(</span>ListTasksRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ListTasksResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Kill a task or process.</span>
+	rpc <span class="token function">Kill</span><span class="token punctuation">(</span>KillRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">Exec</span><span class="token punctuation">(</span>ExecProcessRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">ResizePty</span><span class="token punctuation">(</span>ResizePtyRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">CloseIO</span><span class="token punctuation">(</span>CloseIORequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">Pause</span><span class="token punctuation">(</span>PauseTaskRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">Resume</span><span class="token punctuation">(</span>ResumeTaskRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">ListPids</span><span class="token punctuation">(</span>ListPidsRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>ListPidsResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">Checkpoint</span><span class="token punctuation">(</span>CheckpointTaskRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>CheckpointTaskResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">Update</span><span class="token punctuation">(</span>UpdateTaskRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">Metrics</span><span class="token punctuation">(</span>MetricsRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>MetricsResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	rpc <span class="token function">Wait</span><span class="token punctuation">(</span>WaitRequest<span class="token punctuation">)</span> returns <span class="token punctuation">(</span>WaitResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+message CreateTaskRequest <span class="token punctuation">&#123;</span>
+	<span class="token builtin">string</span> container_id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// RootFS provides the pre-chroot mounts to perform in the shim before</span>
+	<span class="token comment">// executing the container task.</span>
+	<span class="token comment">//</span>
+	<span class="token comment">// These are for mounts that cannot be performed in the user namespace.</span>
+	<span class="token comment">// Typically, these mounts should be resolved from snapshots specified on</span>
+	<span class="token comment">// the container object.</span>
+	repeated containerd<span class="token punctuation">.</span>types<span class="token punctuation">.</span>Mount rootfs <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+	<span class="token builtin">string</span> stdin <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+	<span class="token builtin">string</span> stdout <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+	<span class="token builtin">string</span> stderr <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
+	<span class="token builtin">bool</span> terminal <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span>
+
+	containerd<span class="token punctuation">.</span>types<span class="token punctuation">.</span>Descriptor checkpoint <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">;</span>
+
+	google<span class="token punctuation">.</span>protobuf<span class="token punctuation">.</span>Any options <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">;</span>
+
+	<span class="token builtin">string</span> runtime_path <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="OCI-API"><a href="#OCI-API" class="headerlink" title="OCI API"></a>OCI API</h2><p>OCI runtime spec: <a target="_blank" rel="noopener" href="https://github.com/opencontainers/runtime-spec/blob/main/runtime.md">runtime-spec&#x2F;runtime.md at main · opencontainers&#x2F;runtime-spec</a></p>
+<h1 id="总体交互流程"><a href="#总体交互流程" class="headerlink" title="总体交互流程"></a>总体交互流程</h1><p><img data-src="/docker-containerd-cri-deep-dive/Untitled%202.png" alt="Untitled"></p>
+<h1 id="详细"><a href="#详细" class="headerlink" title="详细"></a>详细</h1><p>containerd如何实现CRI接口? </p>
+<p>→ 客户端可以这样调用, 初始化client, 然后底层是通过grpc调用 RunPodSandbox 请求</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// RunPodSandbox creates and starts a pod-level sandbox. Runtimes should ensure</span>
+<span class="token comment">// the sandbox is in ready state.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>r <span class="token operator">*</span>RuntimeService<span class="token punctuation">)</span> <span class="token function">RunPodSandbox</span><span class="token punctuation">(</span>config <span class="token operator">*</span>runtimeapi<span class="token punctuation">.</span>PodSandboxConfig<span class="token punctuation">,</span> runtimeHandler <span class="token builtin">string</span><span class="token punctuation">,</span> opts <span class="token operator">...</span>grpc<span class="token punctuation">.</span>CallOption<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// Use 2 times longer timeout for sandbox operation (4 mins by default)</span>
+	<span class="token comment">// TODO: Make the pod sandbox timeout configurable.</span>
+	timeout <span class="token operator">:=</span> r<span class="token punctuation">.</span>timeout <span class="token operator">*</span> <span class="token number">2</span>
+
+	klog<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Infof</span><span class="token punctuation">(</span><span class="token string">"[RuntimeService] RunPodSandbox (config=%v, runtimeHandler=%v, timeout=%v)"</span><span class="token punctuation">,</span> config<span class="token punctuation">,</span> runtimeHandler<span class="token punctuation">,</span> timeout<span class="token punctuation">)</span>
+
+	ctx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> <span class="token function">getContextWithTimeout</span><span class="token punctuation">(</span>timeout<span class="token punctuation">)</span>
+	<span class="token keyword">defer</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	resp<span class="token punctuation">,</span> err <span class="token operator">:=</span> r<span class="token punctuation">.</span>runtimeClient<span class="token punctuation">.</span><span class="token function">RunPodSandbox</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token operator">&amp;</span>runtimeapi<span class="token punctuation">.</span>RunPodSandboxRequest<span class="token punctuation">&#123;</span>
+		Config<span class="token punctuation">:</span>         config<span class="token punctuation">,</span>
+		RuntimeHandler<span class="token punctuation">:</span> runtimeHandler<span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> opts<span class="token operator">...</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+		klog<span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">"RunPodSandbox from runtime service failed: %v"</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">,</span> err
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">if</span> resp<span class="token punctuation">.</span>PodSandboxId <span class="token operator">==</span> <span class="token string">""</span> <span class="token punctuation">&#123;</span>
+		errorMessage <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">"PodSandboxId is not set for sandbox %q"</span><span class="token punctuation">,</span> config<span class="token punctuation">.</span><span class="token function">GetMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		klog<span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">"RunPodSandbox failed: %s"</span><span class="token punctuation">,</span> errorMessage<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">,</span> errors<span class="token punctuation">.</span><span class="token function">New</span><span class="token punctuation">(</span>errorMessage<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+	klog<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Infof</span><span class="token punctuation">(</span><span class="token string">"[RuntimeService] RunPodSandbox Response (PodSandboxId=%v)"</span><span class="token punctuation">,</span> resp<span class="token punctuation">.</span>PodSandboxId<span class="token punctuation">)</span>
+
+	<span class="token keyword">return</span> resp<span class="token punctuation">.</span>PodSandboxId<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>→ 服务端这样实现, 统一入口是: <code>instrumented_service.go</code> </p>
+<p>containerd如何实现CRI </p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+<span class="token keyword">func</span> <span class="token punctuation">(</span>in <span class="token operator">*</span>instrumentedService<span class="token punctuation">)</span> <span class="token function">RunPodSandbox</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> r <span class="token operator">*</span>runtime<span class="token punctuation">.</span>RunPodSandboxRequest<span class="token punctuation">)</span> <span class="token punctuation">(</span>res <span class="token operator">*</span>runtime<span class="token punctuation">.</span>RunPodSandboxResponse<span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> err <span class="token operator">:=</span> in<span class="token punctuation">.</span><span class="token function">checkInitialized</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> err
+	<span class="token punctuation">&#125;</span>
+	log<span class="token punctuation">.</span><span class="token function">G</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Infof</span><span class="token punctuation">(</span><span class="token string">"RunPodSandbox for %+v"</span><span class="token punctuation">,</span> r<span class="token punctuation">.</span><span class="token function">GetConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">GetMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token keyword">defer</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+			log<span class="token punctuation">.</span><span class="token function">G</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">WithError</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">"RunPodSandbox for %+v failed, error"</span><span class="token punctuation">,</span> r<span class="token punctuation">.</span><span class="token function">GetConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">GetMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+			log<span class="token punctuation">.</span><span class="token function">G</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Infof</span><span class="token punctuation">(</span><span class="token string">"RunPodSandbox for %+v returns sandbox id %q"</span><span class="token punctuation">,</span> r<span class="token punctuation">.</span><span class="token function">GetConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">GetMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> res<span class="token punctuation">.</span><span class="token function">GetPodSandboxId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	res<span class="token punctuation">,</span> err <span class="token operator">=</span> in<span class="token punctuation">.</span>c<span class="token punctuation">.</span><span class="token function">RunPodSandbox</span><span class="token punctuation">(</span>ctrdutil<span class="token punctuation">.</span><span class="token function">WithNamespace</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token punctuation">,</span> r<span class="token punctuation">)</span>
+	<span class="token keyword">return</span> res<span class="token punctuation">,</span> errdefs<span class="token punctuation">.</span><span class="token function">ToGRPC</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.tutorialworks.com/difference-docker-containerd-runc-crio-oci/">The differences between Docker, containerd, CRI-O and runc - Tutorial Works</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ianlewis.org/en/container-runtimes-part-4-kubernetes-container-run">Container Runtimes Part 4: Kubernetes Container Runtimes &amp; CRI</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/container/" rel="tag"># container</a>
+              <a href="/tags/reading-notes/" rel="tag"># reading-notes</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026-03-04-go-network-socket/" rel="prev" title="go-network-socket">
+                  <i class="fa fa-chevron-left"></i> go-network-socket
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026-03-04-docker-deepdive/" rel="next" title="docker-deepdive">
+                  docker-deepdive <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">389k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:54</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
