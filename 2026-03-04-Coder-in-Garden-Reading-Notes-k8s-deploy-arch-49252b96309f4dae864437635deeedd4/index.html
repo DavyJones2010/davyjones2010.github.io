@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="k8s-deploy-arch对于k8s搭建比较感兴趣: 例如 各个组件如何部署的? 有啥先后顺序? 分别是以啥形态部署等, 以此文详细来分析下. 总览如下图  分析 部署Master节点:  手动通过系统服务(centos7u中的sysd service)的方式, 启动 kubelet, containerd 这两个服务, 同时在kubelet启动参数中配置好apiserver&#x2F;etc">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Coders@Work">
+<meta property="og:url" content="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-k8s-deploy-arch-49252b96309f4dae864437635deeedd4/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="k8s-deploy-arch对于k8s搭建比较感兴趣: 例如 各个组件如何部署的? 有啥先后顺序? 分别是以啥形态部署等, 以此文详细来分析下. 总览如下图  分析 部署Master节点:  手动通过系统服务(centos7u中的sysd service)的方式, 启动 kubelet, containerd 这两个服务, 同时在kubelet启动参数中配置好apiserver&#x2F;etc">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davyjones2010.github.io/k8s-deploy-arch/Untitled.png">
+<meta property="article:published_time" content="2026-03-04T13:47:57.887Z">
+<meta property="article:modified_time" content="2026-03-04T13:47:57.888Z">
+<meta property="article:author" content="Davy Walker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davyjones2010.github.io/k8s-deploy-arch/Untitled.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-k8s-deploy-arch-49252b96309f4dae864437635deeedd4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-k8s-deploy-arch-49252b96309f4dae864437635deeedd4/","path":"/2026-03-04-Coder-in-Garden-Reading-Notes-k8s-deploy-arch-49252b96309f4dae864437635deeedd4/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#k8s-deploy-arch"><span class="nav-number">1.</span> <span class="nav-text">k8s-deploy-arch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-number">2.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A6%81%E7%82%B9"><span class="nav-number">5.</span> <span class="nav-text">其他要点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#kubeconfig%E8%AF%A6%E8%A7%A3"><span class="nav-number">5.1.</span> <span class="nav-text">kubeconfig详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hostNetwork%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">5.2.</span> <span class="nav-text">hostNetwork的含义与使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kube-proxy%E4%B8%8Ecoredns"><span class="nav-number">5.3.</span> <span class="nav-text">kube-proxy与coredns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configmap%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.4.</span> <span class="nav-text">configmap的使用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Reading-Notes-k8s-deploy-arch-49252b96309f4dae864437635deeedd4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 21:47:57" itemprop="dateCreated datePublished" datetime="2026-03-04T21:47:57+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="k8s-deploy-arch"><a href="#k8s-deploy-arch" class="headerlink" title="k8s-deploy-arch"></a>k8s-deploy-arch</h1><p>对于k8s搭建比较感兴趣: 例如 各个组件如何部署的? 有啥先后顺序? 分别是以啥形态部署等, 以此文详细来分析下.</p>
+<h1 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h1><p>如下图</p>
+<p><img data-src="/k8s-deploy-arch/Untitled.png" alt="Untitled"></p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><ol>
+<li><p>部署Master节点:</p>
+</li>
+<li><p>手动通过系统服务(centos7u中的sysd service)的方式, 启动 kubelet, containerd 这两个服务, 同时在kubelet启动参数中配置好apiserver&#x2F;etcd的{地址:端口}; —&gt; 注意, 此时由于没有部署apiserver, kubelet默认需要连接apiserver, 此时肯定连不通, kubelet是设计为能够独立于apiserver正常启动并运行的组件.</p>
+</li>
+</ol>
+<aside>
+💡 kubelet是设计为能够独立于apiserver正常启动并运行的组件。以下是kubelet启动成功的原因：
+
+<ol>
+<li><strong>独立运行</strong>：kubelet的设计允许它在没有apiserver可用的情况下独立运行。kubelet负责节点上的容器生命周期管理，包括创建、启动、停止和删除容器。只要它能够与容器运行时（如Docker或containerd）进行通信，它就能管理容器。</li>
+<li><strong>自我修复</strong>：如果kubelet启动时无法连接到apiserver，它会定期重试连接。这种自我修复能力允许kubelet最终建立与apiserver的连接，一旦apiserver变得可用。</li>
+<li><strong>静态Pod管理</strong>：kubelet负责管理那些通过本地文件定义的静态Pod，而不依赖于apiserver。kubelet会定期扫描预配置的本地目录（如<code>/etc/kubernetes/manifests</code>）来启动和管理静态Pod。如果apiserver的manifest文件位于该目录中，kubelet会启动apiserver的Pod，即使它此时无法连接到apiserver。</li>
+<li><strong>容错性</strong>：kubelet的设计中包含了对网络分区和暂时性故障的容忍性。即使kubelet暂时无法连接apiserver，它也会继续保持当前的Pod运行，并按照最后的已知状态进行操作。</li>
+</ol>
+<p>因此，即使在apiserver不可用的情况下，kubelet也能够启动并继续执行其容器管理的职责。一旦apiserver启动并变得可用，kubelet将与之建立连接并加入到Kubernetes集群中，开始接收新的指令和状态更新。</p>
+</aside>
+
+<ol>
+<li>然后通过static pod的方式, 在master节点上启动 etcd kube-scheduler apiserver kube-controller-manager 这四种static pod</li>
+</ol>
+<aside>
+💡 TODO: 
+1. 确认下这几个static pod的pod spec, 对于资源的请求是咋样的? pod的类型是啥? BE or GU or Burstable? 在哪里可以配置? 最佳实践是咋样的?
+2. 这些组件的容灾(例如kube-sched) 怎么做的? 防止这个static pod挂了, 导致业务整体不可用. 
+3. 确认下这几个pod的priority是怎样的? 如何防止Node pressure的时候被逐出?
+
+</aside>
+
+<aside>
+💡 - 其中apiserver/etcd都需要对外提供HTTP服务, 那么这些pod的端口是怎么对外暴露的呢? 
+- 这些pod的spec里, 都有 hostNetwork: true 标识, 代表直接把pod的端口暴露到host上. 详细参见下文的 “hostNetwork” 部分.
+例如: cat /etc/kubernetes/manifests/kube-apiserver.yaml
+
+</aside>
+
+<ol>
+<li><p>当etcd&#x2F;apiserver启动完成后, kubelet会自动作为kube-client连接上去, 进行list&#x2F;watch等操作, 同时向apiserver汇报pod信息. </p>
+</li>
+<li><p>至此, 基础的k8s已经启动起来. 接下来创建 kube-proxy 这个daemonset, 会在每个节点上自动启动kube-proxy-xxx的pod, 便于后续k8s的service使用.</p>
+</li>
+</ol>
+<aside>
+💡 TODO: 但此时kube-proxy与coredns是啥关系? 有啥启动的优先级么? 需要仔细研究下
+
+</aside>
+
+<ol>
+<li>部署Worker节点: <ol>
+<li>手动通过系统服务(centos7u中的sysd service)的方式, 启动 kubelet, containerd 这两个服务, 同时在kubelet启动参数中配置好apiserver&#x2F;etcd的{地址:端口};</li>
+<li>此时由于已经部署好了apiserver, kubelet默认可以连接apiserver. 相当于该Worker节点已经加入了k8s集群中了</li>
+<li>daemonset controller watch 到新增加了node, 因此自动创建kube-proxy的pod, 指定pod.nodeName&#x3D;Node1; </li>
+<li>Node1上的kubelet watch到需要在本节点创建kube-proxy节点, 因此直接开始创建.</li>
+</ol>
+</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>整体来说还是非常自洽的; 需要手动部署的基础组件基本只有2个, kubelet+containerd, 而这两个基本可以在操作系统镜像里做好, 这样node可以快速扩容. </p>
+<p>只要有kubeconfig, node就能直接连通k8s集群, 也是很方便的. </p>
+<h1 id="其他要点"><a href="#其他要点" class="headerlink" title="其他要点"></a>其他要点</h1><h2 id="kubeconfig详解"><a href="#kubeconfig详解" class="headerlink" title="kubeconfig详解"></a>kubeconfig详解</h2><p>kubeconfig文件非常重要, 基本连接k8s集群, 一个kubeconfig文件即可. 样例如下: </p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Config
+<span class="token key atrule">clusters</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">cluster</span><span class="token punctuation">:</span>
+    <span class="token key atrule">certificate-authority-data</span><span class="token punctuation">:</span> xxx
+    <span class="token key atrule">server</span><span class="token punctuation">:</span> https<span class="token punctuation">:</span>//apiserverIp<span class="token punctuation">:</span><span class="token number">6443</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> kubernetes
+<span class="token key atrule">contexts</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">context</span><span class="token punctuation">:</span>
+    <span class="token key atrule">cluster</span><span class="token punctuation">:</span> kubernetes
+    <span class="token key atrule">user</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>admin
+    <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>admin@kubernetes
+<span class="token key atrule">current-context</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>admin@kubernetes
+<span class="token key atrule">preferences</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token key atrule">users</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>admin
+  <span class="token key atrule">user</span><span class="token punctuation">:</span>
+    <span class="token key atrule">client-certificate-data</span><span class="token punctuation">:</span> xxx
+    <span class="token key atrule">client-key-data</span><span class="token punctuation">:</span> xxx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>包含几个重要信息: </p>
+<ol>
+<li>clusters: 可以定义多个k8s cluster, 里边包含cluster的apiserver地址与端口; 以name作为cluster的唯一标识;<ol>
+<li><code>server</code>：Kubernetes API服务器的URL。</li>
+<li><code>certificate-authority</code>或<code>certificate-authority-data</code>：用于验证API服务器证书的根证书。后续详细在k8s-cert中详解.</li>
+<li><code>name</code>：集群的名称，用于引用。</li>
+</ol>
+</li>
+<li>users: 可以定义多个用户; 以name作为user的唯一标识;<ol>
+<li><code>client-certificate-data</code>  客户端证书用于TLS认证</li>
+<li><code>client-key-data</code> 客户端私钥用于TLS认证</li>
+<li><code>token</code>：用于承载令牌认证。</li>
+<li><code>username</code>和<code>password</code>：基本认证。</li>
+</ol>
+</li>
+<li>contexts: 将user与cluster进行绑定</li>
+</ol>
+<aside>
+💡 小技巧:
+
+<ul>
+<li>经常想要调研下kube-system下的pod, 每次  <code>kubectl get pod -n kube-system</code> 输入好麻烦, 怎么能默认使用  <code>kube-system</code> 这个namespace?</li>
+<li>可以直接修改 <code>.kube/config</code> 文件, 如上, 在context里增加如下  <code>namespace: kube-system</code>  即可.</aside></li>
+</ul>
+<aside>
+💡 小技巧:
+
+<ul>
+<li>如何快速switch context?</li>
+<li></aside></li>
+</ul>
+<h2 id="hostNetwork的含义与使用场景"><a href="#hostNetwork的含义与使用场景" class="headerlink" title="hostNetwork的含义与使用场景"></a>hostNetwork的含义与使用场景</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go">在Kubernetes中，当Pod的定义中设置了hostNetwork<span class="token punctuation">:</span> <span class="token boolean">true</span>，意味着该Pod将不会使用Kubernetes为其Pod分配的隔离网络命名空间，而是使用宿主机（Node）的网络命名空间。换句话说，这个Pod将共享Node的网络栈，并且能够直接访问Node上的网络接口。
+当你把hostNetwork设置为<span class="token boolean">true</span>时，Pod中的容器将会有以下特性：
+<span class="token operator">-</span> 网络接口：容器将能够直接访问宿主机的网络接口，包括所有的网络服务和端口。
+<span class="token operator">-</span> IP地址：容器将使用宿主机的IP地址作为自己的IP地址。
+<span class="token operator">-</span> 端口冲突：由于容器共享宿主机的网络，所以任何尝试在标准端口上启动服务的容器可能会因端口冲突而失败，除非宿主机上该端口未被占用。
+<span class="token operator">-</span> 隔离性降低：使用宿主机网络意味着网络隔离性降低，因为Pod直接运行在宿主机网络环境中。
+<span class="token operator">-</span> 安全影响：由于缺乏网络隔离，使用hostNetwork<span class="token punctuation">:</span> <span class="token boolean">true</span>需要考虑额外的安全措施，因为不恰当的使用可能会增加攻击面。
+<span class="token operator">-</span> DNS设置：通常，容器使用的是Kubernetes集群的DNS服务，但是在hostNetwork模式下，容器将使用宿主机的DNS设定。
+
+Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</span>apiserver、kube<span class="token operator">-</span>scheduler和kube<span class="token operator">-</span>controller<span class="token operator">-</span>manager等核心组件）通常设置为hostNetwork<span class="token punctuation">:</span> <span class="token boolean">true</span>，这样做是为了确保它们能够有效地与其他组件进行通信，并且可以方便地从集群外部访问这些服务（例如通过SSH或其他网络工具）。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="kube-proxy与coredns"><a href="#kube-proxy与coredns" class="headerlink" title="kube-proxy与coredns"></a>kube-proxy与coredns</h2><h2 id="configmap的使用"><a href="#configmap的使用" class="headerlink" title="configmap的使用"></a>configmap的使用</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-k8s-cpumanager-cgroupsv1-f4cd5d7991a84887949c6c48d95ca198/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026-03-04-Coder-in-Garden-Reading-Notes-k8s-kata-8498b44588bd4fe486df2b22073c427e/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>

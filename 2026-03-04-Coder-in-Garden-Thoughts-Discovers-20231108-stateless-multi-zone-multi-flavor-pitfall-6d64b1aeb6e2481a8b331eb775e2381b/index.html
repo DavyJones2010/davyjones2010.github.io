@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="20231108-stateless-multi-zone-multi-flavor-pitfallmulti-zone pitfall作为云计算厂商, 我们最喜欢的用户是能够在一个地域开启多个可用区.  但实际在实践中, 发现这个看似简单的要求&#x2F;最佳实践, 有点儿, 真正down to the earth之后, 发现很多场景用户是不好做&#x2F;压根没办法做到跨AZ的.   Unli">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Coders@Work">
+<meta property="og:url" content="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231108-stateless-multi-zone-multi-flavor-pitfall-6d64b1aeb6e2481a8b331eb775e2381b/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="20231108-stateless-multi-zone-multi-flavor-pitfallmulti-zone pitfall作为云计算厂商, 我们最喜欢的用户是能够在一个地域开启多个可用区.  但实际在实践中, 发现这个看似简单的要求&#x2F;最佳实践, 有点儿, 真正down to the earth之后, 发现很多场景用户是不好做&#x2F;压根没办法做到跨AZ的.   Unli">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davyjones2010.github.io/20231108-stateless-multi-zone-multi-flavor-pitfall/Untitled.png">
+<meta property="article:published_time" content="2026-03-04T13:47:57.972Z">
+<meta property="article:modified_time" content="2026-03-04T13:47:57.972Z">
+<meta property="article:author" content="Davy Walker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davyjones2010.github.io/20231108-stateless-multi-zone-multi-flavor-pitfall/Untitled.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231108-stateless-multi-zone-multi-flavor-pitfall-6d64b1aeb6e2481a8b331eb775e2381b/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231108-stateless-multi-zone-multi-flavor-pitfall-6d64b1aeb6e2481a8b331eb775e2381b/","path":"/2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231108-stateless-multi-zone-multi-flavor-pitfall-6d64b1aeb6e2481a8b331eb775e2381b/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#20231108-stateless-multi-zone-multi-flavor-pitfall"><span class="nav-number">1.</span> <span class="nav-text">20231108-stateless-multi-zone-multi-flavor-pitfall</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#multi-zone-pitfall"><span class="nav-number">2.</span> <span class="nav-text">multi-zone pitfall</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%BB%91%E5%AE%9A"><span class="nav-number">2.1.</span> <span class="nav-text">存储绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E4%B8%BA%E5%95%A5%E4%B8%8D%E8%83%BD%E8%B7%A8%E6%9C%BA%E6%88%BF%E8%AE%BF%E9%97%AE"><span class="nav-number">2.2.</span> <span class="nav-text">应用为啥不能跨机房访问?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E4%B8%BA%E5%95%A5%E4%B8%8D%E8%83%BD%E8%B7%A8%E6%9C%BA%E6%88%BF%E9%83%A8%E7%BD%B2"><span class="nav-number">2.3.</span> <span class="nav-text">集群为啥不能跨机房部署?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zone-x2F-vsw%E6%95%B0%E9%87%8F%E8%86%A8%E8%83%80"><span class="nav-number">2.4.</span> <span class="nav-text">zone&#x2F;vsw数量膨胀</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#multi-flavor-pitfall"><span class="nav-number">3.</span> <span class="nav-text">multi-flavor pitfall</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86%E7%BB%91%E5%AE%9A-x2F-%E4%BC%98%E5%85%88"><span class="nav-number">3.1.</span> <span class="nav-text">指令集绑定&#x2F;优先</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%97%A0%E6%B3%95%E5%AF%B9%E9%BD%90"><span class="nav-number">3.2.</span> <span class="nav-text">性能无法对齐</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231108-stateless-multi-zone-multi-flavor-pitfall-6d64b1aeb6e2481a8b331eb775e2381b/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-04 21:47:57" itemprop="dateCreated datePublished" datetime="2026-03-04T21:47:57+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>767</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="20231108-stateless-multi-zone-multi-flavor-pitfall"><a href="#20231108-stateless-multi-zone-multi-flavor-pitfall" class="headerlink" title="20231108-stateless-multi-zone-multi-flavor-pitfall"></a>20231108-stateless-multi-zone-multi-flavor-pitfall</h1><h1 id="multi-zone-pitfall"><a href="#multi-zone-pitfall" class="headerlink" title="multi-zone pitfall"></a>multi-zone pitfall</h1><p>作为云计算厂商, 我们最喜欢的用户是能够在一个地域开启多个可用区. </p>
+<p>但实际在实践中, 发现这个看似简单的要求&#x2F;最佳实践, 有点儿, 真正down to the earth之后, 发现很多场景用户是不好做&#x2F;压根没办法做到跨AZ的. </p>
+<blockquote>
+<p>Unlike Google, who can’t be bothered to descend the ivory tower to visit real customers, Grab’s mantra is: “Go to the ground”.</p>
+</blockquote>
+<p>个人总结有几个原因: </p>
+<h2 id="存储绑定"><a href="#存储绑定" class="headerlink" title="存储绑定"></a>存储绑定</h2><p>存储基本都是绑定可用区的. 例如 HDFS, ZK, 云盘, RDS等. (当然RDS可以选择其他可用区来做备库)</p>
+<p>例如用户在zoneA下创建一个HDFS集群, 或者ZK集群. </p>
+<p>这样应用在访问存储时希望能同可用区就近访问. </p>
+<p>当然你可以说: </p>
+<ol>
+<li>用户应用为啥不能跨机房访问? </li>
+<li>或者HDFS&#x2F;ZK集群为啥不能跨机房部署?</li>
+</ol>
+<h2 id="应用为啥不能跨机房访问"><a href="#应用为啥不能跨机房访问" class="headerlink" title="应用为啥不能跨机房访问?"></a>应用为啥不能跨机房访问?</h2><h2 id="集群为啥不能跨机房部署"><a href="#集群为啥不能跨机房部署" class="headerlink" title="集群为啥不能跨机房部署?"></a>集群为啥不能跨机房部署?</h2><p>尤其是在ZK等分布式集群下, 节点点通信量是巨大的. 对节点之间的延时要求是很高的. </p>
+<p>如果机房间网络不通, 会直接导致脑裂. </p>
+<p>要注意: 机房间流量是有带宽限制的, 甚至可能会打满! 甚至跨机房流量会收费!</p>
+<h2 id="zone-x2F-vsw数量膨胀"><a href="#zone-x2F-vsw数量膨胀" class="headerlink" title="zone&#x2F;vsw数量膨胀"></a>zone&#x2F;vsw数量膨胀</h2><p>以 阿里云上海地域为例, 总共有12个可用区, 但ECI最多支持10个vsw</p>
+<p><img data-src="/20231108-stateless-multi-zone-multi-flavor-pitfall/Untitled.png" alt="Untitled"></p>
+<ul>
+<li>反观AWS, 最多6个AZ, 永续</li>
+</ul>
+<h1 id="multi-flavor-pitfall"><a href="#multi-flavor-pitfall" class="headerlink" title="multi-flavor pitfall"></a>multi-flavor pitfall</h1><p><a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/ack/ack-managed-and-ack-dedicated/user-guide/recommended-storage-settings-for-cross-zone-deployment#task-2269269">存储在多可用区部署时有哪些推荐配置_容器服务 Kubernetes 版 ACK-阿里云帮助中心</a></p>
+<h2 id="指令集绑定-x2F-优先"><a href="#指令集绑定-x2F-优先" class="headerlink" title="指令集绑定&#x2F;优先"></a>指令集绑定&#x2F;优先</h2><ol>
+<li>指令集绑定: 视频转码AVX512指令集</li>
+</ol>
+<h2 id="性能无法对齐"><a href="#性能无法对齐" class="headerlink" title="性能无法对齐"></a>性能无法对齐</h2><ol>
+<li>无法保证节点性能大致对齐. 尤其是在运行Job时, 会有短板效应.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231101-sys-stat-page-a7953e1cbd9b4a7a85205aab844f32cd/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026-03-04-Coder-in-Garden-Thoughts-Discovers-20231106-agile-storys-4c61df487bb24927915abe514ddbc233/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
