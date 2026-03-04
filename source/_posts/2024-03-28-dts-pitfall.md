@@ -1,0 +1,16 @@
+---
+title: dts pitfall
+date: 2024-03-28 00:00:00
+tags: [thoughts, learn-from-failure, distributed-system]
+---
+
+# 20240328-dts-pitfall
+
+分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. 
+
+我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. 
+
+可能的几种方案:
+
+1. 同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. 
+2. gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.
