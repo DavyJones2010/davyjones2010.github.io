@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="rgba(0,0,0,0)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071611901.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="rgba(0,0,0,0)">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Components 介绍主要有哪些基础组件及其用法 Arg&#x2F;Var utility 把 输入值(param) 保存到 自定义的参数(例如 my_task) 中.  后续可以使用 {var:my_task} 来引用该值.   如下, 把 {query} 保存到 task 参数中    如下, 使用参数 {var:task}   ListFilter">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Alfred Workflow 使用指南">
+<meta property="og:url" content="https://davyjones2010.github.io/2023-11-06-alfred-workflow/">
+<meta property="og:site_name" content="Coders@Work">
+<meta property="og:description" content="Components 介绍主要有哪些基础组件及其用法 Arg&#x2F;Var utility 把 输入值(param) 保存到 自定义的参数(例如 my_task) 中.  后续可以使用 {var:my_task} 来引用该值.   如下, 把 {query} 保存到 task 参数中    如下, 使用参数 {var:task}   ListFilter">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://davyjones2010.github.io/_assets/2023-11-07-alfred-workflow/Untitled.png">
+<meta property="og:image" content="https://davyjones2010.github.io/_assets/2023-11-07-alfred-workflow/Untitled-1.png">
+<meta property="og:image" content="https://davyjones2010.github.io/_assets/2023-11-07-alfred-workflow/Untitled-2.png">
+<meta property="og:image" content="https://davyjones2010.github.io/_assets/2023-11-07-alfred-workflow/Untitled-3.png">
+<meta property="article:published_time" content="2023-11-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-04T14:49:24.353Z">
+<meta property="article:author" content="Davy Walker">
+<meta property="article:tag" content="alfred">
+<meta property="article:tag" content="workflow">
+<meta property="article:tag" content="automation">
+<meta property="article:tag" content="macos">
+<meta property="article:tag" content="productivity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://davyjones2010.github.io/_assets/2023-11-07-alfred-workflow/Untitled.png">
+
+
+<link rel="canonical" href="https://davyjones2010.github.io/2023-11-06-alfred-workflow/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://davyjones2010.github.io/2023-11-06-alfred-workflow/","path":"/2023-11-06-alfred-workflow/","title":"Alfred Workflow 使用指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Alfred Workflow 使用指南 | Coders@Work</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Coders@Work" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coders@Work</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Components"><span class="nav-number">1.</span> <span class="nav-text">Components</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Arg-x2F-Var-utility"><span class="nav-number">1.1.</span> <span class="nav-text">Arg&#x2F;Var utility</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ListFilter"><span class="nav-number">1.2.</span> <span class="nav-text">ListFilter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Practices"><span class="nav-number">2.</span> <span class="nav-text">Practices</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AF%B9%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8Cdict%E6%98%A0%E5%B0%84"><span class="nav-number">2.1.</span> <span class="nav-text">如何对参数进行dict映射?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%A6%82%E4%BD%95%E5%AF%B9%E8%BE%93%E5%85%A5%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%98%A0%E5%B0%84"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. 如何对输入参数进行映射?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E5%B0%86value%E4%BF%9D%E5%AD%98%E5%9C%A8%E6%96%B0%E7%9A%84workflow%E7%9A%84%E5%8F%98%E9%87%8F%E4%B8%AD"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. 如何将value保存在新的workflow的变量中?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%AE%8C%E6%95%B4%E6%A0%B7%E4%BE%8B"><span class="nav-number">2.1.3.</span> <span class="nav-text">3. 完整样例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E6%9C%9F%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">如何添加自定义日期参数?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 添加自定义参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AE%BE%E7%BD%AE%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 设置时间格式:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. 使用自定义参数:</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Davy Walker"
+      src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+  <p class="site-author-name" itemprop="name">Davy Walker</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">299</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DavyJones2010" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DavyJones2010" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:davyjones2010@gmail.com" title="E-Mail → mailto:davyjones2010@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa-solid fa-square-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-alfred-workflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Alfred Workflow 使用指南 | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Alfred Workflow 使用指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-04 22:49:24" itemprop="dateModified" datetime="2026-03-04T22:49:24+08:00">2026-03-04</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><hr>
+<p>介绍主要有哪些基础组件及其用法</p>
+<h2 id="Arg-x2F-Var-utility"><a href="#Arg-x2F-Var-utility" class="headerlink" title="Arg&#x2F;Var utility"></a>Arg&#x2F;Var utility</h2><ol>
+<li>把 输入值(param) 保存到 自定义的参数(例如 my_task) 中. </li>
+<li>后续可以使用 {var:my_task} 来引用该值.</li>
+</ol>
+<ul>
+<li>如下, 把 {query} 保存到 task 参数中</li>
+</ul>
+<p><img data-src="/_assets/2023-11-07-alfred-workflow/Untitled.png" alt="Untitled"></p>
+<ul>
+<li>如下, 使用参数 {var:task}</li>
+</ul>
+<p><img data-src="/_assets/2023-11-07-alfred-workflow/Untitled-1.png" alt="Untitled"></p>
+<h2 id="ListFilter"><a href="#ListFilter" class="headerlink" title="ListFilter"></a>ListFilter</h2><h1 id="Practices"><a href="#Practices" class="headerlink" title="Practices"></a>Practices</h1><h2 id="如何对参数进行dict映射"><a href="#如何对参数进行dict映射" class="headerlink" title="如何对参数进行dict映射?"></a>如何对参数进行dict映射?</h2><p>如下需求: </p>
+<ol>
+<li>提前定义好了字典内容: cn-beijing&#x3D;cn-beijing-btc-a01; cn-hangzhou&#x3D;cn-hangzhou-dg-a01; </li>
+<li>输入了参数 cn-beijing, 需要能映射为对应的value, 即 cn-beijing-btc-a01 </li>
+<li>然后把该value赋值到一个新的变量 <code>region</code> 上</li>
+</ol>
+<p>这里选用自己熟悉的bash脚本,  分为几部分: </p>
+<h3 id="1-如何对输入参数进行映射"><a href="#1-如何对输入参数进行映射" class="headerlink" title="1. 如何对输入参数进行映射?"></a>1. 如何对输入参数进行映射?</h3><p>由于bash里定义dict的数据格式, 需要较高的版本, 兼容性不好. 因此这里推荐使用 json 格式 + jq 命令 来完成. kv的查表&amp;映射. 如下脚本:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># 预定义JSON数据</span>
+<span class="token assign-left variable">json_data</span><span class="token operator">=</span><span class="token string">'&#123;
+    "cn-beijing": "cn-beijing-btc-a01",
+    "cn-hangzhou": "cn-hangzhou-dg-a01"
+&#125;'</span>
+
+<span class="token comment"># 获取输入参数并进行翻译</span>
+<span class="token function-name function">translate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token assign-left variable">word</span><span class="token operator">=</span><span class="token variable">$1</span>
+  <span class="token assign-left variable">translated_word</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$json_data</span>"</span> <span class="token operator">|</span> jq -r --arg word <span class="token string">"<span class="token variable">$word</span>"</span> <span class="token string">'.[$word]'</span><span class="token variable">)</span></span>
+  <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$translated_word</span>"</span> <span class="token operator">!=</span> <span class="token string">"null"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$translated_word</span>"</span>
+  <span class="token keyword">else</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"无法翻译：<span class="token variable">$word</span>"</span>
+  <span class="token keyword">fi</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment"># 测试脚本</span>
+translate <span class="token string">"<span class="token variable">$1</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但注意, 上边脚本只是把对应的value echo出来, 并没有赋值到workflow变量里. 如果需要放到变量里, 需要继续看第二步. </p>
+<h3 id="2-如何将value保存在新的workflow的变量中"><a href="#2-如何将value保存在新的workflow的变量中" class="headerlink" title="2. 如何将value保存在新的workflow的变量中?"></a>2. 如何将value保存在新的workflow的变量中?</h3><p>要注意的是, echo出来的一定要是JSON类型, 且kv需要符合alfred的规范. 参见文章: <a target="_blank" rel="noopener" href="https://www.deanishe.net/post/2018/10/workflow/environment-variables-in-alfred/">Workflow&#x2F;environment variables in Alfred — deanishe.net</a></p>
+<p>详细规范&amp;格式定义如下: </p>
+<ol>
+<li>如果是 <strong>From Run Script actions 类型, 则脚本里输出格式需要为: (通过echo&#x2F;puts来输出)</strong></li>
+</ol>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"alfredworkflow"</span><span class="token operator">:</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token comment">// "arg": "https://www.google.com", // 注意输出的args, 后边是通过 &#123;query&#125; 来进行引用. 个人建议不要使用这种hidden的方式. 建议都显式通过&#123;var:xxx&#125;来引用.</span>
+        <span class="token property">"variables"</span><span class="token operator">:</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token property">"region"</span><span class="token operator">:</span> <span class="token string">"$translated_word"</span> <span class="token comment">// 后续可以使用</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol>
+<li>如果是 From Script Filters 类型, 则脚本里输出格式需要为: <strong>(通过echo&#x2F;puts来输出)</strong></li>
+</ol>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"items"</span><span class="token operator">:</span>
+    <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"$translated_word"</span><span class="token punctuation">,</span>
+            <span class="token comment">// "arg": "$translated_word",</span>
+            <span class="token property">"variables"</span><span class="token operator">:</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token property">"region"</span><span class="token operator">:</span> <span class="token string">"$translated_word"</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-完整样例"><a href="#3-完整样例" class="headerlink" title="3. 完整样例"></a>3. 完整样例</h3><ol>
+<li><strong>From Run Script actions 样例</strong></li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># 预定义JSON数据</span>
+<span class="token assign-left variable">json_data</span><span class="token operator">=</span><span class="token string">'&#123;
+    "cn-beijing": "cn-beijing-btc-a01",
+    "cn-hangzhou": "cn-hangzhou-dg-a01"
+&#125;'</span>
+
+<span class="token comment"># 获取输入参数并进行翻译</span>
+<span class="token function-name function">translate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token assign-left variable">regex</span><span class="token operator">=</span><span class="token variable">$1</span>
+  <span class="token assign-left variable">translated_words</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$json_data</span>"</span> <span class="token operator">|</span> jq -r "to_entries<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">|</span> select<span class="token punctuation">(</span>.key <span class="token operator">|</span> test<span class="token punctuation">(</span><span class="token punctuation">\</span>"$regex<span class="token punctuation">\</span>"<span class="token punctuation">)</span><span class="token variable">)</span></span> <span class="token operator">|</span> <span class="token punctuation">&#123;</span><span class="token punctuation">\</span>"arg<span class="token punctuation">\</span>": .value, <span class="token punctuation">\</span>"variables<span class="token punctuation">\</span>": <span class="token punctuation">&#123;</span><span class="token punctuation">\</span>"region<span class="token punctuation">\</span>": .value<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token string">")
+  if [ -n "</span><span class="token variable">$translated_words</span><span class="token string">" ]; then
+    echo "</span><span class="token punctuation">&#123;</span> <span class="token punctuation">\</span>"alfredworkflow<span class="token punctuation">\</span>": <span class="token variable">$translated_words</span> <span class="token punctuation">&#125;</span><span class="token string">"
+  else
+    echo '&#123; "</span>alfredworkflow<span class="token string">": &#123; "</span>arg<span class="token string">": "</span>无法翻译<span class="token string">", "</span>title<span class="token string">": "</span>无法翻译<span class="token string">", "</span>subtitle<span class="token string">": "</span>无法翻译<span class="token string">" &#125; &#125;'
+  fi
+&#125;
+
+# 测试脚本
+translate "</span><span class="token variable">$1</span>"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol>
+<li>From Script Filters 样例</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># 预定义JSON数据</span>
+<span class="token assign-left variable">json_data</span><span class="token operator">=</span><span class="token string">'&#123;
+    "cn-beijing": "cn-beijing-btc-a01",
+    "cn-hangzhou": "cn-hangzhou-dg-a01"
+&#125;'</span>
+
+<span class="token comment"># 获取输入参数并进行翻译</span>
+<span class="token function-name function">translate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token assign-left variable">word</span><span class="token operator">=</span><span class="token variable">$1</span>
+  <span class="token assign-left variable">translated_word</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$json_data</span>"</span> <span class="token operator">|</span> jq -r --arg word <span class="token string">"<span class="token variable">$word</span>"</span> <span class="token string">'[&#123; "arg": $word, "title": .[$word], "subtitle": .[$word], "variables": &#123;"region": .[$word]&#125;&#125;]'</span><span class="token variable">)</span></span>
+  <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$translated_word</span>"</span> <span class="token operator">!=</span> <span class="token string">'[&#123;"arg":null,"title":null,"subtitle":null&#125;]'</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"&#123; <span class="token entity" title="\&quot;">\"</span>items<span class="token entity" title="\&quot;">\"</span>: <span class="token variable">$translated_word</span> &#125;"</span>
+  <span class="token keyword">else</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">'&#123; "items": [&#123; "arg": "无法翻译", "title": "无法翻译", "subtitle": "无法翻译" &#125;] &#125;'</span>
+  <span class="token keyword">fi</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment"># 测试脚本</span>
+translate <span class="token string">"<span class="token variable">$1</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="如何添加自定义日期参数"><a href="#如何添加自定义日期参数" class="headerlink" title="如何添加自定义日期参数?"></a>如何添加自定义日期参数?</h2><p>例如 最终需要的url 是 <a target="_blank" rel="noopener" href="https://www.xxx.com/query=%7Bquery%7D&startTime=xxx&endTime=xxx"><code>https://www.xxx.com/query=&#123;query&#125;&amp;startTime=xxx&amp;endTime=xxx</code></a> 格式</p>
+<p>需要默认 </p>
+<ol>
+<li>startTime是 now() - 3天;</li>
+<li>endTime是now()</li>
+<li>且格式是 <code>2023-01-01 12:20:20</code></li>
+</ol>
+<h3 id="1-添加自定义参数"><a href="#1-添加自定义参数" class="headerlink" title="1. 添加自定义参数"></a>1. 添加自定义参数</h3><p>如下图,  增加 <code>Arg and Vars</code> 组件: </p>
+<p><img data-src="/_assets/2023-11-07-alfred-workflow/Untitled-2.png" alt="Untitled"></p>
+<h3 id="2-设置时间格式"><a href="#2-设置时间格式" class="headerlink" title="2. 设置时间格式:"></a>2. 设置时间格式:</h3><p>如上图, <code>&#123;isodate +1d:yyyy-MM-dd hh:mm:ss&#125;</code> 代表1天以后, 格式是 2023-01-01 12:12:12 的格式</p>
+<p>完整的时间格式, 参见: <a target="_blank" rel="noopener" href="https://www.alfredapp.com/help/workflows/advanced/placeholders/#date-time">Dynamic Placeholders - Alfred Help and Support</a></p>
+<h3 id="3-使用自定义参数"><a href="#3-使用自定义参数" class="headerlink" title="3. 使用自定义参数:"></a>3. 使用自定义参数:</h3><p>如下图, 使用 <code>&#123;var:starTime&#125;</code> 的方式引用变量</p>
+<p><img data-src="/_assets/2023-11-07-alfred-workflow/Untitled-3.png" alt="Untitled"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/alfred/" rel="tag"># alfred</a>
+              <a href="/tags/workflow/" rel="tag"># workflow</a>
+              <a href="/tags/automation/" rel="tag"># automation</a>
+              <a href="/tags/macos/" rel="tag"># macos</a>
+              <a href="/tags/productivity/" rel="tag"># productivity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023-11-06-thin-client-pitfall/" rel="prev" title="thin client pitfall">
+                  <i class="fa fa-chevron-left"></i> thin client pitfall
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023-11-07-stateless-multi-zone-multi-flavor-pitfall/" rel="next" title="stateless multi zone multi flavor pitfall">
+                  stateless multi zone multi flavor pitfall <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Davy Walker</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">499k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">7:34</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"default"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js","integrity":"sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
