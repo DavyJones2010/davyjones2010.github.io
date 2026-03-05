@@ -31,9 +31,9 @@
 <meta property="og:description" content="docker-deepdivearchitecture参见官方文档:    其中 docker daemon 默认是通过 uds 来listen本地的client请求, 优点是权限好控制. 只允许 root 用户在本机访问   💡 - By default, the Docker daemon listens for connections on a Unix socket to accept">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://davyjones2010.github.io/docker-deepdive/Untitled.png">
-<meta property="og:image" content="https://davyjones2010.github.io/_assets/2024-02-20-docker-deepdive/Untitled.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png">
 <meta property="article:published_time" content="2024-02-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-04T15:42:56.674Z">
+<meta property="article:modified_time" content="2026-03-05T13:36:20.613Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="container">
 <meta property="article:tag" content="docker">
@@ -260,7 +260,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 23:42:56" itemprop="dateModified" datetime="2026-03-04T23:42:56+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-05 21:36:20" itemprop="dateModified" datetime="2026-03-05T21:36:20+08:00">2026-03-05</time>
     </span>
 
   
@@ -348,7 +348,7 @@
 <p>以上步骤即完成了将构建上下文从 Docker 客户端发送到 Docker 守护进程的过程。这是为什么在运行 <code>docker build</code> 时，通常会看到 “Sending build context to Docker daemon” 之类的消息输出。</p>
 <p>为了优化这个过程，通常建议在 <code>.dockerignore</code> 文件中列出不需要包括在构建上下文中的文件和目录，类似于 <code>.gitignore</code> 文件。这样可以减小 tar 归档的大小，提高构建效率，并且防止不必要的文件被发送到 Docker 守护进程。</p>
 </blockquote>
-<p><img data-src="/_assets/2024-02-20-docker-deepdive/Untitled.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
     </div>
 

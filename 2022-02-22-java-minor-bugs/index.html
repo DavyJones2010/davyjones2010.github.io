@@ -30,16 +30,16 @@
 <meta property="og:site_name" content="Coders@Work">
 <meta property="og:description" content="Java SPI机制未生效, ServiceLoader获取不到实现类 最终定位到原因, 是因为接口实现的文件需要放在 main&#x2F;resources&#x2F;META-INF&#x2F;services&#x2F;MyInterface 中而实际文件放到了: main&#x2F;resources&#x2F;META-INF.services&#x2F;MyInterface 中了. 这里比较坑的一点是, 在IntelliJ IDEA中, 会默认flat">
 <meta property="og:locale">
-<meta property="og:image" content="https://davyjones2010.github.io/_assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png">
 <meta property="article:published_time" content="2022-02-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-04T15:42:56.667Z">
+<meta property="article:modified_time" content="2026-03-05T13:36:20.606Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="learn-from-failure">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="mdc">
 <meta property="article:tag" content="npe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://davyjones2010.github.io/_assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png">
 
 
 <link rel="canonical" href="https://davyjones2010.github.io/2022-02-22-java-minor-bugs/">
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-04 23:42:56" itemprop="dateModified" datetime="2026-03-04T23:42:56+08:00">2026-03-04</time>
+      <time title="修改时间：2026-03-05 21:36:20" itemprop="dateModified" datetime="2026-03-05T21:36:20+08:00">2026-03-05</time>
     </span>
 
   
@@ -289,7 +289,7 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="Java-SPI机制未生效-ServiceLoader获取不到实现类"><a href="#Java-SPI机制未生效-ServiceLoader获取不到实现类" class="headerlink" title="Java SPI机制未生效, ServiceLoader获取不到实现类"></a>Java SPI机制未生效, ServiceLoader获取不到实现类</h1><hr>
 <p>最终定位到原因, 是因为接口实现的文件需要放在 <code>main/resources/META-INF/services/MyInterface</code> 中<br>而实际文件放到了: <code>main/resources/META-INF.services/MyInterface</code> 中了.</p>
-<p>这里比较坑的一点是, 在IntelliJ IDEA中, 会默认flatten package, 即将目录路径层级用<code>.</code>连接, 因此<br><code>main/resources/META-INF/services/MyInterface</code> 与 <code>main/resources/META-INF.services/MyInterface</code><br>两个目录看起来是一样的, 如下(根本分不清楚到底是文件夹名字叫<code>codecontest.bloomfilter</code>还是文件夹是<code>codecontest/bloomfilter</code>):<br><img data-src="/../_assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png" alt="2022-02-23-java-minor-bugs-idea-path.png"></p>
+<p>这里比较坑的一点是, 在IntelliJ IDEA中, 会默认flatten package, 即将目录路径层级用<code>.</code>连接, 因此<br><code>main/resources/META-INF/services/MyInterface</code> 与 <code>main/resources/META-INF.services/MyInterface</code><br>两个目录看起来是一样的, 如下(根本分不清楚到底是文件夹名字叫<code>codecontest.bloomfilter</code>还是文件夹是<code>codecontest/bloomfilter</code>):<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png" alt="2022-02-23-java-minor-bugs-idea-path.png"></p>
 <p>随便搜了下, 发现大家踩同样坑的也不少, 目前看貌似没有好的办法避免, 记住有这个坑, 后续引以为戒吧!</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/tszxlzc/article/details/65938891">intellij idea包路径和文件夹目录的坑</a></li>
