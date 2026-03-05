@@ -23,15 +23,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="layout: posttitle: 资源调度API设计的思考tags: [scheduler-design, api-design, scheduler-api]category: tech-notes lang: zh 前言记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀. 批量调度amount &amp; minAmount 模式:模式解释样例请求如下: class Batch">
+    <meta name="description" content="layout: posttitle: 资源调度API设计的思考tags: [scheduler-design, api-design, scheduler-api]category: tech-notes lang: zh 前言记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀. 批量调度amount &amp; minAmount 模式:模式解释样例请求如下: class Batc">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Coders@Work">
 <meta property="og:url" content="https://davyjones2010.github.io/2022-05-23-scheduler-api-design/">
 <meta property="og:site_name" content="Coders@Work">
-<meta property="og:description" content="layout: posttitle: 资源调度API设计的思考tags: [scheduler-design, api-design, scheduler-api]category: tech-notes lang: zh 前言记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀. 批量调度amount &amp; minAmount 模式:模式解释样例请求如下: class Batch">
+<meta property="og:description" content="layout: posttitle: 资源调度API设计的思考tags: [scheduler-design, api-design, scheduler-api]category: tech-notes lang: zh 前言记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀. 批量调度amount &amp; minAmount 模式:模式解释样例请求如下: class Batc">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-05T15:08:34.452Z">
+<meta property="article:modified_time" content="2026-03-05T15:11:16.359Z">
 <meta property="article:author" content="Davy Walker">
 <meta name="twitter:card" content="summary">
 
@@ -253,7 +253,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
 
   
@@ -281,7 +281,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>layout: post<br>title: 资源调度API设计的思考<br>tags: [scheduler-design, api-design, scheduler-api]<br>category: tech-notes</p>
+        <hr>
+<p>layout: post<br>title: 资源调度API设计的思考<br>tags: [scheduler-design, api-design, scheduler-api]<br>category: tech-notes</p>
 <p>lang: zh</p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀.</p>
 <h1 id="批量调度"><a href="#批量调度" class="headerlink" title="批量调度"></a>批量调度</h1><h2 id="amount-amp-minAmount-模式"><a href="#amount-amp-minAmount-模式" class="headerlink" title="amount &amp; minAmount 模式:"></a>amount &amp; minAmount 模式:</h2><h3 id="模式解释"><a href="#模式解释" class="headerlink" title="模式解释"></a>模式解释</h3><p>样例请求如下:</p>
@@ -323,13 +324,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022-05-23-java-db-connection-transaction/" rel="prev" title="Java中常用的数据库连接池以及事务框架的原理探究">
-                  <i class="fa fa-chevron-left"></i> Java中常用的数据库连接池以及事务框架的原理探究
+                <a href="/2022-05-22-k8s-promethus/" rel="prev" title="k8s生态中promethus的架构与原理研究">
+                  <i class="fa fa-chevron-left"></i> k8s生态中promethus的架构与原理研究
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022-05-24-java-spring-spi/" rel="next" title="Java与Spring中SPI机制的探讨与思考">
-                  Java与Spring中SPI机制的探讨与思考 <i class="fa fa-chevron-right"></i>
+                <a href="/2022-05-23-java-db-connection-transaction/" rel="next" title="Java中常用的数据库连接池以及事务框架的原理探究">
+                  Java中常用的数据库连接池以及事务框架的原理探究 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

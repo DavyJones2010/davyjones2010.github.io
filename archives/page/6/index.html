@@ -211,6 +211,142 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-09-08-kube-scheduler-cache/" class="post-title-link" itemprop="url">kube-scheduler笔记之SchedulerCache研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="源码路径"><a href="#源码路径" class="headerlink" title="源码路径"></a>源码路径</h1><pre class="line-numbers language-none"><code class="language-none">kubernetes&#x2F;pkg&#x2F;scheduler&#x2F;internal&#x2F;cache&#x2F;cache.go<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="结构详解"><a href="#结构详解" class="headerlink" title="结构详解"></a>结构详解</h1><h2 id="SchedulerCache"><a href="#SchedulerCache" class="headerlink" title="SchedulerCache"></a>SchedulerCache</h2><h3 id="结构代码"><a href="#结构代码" class="headerlink" title="结构代码"></a>结构代码</h3><pre class="line-numbers language-none"><code class="language-none">type schedulerCache struct &#123;
+
+	&#x2F;&#x2F; 锁信息
+	&#x2F;&#x2F; This mutex guards all fields within this cache struct.
+	mu sync.RWMutex
+	
+	&#x2F;&#x2F; Pod信息(重要)
+	&#x2F;&#x2F; a set of assumed pod keys.
+	&#x2F;&#x2F; The key could further be used to get an entry in podStates.
+	assumedPods map[string]bool
+	&#x2F;&#x2F; a map from pod key to podState.
+	podStates map[string]*podState
+	
+	&#x2F;&#x2F; Node信息(重要)
+	nodes     map[string]*nodeInfoListItem
+	&#x2F;&#x2F; headNode points to the most recently updated NodeInfo in &quot;nodes&quot;. It is the
+	&#x2F;&#x2F; head of the linked list.
+	headNode *nodeInfoListItem
+	nodeTree *NodeTree
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>是调度决策的资源信息核心. 包括如下重要部分:</p>
+<ul>
+<li>headNode *nodeInfoListItem: 指向nodeInfo链表的头部指针</li>
+<li>nodes map[string]*nodeInfoListItem: nodeInfo的组合, key: nodeName, value: nodeInfo</li>
+<li>nodeTree *NodeTree: 按zone打散的node结构.</li>
+</ul>
+<h3 id="核心操作"><a href="#核心操作" class="headerlink" title="核心操作"></a>核心操作</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-09-08-kube-scheduler-cache/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-filter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +383,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -477,142 +613,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-09-08-kube-scheduler-cache/" class="post-title-link" itemprop="url">kube-scheduler笔记之SchedulerCache研究</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>10k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="源码路径"><a href="#源码路径" class="headerlink" title="源码路径"></a>源码路径</h1><pre class="line-numbers language-none"><code class="language-none">kubernetes&#x2F;pkg&#x2F;scheduler&#x2F;internal&#x2F;cache&#x2F;cache.go<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="结构详解"><a href="#结构详解" class="headerlink" title="结构详解"></a>结构详解</h1><h2 id="SchedulerCache"><a href="#SchedulerCache" class="headerlink" title="SchedulerCache"></a>SchedulerCache</h2><h3 id="结构代码"><a href="#结构代码" class="headerlink" title="结构代码"></a>结构代码</h3><pre class="line-numbers language-none"><code class="language-none">type schedulerCache struct &#123;
-
-	&#x2F;&#x2F; 锁信息
-	&#x2F;&#x2F; This mutex guards all fields within this cache struct.
-	mu sync.RWMutex
-	
-	&#x2F;&#x2F; Pod信息(重要)
-	&#x2F;&#x2F; a set of assumed pod keys.
-	&#x2F;&#x2F; The key could further be used to get an entry in podStates.
-	assumedPods map[string]bool
-	&#x2F;&#x2F; a map from pod key to podState.
-	podStates map[string]*podState
-	
-	&#x2F;&#x2F; Node信息(重要)
-	nodes     map[string]*nodeInfoListItem
-	&#x2F;&#x2F; headNode points to the most recently updated NodeInfo in &quot;nodes&quot;. It is the
-	&#x2F;&#x2F; head of the linked list.
-	headNode *nodeInfoListItem
-	nodeTree *NodeTree
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>是调度决策的资源信息核心. 包括如下重要部分:</p>
-<ul>
-<li>headNode *nodeInfoListItem: 指向nodeInfo链表的头部指针</li>
-<li>nodes map[string]*nodeInfoListItem: nodeInfo的组合, key: nodeName, value: nodeInfo</li>
-<li>nodeTree *NodeTree: 按zone打散的node结构.</li>
-</ul>
-<h3 id="核心操作"><a href="#核心操作" class="headerlink" title="核心操作"></a>核心操作</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-09-08-kube-scheduler-cache/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -649,7 +649,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -816,7 +816,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -986,7 +986,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
 
   
@@ -1014,7 +1014,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>layout: post<br>title: 精神训练与身体训练<br>tags: [snippets, physical, psychological]<br>category: life</p>
+          <hr>
+<p>layout: post<br>title: 精神训练与身体训练<br>tags: [snippets, physical, psychological]<br>category: life</p>
 <p>lang: zh</p>
 <blockquote>
 <p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
@@ -1096,7 +1097,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1217,7 +1218,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1336,7 +1337,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1451,7 +1452,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
 
   
@@ -1479,7 +1480,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>title: 明朝那些事儿<br>subtitle: 明朝那些事儿小笔记<br>date: 2021-09-05 10:05:23 +0800<br>tags: [history, ming-dynasty]<br>category: life</p>
+          <hr>
+<p>title: 明朝那些事儿<br>subtitle: 明朝那些事儿小笔记<br>date: 2021-09-05 10:05:23 +0800<br>tags: [history, ming-dynasty]<br>category: life</p>
 <h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
 <p>身在夜郎家万里，五云天北是神州！</p>
 <p>天地圣贤之道，并非存于万物，也无须存于万物，天人本是一体，何时可分？又何必分？<br>随心而动，随意而行，万法自然，便是圣贤之道。存天理，去人欲？天理即是人欲。</p>
@@ -1554,7 +1556,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1698,7 +1700,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1811,7 +1813,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1956,7 +1958,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:08:34" itemprop="dateModified" datetime="2026-03-05T23:08:34+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
