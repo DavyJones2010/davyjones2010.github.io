@@ -30,15 +30,15 @@
 <meta property="og:site_name" content="Coders@Work">
 <meta property="og:description" content="k8s-cpu-manager-deep-dive系统组件预留几种预留方案–reserved-cpus&#x3D;0-3 : 代表把CPU0~CPU3预留给系统组件&#x2F;k8s组件;  –kube-reserved —kube-reserved-cgroup –system-reserved –system-reserved-cgroup –reserved-cpus —&gt; 这种cgr">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled.png">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled%201.png">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled%202.png">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled%203.png">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled%204.png">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled%205.png">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled%206.png">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled%207.png">
-<meta property="og:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled%208.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-1.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-2.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-3.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-4.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-5.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-6.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-7.png">
+<meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-8.png">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-1.png">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-2.png">
@@ -49,13 +49,13 @@
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-7.png">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-8.png">
 <meta property="article:published_time" content="2024-12-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-05T13:43:33.051Z">
+<meta property="article:modified_time" content="2026-03-05T13:47:51.418Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="k8s">
 <meta property="article:tag" content="deep-dive">
 <meta property="article:tag" content="cpu-manager">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://davyjones2010.github.io/k8s-cpu-manager-deep-dive/Untitled.png">
+<meta name="twitter:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png">
 
 
 <link rel="canonical" href="https://davyjones2010.github.io/2024-12-05-k8s-cpu-manager-deep-dive/">
@@ -275,7 +275,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 21:43:33" itemprop="dateModified" datetime="2026-03-05T21:43:33+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 21:47:51" itemprop="dateModified" datetime="2026-03-05T21:47:51+08:00">2026-03-05</time>
     </span>
 
   
@@ -309,7 +309,7 @@
 <p>–system-reserved</p>
 <p>–system-reserved-cgroup</p>
 <p>–reserved-cpus —&gt; 这种cgroups是谁来创建 并把kubelet放入到这个cgroups里的? </p>
-<h2 id="资源逻辑"><a href="#资源逻辑" class="headerlink" title="资源逻辑"></a>资源逻辑</h2><p><img data-src="/k8s-cpu-manager-deep-dive/Untitled.png" alt="Untitled"></p>
+<h2 id="资源逻辑"><a href="#资源逻辑" class="headerlink" title="资源逻辑"></a>资源逻辑</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png" alt="Untitled"></p>
 <ul>
 <li>这也就解释了为啥一旦开启 static 策略, 要求必须要有 kube-reserved&#x2F;system-reserved 设定. 因为假设没有设置, 那么allocatable的就是整台物理机, 也就是存在GU Pod把CPU全给绑定完导致CPU耗尽,</li>
 <li>一是导致系统组件等没有CPU可以使用; —&gt; 勘误, 此处实际系统组件是可以使用allocatable的cpu的.</li>
@@ -406,7 +406,7 @@ Allocatable:
 </ul>
 </li>
 </ul>
-<h1 id="整体梳理"><a href="#整体梳理" class="headerlink" title="整体梳理"></a>整体梳理</h1><p><img data-src="/k8s-cpu-manager-deep-dive/Untitled%201.png" alt="Untitled"></p>
+<h1 id="整体梳理"><a href="#整体梳理" class="headerlink" title="整体梳理"></a>整体梳理</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-1.png" alt="Untitled"></p>
 <blockquote>
 <p>pkg&#x2F;kubelet&#x2F;cm&#x2F;cpumanager&#x2F;cpu_assignment.go:186 takeByTopology</p>
 </blockquote>
@@ -424,12 +424,12 @@ Allocatable:
 <li>10vcpu请求: 先走第一步, 独占socket0, 满足8vcpu需求; 其次使用第二步, 独占socket1上的一个物理core;</li>
 </ol>
 <h2 id="case分析"><a href="#case分析" class="headerlink" title="case分析"></a>case分析</h2><h3 id="case1"><a href="#case1" class="headerlink" title="case1:"></a>case1:</h3><p>如下拓扑结构, 请求了 4C 的GU Pod, (没有配置bindToNuma, 没有配置FullPCPUsOnlyOption) 那么会如何分配&amp;绑核? </p>
-<p><img data-src="/k8s-cpu-manager-deep-dive/Untitled%202.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-2.png" alt="Untitled"></p>
 <ul>
 <li>可能性1: [1,3,7,9]</li>
 <li>可能性2: [1,4,7,10] ✅</li>
 </ul>
-<p><img data-src="/k8s-cpu-manager-deep-dive/Untitled%203.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-3.png" alt="Untitled"></p>
 <p>为啥会这样? 本质还是看代码的实现: </p>
 <blockquote>
 <p>pkg&#x2F;kubelet&#x2F;cm&#x2F;cpumanager&#x2F;cpu_assignment.go:186 takeByTopology</p>
@@ -448,18 +448,18 @@ Allocatable:
 </ol>
 <p>这个分配方式是有优化空间的, </p>
 <h3 id="case2"><a href="#case2" class="headerlink" title="case2:"></a>case2:</h3><p>如下拓扑结构, 请求了 4C 的GU Pod, (没有配置bindToNuma, 没有配置FullPCPUsOnlyOption) 那么会如何分配&amp;绑核? </p>
-<p><img data-src="/k8s-cpu-manager-deep-dive/Untitled%204.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-4.png" alt="Untitled"></p>
 <ol>
 <li>可能性1: [2,4,8,10]</li>
 <li>可能性2: [2,5,8,11] ✅</li>
 </ol>
 <p>按照case1的逻辑来推演下即可. —&gt; 按照Socket剩余的free的vcpu来选择socket</p>
 <h3 id="case3"><a href="#case3" class="headerlink" title="case3"></a>case3</h3><p>如下拓扑结构, 请求了 4C 的GU Pod, (没有配置bindToNuma, 没有配置FullPCPUsOnlyOption) 那么会如何分配&amp;绑核? </p>
-<p><img data-src="/k8s-cpu-manager-deep-dive/Untitled%205.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-5.png" alt="Untitled"></p>
 <ul>
 <li>很容易得出结论: [3,5,9,11]</li>
 </ul>
-<h3 id="case4"><a href="#case4" class="headerlink" title="case4"></a>case4</h3><p><img data-src="/k8s-cpu-manager-deep-dive/Untitled%206.png" alt="Untitled"></p>
+<h3 id="case4"><a href="#case4" class="headerlink" title="case4"></a>case4</h3><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-6.png" alt="Untitled"></p>
 <ul>
 <li>结论: [2,4,8,10] ✅</li>
 </ul>
@@ -468,7 +468,7 @@ Allocatable:
 </ul>
 <h2 id="case分析-full-pcpus-only"><a href="#case分析-full-pcpus-only" class="headerlink" title="case分析: full-pcpus-only"></a>case分析: full-pcpus-only</h2><p>1.22版本: 为啥感觉 full-pcpus-only 实现有点儿问题呢? 即使 full-pcpus-only&#x3D;true, 也有可能跨pcpu</p>
 <p>1.29版本: </p>
-<h2 id="case分析-distribute-cpus-across-numa"><a href="#case分析-distribute-cpus-across-numa" class="headerlink" title="case分析: distribute-cpus-across-numa"></a>case分析: distribute-cpus-across-numa</h2><p><img data-src="/k8s-cpu-manager-deep-dive/Untitled%207.png" alt="Untitled"></p>
+<h2 id="case分析-distribute-cpus-across-numa"><a href="#case分析-distribute-cpus-across-numa" class="headerlink" title="case分析: distribute-cpus-across-numa"></a>case分析: distribute-cpus-across-numa</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-7.png" alt="Untitled"></p>
 <p>逻辑概览: </p>
 <ol>
 <li>如果请求能被单个numa满足, 则在单个numa里堆叠分配; </li>
@@ -493,7 +493,7 @@ Allocatable:
 </ol>
 <h2 id="case分析-align-by-socket"><a href="#case分析-align-by-socket" class="headerlink" title="case分析: align-by-socket"></a>case分析: align-by-socket</h2><p>AlignBySocket —&gt; 即socket聚合</p>
 <p>AlignBySocket 选项 与 TopologyManager的 PolicySingleNumaNode 是不兼容的. —&gt; 为啥不兼容? </p>
-<p><img data-src="/k8s-cpu-manager-deep-dive/Untitled%208.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-8.png" alt="Untitled"></p>
 <p>术语一直不统一, 但至少在cpumanager里</p>
 <ul>
 <li>core: 代表pcpu</li>
