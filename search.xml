@@ -33,71 +33,6 @@
       </tags>
   </entry>
   <entry>
-    <title>k8s基础架构笔记</title>
-    <url>//2021-08-31-k8s-architect/</url>
-    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
-<li>APIServer<ul>
-<li>认证</li>
-<li>鉴权</li>
-<li>准入控制<ul>
-<li>Quota</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Scheduler</li>
-<li>Kubelet</li>
-<li>Etcd</li>
-<li>Kube-Controller Manager包括<ul>
-<li>ReplicaSet Controller</li>
-<li>CDR的Controller</li>
-<li>AdmissionController </li>
-<li>等</li>
-</ul>
-</li>
-</ul>
-<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
-<li>Cluster-scoped resources<ul>
-<li>如node</li>
-</ul>
-</li>
-<li>Namespace-scoped resources<ul>
-<li>如pod</li>
-</ul>
-</li>
-</ul>
-<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
-<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
-<li>workloads</li>
-</ul>
-<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
-<li>Node</li>
-<li>Pod</li>
-</ul>
-<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
-<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
-<li>Deployment: 后端用ESS, 区别是什么? </li>
-<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
-<li>StatefulSets: </li>
-<li>Job&amp;CronJob:</li>
-</ul>
-<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
-<li>Operator &#x3D; 资源(CRD) + Controller</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>CDR</li>
-<li>OAM</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>k8s-architect</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>golang入门笔记之基础语法</title>
     <url>//2021-08-31-golang-basic/</url>
     <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>局部变量单纯地给 a 赋值也是不够的，这个值必须被使用, 否则会编译错误<br>全局变量是允许声明但不使用</p>
@@ -169,6 +104,71 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       <tags>
         <tag>golang</tag>
         <tag>golang-lib</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记</title>
+    <url>//2021-08-31-k8s-architect/</url>
+    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
+<li>APIServer<ul>
+<li>认证</li>
+<li>鉴权</li>
+<li>准入控制<ul>
+<li>Quota</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scheduler</li>
+<li>Kubelet</li>
+<li>Etcd</li>
+<li>Kube-Controller Manager包括<ul>
+<li>ReplicaSet Controller</li>
+<li>CDR的Controller</li>
+<li>AdmissionController </li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
+<li>Cluster-scoped resources<ul>
+<li>如node</li>
+</ul>
+</li>
+<li>Namespace-scoped resources<ul>
+<li>如pod</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
+<li>workloads</li>
+</ul>
+<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
+<li>Node</li>
+<li>Pod</li>
+</ul>
+<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
+<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
+<li>Deployment: 后端用ESS, 区别是什么? </li>
+<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
+<li>StatefulSets: </li>
+<li>Job&amp;CronJob:</li>
+</ul>
+<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
+<li>Operator &#x3D; 资源(CRD) + Controller</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>CDR</li>
+<li>OAM</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -2826,61 +2826,6 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
       </tags>
   </entry>
   <entry>
-    <title>记一次Java Lambda转List为Map时 Duplicate key异常</title>
-    <url>//2021-11-15-java-lambda-list-to-map/</url>
-    <content><![CDATA[<h1 id="错误堆栈"><a href="#错误堆栈" class="headerlink" title="错误堆栈"></a>错误堆栈</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>IllegalStateException</span><span class="token operator">:</span> <span class="token class-name">Duplicate</span> key <span class="token number">21</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>Collectors</span><span class="token punctuation">.</span>lambda$throwingMerger$<span class="token function">0</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">133</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>HashMap</span><span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span><span class="token class-name">HashMap</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1254</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>Collectors</span><span class="token punctuation">.</span>lambda$toMap$<span class="token function">58</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1320</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>ReduceOps</span>$<span class="token number">3</span>ReducingSink<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token class-name">ReduceOps</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">169</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>ArrayList</span>$<span class="token class-name">ArrayListSpliterator</span><span class="token punctuation">.</span><span class="token function">forEachRemaining</span><span class="token punctuation">(</span><span class="token class-name">ArrayList</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1382</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>AbstractPipeline</span><span class="token punctuation">.</span><span class="token function">copyInto</span><span class="token punctuation">(</span><span class="token class-name">AbstractPipeline</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">481</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>AbstractPipeline</span><span class="token punctuation">.</span><span class="token function">wrapAndCopyInto</span><span class="token punctuation">(</span><span class="token class-name">AbstractPipeline</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">471</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>ReduceOps</span>$<span class="token class-name">ReduceOp</span><span class="token punctuation">.</span><span class="token function">evaluateSequential</span><span class="token punctuation">(</span><span class="token class-name">ReduceOps</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">708</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>AbstractPipeline</span><span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token class-name">AbstractPipeline</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">234</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>ReferencePipeline</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">ReferencePipeline</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">499</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>cjf<span class="token punctuation">.</span>java<span class="token punctuation">.</span>learn<span class="token punctuation">.</span>jdk8<span class="token punctuation">.</span></span>StreamTest</span><span class="token punctuation">.</span><span class="token function">testStreamMap_duplicateKey</span><span class="token punctuation">(</span><span class="token class-name">StreamTest</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">90</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke0</span><span class="token punctuation">(</span><span class="token class-name">Native</span> <span class="token class-name">Method</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">NativeMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">62</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">43</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>Method</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Method</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">498</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>FrameworkMethod</span>$<span class="token number">1.</span><span class="token function">runReflectiveCall</span><span class="token punctuation">(</span><span class="token class-name">FrameworkMethod</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">50</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>runners<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>ReflectiveCallable</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ReflectiveCallable</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">12</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>FrameworkMethod</span><span class="token punctuation">.</span><span class="token function">invokeExplosively</span><span class="token punctuation">(</span><span class="token class-name">FrameworkMethod</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">47</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>runners<span class="token punctuation">.</span>statements<span class="token punctuation">.</span></span>InvokeMethod</span><span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token class-name">InvokeMethod</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">17</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span><span class="token punctuation">.</span><span class="token function">runLeaf</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">325</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>BlockJUnit4ClassRunner</span><span class="token punctuation">.</span><span class="token function">runChild</span><span class="token punctuation">(</span><span class="token class-name">BlockJUnit4ClassRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">78</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>BlockJUnit4ClassRunner</span><span class="token punctuation">.</span><span class="token function">runChild</span><span class="token punctuation">(</span><span class="token class-name">BlockJUnit4ClassRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">57</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span>$<span class="token number">3.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">290</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span>$<span class="token number">1.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">71</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span><span class="token punctuation">.</span><span class="token function">runChildren</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">288</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span><span class="token punctuation">.</span>access$<span class="token function">000</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">58</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span>$<span class="token number">2.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">268</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">363</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runner<span class="token punctuation">.</span></span>JUnitCore</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">JUnitCore</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">137</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>intellij<span class="token punctuation">.</span>junit4<span class="token punctuation">.</span></span>JUnit4IdeaTestRunner</span><span class="token punctuation">.</span><span class="token function">startRunnerWithArgs</span><span class="token punctuation">(</span><span class="token class-name">JUnit4IdeaTestRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">68</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>intellij<span class="token punctuation">.</span>rt<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span>IdeaTestRunner</span>$<span class="token class-name">Repeater</span><span class="token punctuation">.</span><span class="token function">startRunnerWithArgs</span><span class="token punctuation">(</span><span class="token class-name">IdeaTestRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">33</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>intellij<span class="token punctuation">.</span>rt<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span>JUnitStarter</span><span class="token punctuation">.</span><span class="token function">prepareStreamsAndStart</span><span class="token punctuation">(</span><span class="token class-name">JUnitStarter</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">230</span><span class="token punctuation">)</span>
-	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>intellij<span class="token punctuation">.</span>rt<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span>JUnitStarter</span><span class="token punctuation">.</span><span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">JUnitStarter</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">58</span><span class="token punctuation">)</span>
-<span class="token class-name">Process</span> finished <span class="token keyword">with</span> <span class="token namespace">exit</span> code <span class="token number">255</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="错误代码"><a href="#错误代码" class="headerlink" title="错误代码"></a>错误代码</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Instance</span><span class="token punctuation">></span></span> instanceMap <span class="token operator">=</span> instances<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span><span class="token class-name">Instance</span><span class="token operator">::</span><span class="token function">getInstanceId</span><span class="token punctuation">,</span> e <span class="token operator">-></span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="FIX"><a href="#FIX" class="headerlink" title="FIX"></a>FIX</h1><p>需要增加mergeFunction()处理方法, 即 Collectors.toMap()中第三个参数.</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Instance</span><span class="token punctuation">></span></span> instanceMap <span class="token operator">=</span> instances<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span><span class="token class-name">Instance</span><span class="token operator">::</span><span class="token function">getInstanceId</span><span class="token punctuation">,</span> e <span class="token operator">-></span> e<span class="token punctuation">,</span> <span class="token punctuation">(</span>k1<span class="token punctuation">,</span> k2<span class="token punctuation">)</span> <span class="token operator">-></span> k2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a href="https://blog.csdn.net/blueheart20/article/details/106326548/">https://blog.csdn.net/blueheart20/article/details/106326548/</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>java</tag>
-        <tag>lambda</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记一次mysql unique index未生效原因排查</title>
     <url>//2021-11-08-mysql-unique-index-not-working/</url>
     <content><![CDATA[<h1 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h1><p>如下SQL: serial_number默认可空, 且为unique key的一部分:</p>
@@ -2996,6 +2941,61 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
         <tag>2021</tag>
         <tag>GFS</tag>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次Java Lambda转List为Map时 Duplicate key异常</title>
+    <url>//2021-11-15-java-lambda-list-to-map/</url>
+    <content><![CDATA[<h1 id="错误堆栈"><a href="#错误堆栈" class="headerlink" title="错误堆栈"></a>错误堆栈</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>IllegalStateException</span><span class="token operator">:</span> <span class="token class-name">Duplicate</span> key <span class="token number">21</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>Collectors</span><span class="token punctuation">.</span>lambda$throwingMerger$<span class="token function">0</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">133</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>HashMap</span><span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span><span class="token class-name">HashMap</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1254</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>Collectors</span><span class="token punctuation">.</span>lambda$toMap$<span class="token function">58</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1320</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>ReduceOps</span>$<span class="token number">3</span>ReducingSink<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token class-name">ReduceOps</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">169</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>ArrayList</span>$<span class="token class-name">ArrayListSpliterator</span><span class="token punctuation">.</span><span class="token function">forEachRemaining</span><span class="token punctuation">(</span><span class="token class-name">ArrayList</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">1382</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>AbstractPipeline</span><span class="token punctuation">.</span><span class="token function">copyInto</span><span class="token punctuation">(</span><span class="token class-name">AbstractPipeline</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">481</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>AbstractPipeline</span><span class="token punctuation">.</span><span class="token function">wrapAndCopyInto</span><span class="token punctuation">(</span><span class="token class-name">AbstractPipeline</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">471</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>ReduceOps</span>$<span class="token class-name">ReduceOp</span><span class="token punctuation">.</span><span class="token function">evaluateSequential</span><span class="token punctuation">(</span><span class="token class-name">ReduceOps</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">708</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>AbstractPipeline</span><span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token class-name">AbstractPipeline</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">234</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span>ReferencePipeline</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">ReferencePipeline</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">499</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>cjf<span class="token punctuation">.</span>java<span class="token punctuation">.</span>learn<span class="token punctuation">.</span>jdk8<span class="token punctuation">.</span></span>StreamTest</span><span class="token punctuation">.</span><span class="token function">testStreamMap_duplicateKey</span><span class="token punctuation">(</span><span class="token class-name">StreamTest</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">90</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke0</span><span class="token punctuation">(</span><span class="token class-name">Native</span> <span class="token class-name">Method</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>NativeMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">NativeMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">62</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">DelegatingMethodAccessorImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">43</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>Method</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Method</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">498</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>FrameworkMethod</span>$<span class="token number">1.</span><span class="token function">runReflectiveCall</span><span class="token punctuation">(</span><span class="token class-name">FrameworkMethod</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">50</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>runners<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>ReflectiveCallable</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ReflectiveCallable</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">12</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>FrameworkMethod</span><span class="token punctuation">.</span><span class="token function">invokeExplosively</span><span class="token punctuation">(</span><span class="token class-name">FrameworkMethod</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">47</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>runners<span class="token punctuation">.</span>statements<span class="token punctuation">.</span></span>InvokeMethod</span><span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token class-name">InvokeMethod</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">17</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span><span class="token punctuation">.</span><span class="token function">runLeaf</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">325</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>BlockJUnit4ClassRunner</span><span class="token punctuation">.</span><span class="token function">runChild</span><span class="token punctuation">(</span><span class="token class-name">BlockJUnit4ClassRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">78</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>BlockJUnit4ClassRunner</span><span class="token punctuation">.</span><span class="token function">runChild</span><span class="token punctuation">(</span><span class="token class-name">BlockJUnit4ClassRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">57</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span>$<span class="token number">3.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">290</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span>$<span class="token number">1.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">71</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span><span class="token punctuation">.</span><span class="token function">runChildren</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">288</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span><span class="token punctuation">.</span>access$<span class="token function">000</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">58</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span>$<span class="token number">2.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">268</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runners<span class="token punctuation">.</span></span>ParentRunner</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ParentRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">363</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runner<span class="token punctuation">.</span></span>JUnitCore</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">JUnitCore</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">137</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>intellij<span class="token punctuation">.</span>junit4<span class="token punctuation">.</span></span>JUnit4IdeaTestRunner</span><span class="token punctuation">.</span><span class="token function">startRunnerWithArgs</span><span class="token punctuation">(</span><span class="token class-name">JUnit4IdeaTestRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">68</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>intellij<span class="token punctuation">.</span>rt<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span>IdeaTestRunner</span>$<span class="token class-name">Repeater</span><span class="token punctuation">.</span><span class="token function">startRunnerWithArgs</span><span class="token punctuation">(</span><span class="token class-name">IdeaTestRunner</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">33</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>intellij<span class="token punctuation">.</span>rt<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span>JUnitStarter</span><span class="token punctuation">.</span><span class="token function">prepareStreamsAndStart</span><span class="token punctuation">(</span><span class="token class-name">JUnitStarter</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">230</span><span class="token punctuation">)</span>
+	at <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>intellij<span class="token punctuation">.</span>rt<span class="token punctuation">.</span>junit<span class="token punctuation">.</span></span>JUnitStarter</span><span class="token punctuation">.</span><span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">JUnitStarter</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">58</span><span class="token punctuation">)</span>
+<span class="token class-name">Process</span> finished <span class="token keyword">with</span> <span class="token namespace">exit</span> code <span class="token number">255</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="错误代码"><a href="#错误代码" class="headerlink" title="错误代码"></a>错误代码</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Instance</span><span class="token punctuation">></span></span> instanceMap <span class="token operator">=</span> instances<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span><span class="token class-name">Instance</span><span class="token operator">::</span><span class="token function">getInstanceId</span><span class="token punctuation">,</span> e <span class="token operator">-></span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="FIX"><a href="#FIX" class="headerlink" title="FIX"></a>FIX</h1><p>需要增加mergeFunction()处理方法, 即 Collectors.toMap()中第三个参数.</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Instance</span><span class="token punctuation">></span></span> instanceMap <span class="token operator">=</span> instances<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span><span class="token class-name">Instance</span><span class="token operator">::</span><span class="token function">getInstanceId</span><span class="token punctuation">,</span> e <span class="token operator">-></span> e<span class="token punctuation">,</span> <span class="token punctuation">(</span>k1<span class="token punctuation">,</span> k2<span class="token punctuation">)</span> <span class="token operator">-></span> k2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a href="https://blog.csdn.net/blueheart20/article/details/106326548/">https://blog.csdn.net/blueheart20/article/details/106326548/</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>java</tag>
+        <tag>lambda</tag>
       </tags>
   </entry>
   <entry>
@@ -4185,6 +4185,111 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       </tags>
   </entry>
   <entry>
+    <title>2022 年度书单</title>
+    <url>//2021-12-31-booklist-for-2022/</url>
+    <content><![CDATA[<h1 id="BookList"><a href="#BookList" class="headerlink" title="BookList"></a>BookList</h1><hr>
+<h2 id="必读"><a href="#必读" class="headerlink" title="必读"></a>必读</h2><ul>
+<li><a href="https://book.douban.com/subject/25897245/">Netty权威指南</a> -20220315 done</li>
+<li><a href="https://book.douban.com/subject/30244461/">规模：复杂世界的简单法则</a> -20220724 done</li>
+<li>Google 4篇论文复习 GFS MapReduce BigTable Dapper</li>
+<li><a href="https://book.douban.com/subject/26643785/">深度探索嵌入式操作系统：从零开始设计、架构和开发</a></li>
+<li><a href="https://book.douban.com/subject/10750155/">数学之美</a> -done</li>
+<li><a href="https://book.douban.com/subject/33429491/">昆仑</a> -20221228 done</li>
+<li><a href="https://edu.51cto.com/center/course/lesson/index?id=118666">开源虚拟化KVM入门（KVM架构+KVM基本管理）视频课程</a></li>
+<li><a href="https://book.douban.com/subject/25985021/">人类简史</a> -20220215 done</li>
+<li><a href="https://book.douban.com/subject/3998926/">系统分析师考试全程指导</a></li>
+<li><a href="https://baike.baidu.com/item/%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%E5%B8%88%E6%95%99%E7%A8%8B/8182174">系统分析师教程</a></li>
+<li><a href="https://book.douban.com/subject/3229243/">Linux内核完全剖析</a></li>
+<li><a href="https://abseil.io/resources/swe_at_google.2.pdf">Software Engineering at Google</a></li>
+<li><a href="https://yeasy.gitbook.io/docker_practice/underly/arch">Docker从入门到实践</a> -20220328 done</li>
+<li><a href="http://product.dangdang.com/25336322.html">深度思考： 不断逼近问题的本质</a> -20220504 done</li>
+<li><a href="https://book.douban.com/subject/26943161/">未来简史</a></li>
+<li><a href="https://book.douban.com/subject/30259720/">今日简史</a> -20230131 done</li>
+<li><a href="https://book.douban.com/subject/3596861/">从产品到服务:企业向服务经济转型指南</a></li>
+<li><a href="https://book.douban.com/subject/35424872/">深入剖析Kubernetes</a> -20220612 done</li>
+<li><a href="https://book.douban.com/subject/30348776/">筚路蓝缕-世纪工程决策建设记述</a> -20220820 done</li>
+<li><a href="https://book.douban.com/subject/1062991/">北京法源寺</a> -20220717 done</li>
+<li><a href="https://book.douban.com/subject/1322455/">遥远的救世主</a> -20220725 done</li>
+<li><a href="https://book.douban.com/subject/1322455/">天幕红尘</a> -20220806 done</li>
+<li><a href="https://book.douban.com/subject/30155731/">算法之美</a> -20221206 done</li>
+<li><a href="https://book.douban.com/subject/11530329/">30天自制操作系统</a></li>
+<li><a href="https://book.douban.com/subject/27091064/">云原生应用架构实践——从单体到服务化架构演进</a></li>
+<li><a href="https://book.douban.com/subject/27032786/">天局</a> -20220818 done</li>
+<li><a href="https://book.douban.com/subject/1578545/">背叛</a> -20220821 done</li>
+<li><a href="https://book.douban.com/subject/20257955/">丰乳肥臀</a> -20220909 done</li>
+<li><a href="https://book.douban.com/subject/26745030/">陌生女人的来信</a> -20221022 done </li>
+<li><a href="https://book.douban.com/subject/26641288/">1984</a> -20221023 done </li>
+<li><a href="https://book.douban.com/subject/35100567/">乞力马扎罗的雪</a> -20221024 done </li>
+<li><a href="https://book.douban.com/subject/35026475/">山月记</a> </li>
+<li><a href="https://book.douban.com/subject/35669245/">乾隆: 政治, 爱情与性格</a> -20221029 done</li>
+<li><a href="https://book.douban.com/subject/26768309/">查令十字街84号</a> -20221031 done</li>
+<li><a href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a> -20221111 done</li>
+<li><a href="https://book.douban.com/subject/35731316/">文件系统技术内幕</a> <a href="https://www.bilibili.com/video/av889477532/">B站视频</a></li>
+</ul>
+<h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
+<li><a href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
+</ul>
+<h1 id="ReadList"><a href="#ReadList" class="headerlink" title="ReadList"></a>ReadList</h1><hr>
+<ul>
+<li><a href="https://cloud.tencent.com/developer/article/1587433">有赞 Bond 分布式锁</a></li>
+<li><a href="https://www.cl.cam.ac.uk/research/srg/netos/camsas/blog/2016-03-09-scheduler-architectures.html">scheduler-architectures</a></li>
+<li><a href="https://blog.paessler.com/disabling-icmp-and-snmp-wont-increase-security-but-will-impact-network-monitoring">ICMP</a></li>
+<li><a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的Thread Monitor方案</a></li>
+<li><a href="https://www.infoq.cn/article/xkJNoczVDHARLkKjvDOm">深度揭秘阿里云 Serverless Kubernetes</a></li>
+<li><a href="https://manybutfinite.com/post/what-does-an-idle-cpu-do/">site for curious people</a></li>
+<li><a href="https://plantegg.github.io/2021/07/19/CPU%E6%80%A7%E8%83%BD%E5%92%8CCACHE/">CPU性能和CACHE</a></li>
+<li><a href="https://www.realworldtech.com/transistor-count-flawed-metric/">Transistor Count: A Flawed Metric</a></li>
+</ul>
+<h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1><hr>
+<ul>
+<li><a href="https://movie.douban.com/subject/35207856/">人世间</a></li>
+<li><a href="https://movie.douban.com/subject/26766214/">风起陇西</a></li>
+<li><a href="https://movie.douban.com/subject/26889177/">异物志</a></li>
+<li><a href="https://movie.douban.com/subject/2210001/">大明王朝: 1566</a></li>
+<li>Yes, Minister</li>
+<li>Yes, Prime Minister</li>
+<li><a href="https://movie.douban.com/subject/30314848/">瞬息全宇宙</a></li>
+<li><a href="https://movie.douban.com/subject/35436582/?ivk_sa=1024320u">爱，死亡和机器人 第三季</a></li>
+<li><a href="https://movie.douban.com/subject/26564735/">武庚纪</a></li>
+<li><a href="https://movie.douban.com/subject/35231822/">梦华录</a></li>
+<li><a href="https://book.douban.com/subject/35494904/">山海情</a></li>
+<li><a href="https://book.douban.com/subject/34864748/">平凡岁月</a></li>
+<li><a href="https://movie.douban.com/subject/2347485/">天道</a></li>
+<li><a href="https://movie.douban.com/subject/35118256/">赛博朋克：边缘行者</a></li>
+<li><a href="https://movie.douban.com/subject/1424406/">星际牛仔</a></li>
+<li><a href="https://movie.douban.com/subject/30198955/">边缘世界</a></li>
+<li><a href="https://movie.douban.com/subject/30285826/">风骚律师-第五季</a></li>
+<li><a href="https://movie.douban.com/subject/10748120/">真探-第一季</a></li>
+<li><a href="https://movie.douban.com/subject/26637615/">猎魔人-第一季、第二季</a></li>
+<li><a href="https://movie.douban.com/subject/35314632/?_dtcc=1">黑暗荣耀</a></li>
+<li><a href="https://movie.douban.com/subject/35300122/">弥留之国的爱丽丝第二季</a></li>
+<li><a href="https://movie.douban.com/subject/35725021/">一人之下第五季</a></li>
+</ul>
+<h1 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h1><hr>
+<ul>
+<li><a href="https://zh.wikipedia.org/zh-sg/%E7%91%AA%E5%88%A9%E6%AD%90%E8%88%87%E8%B7%AF%E6%98%93%E5%90%89RPG4_%E5%A4%A2%E5%A2%83%E5%86%92%E9%9A%AA">马力欧与路易吉RPG4 梦境冒险</a></li>
+<li><a href="https://www.douban.com/game/25890885/">逆转裁判123</a></li>
+<li><a href="https://www.douban.com/game/26382626/">火影忍者：究极忍者风暴4</a></li>
+<li><a href="https://www.douban.com/game/25931998/">赛博朋克2077</a></li>
+<li><a href="https://www.douban.com/game/27185974/">对马岛之魂</a></li>
+<li><a href="https://www.douban.com/game/10744839/">暴雨</a></li>
+</ul>
+<h1 id="Certificates"><a href="#Certificates" class="headerlink" title="Certificates"></a>Certificates</h1><hr>
+<ul>
+<li><a href="https://ke.qq.com/webcourse/index.html#cid=3200525&term_id=103327984&taid=10932152060401165&vid=5285890803968219215">CCNA</a></li>
+<li>CKA</li>
+<li>IELTS</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>books</tag>
+        <tag>2022</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2021 年度总结</title>
     <url>//2021-12-31-summary-for-2021/</url>
     <content><![CDATA[<p>2021年马上就要过去了, 是时候回顾一年的得失, 展望下未来了:</p>
@@ -4294,111 +4399,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       <tags>
         <tag>2021</tag>
         <tag>annual-review</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2022 年度书单</title>
-    <url>//2021-12-31-booklist-for-2022/</url>
-    <content><![CDATA[<h1 id="BookList"><a href="#BookList" class="headerlink" title="BookList"></a>BookList</h1><hr>
-<h2 id="必读"><a href="#必读" class="headerlink" title="必读"></a>必读</h2><ul>
-<li><a href="https://book.douban.com/subject/25897245/">Netty权威指南</a> -20220315 done</li>
-<li><a href="https://book.douban.com/subject/30244461/">规模：复杂世界的简单法则</a> -20220724 done</li>
-<li>Google 4篇论文复习 GFS MapReduce BigTable Dapper</li>
-<li><a href="https://book.douban.com/subject/26643785/">深度探索嵌入式操作系统：从零开始设计、架构和开发</a></li>
-<li><a href="https://book.douban.com/subject/10750155/">数学之美</a> -done</li>
-<li><a href="https://book.douban.com/subject/33429491/">昆仑</a> -20221228 done</li>
-<li><a href="https://edu.51cto.com/center/course/lesson/index?id=118666">开源虚拟化KVM入门（KVM架构+KVM基本管理）视频课程</a></li>
-<li><a href="https://book.douban.com/subject/25985021/">人类简史</a> -20220215 done</li>
-<li><a href="https://book.douban.com/subject/3998926/">系统分析师考试全程指导</a></li>
-<li><a href="https://baike.baidu.com/item/%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%E5%B8%88%E6%95%99%E7%A8%8B/8182174">系统分析师教程</a></li>
-<li><a href="https://book.douban.com/subject/3229243/">Linux内核完全剖析</a></li>
-<li><a href="https://abseil.io/resources/swe_at_google.2.pdf">Software Engineering at Google</a></li>
-<li><a href="https://yeasy.gitbook.io/docker_practice/underly/arch">Docker从入门到实践</a> -20220328 done</li>
-<li><a href="http://product.dangdang.com/25336322.html">深度思考： 不断逼近问题的本质</a> -20220504 done</li>
-<li><a href="https://book.douban.com/subject/26943161/">未来简史</a></li>
-<li><a href="https://book.douban.com/subject/30259720/">今日简史</a> -20230131 done</li>
-<li><a href="https://book.douban.com/subject/3596861/">从产品到服务:企业向服务经济转型指南</a></li>
-<li><a href="https://book.douban.com/subject/35424872/">深入剖析Kubernetes</a> -20220612 done</li>
-<li><a href="https://book.douban.com/subject/30348776/">筚路蓝缕-世纪工程决策建设记述</a> -20220820 done</li>
-<li><a href="https://book.douban.com/subject/1062991/">北京法源寺</a> -20220717 done</li>
-<li><a href="https://book.douban.com/subject/1322455/">遥远的救世主</a> -20220725 done</li>
-<li><a href="https://book.douban.com/subject/1322455/">天幕红尘</a> -20220806 done</li>
-<li><a href="https://book.douban.com/subject/30155731/">算法之美</a> -20221206 done</li>
-<li><a href="https://book.douban.com/subject/11530329/">30天自制操作系统</a></li>
-<li><a href="https://book.douban.com/subject/27091064/">云原生应用架构实践——从单体到服务化架构演进</a></li>
-<li><a href="https://book.douban.com/subject/27032786/">天局</a> -20220818 done</li>
-<li><a href="https://book.douban.com/subject/1578545/">背叛</a> -20220821 done</li>
-<li><a href="https://book.douban.com/subject/20257955/">丰乳肥臀</a> -20220909 done</li>
-<li><a href="https://book.douban.com/subject/26745030/">陌生女人的来信</a> -20221022 done </li>
-<li><a href="https://book.douban.com/subject/26641288/">1984</a> -20221023 done </li>
-<li><a href="https://book.douban.com/subject/35100567/">乞力马扎罗的雪</a> -20221024 done </li>
-<li><a href="https://book.douban.com/subject/35026475/">山月记</a> </li>
-<li><a href="https://book.douban.com/subject/35669245/">乾隆: 政治, 爱情与性格</a> -20221029 done</li>
-<li><a href="https://book.douban.com/subject/26768309/">查令十字街84号</a> -20221031 done</li>
-<li><a href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a> -20221111 done</li>
-<li><a href="https://book.douban.com/subject/35731316/">文件系统技术内幕</a> <a href="https://www.bilibili.com/video/av889477532/">B站视频</a></li>
-</ul>
-<h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
-<li><a href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
-</ul>
-<h1 id="ReadList"><a href="#ReadList" class="headerlink" title="ReadList"></a>ReadList</h1><hr>
-<ul>
-<li><a href="https://cloud.tencent.com/developer/article/1587433">有赞 Bond 分布式锁</a></li>
-<li><a href="https://www.cl.cam.ac.uk/research/srg/netos/camsas/blog/2016-03-09-scheduler-architectures.html">scheduler-architectures</a></li>
-<li><a href="https://blog.paessler.com/disabling-icmp-and-snmp-wont-increase-security-but-will-impact-network-monitoring">ICMP</a></li>
-<li><a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的Thread Monitor方案</a></li>
-<li><a href="https://www.infoq.cn/article/xkJNoczVDHARLkKjvDOm">深度揭秘阿里云 Serverless Kubernetes</a></li>
-<li><a href="https://manybutfinite.com/post/what-does-an-idle-cpu-do/">site for curious people</a></li>
-<li><a href="https://plantegg.github.io/2021/07/19/CPU%E6%80%A7%E8%83%BD%E5%92%8CCACHE/">CPU性能和CACHE</a></li>
-<li><a href="https://www.realworldtech.com/transistor-count-flawed-metric/">Transistor Count: A Flawed Metric</a></li>
-</ul>
-<h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1><hr>
-<ul>
-<li><a href="https://movie.douban.com/subject/35207856/">人世间</a></li>
-<li><a href="https://movie.douban.com/subject/26766214/">风起陇西</a></li>
-<li><a href="https://movie.douban.com/subject/26889177/">异物志</a></li>
-<li><a href="https://movie.douban.com/subject/2210001/">大明王朝: 1566</a></li>
-<li>Yes, Minister</li>
-<li>Yes, Prime Minister</li>
-<li><a href="https://movie.douban.com/subject/30314848/">瞬息全宇宙</a></li>
-<li><a href="https://movie.douban.com/subject/35436582/?ivk_sa=1024320u">爱，死亡和机器人 第三季</a></li>
-<li><a href="https://movie.douban.com/subject/26564735/">武庚纪</a></li>
-<li><a href="https://movie.douban.com/subject/35231822/">梦华录</a></li>
-<li><a href="https://book.douban.com/subject/35494904/">山海情</a></li>
-<li><a href="https://book.douban.com/subject/34864748/">平凡岁月</a></li>
-<li><a href="https://movie.douban.com/subject/2347485/">天道</a></li>
-<li><a href="https://movie.douban.com/subject/35118256/">赛博朋克：边缘行者</a></li>
-<li><a href="https://movie.douban.com/subject/1424406/">星际牛仔</a></li>
-<li><a href="https://movie.douban.com/subject/30198955/">边缘世界</a></li>
-<li><a href="https://movie.douban.com/subject/30285826/">风骚律师-第五季</a></li>
-<li><a href="https://movie.douban.com/subject/10748120/">真探-第一季</a></li>
-<li><a href="https://movie.douban.com/subject/26637615/">猎魔人-第一季、第二季</a></li>
-<li><a href="https://movie.douban.com/subject/35314632/?_dtcc=1">黑暗荣耀</a></li>
-<li><a href="https://movie.douban.com/subject/35300122/">弥留之国的爱丽丝第二季</a></li>
-<li><a href="https://movie.douban.com/subject/35725021/">一人之下第五季</a></li>
-</ul>
-<h1 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h1><hr>
-<ul>
-<li><a href="https://zh.wikipedia.org/zh-sg/%E7%91%AA%E5%88%A9%E6%AD%90%E8%88%87%E8%B7%AF%E6%98%93%E5%90%89RPG4_%E5%A4%A2%E5%A2%83%E5%86%92%E9%9A%AA">马力欧与路易吉RPG4 梦境冒险</a></li>
-<li><a href="https://www.douban.com/game/25890885/">逆转裁判123</a></li>
-<li><a href="https://www.douban.com/game/26382626/">火影忍者：究极忍者风暴4</a></li>
-<li><a href="https://www.douban.com/game/25931998/">赛博朋克2077</a></li>
-<li><a href="https://www.douban.com/game/27185974/">对马岛之魂</a></li>
-<li><a href="https://www.douban.com/game/10744839/">暴雨</a></li>
-</ul>
-<h1 id="Certificates"><a href="#Certificates" class="headerlink" title="Certificates"></a>Certificates</h1><hr>
-<ul>
-<li><a href="https://ke.qq.com/webcourse/index.html#cid=3200525&term_id=103327984&taid=10932152060401165&vid=5285890803968219215">CCNA</a></li>
-<li>CKA</li>
-<li>IELTS</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>life</category>
-      </categories>
-      <tags>
-        <tag>books</tag>
-        <tag>2022</tag>
       </tags>
   </entry>
   <entry>
@@ -5282,24 +5282,6 @@ pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="t
       </tags>
   </entry>
   <entry>
-    <title>一些有意思的记录-3</title>
-    <url>//2022-03-24-random-snippets/</url>
-    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
-<span class="token function">curl</span> cip.cc
-<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
-<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
-<ol>
-<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
-<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>net-tools</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker的一些总结</title>
     <url>//2022-03-18-docker-summary/</url>
     <content><![CDATA[<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
@@ -5674,56 +5656,21 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
-    <title>k8s statefulset的研究与实践</title>
-    <url>//2022-03-27-k8s-stateful-set/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
-<ul>
-<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
-<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
-<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
-</ul>
-<p>这样就保证了Pod销毁重建之后: </p>
-<ul>
-<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
-<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
-</ul>
-<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
-<ul>
-<li>为每个pod创建单独的pvc, 命名规则 ${PvcName}-${StatefulSetName}-${idx}, 并绑定单独的pv, 而不是像deployment为所有pod创建(一个?还是多个?pvc)并绑定同一份pv</li>
-<li>pod销毁重建之后, 由于hostname稳定, 所以还能关联到之前的pv</li>
-</ul>
-<h3 id="其他顺序化的部署特性"><a href="#其他顺序化的部署特性" class="headerlink" title="其他顺序化的部署特性:"></a>其他顺序化的部署特性:</h3><ul>
-<li>Ordered Pod Creation: Pod创建是有序的, 即pod-0先创建, 只有pod-0成功后, pod-1才会创建</li>
-<li>scale-down时, 会按照index倒序删除pod</li>
-<li>滚动升级(Rolling Update)时, 会按照index倒序删除&amp;重建pod</li>
-</ul>
-<h2 id="statefulset的设计原理模型"><a href="#statefulset的设计原理模型" class="headerlink" title="statefulset的设计原理模型"></a>statefulset的设计原理模型</h2><ul>
-<li>拓扑状态: 应用的多个实例之间不是完全对等的关系, 这个应用实例的启动必须按照某些顺序启动. 比如应用的主节点A要先于从节点B启动. 而如果你把A和B两个Pod删除掉, 他们再次被创建出来是也必须严格按照这个顺序才行. 并且, 新创建出来的Pod, 必须和原来的Pod的网络标识一样, 这样原先的访问者才能使用同样的方法, 访问到这个新的Pod.</li>
-<li>存储状态: 应用的多个实例分别绑定了不同的存储数据. 对于这些应用实例来说, Pod A第一次读取到的数据, 和隔了十分钟之后再次读取到的数据, 应该是同一份, 哪怕在此期间Pod A被重新创建过. 一个数据库应用的多个存储实例.</li>
-</ul>
-<h1 id="ZK-on-K8S"><a href="#ZK-on-K8S" class="headerlink" title="ZK on K8S"></a>ZK on K8S</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><p>为啥 <a href="https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/">zookeeper</a> 通过k8s的statefulset创建zk服务, 看yaml文件里,</p>
+    <title>一些有意思的记录-3</title>
+    <url>//2022-03-24-random-snippets/</url>
+    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
+<span class="token function">curl</span> cip.cc
+<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
+<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
 <ol>
-<li>没有创建myid文件</li>
-<li>没有在conf里配置 server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT 这种</li>
+<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
+<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
 </ol>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原因: 因为启动zk的脚本是start-zookeeper, 不是start.sh<br>所以是因为docker镜像里边对zk进行了封装, 对k8s环境变量进行了适配. 具体查看脚本:<br><a href="https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper">start-zookeeper</a></p>
-<h3 id="如何生成myid文件"><a href="#如何生成myid文件" class="headerlink" title="如何生成myid文件?"></a>如何生成myid文件?</h3><ul>
-<li>依赖statefulset的hostname全局有序且保持稳定的特性</li>
-<li>在pod内部执行”hostname”命令, 读取hostname, 参见上边hostname命名规则, 读取到${idx}值, myid&#x3D;${idx}+1</li>
-</ul>
-<h3 id="如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录"><a href="#如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录" class="headerlink" title="如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?"></a>如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?</h3><ul>
-<li>server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT</li>
-<li>$NAME: 从hostname读取到 ${StatefulSetName}</li>
-<li>$DOMAIN: 从 ‘hostname -d’ 命令中读取到domain信息</li>
-</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
       <tags>
-        <tag>kubernetes</tag>
-        <tag>stateful-set</tag>
+        <tag>net-tools</tag>
       </tags>
   </entry>
   <entry>
@@ -5846,6 +5793,59 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
         <tag>containers</tag>
         <tag>aliyun</tag>
         <tag>aws</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s statefulset的研究与实践</title>
+    <url>//2022-03-27-k8s-stateful-set/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
+<ul>
+<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
+<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
+<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
+</ul>
+<p>这样就保证了Pod销毁重建之后: </p>
+<ul>
+<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
+<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
+</ul>
+<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
+<ul>
+<li>为每个pod创建单独的pvc, 命名规则 ${PvcName}-${StatefulSetName}-${idx}, 并绑定单独的pv, 而不是像deployment为所有pod创建(一个?还是多个?pvc)并绑定同一份pv</li>
+<li>pod销毁重建之后, 由于hostname稳定, 所以还能关联到之前的pv</li>
+</ul>
+<h3 id="其他顺序化的部署特性"><a href="#其他顺序化的部署特性" class="headerlink" title="其他顺序化的部署特性:"></a>其他顺序化的部署特性:</h3><ul>
+<li>Ordered Pod Creation: Pod创建是有序的, 即pod-0先创建, 只有pod-0成功后, pod-1才会创建</li>
+<li>scale-down时, 会按照index倒序删除pod</li>
+<li>滚动升级(Rolling Update)时, 会按照index倒序删除&amp;重建pod</li>
+</ul>
+<h2 id="statefulset的设计原理模型"><a href="#statefulset的设计原理模型" class="headerlink" title="statefulset的设计原理模型"></a>statefulset的设计原理模型</h2><ul>
+<li>拓扑状态: 应用的多个实例之间不是完全对等的关系, 这个应用实例的启动必须按照某些顺序启动. 比如应用的主节点A要先于从节点B启动. 而如果你把A和B两个Pod删除掉, 他们再次被创建出来是也必须严格按照这个顺序才行. 并且, 新创建出来的Pod, 必须和原来的Pod的网络标识一样, 这样原先的访问者才能使用同样的方法, 访问到这个新的Pod.</li>
+<li>存储状态: 应用的多个实例分别绑定了不同的存储数据. 对于这些应用实例来说, Pod A第一次读取到的数据, 和隔了十分钟之后再次读取到的数据, 应该是同一份, 哪怕在此期间Pod A被重新创建过. 一个数据库应用的多个存储实例.</li>
+</ul>
+<h1 id="ZK-on-K8S"><a href="#ZK-on-K8S" class="headerlink" title="ZK on K8S"></a>ZK on K8S</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><p>为啥 <a href="https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/">zookeeper</a> 通过k8s的statefulset创建zk服务, 看yaml文件里,</p>
+<ol>
+<li>没有创建myid文件</li>
+<li>没有在conf里配置 server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT 这种</li>
+</ol>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原因: 因为启动zk的脚本是start-zookeeper, 不是start.sh<br>所以是因为docker镜像里边对zk进行了封装, 对k8s环境变量进行了适配. 具体查看脚本:<br><a href="https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper">start-zookeeper</a></p>
+<h3 id="如何生成myid文件"><a href="#如何生成myid文件" class="headerlink" title="如何生成myid文件?"></a>如何生成myid文件?</h3><ul>
+<li>依赖statefulset的hostname全局有序且保持稳定的特性</li>
+<li>在pod内部执行”hostname”命令, 读取hostname, 参见上边hostname命名规则, 读取到${idx}值, myid&#x3D;${idx}+1</li>
+</ul>
+<h3 id="如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录"><a href="#如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录" class="headerlink" title="如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?"></a>如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?</h3><ul>
+<li>server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT</li>
+<li>$NAME: 从hostname读取到 ${StatefulSetName}</li>
+<li>$DOMAIN: 从 ‘hostname -d’ 命令中读取到domain信息</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>stateful-set</tag>
       </tags>
   </entry>
   <entry>
@@ -6197,6 +6197,26 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
       </tags>
   </entry>
   <entry>
+    <title>k8s基础架构笔记--一些必知的基础数据</title>
+    <url>//2022-04-05-k8s-common-sense/</url>
+    <content><![CDATA[<h1 id="内存空间占用"><a href="#内存空间占用" class="headerlink" title="内存空间占用"></a>内存空间占用</h1><ul>
+<li>一个node数据对象的json格式大小约为28KB</li>
+<li>一个pod的数据对象的json格式大小约为40KB</li>
+</ul>
+<h1 id="规模"><a href="#规模" class="headerlink" title="规模"></a>规模</h1><p>瓶颈主要在watch&amp;list导致apiserver压力巨大上.</p>
+<ul>
+<li>单cluster 5000个Node, 25000个Pod</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>k8s-architect</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>k8s基础架构笔记--kube-proxy原理</title>
     <url>//2022-04-05-k8s-kube-proxy/</url>
     <content><![CDATA[<h1 id="k8s网络模型"><a href="#k8s网络模型" class="headerlink" title="k8s网络模型"></a>k8s网络模型</h1><p>如下三点是基础要求: </p>
@@ -6234,26 +6254,6 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <tag>kubernetes</tag>
         <tag>k8s-architect</tag>
         <tag>kube-proxy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s基础架构笔记--一些必知的基础数据</title>
-    <url>//2022-04-05-k8s-common-sense/</url>
-    <content><![CDATA[<h1 id="内存空间占用"><a href="#内存空间占用" class="headerlink" title="内存空间占用"></a>内存空间占用</h1><ul>
-<li>一个node数据对象的json格式大小约为28KB</li>
-<li>一个pod的数据对象的json格式大小约为40KB</li>
-</ul>
-<h1 id="规模"><a href="#规模" class="headerlink" title="规模"></a>规模</h1><p>瓶颈主要在watch&amp;list导致apiserver压力巨大上.</p>
-<ul>
-<li>单cluster 5000个Node, 25000个Pod</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -6408,6 +6408,28 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
+    <title>Java中Log4j的最佳实践</title>
+    <url>//2022-04-18-java-log4j-bestpractice/</url>
+    <content><![CDATA[<h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><ul>
+<li>把ThreadName, RequestId放到MDC, 加到pattern里.</li>
+</ul>
+<h2 id="异步日志"><a href="#异步日志" class="headerlink" title="异步日志"></a>异步日志</h2><p>使用 <a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">log4j2 asyncLogger</a> 来异步打印</p>
+<ul>
+<li>不要在pattern里增加location相关信息, 例如class, file, location, line, method等, 因为这些底层需要<a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">打印堆栈</a>, 然后遍历, 性能较差. 尤其是需要使用asyncLogger的场景下</li>
+<li><a href="https://issues.apache.org/jira/browse/LOG4J2-2031">异步日志底层实现原理</a>: 本质是一个RingBuffer, 默认size大约是21w条, 需要注意不要使用DiscardPolicy;</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>log4j</tag>
+        <tag>logging</tag>
+        <tag>best-practices</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>k8s virtual-kubelet的实现原理研究</title>
     <url>//2022-04-18-k8s-virtual-kubelet/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, vk的实现原理, 看官方的文档, 太偏向用户视角,<br>研究了源代码, 工作机制先大概说下: </p>
@@ -6440,28 +6462,6 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
         <tag>kubernetes</tag>
         <tag>virtual-kubelet</tag>
         <tag>vk</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java中Log4j的最佳实践</title>
-    <url>//2022-04-18-java-log4j-bestpractice/</url>
-    <content><![CDATA[<h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><ul>
-<li>把ThreadName, RequestId放到MDC, 加到pattern里.</li>
-</ul>
-<h2 id="异步日志"><a href="#异步日志" class="headerlink" title="异步日志"></a>异步日志</h2><p>使用 <a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">log4j2 asyncLogger</a> 来异步打印</p>
-<ul>
-<li>不要在pattern里增加location相关信息, 例如class, file, location, line, method等, 因为这些底层需要<a href="https://logging.apache.org/log4j/2.x/manual/async.html#Location">打印堆栈</a>, 然后遍历, 性能较差. 尤其是需要使用asyncLogger的场景下</li>
-<li><a href="https://issues.apache.org/jira/browse/LOG4J2-2031">异步日志底层实现原理</a>: 本质是一个RingBuffer, 默认size大约是21w条, 需要注意不要使用DiscardPolicy;</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>log4j</tag>
-        <tag>logging</tag>
-        <tag>best-practices</tag>
       </tags>
   </entry>
   <entry>
@@ -6808,6 +6808,28 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
       </tags>
   </entry>
   <entry>
+    <title>深度思考：不断逼近问题的本质 读后感</title>
+    <url>//2022-05-03-Beyond-the-Label/</url>
+    <content><![CDATA[<p>总体来说，鸡汤不少，但没啥干货，说的都是一些虚无缥缈且人尽皆知的大道理。</p>
+<hr>
+<p>读的过程，也感觉很鸡肋，感觉像是有些自恋的人的自传，愈发读不下去，但又为了完整读完一本书，硬着头皮读了下去，期待着后边说不定会由有不同的收获。<br>但结果令人失望，甚至都不想做笔记。<br>首先，书名非常具有迷惑性，实在没看出跟深度思考，以及探究问题的本质有任何关系。直到看了英文名称，才恍然大悟。<br>《Beyond the Label: Women, Leadership, and Success on Our Own Terms》，<br>直译过来就是：《拒绝标签：女性，领导力与成功》，压根跟深度思考没任何关系，也不知道书名的中文翻译人员咋想的。<br>如果早看了英文名，尤其是几个雷区词“Women”，“Leadership”，“Success”等这些，就一定不会读的。</p>
+<p>其次，内容更像是作者自己的经历自传。最开始当个推销员，莫名奇妙就推销成功了，然后还获得了贵人的帮助。<br>如果说是因为真诚，那么我相信世界上比她真诚的人要多得多，为什么其他人没有？<br>莫名其妙就结婚了，莫名其妙被派到香港，莫名其妙又掌管了GAP，把old navy做了起来，然后GAP莫名其妙就不行了，莫名其妙就成了香奈儿的CEO了。<br>最后由莫名其妙离婚，还美其名曰“打破规则”。<br>总体来说这些转变读者我是一头雾水。<br>我相信成为一个优秀的CEO，把一个公司与品牌做起来，需要的绝对不仅是书中她提到的这些软素质，还有巨大的一块，应该就是硬素质。<br>如何理解管理，毕竟也是一门工程与科学；如何理解财务报表，处理财务危机；如何品牌营销与形象树立？<br>等等。<br>文中提到的这些软素质，都太普通了，太没有专业门槛了。</p>
+<p>最后就是讲到的一些关于女性职场特有的问题，例如“当人们只注意你的外貌而非工作时，该怎么办？”，并无法引发丝毫我这位直男癌患者的共鸣。</p>
+<p>吸取几点教训吧：</p>
+<ol>
+<li>看英文翻译书之前，一定要看下原先的英文名称是啥，千万不能被忽悠了。</li>
+<li>相信自己的判断，一旦看不下去，觉得没意思没价值没收获，就果断弃坑，不要为了完成读书而读书，否则沉没成本太高。</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>books</tag>
+        <tag>2022</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ubuntu kvm虚拟化配置</title>
     <url>//2022-05-07-ubuntu-kvm-init/</url>
     <content><![CDATA[<h1 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h1><ul>
@@ -6891,25 +6913,64 @@ Your CPU does not support KVM extensions<span aria-hidden="true" class="line-num
       </tags>
   </entry>
   <entry>
-    <title>深度思考：不断逼近问题的本质 读后感</title>
-    <url>//2022-05-03-Beyond-the-Label/</url>
-    <content><![CDATA[<p>总体来说，鸡汤不少，但没啥干货，说的都是一些虚无缥缈且人尽皆知的大道理。</p>
-<hr>
-<p>读的过程，也感觉很鸡肋，感觉像是有些自恋的人的自传，愈发读不下去，但又为了完整读完一本书，硬着头皮读了下去，期待着后边说不定会由有不同的收获。<br>但结果令人失望，甚至都不想做笔记。<br>首先，书名非常具有迷惑性，实在没看出跟深度思考，以及探究问题的本质有任何关系。直到看了英文名称，才恍然大悟。<br>《Beyond the Label: Women, Leadership, and Success on Our Own Terms》，<br>直译过来就是：《拒绝标签：女性，领导力与成功》，压根跟深度思考没任何关系，也不知道书名的中文翻译人员咋想的。<br>如果早看了英文名，尤其是几个雷区词“Women”，“Leadership”，“Success”等这些，就一定不会读的。</p>
-<p>其次，内容更像是作者自己的经历自传。最开始当个推销员，莫名奇妙就推销成功了，然后还获得了贵人的帮助。<br>如果说是因为真诚，那么我相信世界上比她真诚的人要多得多，为什么其他人没有？<br>莫名其妙就结婚了，莫名其妙被派到香港，莫名其妙又掌管了GAP，把old navy做了起来，然后GAP莫名其妙就不行了，莫名其妙就成了香奈儿的CEO了。<br>最后由莫名其妙离婚，还美其名曰“打破规则”。<br>总体来说这些转变读者我是一头雾水。<br>我相信成为一个优秀的CEO，把一个公司与品牌做起来，需要的绝对不仅是书中她提到的这些软素质，还有巨大的一块，应该就是硬素质。<br>如何理解管理，毕竟也是一门工程与科学；如何理解财务报表，处理财务危机；如何品牌营销与形象树立？<br>等等。<br>文中提到的这些软素质，都太普通了，太没有专业门槛了。</p>
-<p>最后就是讲到的一些关于女性职场特有的问题，例如“当人们只注意你的外貌而非工作时，该怎么办？”，并无法引发丝毫我这位直男癌患者的共鸣。</p>
-<p>吸取几点教训吧：</p>
+    <title>一个通用数据巡检框架的设计</title>
+    <url>//2022-05-15-cruise-framework-design/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在实际项目中, 有许多业务场景, 会存在多张表数据不一致或者脏数据残留的问题,<br>需要定期执行一些SQL来进行数据一致性的巡检与订正, 以实现数据的最终一致性.<br>例如下表, 需要定期查询&amp;统计出’deleted’状态的用户数量, 报警, 并清理这些数据.</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- user表</span>
+user_id<span class="token operator">|</span> age<span class="token operator">|</span> <span class="token keyword">status</span><span class="token operator">|</span>
+<span class="token number">1</span><span class="token operator">|</span> <span class="token number">18</span><span class="token operator">|</span> deleted<span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="初步方案"><a href="#初步方案" class="headerlink" title="初步方案:"></a>初步方案:</h1><p>方案1: 可以针对每个需求, 单独写SQL-&gt;DAO-&gt;Service等, 但带来的问题是: </p>
 <ol>
-<li>看英文翻译书之前，一定要看下原先的英文名称是啥，千万不能被忽悠了。</li>
-<li>相信自己的判断，一旦看不下去，觉得没意思没价值没收获，就果断弃坑，不要为了完成读书而读书，否则沉没成本太高。</li>
+<li>开发量大, 每次新的需求, 都需要撸一遍, 重复工作量大.</li>
+<li>SQL-&gt;Service整体功能分散, 不便于维护.<br>方案2: 可以基于此, 抽象出一个面向SQL的通用巡检框架, 便于统一接入与维护.</li>
 </ol>
+<h1 id="架构设计思考"><a href="#架构设计思考" class="headerlink" title="架构设计思考"></a>架构设计思考</h1><p>从用户角度, 可以:<br>定时任务框架: </p>
+<ol>
+<li>创建巡检任务, 与输入自定义的SQL绑定</li>
+<li>定义巡检周期</li>
+<li>手动触发运行(便于首次配置之后调试)</li>
+<li>查看运行记录(便于)</li>
+</ol>
+<p>报警与订正框架: </p>
+<ol>
+<li>定义任务结果筛选与报警条件</li>
+<li>定义任务结果执行的订正Action</li>
+</ol>
+<h2 id="第一部分-定时任务框架"><a href="#第一部分-定时任务框架" class="headerlink" title="第一部分: 定时任务框架"></a>第一部分: 定时任务框架</h2><p>核心就是一个面向SQL的分布式定时任务框架, 调研现有的任务框架实现(例如Quartz): </p>
+<ul>
+<li>任务核心: <ul>
+<li>任务描述与定义(即数据源支持哪些? SQL支持哪些?)</li>
+<li>定时任务的调度与执行</li>
+<li>历史任务运行情况<ul>
+<li>耗时</li>
+<li>WorkerIp</li>
+<li>执行状态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>运维后台: <ul>
+<li>手工触发<ul>
+<li>指定</li>
+</ul>
+</li>
+<li>任务</li>
+</ul>
+</li>
+</ul>
+<h2 id="第二部分-数据订正报警框架"><a href="#第二部分-数据订正报警框架" class="headerlink" title="第二部分: 数据订正报警框架"></a>第二部分: 数据订正报警框架</h2><h1 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h1><p>任务分为 “全量巡检” 与 “增量巡检” 两类.<br>全量巡检: 即每次执行SQL, 对报警结果全量输出.<br>增量巡检: 即每次执行SQL, 只输出与上次执行有差异的(新增的)数据报警.</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>life</category>
+        <category>tech-notes</category>
       </categories>
       <tags>
-        <tag>books</tag>
-        <tag>2022</tag>
+        <tag>java</tag>
+        <tag>best-practices</tag>
+        <tag>software-engineering</tag>
+        <tag>cruiser</tag>
+        <tag>architecture</tag>
       </tags>
   </entry>
   <entry>
@@ -7082,67 +7143,6 @@ CMD <span class="token punctuation">[</span><span class="token string">"catalina
       </tags>
   </entry>
   <entry>
-    <title>一个通用数据巡检框架的设计</title>
-    <url>//2022-05-15-cruise-framework-design/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在实际项目中, 有许多业务场景, 会存在多张表数据不一致或者脏数据残留的问题,<br>需要定期执行一些SQL来进行数据一致性的巡检与订正, 以实现数据的最终一致性.<br>例如下表, 需要定期查询&amp;统计出’deleted’状态的用户数量, 报警, 并清理这些数据.</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- user表</span>
-user_id<span class="token operator">|</span> age<span class="token operator">|</span> <span class="token keyword">status</span><span class="token operator">|</span>
-<span class="token number">1</span><span class="token operator">|</span> <span class="token number">18</span><span class="token operator">|</span> deleted<span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-<h1 id="初步方案"><a href="#初步方案" class="headerlink" title="初步方案:"></a>初步方案:</h1><p>方案1: 可以针对每个需求, 单独写SQL-&gt;DAO-&gt;Service等, 但带来的问题是: </p>
-<ol>
-<li>开发量大, 每次新的需求, 都需要撸一遍, 重复工作量大.</li>
-<li>SQL-&gt;Service整体功能分散, 不便于维护.<br>方案2: 可以基于此, 抽象出一个面向SQL的通用巡检框架, 便于统一接入与维护.</li>
-</ol>
-<h1 id="架构设计思考"><a href="#架构设计思考" class="headerlink" title="架构设计思考"></a>架构设计思考</h1><p>从用户角度, 可以:<br>定时任务框架: </p>
-<ol>
-<li>创建巡检任务, 与输入自定义的SQL绑定</li>
-<li>定义巡检周期</li>
-<li>手动触发运行(便于首次配置之后调试)</li>
-<li>查看运行记录(便于)</li>
-</ol>
-<p>报警与订正框架: </p>
-<ol>
-<li>定义任务结果筛选与报警条件</li>
-<li>定义任务结果执行的订正Action</li>
-</ol>
-<h2 id="第一部分-定时任务框架"><a href="#第一部分-定时任务框架" class="headerlink" title="第一部分: 定时任务框架"></a>第一部分: 定时任务框架</h2><p>核心就是一个面向SQL的分布式定时任务框架, 调研现有的任务框架实现(例如Quartz): </p>
-<ul>
-<li>任务核心: <ul>
-<li>任务描述与定义(即数据源支持哪些? SQL支持哪些?)</li>
-<li>定时任务的调度与执行</li>
-<li>历史任务运行情况<ul>
-<li>耗时</li>
-<li>WorkerIp</li>
-<li>执行状态</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>运维后台: <ul>
-<li>手工触发<ul>
-<li>指定</li>
-</ul>
-</li>
-<li>任务</li>
-</ul>
-</li>
-</ul>
-<h2 id="第二部分-数据订正报警框架"><a href="#第二部分-数据订正报警框架" class="headerlink" title="第二部分: 数据订正报警框架"></a>第二部分: 数据订正报警框架</h2><h1 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h1><p>任务分为 “全量巡检” 与 “增量巡检” 两类.<br>全量巡检: 即每次执行SQL, 对报警结果全量输出.<br>增量巡检: 即每次执行SQL, 只输出与上次执行有差异的(新增的)数据报警.</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>best-practices</tag>
-        <tag>software-engineering</tag>
-        <tag>cruiser</tag>
-        <tag>architecture</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>软件工程中的一些最佳实践沉淀</title>
     <url>//2022-05-15-software-enginnering-best-practice/</url>
     <content><![CDATA[<h1 id="jar-x2F-maven版本号定义"><a href="#jar-x2F-maven版本号定义" class="headerlink" title="jar&#x2F;maven版本号定义"></a>jar&#x2F;maven版本号定义</h1><p>一般推荐使用 <a href="https://chronver.org/">chronVer</a></p>
@@ -7177,6 +7177,41 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <tag>java</tag>
         <tag>best-practices</tag>
         <tag>software-engineering</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记SpringBootCache使用的问题总结</title>
+    <url>//2022-05-18-springboot-cache/</url>
+    <content><![CDATA[<h1 id="Cacheable-无参方法"><a href="#Cacheable-无参方法" class="headerlink" title="@Cacheable 无参方法"></a>@Cacheable 无参方法</h1><p>有些无参方法, 也需要被SpringBoot @Cacheable 进行cache, 如下代码样例:  </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">listAllUids</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有如下需要注意的点:</p>
+<ul>
+<li>可以不写 <code>key=xxx</code>, 这样默认的key就是<code>SimpleType []</code></li>
+<li>SpringBoot官方建议<a href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/cache.html">使用方法名作为key</a>, 如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key <span class="token operator">=</span> <span class="token string">"#root.method.name"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>也可以hardcode一个key, 这样更易于查找, 如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token string">"'my_key'"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>要注意key里的常量, <font color='red'>一定要用单引号括起来</font>, 否则会<a href="https://stackoverflow.com/questions/33383366/cacheble-annotation-on-no-parameter-method">报错如下</a>: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>expression<span class="token punctuation">.</span>spel<span class="token punctuation">.</span></span>SpelEvaluationException</span><span class="token operator">:</span> EL1008E<span class="token operator">:</span><span class="token punctuation">(</span>pos <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Property</span> or field my_key cannot be found on object of type '<span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>interceptor<span class="token punctuation">.</span></span>CacheExpressionRootObject</span>' <span class="token operator">-</span> maybe not <span class="token keyword">public</span><span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>java</tag>
+        <tag>spring-cache</tag>
+        <tag>springboot</tag>
       </tags>
   </entry>
   <entry>
@@ -7246,41 +7281,6 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <tag>java</tag>
         <tag>rpc</tag>
         <tag>exception</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记SpringBootCache使用的问题总结</title>
-    <url>//2022-05-18-springboot-cache/</url>
-    <content><![CDATA[<h1 id="Cacheable-无参方法"><a href="#Cacheable-无参方法" class="headerlink" title="@Cacheable 无参方法"></a>@Cacheable 无参方法</h1><p>有些无参方法, 也需要被SpringBoot @Cacheable 进行cache, 如下代码样例:  </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">listAllUids</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>有如下需要注意的点:</p>
-<ul>
-<li>可以不写 <code>key=xxx</code>, 这样默认的key就是<code>SimpleType []</code></li>
-<li>SpringBoot官方建议<a href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/cache.html">使用方法名作为key</a>, 如下:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key <span class="token operator">=</span> <span class="token string">"#root.method.name"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>也可以hardcode一个key, 这样更易于查找, 如下:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token string">"'my_key'"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>要注意key里的常量, <font color='red'>一定要用单引号括起来</font>, 否则会<a href="https://stackoverflow.com/questions/33383366/cacheble-annotation-on-no-parameter-method">报错如下</a>: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>expression<span class="token punctuation">.</span>spel<span class="token punctuation">.</span></span>SpelEvaluationException</span><span class="token operator">:</span> EL1008E<span class="token operator">:</span><span class="token punctuation">(</span>pos <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Property</span> or field my_key cannot be found on object of type '<span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>interceptor<span class="token punctuation">.</span></span>CacheExpressionRootObject</span>' <span class="token operator">-</span> maybe not <span class="token keyword">public</span><span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>java</tag>
-        <tag>spring-cache</tag>
-        <tag>springboot</tag>
       </tags>
   </entry>
   <entry>
@@ -8220,37 +8220,6 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
-    <title>asciinema使用笔记</title>
-    <url>//2022-06-10-asciinema/</url>
-    <content><![CDATA[<h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><ul>
-<li><a href="https://github.com/asciinema/asciinema">asciinema</a></li>
-<li><a href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> nodejs
-<span class="token function">npm</span> <span class="token function">install</span> -g svg-term-cli<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-<h1 id="生成录屏文件-cast"><a href="#生成录屏文件-cast" class="headerlink" title="生成录屏文件.cast"></a>生成录屏文件.cast</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema rec a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><code>Ctrl + D 结束录屏</code></p>
-<h1 id="本地播放录屏文件"><a href="#本地播放录屏文件" class="headerlink" title="本地播放录屏文件"></a>本地播放录屏文件</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema play a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="cast文件转成-svg文件"><a href="#cast文件转成-svg文件" class="headerlink" title=".cast文件转成.svg文件"></a>.cast文件转成.svg文件</h1><p>需要先安装 <a href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> a.cast <span class="token operator">|</span> svg-term --out a.svg --term iterm2 --profile mymatrix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p><a href="https://asciinema.org/docs/config">$HOME&#x2F;.config&#x2F;asciinema&#x2F;config</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>tools</tag>
-        <tag>mac</tag>
-        <tag>asciinema</tag>
-        <tag>svg</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker的一些总结II</title>
     <url>//2022-06-11-docker-summary-2/</url>
     <content><![CDATA[<h1 id="exec到容器的原理"><a href="#exec到容器的原理" class="headerlink" title="exec到容器的原理"></a>exec到容器的原理</h1><p>本质是在host上新创建一个进程, 加入到已存在的docker容器的Linux Namespace中.</p>
@@ -8335,6 +8304,37 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
+    <title>asciinema使用笔记</title>
+    <url>//2022-06-10-asciinema/</url>
+    <content><![CDATA[<h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><ul>
+<li><a href="https://github.com/asciinema/asciinema">asciinema</a></li>
+<li><a href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> nodejs
+<span class="token function">npm</span> <span class="token function">install</span> -g svg-term-cli<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+<h1 id="生成录屏文件-cast"><a href="#生成录屏文件-cast" class="headerlink" title="生成录屏文件.cast"></a>生成录屏文件.cast</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema rec a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>Ctrl + D 结束录屏</code></p>
+<h1 id="本地播放录屏文件"><a href="#本地播放录屏文件" class="headerlink" title="本地播放录屏文件"></a>本地播放录屏文件</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema play a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="cast文件转成-svg文件"><a href="#cast文件转成-svg文件" class="headerlink" title=".cast文件转成.svg文件"></a>.cast文件转成.svg文件</h1><p>需要先安装 <a href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> a.cast <span class="token operator">|</span> svg-term --out a.svg --term iterm2 --profile mymatrix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p><a href="https://asciinema.org/docs/config">$HOME&#x2F;.config&#x2F;asciinema&#x2F;config</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+        <tag>mac</tag>
+        <tag>asciinema</tag>
+        <tag>svg</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>深入剖析Kubernetes笔记</title>
     <url>//2022-06-11-k8s-deep-dive/</url>
     <content><![CDATA[<p>很久没有看到这么一本书了, 虽然刚拿到手感觉很薄, 只有不到400页, 价格也贵, 99元.<br>比起<a href="https://book.douban.com/subject/33444476/">k8s权威指南</a>这种大部头, 略显单薄.<br>但实际翻看前两章之后, 欣喜万分. 越往后看, 愈发觉得鞭辟入里.<br>从底层原理出发, 没有废话, 深入且细致地讲解出docker&#x2F;k8s实现的各种细节.<br>有效地解释了自己心中的诸多疑惑. 物有所值. </p>
@@ -8370,6 +8370,48 @@ public synchronized void close() throws SQLException &#123;
         <tag>docker</tag>
         <tag>books</tag>
         <tag>2022</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大学对我的影响</title>
+    <url>//2022-06-17-university-summary/</url>
+    <content><![CDATA[<p>一年一度如火如荼的高考季结束. 蓦然回首, 自己已然高中毕业13年, 大学也毕业9年了.<br>9年时间, 改变了很多, 足以把一个鲜衣怒马, 意气风发, 唇红齿白的少年, 变成而今房贷和车贷缠身, 视力与体力俱下, 惶惶不可终日的油腻中年.</p>
+<p>但最近也一直在酝酿与反思, 这短短四年的大学生活, 究竟带给了我什么?<br>当我在收到外卖, 外卖员说都怪自己没上大学, 才落得今天下苦力.<br>当我在坐网约车, 司机说要不是自己没上大学, 也不至于现在每天被公司压榨.</p>
+<p>四年的生活, 有什么样的魔力, 真的足以把人群完成阶级划分么?<br>现在把杂乱的思绪总结成文, 聊以慰藉.</p>
+<h1 id="一-让我看到了一个更大的世界"><a href="#一-让我看到了一个更大的世界" class="headerlink" title="一: 让我看到了一个更大的世界"></a>一: 让我看到了一个更大的世界</h1><hr>
+<p>这个话说得可能有点儿大, 有点儿虚, 但确实上大学, 让我这个小镇青年, 有机会第一次离开了那个只有60万人口的小城市,<br>进入到一个二三线城市, 看到了一个更大的世界.</p>
+<h2 id="地理上的冲击"><a href="#地理上的冲击" class="headerlink" title="地理上的冲击"></a>地理上的冲击</h2><p>家乡处于豫西北一个不起眼的角落, 三面环山的盆地, 剩余一面被黄河阻隔.<br>伟大的太行山与王屋山交汇于此. <br>而我从小生活在太行山脚下, 听着愚公移山的故事长大. <br>18岁前从来没有离开过那片大山. <br>年少的我一直很好奇山的后边是什么? 会不会是一片蔚蓝色的大海呢? 会不会是一个喧嚣繁华, 高楼林立, 霓虹闪烁的都市呢?<br>曾经跟随奶奶上坟, 翻越了眼前那座大山, 发现在山的后边, 仍然是山, 是无穷无尽绵延不绝的山, 是目之所及毫无颓势的山脉.<br>沮丧至极.  </p>
+<blockquote>
+<p>没有人知道为什么<br>太阳总下到山的那一边<br>没有人能够告诉我<br>山里面有没有住着神仙<br>多少的日子里总是<br>一个人面对着天空发呆<br>就这么好奇就这么幻想<br>这么孤单的童年</p>
+</blockquote>
+<p>而上大学给了我一次机会,<br>能光明正大理直气壮地彻底逃离这片群山,<br>毅然决然地选择离家2000公里外的厦门.</p>
+<p>我来自大山, <br>我要奔赴向大海. </p>
+<p>第一次到海边, 第一次吃到芒果荔枝肯德基麦当劳, </p>
+<blockquote>
+<p>父母在, 不远游.<br>游必有方.</p>
+</blockquote>
+<h2 id="文化上的冲击"><a href="#文化上的冲击" class="headerlink" title="文化上的冲击"></a>文化上的冲击</h2><p>同学都来自五湖四海, </p>
+<h2 id="思想上的冲击"><a href="#思想上的冲击" class="headerlink" title="思想上的冲击"></a>思想上的冲击</h2><p>很快就体会到了贫富差距与阶级差异.<br>当我还在省吃俭用只为买个100多元的<code>蓝魔MP3</code>, 甚至兴奋地睡不着时, 隔壁宿舍的同学就已经开始用<code>iPod touch</code>通过陀螺仪玩赛车游戏了.<br>当我还在用<code>小灵通</code>的时候, 室友就已经开始用<code>iPhone 3Gs</code>了. 当第一次试用, 彻底颠覆了我的想象, 才知道原来手机可以是这样的. </p>
+<blockquote>
+<p>每次室友手机解锁时, 经典的”咔哒”声音, 令我羡慕, 至今仍在我耳边回响, 是我永远逾越不了的鸿沟.</p>
+</blockquote>
+<p>当我为了省钱, 选择花费120元, 硬座坐43小时火车跨越四千里回家, 腰酸背痛, 双腿浮肿时; 室友与爸妈选择坐飞机, 去香港购物度假.<br>当我知道室友原来竟然没有参加高考, 直接通过竞赛保送到大学; 而我却几乎拼出了半条命, 才得以在当年100万考生中杀出了一条血路.<br>当看到室友的班级通讯录里, 前四五十都是清一色的清北浙交; 我们河南的同伴</p>
+<p>很庆幸自己没有因为这些差异导致走向消极与虚无, 走向愤怒与反抗, 而是接受这些冲击, 这就是生活.<br>然后一点一点地再努力一些, </p>
+<p>当然, 外卖员, 网约车司机可能也是一样, 借由来城市打工.</p>
+<h1 id="二-让我拥有了独立思考与探索知识的能力"><a href="#二-让我拥有了独立思考与探索知识的能力" class="headerlink" title="二: 让我拥有了独立思考与探索知识的能力"></a>二: 让我拥有了独立思考与探索知识的能力</h1><hr>
+<p>第一次在同学宿舍, 看到了墙外的世界.<br>批判型思维.<br>成长型思维.</p>
+<h1 id="三-让我拥有了破除任何神话人物的信心与勇气"><a href="#三-让我拥有了破除任何神话人物的信心与勇气" class="headerlink" title="三: 让我拥有了破除任何神话人物的信心与勇气"></a>三: 让我拥有了破除任何神话人物的信心与勇气</h1><hr>
+<p>正是因为接受了思想上的冲击, 所以至今我心底里从不会崇拜或者神话任何一个人.<br>相信自己</p>
+<h1 id="遗憾"><a href="#遗憾" class="headerlink" title="遗憾"></a>遗憾</h1><hr>
+<p>最近也在看&lt;规模&gt;这本书, 城市, 真的会让生活更美好么? </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>weekend-summary</tag>
+        <tag>diary</tag>
+        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -8544,48 +8586,6 @@ yum <span class="token function">install</span> bridge-utils -y<span aria-hidden
         <tag>networking</tag>
         <tag>nat</tag>
         <tag>pat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>大学对我的影响</title>
-    <url>//2022-06-17-university-summary/</url>
-    <content><![CDATA[<p>一年一度如火如荼的高考季结束. 蓦然回首, 自己已然高中毕业13年, 大学也毕业9年了.<br>9年时间, 改变了很多, 足以把一个鲜衣怒马, 意气风发, 唇红齿白的少年, 变成而今房贷和车贷缠身, 视力与体力俱下, 惶惶不可终日的油腻中年.</p>
-<p>但最近也一直在酝酿与反思, 这短短四年的大学生活, 究竟带给了我什么?<br>当我在收到外卖, 外卖员说都怪自己没上大学, 才落得今天下苦力.<br>当我在坐网约车, 司机说要不是自己没上大学, 也不至于现在每天被公司压榨.</p>
-<p>四年的生活, 有什么样的魔力, 真的足以把人群完成阶级划分么?<br>现在把杂乱的思绪总结成文, 聊以慰藉.</p>
-<h1 id="一-让我看到了一个更大的世界"><a href="#一-让我看到了一个更大的世界" class="headerlink" title="一: 让我看到了一个更大的世界"></a>一: 让我看到了一个更大的世界</h1><hr>
-<p>这个话说得可能有点儿大, 有点儿虚, 但确实上大学, 让我这个小镇青年, 有机会第一次离开了那个只有60万人口的小城市,<br>进入到一个二三线城市, 看到了一个更大的世界.</p>
-<h2 id="地理上的冲击"><a href="#地理上的冲击" class="headerlink" title="地理上的冲击"></a>地理上的冲击</h2><p>家乡处于豫西北一个不起眼的角落, 三面环山的盆地, 剩余一面被黄河阻隔.<br>伟大的太行山与王屋山交汇于此. <br>而我从小生活在太行山脚下, 听着愚公移山的故事长大. <br>18岁前从来没有离开过那片大山. <br>年少的我一直很好奇山的后边是什么? 会不会是一片蔚蓝色的大海呢? 会不会是一个喧嚣繁华, 高楼林立, 霓虹闪烁的都市呢?<br>曾经跟随奶奶上坟, 翻越了眼前那座大山, 发现在山的后边, 仍然是山, 是无穷无尽绵延不绝的山, 是目之所及毫无颓势的山脉.<br>沮丧至极.  </p>
-<blockquote>
-<p>没有人知道为什么<br>太阳总下到山的那一边<br>没有人能够告诉我<br>山里面有没有住着神仙<br>多少的日子里总是<br>一个人面对着天空发呆<br>就这么好奇就这么幻想<br>这么孤单的童年</p>
-</blockquote>
-<p>而上大学给了我一次机会,<br>能光明正大理直气壮地彻底逃离这片群山,<br>毅然决然地选择离家2000公里外的厦门.</p>
-<p>我来自大山, <br>我要奔赴向大海. </p>
-<p>第一次到海边, 第一次吃到芒果荔枝肯德基麦当劳, </p>
-<blockquote>
-<p>父母在, 不远游.<br>游必有方.</p>
-</blockquote>
-<h2 id="文化上的冲击"><a href="#文化上的冲击" class="headerlink" title="文化上的冲击"></a>文化上的冲击</h2><p>同学都来自五湖四海, </p>
-<h2 id="思想上的冲击"><a href="#思想上的冲击" class="headerlink" title="思想上的冲击"></a>思想上的冲击</h2><p>很快就体会到了贫富差距与阶级差异.<br>当我还在省吃俭用只为买个100多元的<code>蓝魔MP3</code>, 甚至兴奋地睡不着时, 隔壁宿舍的同学就已经开始用<code>iPod touch</code>通过陀螺仪玩赛车游戏了.<br>当我还在用<code>小灵通</code>的时候, 室友就已经开始用<code>iPhone 3Gs</code>了. 当第一次试用, 彻底颠覆了我的想象, 才知道原来手机可以是这样的. </p>
-<blockquote>
-<p>每次室友手机解锁时, 经典的”咔哒”声音, 令我羡慕, 至今仍在我耳边回响, 是我永远逾越不了的鸿沟.</p>
-</blockquote>
-<p>当我为了省钱, 选择花费120元, 硬座坐43小时火车跨越四千里回家, 腰酸背痛, 双腿浮肿时; 室友与爸妈选择坐飞机, 去香港购物度假.<br>当我知道室友原来竟然没有参加高考, 直接通过竞赛保送到大学; 而我却几乎拼出了半条命, 才得以在当年100万考生中杀出了一条血路.<br>当看到室友的班级通讯录里, 前四五十都是清一色的清北浙交; 我们河南的同伴</p>
-<p>很庆幸自己没有因为这些差异导致走向消极与虚无, 走向愤怒与反抗, 而是接受这些冲击, 这就是生活.<br>然后一点一点地再努力一些, </p>
-<p>当然, 外卖员, 网约车司机可能也是一样, 借由来城市打工.</p>
-<h1 id="二-让我拥有了独立思考与探索知识的能力"><a href="#二-让我拥有了独立思考与探索知识的能力" class="headerlink" title="二: 让我拥有了独立思考与探索知识的能力"></a>二: 让我拥有了独立思考与探索知识的能力</h1><hr>
-<p>第一次在同学宿舍, 看到了墙外的世界.<br>批判型思维.<br>成长型思维.</p>
-<h1 id="三-让我拥有了破除任何神话人物的信心与勇气"><a href="#三-让我拥有了破除任何神话人物的信心与勇气" class="headerlink" title="三: 让我拥有了破除任何神话人物的信心与勇气"></a>三: 让我拥有了破除任何神话人物的信心与勇气</h1><hr>
-<p>正是因为接受了思想上的冲击, 所以至今我心底里从不会崇拜或者神话任何一个人.<br>相信自己</p>
-<h1 id="遗憾"><a href="#遗憾" class="headerlink" title="遗憾"></a>遗憾</h1><hr>
-<p>最近也在看&lt;规模&gt;这本书, 城市, 真的会让生活更美好么? </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>life</category>
-      </categories>
-      <tags>
-        <tag>weekend-summary</tag>
-        <tag>diary</tag>
-        <tag>books</tag>
       </tags>
   </entry>
   <entry>
@@ -14228,6 +14228,26 @@ Rework  - Jason Fried
       </tags>
   </entry>
   <entry>
+    <title>系统统计页面实现</title>
+    <url>//2023-10-31-sys-stat-page/</url>
+    <content><![CDATA[<h1 id="20231101-sys-stat-page"><a href="#20231101-sys-stat-page" class="headerlink" title="20231101-sys-stat-page"></a>20231101-sys-stat-page</h1><p>无意间发现: <a href="https://www.37status.com/">37signals Status</a> 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-01-sys-stat-page/Untitled.png" alt="Untitled"></p>
+<p>另外顺便搜索了下, 发现这个页面还是Atlassian 提供的服务: <a href="https://www.atlassian.com/software/statuspage?utm_campaign=www.37status.com&utm_content=SP-notifications&utm_medium=powered-by&utm_source=inapp">Statuspage | Atlassian</a></p>
+<p>不得不说这种方式真的非常直观美观, 且把故障发生&amp;结束&amp;持续时长都一目了然地给出. </p>
+<p>以此为对比,  <a href="https://status.aliyun.com/?spm=5176.8789780.J_9220772140.26.348c39fbxOAGXq#/">阿里云健康状态</a> 就显得差了很多: </p>
+<ol>
+<li>一是不够清晰美观. </li>
+<li>二是数据准确度存疑. 一直都是状态正常, 让人觉得不可思议…</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>system-monitoring</tag>
+        <tag>statistics</tag>
+        <tag>dashboard</tag>
+        <tag>visualization</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Bot 开发中的陷阱</title>
     <url>//2023-11-01-bot-pitfall/</url>
     <content><![CDATA[<h1 id="20231102-bot-pitfall"><a href="#20231102-bot-pitfall" class="headerlink" title="20231102-bot-pitfall"></a>20231102-bot-pitfall</h1><p>想起了之前的一个误区, 很多业务的支持, 都想要通过聊天机器人来让用户实现自运维. </p>
@@ -14246,26 +14266,6 @@ Rework  - Jason Fried
       <tags>
         <tag>lessons-learned</tag>
         <tag>bot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>系统统计页面实现</title>
-    <url>//2023-10-31-sys-stat-page/</url>
-    <content><![CDATA[<h1 id="20231101-sys-stat-page"><a href="#20231101-sys-stat-page" class="headerlink" title="20231101-sys-stat-page"></a>20231101-sys-stat-page</h1><p>无意间发现: <a href="https://www.37status.com/">37signals Status</a> 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-01-sys-stat-page/Untitled.png" alt="Untitled"></p>
-<p>另外顺便搜索了下, 发现这个页面还是Atlassian 提供的服务: <a href="https://www.atlassian.com/software/statuspage?utm_campaign=www.37status.com&utm_content=SP-notifications&utm_medium=powered-by&utm_source=inapp">Statuspage | Atlassian</a></p>
-<p>不得不说这种方式真的非常直观美观, 且把故障发生&amp;结束&amp;持续时长都一目了然地给出. </p>
-<p>以此为对比,  <a href="https://status.aliyun.com/?spm=5176.8789780.J_9220772140.26.348c39fbxOAGXq#/">阿里云健康状态</a> 就显得差了很多: </p>
-<ol>
-<li>一是不够清晰美观. </li>
-<li>二是数据准确度存疑. 一直都是状态正常, 让人觉得不可思议…</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>system-monitoring</tag>
-        <tag>statistics</tag>
-        <tag>dashboard</tag>
-        <tag>visualization</tag>
       </tags>
   </entry>
   <entry>
@@ -14582,6 +14582,25 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
+    <title>HTTP POST 与 GET 的选择</title>
+    <url>//2023-11-26-http-post-or-get/</url>
+    <content><![CDATA[<h1 id="20231127-http-post-or-get"><a href="#20231127-http-post-or-get" class="headerlink" title="20231127-http-post-or-get"></a>20231127-http-post-or-get</h1><p>之前记得网上有过讨论, 有公司让所有请求都用POST. </p>
+<p>结合最近自己的感悟, 说下. </p>
+<p>如果是内部系统, 那就尽量用GET吧. 关键参数都放在URL里. 不管是普通风格还是RESTFUL风格. </p>
+<p>优点是: </p>
+<ul>
+<li>便于使用Alfred等工具, 一键进入. 提效明显: 例如查询用户信息, url?uid&#x3D;xxx, 这样. 而如果是POST,</li>
+<li></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>api-design</tag>
+        <tag>http</tag>
+        <tag>post</tag>
+        <tag>get</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>长期主义思维</title>
     <url>//2023-11-26-long-term-thinking/</url>
     <content><![CDATA[<h1 id="20231127-long-term-thinking"><a href="#20231127-long-term-thinking" class="headerlink" title="20231127-long-term-thinking"></a>20231127-long-term-thinking</h1><p>经常说长期思维, 但具体是啥? 我用一些例子来说明: </p>
@@ -14603,45 +14622,6 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
         <tag>career</tag>
         <tag>long-term-thinking</tag>
         <tag>philosophy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTTP POST 与 GET 的选择</title>
-    <url>//2023-11-26-http-post-or-get/</url>
-    <content><![CDATA[<h1 id="20231127-http-post-or-get"><a href="#20231127-http-post-or-get" class="headerlink" title="20231127-http-post-or-get"></a>20231127-http-post-or-get</h1><p>之前记得网上有过讨论, 有公司让所有请求都用POST. </p>
-<p>结合最近自己的感悟, 说下. </p>
-<p>如果是内部系统, 那就尽量用GET吧. 关键参数都放在URL里. 不管是普通风格还是RESTFUL风格. </p>
-<p>优点是: </p>
-<ul>
-<li>便于使用Alfred等工具, 一键进入. 提效明显: 例如查询用户信息, url?uid&#x3D;xxx, 这样. 而如果是POST,</li>
-<li></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>api-design</tag>
-        <tag>http</tag>
-        <tag>post</tag>
-        <tag>get</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go vs java</title>
-    <url>//2023-12-12-go-vs-java/</url>
-    <content><![CDATA[<h1 id="go-v-s-Java"><a href="#go-v-s-Java" class="headerlink" title="go v.s. Java"></a>go v.s. Java</h1><p>作为准备转型为Gopher的Javaer , 总结下异同点</p>
-<p>协程 vs 线程</p>
-<p>虽然Java 21也已经引入了轻量级线程(用户态线程), 但毕竟还是太过遥远</p>
-<p>包级别 vs 类级别</p>
-<p>对go最不适应的, 就是 全局的变量名, 方法名 竟然都是包级别可见的. 导致很容易冲突(因为记不得同个包下其他文件中命名了相同的变量~). </p>
-<p>本质上, 编译阶段go就是把一个包下的所有文件都组合成一个大文件. </p>
-<p>面向过程 vs 面向对象</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>golang</tag>
-        <tag>comparison</tag>
       </tags>
   </entry>
   <entry>
@@ -14749,6 +14729,47 @@ Example:
         <tag>networking</tag>
         <tag>concurrency</tag>
         <tag>sockets</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go vs java</title>
+    <url>//2023-12-12-go-vs-java/</url>
+    <content><![CDATA[<h1 id="go-v-s-Java"><a href="#go-v-s-Java" class="headerlink" title="go v.s. Java"></a>go v.s. Java</h1><p>作为准备转型为Gopher的Javaer , 总结下异同点</p>
+<p>协程 vs 线程</p>
+<p>虽然Java 21也已经引入了轻量级线程(用户态线程), 但毕竟还是太过遥远</p>
+<p>包级别 vs 类级别</p>
+<p>对go最不适应的, 就是 全局的变量名, 方法名 竟然都是包级别可见的. 导致很容易冲突(因为记不得同个包下其他文件中命名了相同的变量~). </p>
+<p>本质上, 编译阶段go就是把一个包下的所有文件都组合成一个大文件. </p>
+<p>面向过程 vs 面向对象</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>golang</tag>
+        <tag>comparison</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>most important decision i have made</title>
+    <url>//2023-12-21-most-important-decision-i-have-made/</url>
+    <content><![CDATA[<h1 id="20231222-most-important-decision-i-have-made"><a href="#20231222-most-important-decision-i-have-made" class="headerlink" title="20231222-most-important-decision-i-have-made"></a>20231222-most-important-decision-i-have-made</h1><p>SPOT</p>
+<ol>
+<li>上线AZ售卖水位</li>
+<li>定价策略, 识别Generation差异</li>
+<li>GPU&#x2F;CPU 差异化定价</li>
+</ol>
+<p>Apollo</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>reflection</tag>
+        <tag>career</tag>
+        <tag>life-decisions</tag>
+        <tag>personal-growth</tag>
       </tags>
   </entry>
   <entry>
@@ -14929,27 +14950,6 @@ Example:
         <tag>cpu</tag>
         <tag>libvirt</tag>
         <tag>hyperthreading</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>most important decision i have made</title>
-    <url>//2023-12-21-most-important-decision-i-have-made/</url>
-    <content><![CDATA[<h1 id="20231222-most-important-decision-i-have-made"><a href="#20231222-most-important-decision-i-have-made" class="headerlink" title="20231222-most-important-decision-i-have-made"></a>20231222-most-important-decision-i-have-made</h1><p>SPOT</p>
-<ol>
-<li>上线AZ售卖水位</li>
-<li>定价策略, 识别Generation差异</li>
-<li>GPU&#x2F;CPU 差异化定价</li>
-</ol>
-<p>Apollo</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>life</category>
-      </categories>
-      <tags>
-        <tag>reflection</tag>
-        <tag>career</tag>
-        <tag>life-decisions</tag>
-        <tag>personal-growth</tag>
       </tags>
   </entry>
   <entry>
@@ -16681,6 +16681,58 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
       </tags>
   </entry>
   <entry>
+    <title>K8s 工具集与实用命令</title>
+    <url>//2024-03-05-k8s-util/</url>
+    <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#x70;&#x69;&#115;&#x65;&#x72;&#118;&#101;&#114;&#x40;&#118;&#48;&#x2e;&#50;&#52;&#x2e;&#x31;&#x35;">&#x61;&#x70;&#x69;&#115;&#x65;&#x72;&#118;&#101;&#114;&#x40;&#118;&#48;&#x2e;&#50;&#52;&#x2e;&#x31;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+</blockquote>
+<p>新建一个协程来启动HTTPServer. </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
+<h1 id="wait机制"><a href="#wait机制" class="headerlink" title="wait机制"></a>wait机制</h1><p><code>k8s.io/apimachinery/pkg/util/wait</code></p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">"context"</span>
+	<span class="token string">"fmt"</span>
+	<span class="token string">"k8s.io/apimachinery/pkg/util/wait"</span>
+	<span class="token string">"math/rand"</span>
+	<span class="token string">"time"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	ctx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token boolean">_</span> <span class="token operator">=</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	rand<span class="token punctuation">.</span><span class="token function">Seed</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">UnixNano</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">doSomething</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"doSomething called"</span><span class="token punctuation">)</span>
+	n <span class="token operator">:=</span> rand<span class="token punctuation">.</span><span class="token function">Intn</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span>
+	time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"Hello"</span><span class="token punctuation">)</span>
+	ctx<span class="token punctuation">.</span><span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>wait.UntilWithContext</code>是<code>wait</code>包中的一个函数，它会按指定的时间间隔（本例中为1纳秒）重复执行<code>doSomething</code>函数，直到上下文<code>ctx</code>被取消。由于间隔设置为1纳秒，实际上操作会持续不断地执行，因为1纳秒是极短的时间。</p>
+<p>会在当前主线程中持续不断地执行 <code>doSomething</code> </p>
+<p>另外一种方式, 可以直接启动一个routine来不间断地执行: </p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">go</span> wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h1 id="Parallelizer机制"><a href="#Parallelizer机制" class="headerlink" title="Parallelizer机制"></a>Parallelizer机制</h1><p>参见kube-sched的代码, 实现了fork&amp;join的功能:<br><code>fh.Parallelizer().Until(parallelCtx, len(potentialNodes), checkNode)</code></p>
+<h1 id="k8s-client"><a href="#k8s-client" class="headerlink" title="k8s-client"></a>k8s-client</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled-1.png" alt="Untitled"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>tools</tag>
+        <tag>commands</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>k8s kube scheduler</title>
     <url>//2024-03-05-k8s-kube-scheduler/</url>
     <content><![CDATA[<h1 id="k8s-kube-scheduler"><a href="#k8s-kube-scheduler" class="headerlink" title="k8s-kube-scheduler"></a>k8s-kube-scheduler</h1><h1 id="代码结构梳理"><a href="#代码结构梳理" class="headerlink" title="代码结构梳理"></a>代码结构梳理</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled.png" alt="Untitled"></p>
@@ -16751,58 +16803,6 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
         <tag>kubernetes</tag>
         <tag>scheduling</tag>
         <tag>core-components</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>K8s 工具集与实用命令</title>
-    <url>//2024-03-05-k8s-util/</url>
-    <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#97;&#112;&#105;&#115;&#101;&#x72;&#x76;&#101;&#114;&#64;&#x76;&#x30;&#x2e;&#x32;&#52;&#46;&#49;&#53;">&#97;&#112;&#105;&#115;&#101;&#x72;&#x76;&#101;&#114;&#64;&#x76;&#x30;&#x2e;&#x32;&#52;&#46;&#49;&#53;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
-</blockquote>
-<p>新建一个协程来启动HTTPServer. </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
-<h1 id="wait机制"><a href="#wait机制" class="headerlink" title="wait机制"></a>wait机制</h1><p><code>k8s.io/apimachinery/pkg/util/wait</code></p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">import</span> <span class="token punctuation">(</span>
-	<span class="token string">"context"</span>
-	<span class="token string">"fmt"</span>
-	<span class="token string">"k8s.io/apimachinery/pkg/util/wait"</span>
-	<span class="token string">"math/rand"</span>
-	<span class="token string">"time"</span>
-<span class="token punctuation">)</span>
-
-<span class="token keyword">func</span> <span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	ctx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-	<span class="token boolean">_</span> <span class="token operator">=</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-	<span class="token punctuation">&#125;</span>
-	rand<span class="token punctuation">.</span><span class="token function">Seed</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">UnixNano</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-	wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">func</span> <span class="token function">doSomething</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"doSomething called"</span><span class="token punctuation">)</span>
-	n <span class="token operator">:=</span> rand<span class="token punctuation">.</span><span class="token function">Intn</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span>
-	time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"Hello"</span><span class="token punctuation">)</span>
-	ctx<span class="token punctuation">.</span><span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><code>wait.UntilWithContext</code>是<code>wait</code>包中的一个函数，它会按指定的时间间隔（本例中为1纳秒）重复执行<code>doSomething</code>函数，直到上下文<code>ctx</code>被取消。由于间隔设置为1纳秒，实际上操作会持续不断地执行，因为1纳秒是极短的时间。</p>
-<p>会在当前主线程中持续不断地执行 <code>doSomething</code> </p>
-<p>另外一种方式, 可以直接启动一个routine来不间断地执行: </p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">go</span> wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h1 id="Parallelizer机制"><a href="#Parallelizer机制" class="headerlink" title="Parallelizer机制"></a>Parallelizer机制</h1><p>参见kube-sched的代码, 实现了fork&amp;join的功能:<br><code>fh.Parallelizer().Until(parallelCtx, len(potentialNodes), checkNode)</code></p>
-<h1 id="k8s-client"><a href="#k8s-client" class="headerlink" title="k8s-client"></a>k8s-client</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled-1.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>tools</tag>
-        <tag>commands</tag>
       </tags>
   </entry>
   <entry>
@@ -17709,6 +17709,56 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
+    <title>2025 Plans &amp; Goals 年度计划</title>
+    <url>//2024-12-31-2025-plans-goals/</url>
+    <content><![CDATA[<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><p>2025年, 可以多一些前瞻性的思考, 技术视野也一定要宽广一些. 不要每天被困在一亩三分地的业务里绕圈圈. 多一些尝试以及实践.</p>
+<h2 id="深度"><a href="#深度" class="headerlink" title="深度"></a>深度</h2><ul>
+<li><input disabled="" type="checkbox"> Java&#x2F;Unix网络编程, 如何编写一个高性能RPC框架<ul>
+<li><input disabled="" type="checkbox"> Netty架构以及设计</li>
+<li><input disabled="" type="checkbox"> 序列化问题, zero copy技术</li>
+<li><input disabled="" type="checkbox"> HTTP 1.1 chunked encoding &amp; k8s如何使用</li>
+<li><input disabled="" type="checkbox"> 长连接短连接</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 性能压测的方法论</li>
+</ul>
+<h2 id="广度"><a href="#广度" class="headerlink" title="广度"></a>广度</h2><ul>
+<li><input disabled="" type="checkbox"> 调度相关论文, 深入分析比对, 要注重实践!<ul>
+<li><input checked="" disabled="" type="checkbox"> CFS: 已经彻底理解了CFS的设计原理</li>
+<li><input checked="" disabled="" type="checkbox"> mesos: 已彻底了解, 文章后续补充</li>
+<li><input disabled="" type="checkbox"> nomad @Hashicorp</li>
+<li><input disabled="" type="checkbox"> sparrow hawk</li>
+<li><input disabled="" type="checkbox"> k8s 体系: yunikorn, volcano, godel 等架构以及与kube-sched的差异</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 流计算&#x2F;实时计算, spark<ul>
+<li><input disabled="" type="checkbox"> 搭建一个spark集群, 用户角度: 看下如何提交任务, 如何执行?</li>
+<li><input disabled="" type="checkbox"> Spark开发角度: 架构是怎样的? 内部是如何调度的?</li>
+<li><input disabled="" type="checkbox"> Adaptor开发角度: spark on k8s, mapreduce on k8s 具体资源管理是如何适配的:</li>
+</ul>
+</li>
+</ul>
+<h2 id="专利"><a href="#专利" class="headerlink" title="专利"></a>专利</h2><aside>
+💡
+
+<p>至少2篇! 不要懒!</p>
+</aside>
+
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 一种基于线程池的管理方案 GroupThreadPoolExecutor</li>
+</ul>
+<h1 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>annual-review</tag>
+        <tag>plans</tag>
+        <tag>goals</tag>
+        <tag>2025</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 AI 辅助修改开源项目的实践：以浏览器插件开发为例</title>
     <url>//2026-03-04-ai-assist-opensource-project/</url>
     <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在日常工作中，我经常使用 <a href="https://github.com/yorkxin/copy-as-markdown">Copy as Markdown</a> 这款浏览器扩展来复制网页链接为 Markdown 格式。但有一个痛点：复制的 URL 经常包含大量追踪参数（如 <code>spm</code>、<code>utm_*</code> 等），导致生成的链接非常冗长。</p>
@@ -17905,63 +17955,13 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>2025 Plans &amp; Goals 年度计划</title>
-    <url>//2024-12-31-2025-plans-goals/</url>
-    <content><![CDATA[<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><p>2025年, 可以多一些前瞻性的思考, 技术视野也一定要宽广一些. 不要每天被困在一亩三分地的业务里绕圈圈. 多一些尝试以及实践.</p>
-<h2 id="深度"><a href="#深度" class="headerlink" title="深度"></a>深度</h2><ul>
-<li><input disabled="" type="checkbox"> Java&#x2F;Unix网络编程, 如何编写一个高性能RPC框架<ul>
-<li><input disabled="" type="checkbox"> Netty架构以及设计</li>
-<li><input disabled="" type="checkbox"> 序列化问题, zero copy技术</li>
-<li><input disabled="" type="checkbox"> HTTP 1.1 chunked encoding &amp; k8s如何使用</li>
-<li><input disabled="" type="checkbox"> 长连接短连接</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"> 性能压测的方法论</li>
-</ul>
-<h2 id="广度"><a href="#广度" class="headerlink" title="广度"></a>广度</h2><ul>
-<li><input disabled="" type="checkbox"> 调度相关论文, 深入分析比对, 要注重实践!<ul>
-<li><input checked="" disabled="" type="checkbox"> CFS: 已经彻底理解了CFS的设计原理</li>
-<li><input checked="" disabled="" type="checkbox"> mesos: 已彻底了解, 文章后续补充</li>
-<li><input disabled="" type="checkbox"> nomad @Hashicorp</li>
-<li><input disabled="" type="checkbox"> sparrow hawk</li>
-<li><input disabled="" type="checkbox"> k8s 体系: yunikorn, volcano, godel 等架构以及与kube-sched的差异</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"> 流计算&#x2F;实时计算, spark<ul>
-<li><input disabled="" type="checkbox"> 搭建一个spark集群, 用户角度: 看下如何提交任务, 如何执行?</li>
-<li><input disabled="" type="checkbox"> Spark开发角度: 架构是怎样的? 内部是如何调度的?</li>
-<li><input disabled="" type="checkbox"> Adaptor开发角度: spark on k8s, mapreduce on k8s 具体资源管理是如何适配的:</li>
-</ul>
-</li>
-</ul>
-<h2 id="专利"><a href="#专利" class="headerlink" title="专利"></a>专利</h2><aside>
-💡
-
-<p>至少2篇! 不要懒!</p>
-</aside>
-
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 一种基于线程池的管理方案 GroupThreadPoolExecutor</li>
-</ul>
-<h1 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>life</category>
-      </categories>
-      <tags>
-        <tag>annual-review</tag>
-        <tag>plans</tag>
-        <tag>goals</tag>
-        <tag>2025</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MacBook Neo 发布：致我们终将逝去的 2015，以及永不过时的偏执</title>
     <url>//2026-03-04-macbook-neo-release/</url>
     <content><![CDATA[<p>2026 年 03 月 04 日 23:00:00，Apple Newsroom 更新了。</p>
 <p>等了一整天，MacBook Neo 终于发布了。</p>
 <p><img data-src="https://www.apple.com/newsroom/images/2026/03/say-hello-to-macbook-neo/article/Apple-MacBook-Neo-hero-260304_big.jpg.large.jpg" alt="MacBook Neo"></p>
 <p>3 月 6 日上午 9 点接受预购，3 月 11 日发售。</p>
-<p>我的 MacBook 2015 也可以准备退休了——如果我真的决定买的话。</p>
+<p>我的 MacBook 2016 也可以准备退休了——如果我真的决定买的话。</p>
 <h2 id="为什么关注-MacBook-Neo？"><a href="#为什么关注-MacBook-Neo？" class="headerlink" title="为什么关注 MacBook Neo？"></a>为什么关注 MacBook Neo？</h2><p>本来期待看到 Apple 继续坚持那种极致的、甚至有点偏执的设计思路。</p>
 <p>但实际并非如此。</p>
 <ul>
@@ -17984,7 +17984,7 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       <tags>
         <tag>Apple</tag>
         <tag>MacBook Neo</tag>
-        <tag>MacBook 2015</tag>
+        <tag>MacBook 2016</tag>
         <tag>数码生活</tag>
       </tags>
   </entry>
@@ -18331,6 +18331,22 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
+    <title>qemu-img 使用笔记</title>
+    <url>//2023-11-06-qemu-img/</url>
+    <content><![CDATA[<h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png" alt="Untitled"></p>
+<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>virtualization</tag>
+        <tag>qemu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Perf Tools 性能工具速查</title>
     <url>//2023-11-06-perf-tools/</url>
     <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>cpuz</p>
@@ -18353,22 +18369,6 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
         <tag>linux</tag>
         <tag>performance</tag>
         <tag>profiling</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>qemu-img 使用笔记</title>
-    <url>//2023-11-06-qemu-img/</url>
-    <content><![CDATA[<h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png" alt="Untitled"></p>
-<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>virtualization</tag>
-        <tag>qemu</tag>
       </tags>
   </entry>
   <entry>
