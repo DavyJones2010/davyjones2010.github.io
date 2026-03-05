@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">266</span>
+        <span class="site-state-item-count">238</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,134 +211,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-11-docker-summary-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-06-11-docker-summary-2/" class="post-title-link" itemprop="url">Docker的一些总结II</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-12 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-12T00:00:00+08:00">2022-06-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="exec到容器的原理"><a href="#exec到容器的原理" class="headerlink" title="exec到容器的原理"></a>exec到容器的原理</h1><p>本质是在host上新创建一个进程, 加入到已存在的docker容器的Linux Namespace中.</p>
-<h2 id="1-查看已有docker容器的namespace信息"><a href="#1-查看已有docker容器的namespace信息" class="headerlink" title="1. 查看已有docker容器的namespace信息"></a>1. 查看已有docker容器的namespace信息</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206122047763.svg"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span>
-<span class="token function">docker</span> inspect --format <span class="token string">'&#123;&#123; .State.Pid &#125;&#125;'</span> dockerContainerId
-<span class="token function">sudo</span> <span class="token function">ls</span> -l /proc/<span class="token variable">$pid</span>/ns<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="2-通过setns-系统调用-将新进程加入到已有docker容器的namespace中"><a href="#2-通过setns-系统调用-将新进程加入到已有docker容器的namespace中" class="headerlink" title="2. 通过setns()系统调用, 将新进程加入到已有docker容器的namespace中"></a>2. 通过setns()系统调用, 将新进程加入到已有docker容器的namespace中</h2><p>核心代码如下: </p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">int main<span class="token punctuation">(</span>int argc, char *argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-	int fd<span class="token punctuation">;</span>
-	fd <span class="token operator">=</span> open<span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>, O_RDONLY<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	if<span class="token punctuation">(</span>setns<span class="token punctuation">(</span>fd, <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">==</span>-1<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-		errExit<span class="token punctuation">(</span><span class="token string">"setns"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-	execvp<span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>, <span class="token operator">&amp;</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	errExit<span class="token punctuation">(</span><span class="token string">"execvp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./set_ns /proc/<span class="token variable">$pid</span>/ns/net /bin/sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>argv[1]: 即当前新进程要加入的Namesapce文件路径</li>
-<li>argv[2]: 即新进程要在Namesapce里运行的程序</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-06-11-docker-summary-2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-11-k8s-deep-dive/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -375,7 +247,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -505,7 +377,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -625,7 +497,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -757,7 +629,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -870,119 +742,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-04-love-death-robots/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-06-04-love-death-robots/" class="post-title-link" itemprop="url">爱死机第三季观后感</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-05 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-05T00:00:00+08:00">2022-06-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>144</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在这个阴雨连绵的端午, Netflix的爱死机第三季, 如期而至, 惊喜万分.<br>不需要任何PPT大话, 这个NETFLIX的Logo在我心中就意味着 <mark>奈飞出品, 必属竞品</mark></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051149708.png"></p>
-<hr>
-<p>第一集, 例行的机器人来到已经荒废的地球, 参观了各个阶层人群在末日时刻的,<br>例行地以局外人的角度幽默吐槽.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206051150581.png"><br><img data-src="https://s2.loli.net/2022/06/05/7g9AGjZH4t132ve.png" alt="1-1"><br><img data-src="https://s2.loli.net/2022/06/05/9XMwt2LFOshYeWp.png" alt="1-2"><br><img data-src="https://s2.loli.net/2022/06/05/wYeOh4a3FDqpIoE.png" alt="1-3"><br><img data-src="https://s2.loli.net/2022/06/05/QoUclBknD3W59wP.png" alt="1-4"><br><img data-src="https://s2.loli.net/2022/06/05/zp3IlVw6Ai79fYv.png" alt="1-5"></p>
-<hr>
-<p>最负盛誉的第九集, Jibaro</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022-06-04-love-death-robots/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-06-02-spring-annotation-on-interface/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1019,7 +778,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1139,7 +898,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1275,7 +1034,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1387,7 +1146,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1490,7 +1249,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-05-23-scheduler-api-design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1509,7 +1268,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-05-23-scheduler-api-design/" class="post-title-link" itemprop="url">资源调度API设计的思考</a>
+          <a href="/2022-05-23-scheduler-api-design/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1527,16 +1286,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
 
   
@@ -1546,7 +1296,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>722</span>
+      <span>825</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1564,7 +1314,9 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀.</p>
+          <p>layout: post<br>title: 资源调度API设计的思考<br>tags: [scheduler-design, api-design, scheduler-api]<br>category: tech-notes</p>
+<p>lang: zh</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀.</p>
 <h1 id="批量调度"><a href="#批量调度" class="headerlink" title="批量调度"></a>批量调度</h1><h2 id="amount-amp-minAmount-模式"><a href="#amount-amp-minAmount-模式" class="headerlink" title="amount &amp; minAmount 模式:"></a>amount &amp; minAmount 模式:</h2><h3 id="模式解释"><a href="#模式解释" class="headerlink" title="模式解释"></a>模式解释</h3><p>样例请求如下:</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">BatchParam</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">Integer</span> minAmount<span class="token punctuation">;</span>
@@ -1572,11 +1324,6 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>语义解释: </p>
-<ul>
-<li>minAmount: 代表请求方需求的最小的资源量. </li>
-<li>amount: 代表请求方需要的最大资源量.</li>
-</ul>
-<p>有点儿抽象, 我们站在scheduler的角度看.<br>批量调度资源, 资源不一定总会满足用户需求的资源, 此时就需要做个妥协,<br>如果能调度出来的资源量(realAmount)范围:</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022-05-23-scheduler-api-design/#more" rel="contents">
@@ -1646,7 +1393,7 @@ conn.close();<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1854,7 +1601,7 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2004,7 +1751,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2132,7 +1879,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2263,7 +2010,7 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2388,7 +2135,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2531,7 +2278,7 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2679,7 +2426,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2796,7 +2543,7 @@ L3 cache:                        <span class="token number">3</span> MiB<span ar
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2919,7 +2666,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3040,7 +2787,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3156,7 +2903,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3277,7 +3024,7 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3401,7 +3148,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3516,7 +3263,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3645,7 +3392,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3759,7 +3506,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3874,7 +3621,7 @@ options ndots:5<span aria-hidden="true" class="line-numbers-rows"><span></span><
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3987,7 +3734,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022-04-05-k8s-kubectl-cmd/" class="post-title-link" itemprop="url">常用的KubeCtl命令</a>
+          <a href="/2022-04-05-k8s-kubectl-cmd/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta-container">
@@ -4005,16 +3752,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
 
   
@@ -4024,7 +3762,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.1k</span>
+      <span>3.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -4042,7 +3780,8 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="个人习惯"><a href="#个人习惯" class="headerlink" title="个人习惯"></a>个人习惯</h1><p>在<code>~/.bash_profile</code>里增加alias: </p>
+          <p>layout: post<br>title: 常用的KubeCtl命令<br>subtitle: 常用的KubeCtl命令<br>tags: [‘code-snippets’, ‘tools’]<br>category: container-orchestration</p>
+<h1 id="个人习惯"><a href="#个人习惯" class="headerlink" title="个人习惯"></a>个人习惯</h1><p>在<code>~/.bash_profile</code>里增加alias: </p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">alias</span> <span class="token assign-left variable">k</span><span class="token operator">=</span><span class="token string">'kubectl'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h1 id="资源相关命令"><a href="#资源相关命令" class="headerlink" title="资源相关命令"></a>资源相关命令</h1><h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><h3 id="创建pod"><a href="#创建pod" class="headerlink" title="创建pod"></a>创建pod</h3><ul>
@@ -4053,8 +3792,6 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k apply -f my-pause.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
 <h3 id="列出pod-包含所在的node"><a href="#列出pod-包含所在的node" class="headerlink" title="列出pod(包含所在的node)"></a>列出pod(包含所在的node)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">k get pod -n kube-system -o wide<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="查看pod详情-包含所在的node"><a href="#查看pod详情-包含所在的node" class="headerlink" title="查看pod详情(包含所在的node)"></a>查看pod详情(包含所在的node)</h3>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022-04-05-k8s-kubectl-cmd/#more" rel="contents">
@@ -4124,7 +3861,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -4249,7 +3986,7 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:59:28" itemprop="dateModified" datetime="2026-03-05T22:59:28+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -4328,6 +4065,326 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-03-28-openapi-nexttoken/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-03-28-openapi-nexttoken/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-29 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-29T00:00:00+08:00">2022-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>layout: post<br>title: OpenAPI设计之NextToken<br>tags: [‘lessons-learned’, ‘java’, ‘next-token’, ‘openapi’]<br>category: tech-notes<br>lang: zh</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景:"></a>背景:</h1><p>在API设计时, 如果是<code>list</code>接口, 通常需要对返回的结果进行分页.</p>
+<h1 id="为啥需要分页"><a href="#为啥需要分页" class="headerlink" title="为啥需要分页?"></a>为啥需要分页?</h1><ol>
+<li>数据库层面: 防止由于没有limit, 导致从数据库中一次查询数据太多, 导致形成慢SQL: <ol>
+<li>导致mysql需要把结果放在内存, 从而导致整体MySQL内存占用增加, 甚至oom</li>
+<li>导致通过tcp数据库连接, 往client端传输耗时过久. 例如10MB的数据, 在100Mbps的带宽下需要几乎1秒</li>
+</ol>
+</li>
+<li>应用层面: 如果没有分页, 也很容易造成应用内存占用过多, 如果是Java应用很可能触发FGC等.</li>
+<li>前端: 如果不分页, 导致浏览器无法缓存大量数据, 卡死.<br>所以一般对于非宽表, 以500~2000作为pageSize较为合适.</li>
+</ol>
+<h1 id="方案1-pageNo-pageSize-方式"><a href="#方案1-pageNo-pageSize-方式" class="headerlink" title="方案1: pageNo+pageSize 方式"></a>方案1: pageNo+pageSize 方式</h1><h2 id="典型常规的分页写法"><a href="#典型常规的分页写法" class="headerlink" title="典型常规的分页写法"></a>典型常规的分页写法</h2><ul>
+<li>当页数少时, 如下第1页, 耗时0ms:</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employees  <span class="token keyword">order</span> <span class="token keyword">by</span> emp_no <span class="token keyword">desc</span> <span class="token keyword">limit</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token operator">|</span> emp_no <span class="token operator">|</span> birth_date <span class="token operator">|</span> first_name <span class="token operator">|</span> last_name <span class="token operator">|</span> gender <span class="token operator">|</span> hire_date  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token operator">|</span> <span class="token number">499999</span> <span class="token operator">|</span> <span class="token number">1958</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">01</span> <span class="token operator">|</span> Sachin     <span class="token operator">|</span> Tsukuda   <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1997</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">30</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">499998</span> <span class="token operator">|</span> <span class="token number">1956</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">05</span> <span class="token operator">|</span> Patricia   <span class="token operator">|</span> Breugel   <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1993</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">-</span><span class="token number">13</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">499997</span> <span class="token operator">|</span> <span class="token number">1961</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">03</span> <span class="token operator">|</span> Berhard    <span class="token operator">|</span> Lenart    <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1986</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">21</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>– 当页数多时, 如下到第300000&#x2F;3&#x3D;10w页, 耗时110ms: </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-03-28-openapi-nexttoken/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-03-27-container-ecosystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-03-27-container-ecosystem/" class="post-title-link" itemprop="url">容器生态的一些研究与对比</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-28T00:00:00+08:00">2022-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 23:03:16" itemprop="dateModified" datetime="2026-03-05T23:03:16+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>阿里云云产品</th>
+<th>aws云产品</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>容器服务</td>
+<td>ECI(Elastic Container Instance)</td>
+<td>ECS(Elastic Container Service)</td>
+<td>提供单纯的容器服务, 不涉及容器的编排等</td>
+</tr>
+<tr>
+<td>K8S集群管控服务</td>
+<td><a target="_blank" rel="noopener" href="https://www.aliyun.com/product/kubernetes">Dedicated ACK</a></td>
+<td>EKS</td>
+<td>可以基于各自的虚拟机实例, 作为Node, 在Node之上生产Pod</td>
+</tr>
+<tr>
+<td>Serverless</td>
+<td><a target="_blank" rel="noopener" href="https://www.aliyun.com/product/cs/ask">ASK</a></td>
+<td>Fargate</td>
+<td>在客户侧看到的是一个VirtualKubelet, kube-system空间下的管控组件也都是不可见的</td>
+</tr>
+<tr>
+<td>函数计算服务</td>
+<td>Lambda</td>
+<td>Function Compute</td>
+<td></td>
+</tr>
+<tr>
+<td>混合云扩容方案(虚拟机)</td>
+<td>ACK Anywhere</td>
+<td>EKS Anywhere</td>
+<td>本质都是通过可以扩展使用云上虚拟机作为Node</td>
+</tr>
+<tr>
+<td>混合云扩容方案(容器)</td>
+<td>Virtual Kubelet</td>
+<td>Virtual Kubelet</td>
+<td>本质都是通过VirtualKubelet集成在现有k8s集群中</td>
+</tr>
+</tbody></table>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h2 id="常见的几种方式"><a href="#常见的几种方式" class="headerlink" title="常见的几种方式"></a>常见的几种方式</h2><ol>
+<li>多租户全托管方式(Serverless)</li>
+</ol>
+<ul>
+<li>例如: 搭建了一个统一的redis&#x2F;HBase集群, 为不同租户设定不同的namespace, quota等</li>
+<li>优势: 用户侧接入简单方便, 但定制化的需求满足度与响应度可能不会很好. </li>
+<li>缺点: 系统侧运维复杂能力要求较高, 横向扩展能力有可能成为瓶颈.</li>
+<li>计费方式: 一般都是按量计费, 例如存储的使用量, API的调用量等</li>
+<li>典型例子: <ul>
+<li>大数据场景: <ul>
+<li><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/27800.html">MaxCompute</a></li>
+<li><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/187556.html">Lindorm Serverless型</a></li>
+</ul>
+</li>
+<li>容器场景: <a target="_blank" rel="noopener" href="https://www.aliyun.com/product/cs/ask">ASK</a>, 控制平面的组件是多租户共享的.</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>多租户半托管方式(Hosted)</li>
+</ol>
+<ul>
+<li>例如: 在阿里云上购买RDS, 选好规格之后, RDS就创建好了, 直接拿到url就能jdbc连接上去了.</li>
+<li>优势: 搭建成本低, 云产品会提供各种工具方便运维. 例如SQL审计工具, 白屏化的慢SQL查询与优化工具等.</li>
+<li>缺点: 仍然需要用户感知实例的存在, 需要部分介入运维(例如实例宕机的数据备份恢复等).</li>
+<li>典型例子: <ul>
+<li>数据库场景: <a target="_blank" rel="noopener" href="https://www.aliyun.com/product/rds/mysql">rds</a></li>
+<li>大数据场景: <a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/187556.html">Lindorm 普通型</a></li>
+<li>容器场景: <a target="_blank" rel="noopener" href="https://www.aliyun.com/product/kubernetes">ack</a></li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>单用户完全自建方式(SelfManaged)</li>
+</ol>
+<ul>
+<li>例如: 自己基于2个ECS, 每个上边都安装了mysql, 搭建了一个主备的mysql集群.</li>
+<li>优势: 用户侧可管控度极高</li>
+<li>缺点: 自建初期与后续成本高, 运维成本极高</li>
+<li>典型例子: <ul>
+<li>基于ZK的jar包构建zk集群</li>
+<li>基于CDH创建Hadoop集群</li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-03-27-container-ecosystem/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4353,14 +4410,14 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">441k</span>
+    <span title="站点总字数">437k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:41</span>
+    <span title="站点阅读时长">6:37</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
