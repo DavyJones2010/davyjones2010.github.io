@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-容器编排"><a href="/categories/container-orchestration/" rel="section"><i class="fa fa-box fa-fw"></i>容器编排</a></li><li class="menu-item menu-item-后端开发"><a href="/categories/backend-development/" rel="section"><i class="fa fa-server fa-fw"></i>后端开发</a></li><li class="menu-item menu-item-系统运维"><a href="/categories/devops/" rel="section"><i class="fa fa-cogs fa-fw"></i>系统运维</a></li><li class="menu-item menu-item-技术随笔"><a href="/categories/tech-notes/" rel="section"><i class="fa fa-pen-fancy fa-fw"></i>技术随笔</a></li><li class="menu-item menu-item-生活感悟"><a href="/categories/life/" rel="section"><i class="fa fa-heart fa-fw"></i>生活感悟</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -156,12 +156,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">261</span>
+        <span class="site-state-item-count">276</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,136 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-03-28-openapi-nexttoken/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022-03-28-openapi-nexttoken/" class="post-title-link" itemprop="url">OpenAPI设计之NextToken</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-29 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-29T00:00:00+08:00">2022-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景:"></a>背景:</h1><p>在API设计时, 如果是<code>list</code>接口, 通常需要对返回的结果进行分页.</p>
+<h1 id="为啥需要分页"><a href="#为啥需要分页" class="headerlink" title="为啥需要分页?"></a>为啥需要分页?</h1><ol>
+<li>数据库层面: 防止由于没有limit, 导致从数据库中一次查询数据太多, 导致形成慢SQL: <ol>
+<li>导致mysql需要把结果放在内存, 从而导致整体MySQL内存占用增加, 甚至oom</li>
+<li>导致通过tcp数据库连接, 往client端传输耗时过久. 例如10MB的数据, 在100Mbps的带宽下需要几乎1秒</li>
+</ol>
+</li>
+<li>应用层面: 如果没有分页, 也很容易造成应用内存占用过多, 如果是Java应用很可能触发FGC等.</li>
+<li>前端: 如果不分页, 导致浏览器无法缓存大量数据, 卡死.<br>所以一般对于非宽表, 以500~2000作为pageSize较为合适.</li>
+</ol>
+<h1 id="方案1-pageNo-pageSize-方式"><a href="#方案1-pageNo-pageSize-方式" class="headerlink" title="方案1: pageNo+pageSize 方式"></a>方案1: pageNo+pageSize 方式</h1><h2 id="典型常规的分页写法"><a href="#典型常规的分页写法" class="headerlink" title="典型常规的分页写法"></a>典型常规的分页写法</h2><ul>
+<li>当页数少时, 如下第1页, 耗时0ms:</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employees  <span class="token keyword">order</span> <span class="token keyword">by</span> emp_no <span class="token keyword">desc</span> <span class="token keyword">limit</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token operator">|</span> emp_no <span class="token operator">|</span> birth_date <span class="token operator">|</span> first_name <span class="token operator">|</span> last_name <span class="token operator">|</span> gender <span class="token operator">|</span> hire_date  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token operator">|</span> <span class="token number">499999</span> <span class="token operator">|</span> <span class="token number">1958</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">01</span> <span class="token operator">|</span> Sachin     <span class="token operator">|</span> Tsukuda   <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1997</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">30</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">499998</span> <span class="token operator">|</span> <span class="token number">1956</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">05</span> <span class="token operator">|</span> Patricia   <span class="token operator">|</span> Breugel   <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1993</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">-</span><span class="token number">13</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">499997</span> <span class="token operator">|</span> <span class="token number">1961</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">03</span> <span class="token operator">|</span> Berhard    <span class="token operator">|</span> Lenart    <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1986</span><span class="token operator">-</span><span class="token number">04</span><span class="token operator">-</span><span class="token number">21</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+-----------+--------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>– 当页数多时, 如下到第300000&#x2F;3&#x3D;10w页, 耗时110ms: </p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span>  <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employees  <span class="token keyword">order</span> <span class="token keyword">by</span> emp_no <span class="token keyword">desc</span> <span class="token keyword">limit</span> <span class="token number">300000</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token operator">|</span> emp_no <span class="token operator">|</span> birth_date <span class="token operator">|</span> first_name <span class="token operator">|</span> last_name  <span class="token operator">|</span> gender <span class="token operator">|</span> hire_date  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token operator">|</span>  <span class="token number">10024</span> <span class="token operator">|</span> <span class="token number">1958</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">05</span> <span class="token operator">|</span> Suzette    <span class="token operator">|</span> Pettey     <span class="token operator">|</span> F      <span class="token operator">|</span> <span class="token number">1997</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">19</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">10023</span> <span class="token operator">|</span> <span class="token number">1953</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">29</span> <span class="token operator">|</span> Bojan      <span class="token operator">|</span> Montemayor <span class="token operator">|</span> F      <span class="token operator">|</span> <span class="token number">1989</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">17</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">10022</span> <span class="token operator">|</span> <span class="token number">1952</span><span class="token operator">-</span><span class="token number">07</span><span class="token operator">-</span><span class="token number">08</span> <span class="token operator">|</span> Shahaf     <span class="token operator">|</span> Famili     <span class="token operator">|</span> M      <span class="token operator">|</span> <span class="token number">1995</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">22</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+------------+------------+------------+--------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.11</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022-03-28-openapi-nexttoken/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2022-03-27-container-ecosystem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,16 +377,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -445,16 +566,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -564,16 +676,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -681,16 +784,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -844,16 +938,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -988,16 +1073,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -1115,16 +1191,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -1239,16 +1306,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -1365,16 +1423,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -1505,16 +1554,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -1636,16 +1676,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -1758,7 +1789,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1766,7 +1797,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
+          <a href="/categories/%E4%B9%A6%E5%8D%95/" itemprop="url" rel="index"><span itemprop="name">书单</span></a>
         </span>
     </span>
 
@@ -1918,7 +1949,16 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">年度总结</span></a>
+        </span>
     </span>
 
   
@@ -1946,8 +1986,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>tags: [‘2021’, ‘annual-review’]<br>category: life</p>
-<p>2021年马上就要过去了, 是时候回顾一年的得失, 展望下未来了:</p>
+          <p>2021年马上就要过去了, 是时候回顾一年的得失, 展望下未来了:</p>
 <h1 id="0x00-工作总结"><a href="#0x00-工作总结" class="headerlink" title="0x00 工作总结"></a>0x00 工作总结</h1><p>一个字: “稳”</p>
 <ul>
 <li><p>稳定性上识别到了很多风险, perf tunning 等, 做的还不错. 全年无故障.<br>但”稳”另一方面, 也代表着没有惊喜, 没有突破. 这也是很头疼的点, 只能守着自己的一亩三分地, 找不到突破的方向.<br>个人认为瓶颈可能并不在技术侧. </p>
@@ -1982,6 +2021,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
 <li>由于对操作系统硬件的更深一层理解, 从而更加能理解Java NIO的编程模型.</li>
 <li>深入研究了zkclient的连接以及传输机制.</li>
 </ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021-12-31-summary-for-2021/#more" rel="contents">
@@ -2051,16 +2091,7 @@ CMD <span class="token punctuation">[</span><span class="token string">"node"</s
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -2191,16 +2222,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -2309,16 +2331,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -2464,16 +2477,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -2590,16 +2594,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -2711,16 +2706,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -2832,16 +2818,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -2960,16 +2937,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -3081,16 +3049,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -3223,16 +3182,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -3416,16 +3366,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -3565,16 +3506,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -3711,16 +3643,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -3820,6 +3743,121 @@ clientChannel<span class="token punctuation">.</span><span class="token function
   
   
 
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-11-06-resolution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-11-06-resolution/" class="post-title-link" itemprop="url">关于分辨率的常识</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-07T00:00:00+08:00">2021-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>148</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
+<li>480P: 720*480</li>
+<li>720P: 1280x720</li>
+<li>1080P: 1920x1080</li>
+<li>2K: 2560x1440</li>
+<li>4K:</li>
+<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
+</ul>
+<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
+<li>字母P代表: Progressive Scan, 即逐行扫描</li>
+<li>480P代表:</li>
+</ul>
+<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
+<li>30Hz</li>
+<li>60Hz</li>
+<li></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-11-06-resolution/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-11-06-mac-init/">
 
@@ -3857,16 +3895,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -3951,130 +3980,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-11-06-resolution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-11-06-resolution/" class="post-title-link" itemprop="url">关于分辨率的常识</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-07T00:00:00+08:00">2021-11-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>148</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
-<li>480P: 720*480</li>
-<li>720P: 1280x720</li>
-<li>1080P: 1920x1080</li>
-<li>2K: 2560x1440</li>
-<li>4K:</li>
-<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
-</ul>
-<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
-<li>字母P代表: Progressive Scan, 即逐行扫描</li>
-<li>480P代表:</li>
-</ul>
-<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
-<li>30Hz</li>
-<li>60Hz</li>
-<li></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-11-06-resolution/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-11-03-java-mdc-put-npe/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4111,16 +4016,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -4318,16 +4214,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -4466,16 +4353,7 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
-        </span>
+      <time title="修改时间：2026-03-05 23:16:28" itemprop="dateModified" datetime="2026-03-05T23:16:28+08:00">2026-03-05</time>
     </span>
 
   
@@ -4542,130 +4420,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-10-17-weekend-summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-10-17-weekend-summary/" class="post-title-link" itemprop="url">2021年10月第三周</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-10-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-10-18T00:00:00+08:00">2021-10-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:15:05" itemprop="dateModified" datetime="2026-03-05T23:15:05+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>796</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>闲适的周末, 读完了科幻小说: &lt;穿越土星环&gt;, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环.<br>在绝境中努力求生, 最后在AI的帮助下, 受苦受难, 艰难度过一年, 最终返回地球的故事.<br>个人感觉比较平淡一般, 乏善可陈. 没有特别瑰丽的想象. 从文笔的优美, 科幻的硬核程度, 想象的宏大等方面, 跟&lt;三体&gt;比起来, 差的太多了.</p>
-<p>看了 &lt;殷瑗小聚&gt; 之 &lt;前&amp;后赤壁赋&gt; , 听着蒋勋老师不焦不躁的富有磁性的声音, 娓娓道来. 才真正体会到这篇文章是如此之美, 为何会这样美.<br>例如摘抄如下: </p>
-<blockquote>
-<p>东坡的由来 <br><br>我觉得随缘可能是生命里面最好的部分<br>因为你不计较了, 因为 轼 这个字对他来讲, 本来是一个很得意的字. 东坡这个字反而很随缘. 你到东边的坡地了, 你就叫自己东坡. 我想那个随缘变成他的快乐.</p>
-</blockquote>
-<blockquote>
-<p>月出于东山之上. <br><br>我常常用赤壁赋在观察我自己生活的周遭环境. 特别是到月圆的晚上.<br>所以你可以想象到, 一千年以前苏东坡在生命里面追寻的东西, 我们今天一样可以碰到, 他并不遥远.</p>
-</blockquote>
-<blockquote>
-<p>扣舷而歌之 <br><br>很有一种姿态上的美<br>如果我今天唱歌, 很正经的唱歌, 跟我躺在船边, 扣着那个船舷唱歌, 感觉是不太一样的, 因为这里面有一种节奏感.<br>我觉得人生一定要找到这种快乐. 这种快乐是你忽然觉得你放松了. 你在人生上没有什么东西要计较, 也没有什么东西要做作.</p>
-</blockquote>
-<p>如果在学校如果老师能这样解析, 那可能层次就又不一样了. 还好不算晚, 我们人生毕竟还有那么长呢.</p>
-<p>提前过了自己31岁生日, 已经踏入32个年头了, 回想起来有种恍然若梦的不真实感. 感觉自己仍然是个少年, 仍然赤脚在故乡的天空下奔跑, 在金黄的麦田里大声谈吐.<br>想起了苏轼的&lt;寒食帖&gt;中所言: </p>
-<blockquote>
-<p>闇中偷负去，夜半真有力。 <br><br>何殊病少年，病起头已白。</p>
-</blockquote>
-<p>玩了玩&lt;如龙0&gt; &lt;绝对绝望少女&gt;, 只玩了片刻, 却不怎么能提起兴趣. 可能是上了年纪吧. </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-10-17-weekend-summary/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/archives/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -4691,14 +4445,14 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">439k</span>
+    <span title="站点总字数">441k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:39</span>
+    <span title="站点阅读时长">6:41</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
