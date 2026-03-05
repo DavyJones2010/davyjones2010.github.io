@@ -107,68 +107,6 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       </tags>
   </entry>
   <entry>
-    <title>k8s基础架构笔记</title>
-    <url>//2021-08-31-k8s-architect/</url>
-    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
-<li>APIServer<ul>
-<li>认证</li>
-<li>鉴权</li>
-<li>准入控制<ul>
-<li>Quota</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Scheduler</li>
-<li>Kubelet</li>
-<li>Etcd</li>
-<li>Kube-Controller Manager包括<ul>
-<li>ReplicaSet Controller</li>
-<li>CDR的Controller</li>
-<li>AdmissionController </li>
-<li>等</li>
-</ul>
-</li>
-</ul>
-<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
-<li>Cluster-scoped resources<ul>
-<li>如node</li>
-</ul>
-</li>
-<li>Namespace-scoped resources<ul>
-<li>如pod</li>
-</ul>
-</li>
-</ul>
-<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
-<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
-<li>workloads</li>
-</ul>
-<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
-<li>Node</li>
-<li>Pod</li>
-</ul>
-<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
-<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
-<li>Deployment: 后端用ESS, 区别是什么? </li>
-<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
-<li>StatefulSets: </li>
-<li>Job&amp;CronJob:</li>
-</ul>
-<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
-<li>Operator &#x3D; 资源(CRD) + Controller</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>CDR</li>
-<li>OAM</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>k8s-architect</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>K8S调度器研究</title>
     <url>//2021-09-03-kube-scheduler/</url>
     <content><![CDATA[<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="关于kube-scheduler的资源记账"><a href="#关于kube-scheduler的资源记账" class="headerlink" title="关于kube-scheduler的资源记账:"></a>关于kube-scheduler的资源记账:</h2><h3 id="以为的记账流程"><a href="#以为的记账流程" class="headerlink" title="以为的记账流程:"></a>以为的记账流程:</h3><ul>
@@ -291,6 +229,68 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       <tags>
         <tag>kubernetes</tag>
         <tag>scheduling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记</title>
+    <url>//2021-08-31-k8s-architect/</url>
+    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
+<li>APIServer<ul>
+<li>认证</li>
+<li>鉴权</li>
+<li>准入控制<ul>
+<li>Quota</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scheduler</li>
+<li>Kubelet</li>
+<li>Etcd</li>
+<li>Kube-Controller Manager包括<ul>
+<li>ReplicaSet Controller</li>
+<li>CDR的Controller</li>
+<li>AdmissionController </li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
+<li>Cluster-scoped resources<ul>
+<li>如node</li>
+</ul>
+</li>
+<li>Namespace-scoped resources<ul>
+<li>如pod</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
+<li>workloads</li>
+</ul>
+<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
+<li>Node</li>
+<li>Pod</li>
+</ul>
+<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
+<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
+<li>Deployment: 后端用ESS, 区别是什么? </li>
+<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
+<li>StatefulSets: </li>
+<li>Job&amp;CronJob:</li>
+</ul>
+<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
+<li>Operator &#x3D; 资源(CRD) + Controller</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>CDR</li>
+<li>OAM</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -437,26 +437,6 @@ fstatus, _ :<span class="token operator">=</span> cmd.Flags<span class="token pu
       <tags>
         <tag>golang</tag>
         <tag>cobra</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>心理学之本我 自我 超我</title>
-    <url>//2021-09-08-ego-super-ego/</url>
-    <content><![CDATA[<p>怪诞行为学有感.</p>
-<h1 id="本我-Id"><a href="#本我-Id" class="headerlink" title="本我: Id"></a>本我: Id</h1><p>本我只遵循一个原则——快樂原則（pleasure principle）<br>而不關心社會的規則，意为追求个体的生物性需求，如食物的饱足与性欲的满足，以及避免痛苦或不愉快[7]。它不能忍受任何挫折，就像一個被溺愛的小孩子，想要甚麽就要甚麽[8]:88。弗洛伊德认为，享乐原则的影响最大化是在人的婴幼儿时期，也是本我思想表现最突出的时候。本我沒有對錯判斷力[9]，也没有想自我破壞的慾望[10]。</p>
-<hr>
-<h1 id="自我-Ego"><a href="#自我-Ego" class="headerlink" title="自我: Ego"></a>自我: Ego</h1><p>自我在自身和其環境中進行調節，如延遲享樂[14]。佛洛伊德認為自我是人格的執行者。</p>
-<p>意涵：個人的生物欲望和社會規範之間相互協調折衷，所表現出來的「自我」。</p>
-<hr>
-<h1 id="超我-super-ego"><a href="#超我-super-ego" class="headerlink" title="超我: super-ego"></a>超我: super-ego</h1><p>人格結構中的管制者，由道德原則支配，想要完美[17]，屬於人格結構中的道德部份。<br>佛洛伊德的學說中，超我是父親形象與文化規範的符號同化，由於對客體的衝突，超我傾向於站在「本我」的原始渴望的反對立場[18]，而對「自我」帶有侵略性。超我以道德心的形式運作[19]，維持個體的道德感、迴避禁忌，而令自我左右為難。超我的形成發生在戀母情結的崩解時期[20]，是一種對父親形象的內化認同，由於小男孩無法成功地維持母親成為其愛戀的客體，對父親可能對其的閹割報復或懲罰產生阉割情结（castration anxiety），進而轉為認同父親。<br>意涵：因應社會文化的行為規範和道德期待，形成「超我」的動力。</p>
-<hr>
-<p>本我、自我、超我構成了人的完整的人格。人的一切心理活動都可以從它們之間的聯繫中得到合理的解釋，自我是永久存在的，而超我和本我又幾乎是永久對立的，為了協調本我和超我之間的矛盾，自我需要進行調節[21]。若個人承受的來自本我、超我和外界壓力過大而產生焦慮時，自我就會幫助啟動防御機制，並稱為心理防衛機制或自我防衛機制。防御機制有：壓抑、否認、退行、抵消、投射、昇華等等。</p>
-<p>本我對應了人腦中央部位，自我對應了前額葉皮質， 超我對應了眶額葉皮層[22]。</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>psychology</tag>
-        <tag>ego</tag>
-        <tag>super-ego</tag>
       </tags>
   </entry>
   <entry>
@@ -625,6 +605,26 @@ fstatus, _ :<span class="token operator">=</span> cmd.Flags<span class="token pu
         <tag>kubernetes</tag>
         <tag>scheduling</tag>
         <tag>kube-scheduler</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>心理学之本我 自我 超我</title>
+    <url>//2021-09-08-ego-super-ego/</url>
+    <content><![CDATA[<p>怪诞行为学有感.</p>
+<h1 id="本我-Id"><a href="#本我-Id" class="headerlink" title="本我: Id"></a>本我: Id</h1><p>本我只遵循一个原则——快樂原則（pleasure principle）<br>而不關心社會的規則，意为追求个体的生物性需求，如食物的饱足与性欲的满足，以及避免痛苦或不愉快[7]。它不能忍受任何挫折，就像一個被溺愛的小孩子，想要甚麽就要甚麽[8]:88。弗洛伊德认为，享乐原则的影响最大化是在人的婴幼儿时期，也是本我思想表现最突出的时候。本我沒有對錯判斷力[9]，也没有想自我破壞的慾望[10]。</p>
+<hr>
+<h1 id="自我-Ego"><a href="#自我-Ego" class="headerlink" title="自我: Ego"></a>自我: Ego</h1><p>自我在自身和其環境中進行調節，如延遲享樂[14]。佛洛伊德認為自我是人格的執行者。</p>
+<p>意涵：個人的生物欲望和社會規範之間相互協調折衷，所表現出來的「自我」。</p>
+<hr>
+<h1 id="超我-super-ego"><a href="#超我-super-ego" class="headerlink" title="超我: super-ego"></a>超我: super-ego</h1><p>人格結構中的管制者，由道德原則支配，想要完美[17]，屬於人格結構中的道德部份。<br>佛洛伊德的學說中，超我是父親形象與文化規範的符號同化，由於對客體的衝突，超我傾向於站在「本我」的原始渴望的反對立場[18]，而對「自我」帶有侵略性。超我以道德心的形式運作[19]，維持個體的道德感、迴避禁忌，而令自我左右為難。超我的形成發生在戀母情結的崩解時期[20]，是一種對父親形象的內化認同，由於小男孩無法成功地維持母親成為其愛戀的客體，對父親可能對其的閹割報復或懲罰產生阉割情结（castration anxiety），進而轉為認同父親。<br>意涵：因應社會文化的行為規範和道德期待，形成「超我」的動力。</p>
+<hr>
+<p>本我、自我、超我構成了人的完整的人格。人的一切心理活動都可以從它們之間的聯繫中得到合理的解釋，自我是永久存在的，而超我和本我又幾乎是永久對立的，為了協調本我和超我之間的矛盾，自我需要進行調節[21]。若個人承受的來自本我、超我和外界壓力過大而產生焦慮時，自我就會幫助啟動防御機制，並稱為心理防衛機制或自我防衛機制。防御機制有：壓抑、否認、退行、抵消、投射、昇華等等。</p>
+<p>本我對應了人腦中央部位，自我對應了前額葉皮質， 超我對應了眶額葉皮層[22]。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>psychology</tag>
+        <tag>ego</tag>
+        <tag>super-ego</tag>
       </tags>
   </entry>
   <entry>
@@ -1322,6 +1322,100 @@ pkg<span class="token operator">/</span>scheduler<span class="token operator">/<
       </tags>
   </entry>
   <entry>
+    <title>kube-scheduler笔记之Queue研究</title>
+    <url>//2021-09-08-kube-scheduler-queue/</url>
+    <content><![CDATA[<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type PriorityQueue struct &#123;
+
+   &#x2F;&#x2F; backoff队列
+   podBackoff *util.PodBackoff
+   &#x2F;&#x2F; backoff队列, 与podBackoff区别?
+   podBackoffQ *util.Heap
+  
+   &#x2F;&#x2F; activeQ is heap structure that scheduler actively looks at to find pods to
+   &#x2F;&#x2F; schedule. Head of heap is the highest priority pod.
+   activeQ *util.Heap
+
+   &#x2F;&#x2F; unschedulable队列
+   unschedulableQ *UnschedulablePodsMap
+  
+   &#x2F;&#x2F; 抢占式调度成功后, 将preemptor放到nominatedPodMap里
+   nominatedPods *nominatedPodMap
+  
+   &#x2F;&#x2F; 全局调度周期的递增序号，当pod pop的时候会递增
+   schedulingCycle int64
+   &#x2F;&#x2F; 当未调度的pod重新被添加到activeQueue中会保存schedulingCycle到moveRequestCycle中
+   moveRequestCycle int64
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="核心解读"><a href="#核心解读" class="headerlink" title="核心解读"></a>核心解读</h2><ol>
+<li>Heap结构, 即为最大堆.</li>
+<li>activeQ: 存储所有等待调度的Pod的队列, 根据pod.Spec.Priority来构建最大堆</li>
+<li>podBackoffQ: 存储在多个schedulingCycle中依旧调度失败的情况下，则会通过之前说的backOff机制，延迟等待调度的时间. 但该backoffQ是纯的PodHeap, 并没有存储pod的backOff的具体信息</li>
+<li>podBackoff: 类似一个记分板, backoff的计数器，最后一次更新的时间等</li>
+<li>unschedulableQ: 本质上是&lt;podName, podInfo&gt;的map, 而不是一个队列.</li>
+</ol>
+<h2 id="重点疑问"><a href="#重点疑问" class="headerlink" title="重点疑问"></a>重点疑问</h2><ol>
+<li><p>在什么时候Pod被加入到activeQ中? 何时加入podBackoffQ中? 何时加入unschedulableQ中? Pod在这几个Q中间是如何变化的?</p>
+<ol>
+<li></li>
+</ol>
+</li>
+<li><p>podBackoffQ是按照什么来划分优先级的?</p>
+<ol>
+<li>如果仍然是按照优先级来, 如何防止高优先级Pod反复拉起, 反复失败?</li>
+<li>应该是按照调度失败次数? 还是调度等待时长?</li>
+<li>根据podsCompareBackoffCompleted, 按照podBackoffTime, 即调度失败次数. 调度等待时长与调度失败次数有一个函数关系.<ol>
+<li>如果pod从podBackoffQ中移入到activeQ中, 接下来调度失败, 重新移入podBackoffQ中, 此时podBackoffTime会重置么?</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>从unschedulableQ中移出pod的优先级是怎样的?</p>
+<ol>
+<li></li>
+</ol>
+</li>
+<li><p>Pod调度失败的终止条件是什么? 还是说没有终止条件? 始终在几个Queue中打转?</p>
+<ol>
+<li>对的. 除非显式调用api删除掉该Pod</li>
+</ol>
+</li>
+<li><p>各个队列有大小限制么? 如何防止Pod请求积压过多导致Queue(内存)满了?</p>
+</li>
+</ol>
+<p><img data-src="https://bbsmax.ikafan.com/static/L3Byb3h5L2h0dHBzL2ltZzIwMTguY25ibG9ncy5jb20vYmxvZy8xNTA2NzI0LzIwMjAwMS8xNTA2NzI0LTIwMjAwMTEzMTEwMzU5Mzg1LTM2MDkzMzYzNS5wbmc=.jpg" alt="img"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.shuzhiduo.com/A/rV576rRXJP/">https://www.shuzhiduo.com/A/rV576rRXJP/</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>scheduling</tag>
+        <tag>kube-scheduler</tag>
+        <tag>kube-scheduler-queue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>精神训练与身体训练</title>
+    <url>//2021-09-08-physical-psychological/</url>
+    <content><![CDATA[<blockquote>
+<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
+</blockquote>
+<blockquote>
+<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
+</blockquote>
+<blockquote>
+<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
+</blockquote>
+<p>所以要注意加强锻炼身体哦~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>snippets</tag>
+        <tag>physical</tag>
+        <tag>psychological</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>kube-scheduler笔记</title>
     <url>//2021-09-08-kube-scheduler-overview/</url>
     <content><![CDATA[<h2 id="一言概之"><a href="#一言概之" class="headerlink" title="一言概之"></a>一言概之</h2><p>将PodSpec.NodeName为空的Pods逐个地，经过预选(Predicates)和优选(Priorities)两个步骤，挑选最合适的Node作为该Pod的Destination。</p>
@@ -1685,100 +1779,6 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
         <tag>kubernetes</tag>
         <tag>scheduling</tag>
         <tag>kube-scheduler</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kube-scheduler笔记之Queue研究</title>
-    <url>//2021-09-08-kube-scheduler-queue/</url>
-    <content><![CDATA[<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type PriorityQueue struct &#123;
-
-   &#x2F;&#x2F; backoff队列
-   podBackoff *util.PodBackoff
-   &#x2F;&#x2F; backoff队列, 与podBackoff区别?
-   podBackoffQ *util.Heap
-  
-   &#x2F;&#x2F; activeQ is heap structure that scheduler actively looks at to find pods to
-   &#x2F;&#x2F; schedule. Head of heap is the highest priority pod.
-   activeQ *util.Heap
-
-   &#x2F;&#x2F; unschedulable队列
-   unschedulableQ *UnschedulablePodsMap
-  
-   &#x2F;&#x2F; 抢占式调度成功后, 将preemptor放到nominatedPodMap里
-   nominatedPods *nominatedPodMap
-  
-   &#x2F;&#x2F; 全局调度周期的递增序号，当pod pop的时候会递增
-   schedulingCycle int64
-   &#x2F;&#x2F; 当未调度的pod重新被添加到activeQueue中会保存schedulingCycle到moveRequestCycle中
-   moveRequestCycle int64
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="核心解读"><a href="#核心解读" class="headerlink" title="核心解读"></a>核心解读</h2><ol>
-<li>Heap结构, 即为最大堆.</li>
-<li>activeQ: 存储所有等待调度的Pod的队列, 根据pod.Spec.Priority来构建最大堆</li>
-<li>podBackoffQ: 存储在多个schedulingCycle中依旧调度失败的情况下，则会通过之前说的backOff机制，延迟等待调度的时间. 但该backoffQ是纯的PodHeap, 并没有存储pod的backOff的具体信息</li>
-<li>podBackoff: 类似一个记分板, backoff的计数器，最后一次更新的时间等</li>
-<li>unschedulableQ: 本质上是&lt;podName, podInfo&gt;的map, 而不是一个队列.</li>
-</ol>
-<h2 id="重点疑问"><a href="#重点疑问" class="headerlink" title="重点疑问"></a>重点疑问</h2><ol>
-<li><p>在什么时候Pod被加入到activeQ中? 何时加入podBackoffQ中? 何时加入unschedulableQ中? Pod在这几个Q中间是如何变化的?</p>
-<ol>
-<li></li>
-</ol>
-</li>
-<li><p>podBackoffQ是按照什么来划分优先级的?</p>
-<ol>
-<li>如果仍然是按照优先级来, 如何防止高优先级Pod反复拉起, 反复失败?</li>
-<li>应该是按照调度失败次数? 还是调度等待时长?</li>
-<li>根据podsCompareBackoffCompleted, 按照podBackoffTime, 即调度失败次数. 调度等待时长与调度失败次数有一个函数关系.<ol>
-<li>如果pod从podBackoffQ中移入到activeQ中, 接下来调度失败, 重新移入podBackoffQ中, 此时podBackoffTime会重置么?</li>
-</ol>
-</li>
-</ol>
-</li>
-<li><p>从unschedulableQ中移出pod的优先级是怎样的?</p>
-<ol>
-<li></li>
-</ol>
-</li>
-<li><p>Pod调度失败的终止条件是什么? 还是说没有终止条件? 始终在几个Queue中打转?</p>
-<ol>
-<li>对的. 除非显式调用api删除掉该Pod</li>
-</ol>
-</li>
-<li><p>各个队列有大小限制么? 如何防止Pod请求积压过多导致Queue(内存)满了?</p>
-</li>
-</ol>
-<p><img data-src="https://bbsmax.ikafan.com/static/L3Byb3h5L2h0dHBzL2ltZzIwMTguY25ibG9ncy5jb20vYmxvZy8xNTA2NzI0LzIwMjAwMS8xNTA2NzI0LTIwMjAwMTEzMTEwMzU5Mzg1LTM2MDkzMzYzNS5wbmc=.jpg" alt="img"></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.shuzhiduo.com/A/rV576rRXJP/">https://www.shuzhiduo.com/A/rV576rRXJP/</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>scheduling</tag>
-        <tag>kube-scheduler</tag>
-        <tag>kube-scheduler-queue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>精神训练与身体训练</title>
-    <url>//2021-09-08-physical-psychological/</url>
-    <content><![CDATA[<blockquote>
-<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
-</blockquote>
-<blockquote>
-<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
-</blockquote>
-<blockquote>
-<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
-</blockquote>
-<p>所以要注意加强锻炼身体哦~</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>snippets</tag>
-        <tag>physical</tag>
-        <tag>psychological</tag>
       </tags>
   </entry>
   <entry>
@@ -2342,39 +2342,6 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
       </tags>
   </entry>
   <entry>
-    <title>2021年10月第四周</title>
-    <url>//2021-10-23-weekend-summary/</url>
-    <content><![CDATA[<p>周末, 深秋, 天寒, 江南, 清冷. 因感冒而略微发烧, 咳嗽残病的两天. 在病榻上, 突然想起杜甫在&lt;登高&gt;中所言:</p>
-<blockquote>
-<p>无边落木萧萧下，不尽长江滚滚来。<br>万里悲秋常作客，百年多病独登台。</p>
-</blockquote>
-<p>如此的应景, 引发强烈的内心共鸣.<br>仿佛秋季就应该属于杜甫, 毕竟写了如此之多悲秋之诗;<br>伤病也应该属于这位悲苦的诗人, 毕竟不是在生病, 就是在生病的路上.</p>
-<blockquote>
-<p>亲朋无一字, 老病有孤舟  —&lt;登岳阳楼&gt;</p>
-</blockquote>
-<p>想到此眼前不禁浮现一个眉头紧皱的穷酸倒霉鬼形象, 唉声叹气, 自怨自艾, 吊着书袋, 不觉苦笑, 莞尔.</p>
-<hr>
-<p>周六晚上看了&lt;八角亭迷雾&gt;, 迷雾剧场出品, 本来保有一丝期待, 结果只看了三四集便兴致寥寥, 遂决定弃剧. </p>
-<p>一是选角绝对是最大败笔, 根本想不到”名动街坊邻里的大美女”竟然是表情僵硬, 眉头紧皱, 披头散发, 苦大仇深, 容貌平庸之状. 实在是难以缺乏共鸣. 可能是带资进组吧.<br>另外实在是看不出来玄珠是有什么样的魅力, 能让老板说出 “只要你一句话, 我便跟她离婚” 这句话. 原配从身材样貌, 没看出来那点儿比她差的. </p>
-<p>二是角色塑造不合情理, 没有一个正常人. 不是在爆发, 就是在爆发的路上, 拧巴纠结, 没有一点正常人的理智. 大哥玄梁是个因为妹妹被杀导致对女儿病态关爱的PTSD患者,<br>二姐因为生不出孩子导致几乎神经病, 双胞胎妹妹玄珠是18年都跟家里人断绝联系的绝情鬼. 妈妈是个糊涂鬼, 女儿是个智商为负的叛逆鬼, 警察是个无能的拖延鬼, 老师是个有跟踪癖好的变态鬼…等等不一而足.<br>三是整体气氛太压抑, 苦大仇深, 剧情推进节奏太慢. 观众仿佛也被一同浸没在水中, 难以呼吸.   </p>
-<p>辣眼睛辣眼睛, 罢了罢了.<br>看了虎嗅上安利&lt;沙丘&gt;的文章, 有点心动, 下载来原著, 病床上安心读一读, 洗洗眼吧. </p>
-<p>P.S. 杭城桂花开了, 由于气候原因, 比往年都要晚一些. 满城都氤氲在桂花的香味中, 家中打开窗户, 花香便随风潜入, 令人心旷神怡. 给病榻上的人一丝丝安慰.<br>小区中随处漫步, 金桂居多, 丹桂虽少但更为别致, 还有些由于之前异变的气温导致误开的樱花.</p>
-<blockquote>
-<p>江南忆<br/><br>最忆是杭州<br/><br>山寺月中寻桂子<br/><br>郡亭枕上看潮头<br/><br>何日更重游<br/><br>&lt;忆江南&gt; 白居易</p>
-</blockquote>
-<p>P.S.2 </p>
-<blockquote>
-<p>宁可食无肉，不可居无竹。<br/><br>无肉令人瘦，无竹令人俗。<br/><br>人瘦尚可肥，士俗不可医。<br/><br>旁人笑此言，似高还似痴。<br/><br>若对此君仍大嚼，世间那有扬州鹤？<br/><br>&lt;於潜僧绿筠轩&gt; 苏轼</p>
-</blockquote>
-<p>才知道东坡的这首诗, 就是在出任杭州通判时, 从富阳 新登 取道浮云岭, 进入於潜县境”视政”时写的.<br>於潜僧慧觉在於潜县南二里的丰国乡寂照寺出家。寺内有绿筠轩，以竹点缀环境，十分幽雅。苏轼与僧慧觉游绿筠轩时，写下了这首《於潜僧绿筠轩》。<br>具体位置应该是现在杭州市临安区於潜镇附近.<br>有时间可以去找一找. </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>weekend-summary</tag>
-        <tag>diary</tag>
-        <tag>books</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2021年10月第五周</title>
     <url>//2021-10-30-weekend-summary/</url>
     <content><![CDATA[<p>第一次完整地参加了一次代码大赛, 即阿里云举办的 <a href="https://code83.ide.aliyun.com/billboard">83行代码</a>.<br>整体没有特别投入, 所以最终成绩也不算特别好. </p>
@@ -2428,6 +2395,39 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
 <p>后续有这种活动, 还要继续参与, 简直是小投入, 大回报, 其乐无穷~</p>
 <hr>
 <p>另外, 附加一个网站, 可以在线看到数据结构的生成逻辑, 十分方便: <a href="https://www.cs.usfca.edu/~galles/visualization/">Data Structure Visualizations</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>weekend-summary</tag>
+        <tag>diary</tag>
+        <tag>books</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2021年10月第四周</title>
+    <url>//2021-10-23-weekend-summary/</url>
+    <content><![CDATA[<p>周末, 深秋, 天寒, 江南, 清冷. 因感冒而略微发烧, 咳嗽残病的两天. 在病榻上, 突然想起杜甫在&lt;登高&gt;中所言:</p>
+<blockquote>
+<p>无边落木萧萧下，不尽长江滚滚来。<br>万里悲秋常作客，百年多病独登台。</p>
+</blockquote>
+<p>如此的应景, 引发强烈的内心共鸣.<br>仿佛秋季就应该属于杜甫, 毕竟写了如此之多悲秋之诗;<br>伤病也应该属于这位悲苦的诗人, 毕竟不是在生病, 就是在生病的路上.</p>
+<blockquote>
+<p>亲朋无一字, 老病有孤舟  —&lt;登岳阳楼&gt;</p>
+</blockquote>
+<p>想到此眼前不禁浮现一个眉头紧皱的穷酸倒霉鬼形象, 唉声叹气, 自怨自艾, 吊着书袋, 不觉苦笑, 莞尔.</p>
+<hr>
+<p>周六晚上看了&lt;八角亭迷雾&gt;, 迷雾剧场出品, 本来保有一丝期待, 结果只看了三四集便兴致寥寥, 遂决定弃剧. </p>
+<p>一是选角绝对是最大败笔, 根本想不到”名动街坊邻里的大美女”竟然是表情僵硬, 眉头紧皱, 披头散发, 苦大仇深, 容貌平庸之状. 实在是难以缺乏共鸣. 可能是带资进组吧.<br>另外实在是看不出来玄珠是有什么样的魅力, 能让老板说出 “只要你一句话, 我便跟她离婚” 这句话. 原配从身材样貌, 没看出来那点儿比她差的. </p>
+<p>二是角色塑造不合情理, 没有一个正常人. 不是在爆发, 就是在爆发的路上, 拧巴纠结, 没有一点正常人的理智. 大哥玄梁是个因为妹妹被杀导致对女儿病态关爱的PTSD患者,<br>二姐因为生不出孩子导致几乎神经病, 双胞胎妹妹玄珠是18年都跟家里人断绝联系的绝情鬼. 妈妈是个糊涂鬼, 女儿是个智商为负的叛逆鬼, 警察是个无能的拖延鬼, 老师是个有跟踪癖好的变态鬼…等等不一而足.<br>三是整体气氛太压抑, 苦大仇深, 剧情推进节奏太慢. 观众仿佛也被一同浸没在水中, 难以呼吸.   </p>
+<p>辣眼睛辣眼睛, 罢了罢了.<br>看了虎嗅上安利&lt;沙丘&gt;的文章, 有点心动, 下载来原著, 病床上安心读一读, 洗洗眼吧. </p>
+<p>P.S. 杭城桂花开了, 由于气候原因, 比往年都要晚一些. 满城都氤氲在桂花的香味中, 家中打开窗户, 花香便随风潜入, 令人心旷神怡. 给病榻上的人一丝丝安慰.<br>小区中随处漫步, 金桂居多, 丹桂虽少但更为别致, 还有些由于之前异变的气温导致误开的樱花.</p>
+<blockquote>
+<p>江南忆<br/><br>最忆是杭州<br/><br>山寺月中寻桂子<br/><br>郡亭枕上看潮头<br/><br>何日更重游<br/><br>&lt;忆江南&gt; 白居易</p>
+</blockquote>
+<p>P.S.2 </p>
+<blockquote>
+<p>宁可食无肉，不可居无竹。<br/><br>无肉令人瘦，无竹令人俗。<br/><br>人瘦尚可肥，士俗不可医。<br/><br>旁人笑此言，似高还似痴。<br/><br>若对此君仍大嚼，世间那有扬州鹤？<br/><br>&lt;於潜僧绿筠轩&gt; 苏轼</p>
+</blockquote>
+<p>才知道东坡的这首诗, 就是在出任杭州通判时, 从富阳 新登 取道浮云岭, 进入於潜县境”视政”时写的.<br>於潜僧慧觉在於潜县南二里的丰国乡寂照寺出家。寺内有绿筠轩，以竹点缀环境，十分幽雅。苏轼与僧慧觉游绿筠轩时，写下了这首《於潜僧绿筠轩》。<br>具体位置应该是现在杭州市临安区於潜镇附近.<br>有时间可以去找一找. </p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>weekend-summary</tag>
@@ -2553,6 +2553,32 @@ forkJoin finished. callables.size: 40 results.size: 40 cost: 1238 <span aria-hid
         <tag>java</tag>
         <tag>mdc</tag>
         <tag>npe</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于分辨率的常识</title>
+    <url>//2021-11-06-resolution/</url>
+    <content><![CDATA[<h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
+<li>480P: 720*480</li>
+<li>720P: 1280x720</li>
+<li>1080P: 1920x1080</li>
+<li>2K: 2560x1440</li>
+<li>4K:</li>
+<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
+</ul>
+<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
+<li>字母P代表: Progressive Scan, 即逐行扫描</li>
+<li>480P代表:</li>
+</ul>
+<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
+<li>30Hz</li>
+<li>60Hz</li>
+<li></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>common-sense</tag>
+        <tag>resolution</tag>
       </tags>
   </entry>
   <entry>
@@ -2752,32 +2778,6 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>mac</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于分辨率的常识</title>
-    <url>//2021-11-06-resolution/</url>
-    <content><![CDATA[<h2 id="常见分辨率"><a href="#常见分辨率" class="headerlink" title="常见分辨率"></a>常见分辨率</h2><ul>
-<li>480P: 720*480</li>
-<li>720P: 1280x720</li>
-<li>1080P: 1920x1080</li>
-<li>2K: 2560x1440</li>
-<li>4K:</li>
-<li>15寸MacBookPro 2015Mid Retina屏: 2880 × 1800</li>
-</ul>
-<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
-<li>字母P代表: Progressive Scan, 即逐行扫描</li>
-<li>480P代表:</li>
-</ul>
-<h2 id="常见刷新率"><a href="#常见刷新率" class="headerlink" title="常见刷新率"></a>常见刷新率</h2><ul>
-<li>30Hz</li>
-<li>60Hz</li>
-<li></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>common-sense</tag>
-        <tag>resolution</tag>
       </tags>
   </entry>
   <entry>
@@ -6298,38 +6298,6 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>k8s virtual-kubelet的实现原理研究</title>
-    <url>//2022-04-18-k8s-virtual-kubelet/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, vk的实现原理, 看官方的文档, 太偏向用户视角,<br>研究了源代码, 工作机制先大概说下: </p>
-<ol>
-<li>使用apiserver的admission插入点机制, vk启动了一个webserver, 当匹配到vk时, 会将请求路由到vk的webserver</li>
-<li>vk的webserver做简单的一件事: 将pod的nodename修改成自己的</li>
-<li>由于以及有了nodename, 因此跳过sheduler过程, bind请求直接发到对应的kubelet.</li>
-<li>这里的kubelet就是vk启动的虚拟kubelet. </li>
-<li>vk收到bind请求, 调用云厂商的OpenAPI, 创建pod.</li>
-</ol>
-<p>vk本质上是以pod形式运行在用户自己的k8s集群上.</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>所以vk做了几件事: </p>
-<ol>
-<li>负责维护pod的生命周期, 例如pod的创建与销毁.</li>
-</ol>
-<p>其他思考:</p>
-<ol>
-<li>pod的心跳检查与事件上报链路是怎样的?</li>
-<li>pod的configmap, secret等信息更新, 如何推送到pod上?<ol>
-<li>是vk推送? </li>
-<li>or pod上安装agent主动pull?</li>
-</ol>
-</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>virtual-kubelet</tag>
-        <tag>vk</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s DNS的研究与实践</title>
     <url>//2022-04-19-k8s-dns/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直对于k8s的dns机制不甚了解, 借此机会彻底搞懂.<br>主要参照文章 <a href="https://zhuanlan.zhihu.com/p/80141656">KubeDNS 和 CoreDNS</a> 进行个人消化.</p>
@@ -6420,6 +6388,38 @@ kube-dns                             ClusterIP      <span class="token number">1
         <tag>dns</tag>
         <tag>coredns</tag>
         <tag>kube-dns</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s virtual-kubelet的实现原理研究</title>
+    <url>//2022-04-18-k8s-virtual-kubelet/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, vk的实现原理, 看官方的文档, 太偏向用户视角,<br>研究了源代码, 工作机制先大概说下: </p>
+<ol>
+<li>使用apiserver的admission插入点机制, vk启动了一个webserver, 当匹配到vk时, 会将请求路由到vk的webserver</li>
+<li>vk的webserver做简单的一件事: 将pod的nodename修改成自己的</li>
+<li>由于以及有了nodename, 因此跳过sheduler过程, bind请求直接发到对应的kubelet.</li>
+<li>这里的kubelet就是vk启动的虚拟kubelet. </li>
+<li>vk收到bind请求, 调用云厂商的OpenAPI, 创建pod.</li>
+</ol>
+<p>vk本质上是以pod形式运行在用户自己的k8s集群上.</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>所以vk做了几件事: </p>
+<ol>
+<li>负责维护pod的生命周期, 例如pod的创建与销毁.</li>
+</ol>
+<p>其他思考:</p>
+<ol>
+<li>pod的心跳检查与事件上报链路是怎样的?</li>
+<li>pod的configmap, secret等信息更新, 如何推送到pod上?<ol>
+<li>是vk推送? </li>
+<li>or pod上安装agent主动pull?</li>
+</ol>
+</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>virtual-kubelet</tag>
+        <tag>vk</tag>
       </tags>
   </entry>
   <entry>
@@ -7018,6 +7018,38 @@ user_id<span class="token operator">|</span> age<span class="token operator">|</
       </tags>
   </entry>
   <entry>
+    <title>记SpringBootCache使用的问题总结</title>
+    <url>//2022-05-18-springboot-cache/</url>
+    <content><![CDATA[<h1 id="Cacheable-无参方法"><a href="#Cacheable-无参方法" class="headerlink" title="@Cacheable 无参方法"></a>@Cacheable 无参方法</h1><p>有些无参方法, 也需要被SpringBoot @Cacheable 进行cache, 如下代码样例:  </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">listAllUids</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有如下需要注意的点:</p>
+<ul>
+<li>可以不写 <code>key=xxx</code>, 这样默认的key就是<code>SimpleType []</code></li>
+<li>SpringBoot官方建议<a href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/cache.html">使用方法名作为key</a>, 如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key <span class="token operator">=</span> <span class="token string">"#root.method.name"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>也可以hardcode一个key, 这样更易于查找, 如下:</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token string">"'my_key'"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>要注意key里的常量, <font color='red'>一定要用单引号括起来</font>, 否则会<a href="https://stackoverflow.com/questions/33383366/cacheble-annotation-on-no-parameter-method">报错如下</a>: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>expression<span class="token punctuation">.</span>spel<span class="token punctuation">.</span></span>SpelEvaluationException</span><span class="token operator">:</span> EL1008E<span class="token operator">:</span><span class="token punctuation">(</span>pos <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Property</span> or field my_key cannot be found on object of type '<span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>interceptor<span class="token punctuation">.</span></span>CacheExpressionRootObject</span>' <span class="token operator">-</span> maybe not <span class="token keyword">public</span><span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>java</tag>
+        <tag>spring-cache</tag>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RPC调用异常行为与处理方案总结</title>
     <url>//2022-05-18-rpc-exception-handling/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用IAcsClient或者dubbo进行rpc调用时, 异常情况总是不可避免的.<br>这里总结下各种异常, 以及对应的表现形式与处理方式.</p>
@@ -7081,38 +7113,6 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <tag>java</tag>
         <tag>rpc</tag>
         <tag>exception</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记SpringBootCache使用的问题总结</title>
-    <url>//2022-05-18-springboot-cache/</url>
-    <content><![CDATA[<h1 id="Cacheable-无参方法"><a href="#Cacheable-无参方法" class="headerlink" title="@Cacheable 无参方法"></a>@Cacheable 无参方法</h1><p>有些无参方法, 也需要被SpringBoot @Cacheable 进行cache, 如下代码样例:  </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">listAllUids</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>有如下需要注意的点:</p>
-<ul>
-<li>可以不写 <code>key=xxx</code>, 这样默认的key就是<code>SimpleType []</code></li>
-<li>SpringBoot官方建议<a href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/cache.html">使用方法名作为key</a>, 如下:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key <span class="token operator">=</span> <span class="token string">"#root.method.name"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>也可以hardcode一个key, 这样更易于查找, 如下:</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Cachable</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"my_cache"</span><span class="token punctuation">,</span> unless<span class="token operator">=</span><span class="token string">"#result == null || #result.size() &lt;= 0"</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token string">"'my_key'"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>要注意key里的常量, <font color='red'>一定要用单引号括起来</font>, 否则会<a href="https://stackoverflow.com/questions/33383366/cacheble-annotation-on-no-parameter-method">报错如下</a>: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>expression<span class="token punctuation">.</span>spel<span class="token punctuation">.</span></span>SpelEvaluationException</span><span class="token operator">:</span> EL1008E<span class="token operator">:</span><span class="token punctuation">(</span>pos <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Property</span> or field my_key cannot be found on object of type '<span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>interceptor<span class="token punctuation">.</span></span>CacheExpressionRootObject</span>' <span class="token operator">-</span> maybe not <span class="token keyword">public</span><span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>java</tag>
-        <tag>spring-cache</tag>
-        <tag>springboot</tag>
       </tags>
   </entry>
   <entry>
@@ -8056,6 +8056,41 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
+    <title>深入剖析Kubernetes笔记</title>
+    <url>//2022-06-11-k8s-deep-dive/</url>
+    <content><![CDATA[<p>很久没有看到这么一本书了, 虽然刚拿到手感觉很薄, 只有不到400页, 价格也贵, 99元.<br>比起<a href="https://book.douban.com/subject/33444476/">k8s权威指南</a>这种大部头, 略显单薄.<br>但实际翻看前两章之后, 欣喜万分. 越往后看, 愈发觉得鞭辟入里.<br>从底层原理出发, 没有废话, 深入且细致地讲解出docker&#x2F;k8s实现的各种细节.<br>有效地解释了自己心中的诸多疑惑. 物有所值. </p>
+<hr>
+<h1 id="一些疑惑解释"><a href="#一些疑惑解释" class="headerlink" title="一些疑惑解释"></a>一些疑惑解释</h1><h2 id="多进程-x2F-富容器"><a href="#多进程-x2F-富容器" class="headerlink" title="多进程&#x2F;富容器"></a>多进程&#x2F;富容器</h2><ul>
+<li>Q: 如果docker中起了多个进程, 那么在宿主机上是怎样的? 是多个进程 or docker进程中的多个线程?</li>
+<li>A: 在宿主机上是多个进程. 本质上是通过新建进程, 将新进程加入到已经存在的Namespace中实现.</li>
+</ul>
+<hr>
+<ul>
+<li>Q: 富容器是如何实现的?</li>
+<li>A:</li>
+</ul>
+<hr>
+<ul>
+<li><p>Q: docker exec 到容器中执行命令, 理论上容器也新开了个进程执行该命令(也就类似富容器了), 是如何实现的? </p>
+</li>
+<li><p>A: </p>
+</li>
+<li><p>Q: 富容器模式有什么缺点? 为啥不推荐使用富容器? </p>
+<ul>
+<li>A:</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>containers</tag>
+        <tag>docker</tag>
+        <tag>books</tag>
+        <tag>2022</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker的一些总结II</title>
     <url>//2022-06-11-docker-summary-2/</url>
     <content><![CDATA[<h1 id="exec到容器的原理"><a href="#exec到容器的原理" class="headerlink" title="exec到容器的原理"></a>exec到容器的原理</h1><p>本质是在host上新创建一个进程, 加入到已存在的docker容器的Linux Namespace中.</p>
@@ -8134,41 +8169,6 @@ public synchronized void close() throws SQLException &#123;
         <tag>kubernetes</tag>
         <tag>containers</tag>
         <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深入剖析Kubernetes笔记</title>
-    <url>//2022-06-11-k8s-deep-dive/</url>
-    <content><![CDATA[<p>很久没有看到这么一本书了, 虽然刚拿到手感觉很薄, 只有不到400页, 价格也贵, 99元.<br>比起<a href="https://book.douban.com/subject/33444476/">k8s权威指南</a>这种大部头, 略显单薄.<br>但实际翻看前两章之后, 欣喜万分. 越往后看, 愈发觉得鞭辟入里.<br>从底层原理出发, 没有废话, 深入且细致地讲解出docker&#x2F;k8s实现的各种细节.<br>有效地解释了自己心中的诸多疑惑. 物有所值. </p>
-<hr>
-<h1 id="一些疑惑解释"><a href="#一些疑惑解释" class="headerlink" title="一些疑惑解释"></a>一些疑惑解释</h1><h2 id="多进程-x2F-富容器"><a href="#多进程-x2F-富容器" class="headerlink" title="多进程&#x2F;富容器"></a>多进程&#x2F;富容器</h2><ul>
-<li>Q: 如果docker中起了多个进程, 那么在宿主机上是怎样的? 是多个进程 or docker进程中的多个线程?</li>
-<li>A: 在宿主机上是多个进程. 本质上是通过新建进程, 将新进程加入到已经存在的Namespace中实现.</li>
-</ul>
-<hr>
-<ul>
-<li>Q: 富容器是如何实现的?</li>
-<li>A:</li>
-</ul>
-<hr>
-<ul>
-<li><p>Q: docker exec 到容器中执行命令, 理论上容器也新开了个进程执行该命令(也就类似富容器了), 是如何实现的? </p>
-</li>
-<li><p>A: </p>
-</li>
-<li><p>Q: 富容器模式有什么缺点? 为啥不推荐使用富容器? </p>
-<ul>
-<li>A:</li>
-</ul>
-</li>
-</ul>
-<h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>containers</tag>
-        <tag>docker</tag>
-        <tag>books</tag>
-        <tag>2022</tag>
       </tags>
   </entry>
   <entry>
@@ -9227,72 +9227,6 @@ Property settings:
       </tags>
   </entry>
   <entry>
-    <title>记一次分布式场景下状态机设计缺陷导致的问题</title>
-    <url>//2022-07-06-state-machine-in-distributed-system/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
-<li><p>为某个对象item建模, 有如下几种状态变迁, 在数据库中state字段记录:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072308671.png"></p>
-</li>
-<li><p>其中processing过程可能会持续时间较久, 10min左右</p>
-</li>
-<li><p>在服务端某个线程响应请求, 该对象处于processing过程中时, 服务器发布重启, 导致item状态一直卡在processing </p>
-</li>
-<li><p>而processing状态, <strong>本身是中间状态, 无法进行任何人肉干预&#x2F;操作</strong>, 从而导致只能临时提交数据订正, 将状态字段修改回”init”, 然后再执行一次process.</p>
-</li>
-</ul>
-<h1 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h1><p>仔细思考了下, 发现设计的时候, 根本原因是对于中间状态没有做好处理, 如背景中介绍的服务重启的处理.<br>而<mark>在分布式场景下, 服务重启是by design需要被接受的.</mark><br>这里思考了下可能的几种处理方式:</p>
-<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><ul>
-<li>如何区分状态机的中间状态与终态? </li>
-<li>一条原则: <mark>终态-&gt;终态之间, 必须是可以人肉有入口触发的(而不是系统自动触发的); 必须是可重入的.</mark></li>
-</ul>
-<h2 id="方案1-状态机设计修改-把processing作为纯粹的中间状态"><a href="#方案1-状态机设计修改-把processing作为纯粹的中间状态" class="headerlink" title="方案1: 状态机设计修改: 把processing作为纯粹的中间状态"></a>方案1: 状态机设计修改: 把processing作为纯粹的中间状态</h2><ol>
-<li><p>将processing从状态机中删除掉, 如下: <br/><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072351350.png"></p>
-</li>
-<li><p>使用 分布式锁&#x2F;db字段锁 来实现排他功能(即item同时只能被一个线程处理, 防止多个线程同时处理一个item导致死锁&#x2F;重复计算等问题).</p>
-<ol>
-<li>在item执行前, 加上锁+锁超时时间(如例子中的10min); 其他线程要执行时, 无法抢到该item的锁. </li>
-<li>item执行完成之后, 状态修改为finished之后, 再释放掉item锁.</li>
-<li>item执行异常中断(例如服务器重启, 线程crash等): 等待锁超时. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
-<li>item执行失败: 线程里catch住异常, 主动释放掉该item锁. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
-</ol>
-</li>
-<li><p>或者使用事务:(不过本例子中不适合, 因为10min太久了, 其他执行耗时较短30s以内的可以使用该方案)  </p>
-<ol>
-<li>item执行前开启事务;</li>
-<li>执行后修改状态为finished, commit事务.</li>
-<li>item执行异常中断(例如服务器重启, 线程crash等): 事务自动回滚. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
-<li>item执行失败: 主动回滚事务. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
-</ol>
-</li>
-</ol>
-<h2 id="方案2-状态机设计修改-把processing作为纯粹的终态"><a href="#方案2-状态机设计修改-把processing作为纯粹的终态" class="headerlink" title="方案2: 状态机设计修改: 把processing作为纯粹的终态"></a>方案2: 状态机设计修改: 把processing作为纯粹的终态</h2><ol>
-<li><p>需要设计从processing-&gt;finished&#x2F;init的人肉触发入口.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072354738.png"></p>
-</li>
-<li><p>如何防止多个线程同时触发该item从processing-&gt;finished&#x2F;init的变迁? 参见方案1中锁&#x2F;事务的方式</p>
-</li>
-</ol>
-<h2 id="方案3-优雅停机"><a href="#方案3-优雅停机" class="headerlink" title="方案3: 优雅停机"></a>方案3: 优雅停机</h2><ol>
-<li>在shutdown-hook里注册事件:<ol>
-<li>将状态改回init. –&gt; required.</li>
-<li>将worker线程interrupt掉. –&gt; optional, 因为即使不interrupt, 进程停止线程也会被回收.</li>
-</ol>
-</li>
-<li>但该方案有很大的缺陷, 如果直接<code>kill -9</code>, 则shutdown-hook根本不会执行.</li>
-</ol>
-<h2 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案"></a>最终方案</h2><p>最终采用了方案2, 因为从状态机中删除掉一个终态, 对现有代码改造量太大了.</p>
-<h1 id="其他思考"><a href="#其他思考" class="headerlink" title="其他思考"></a>其他思考</h1><ol>
-<li>状态机设计的时候, 一定要慎重考虑哪些是终态, 哪些是中间状态. 不是说因为在某个状态持续时间较长(如例子中的processing), 就要作为终态. </li>
-<li>状态机中每个终态之间, 必须考虑可重入性; 必须要保证能人肉触发终态之间的转化. 本文的例子就是反面教材, item卡在processing这个终态, 无法进行程序上的任何操作.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>java</tag>
-        <tag>design</tag>
-        <tag>state-machine</tag>
-        <tag>lock</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记一次Dubbo应用性能优化</title>
     <url>//2022-07-02-dubbo-app-perf-tunning/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>新的应用以dubbo接口对外暴露调度能力。<br>在上线前需要整体压测，确认下系统能力与瓶颈。</p>
@@ -9519,6 +9453,72 @@ Property settings:
         <tag>dubbo</tag>
         <tag>perf-tunning</tag>
         <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次分布式场景下状态机设计缺陷导致的问题</title>
+    <url>//2022-07-06-state-machine-in-distributed-system/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
+<li><p>为某个对象item建模, 有如下几种状态变迁, 在数据库中state字段记录:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072308671.png"></p>
+</li>
+<li><p>其中processing过程可能会持续时间较久, 10min左右</p>
+</li>
+<li><p>在服务端某个线程响应请求, 该对象处于processing过程中时, 服务器发布重启, 导致item状态一直卡在processing </p>
+</li>
+<li><p>而processing状态, <strong>本身是中间状态, 无法进行任何人肉干预&#x2F;操作</strong>, 从而导致只能临时提交数据订正, 将状态字段修改回”init”, 然后再执行一次process.</p>
+</li>
+</ul>
+<h1 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h1><p>仔细思考了下, 发现设计的时候, 根本原因是对于中间状态没有做好处理, 如背景中介绍的服务重启的处理.<br>而<mark>在分布式场景下, 服务重启是by design需要被接受的.</mark><br>这里思考了下可能的几种处理方式:</p>
+<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><ul>
+<li>如何区分状态机的中间状态与终态? </li>
+<li>一条原则: <mark>终态-&gt;终态之间, 必须是可以人肉有入口触发的(而不是系统自动触发的); 必须是可重入的.</mark></li>
+</ul>
+<h2 id="方案1-状态机设计修改-把processing作为纯粹的中间状态"><a href="#方案1-状态机设计修改-把processing作为纯粹的中间状态" class="headerlink" title="方案1: 状态机设计修改: 把processing作为纯粹的中间状态"></a>方案1: 状态机设计修改: 把processing作为纯粹的中间状态</h2><ol>
+<li><p>将processing从状态机中删除掉, 如下: <br/><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072351350.png"></p>
+</li>
+<li><p>使用 分布式锁&#x2F;db字段锁 来实现排他功能(即item同时只能被一个线程处理, 防止多个线程同时处理一个item导致死锁&#x2F;重复计算等问题).</p>
+<ol>
+<li>在item执行前, 加上锁+锁超时时间(如例子中的10min); 其他线程要执行时, 无法抢到该item的锁. </li>
+<li>item执行完成之后, 状态修改为finished之后, 再释放掉item锁.</li>
+<li>item执行异常中断(例如服务器重启, 线程crash等): 等待锁超时. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+<li>item执行失败: 线程里catch住异常, 主动释放掉该item锁. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+</ol>
+</li>
+<li><p>或者使用事务:(不过本例子中不适合, 因为10min太久了, 其他执行耗时较短30s以内的可以使用该方案)  </p>
+<ol>
+<li>item执行前开启事务;</li>
+<li>执行后修改状态为finished, commit事务.</li>
+<li>item执行异常中断(例如服务器重启, 线程crash等): 事务自动回滚. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+<li>item执行失败: 主动回滚事务. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+</ol>
+</li>
+</ol>
+<h2 id="方案2-状态机设计修改-把processing作为纯粹的终态"><a href="#方案2-状态机设计修改-把processing作为纯粹的终态" class="headerlink" title="方案2: 状态机设计修改: 把processing作为纯粹的终态"></a>方案2: 状态机设计修改: 把processing作为纯粹的终态</h2><ol>
+<li><p>需要设计从processing-&gt;finished&#x2F;init的人肉触发入口.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072354738.png"></p>
+</li>
+<li><p>如何防止多个线程同时触发该item从processing-&gt;finished&#x2F;init的变迁? 参见方案1中锁&#x2F;事务的方式</p>
+</li>
+</ol>
+<h2 id="方案3-优雅停机"><a href="#方案3-优雅停机" class="headerlink" title="方案3: 优雅停机"></a>方案3: 优雅停机</h2><ol>
+<li>在shutdown-hook里注册事件:<ol>
+<li>将状态改回init. –&gt; required.</li>
+<li>将worker线程interrupt掉. –&gt; optional, 因为即使不interrupt, 进程停止线程也会被回收.</li>
+</ol>
+</li>
+<li>但该方案有很大的缺陷, 如果直接<code>kill -9</code>, 则shutdown-hook根本不会执行.</li>
+</ol>
+<h2 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案"></a>最终方案</h2><p>最终采用了方案2, 因为从状态机中删除掉一个终态, 对现有代码改造量太大了.</p>
+<h1 id="其他思考"><a href="#其他思考" class="headerlink" title="其他思考"></a>其他思考</h1><ol>
+<li>状态机设计的时候, 一定要慎重考虑哪些是终态, 哪些是中间状态. 不是说因为在某个状态持续时间较长(如例子中的processing), 就要作为终态. </li>
+<li>状态机中每个终态之间, 必须考虑可重入性; 必须要保证能人肉触发终态之间的转化. 本文的例子就是反面教材, item卡在processing这个终态, 无法进行程序上的任何操作.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>java</tag>
+        <tag>design</tag>
+        <tag>state-machine</tag>
+        <tag>lock</tag>
       </tags>
   </entry>
   <entry>
@@ -10477,148 +10477,6 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
       </tags>
   </entry>
   <entry>
-    <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
-    <url>//2022-08-30-disk-partition/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问: </p>
-<ul>
-<li>为什么磁盘需要进行分区, 不分区直接按照文件夹划分有啥问题? 这个在Windows下尤其有疑问.</li>
-<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下? </li>
-<li>分区与格式化以及文件系统有啥关系与区别? 是一对一的么? 一个分区下只能有一个文件系统么? 一个文件系统下只能有一个分区么?</li>
-</ul>
-<h1 id="为啥需要分区"><a href="#为啥需要分区" class="headerlink" title="为啥需要分区?"></a>为啥需要分区?</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>习惯了使用Linux&#x2F;Mac之后, 完全没有分区的概念了.</p>
-<ul>
-<li>Linux&#x2F;Ubuntu装机步骤:<ul>
-<li>一整块磁盘, 选定文件系统类型, 进行格式化.</li>
-<li>直接在磁盘上安装操作系统, 就可以开始使用了.</li>
-</ul>
-</li>
-<li>Mac甚至无需装机, 开机直接使用.</li>
-</ul>
-<p>实际使用过程中, 不分区有如下优势:</p>
-<ul>
-<li>软件安装: 无需关注需要把软件安装在哪个盘(C盘&#x2F;D盘&#x2F;E盘…), 通常只需要默认路径就好;</li>
-<li>文件下载存储: 无需关注文件要保存在哪个盘, 只需要关注保存在哪个目录即可.</li>
-</ul>
-<blockquote>
-<p>因此完全不用担心到底分几个区, 每个分区大小多少, C盘满了如何扩容之类的问题.</p>
-</blockquote>
-<p>因此, 在攒了台Windows机器之后, 犹豫要不要分多个区. 后来事实教会了我怎么做人.</p>
-<blockquote>
-<p>Win10很无节操地会在C盘预留30GB+的空间, 还要放虚拟内存文件等, 导致可怜的C盘立刻存储报警.</p>
-</blockquote>
-<h2 id="个人实践理解"><a href="#个人实践理解" class="headerlink" title="个人实践理解"></a>个人实践理解</h2><p>个人使用下来, 唯一的理由就是: <strong>分区隔离, 方便无损重装系统.</strong></p>
-<p>Mac&#x2F;Linux上, 几乎无需也没有重装过系统. 但<strong>在Windows下, 重装系统简直是常态</strong>. </p>
-<blockquote>
-<p>垃圾(病毒)软件太多, 连所谓的纯净镜像也根本不纯净.</p>
-</blockquote>
-<ul>
-<li>都想往注册表里偷偷塞东西. 清理注册表, 一不小心就会把系统清理蓝屏.</li>
-<li>或者有病毒, 直接系统崩溃.</li>
-</ul>
-<blockquote>
-<p>解决方案</p>
-</blockquote>
-<ul>
-<li>要么通过PE进入系统, 找到问题点, 进行修复. </li>
-<li>要么直接重装系统. </li>
-<li>找到问题点太麻烦, 所以还是无脑一键重装吧.</li>
-</ul>
-<p>但重装系统, 就需要把分区重新格式化. 想想吧, 辛苦安装的软件, 设定的配置, 保存的文件, 都会随着格式化被完全抹除!<br>所以还是分区吧, 只格式化C盘就好. 软件啊, 文件啊, 配置啊, 都放到其他盘里好了.</p>
-<h2 id="其他专业理由"><a href="#其他专业理由" class="headerlink" title="其他专业理由"></a>其他专业理由</h2><p>参照知乎 <a href="https://www.zhihu.com/question/47538075/answer/107737383">其实windows分区是不是分C盘和D盘就好了？</a> 回答.</p>
-<ul>
-<li>病毒泛滥, 会把系统搞Crash, 需要频繁重装系统.</li>
-<li>早期的FAT16&#x2F;32文件系统支持的单个分区容量有限. FAT32最大文件系统总容量 128GB, 在现在随便一个硬盘就是1TB+, 无法充分利用磁盘空间.</li>
-<li>xp之前的windows系列操作系统本身稳定性堪忧，很容易因为用户操作、软件故障崩溃甚至破坏。尤其是经常折腾的桌面系统。这就导致用户不得不频繁重装系统。</li>
-<li>操作系统权限&amp;软件兼容问题: 现在win10管理员权限小了，某些软件装在C盘会有权限问题，比如notepad++装在C盘，直接运行的话是不能保存自定义配置的</li>
-</ul>
-<blockquote>
-<p>所以在Windows下, 还是老老实实分区吧! 当然在严肃的企业场景, 也推荐按照系统盘与数据盘进行下区分.</p>
-</blockquote>
-<h1 id="为啥需要挂载"><a href="#为啥需要挂载" class="headerlink" title="为啥需要挂载?"></a>为啥需要挂载?</h1><p>尤其是在Linux下, 设备可以从 &#x2F;dev&#x2F;sda[b] 路径下获取, 为啥不能直接操作这些设备? 还需要挂载(mount)下?</p>
-<h2 id="为啥磁盘需要挂载才能使用"><a href="#为啥磁盘需要挂载才能使用" class="headerlink" title="为啥磁盘需要挂载才能使用?"></a>为啥磁盘需要挂载才能使用?</h2><h3 id="为啥不能直接操作-dev-sda-b-等裸设备"><a href="#为啥不能直接操作-dev-sda-b-等裸设备" class="headerlink" title="为啥不能直接操作/dev/sda[b]等裸设备?"></a>为啥不能直接操作<code>/dev/sda[b]</code>等裸设备?</h3><h3 id="挂载具体做了啥"><a href="#挂载具体做了啥" class="headerlink" title="挂载具体做了啥?"></a>挂载具体做了啥?</h3><p>本质上, Windows下也是有挂载这一步的, 本质上挂载就是把分区&#x2F;磁盘格式化之后的文件系统, 挂载到操作系统文件树下, 映射到某个目录,<br>便于操作系统</p>
-<h3 id="Windows下也有挂载么"><a href="#Windows下也有挂载么" class="headerlink" title="Windows下也有挂载么?"></a>Windows下也有挂载么?</h3><p>是的. Windows下</p>
-<h2 id="为啥不能像Windows一样-插入设备直接默认挂载"><a href="#为啥不能像Windows一样-插入设备直接默认挂载" class="headerlink" title="为啥不能像Windows一样, 插入设备直接默认挂载?"></a>为啥不能像Windows一样, 插入设备直接默认挂载?</h2><p>这个搜索了知乎, <a href="https://www.zhihu.com/question/524667726/answer/2437578886">得到的结论</a>是: </p>
-<ol>
-<li><p>Unix-like的操作系统不支持自动mount原因是为了权限控制</p>
-<blockquote>
-<p>POSIX权限的概念出现的很早，Unix、Linux都是支持POSIX权限的。<br>那么对于一个新设备来说，操作系统不是很确定是不是所有用户都对这个设备有访问权限，<br>这种情况下，如果自动mount，那么这个设备的内容就可能会被所有用户看到，<br>这样会有安全的隐患。所以Unix和Linux才要求必须先mount，<br>并且mount命令必须要用root权限，也就是说对于一个未知的设备，<br>必须由root来决定是不是可用的。</p>
-<p>所以，这种设计的原因已经很清晰了，就是为了权限控制。</p>
-</blockquote>
-</li>
-<li><p>Windows不需要这个机制，是因为Windows是从DOS发展过来的，这个过程中一直没有权限控制，</p>
-<blockquote>
-<p>所以Windows也不需要mount</p>
-</blockquote>
-</li>
-<li><p>Linux也可以做到自动挂载, 例如Ubuntu就是自动挂载的</p>
-</li>
-</ol>
-<h1 id="磁盘-amp-文件系统的扩展知识"><a href="#磁盘-amp-文件系统的扩展知识" class="headerlink" title="磁盘&amp;文件系统的扩展知识"></a>磁盘&amp;文件系统的扩展知识</h1><h2 id="磁盘-分区-文件系统-关系"><a href="#磁盘-分区-文件系统-关系" class="headerlink" title="磁盘, 分区, 文件系统 关系"></a>磁盘, 分区, 文件系统 关系</h2><p>如下: </p>
-<pre class="mermaid">erDiagram
-    DiskDevice ||--|{ Partition : contain
-    Partition ||--|| FileSystem : format</pre>
-
-<h3 id="磁盘-x2F-块设备-gt-分区"><a href="#磁盘-x2F-块设备-gt-分区" class="headerlink" title="磁盘&#x2F;块设备 -&gt; 分区"></a>磁盘&#x2F;块设备 -&gt; 分区</h3><p>一个磁盘设备(HDD, SSD, U盘等), 可以划分为多个分区. 分区方式有MBR, GPT两种.<br>那么磁盘分区的元信息写在哪里? </p>
-<ul>
-<li>是存储在文件系统中么? 此时磁盘还没有文件系统, 所以应该不是以文件形式保存, 所以我们也就无法直接在操作系统里找到这个文件并操作.</li>
-<li>是存储在裸设备的固定位置(它在硬盘上的三维地址为（柱面，磁头，扇区）＝（0，0，1）。)</li>
-<li>通过 <code>lsblk</code> 命令查看已经挂载的块设备<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># lsblk</span>
-NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-vda    <span class="token number">254</span>:0    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> disk
-`-vda1 <span class="token number">254</span>:1    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> part /etc/hosts<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h3 id="分区-gt-文件系统"><a href="#分区-gt-文件系统" class="headerlink" title="分区 -&gt; 文件系统"></a>分区 -&gt; 文件系统</h3><p>一个分区对应一个文件系统. 因此同一个磁盘设备的多个分区, 各个分区都可以格式化成不同的文件系统类型.</p>
-<ul>
-<li>通过 <code>df -h</code> 命令查看分区<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># df -h</span>
-Filesystem      Size  Used Avail Use% Mounted on
-overlay          59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /
-tmpfs            64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev
-shm              64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev/shm
-/dev/vda1        59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /data
-tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /proc/acpi
-tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /sys/firmware<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h3 id="文件系统类型描述元数据"><a href="#文件系统类型描述元数据" class="headerlink" title="文件系统类型描述元数据"></a>文件系统类型描述元数据</h3><div class="note warning"><p>TODO: 暂时还没搜索到相关信息.</p>
-</div>
-
-<h3 id="文件系统内部目录-amp-文件元数据"><a href="#文件系统内部目录-amp-文件元数据" class="headerlink" title="文件系统内部目录&amp;文件元数据:"></a>文件系统内部目录&amp;文件元数据:</h3><ul>
-<li>例如ext4, 以inode形式保存. 包括文件大小, 权限信息, gmtCreated, gmtModified, 包含的block数量, 存储在磁盘的位置(柱面) 等</li>
-<li>可以使用 stat 命令查看</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># stat dump.rdb</span>
-  File: dump.rdb
-  Size: <span class="token number">105</span>       	Blocks: <span class="token number">8</span>          IO Block: <span class="token number">4096</span>   regular <span class="token function">file</span>
-Device: fe01h/65025d	Inode: <span class="token number">1055693</span>     Links: <span class="token number">1</span>
-Access: <span class="token punctuation">(</span>0600/-rw-------<span class="token punctuation">)</span>  Uid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>   Gid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>
-Access: <span class="token number">2022</span>-10-12 <span class="token number">16</span>:01:07.043330092 +0000
-Modify: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.880774990 +0000
-Change: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.896774990 +0000
- Birth: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.869774990 +0000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<div class="note warning"><p>TODO: 分析下stat的具体信息含义, 尤其是 Device 相关的, 是不是操作系统直接就按照这个信息去寻找到文件的柱面范围了?</p>
-</div>
-
-<h3 id="分区名称规范"><a href="#分区名称规范" class="headerlink" title="分区名称规范"></a>分区名称规范</h3><ul>
-<li>在Linux系统中，硬盘分区命名为sda1－sda4或者hda1－hda4</li>
-</ul>
-<div class="note warning"><p>TODO: 自己找个U盘试下划分成多个分区, 每个分区不同的文件系统类型?</p>
-</div>
-
-
-
-
-
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>十万个为什么</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>disk</tag>
-        <tag>os</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>瞎折腾洋垃圾电脑笔记</title>
     <url>//2022-08-13-computer-diy/</url>
     <content><![CDATA[<p>垃圾佬的周末, 没事儿就是瞎折腾, 自从在B站被种草了洋垃圾, 按耐不住心中的冲动, 决定也用洋垃圾组装一台能数框框的电脑, 玩玩儿游戏, 压榨压榨性能.</p>
@@ -10869,6 +10727,148 @@ Change: <span class="token number">2022</span>-06-26 <span class="token number">
       </categories>
       <tags>
         <tag>diy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
+    <url>//2022-08-30-disk-partition/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问: </p>
+<ul>
+<li>为什么磁盘需要进行分区, 不分区直接按照文件夹划分有啥问题? 这个在Windows下尤其有疑问.</li>
+<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下? </li>
+<li>分区与格式化以及文件系统有啥关系与区别? 是一对一的么? 一个分区下只能有一个文件系统么? 一个文件系统下只能有一个分区么?</li>
+</ul>
+<h1 id="为啥需要分区"><a href="#为啥需要分区" class="headerlink" title="为啥需要分区?"></a>为啥需要分区?</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>习惯了使用Linux&#x2F;Mac之后, 完全没有分区的概念了.</p>
+<ul>
+<li>Linux&#x2F;Ubuntu装机步骤:<ul>
+<li>一整块磁盘, 选定文件系统类型, 进行格式化.</li>
+<li>直接在磁盘上安装操作系统, 就可以开始使用了.</li>
+</ul>
+</li>
+<li>Mac甚至无需装机, 开机直接使用.</li>
+</ul>
+<p>实际使用过程中, 不分区有如下优势:</p>
+<ul>
+<li>软件安装: 无需关注需要把软件安装在哪个盘(C盘&#x2F;D盘&#x2F;E盘…), 通常只需要默认路径就好;</li>
+<li>文件下载存储: 无需关注文件要保存在哪个盘, 只需要关注保存在哪个目录即可.</li>
+</ul>
+<blockquote>
+<p>因此完全不用担心到底分几个区, 每个分区大小多少, C盘满了如何扩容之类的问题.</p>
+</blockquote>
+<p>因此, 在攒了台Windows机器之后, 犹豫要不要分多个区. 后来事实教会了我怎么做人.</p>
+<blockquote>
+<p>Win10很无节操地会在C盘预留30GB+的空间, 还要放虚拟内存文件等, 导致可怜的C盘立刻存储报警.</p>
+</blockquote>
+<h2 id="个人实践理解"><a href="#个人实践理解" class="headerlink" title="个人实践理解"></a>个人实践理解</h2><p>个人使用下来, 唯一的理由就是: <strong>分区隔离, 方便无损重装系统.</strong></p>
+<p>Mac&#x2F;Linux上, 几乎无需也没有重装过系统. 但<strong>在Windows下, 重装系统简直是常态</strong>. </p>
+<blockquote>
+<p>垃圾(病毒)软件太多, 连所谓的纯净镜像也根本不纯净.</p>
+</blockquote>
+<ul>
+<li>都想往注册表里偷偷塞东西. 清理注册表, 一不小心就会把系统清理蓝屏.</li>
+<li>或者有病毒, 直接系统崩溃.</li>
+</ul>
+<blockquote>
+<p>解决方案</p>
+</blockquote>
+<ul>
+<li>要么通过PE进入系统, 找到问题点, 进行修复. </li>
+<li>要么直接重装系统. </li>
+<li>找到问题点太麻烦, 所以还是无脑一键重装吧.</li>
+</ul>
+<p>但重装系统, 就需要把分区重新格式化. 想想吧, 辛苦安装的软件, 设定的配置, 保存的文件, 都会随着格式化被完全抹除!<br>所以还是分区吧, 只格式化C盘就好. 软件啊, 文件啊, 配置啊, 都放到其他盘里好了.</p>
+<h2 id="其他专业理由"><a href="#其他专业理由" class="headerlink" title="其他专业理由"></a>其他专业理由</h2><p>参照知乎 <a href="https://www.zhihu.com/question/47538075/answer/107737383">其实windows分区是不是分C盘和D盘就好了？</a> 回答.</p>
+<ul>
+<li>病毒泛滥, 会把系统搞Crash, 需要频繁重装系统.</li>
+<li>早期的FAT16&#x2F;32文件系统支持的单个分区容量有限. FAT32最大文件系统总容量 128GB, 在现在随便一个硬盘就是1TB+, 无法充分利用磁盘空间.</li>
+<li>xp之前的windows系列操作系统本身稳定性堪忧，很容易因为用户操作、软件故障崩溃甚至破坏。尤其是经常折腾的桌面系统。这就导致用户不得不频繁重装系统。</li>
+<li>操作系统权限&amp;软件兼容问题: 现在win10管理员权限小了，某些软件装在C盘会有权限问题，比如notepad++装在C盘，直接运行的话是不能保存自定义配置的</li>
+</ul>
+<blockquote>
+<p>所以在Windows下, 还是老老实实分区吧! 当然在严肃的企业场景, 也推荐按照系统盘与数据盘进行下区分.</p>
+</blockquote>
+<h1 id="为啥需要挂载"><a href="#为啥需要挂载" class="headerlink" title="为啥需要挂载?"></a>为啥需要挂载?</h1><p>尤其是在Linux下, 设备可以从 &#x2F;dev&#x2F;sda[b] 路径下获取, 为啥不能直接操作这些设备? 还需要挂载(mount)下?</p>
+<h2 id="为啥磁盘需要挂载才能使用"><a href="#为啥磁盘需要挂载才能使用" class="headerlink" title="为啥磁盘需要挂载才能使用?"></a>为啥磁盘需要挂载才能使用?</h2><h3 id="为啥不能直接操作-dev-sda-b-等裸设备"><a href="#为啥不能直接操作-dev-sda-b-等裸设备" class="headerlink" title="为啥不能直接操作/dev/sda[b]等裸设备?"></a>为啥不能直接操作<code>/dev/sda[b]</code>等裸设备?</h3><h3 id="挂载具体做了啥"><a href="#挂载具体做了啥" class="headerlink" title="挂载具体做了啥?"></a>挂载具体做了啥?</h3><p>本质上, Windows下也是有挂载这一步的, 本质上挂载就是把分区&#x2F;磁盘格式化之后的文件系统, 挂载到操作系统文件树下, 映射到某个目录,<br>便于操作系统</p>
+<h3 id="Windows下也有挂载么"><a href="#Windows下也有挂载么" class="headerlink" title="Windows下也有挂载么?"></a>Windows下也有挂载么?</h3><p>是的. Windows下</p>
+<h2 id="为啥不能像Windows一样-插入设备直接默认挂载"><a href="#为啥不能像Windows一样-插入设备直接默认挂载" class="headerlink" title="为啥不能像Windows一样, 插入设备直接默认挂载?"></a>为啥不能像Windows一样, 插入设备直接默认挂载?</h2><p>这个搜索了知乎, <a href="https://www.zhihu.com/question/524667726/answer/2437578886">得到的结论</a>是: </p>
+<ol>
+<li><p>Unix-like的操作系统不支持自动mount原因是为了权限控制</p>
+<blockquote>
+<p>POSIX权限的概念出现的很早，Unix、Linux都是支持POSIX权限的。<br>那么对于一个新设备来说，操作系统不是很确定是不是所有用户都对这个设备有访问权限，<br>这种情况下，如果自动mount，那么这个设备的内容就可能会被所有用户看到，<br>这样会有安全的隐患。所以Unix和Linux才要求必须先mount，<br>并且mount命令必须要用root权限，也就是说对于一个未知的设备，<br>必须由root来决定是不是可用的。</p>
+<p>所以，这种设计的原因已经很清晰了，就是为了权限控制。</p>
+</blockquote>
+</li>
+<li><p>Windows不需要这个机制，是因为Windows是从DOS发展过来的，这个过程中一直没有权限控制，</p>
+<blockquote>
+<p>所以Windows也不需要mount</p>
+</blockquote>
+</li>
+<li><p>Linux也可以做到自动挂载, 例如Ubuntu就是自动挂载的</p>
+</li>
+</ol>
+<h1 id="磁盘-amp-文件系统的扩展知识"><a href="#磁盘-amp-文件系统的扩展知识" class="headerlink" title="磁盘&amp;文件系统的扩展知识"></a>磁盘&amp;文件系统的扩展知识</h1><h2 id="磁盘-分区-文件系统-关系"><a href="#磁盘-分区-文件系统-关系" class="headerlink" title="磁盘, 分区, 文件系统 关系"></a>磁盘, 分区, 文件系统 关系</h2><p>如下: </p>
+<pre class="mermaid">erDiagram
+    DiskDevice ||--|{ Partition : contain
+    Partition ||--|| FileSystem : format</pre>
+
+<h3 id="磁盘-x2F-块设备-gt-分区"><a href="#磁盘-x2F-块设备-gt-分区" class="headerlink" title="磁盘&#x2F;块设备 -&gt; 分区"></a>磁盘&#x2F;块设备 -&gt; 分区</h3><p>一个磁盘设备(HDD, SSD, U盘等), 可以划分为多个分区. 分区方式有MBR, GPT两种.<br>那么磁盘分区的元信息写在哪里? </p>
+<ul>
+<li>是存储在文件系统中么? 此时磁盘还没有文件系统, 所以应该不是以文件形式保存, 所以我们也就无法直接在操作系统里找到这个文件并操作.</li>
+<li>是存储在裸设备的固定位置(它在硬盘上的三维地址为（柱面，磁头，扇区）＝（0，0，1）。)</li>
+<li>通过 <code>lsblk</code> 命令查看已经挂载的块设备<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># lsblk</span>
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda    <span class="token number">254</span>:0    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> disk
+`-vda1 <span class="token number">254</span>:1    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> part /etc/hosts<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3 id="分区-gt-文件系统"><a href="#分区-gt-文件系统" class="headerlink" title="分区 -&gt; 文件系统"></a>分区 -&gt; 文件系统</h3><p>一个分区对应一个文件系统. 因此同一个磁盘设备的多个分区, 各个分区都可以格式化成不同的文件系统类型.</p>
+<ul>
+<li>通过 <code>df -h</code> 命令查看分区<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># df -h</span>
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /
+tmpfs            64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev
+shm              64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev/shm
+/dev/vda1        59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /data
+tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /proc/acpi
+tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /sys/firmware<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3 id="文件系统类型描述元数据"><a href="#文件系统类型描述元数据" class="headerlink" title="文件系统类型描述元数据"></a>文件系统类型描述元数据</h3><div class="note warning"><p>TODO: 暂时还没搜索到相关信息.</p>
+</div>
+
+<h3 id="文件系统内部目录-amp-文件元数据"><a href="#文件系统内部目录-amp-文件元数据" class="headerlink" title="文件系统内部目录&amp;文件元数据:"></a>文件系统内部目录&amp;文件元数据:</h3><ul>
+<li>例如ext4, 以inode形式保存. 包括文件大小, 权限信息, gmtCreated, gmtModified, 包含的block数量, 存储在磁盘的位置(柱面) 等</li>
+<li>可以使用 stat 命令查看</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># stat dump.rdb</span>
+  File: dump.rdb
+  Size: <span class="token number">105</span>       	Blocks: <span class="token number">8</span>          IO Block: <span class="token number">4096</span>   regular <span class="token function">file</span>
+Device: fe01h/65025d	Inode: <span class="token number">1055693</span>     Links: <span class="token number">1</span>
+Access: <span class="token punctuation">(</span>0600/-rw-------<span class="token punctuation">)</span>  Uid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>   Gid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>
+Access: <span class="token number">2022</span>-10-12 <span class="token number">16</span>:01:07.043330092 +0000
+Modify: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.880774990 +0000
+Change: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.896774990 +0000
+ Birth: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.869774990 +0000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<div class="note warning"><p>TODO: 分析下stat的具体信息含义, 尤其是 Device 相关的, 是不是操作系统直接就按照这个信息去寻找到文件的柱面范围了?</p>
+</div>
+
+<h3 id="分区名称规范"><a href="#分区名称规范" class="headerlink" title="分区名称规范"></a>分区名称规范</h3><ul>
+<li>在Linux系统中，硬盘分区命名为sda1－sda4或者hda1－hda4</li>
+</ul>
+<div class="note warning"><p>TODO: 自己找个U盘试下划分成多个分区, 每个分区不同的文件系统类型?</p>
+</div>
+
+
+
+
+
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>十万个为什么</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>disk</tag>
+        <tag>os</tag>
       </tags>
   </entry>
   <entry>
@@ -11762,64 +11762,6 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       </tags>
   </entry>
   <entry>
-    <title>宋词集锦&amp;赏析</title>
-    <url>//2023-02-08-songci/</url>
-    <content><![CDATA[<h1 id="行香子·过七里濑"><a href="#行香子·过七里濑" class="headerlink" title="行香子·过七里濑"></a>行香子·过七里濑</h1><p>宋 · 苏轼<br>一叶舟轻，双桨鸿惊。水天清、影湛波平。鱼翻藻鉴，鹭点烟汀。过沙溪急，霜溪冷，月溪明。<br>重重似画，曲曲如屏。算当年、虚老严陵。君臣一梦，今古空名。但远山长，云山乱，晓山青。</p>
-<p>这首词作于公元1073年（宋神宗熙宁六年）春二月。苏轼时任杭州通判，巡查富阳，由新城至桐庐，乘舟富春江，经过七里濑时作此词。</p>
-<p>七里濑：又名七里滩、七里泷，在今浙江省桐庐县城南三十里。钱塘江两岸山峦夹峙，水流湍急，连绵七里，故名七里濑。濑，沙石上流过的急水。</p>
-<p>严陵：即严光，字子陵，东汉人，曾与<a href="https://so.gushiwen.cn/authorv_0ef2b626111d.aspx">刘秀</a>同学，并帮助刘秀打天下。刘秀称帝后，他改名隐居。刘秀三次派人才把他召到京师。授谏议大夫，他不肯接受，归隐富春江，终日钓鱼。</p>
-<p>接下来“过沙溪急，霜溪冷，月溪明”三句，节奏轻快。沙溪，是白天之溪，清澈而见沙底；霜溪，是清晓之溪，清冷而有霜意；月溪，乃是月下之溪，是明亮的水晶世界。词人用蒙太奇手法，剪接了三个不同时辰的舟行之景。既写出了船之行程，也创造出清寒凄美的意境，由此引出一股人生的况味，为下片抒写人生感慨作了铺垫。</p>
-<p>“算当年，虚老严陵。”东汉初年的严子陵，隐居不仕，垂钓富春江上。昔人多说严光垂钓实是“钓名”，东坡在此，也笑严光当年白白在此终老，不曾真正领略到山水佳处。“君臣一梦，今古空名”，表达出浮生若梦的感慨：皇帝和隐士，而今也已如梦一般消失，只留下空名而已。那么真正能永恒留传的实体是什么呢？“但远山长，云山乱，晓山青。”只有远山连绵，重峦叠嶂；山间白云，缭绕变形；晓山晨曦，青翠欲滴。意思是说，只有大自然才是永恒的，只有大自然之美才是永恒的。这是<a href="https://so.gushiwen.cn/authorv_3b99a16ff2dd.aspx">苏轼</a>的一贯思想，正如他在《前赤壁赋》中所感叹的：“惟江上之清风，与山间之明月，耳得之而为声，目遇之而成色，取之无禁，用之不竭……”</p>
-<hr>
-<h1 id="临安春雨初霁"><a href="#临安春雨初霁" class="headerlink" title="临安春雨初霁"></a>临安春雨初霁</h1><p>宋 · 陆游</p>
-<p>世味年来薄似纱，谁令骑马客京华。<br>小楼一夜听春雨，深巷明朝卖杏花。<br>矮纸斜行闲作草，晴窗细乳戏分茶。<br>素衣莫起风尘叹，犹及清明可到家。</p>
-<p>孩儿巷里的南宋慢生活</p>
-<p>我们的故事从杭城闹市区的一幢小楼说起。</p>
-<p>南宋偏安一隅，临安城的人们有了短暂的慢生活时光。陆游在起起伏伏的仕途中间，也得以钱塘江边观潮、西子湖上泛舟、冷泉亭中饮酒、深巷小楼戏分茶。最让如今杭州人乐道的莫过于他和一条小巷一座小楼的传说。</p>
-<p>孩儿巷98号，陆游回到杭州做军器少监，就寓居于这幢小楼里，而他办公的地方位于现在的百井坊巷一带，每天他或走路或乘轿或骑马去上班。</p>
-<p>小楼现在是陆游纪念馆，白墙黛瓦，岁月斑驳的痕迹很显眼，这里虽然是清末建筑，没有留下他的任何痕迹，但一首《临安春雨初霁》足矣。</p>
-<p>处于闹市中的孩儿巷当时甚是热闹。七夕，孩子们会买泥土做的玩具，手持新鲜的荷叶嬉戏；除夕，家庭主妇们会在供桌上摆放泥娃娃，用红色的绒线给泥娃娃系一个钱币，以求早生贵子；平日里，这条巷子就成了擅长捏塑泥孩儿的民间艺人的天堂，泥偶铺子甚多，且生意兴隆。所以哪怕是陆游夜班后回到小楼，巷子也是“近坊灯火如昼明，十里东风吹市声。”</p>
-<p>初春，淅淅沥沥的雨声浸满了二楼的书房， “小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。”虽然诗、酒、花、茶一应俱全，但陆游难以入眠，因为他花甲之年还没实现自己的英雄梦——“上马击狂胡,下马草军书”，收复中原。</p>
-<p>据史料记载，陆游一生多次来杭，并居住在保和坊，宋时的保和坊就是现在的孩儿巷，俗称砖街巷。在陆游的眼中，孩儿巷是极富诗意的：夜色灿烂、静寂如野。“近坊灯火如昼明，十里杀风吹市声”、“谁家小楼歌恼侬，余响缥缈萦帘栊。”等诗句就是陆游笔下的孩儿巷。这位深切关注国家命运的豪迈诗人，竟将孩儿巷的市井风貌观察、描写得如此生动，实为不易，陆游为孩儿巷的传神写照，一直流传至今。</p>
-<p>孩儿巷的重要历史文化价值，还在于南宋爱国诗人陆游曾写下了名闻遐迩的不朽诗篇：“世味年来薄似纱，谁令骑马客京华。小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。素衣莫起风尘叹，犹及清明可到家。” 现在的孩儿巷98号，设有<a href="https://baike.baidu.com/item/%E9%99%86%E6%B8%B8%E7%BA%AA%E5%BF%B5%E9%A6%86/6426661?fromModule=lemma_inlink">陆游纪念馆</a>。</p>
-<p>陆游62岁时任除军器少监（唐宋时期的官职名，监督兵器、旗帜、戎帐等物品的造作），就住在孩儿巷内的南楼，在不眠之夜听了春雨之后，写下了著名的《<a href="https://baike.baidu.com/item/%E4%B8%B4%E5%AE%89%E6%98%A5%E9%9B%A8%E5%88%9D%E9%9C%81/7331905?fromModule=lemma_inlink">临安春雨初霁</a>》：世味年来薄似纱，谁令骑马客京华？小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。素衣莫起风尘叹，犹及清明可到家。</p>
-<hr>
-<h1 id="看梅绝句"><a href="#看梅绝句" class="headerlink" title="看梅绝句"></a>看梅绝句</h1><p>陆游 〔宋代〕</p>
-<p>老子舞时不须拍，梅花乱插乌巾香。<br>樽前作剧莫相笑，我死诸君思此狂。</p>
-<hr>
-<h1 id="六月二十七日望湖楼醉书-之一"><a href="#六月二十七日望湖楼醉书-之一" class="headerlink" title="六月二十七日望湖楼醉书 之一"></a>六月二十七日望湖楼醉书 之一</h1><p>宋 · 苏轼<br>黑云翻墨未遮山，白雨跳珠乱入船。<br>卷地风来忽吹散，望湖楼下水如天。</p>
-<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>六月二十七日：指宋神宗熙宁五年（1072）六月二十七日。<br>望湖楼：古建筑名，又叫看经楼。位于杭州西湖畔，五代时吴越王钱弘俶所建。</p>
-<h2 id="赏析"><a href="#赏析" class="headerlink" title="赏析"></a>赏析</h2><p>公元1072年（宋神宗熙宁五年），作者在杭州任通判。这年六月二十七日，他游览西湖，在船上看到奇妙的湖光山色，再到望湖楼上喝酒，写下这五首七言绝句。本诗是其第一首。</p>
-<p>此诗描绘了望湖楼的美丽雨景。才思敏捷的诗人用诗句捕捉到西子湖这一番别具风味的“即兴表演”，绘成一幅“西湖骤雨图”。乌云骤聚，大雨突降，倾刻又雨过天晴，水天一色。又是山，又是水，又是船，这就突出了泛舟西湖的特点。其次，作者用“黑云翻墨”，“白雨跳珠”形成强烈的色彩对比，给人以很强的质感。再次，用“翻墨”写云的来势，用“跳珠”描绘雨点飞溅的情态，以动词前移的句式使比喻运用得灵活生动却不露痕迹。而“卷地风来忽吹散，望湖楼下水如天”两句又把天气由骤雨到晴朗前转变之快描绘得令人心清气爽，眼前陡然一亮，境界大开。</p>
-<p>诗人将一场变幻的风雨写得十分生动。他那时是坐在船上。船正好划到望湖楼下，忽见远处天上涌起来一片黑云，就像泼翻了一盆墨汁，半边天空霎时昏暗。这片黑云不偏不倚，直向湖上奔来，一眨眼间，便泼下一场倾盆大雨。只见湖面上溅起无数水花，那雨点足有黄豆大小，纷纷打到船上来，就像天老爷把千万颗珍珠一齐撒下，船篷船板，全是一片乒乒乓乓的声响。船上有人吓慌了，嚷着要靠岸。可是诗人朝远处一看，却知道这不过是一场过眼云雨，转眼就收场了。远处的群山依然映着阳光，全无半点雨意。事实上也确实是如此。这片黑云，顺着风势吹来，也顺着风势移去。还不到半盏茶工夫，雨过天晴，依旧是一片平静。水映着天，天照着水，碧波如镜，又是一派温柔明媚的风光。</p>
-<p>诗人先在船中，后在楼头，迅速捕捉住湖上急剧变化的自然景物：云翻、雨泻、风卷、天晴，写得有远有近，有动有静，有声有色，有景有情。抓住几个要点，把一场忽然而来又忽然而去的骤雨，写得非常鲜明，富于情趣，颇见功夫。诗用“翻墨”写出云的来势，用“跳珠”描绘雨的特点，说明是骤雨而不是久雨。“未遮山”是骤雨才有的景象。“卷地风”说明雨过得快的原因，都是如实描写，却分插在第一、第三句中，彼此呼应，烘托得好。</p>
-<p>最后用“水如天”写一场骤雨的结束，又有悠然不尽的情致。句中又用“白雨”和“黑云”映衬，用“水如天”和“卷地风”对照，用“乱入船“与“未遮山”比较，都显出作者构思时的用心。这二十八个字，随笔挥洒，信手拈来，显示出作者功力的深厚，只是在表面上不着痕迹罢了。</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>奥运会解说那个，我记得东京奥运会皮划艇有个比赛因为下雨推迟了，然后开始时雨还没有完全停，屏幕上能看到雨点撞击的样子，然后解说来了句黑云翻墨未遮山白雨跳珠乱入船</p>
-<hr>
-<h1 id="六月二十七日望湖楼醉书-之五"><a href="#六月二十七日望湖楼醉书-之五" class="headerlink" title="六月二十七日望湖楼醉书 之五"></a>六月二十七日望湖楼醉书 之五</h1><p>宋 · 苏轼</p>
-<p>未成小隐聊中隐，可得长闲胜暂闲。<br>我本无家更安往，故乡无此好湖山。</p>
-<p>做不到隐居山林，暂时先做个闲官吧，这样尚可得到长期的悠闲胜过暂时的休闲。<br>我本来就没有家，不安身在这里又能到哪里去呢?何况就算是故乡，也没有像这里这样优美的湖光山色。</p>
-<hr>
-<h1 id="湖州"><a href="#湖州" class="headerlink" title="湖州"></a>湖州</h1><p>【作者】戴表元【朝代】宋</p>
-<p>山从天目成群出，水傍太湖分港流。<br>行遍江南清丽地，人生只合住湖州。</p>
-<hr>
-<h1 id="寒食雨二首"><a href="#寒食雨二首" class="headerlink" title="寒食雨二首"></a>寒食雨二首</h1><p>苏轼 〔宋代〕</p>
-<p>自我来黄州，已过三寒食。<br>年年欲惜春，春去不容惜。<br>今年又苦雨，两月秋萧瑟。<br>卧闻海棠花，泥污燕脂雪。<br><strong>暗中偷负去，夜半真有力。</strong><br><strong>何殊病少年，病起头已白。</strong></p>
-<p>春江欲入户，雨势来不已。<br>小屋如渔舟，濛濛水云里。<br>空庖煮寒菜，破灶烧湿苇。<br>那知是寒食，但见乌衔纸。<br>君门深九重，坟墓在万里。<br>也拟哭途穷，死灰吹不起。</p>
-<h2 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h2><p>自从我来到黄州，已度过三个寒食时际。<br>年年爱惜春光想将它挽留，春天自管自归去不容人惋惜。<br>今年又苦于连连阴雨，绵延两个月气候萧瑟一如秋季。<br>独卧在床听得雨打海棠，胭脂样花瓣像雪片凋落污泥。<br>造物主把艳丽的海棠偷偷背去，夜半的雨真有神力。<br>雨中海棠仿佛一位患病的少年，病愈时双鬓斑白已然老去。</p>
-<p>春江暴涨仿佛要冲进门户，雨势凶猛袭来似乎没有穷已。<br>我的小屋宛如一叶渔舟，笼罩在濛濛水云里。<br>空空的厨房煮着些寒菜，潮湿的芦苇燃在破灶底。<br>哪还知道这一天竟然是寒食，却看见乌鸦衔来烧剩的纸币。<br>天子的宫门有九重，深远难以归去，祖上的坟茔遥隔万里不能吊祭。<br>我只想学阮籍作穷途痛哭，心头却似死灰并不想重新燃起。</p>
-<h2 id="注释-1"><a href="#注释-1" class="headerlink" title="注释"></a>注释</h2><p>寒食：旧历清明节的前一天，是寒食节。<br>胭脂雪：指海棠花瓣。</p>
-<h2 id="创作背景"><a href="#创作背景" class="headerlink" title="创作背景"></a>创作背景</h2><p>这首诗作于元丰五年（1082年）三月寒食节。东坡依然处境艰难，生活凄凉。心情孤郁。经过险恶的政治斗争和牢狱的折磨，东坡的个性收敛了许多。这两首诗充分表现了这种心境平和之后的无奈和绝望。</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>诗词</category>
-      </categories>
-      <tags>
-        <tag>诗词</tag>
-        <tag>poetry</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>唐诗集锦&amp;赏析</title>
     <url>//2023-02-08-tangshi/</url>
     <content><![CDATA[<h1 id="忆秦娥"><a href="#忆秦娥" class="headerlink" title="忆秦娥"></a>忆秦娥</h1><p>李白</p>
@@ -11880,6 +11822,64 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       <tags>
         <tag>诗词</tag>
         <tag>唐诗</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宋词集锦&amp;赏析</title>
+    <url>//2023-02-08-songci/</url>
+    <content><![CDATA[<h1 id="行香子·过七里濑"><a href="#行香子·过七里濑" class="headerlink" title="行香子·过七里濑"></a>行香子·过七里濑</h1><p>宋 · 苏轼<br>一叶舟轻，双桨鸿惊。水天清、影湛波平。鱼翻藻鉴，鹭点烟汀。过沙溪急，霜溪冷，月溪明。<br>重重似画，曲曲如屏。算当年、虚老严陵。君臣一梦，今古空名。但远山长，云山乱，晓山青。</p>
+<p>这首词作于公元1073年（宋神宗熙宁六年）春二月。苏轼时任杭州通判，巡查富阳，由新城至桐庐，乘舟富春江，经过七里濑时作此词。</p>
+<p>七里濑：又名七里滩、七里泷，在今浙江省桐庐县城南三十里。钱塘江两岸山峦夹峙，水流湍急，连绵七里，故名七里濑。濑，沙石上流过的急水。</p>
+<p>严陵：即严光，字子陵，东汉人，曾与<a href="https://so.gushiwen.cn/authorv_0ef2b626111d.aspx">刘秀</a>同学，并帮助刘秀打天下。刘秀称帝后，他改名隐居。刘秀三次派人才把他召到京师。授谏议大夫，他不肯接受，归隐富春江，终日钓鱼。</p>
+<p>接下来“过沙溪急，霜溪冷，月溪明”三句，节奏轻快。沙溪，是白天之溪，清澈而见沙底；霜溪，是清晓之溪，清冷而有霜意；月溪，乃是月下之溪，是明亮的水晶世界。词人用蒙太奇手法，剪接了三个不同时辰的舟行之景。既写出了船之行程，也创造出清寒凄美的意境，由此引出一股人生的况味，为下片抒写人生感慨作了铺垫。</p>
+<p>“算当年，虚老严陵。”东汉初年的严子陵，隐居不仕，垂钓富春江上。昔人多说严光垂钓实是“钓名”，东坡在此，也笑严光当年白白在此终老，不曾真正领略到山水佳处。“君臣一梦，今古空名”，表达出浮生若梦的感慨：皇帝和隐士，而今也已如梦一般消失，只留下空名而已。那么真正能永恒留传的实体是什么呢？“但远山长，云山乱，晓山青。”只有远山连绵，重峦叠嶂；山间白云，缭绕变形；晓山晨曦，青翠欲滴。意思是说，只有大自然才是永恒的，只有大自然之美才是永恒的。这是<a href="https://so.gushiwen.cn/authorv_3b99a16ff2dd.aspx">苏轼</a>的一贯思想，正如他在《前赤壁赋》中所感叹的：“惟江上之清风，与山间之明月，耳得之而为声，目遇之而成色，取之无禁，用之不竭……”</p>
+<hr>
+<h1 id="临安春雨初霁"><a href="#临安春雨初霁" class="headerlink" title="临安春雨初霁"></a>临安春雨初霁</h1><p>宋 · 陆游</p>
+<p>世味年来薄似纱，谁令骑马客京华。<br>小楼一夜听春雨，深巷明朝卖杏花。<br>矮纸斜行闲作草，晴窗细乳戏分茶。<br>素衣莫起风尘叹，犹及清明可到家。</p>
+<p>孩儿巷里的南宋慢生活</p>
+<p>我们的故事从杭城闹市区的一幢小楼说起。</p>
+<p>南宋偏安一隅，临安城的人们有了短暂的慢生活时光。陆游在起起伏伏的仕途中间，也得以钱塘江边观潮、西子湖上泛舟、冷泉亭中饮酒、深巷小楼戏分茶。最让如今杭州人乐道的莫过于他和一条小巷一座小楼的传说。</p>
+<p>孩儿巷98号，陆游回到杭州做军器少监，就寓居于这幢小楼里，而他办公的地方位于现在的百井坊巷一带，每天他或走路或乘轿或骑马去上班。</p>
+<p>小楼现在是陆游纪念馆，白墙黛瓦，岁月斑驳的痕迹很显眼，这里虽然是清末建筑，没有留下他的任何痕迹，但一首《临安春雨初霁》足矣。</p>
+<p>处于闹市中的孩儿巷当时甚是热闹。七夕，孩子们会买泥土做的玩具，手持新鲜的荷叶嬉戏；除夕，家庭主妇们会在供桌上摆放泥娃娃，用红色的绒线给泥娃娃系一个钱币，以求早生贵子；平日里，这条巷子就成了擅长捏塑泥孩儿的民间艺人的天堂，泥偶铺子甚多，且生意兴隆。所以哪怕是陆游夜班后回到小楼，巷子也是“近坊灯火如昼明，十里东风吹市声。”</p>
+<p>初春，淅淅沥沥的雨声浸满了二楼的书房， “小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。”虽然诗、酒、花、茶一应俱全，但陆游难以入眠，因为他花甲之年还没实现自己的英雄梦——“上马击狂胡,下马草军书”，收复中原。</p>
+<p>据史料记载，陆游一生多次来杭，并居住在保和坊，宋时的保和坊就是现在的孩儿巷，俗称砖街巷。在陆游的眼中，孩儿巷是极富诗意的：夜色灿烂、静寂如野。“近坊灯火如昼明，十里杀风吹市声”、“谁家小楼歌恼侬，余响缥缈萦帘栊。”等诗句就是陆游笔下的孩儿巷。这位深切关注国家命运的豪迈诗人，竟将孩儿巷的市井风貌观察、描写得如此生动，实为不易，陆游为孩儿巷的传神写照，一直流传至今。</p>
+<p>孩儿巷的重要历史文化价值，还在于南宋爱国诗人陆游曾写下了名闻遐迩的不朽诗篇：“世味年来薄似纱，谁令骑马客京华。小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。素衣莫起风尘叹，犹及清明可到家。” 现在的孩儿巷98号，设有<a href="https://baike.baidu.com/item/%E9%99%86%E6%B8%B8%E7%BA%AA%E5%BF%B5%E9%A6%86/6426661?fromModule=lemma_inlink">陆游纪念馆</a>。</p>
+<p>陆游62岁时任除军器少监（唐宋时期的官职名，监督兵器、旗帜、戎帐等物品的造作），就住在孩儿巷内的南楼，在不眠之夜听了春雨之后，写下了著名的《<a href="https://baike.baidu.com/item/%E4%B8%B4%E5%AE%89%E6%98%A5%E9%9B%A8%E5%88%9D%E9%9C%81/7331905?fromModule=lemma_inlink">临安春雨初霁</a>》：世味年来薄似纱，谁令骑马客京华？小楼一夜听春雨，深巷明朝卖杏花。矮纸斜行闲作草，晴窗细乳戏分茶。素衣莫起风尘叹，犹及清明可到家。</p>
+<hr>
+<h1 id="看梅绝句"><a href="#看梅绝句" class="headerlink" title="看梅绝句"></a>看梅绝句</h1><p>陆游 〔宋代〕</p>
+<p>老子舞时不须拍，梅花乱插乌巾香。<br>樽前作剧莫相笑，我死诸君思此狂。</p>
+<hr>
+<h1 id="六月二十七日望湖楼醉书-之一"><a href="#六月二十七日望湖楼醉书-之一" class="headerlink" title="六月二十七日望湖楼醉书 之一"></a>六月二十七日望湖楼醉书 之一</h1><p>宋 · 苏轼<br>黑云翻墨未遮山，白雨跳珠乱入船。<br>卷地风来忽吹散，望湖楼下水如天。</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>六月二十七日：指宋神宗熙宁五年（1072）六月二十七日。<br>望湖楼：古建筑名，又叫看经楼。位于杭州西湖畔，五代时吴越王钱弘俶所建。</p>
+<h2 id="赏析"><a href="#赏析" class="headerlink" title="赏析"></a>赏析</h2><p>公元1072年（宋神宗熙宁五年），作者在杭州任通判。这年六月二十七日，他游览西湖，在船上看到奇妙的湖光山色，再到望湖楼上喝酒，写下这五首七言绝句。本诗是其第一首。</p>
+<p>此诗描绘了望湖楼的美丽雨景。才思敏捷的诗人用诗句捕捉到西子湖这一番别具风味的“即兴表演”，绘成一幅“西湖骤雨图”。乌云骤聚，大雨突降，倾刻又雨过天晴，水天一色。又是山，又是水，又是船，这就突出了泛舟西湖的特点。其次，作者用“黑云翻墨”，“白雨跳珠”形成强烈的色彩对比，给人以很强的质感。再次，用“翻墨”写云的来势，用“跳珠”描绘雨点飞溅的情态，以动词前移的句式使比喻运用得灵活生动却不露痕迹。而“卷地风来忽吹散，望湖楼下水如天”两句又把天气由骤雨到晴朗前转变之快描绘得令人心清气爽，眼前陡然一亮，境界大开。</p>
+<p>诗人将一场变幻的风雨写得十分生动。他那时是坐在船上。船正好划到望湖楼下，忽见远处天上涌起来一片黑云，就像泼翻了一盆墨汁，半边天空霎时昏暗。这片黑云不偏不倚，直向湖上奔来，一眨眼间，便泼下一场倾盆大雨。只见湖面上溅起无数水花，那雨点足有黄豆大小，纷纷打到船上来，就像天老爷把千万颗珍珠一齐撒下，船篷船板，全是一片乒乒乓乓的声响。船上有人吓慌了，嚷着要靠岸。可是诗人朝远处一看，却知道这不过是一场过眼云雨，转眼就收场了。远处的群山依然映着阳光，全无半点雨意。事实上也确实是如此。这片黑云，顺着风势吹来，也顺着风势移去。还不到半盏茶工夫，雨过天晴，依旧是一片平静。水映着天，天照着水，碧波如镜，又是一派温柔明媚的风光。</p>
+<p>诗人先在船中，后在楼头，迅速捕捉住湖上急剧变化的自然景物：云翻、雨泻、风卷、天晴，写得有远有近，有动有静，有声有色，有景有情。抓住几个要点，把一场忽然而来又忽然而去的骤雨，写得非常鲜明，富于情趣，颇见功夫。诗用“翻墨”写出云的来势，用“跳珠”描绘雨的特点，说明是骤雨而不是久雨。“未遮山”是骤雨才有的景象。“卷地风”说明雨过得快的原因，都是如实描写，却分插在第一、第三句中，彼此呼应，烘托得好。</p>
+<p>最后用“水如天”写一场骤雨的结束，又有悠然不尽的情致。句中又用“白雨”和“黑云”映衬，用“水如天”和“卷地风”对照，用“乱入船“与“未遮山”比较，都显出作者构思时的用心。这二十八个字，随笔挥洒，信手拈来，显示出作者功力的深厚，只是在表面上不着痕迹罢了。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>奥运会解说那个，我记得东京奥运会皮划艇有个比赛因为下雨推迟了，然后开始时雨还没有完全停，屏幕上能看到雨点撞击的样子，然后解说来了句黑云翻墨未遮山白雨跳珠乱入船</p>
+<hr>
+<h1 id="六月二十七日望湖楼醉书-之五"><a href="#六月二十七日望湖楼醉书-之五" class="headerlink" title="六月二十七日望湖楼醉书 之五"></a>六月二十七日望湖楼醉书 之五</h1><p>宋 · 苏轼</p>
+<p>未成小隐聊中隐，可得长闲胜暂闲。<br>我本无家更安往，故乡无此好湖山。</p>
+<p>做不到隐居山林，暂时先做个闲官吧，这样尚可得到长期的悠闲胜过暂时的休闲。<br>我本来就没有家，不安身在这里又能到哪里去呢?何况就算是故乡，也没有像这里这样优美的湖光山色。</p>
+<hr>
+<h1 id="湖州"><a href="#湖州" class="headerlink" title="湖州"></a>湖州</h1><p>【作者】戴表元【朝代】宋</p>
+<p>山从天目成群出，水傍太湖分港流。<br>行遍江南清丽地，人生只合住湖州。</p>
+<hr>
+<h1 id="寒食雨二首"><a href="#寒食雨二首" class="headerlink" title="寒食雨二首"></a>寒食雨二首</h1><p>苏轼 〔宋代〕</p>
+<p>自我来黄州，已过三寒食。<br>年年欲惜春，春去不容惜。<br>今年又苦雨，两月秋萧瑟。<br>卧闻海棠花，泥污燕脂雪。<br><strong>暗中偷负去，夜半真有力。</strong><br><strong>何殊病少年，病起头已白。</strong></p>
+<p>春江欲入户，雨势来不已。<br>小屋如渔舟，濛濛水云里。<br>空庖煮寒菜，破灶烧湿苇。<br>那知是寒食，但见乌衔纸。<br>君门深九重，坟墓在万里。<br>也拟哭途穷，死灰吹不起。</p>
+<h2 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h2><p>自从我来到黄州，已度过三个寒食时际。<br>年年爱惜春光想将它挽留，春天自管自归去不容人惋惜。<br>今年又苦于连连阴雨，绵延两个月气候萧瑟一如秋季。<br>独卧在床听得雨打海棠，胭脂样花瓣像雪片凋落污泥。<br>造物主把艳丽的海棠偷偷背去，夜半的雨真有神力。<br>雨中海棠仿佛一位患病的少年，病愈时双鬓斑白已然老去。</p>
+<p>春江暴涨仿佛要冲进门户，雨势凶猛袭来似乎没有穷已。<br>我的小屋宛如一叶渔舟，笼罩在濛濛水云里。<br>空空的厨房煮着些寒菜，潮湿的芦苇燃在破灶底。<br>哪还知道这一天竟然是寒食，却看见乌鸦衔来烧剩的纸币。<br>天子的宫门有九重，深远难以归去，祖上的坟茔遥隔万里不能吊祭。<br>我只想学阮籍作穷途痛哭，心头却似死灰并不想重新燃起。</p>
+<h2 id="注释-1"><a href="#注释-1" class="headerlink" title="注释"></a>注释</h2><p>寒食：旧历清明节的前一天，是寒食节。<br>胭脂雪：指海棠花瓣。</p>
+<h2 id="创作背景"><a href="#创作背景" class="headerlink" title="创作背景"></a>创作背景</h2><p>这首诗作于元丰五年（1082年）三月寒食节。东坡依然处境艰难，生活凄凉。心情孤郁。经过险恶的政治斗争和牢狱的折磨，东坡的个性收敛了许多。这两首诗充分表现了这种心境平和之后的无奈和绝望。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>诗词</category>
+      </categories>
+      <tags>
+        <tag>诗词</tag>
+        <tag>poetry</tag>
       </tags>
   </entry>
   <entry>
@@ -12175,45 +12175,6 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       </tags>
   </entry>
   <entry>
-    <title>常用的Linux命令之tcpdump</title>
-    <url>//2023-02-10-linux-network-tcpdump-sample/</url>
-    <content><![CDATA[<h1 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302102123138.png"></p>
-<h1 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h1><h2 id="应用拓扑"><a href="#应用拓扑" class="headerlink" title="应用拓扑"></a>应用拓扑</h2><pre class="mermaid">graph BT
-    B[HostB:anyPort] -..-> |dubbo| A[HostA:12200];</pre>
-
-<h2 id="拓扑说明"><a href="#拓扑说明" class="headerlink" title="拓扑说明"></a>拓扑说明</h2><ul>
-<li>HostA是服务端, 开启了12200服务端口</li>
-<li>HostB是客户端, 开启了任意端口与HostA:12200连接</li>
-<li>在HostA上执行tcpdump 查看 HostA:12200 &lt;-&gt; HostB 的通信</li>
-</ul>
-<h2 id="命令实践"><a href="#命令实践" class="headerlink" title="命令实践"></a>命令实践</h2><p>⁃ in 链路(即从B —&gt;A:12200)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> tcpdump -i eth0 -P <span class="token keyword">in</span> -vv dst port <span class="token number">12200</span> and src <span class="token function">host</span> <span class="token variable">$&#123;hostB&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>⁃ out 链路(即从A:12200—&gt;B)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> tcpdump -i eth0 -P out -vv src port <span class="token number">12200</span> and dst <span class="token function">host</span> <span class="token variable">$&#123;hostB&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>⁃ inout (即从A:12200&lt;—&gt;B)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">tcpdump -i eth0  <span class="token function">host</span> <span class="token variable">$&#123;hostB&#125;</span> and port <span class="token number">12200</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>⁃ dump 抓取具体包内容, 导出为文件, 便于wireshark分析 (注意, 这里导出的文件为二进制, 推荐使用.pcap作为后缀名)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> tcpdump -i eth0 -P <span class="token keyword">in</span> -vv dst port <span class="token number">12200</span> and src <span class="token function">host</span> <span class="token variable">$&#123;hostB&#125;</span> -w ~/tcpdump.pcap<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>⁃ 读取tcpdump文件 (注意, 这里读取的文件也为二进制)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> tcpdump -r tcpdump.pcap<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://blog.csdn.net/weixin_36338224/article/details/107035214">linux下如何使用 tcpdump 进行抓包详细教程</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>code-snippets</tag>
-        <tag>networking</tag>
-        <tag>tcpdump</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>jmockit测试框架常用技巧</title>
     <url>//2023-02-19-jmockit-usage-faq/</url>
     <content><![CDATA[<h1 id="Injectable-与-Mocked-有啥区别"><a href="#Injectable-与-Mocked-有啥区别" class="headerlink" title="@Injectable  与 @Mocked 有啥区别?"></a>@Injectable  与 @Mocked 有啥区别?</h1><p><a href="https://www.cnblogs.com/shoren/p/jmokit-summary.html">https://www.cnblogs.com/shoren/p/jmokit-summary.html</a></p>
@@ -12409,6 +12370,45 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       </tags>
   </entry>
   <entry>
+    <title>常用的Linux命令之tcpdump</title>
+    <url>//2023-02-10-linux-network-tcpdump-sample/</url>
+    <content><![CDATA[<h1 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202302102123138.png"></p>
+<h1 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h1><h2 id="应用拓扑"><a href="#应用拓扑" class="headerlink" title="应用拓扑"></a>应用拓扑</h2><pre class="mermaid">graph BT
+    B[HostB:anyPort] -..-> |dubbo| A[HostA:12200];</pre>
+
+<h2 id="拓扑说明"><a href="#拓扑说明" class="headerlink" title="拓扑说明"></a>拓扑说明</h2><ul>
+<li>HostA是服务端, 开启了12200服务端口</li>
+<li>HostB是客户端, 开启了任意端口与HostA:12200连接</li>
+<li>在HostA上执行tcpdump 查看 HostA:12200 &lt;-&gt; HostB 的通信</li>
+</ul>
+<h2 id="命令实践"><a href="#命令实践" class="headerlink" title="命令实践"></a>命令实践</h2><p>⁃ in 链路(即从B —&gt;A:12200)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> tcpdump -i eth0 -P <span class="token keyword">in</span> -vv dst port <span class="token number">12200</span> and src <span class="token function">host</span> <span class="token variable">$&#123;hostB&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>⁃ out 链路(即从A:12200—&gt;B)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> tcpdump -i eth0 -P out -vv src port <span class="token number">12200</span> and dst <span class="token function">host</span> <span class="token variable">$&#123;hostB&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>⁃ inout (即从A:12200&lt;—&gt;B)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">tcpdump -i eth0  <span class="token function">host</span> <span class="token variable">$&#123;hostB&#125;</span> and port <span class="token number">12200</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>⁃ dump 抓取具体包内容, 导出为文件, 便于wireshark分析 (注意, 这里导出的文件为二进制, 推荐使用.pcap作为后缀名)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> tcpdump -i eth0 -P <span class="token keyword">in</span> -vv dst port <span class="token number">12200</span> and src <span class="token function">host</span> <span class="token variable">$&#123;hostB&#125;</span> -w ~/tcpdump.pcap<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>⁃ 读取tcpdump文件 (注意, 这里读取的文件也为二进制)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> tcpdump -r tcpdump.pcap<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://blog.csdn.net/weixin_36338224/article/details/107035214">linux下如何使用 tcpdump 进行抓包详细教程</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>code-snippets</tag>
+        <tag>networking</tag>
+        <tag>tcpdump</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一本书读懂财报笔记</title>
     <url>//2023-02-24-finance-report-reading-notes/</url>
     <content><![CDATA[
@@ -12420,6 +12420,83 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
         <tag>books</tag>
         <tag>note</tag>
         <tag>finance</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于JVM DNS Cache问题的研究</title>
+    <url>//2023-03-04-java-jvm-dns-caching/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>某次jstack发现应用卡在DNS解析上, 发现应用为了做负载均衡, 故意将JVM DNS Cache失效时间设置为了0, 即永不缓存.<br>这才知道原来还有这个参数. 因此借此机会就查阅资料, 详细研究下.</p>
+<h1 id="Java-DNS流程"><a href="#Java-DNS流程" class="headerlink" title="Java DNS流程"></a>Java DNS流程</h1><h2 id="流程详解"><a href="#流程详解" class="headerlink" title="流程详解"></a>流程详解</h2><p>当我们调用如下方式解析域名时, 经过了如下流程: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> hostname <span class="token operator">=</span> <span class="token string">"www.baidu.com"</span><span class="token punctuation">;</span>
+<span class="token class-name">InetAddress</span> addr <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getByName</span><span class="token punctuation">(</span>hostname<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041111414.png"></p>
+<p>看了上图, 估计会有几个疑问: </p>
+<ol>
+<li>通常域名会对应多个IP, 为啥Java中<code>InetAddress.getByName</code>解析只返回一个IP? 具体是怎么实现的?</li>
+<li>DNS具体实现是怎么做的呢?<br>带着疑问往下看吧.</li>
+</ol>
+<h2 id="具体解析实现"><a href="#具体解析实现" class="headerlink" title="具体解析实现"></a>具体解析实现</h2><p>具体解析实现, 参见上图的<code>getaddrinfo</code>. 该方法是POSIX协议的标准, 由各个操作系统来实现.<br><a href="https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird/">详细点此</a></p>
+<p>getaddrinfo is part of a library called libc which is the standard C library.<br>There are at least 3 versions of libc:</p>
+<ul>
+<li>glibc (GNU libc)</li>
+<li>musl libc</li>
+<li>the Mac OS version of libc (I don’t know if this has a name)</li>
+</ul>
+<p>真正的实现就更多啦. 有些在 <code>getaddrinfo</code> 里有缓存, 有些没有, 这点要依据自己的平台注意研究.<br>之所以我们设置, 是因为线上使用了自研的dnsClient, 相当于重写了<code>getaddrinfo</code>, 是没有缓存的. 因此JVM设置缓存未0也就能生效.  </p>
+<h2 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h2><p>注意上图中, “in cache?” 代表的是域名对应的IP是否已经在JVM的缓存中了.<br>既然涉及到缓存, 就必然涉及到失效时间的问题. 因此JVM提供了如下2个参数:</p>
+<ul>
+<li>networkaddress.cache.ttl (default: -1): 代表DNS解析成功时, hostName-&gt;ip 的缓存失效时间. 默认-1代表永不失效. </li>
+<li>networkaddress.cache.negative.ttl (default: 10): 代表DNS解析失败时, hostName-&gt;空缓存 的失效时间. 默认为10s. 就是为了做空查询保护.</li>
+</ul>
+<h2 id="如何设置上述参数"><a href="#如何设置上述参数" class="headerlink" title="如何设置上述参数"></a>如何设置上述参数</h2><h3 id="方案1-JVM启动参数"><a href="#方案1-JVM启动参数" class="headerlink" title="方案1: JVM启动参数"></a>方案1: JVM启动参数</h3><p>在应用启动时, 设置启动参数:<br><code>-Dsun.net.inetaddr.ttl=0 -Dsun.net.inetaddr.negative.ttl=0</code></p>
+<h3 id="方案2-应用启动后设置变量"><a href="#方案2-应用启动后设置变量" class="headerlink" title="方案2: 应用启动后设置变量"></a>方案2: 应用启动后设置变量</h3><p>在应用启动后, 设置参数: (注意参数名与启动参数名称不同)</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span>Security</span><span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"networkaddress.cache.ttl"</span> <span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span>Security</span><span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"networkaddress.cache.negative.ttl"</span> <span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="方案3-设置JVM配置"><a href="#方案3-设置JVM配置" class="headerlink" title="方案3: 设置JVM配置"></a>方案3: 设置JVM配置</h3><p>编辑<code>$JRE_HOME/lib/security/java.security</code> 文件, 增加如下配置: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">networkaddress<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">0</span>
+networkaddress<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>negative<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h1 id="问题重现"><a href="#问题重现" class="headerlink" title="问题重现"></a>问题重现</h1><p>为了模拟重现当时网络不稳定的情况, 设置某个不存在的域名, 这样解析需要花时间. </p>
+<ul>
+<li><a href="https://github.com/DavyJones2010/test-core/blob/master/src/test/java/edu/xmu/test/dns/DnsCachingTest.java">测试代码</a></li>
+</ul>
+<h2 id="不禁用negative"><a href="#不禁用negative" class="headerlink" title="不禁用negative"></a>不禁用negative</h2><p>发现大部分线程卡在访问DNS缓存上, 达不到重现的效果:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041108536.png"></p>
+<h2 id="禁用negative"><a href="#禁用negative" class="headerlink" title="禁用negative"></a>禁用negative</h2><p>这下就重现的当时的情况, 大部分线程都卡在真正解析域名上(或者叫<code>getaddrinfo</code>系统调用上):<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041147157.png"></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="关于Java-DNS解析实现的吐槽"><a href="#关于Java-DNS解析实现的吐槽" class="headerlink" title="关于Java DNS解析实现的吐槽"></a>关于Java DNS解析实现的吐槽</h2><p>关于Java域名解析问题, 即<code>InetAddress.getByName()</code>实现, 发现了很有趣的一篇小文:<br><a href="https://blog.bmarwell.de/2020/09/23/javas-dns-resolution-is-so-90ies.html">Java’s DNS resolution is so 90ies! Java的DNS解析实现仍然停留在90年代!</a></p>
+<h3 id="存在3个问题"><a href="#存在3个问题" class="headerlink" title="存在3个问题"></a>存在3个问题</h3><ol>
+<li>首先, 虽然DNS会返回多个IP, 但<code>InetAddress.getByName()</code>只会返回第一个IP. </li>
+<li>其次, 返回的IP并且不会保证这个IP能不能连通.</li>
+<li>最后, <code>InetAddress</code> 所有实现方法都是<code>non-public</code>的, 导致扩展&#x2F;修复极为困难!<blockquote>
+<p>Wow, that is remarkably simple! How do we know that this IP will be reachable? Well, we do not! If there are more IPs in the answer section, they are just being ignored.</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="作者的解决方案"><a href="#作者的解决方案" class="headerlink" title="作者的解决方案"></a>作者的解决方案</h3><ol>
+<li>通过JavaAgent解决了<code>InetAddress</code>难以扩展的问题</li>
+<li>通过类似python中的方案, DNS获取到IpList之后, 会尝试连接ip 3次(timeout 100ms), 直到获取可以连通的ip, 再返回.</li>
+<li>详细代码参见: [bmarwell&#x2F;nameserviceagent]<a href="https://github.com/bmarwell/nameserviceagent">https://github.com/bmarwell/nameserviceagent</a><br>我就喜欢这种能喷能干的实干家:)</li>
+</ol>
+<h2 id="关于配置JVM-DNS缓存生效情况问题"><a href="#关于配置JVM-DNS缓存生效情况问题" class="headerlink" title="关于配置JVM DNS缓存生效情况问题"></a>关于配置JVM DNS缓存生效情况问题</h2><ol>
+<li><p>实际在Mac上设置JVM DNS缓存都为0, 发现并不生效. 例如<code>www.baidu.com</code>其实返回了2个IP, 但测试代码一直返回1个.<br>这是由于 Mac OS has DNS caching, 即把上述 <code>getaddrinfo</code> 的系统调用也进行了缓存. </p>
+</li>
+<li><p>而Linux上 <code>getaddrinfo</code> 不一定会有缓存, 除非使用<code>systemd-resolved</code>等工具</p>
+<blockquote>
+<p>Linux doesn’t necessarily unless you use systemd-resolved or something</p>
+</blockquote>
+</li>
+</ol>
+<p>所以在配置JVM DNS参数前, 也请务必确认好自己的OS环境以及各自实现.</p>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://maheshsenniappan.medium.com/host-name-resolution-in-java-80301fea465a">Host name resolution in Java</a></li>
+<li><a href="https://stackoverflow.com/questions/1256556/how-to-make-java-honor-the-dns-caching-timeout">How to make Java honor the DNS Caching Timeout?</a></li>
+<li><a href="https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird/">Some things about getaddrinfo that surprised me</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>dns</tag>
+        <tag>jvm</tag>
       </tags>
   </entry>
   <entry>
@@ -12800,83 +12877,6 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
         <tag>concurrent</tag>
         <tag>concurrency</tag>
         <tag>know-why</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于JVM DNS Cache问题的研究</title>
-    <url>//2023-03-04-java-jvm-dns-caching/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>某次jstack发现应用卡在DNS解析上, 发现应用为了做负载均衡, 故意将JVM DNS Cache失效时间设置为了0, 即永不缓存.<br>这才知道原来还有这个参数. 因此借此机会就查阅资料, 详细研究下.</p>
-<h1 id="Java-DNS流程"><a href="#Java-DNS流程" class="headerlink" title="Java DNS流程"></a>Java DNS流程</h1><h2 id="流程详解"><a href="#流程详解" class="headerlink" title="流程详解"></a>流程详解</h2><p>当我们调用如下方式解析域名时, 经过了如下流程: </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> hostname <span class="token operator">=</span> <span class="token string">"www.baidu.com"</span><span class="token punctuation">;</span>
-<span class="token class-name">InetAddress</span> addr <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getByName</span><span class="token punctuation">(</span>hostname<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041111414.png"></p>
-<p>看了上图, 估计会有几个疑问: </p>
-<ol>
-<li>通常域名会对应多个IP, 为啥Java中<code>InetAddress.getByName</code>解析只返回一个IP? 具体是怎么实现的?</li>
-<li>DNS具体实现是怎么做的呢?<br>带着疑问往下看吧.</li>
-</ol>
-<h2 id="具体解析实现"><a href="#具体解析实现" class="headerlink" title="具体解析实现"></a>具体解析实现</h2><p>具体解析实现, 参见上图的<code>getaddrinfo</code>. 该方法是POSIX协议的标准, 由各个操作系统来实现.<br><a href="https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird/">详细点此</a></p>
-<p>getaddrinfo is part of a library called libc which is the standard C library.<br>There are at least 3 versions of libc:</p>
-<ul>
-<li>glibc (GNU libc)</li>
-<li>musl libc</li>
-<li>the Mac OS version of libc (I don’t know if this has a name)</li>
-</ul>
-<p>真正的实现就更多啦. 有些在 <code>getaddrinfo</code> 里有缓存, 有些没有, 这点要依据自己的平台注意研究.<br>之所以我们设置, 是因为线上使用了自研的dnsClient, 相当于重写了<code>getaddrinfo</code>, 是没有缓存的. 因此JVM设置缓存未0也就能生效.  </p>
-<h2 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h2><p>注意上图中, “in cache?” 代表的是域名对应的IP是否已经在JVM的缓存中了.<br>既然涉及到缓存, 就必然涉及到失效时间的问题. 因此JVM提供了如下2个参数:</p>
-<ul>
-<li>networkaddress.cache.ttl (default: -1): 代表DNS解析成功时, hostName-&gt;ip 的缓存失效时间. 默认-1代表永不失效. </li>
-<li>networkaddress.cache.negative.ttl (default: 10): 代表DNS解析失败时, hostName-&gt;空缓存 的失效时间. 默认为10s. 就是为了做空查询保护.</li>
-</ul>
-<h2 id="如何设置上述参数"><a href="#如何设置上述参数" class="headerlink" title="如何设置上述参数"></a>如何设置上述参数</h2><h3 id="方案1-JVM启动参数"><a href="#方案1-JVM启动参数" class="headerlink" title="方案1: JVM启动参数"></a>方案1: JVM启动参数</h3><p>在应用启动时, 设置启动参数:<br><code>-Dsun.net.inetaddr.ttl=0 -Dsun.net.inetaddr.negative.ttl=0</code></p>
-<h3 id="方案2-应用启动后设置变量"><a href="#方案2-应用启动后设置变量" class="headerlink" title="方案2: 应用启动后设置变量"></a>方案2: 应用启动后设置变量</h3><p>在应用启动后, 设置参数: (注意参数名与启动参数名称不同)</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span>Security</span><span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"networkaddress.cache.ttl"</span> <span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span>Security</span><span class="token punctuation">.</span><span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">"networkaddress.cache.negative.ttl"</span> <span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h3 id="方案3-设置JVM配置"><a href="#方案3-设置JVM配置" class="headerlink" title="方案3: 设置JVM配置"></a>方案3: 设置JVM配置</h3><p>编辑<code>$JRE_HOME/lib/security/java.security</code> 文件, 增加如下配置: </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">networkaddress<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">0</span>
-networkaddress<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>negative<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h1 id="问题重现"><a href="#问题重现" class="headerlink" title="问题重现"></a>问题重现</h1><p>为了模拟重现当时网络不稳定的情况, 设置某个不存在的域名, 这样解析需要花时间. </p>
-<ul>
-<li><a href="https://github.com/DavyJones2010/test-core/blob/master/src/test/java/edu/xmu/test/dns/DnsCachingTest.java">测试代码</a></li>
-</ul>
-<h2 id="不禁用negative"><a href="#不禁用negative" class="headerlink" title="不禁用negative"></a>不禁用negative</h2><p>发现大部分线程卡在访问DNS缓存上, 达不到重现的效果:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041108536.png"></p>
-<h2 id="禁用negative"><a href="#禁用negative" class="headerlink" title="禁用negative"></a>禁用negative</h2><p>这下就重现的当时的情况, 大部分线程都卡在真正解析域名上(或者叫<code>getaddrinfo</code>系统调用上):<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303041147157.png"></p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="关于Java-DNS解析实现的吐槽"><a href="#关于Java-DNS解析实现的吐槽" class="headerlink" title="关于Java DNS解析实现的吐槽"></a>关于Java DNS解析实现的吐槽</h2><p>关于Java域名解析问题, 即<code>InetAddress.getByName()</code>实现, 发现了很有趣的一篇小文:<br><a href="https://blog.bmarwell.de/2020/09/23/javas-dns-resolution-is-so-90ies.html">Java’s DNS resolution is so 90ies! Java的DNS解析实现仍然停留在90年代!</a></p>
-<h3 id="存在3个问题"><a href="#存在3个问题" class="headerlink" title="存在3个问题"></a>存在3个问题</h3><ol>
-<li>首先, 虽然DNS会返回多个IP, 但<code>InetAddress.getByName()</code>只会返回第一个IP. </li>
-<li>其次, 返回的IP并且不会保证这个IP能不能连通.</li>
-<li>最后, <code>InetAddress</code> 所有实现方法都是<code>non-public</code>的, 导致扩展&#x2F;修复极为困难!<blockquote>
-<p>Wow, that is remarkably simple! How do we know that this IP will be reachable? Well, we do not! If there are more IPs in the answer section, they are just being ignored.</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="作者的解决方案"><a href="#作者的解决方案" class="headerlink" title="作者的解决方案"></a>作者的解决方案</h3><ol>
-<li>通过JavaAgent解决了<code>InetAddress</code>难以扩展的问题</li>
-<li>通过类似python中的方案, DNS获取到IpList之后, 会尝试连接ip 3次(timeout 100ms), 直到获取可以连通的ip, 再返回.</li>
-<li>详细代码参见: [bmarwell&#x2F;nameserviceagent]<a href="https://github.com/bmarwell/nameserviceagent">https://github.com/bmarwell/nameserviceagent</a><br>我就喜欢这种能喷能干的实干家:)</li>
-</ol>
-<h2 id="关于配置JVM-DNS缓存生效情况问题"><a href="#关于配置JVM-DNS缓存生效情况问题" class="headerlink" title="关于配置JVM DNS缓存生效情况问题"></a>关于配置JVM DNS缓存生效情况问题</h2><ol>
-<li><p>实际在Mac上设置JVM DNS缓存都为0, 发现并不生效. 例如<code>www.baidu.com</code>其实返回了2个IP, 但测试代码一直返回1个.<br>这是由于 Mac OS has DNS caching, 即把上述 <code>getaddrinfo</code> 的系统调用也进行了缓存. </p>
-</li>
-<li><p>而Linux上 <code>getaddrinfo</code> 不一定会有缓存, 除非使用<code>systemd-resolved</code>等工具</p>
-<blockquote>
-<p>Linux doesn’t necessarily unless you use systemd-resolved or something</p>
-</blockquote>
-</li>
-</ol>
-<p>所以在配置JVM DNS参数前, 也请务必确认好自己的OS环境以及各自实现.</p>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://maheshsenniappan.medium.com/host-name-resolution-in-java-80301fea465a">Host name resolution in Java</a></li>
-<li><a href="https://stackoverflow.com/questions/1256556/how-to-make-java-honor-the-dns-caching-timeout">How to make Java honor the DNS Caching Timeout?</a></li>
-<li><a href="https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird/">Some things about getaddrinfo that surprised me</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>dns</tag>
-        <tag>jvm</tag>
       </tags>
   </entry>
   <entry>
@@ -13696,26 +13696,6 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
       </tags>
   </entry>
   <entry>
-    <title>学习方法论</title>
-    <url>//2023-09-11-methodology-of-learning/</url>
-    <content><![CDATA[<h1 id="20230912-methodology-of-learning"><a href="#20230912-methodology-of-learning" class="headerlink" title="20230912-methodology-of-learning"></a>20230912-methodology-of-learning</h1><h1 id="通用方法论"><a href="#通用方法论" class="headerlink" title="通用方法论"></a>通用方法论</h1><p>自己学习一项新的技能的方法论总结: </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309122352915.png"></p>
-<h1 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h1><p>自己以docker, K8s, SpringBoot为例:</p>
-<ol>
-<li>为啥会存在docker&#x2F;k8s? 没有它会有啥问题? 在k8s以前大家都是怎么玩儿的?</li>
-<li>如何去玩转docker&#x2F;k8s? 这一步需要特别注重实践, 最好可以同步去实践下上一代的产品. 从而通过这个过程, 来加深第一个问题的认知.</li>
-<li>它是如何实现的? 架构是怎样的? 从而来加深对第二个问题的认知, 例如如何更好滴来使用? 有那些最佳实践? 需要避免那些坑?</li>
-</ol>
-<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>可以想下, 自己现在对于某个技术, 是处于哪个认知层次?</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>learning</tag>
-        <tag>methodology</tag>
-        <tag>self-improvement</tag>
-        <tag>knowledge</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CentOS 7 systemd 与 SysV init 对比</title>
     <url>//2023-10-20-centos-systemd-sysv/</url>
     <content><![CDATA[<h1 id="20231021-centos-systemd-sysv"><a href="#20231021-centos-systemd-sysv" class="headerlink" title="20231021-centos-systemd-sysv"></a>20231021-centos-systemd-sysv</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>centos7之后, 所有的service都推荐使用systemd&#x2F;systemctl来管理.</p>
@@ -13767,6 +13747,26 @@ Wants&#x3D;sshd-keygen.service
         <tag>linux</tag>
         <tag>centos</tag>
         <tag>systemd</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>学习方法论</title>
+    <url>//2023-09-11-methodology-of-learning/</url>
+    <content><![CDATA[<h1 id="20230912-methodology-of-learning"><a href="#20230912-methodology-of-learning" class="headerlink" title="20230912-methodology-of-learning"></a>20230912-methodology-of-learning</h1><h1 id="通用方法论"><a href="#通用方法论" class="headerlink" title="通用方法论"></a>通用方法论</h1><p>自己学习一项新的技能的方法论总结: </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309122352915.png"></p>
+<h1 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h1><p>自己以docker, K8s, SpringBoot为例:</p>
+<ol>
+<li>为啥会存在docker&#x2F;k8s? 没有它会有啥问题? 在k8s以前大家都是怎么玩儿的?</li>
+<li>如何去玩转docker&#x2F;k8s? 这一步需要特别注重实践, 最好可以同步去实践下上一代的产品. 从而通过这个过程, 来加深第一个问题的认知.</li>
+<li>它是如何实现的? 架构是怎样的? 从而来加深对第二个问题的认知, 例如如何更好滴来使用? 有那些最佳实践? 需要避免那些坑?</li>
+</ol>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>可以想下, 自己现在对于某个技术, 是处于哪个认知层次?</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>learning</tag>
+        <tag>methodology</tag>
+        <tag>self-improvement</tag>
+        <tag>knowledge</tag>
       </tags>
   </entry>
   <entry>
@@ -14331,6 +14331,23 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
+    <title>go vs java</title>
+    <url>//2023-12-12-go-vs-java/</url>
+    <content><![CDATA[<h1 id="go-v-s-Java"><a href="#go-v-s-Java" class="headerlink" title="go v.s. Java"></a>go v.s. Java</h1><p>作为准备转型为Gopher的Javaer , 总结下异同点</p>
+<p>协程 vs 线程</p>
+<p>虽然Java 21也已经引入了轻量级线程(用户态线程), 但毕竟还是太过遥远</p>
+<p>包级别 vs 类级别</p>
+<p>对go最不适应的, 就是 全局的变量名, 方法名 竟然都是包级别可见的. 导致很容易冲突(因为记不得同个包下其他文件中命名了相同的变量~). </p>
+<p>本质上, 编译阶段go就是把一个包下的所有文件都组合成一个大文件. </p>
+<p>面向过程 vs 面向对象</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>golang</tag>
+        <tag>comparison</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go 网络 Socket 编程</title>
     <url>//2023-12-12-go-network-socket/</url>
     <content><![CDATA[<h1 id="go-network-socket"><a href="#go-network-socket" class="headerlink" title="go-network-socket"></a>go-network-socket</h1><h1 id="go-proxy"><a href="#go-proxy" class="headerlink" title="go proxy"></a>go proxy</h1><ul>
@@ -14435,41 +14452,6 @@ Example:
       </tags>
   </entry>
   <entry>
-    <title>go vs java</title>
-    <url>//2023-12-12-go-vs-java/</url>
-    <content><![CDATA[<h1 id="go-v-s-Java"><a href="#go-v-s-Java" class="headerlink" title="go v.s. Java"></a>go v.s. Java</h1><p>作为准备转型为Gopher的Javaer , 总结下异同点</p>
-<p>协程 vs 线程</p>
-<p>虽然Java 21也已经引入了轻量级线程(用户态线程), 但毕竟还是太过遥远</p>
-<p>包级别 vs 类级别</p>
-<p>对go最不适应的, 就是 全局的变量名, 方法名 竟然都是包级别可见的. 导致很容易冲突(因为记不得同个包下其他文件中命名了相同的变量~). </p>
-<p>本质上, 编译阶段go就是把一个包下的所有文件都组合成一个大文件. </p>
-<p>面向过程 vs 面向对象</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>golang</tag>
-        <tag>comparison</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>most important decision i have made</title>
-    <url>//2023-12-21-most-important-decision-i-have-made/</url>
-    <content><![CDATA[<h1 id="20231222-most-important-decision-i-have-made"><a href="#20231222-most-important-decision-i-have-made" class="headerlink" title="20231222-most-important-decision-i-have-made"></a>20231222-most-important-decision-i-have-made</h1><p>SPOT</p>
-<ol>
-<li>上线AZ售卖水位</li>
-<li>定价策略, 识别Generation差异</li>
-<li>GPU&#x2F;CPU 差异化定价</li>
-</ol>
-<p>Apollo</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>reflection</tag>
-        <tag>career</tag>
-        <tag>life-decisions</tag>
-        <tag>personal-growth</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2024 Annual Reading &amp; Gaming List</title>
     <url>//2023-12-31-2024-annual-list/</url>
     <content><![CDATA[<h2 id="📚-BookList-2024"><a href="#📚-BookList-2024" class="headerlink" title="📚 BookList 2024"></a>📚 BookList 2024</h2><ul>
@@ -14522,6 +14504,24 @@ Example:
       </tags>
   </entry>
   <entry>
+    <title>most important decision i have made</title>
+    <url>//2023-12-21-most-important-decision-i-have-made/</url>
+    <content><![CDATA[<h1 id="20231222-most-important-decision-i-have-made"><a href="#20231222-most-important-decision-i-have-made" class="headerlink" title="20231222-most-important-decision-i-have-made"></a>20231222-most-important-decision-i-have-made</h1><p>SPOT</p>
+<ol>
+<li>上线AZ售卖水位</li>
+<li>定价策略, 识别Generation差异</li>
+<li>GPU&#x2F;CPU 差异化定价</li>
+</ol>
+<p>Apollo</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>reflection</tag>
+        <tag>career</tag>
+        <tag>life-decisions</tag>
+        <tag>personal-growth</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Node VPA 使用陷阱</title>
     <url>//2024-01-04-node-vpa-pitfall/</url>
     <content><![CDATA[<h1 id="20240105-node-vpa-pitfall"><a href="#20240105-node-vpa-pitfall" class="headerlink" title="20240105-node-vpa-pitfall"></a>20240105-node-vpa-pitfall</h1><p>节点垂直伸缩的概念, 看起来很美好, 都是大家鼓吹的. 但实际实现起来, 落地难度巨大. 本质上来说, 是需要应用层的适配. </p>
@@ -14540,6 +14540,40 @@ Example:
         <tag>lessons-learned</tag>
         <tag>kubernetes</tag>
         <tag>vpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s Memory Manager 深入解析</title>
+    <url>//2024-01-09-k8s-memory-manager-deep-dive/</url>
+    <content><![CDATA[<h1 id="k8s-memory-manager-deep-dive"><a href="#k8s-memory-manager-deep-dive" class="headerlink" title="k8s-memory-manager-deep-dive"></a>k8s-memory-manager-deep-dive</h1><ul>
+<li>只能针对GU, 不保证burstable的pod是否跨numa访问.</li>
+<li>kube-scheduler无法感知numa: The default Kubernetes scheduler is not aware of the node’s NUMA topology, and it can be a reason for many admission errors during the pod start.</li>
+</ul>
+<h1 id="疑问汇总"><a href="#疑问汇总" class="headerlink" title="疑问汇总"></a>疑问汇总</h1><ol>
+<li><p>mm怎么跟cadvisor交互, 来获取内存信息? 详细代码实现. ❌</p>
+</li>
+<li><p>如下图, 如果到操作系统来给pod发送OOM, 如何保证 “Low-priority containers are targeted before the high-priority containers”? 在进程优先级上有设定? 底层是怎么实现的? ✅</p>
+</li>
+</ol>
+<p>答案: 参见 <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-out-of-memory-behavior">Node-pressure Eviction | Kubernetes</a> 底层是给不同QoS的Pod设定不同的oom_score_adj, 然后通过Linux的 oom_killer 识别&amp;执行.</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled.png" alt="Untitled"></p>
+<ol>
+<li>为啥下边的场景, Pod2创建会失败? ❌</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled-1.png" alt="Untitled"></p>
+<ol>
+<li>怎么跟cpumanager进行交互?</li>
+</ol>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="%5Bhttps://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work?">Kubernetes Memory Manager moves to beta | Kubernetes</a>](<a href="https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work">https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work</a>?))</li>
+<li><a href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/1769-memory-manager">enhancements&#x2F;keps&#x2F;sig-node&#x2F;1769-memory-manager&#x2F;mm_tm_diagram.png at master · kubernetes&#x2F;enhancements</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>resource-management</tag>
+        <tag>memory-manager</tag>
+        <tag>kubelet</tag>
       </tags>
   </entry>
   <entry>
@@ -14638,40 +14672,6 @@ Example:
         <tag>cpu</tag>
         <tag>libvirt</tag>
         <tag>hyperthreading</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>K8s Memory Manager 深入解析</title>
-    <url>//2024-01-09-k8s-memory-manager-deep-dive/</url>
-    <content><![CDATA[<h1 id="k8s-memory-manager-deep-dive"><a href="#k8s-memory-manager-deep-dive" class="headerlink" title="k8s-memory-manager-deep-dive"></a>k8s-memory-manager-deep-dive</h1><ul>
-<li>只能针对GU, 不保证burstable的pod是否跨numa访问.</li>
-<li>kube-scheduler无法感知numa: The default Kubernetes scheduler is not aware of the node’s NUMA topology, and it can be a reason for many admission errors during the pod start.</li>
-</ul>
-<h1 id="疑问汇总"><a href="#疑问汇总" class="headerlink" title="疑问汇总"></a>疑问汇总</h1><ol>
-<li><p>mm怎么跟cadvisor交互, 来获取内存信息? 详细代码实现. ❌</p>
-</li>
-<li><p>如下图, 如果到操作系统来给pod发送OOM, 如何保证 “Low-priority containers are targeted before the high-priority containers”? 在进程优先级上有设定? 底层是怎么实现的? ✅</p>
-</li>
-</ol>
-<p>答案: 参见 <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-out-of-memory-behavior">Node-pressure Eviction | Kubernetes</a> 底层是给不同QoS的Pod设定不同的oom_score_adj, 然后通过Linux的 oom_killer 识别&amp;执行.</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled.png" alt="Untitled"></p>
-<ol>
-<li>为啥下边的场景, Pod2创建会失败? ❌</li>
-</ol>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled-1.png" alt="Untitled"></p>
-<ol>
-<li>怎么跟cpumanager进行交互?</li>
-</ol>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="%5Bhttps://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work?">Kubernetes Memory Manager moves to beta | Kubernetes</a>](<a href="https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work">https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work</a>?))</li>
-<li><a href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/1769-memory-manager">enhancements&#x2F;keps&#x2F;sig-node&#x2F;1769-memory-manager&#x2F;mm_tm_diagram.png at master · kubernetes&#x2F;enhancements</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>resource-management</tag>
-        <tag>memory-manager</tag>
-        <tag>kubelet</tag>
       </tags>
   </entry>
   <entry>
@@ -14781,6 +14781,51 @@ Example:
         <tag>golang</tag>
         <tag>best-practices</tag>
         <tag>helpers</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cgroup、QEMU 与 CFS 调度</title>
+    <url>//2024-01-24-cgroup-qemu-cfs/</url>
+    <content><![CDATA[<h1 id="20240125-cgroup-qemu-cfs"><a href="#20240125-cgroup-qemu-cfs" class="headerlink" title="20240125-cgroup-qemu-cfs"></a>20240125-cgroup-qemu-cfs</h1><p>针对如何实现CPU的绑核逻辑, 一直有很多疑问. </p>
+<p>今天跟GPT聊了一会儿, 大致勾画出如下: </p>
+<p>本质还是cfs-scheduler的策略, 但通过的方式不同工具&#x2F;方式透出. 基本明了了.</p>
+<p>TODO: 底层还是要研究下cfs-scheduler具体的工作机制, 才能彻底透彻.</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-25-cgroup-qemu-cfs/Untitled.png" alt="Untitled"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>cgroups</tag>
+        <tag>virtualization</tag>
+        <tag>qemu</tag>
+        <tag>cfs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>虎寺</title>
+    <url>//2024-01-20-hushi/</url>
+    <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
+<blockquote>
+<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
+</blockquote>
+<ul>
+<li>胡适<blockquote>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
+</blockquote>
+<ul>
+<li>胡适<blockquote>
+</blockquote>
+</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>experience</tag>
+        <tag>culture</tag>
+        <tag>travel</tag>
       </tags>
   </entry>
   <entry>
@@ -15155,51 +15200,6 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
         <tag>resource-management</tag>
         <tag>cgroups</tag>
         <tag>process-management</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>虎寺</title>
-    <url>//2024-01-20-hushi/</url>
-    <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
-<blockquote>
-<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<p><a href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>experience</tag>
-        <tag>culture</tag>
-        <tag>travel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Cgroup、QEMU 与 CFS 调度</title>
-    <url>//2024-01-24-cgroup-qemu-cfs/</url>
-    <content><![CDATA[<h1 id="20240125-cgroup-qemu-cfs"><a href="#20240125-cgroup-qemu-cfs" class="headerlink" title="20240125-cgroup-qemu-cfs"></a>20240125-cgroup-qemu-cfs</h1><p>针对如何实现CPU的绑核逻辑, 一直有很多疑问. </p>
-<p>今天跟GPT聊了一会儿, 大致勾画出如下: </p>
-<p>本质还是cfs-scheduler的策略, 但通过的方式不同工具&#x2F;方式透出. 基本明了了.</p>
-<p>TODO: 底层还是要研究下cfs-scheduler具体的工作机制, 才能彻底透彻.</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-25-cgroup-qemu-cfs/Untitled.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>cgroups</tag>
-        <tag>virtualization</tag>
-        <tag>qemu</tag>
-        <tag>cfs</tag>
       </tags>
   </entry>
   <entry>
@@ -16133,38 +16133,6 @@ message CreateTaskRequest <span class="token punctuation">&#123;</span>
       </tags>
   </entry>
   <entry>
-    <title>K8s 证书管理与配置</title>
-    <url>//2024-02-27-k8s-cert/</url>
-    <content><![CDATA[<h1 id="k8s-cert"><a href="#k8s-cert" class="headerlink" title="k8s-cert"></a>k8s-cert</h1><ol>
-<li>初始化时, cert先后流程是怎样的? </li>
-<li>cert怎么跟service account关联?</li>
-</ol>
-<h1 id="kubeconfig"><a href="#kubeconfig" class="headerlink" title="kubeconfig"></a>kubeconfig</h1><ul>
-<li>kubeconfig.yaml中各个字段含义详解; 以kube-scheduer的kube-config为例:</li>
-</ul>
-<p>certificate-authority-data: 用于验证apiserver服务端证书的CA证书; 所有需要连接apiserver的角色, 都需要配置该CA证书, 且内容都一样. </p>
-<p>client-certificate-data: </p>
-<p>client-key: </p>
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ol>
-<li>生成服务端证书:  certificate-authority-data; </li>
-<li>基于服务端证书, 生成kubelet的客户端证书<ol>
-<li>集群中多个node, 每个node的kubelet客户端证书都一样的么?  —&gt; 实际验证, 每个node的kubelet客户端证书都不一样. </li>
-<li>如果所有node使用一样的证书, 会有啥问题?</li>
-</ol>
-</li>
-<li>kubelet启动时, 配置kubeconfig</li>
-</ol>
-<h1 id="case"><a href="#case" class="headerlink" title="case"></a>case</h1><h2 id="如何为某个client签发证书便于连接k8s集群"><a href="#如何为某个client签发证书便于连接k8s集群" class="headerlink" title="如何为某个client签发证书便于连接k8s集群?"></a>如何为某个client签发证书便于连接k8s集群?</h2><p>例如需要为某个用户签发证书, 只能访问某个namespace, 只能执行create&#x2F;list操作, 不能执行delete. 需要怎么做? </p>
-<h1 id="refs"><a href="#refs" class="headerlink" title="refs"></a>refs</h1><ul>
-<li><a href="https://blog.csdn.net/qq_24433609/article/details/120307483">Kubernetes（k8s）证书机制_k8s证书原理-CSDN博客</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>security</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>K8s 部署架构设计</title>
     <url>//2024-02-27-k8s-deploy-arch/</url>
     <content><![CDATA[<h1 id="k8s-deploy-arch"><a href="#k8s-deploy-arch" class="headerlink" title="k8s-deploy-arch"></a>k8s-deploy-arch</h1><p>对于k8s搭建比较感兴趣: 例如 各个组件如何部署的? 有啥先后顺序? 分别是以啥形态部署等, 以此文详细来分析下.</p>
@@ -16302,6 +16270,38 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
       </tags>
   </entry>
   <entry>
+    <title>K8s 证书管理与配置</title>
+    <url>//2024-02-27-k8s-cert/</url>
+    <content><![CDATA[<h1 id="k8s-cert"><a href="#k8s-cert" class="headerlink" title="k8s-cert"></a>k8s-cert</h1><ol>
+<li>初始化时, cert先后流程是怎样的? </li>
+<li>cert怎么跟service account关联?</li>
+</ol>
+<h1 id="kubeconfig"><a href="#kubeconfig" class="headerlink" title="kubeconfig"></a>kubeconfig</h1><ul>
+<li>kubeconfig.yaml中各个字段含义详解; 以kube-scheduer的kube-config为例:</li>
+</ul>
+<p>certificate-authority-data: 用于验证apiserver服务端证书的CA证书; 所有需要连接apiserver的角色, 都需要配置该CA证书, 且内容都一样. </p>
+<p>client-certificate-data: </p>
+<p>client-key: </p>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ol>
+<li>生成服务端证书:  certificate-authority-data; </li>
+<li>基于服务端证书, 生成kubelet的客户端证书<ol>
+<li>集群中多个node, 每个node的kubelet客户端证书都一样的么?  —&gt; 实际验证, 每个node的kubelet客户端证书都不一样. </li>
+<li>如果所有node使用一样的证书, 会有啥问题?</li>
+</ol>
+</li>
+<li>kubelet启动时, 配置kubeconfig</li>
+</ol>
+<h1 id="case"><a href="#case" class="headerlink" title="case"></a>case</h1><h2 id="如何为某个client签发证书便于连接k8s集群"><a href="#如何为某个client签发证书便于连接k8s集群" class="headerlink" title="如何为某个client签发证书便于连接k8s集群?"></a>如何为某个client签发证书便于连接k8s集群?</h2><p>例如需要为某个用户签发证书, 只能访问某个namespace, 只能执行create&#x2F;list操作, 不能执行delete. 需要怎么做? </p>
+<h1 id="refs"><a href="#refs" class="headerlink" title="refs"></a>refs</h1><ul>
+<li><a href="https://blog.csdn.net/qq_24433609/article/details/120307483">Kubernetes（k8s）证书机制_k8s证书原理-CSDN博客</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>security</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>K8s 基础知识入门</title>
     <url>//2024-03-05-k8s-basis/</url>
     <content><![CDATA[<h1 id="k8s-basis"><a href="#k8s-basis" class="headerlink" title="k8s-basis"></a>k8s-basis</h1><p>这里记录一些基础的, 个人容易遗忘的零散知识点:</p>
@@ -16406,7 +16406,7 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
     <title>K8s 工具集与实用命令</title>
     <url>//2024-03-05-k8s-util/</url>
     <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#x70;&#x69;&#115;&#101;&#x72;&#x76;&#x65;&#x72;&#64;&#x76;&#48;&#x2e;&#50;&#52;&#46;&#x31;&#53;">&#x61;&#x70;&#x69;&#115;&#101;&#x72;&#x76;&#x65;&#x72;&#64;&#x76;&#48;&#x2e;&#50;&#52;&#46;&#x31;&#53;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#x69;&#x73;&#101;&#x72;&#118;&#101;&#x72;&#x40;&#x76;&#48;&#x2e;&#50;&#x34;&#46;&#x31;&#x35;">&#x61;&#112;&#x69;&#x73;&#101;&#x72;&#118;&#101;&#x72;&#x40;&#x76;&#48;&#x2e;&#50;&#x34;&#46;&#x31;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
 </blockquote>
 <p>新建一个协程来启动HTTPServer. </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
@@ -16449,22 +16449,6 @@ time<span class="token punctuation">.</span><span class="token function">Sleep</
         <tag>kubernetes</tag>
         <tag>tools</tag>
         <tag>commands</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DTS 使用陷阱</title>
-    <url>//2024-03-27-dts-pitfall/</url>
-    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
-<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
-<p>可能的几种方案:</p>
-<ol>
-<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
-<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>dts</tag>
       </tags>
   </entry>
   <entry>
@@ -16925,6 +16909,22 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
       </tags>
   </entry>
   <entry>
+    <title>DTS 使用陷阱</title>
+    <url>//2024-03-27-dts-pitfall/</url>
+    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
+<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
+<p>可能的几种方案:</p>
+<ol>
+<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
+<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>dts</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>太阳底下无新事</title>
     <url>//2024-05-05-nothing-new-under-the-sun/</url>
     <content><![CDATA[<h1 id="20240506-nothing-new-under-the-sun"><a href="#20240506-nothing-new-under-the-sun" class="headerlink" title="20240506-nothing-new-under-the-sun"></a>20240506-nothing-new-under-the-sun</h1><p><a href="https://techcrunch.com/2024/05/03/nasa-is-expanding-its-wallops-island-facility-to-support-three-times-as-many-launches/?utm_campaign=tc_daily_pm&utm_medium=newsletter&_hsenc=p2ANqtz-_pt71sn4qCkCoiGwCCV0uyZogPkRC8nOveczoxht3PFxUOspVDaWEPhEHlgDAPV-SsURhiDVvoLKHDEVsrVw_9EUC8rA&_hsmi=305558670&utm_source=tc&guccounter=1">NASA is expanding its Wallops Island facility to support three times as many launches | TechCrunch</a></p>
@@ -17231,35 +17231,6 @@ Allocatable:
       </tags>
   </entry>
   <entry>
-    <title>2025 Annual Reading List</title>
-    <url>//2024-12-31-2025-annual-list/</url>
-    <content><![CDATA[<h2 id="📚-BookList-2025"><a href="#📚-BookList-2025" class="headerlink" title="📚 BookList 2025"></a>📚 BookList 2025</h2><ul>
-<li>📋 <a href="https://detail.tmall.com/item.htm?ali_trackid=2:mm_1721980159_2323450014_111392550115:1730372520060_560407301_0&bxsign=tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&id=842506021019&scm=moon.0.0.moon_linkconverter_0&spm=a21wq.b804539.1000.mainShare&tkSid=1730372520060_560407301_0.0&un=ad322868c9dc35e7b463cb48fb1832e7&union_lens=lensId:APP@1729497981@2167296e_2298_192ae1ce363_3417@033uhK55xEUqaLOkWRQPqshb;tkScm:appTrans_site_0_0_0_0_0_0;scm:moon.0.0.moon_linkconverter_0;recoveryid:560407301_0@1730372520061&ut_sk=1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&skuId=5781756430189">https://detail.tmall.com/item.htm?ali_trackid&#x3D;2%3Amm_1721980159_2323450014_111392550115%3A1730372520060_560407301_0&amp;bxsign&#x3D;tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&amp;id&#x3D;842506021019&amp;scm&#x3D;moon.0.0.moon_linkconverter_0&amp;spm&#x3D;a21wq.b804539.1000.mainShare&amp;tkSid&#x3D;1730372520060_560407301_0.0&amp;un&#x3D;ad322868c9dc35e7b463cb48fb1832e7&amp;union_lens&#x3D;lensId%3AAPP%401729497981%402167296e_2298_192ae1ce363_3417%40033uhK55xEUqaLOkWRQPqshb%3BtkScm%3AappTrans_site_0_0_0_0_0_0%3Bscm%3Amoon.0.0.moon_linkconverter_0%3Brecoveryid%3A560407301_0%401730372520061&amp;ut_sk&#x3D;1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&amp;skuId&#x3D;5781756430189</a></li>
-<li>✅ 一个天文学家的夜空漫游指南</li>
-<li>✅ 世上为什么要有图书馆</li>
-<li>✅ 碧玉刀</li>
-<li>✅ 深渊-by 深蓝</li>
-<li>✅ <a href="https://book.douban.com/subject/37339619/">https://book.douban.com/subject/37339619/</a></li>
-<li>✅ 草原动物园-马伯庸</li>
-<li>✅ 七杀手</li>
-<li>✅ 七侯笔录-马伯庸</li>
-<li>✅ 关乎天下-中小企业赢的秘诀</li>
-<li>✅ 关乎天下2</li>
-<li>📖 边界的诱惑</li>
-<li>📖 It Doesn’t Have to Be Crazy at Work</li>
-<li>📖 逆风顺水-阿嘉仁波切</li>
-<li>📖 生命不过一场遇合-沈从文自传</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>books</tag>
-        <tag>annual-review</tag>
-        <tag>movies</tag>
-        <tag>reading</tag>
-        <tag>games</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>K8s 故障排查指南</title>
     <url>//2025-05-14-k8s-troubleshooting/</url>
     <content><![CDATA[<h1 id="k8s-troubleshooting"><a href="#k8s-troubleshooting" class="headerlink" title="k8s-troubleshooting"></a>k8s-troubleshooting</h1><h1 id="Disk-Pressure"><a href="#Disk-Pressure" class="headerlink" title="Disk Pressure"></a>Disk Pressure</h1><h2 id="错误现象"><a href="#错误现象" class="headerlink" title="错误现象"></a>错误现象</h2><p>“Disk usage on image filesystem is over the high threshold, trying to free bytes down to the low threshold”</p>
@@ -17322,50 +17293,32 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>2025 Plans &amp; Goals 年度计划</title>
-    <url>//2024-12-31-2025-plans-goals/</url>
-    <content><![CDATA[<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><p>2025年, 可以多一些前瞻性的思考, 技术视野也一定要宽广一些. 不要每天被困在一亩三分地的业务里绕圈圈. 多一些尝试以及实践.</p>
-<h2 id="深度"><a href="#深度" class="headerlink" title="深度"></a>深度</h2><ul>
-<li><input disabled="" type="checkbox"> Java&#x2F;Unix网络编程, 如何编写一个高性能RPC框架<ul>
-<li><input disabled="" type="checkbox"> Netty架构以及设计</li>
-<li><input disabled="" type="checkbox"> 序列化问题, zero copy技术</li>
-<li><input disabled="" type="checkbox"> HTTP 1.1 chunked encoding &amp; k8s如何使用</li>
-<li><input disabled="" type="checkbox"> 长连接短连接</li>
+    <title>2025 Annual Reading List</title>
+    <url>//2024-12-31-2025-annual-list/</url>
+    <content><![CDATA[<h2 id="📚-BookList-2025"><a href="#📚-BookList-2025" class="headerlink" title="📚 BookList 2025"></a>📚 BookList 2025</h2><ul>
+<li>📋 <a href="https://detail.tmall.com/item.htm?ali_trackid=2:mm_1721980159_2323450014_111392550115:1730372520060_560407301_0&bxsign=tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&id=842506021019&scm=moon.0.0.moon_linkconverter_0&spm=a21wq.b804539.1000.mainShare&tkSid=1730372520060_560407301_0.0&un=ad322868c9dc35e7b463cb48fb1832e7&union_lens=lensId:APP@1729497981@2167296e_2298_192ae1ce363_3417@033uhK55xEUqaLOkWRQPqshb;tkScm:appTrans_site_0_0_0_0_0_0;scm:moon.0.0.moon_linkconverter_0;recoveryid:560407301_0@1730372520061&ut_sk=1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&skuId=5781756430189">https://detail.tmall.com/item.htm?ali_trackid&#x3D;2%3Amm_1721980159_2323450014_111392550115%3A1730372520060_560407301_0&amp;bxsign&#x3D;tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&amp;id&#x3D;842506021019&amp;scm&#x3D;moon.0.0.moon_linkconverter_0&amp;spm&#x3D;a21wq.b804539.1000.mainShare&amp;tkSid&#x3D;1730372520060_560407301_0.0&amp;un&#x3D;ad322868c9dc35e7b463cb48fb1832e7&amp;union_lens&#x3D;lensId%3AAPP%401729497981%402167296e_2298_192ae1ce363_3417%40033uhK55xEUqaLOkWRQPqshb%3BtkScm%3AappTrans_site_0_0_0_0_0_0%3Bscm%3Amoon.0.0.moon_linkconverter_0%3Brecoveryid%3A560407301_0%401730372520061&amp;ut_sk&#x3D;1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&amp;skuId&#x3D;5781756430189</a></li>
+<li>✅ 一个天文学家的夜空漫游指南</li>
+<li>✅ 世上为什么要有图书馆</li>
+<li>✅ 碧玉刀</li>
+<li>✅ 深渊-by 深蓝</li>
+<li>✅ <a href="https://book.douban.com/subject/37339619/">https://book.douban.com/subject/37339619/</a></li>
+<li>✅ 草原动物园-马伯庸</li>
+<li>✅ 七杀手</li>
+<li>✅ 七侯笔录-马伯庸</li>
+<li>✅ 关乎天下-中小企业赢的秘诀</li>
+<li>✅ 关乎天下2</li>
+<li>📖 边界的诱惑</li>
+<li>📖 It Doesn’t Have to Be Crazy at Work</li>
+<li>📖 逆风顺水-阿嘉仁波切</li>
+<li>📖 生命不过一场遇合-沈从文自传</li>
 </ul>
-</li>
-<li><input disabled="" type="checkbox"> 性能压测的方法论</li>
-</ul>
-<h2 id="广度"><a href="#广度" class="headerlink" title="广度"></a>广度</h2><ul>
-<li><input disabled="" type="checkbox"> 调度相关论文, 深入分析比对, 要注重实践!<ul>
-<li><input checked="" disabled="" type="checkbox"> CFS: 已经彻底理解了CFS的设计原理</li>
-<li><input checked="" disabled="" type="checkbox"> mesos: 已彻底了解, 文章后续补充</li>
-<li><input disabled="" type="checkbox"> nomad @Hashicorp</li>
-<li><input disabled="" type="checkbox"> sparrow hawk</li>
-<li><input disabled="" type="checkbox"> k8s 体系: yunikorn, volcano, godel 等架构以及与kube-sched的差异</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"> 流计算&#x2F;实时计算, spark<ul>
-<li><input disabled="" type="checkbox"> 搭建一个spark集群, 用户角度: 看下如何提交任务, 如何执行?</li>
-<li><input disabled="" type="checkbox"> Spark开发角度: 架构是怎样的? 内部是如何调度的?</li>
-<li><input disabled="" type="checkbox"> Adaptor开发角度: spark on k8s, mapreduce on k8s 具体资源管理是如何适配的:</li>
-</ul>
-</li>
-</ul>
-<h2 id="专利"><a href="#专利" class="headerlink" title="专利"></a>专利</h2><aside>
-💡
-
-<p>至少2篇! 不要懒!</p>
-</aside>
-
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 一种基于线程池的管理方案 GroupThreadPoolExecutor</li>
-</ul>
-<h1 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
+        <tag>books</tag>
         <tag>annual-review</tag>
-        <tag>plans</tag>
-        <tag>goals</tag>
-        <tag>2025</tag>
+        <tag>movies</tag>
+        <tag>reading</tag>
+        <tag>games</tag>
       </tags>
   </entry>
   <entry>
@@ -17565,6 +17518,53 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
+    <title>2025 Plans &amp; Goals 年度计划</title>
+    <url>//2024-12-31-2025-plans-goals/</url>
+    <content><![CDATA[<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><p>2025年, 可以多一些前瞻性的思考, 技术视野也一定要宽广一些. 不要每天被困在一亩三分地的业务里绕圈圈. 多一些尝试以及实践.</p>
+<h2 id="深度"><a href="#深度" class="headerlink" title="深度"></a>深度</h2><ul>
+<li><input disabled="" type="checkbox"> Java&#x2F;Unix网络编程, 如何编写一个高性能RPC框架<ul>
+<li><input disabled="" type="checkbox"> Netty架构以及设计</li>
+<li><input disabled="" type="checkbox"> 序列化问题, zero copy技术</li>
+<li><input disabled="" type="checkbox"> HTTP 1.1 chunked encoding &amp; k8s如何使用</li>
+<li><input disabled="" type="checkbox"> 长连接短连接</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 性能压测的方法论</li>
+</ul>
+<h2 id="广度"><a href="#广度" class="headerlink" title="广度"></a>广度</h2><ul>
+<li><input disabled="" type="checkbox"> 调度相关论文, 深入分析比对, 要注重实践!<ul>
+<li><input checked="" disabled="" type="checkbox"> CFS: 已经彻底理解了CFS的设计原理</li>
+<li><input checked="" disabled="" type="checkbox"> mesos: 已彻底了解, 文章后续补充</li>
+<li><input disabled="" type="checkbox"> nomad @Hashicorp</li>
+<li><input disabled="" type="checkbox"> sparrow hawk</li>
+<li><input disabled="" type="checkbox"> k8s 体系: yunikorn, volcano, godel 等架构以及与kube-sched的差异</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 流计算&#x2F;实时计算, spark<ul>
+<li><input disabled="" type="checkbox"> 搭建一个spark集群, 用户角度: 看下如何提交任务, 如何执行?</li>
+<li><input disabled="" type="checkbox"> Spark开发角度: 架构是怎样的? 内部是如何调度的?</li>
+<li><input disabled="" type="checkbox"> Adaptor开发角度: spark on k8s, mapreduce on k8s 具体资源管理是如何适配的:</li>
+</ul>
+</li>
+</ul>
+<h2 id="专利"><a href="#专利" class="headerlink" title="专利"></a>专利</h2><aside>
+💡
+
+<p>至少2篇! 不要懒!</p>
+</aside>
+
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 一种基于线程池的管理方案 GroupThreadPoolExecutor</li>
+</ul>
+<h1 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>annual-review</tag>
+        <tag>plans</tag>
+        <tag>goals</tag>
+        <tag>2025</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MacBook Neo 发布：致我们终将逝去的 2015，以及永不过时的偏执</title>
     <url>//2026-03-04-macbook-neo-release/</url>
     <content><![CDATA[<p>2026 年 03 月 04 日 23:00:00，Apple Newsroom 更新了。</p>
@@ -17599,6 +17599,25 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
         <tag>MacBook Neo</tag>
         <tag>MacBook 2015</tag>
         <tag>数码生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mac Setup 初始化配置</title>
+    <url>//2023-11-06-mac-setup/</url>
+    <content><![CDATA[<p>iterm2</p>
+<ol>
+<li>下载使用 <code>HaX0R_GR33N</code> 的主题</li>
+<li>安装 <code>lsd</code> 比 <code>ls</code> 好看太多啦!</li>
+<li>安装 <code>brew install font-hack-nerd-font --cask</code> 不然文件前边会有奇怪的符号</li>
+</ol>
+<p>如下, 确实要美观好多, 可读性也好很多.</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/mac-setup/image.png" alt="image.png"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>setup</tag>
+        <tag>mac</tag>
+        <tag>macos</tag>
+        <tag>productivity</tag>
       </tags>
   </entry>
   <entry>
@@ -17802,75 +17821,6 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>Mac Setup 初始化配置</title>
-    <url>//2023-11-06-mac-setup/</url>
-    <content><![CDATA[<p>iterm2</p>
-<ol>
-<li>下载使用 <code>HaX0R_GR33N</code> 的主题</li>
-<li>安装 <code>lsd</code> 比 <code>ls</code> 好看太多啦!</li>
-<li>安装 <code>brew install font-hack-nerd-font --cask</code> 不然文件前边会有奇怪的符号</li>
-</ol>
-<p>如下, 确实要美观好多, 可读性也好很多.</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/mac-setup/image.png" alt="image.png"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>setup</tag>
-        <tag>mac</tag>
-        <tag>macos</tag>
-        <tag>productivity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Minikube 实验笔记</title>
-    <url>//2023-11-06-minikube-playground/</url>
-    <content><![CDATA[<ol>
-<li><p>install docker: <a href="https://www.zhaowenyu.com/docker-doc/ops/docker-install.html">软件获取与安装 · Docker 文档</a></p>
-</li>
-<li><p>install minikube: <a href="https://www.zhaowenyu.com/minikube-doc/ops/minikube.html">minikube安装Kubernetes · minikube</a></p>
-</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.18.1/minikube-linux-amd64 <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x minikube <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">mv</span> minikube /usr/local/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>FXXK!!!</p>
-<h2 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled.png" alt="Untitled"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-1.png" alt="Untitled"></p>
-<h2 id="checksum文件下载失败"><a href="#checksum文件下载失败" class="headerlink" title="checksum文件下载失败"></a>checksum文件下载失败</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-2.png" alt="Untitled"></p>
-<p>修复: </p>
-<p>重新从官方的release中下载最新的binary Lol</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
-<span class="token function">curl</span> -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-<span class="token function">sudo</span> <span class="token function">install</span> minikube-linux-amd64 /usr/local/bin/minikube<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="下载速度太慢啦"><a href="#下载速度太慢啦" class="headerlink" title="下载速度太慢啦!"></a>下载速度太慢啦!</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-3.png" alt="Untitled"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">minikube start --kubernetes-version v1.17.5 <span class="token punctuation">\</span>
---vm-driver<span class="token operator">=</span>none <span class="token punctuation">\</span> 
---cni<span class="token operator">=</span>flannel <span class="token punctuation">\</span>
---image-mirror-country<span class="token operator">=</span>cn <span class="token punctuation">\</span>
---image-repository<span class="token operator">=</span>registry.cn-hangzhou.aliyuncs.com/google_containers <span class="token punctuation">\</span>
---iso-url<span class="token operator">=</span>https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.7.3.iso  <span class="token punctuation">\</span>
---registry-mirror<span class="token operator">=</span>https://hub-mirror.c.163.com
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="conntrack-需要提前安装"><a href="#conntrack-需要提前安装" class="headerlink" title="conntrack 需要提前安装"></a>conntrack 需要提前安装</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-4.png" alt="Untitled"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
-<span class="token function">sudo</span> yum <span class="token function">install</span> -y conntrack<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h2 id="crictl-需要提前安装"><a href="#crictl-需要提前安装" class="headerlink" title="crictl 需要提前安装"></a>crictl 需要提前安装</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-5.png" alt="Untitled"></p>
-<p>参见: 手动把tgz下载下来:</p>
-<p><a href="https://github.com/kubernetes-sigs/cri-tools">https://github.com/kubernetes-sigs/cri-tools</a></p>
-<h2 id="kubectl-下载太慢"><a href="#kubectl-下载太慢" class="headerlink" title="kubectl 下载太慢"></a>kubectl 下载太慢</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-6.png" alt="Untitled"></p>
-<ol>
-<li>根据: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">Install and Set Up kubectl on Linux | Kubernetes</a> 中说明, 直接配置yum源, 使用yum 安装要快很多. </li>
-<li>安装好之后, 直接 kubectl 就可以连接到minikube集群里了. 不需要再使用 <code>minikube kubectl</code>这种命令</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>minikube</tag>
-        <tag>playground</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>My Devices - 设备折腾记录</title>
     <url>//2023-11-06-my-devices/</url>
     <content><![CDATA[<h2 id="💻-My-PCs-amp-Devices"><a href="#💻-My-PCs-amp-Devices" class="headerlink" title="💻 My PCs &amp; Devices"></a>💻 My PCs &amp; Devices</h2><h3 id="Surface-Pro-4"><a href="#Surface-Pro-4" class="headerlink" title="Surface Pro 4"></a>Surface Pro 4</h3><p>Battery: 38Wh<br>CPU: Intel Core M3-7Y30 2C4HT<br>kabylake<br>Fans: 0<br>GPU: Intel HD Graphics 515<br>MEM: 0.9GHz~2.2GHz<br>No: 9<br>OS: Windows10<br>OfficialSpec: <a href="https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75">https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75</a><br>Power: SurfaceConnect<br>Price: 1800<br>ReleaseDate: 2015<br>Review: <a href="https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html">https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html</a><br>Screen: 12.3’’<br>97% of sRGB<br>Usage: reading<br>Weight: 0.77Kg</p>
@@ -17938,6 +17888,56 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
         <tag>hardware</tag>
         <tag>devices</tag>
         <tag>pc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Minikube 实验笔记</title>
+    <url>//2023-11-06-minikube-playground/</url>
+    <content><![CDATA[<ol>
+<li><p>install docker: <a href="https://www.zhaowenyu.com/docker-doc/ops/docker-install.html">软件获取与安装 · Docker 文档</a></p>
+</li>
+<li><p>install minikube: <a href="https://www.zhaowenyu.com/minikube-doc/ops/minikube.html">minikube安装Kubernetes · minikube</a></p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.18.1/minikube-linux-amd64 <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x minikube <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">mv</span> minikube /usr/local/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>FXXK!!!</p>
+<h2 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-1.png" alt="Untitled"></p>
+<h2 id="checksum文件下载失败"><a href="#checksum文件下载失败" class="headerlink" title="checksum文件下载失败"></a>checksum文件下载失败</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-2.png" alt="Untitled"></p>
+<p>修复: </p>
+<p>重新从官方的release中下载最新的binary Lol</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
+<span class="token function">curl</span> -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+<span class="token function">sudo</span> <span class="token function">install</span> minikube-linux-amd64 /usr/local/bin/minikube<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="下载速度太慢啦"><a href="#下载速度太慢啦" class="headerlink" title="下载速度太慢啦!"></a>下载速度太慢啦!</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-3.png" alt="Untitled"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">minikube start --kubernetes-version v1.17.5 <span class="token punctuation">\</span>
+--vm-driver<span class="token operator">=</span>none <span class="token punctuation">\</span> 
+--cni<span class="token operator">=</span>flannel <span class="token punctuation">\</span>
+--image-mirror-country<span class="token operator">=</span>cn <span class="token punctuation">\</span>
+--image-repository<span class="token operator">=</span>registry.cn-hangzhou.aliyuncs.com/google_containers <span class="token punctuation">\</span>
+--iso-url<span class="token operator">=</span>https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.7.3.iso  <span class="token punctuation">\</span>
+--registry-mirror<span class="token operator">=</span>https://hub-mirror.c.163.com
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="conntrack-需要提前安装"><a href="#conntrack-需要提前安装" class="headerlink" title="conntrack 需要提前安装"></a>conntrack 需要提前安装</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-4.png" alt="Untitled"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
+<span class="token function">sudo</span> yum <span class="token function">install</span> -y conntrack<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="crictl-需要提前安装"><a href="#crictl-需要提前安装" class="headerlink" title="crictl 需要提前安装"></a>crictl 需要提前安装</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-5.png" alt="Untitled"></p>
+<p>参见: 手动把tgz下载下来:</p>
+<p><a href="https://github.com/kubernetes-sigs/cri-tools">https://github.com/kubernetes-sigs/cri-tools</a></p>
+<h2 id="kubectl-下载太慢"><a href="#kubectl-下载太慢" class="headerlink" title="kubectl 下载太慢"></a>kubectl 下载太慢</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-6.png" alt="Untitled"></p>
+<ol>
+<li>根据: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">Install and Set Up kubectl on Linux | Kubernetes</a> 中说明, 直接配置yum源, 使用yum 安装要快很多. </li>
+<li>安装好之后, 直接 kubectl 就可以连接到minikube集群里了. 不需要再使用 <code>minikube kubectl</code>这种命令</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>minikube</tag>
+        <tag>playground</tag>
       </tags>
   </entry>
   <entry>
