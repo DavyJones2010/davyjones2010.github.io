@@ -294,6 +294,19 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       </tags>
   </entry>
   <entry>
+    <title>明朝那些事儿</title>
+    <url>//2021-09-04-ming-dynasty/</url>
+    <content><![CDATA[<h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
+<p>身在夜郎家万里，五云天北是神州！</p>
+<p>天地圣贤之道，并非存于万物，也无须存于万物，天人本是一体，何时可分？又何必分？<br>随心而动，随意而行，万法自然，便是圣贤之道。存天理，去人欲？天理即是人欲。</p>
+</blockquote>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>history</tag>
+        <tag>ming-dynasty</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Jekyll搭建博客总结</title>
     <url>//2021-09-05-jekyll-site/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>终于下定决心，花一些事件，把自己沉淀与思考，都用GitHubPages保存起来。</p>
@@ -356,19 +369,6 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>jekyll</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>明朝那些事儿</title>
-    <url>//2021-09-04-ming-dynasty/</url>
-    <content><![CDATA[<h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
-<p>身在夜郎家万里，五云天北是神州！</p>
-<p>天地圣贤之道，并非存于万物，也无须存于万物，天人本是一体，何时可分？又何必分？<br>随心而动，随意而行，万法自然，便是圣贤之道。存天理，去人欲？天理即是人欲。</p>
-</blockquote>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>history</tag>
-        <tag>ming-dynasty</tag>
       </tags>
   </entry>
   <entry>
@@ -3787,44 +3787,6 @@ Linux localhost.localdomain <span class="token number">3.10</span>.0-1160.el7.x8
       </tags>
   </entry>
   <entry>
-    <title>TCP协议中TIME_WAIT疑问与思考</title>
-    <url>//2021-12-17-tcp-time-wait/</url>
-    <content><![CDATA[<hr>
-<p>疑问: 从下图可以看出, 客户端可能会是TIME_WAIT状态. 但如果是服务端主动关闭的呢? 服务端可能会是TIME_WAIT状态么?<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-12-18-tcp-time-wait/tcp.png" alt="img.png"></p>
-<p>答案: 是可能的. 服务端主动关闭, 那么四次挥手的过程, 上图中客户端&#x2F;服务端就要翻转下了. </p>
-<hr>
-<p>疑问: 为啥TIME_WAIT要持续2MSL?</p>
-<ul>
-<li>MSL: 最大分段生存期, 指明TCP报文在Internet上最长生存时间，每个具体的TCP实现都必须选择一个确定的MSL值。</li>
-</ul>
-<p>TIME_WAIT状态必须要有一定的持续时间，所以TIME_WAIT也被称为2MSL等待状态，一般持续时间在1分钟到4分钟之间。<br>RFC793定义了MSL为2分钟，Linux设置成了30s</p>
-<p>主要有两个原因：<br>1、我们没有任何机制保证最后的一个ACK能够正常送达, TIME_WAIT确保有足够的时间让对端收到了ACK，<br>    * 如果被动关闭的那方没有收到ACK，就会触发被动端重发Fin，<br>    * 从上图查看, ACK到服务端1个MSL, 服务端如果在MSL里没收到ACK, 则会重发FIN, FIN到达客户端.<br>    * 上边ACK + FIN 耗时, 正好2个MSL；<br>2、有足够的时间让这个连接不会跟后面的连接混在一起（如果连接被重用了，那么这些延迟收到的包就有可能会跟新连接混在一起）。<br>    * </p>
-<p>我们经常就会在服务器上发现有很多的wait_timeout，特别常见的就是http服务器，从上面的描述来看，这个状态应该是主动关闭的一方，才会有的状态，我们有没有想过，就是为什么服务器端会主动断开连接呢？不应该是客户端主动断开吗？</p>
-<p>据说，其实在最初的http协议，服务器在发送完客户端需要的内容后，就主动关闭连接，因为当时的客户端，需要等待所有效果渲染完毕，才会主动断开连接，为了照顾当时性能低下的服务器，更好的服务其他客户，才在协议中这样规定，说到底就是http协议太老了，所以Google才会推他的SPDY协议。</p>
-<hr>
-<p>疑问: 实际上, 我们看到经常服务端会处于CLOSE_WAIT状态, 理论上CLOSE_WAIT应该持续时间很短, 为啥会经常处于这个状态?<br>解释: 出现大量close_wait的现象，主要原因是某种情况下对方关闭了socket链接，但是我方忙与读或者写，没有关闭连接。<br>    就是说CLOSE_WAIT时, 服务端还有数据要写给客户端, 所以没有给客户端发FIN<br>    代码需要判断socket，一旦读到0，断开连接，read返回负，检查一下errno，如果不是AGAIN，就断开连接。</p>
-<hr>
-<p>疑问: 可以从上图看出, 如果客户端在TIME_WAIT内重发了一次ACK, 但ACK还是没有被服务端收到, 那么服务端就会在LAST_ACK状态. 具体LAST_ACK会持续多久?<br>解释: LAST_ACK-&gt;CLOSE不靠超时. 加入服务端发送了FIN之后, 等待LAST_ACK.<br>但客户端回复的ACK丢失了, 在MSL里, 服务端重新发送了FIN, 客户端收到之后, 重新发送ACK, 此时ACK重新丢失.<br>客户端由于2MSL到期, 因此变为CLOSED状态;<br>服务端重新发送FIN, 由于客户端已经处于CLOSED状态, 因此连接丢失, 客户端回复RST, B收到RST进入CLOSED状态.</p>
-<hr>
-<p>疑问: 有啥最佳实践?<br>高并发TCP服务器中进行主动关闭的一方最好是客户端：</p>
-<ul>
-<li>因为对于高并发服务器来说文件描述符资源是很重要的资源，</li>
-<li>如果对于每一个连接都要经历TIME_WAIT这个2MSL的时长，势必造成资源不能立马复用的浪费。</li>
-<li>虽然对于客户端来说TIME_WAIT状态会占用端口和句柄资源，但是客户端一般很少有并发资源限制，所以客户端执行主动关闭是比较合适的。</li>
-</ul>
-<p>服务器端程序最好启用SO_REUSEADDR选项：</p>
-<ul>
-<li>我们想这样做一种情况，如果生产环境中服务端程序由于某种错误操作关闭了，我们肯定是要立马重启服务程序，</li>
-<li>但是TIME_WAIT还在占用着这些地址端口资源让你的服务起不来，那你着不着急。</li>
-<li>SOREUSEADDR这个选项正是允许地址端口的重复绑定。</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>tcp</tag>
-        <tag>timewait</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java NIO疑问与总结</title>
     <url>//2021-12-17-java-nio/</url>
     <content><![CDATA[<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ByteBuffer</span> dst <span class="token operator">=</span> <span class="token class-name">ByteBuffer</span><span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -3865,6 +3827,44 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <tag>java</tag>
         <tag>code-snippets</tag>
         <tag>nio</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TCP协议中TIME_WAIT疑问与思考</title>
+    <url>//2021-12-17-tcp-time-wait/</url>
+    <content><![CDATA[<hr>
+<p>疑问: 从下图可以看出, 客户端可能会是TIME_WAIT状态. 但如果是服务端主动关闭的呢? 服务端可能会是TIME_WAIT状态么?<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-12-18-tcp-time-wait/tcp.png" alt="img.png"></p>
+<p>答案: 是可能的. 服务端主动关闭, 那么四次挥手的过程, 上图中客户端&#x2F;服务端就要翻转下了. </p>
+<hr>
+<p>疑问: 为啥TIME_WAIT要持续2MSL?</p>
+<ul>
+<li>MSL: 最大分段生存期, 指明TCP报文在Internet上最长生存时间，每个具体的TCP实现都必须选择一个确定的MSL值。</li>
+</ul>
+<p>TIME_WAIT状态必须要有一定的持续时间，所以TIME_WAIT也被称为2MSL等待状态，一般持续时间在1分钟到4分钟之间。<br>RFC793定义了MSL为2分钟，Linux设置成了30s</p>
+<p>主要有两个原因：<br>1、我们没有任何机制保证最后的一个ACK能够正常送达, TIME_WAIT确保有足够的时间让对端收到了ACK，<br>    * 如果被动关闭的那方没有收到ACK，就会触发被动端重发Fin，<br>    * 从上图查看, ACK到服务端1个MSL, 服务端如果在MSL里没收到ACK, 则会重发FIN, FIN到达客户端.<br>    * 上边ACK + FIN 耗时, 正好2个MSL；<br>2、有足够的时间让这个连接不会跟后面的连接混在一起（如果连接被重用了，那么这些延迟收到的包就有可能会跟新连接混在一起）。<br>    * </p>
+<p>我们经常就会在服务器上发现有很多的wait_timeout，特别常见的就是http服务器，从上面的描述来看，这个状态应该是主动关闭的一方，才会有的状态，我们有没有想过，就是为什么服务器端会主动断开连接呢？不应该是客户端主动断开吗？</p>
+<p>据说，其实在最初的http协议，服务器在发送完客户端需要的内容后，就主动关闭连接，因为当时的客户端，需要等待所有效果渲染完毕，才会主动断开连接，为了照顾当时性能低下的服务器，更好的服务其他客户，才在协议中这样规定，说到底就是http协议太老了，所以Google才会推他的SPDY协议。</p>
+<hr>
+<p>疑问: 实际上, 我们看到经常服务端会处于CLOSE_WAIT状态, 理论上CLOSE_WAIT应该持续时间很短, 为啥会经常处于这个状态?<br>解释: 出现大量close_wait的现象，主要原因是某种情况下对方关闭了socket链接，但是我方忙与读或者写，没有关闭连接。<br>    就是说CLOSE_WAIT时, 服务端还有数据要写给客户端, 所以没有给客户端发FIN<br>    代码需要判断socket，一旦读到0，断开连接，read返回负，检查一下errno，如果不是AGAIN，就断开连接。</p>
+<hr>
+<p>疑问: 可以从上图看出, 如果客户端在TIME_WAIT内重发了一次ACK, 但ACK还是没有被服务端收到, 那么服务端就会在LAST_ACK状态. 具体LAST_ACK会持续多久?<br>解释: LAST_ACK-&gt;CLOSE不靠超时. 加入服务端发送了FIN之后, 等待LAST_ACK.<br>但客户端回复的ACK丢失了, 在MSL里, 服务端重新发送了FIN, 客户端收到之后, 重新发送ACK, 此时ACK重新丢失.<br>客户端由于2MSL到期, 因此变为CLOSED状态;<br>服务端重新发送FIN, 由于客户端已经处于CLOSED状态, 因此连接丢失, 客户端回复RST, B收到RST进入CLOSED状态.</p>
+<hr>
+<p>疑问: 有啥最佳实践?<br>高并发TCP服务器中进行主动关闭的一方最好是客户端：</p>
+<ul>
+<li>因为对于高并发服务器来说文件描述符资源是很重要的资源，</li>
+<li>如果对于每一个连接都要经历TIME_WAIT这个2MSL的时长，势必造成资源不能立马复用的浪费。</li>
+<li>虽然对于客户端来说TIME_WAIT状态会占用端口和句柄资源，但是客户端一般很少有并发资源限制，所以客户端执行主动关闭是比较合适的。</li>
+</ul>
+<p>服务器端程序最好启用SO_REUSEADDR选项：</p>
+<ul>
+<li>我们想这样做一种情况，如果生产环境中服务端程序由于某种错误操作关闭了，我们肯定是要立马重启服务程序，</li>
+<li>但是TIME_WAIT还在占用着这些地址端口资源让你的服务起不来，那你着不着急。</li>
+<li>SOREUSEADDR这个选项正是允许地址端口的重复绑定。</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>tcp</tag>
+        <tag>timewait</tag>
       </tags>
   </entry>
   <entry>
@@ -5185,6 +5185,24 @@ pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="t
       </tags>
   </entry>
   <entry>
+    <title>一些有意思的记录-3</title>
+    <url>//2022-03-24-random-snippets/</url>
+    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
+<span class="token function">curl</span> cip.cc
+<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
+<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
+<ol>
+<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
+<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>net-tools</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker的一些总结</title>
     <url>//2022-03-18-docker-summary/</url>
     <content><![CDATA[<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
@@ -5556,24 +5574,6 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
-    <title>一些有意思的记录-3</title>
-    <url>//2022-03-24-random-snippets/</url>
-    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
-<span class="token function">curl</span> cip.cc
-<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
-<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
-<ol>
-<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
-<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>net-tools</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>容器生态的一些研究与对比</title>
     <url>//2022-03-27-container-ecosystem/</url>
     <content><![CDATA[<h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><table>
@@ -5690,6 +5690,148 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
         <tag>container</tag>
         <tag>aliyun</tag>
         <tag>aws</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s statefulset的研究与实践</title>
+    <url>//2022-03-27-k8s-stateful-set/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
+<ul>
+<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
+<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
+<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
+</ul>
+<p>这样就保证了Pod销毁重建之后: </p>
+<ul>
+<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
+<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
+</ul>
+<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
+<ul>
+<li>为每个pod创建单独的pvc, 命名规则 ${PvcName}-${StatefulSetName}-${idx}, 并绑定单独的pv, 而不是像deployment为所有pod创建(一个?还是多个?pvc)并绑定同一份pv</li>
+<li>pod销毁重建之后, 由于hostname稳定, 所以还能关联到之前的pv</li>
+</ul>
+<h3 id="其他顺序化的部署特性"><a href="#其他顺序化的部署特性" class="headerlink" title="其他顺序化的部署特性:"></a>其他顺序化的部署特性:</h3><ul>
+<li>Ordered Pod Creation: Pod创建是有序的, 即pod-0先创建, 只有pod-0成功后, pod-1才会创建</li>
+<li>scale-down时, 会按照index倒序删除pod</li>
+<li>滚动升级(Rolling Update)时, 会按照index倒序删除&amp;重建pod</li>
+</ul>
+<h2 id="statefulset的设计原理模型"><a href="#statefulset的设计原理模型" class="headerlink" title="statefulset的设计原理模型"></a>statefulset的设计原理模型</h2><ul>
+<li>拓扑状态: 应用的多个实例之间不是完全对等的关系, 这个应用实例的启动必须按照某些顺序启动. 比如应用的主节点A要先于从节点B启动. 而如果你把A和B两个Pod删除掉, 他们再次被创建出来是也必须严格按照这个顺序才行. 并且, 新创建出来的Pod, 必须和原来的Pod的网络标识一样, 这样原先的访问者才能使用同样的方法, 访问到这个新的Pod.</li>
+<li>存储状态: 应用的多个实例分别绑定了不同的存储数据. 对于这些应用实例来说, Pod A第一次读取到的数据, 和隔了十分钟之后再次读取到的数据, 应该是同一份, 哪怕在此期间Pod A被重新创建过. 一个数据库应用的多个存储实例.</li>
+</ul>
+<h1 id="ZK-on-K8S"><a href="#ZK-on-K8S" class="headerlink" title="ZK on K8S"></a>ZK on K8S</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><p>为啥 <a href="https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/">zookeeper</a> 通过k8s的statefulset创建zk服务, 看yaml文件里,</p>
+<ol>
+<li>没有创建myid文件</li>
+<li>没有在conf里配置 server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT 这种</li>
+</ol>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原因: 因为启动zk的脚本是start-zookeeper, 不是start.sh<br>所以是因为docker镜像里边对zk进行了封装, 对k8s环境变量进行了适配. 具体查看脚本:<br><a href="https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper">start-zookeeper</a></p>
+<h3 id="如何生成myid文件"><a href="#如何生成myid文件" class="headerlink" title="如何生成myid文件?"></a>如何生成myid文件?</h3><ul>
+<li>依赖statefulset的hostname全局有序且保持稳定的特性</li>
+<li>在pod内部执行”hostname”命令, 读取hostname, 参见上边hostname命名规则, 读取到${idx}值, myid&#x3D;${idx}+1</li>
+</ul>
+<h3 id="如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录"><a href="#如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录" class="headerlink" title="如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?"></a>如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?</h3><ul>
+<li>server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT</li>
+<li>$NAME: 从hostname读取到 ${StatefulSetName}</li>
+<li>$DOMAIN: 从 ‘hostname -d’ 命令中读取到domain信息</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>stateful-set</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录一些有趣的产品设计</title>
+    <url>//2022-04-04-good-design/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
+<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
+<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
+</ul>
+<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
+<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
+<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
+</ul>
+<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
+<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
+</li>
+<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
+</li>
+</ul>
+<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
+<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
+</ul>
+<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
+<ul>
+<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
+<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
+</ul>
+<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
+<ol>
+<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
+<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
+</ol>
+<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
+<ul>
+<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
+</li>
+<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
+</li>
+</ul>
+<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
+<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
+</li>
+<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
+</li>
+</ol>
+<ul>
+<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
+<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
+<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
+</ul>
+<ol start="3">
+<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
+</ol>
+<ul>
+<li>最佳实践: 一些使用的小技巧.</li>
+<li>new feature: 新功能的介绍.</li>
+<li>case study: 用户案例.</li>
+<li>event: 线下&#x2F;线上的技术活动介绍.</li>
+<li>竞品比对: 例如与Gliffy,StarUML等.</li>
+<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
+</ul>
+<ol start="4">
+<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
+<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
+<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
+</blockquote>
+</li>
+</ol>
+<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>product-design</tag>
+        <tag>good-design</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>云计算笔记--aws的DefaultVpc实现调研</title>
+    <url>//2022-04-05-aws-default-vpc/</url>
+    <content><![CDATA[<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html">AWS Default VPCs</a></p>
+<ol>
+<li>默认每个账号下, 每个地域下, AWS都会自动创建 172.31.0.0&#x2F;16  CIDR的VPC</li>
+<li>会在账号下Default VPC内, 每个可用区都创建一个VSW, 范围是:<br>a. VSW网段范围: [172.31.00000000.0&#x2F;20, 172.31.11110000.0&#x2F;20] 共16个VSW<br>b. 每个VSW内, IP数量: 2^12&#x3D;4096 个</li>
+<li>新的可用区上线之后, 等待几天, AWS就会自动创建对应可用区的Default VSW.</li>
+<li>只要对默认VPC进行了配置修改, 那么新的可用区上线之后, 就不会为之自动创建DefaultVSW了.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>aws</tag>
+        <tag>cloud</tag>
+        <tag>iaas</tag>
+        <tag>default-vpc</tag>
+        <tag>vpc</tag>
       </tags>
   </entry>
   <entry>
@@ -5939,148 +6081,6 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
         <tag>java</tag>
         <tag>openapi</tag>
         <tag>next-token</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记录一些有趣的产品设计</title>
-    <url>//2022-04-04-good-design/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
-<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
-<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
-</ul>
-<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
-<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
-<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
-</ul>
-<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
-<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
-</li>
-<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
-</li>
-</ul>
-<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
-<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
-</ul>
-<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
-<ul>
-<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
-<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
-</ul>
-<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
-<ol>
-<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
-<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
-</ol>
-<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
-<ul>
-<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
-</li>
-<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
-</li>
-</ul>
-<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
-<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
-</li>
-<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
-</li>
-</ol>
-<ul>
-<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
-<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
-<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
-</ul>
-<ol start="3">
-<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
-</ol>
-<ul>
-<li>最佳实践: 一些使用的小技巧.</li>
-<li>new feature: 新功能的介绍.</li>
-<li>case study: 用户案例.</li>
-<li>event: 线下&#x2F;线上的技术活动介绍.</li>
-<li>竞品比对: 例如与Gliffy,StarUML等.</li>
-<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
-</ul>
-<ol start="4">
-<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
-<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
-<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
-</blockquote>
-</li>
-</ol>
-<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>product-design</tag>
-        <tag>good-design</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>云计算笔记--aws的DefaultVpc实现调研</title>
-    <url>//2022-04-05-aws-default-vpc/</url>
-    <content><![CDATA[<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html">AWS Default VPCs</a></p>
-<ol>
-<li>默认每个账号下, 每个地域下, AWS都会自动创建 172.31.0.0&#x2F;16  CIDR的VPC</li>
-<li>会在账号下Default VPC内, 每个可用区都创建一个VSW, 范围是:<br>a. VSW网段范围: [172.31.00000000.0&#x2F;20, 172.31.11110000.0&#x2F;20] 共16个VSW<br>b. 每个VSW内, IP数量: 2^12&#x3D;4096 个</li>
-<li>新的可用区上线之后, 等待几天, AWS就会自动创建对应可用区的Default VSW.</li>
-<li>只要对默认VPC进行了配置修改, 那么新的可用区上线之后, 就不会为之自动创建DefaultVSW了.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>aws</tag>
-        <tag>cloud</tag>
-        <tag>iaas</tag>
-        <tag>default-vpc</tag>
-        <tag>vpc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s statefulset的研究与实践</title>
-    <url>//2022-03-27-k8s-stateful-set/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
-<ul>
-<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
-<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
-<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
-</ul>
-<p>这样就保证了Pod销毁重建之后: </p>
-<ul>
-<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
-<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
-</ul>
-<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
-<ul>
-<li>为每个pod创建单独的pvc, 命名规则 ${PvcName}-${StatefulSetName}-${idx}, 并绑定单独的pv, 而不是像deployment为所有pod创建(一个?还是多个?pvc)并绑定同一份pv</li>
-<li>pod销毁重建之后, 由于hostname稳定, 所以还能关联到之前的pv</li>
-</ul>
-<h3 id="其他顺序化的部署特性"><a href="#其他顺序化的部署特性" class="headerlink" title="其他顺序化的部署特性:"></a>其他顺序化的部署特性:</h3><ul>
-<li>Ordered Pod Creation: Pod创建是有序的, 即pod-0先创建, 只有pod-0成功后, pod-1才会创建</li>
-<li>scale-down时, 会按照index倒序删除pod</li>
-<li>滚动升级(Rolling Update)时, 会按照index倒序删除&amp;重建pod</li>
-</ul>
-<h2 id="statefulset的设计原理模型"><a href="#statefulset的设计原理模型" class="headerlink" title="statefulset的设计原理模型"></a>statefulset的设计原理模型</h2><ul>
-<li>拓扑状态: 应用的多个实例之间不是完全对等的关系, 这个应用实例的启动必须按照某些顺序启动. 比如应用的主节点A要先于从节点B启动. 而如果你把A和B两个Pod删除掉, 他们再次被创建出来是也必须严格按照这个顺序才行. 并且, 新创建出来的Pod, 必须和原来的Pod的网络标识一样, 这样原先的访问者才能使用同样的方法, 访问到这个新的Pod.</li>
-<li>存储状态: 应用的多个实例分别绑定了不同的存储数据. 对于这些应用实例来说, Pod A第一次读取到的数据, 和隔了十分钟之后再次读取到的数据, 应该是同一份, 哪怕在此期间Pod A被重新创建过. 一个数据库应用的多个存储实例.</li>
-</ul>
-<h1 id="ZK-on-K8S"><a href="#ZK-on-K8S" class="headerlink" title="ZK on K8S"></a>ZK on K8S</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><p>为啥 <a href="https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/">zookeeper</a> 通过k8s的statefulset创建zk服务, 看yaml文件里,</p>
-<ol>
-<li>没有创建myid文件</li>
-<li>没有在conf里配置 server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT 这种</li>
-</ol>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原因: 因为启动zk的脚本是start-zookeeper, 不是start.sh<br>所以是因为docker镜像里边对zk进行了封装, 对k8s环境变量进行了适配. 具体查看脚本:<br><a href="https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper">start-zookeeper</a></p>
-<h3 id="如何生成myid文件"><a href="#如何生成myid文件" class="headerlink" title="如何生成myid文件?"></a>如何生成myid文件?</h3><ul>
-<li>依赖statefulset的hostname全局有序且保持稳定的特性</li>
-<li>在pod内部执行”hostname”命令, 读取hostname, 参见上边hostname命名规则, 读取到${idx}值, myid&#x3D;${idx}+1</li>
-</ul>
-<h3 id="如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录"><a href="#如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录" class="headerlink" title="如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?"></a>如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?</h3><ul>
-<li>server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT</li>
-<li>$NAME: 从hostname读取到 ${StatefulSetName}</li>
-<li>$DOMAIN: 从 ‘hostname -d’ 命令中读取到domain信息</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>stateful-set</tag>
       </tags>
   </entry>
   <entry>
@@ -6642,25 +6642,6 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
       </tags>
   </entry>
   <entry>
-    <title>深度思考：不断逼近问题的本质 读后感</title>
-    <url>//2022-05-03-Beyond-the-Label/</url>
-    <content><![CDATA[<p>总体来说，鸡汤不少，但没啥干货，说的都是一些虚无缥缈且人尽皆知的大道理。</p>
-<hr>
-<p>读的过程，也感觉很鸡肋，感觉像是有些自恋的人的自传，愈发读不下去，但又为了完整读完一本书，硬着头皮读了下去，期待着后边说不定会由有不同的收获。<br>但结果令人失望，甚至都不想做笔记。<br>首先，书名非常具有迷惑性，实在没看出跟深度思考，以及探究问题的本质有任何关系。直到看了英文名称，才恍然大悟。<br>《Beyond the Label: Women, Leadership, and Success on Our Own Terms》，<br>直译过来就是：《拒绝标签：女性，领导力与成功》，压根跟深度思考没任何关系，也不知道书名的中文翻译人员咋想的。<br>如果早看了英文名，尤其是几个雷区词“Women”，“Leadership”，“Success”等这些，就一定不会读的。</p>
-<p>其次，内容更像是作者自己的经历自传。最开始当个推销员，莫名奇妙就推销成功了，然后还获得了贵人的帮助。<br>如果说是因为真诚，那么我相信世界上比她真诚的人要多得多，为什么其他人没有？<br>莫名其妙就结婚了，莫名其妙被派到香港，莫名其妙又掌管了GAP，把old navy做了起来，然后GAP莫名其妙就不行了，莫名其妙就成了香奈儿的CEO了。<br>最后由莫名其妙离婚，还美其名曰“打破规则”。<br>总体来说这些转变读者我是一头雾水。<br>我相信成为一个优秀的CEO，把一个公司与品牌做起来，需要的绝对不仅是书中她提到的这些软素质，还有巨大的一块，应该就是硬素质。<br>如何理解管理，毕竟也是一门工程与科学；如何理解财务报表，处理财务危机；如何品牌营销与形象树立？<br>等等。<br>文中提到的这些软素质，都太普通了，太没有专业门槛了。</p>
-<p>最后就是讲到的一些关于女性职场特有的问题，例如“当人们只注意你的外貌而非工作时，该怎么办？”，并无法引发丝毫我这位直男癌患者的共鸣。</p>
-<p>吸取几点教训吧：</p>
-<ol>
-<li>看英文翻译书之前，一定要看下原先的英文名称是啥，千万不能被忽悠了。</li>
-<li>相信自己的判断，一旦看不下去，觉得没意思没价值没收获，就果断弃坑，不要为了完成读书而读书，否则沉没成本太高。</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>books</tag>
-        <tag>2022</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记一次由于JVM优化导致异常堆栈丢失的问题</title>
     <url>//2022-04-30-java-exception-stack-trace-missing/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>线上某次故障排查, 发现线上有异常, 但无堆栈信息.<br>实际查看打印异常的地方, 确实是会打印出堆栈的. 那么堆栈信息为啥会丢呢? </p>
@@ -6682,6 +6663,25 @@ cache<span class="token punctuation">.</span><span class="token function">put</s
         <tag>learn-from-failure</tag>
         <tag>java</tag>
         <tag>stacktrace</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度思考：不断逼近问题的本质 读后感</title>
+    <url>//2022-05-03-Beyond-the-Label/</url>
+    <content><![CDATA[<p>总体来说，鸡汤不少，但没啥干货，说的都是一些虚无缥缈且人尽皆知的大道理。</p>
+<hr>
+<p>读的过程，也感觉很鸡肋，感觉像是有些自恋的人的自传，愈发读不下去，但又为了完整读完一本书，硬着头皮读了下去，期待着后边说不定会由有不同的收获。<br>但结果令人失望，甚至都不想做笔记。<br>首先，书名非常具有迷惑性，实在没看出跟深度思考，以及探究问题的本质有任何关系。直到看了英文名称，才恍然大悟。<br>《Beyond the Label: Women, Leadership, and Success on Our Own Terms》，<br>直译过来就是：《拒绝标签：女性，领导力与成功》，压根跟深度思考没任何关系，也不知道书名的中文翻译人员咋想的。<br>如果早看了英文名，尤其是几个雷区词“Women”，“Leadership”，“Success”等这些，就一定不会读的。</p>
+<p>其次，内容更像是作者自己的经历自传。最开始当个推销员，莫名奇妙就推销成功了，然后还获得了贵人的帮助。<br>如果说是因为真诚，那么我相信世界上比她真诚的人要多得多，为什么其他人没有？<br>莫名其妙就结婚了，莫名其妙被派到香港，莫名其妙又掌管了GAP，把old navy做了起来，然后GAP莫名其妙就不行了，莫名其妙就成了香奈儿的CEO了。<br>最后由莫名其妙离婚，还美其名曰“打破规则”。<br>总体来说这些转变读者我是一头雾水。<br>我相信成为一个优秀的CEO，把一个公司与品牌做起来，需要的绝对不仅是书中她提到的这些软素质，还有巨大的一块，应该就是硬素质。<br>如何理解管理，毕竟也是一门工程与科学；如何理解财务报表，处理财务危机；如何品牌营销与形象树立？<br>等等。<br>文中提到的这些软素质，都太普通了，太没有专业门槛了。</p>
+<p>最后就是讲到的一些关于女性职场特有的问题，例如“当人们只注意你的外貌而非工作时，该怎么办？”，并无法引发丝毫我这位直男癌患者的共鸣。</p>
+<p>吸取几点教训吧：</p>
+<ol>
+<li>看英文翻译书之前，一定要看下原先的英文名称是啥，千万不能被忽悠了。</li>
+<li>相信自己的判断，一旦看不下去，觉得没意思没价值没收获，就果断弃坑，不要为了完成读书而读书，否则沉没成本太高。</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>books</tag>
+        <tag>2022</tag>
       </tags>
   </entry>
   <entry>
@@ -8512,239 +8512,6 @@ yum <span class="token function">install</span> bridge-utils -y<span aria-hidden
       </tags>
   </entry>
   <entry>
-    <title>Linux网络之原理探讨与疑问总结</title>
-    <url>//2022-06-29-linux-network-faq/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="网卡混杂模式"><a href="#网卡混杂模式" class="headerlink" title="网卡混杂模式"></a>网卡混杂模式</h2><ul>
-<li><p>啥是网卡混杂模式？</p>
-</li>
-<li><p>正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。</p>
-</li>
-<li><p>开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。</p>
-</li>
-<li><p>啥时候需要开启？</p>
-</li>
-<li><p>&#x2F;&#x2F; TODO:</p>
-</li>
-<li><p>如何开启？</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 开启混杂模式
-<span class="token function">ifconfig</span> eth0 promisc
-// 取消混杂模式
-<span class="token function">ifconfig</span> eth0 -promisc
-// 内核判断网卡是否处于混杂模式是看如下标识，如果置位了0x100，则处于混杂模式
-<span class="token function">cat</span> /sys/class/net/eth0/flags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>是否开启了混杂模式，就能嗅探局域网（二层网）内的所有数据包了？</p>
-</li>
-<li><p>不一定。</p>
-</li>
-<li><p>针对二层如果是集线器模式，可以嗅探到。</p>
-</li>
-<li><p>但现在大部分二层都是交换机模式。即交换机会根据CAM表，往对应的端口转发，不会无脑地全部端口都转发，因此嗅探不到。</p>
-</li>
-<li><p>开启混杂模式的例子</p>
-</li>
-<li><p>如下，docker0网桥就开启了混杂模式。</p>
-</li>
-<li><p>&#x2F;&#x2F; TODO: 为啥docker0网桥开启混杂模式？具体怎么用的？</p>
-</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">cat</span> /sys/class/net/docker0/flags 
-0x1003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h2 id="路由器与NAT设备的关联与区别"><a href="#路由器与NAT设备的关联与区别" class="headerlink" title="路由器与NAT设备的关联与区别"></a>路由器与NAT设备的关联与区别</h2><h3 id="路由器工作原理："><a href="#路由器工作原理：" class="headerlink" title="路由器工作原理："></a>路由器工作原理：</h3><p>主要用来联通连个不同的网段，<mark>只修改sourceMac与targetMac，不修改sourceIp与targetIp</mark></p>
-<ol>
-<li>根据传入包指定的targetIp（传入包的MAC地址是路由器当前网卡的MAC地址，IP地址是真正的IP地址）</li>
-<li>查询自身路由表，查找到最近的下一跳的IP地址。<code>route -n</code></li>
-<li>再根据下一跳的IP地址，查找到对应的MAC地址。arp缓存表</li>
-<li>修改数据包的targetMAC地址为下一跳的MAC地址，sourceMAC为当前网卡出口的mac地址</li>
-<li>将数据包从对应网卡送出去。</li>
-</ol>
-<blockquote>
-<p>路由器的核心是路由表的维护，能生成最短最优路径。<br/><br>从sourceIp到targetIp的路由路径，很可能与回包，即从targetIp返回到sourceIp的路由路径不一样。<br>取决于当时的路径中路由器的路由表情况。</p>
-</blockquote>
-<h3 id="NAT工作原理："><a href="#NAT工作原理：" class="headerlink" title="NAT工作原理："></a>NAT工作原理：</h3><ul>
-<li><p>原理<br>需要修改sourceMac与targetMac。<br>同时如果是SNAT，则还要修改sourceIp。<br>如果是DNAT，则还要修改targetIp。</p>
-</li>
-<li><p>实现方式:<br>通过iptables可以设置nat表。<br>snat作用在postrouting阶段，dnat作用在prerouting阶段。<br>回包由内核的conntrack模块负责，不再由iptables负责。<br>详细参见 <a href="https://davyjones2010.github.io/2022-06-23-linux-network-nat">NAT之端口映射(PAT)原理总结&amp;实践</a></p>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>由此可知，家用的路由器，是附带了SNAT（也可以配置DNAT）功能的路由器。</p>
-<h2 id="ip-forwarding"><a href="#ip-forwarding" class="headerlink" title="ip_forwarding"></a>ip_forwarding</h2><h3 id="MAC地址匹配-但IP地址不匹配"><a href="#MAC地址匹配-但IP地址不匹配" class="headerlink" title="MAC地址匹配, 但IP地址不匹配"></a>MAC地址匹配, 但IP地址不匹配</h3><p>网卡会不会收到MAC地址与当前网卡MAC地址匹配, 但IP地址与当前网卡的IP不匹配的IP包?<br>具体咋处理? 直接丢弃? 还是可以使用?</p>
-<ul>
-<li>会收到。</li>
-<li>如果开启了ip_forwarding，则会进入FORWARD&#x2F;ROUTE阶段，查看本地 route 表，进入路由与postrouting阶段，找到对应的出口网卡，将包转发出去。与路由器的功能完全一致了。</li>
-<li>如果未开启ip_forwarding，则直接丢弃该包。</li>
-<li>所以，NAT模式下，必须要开启ip_forwarding。</li>
-</ul>
-<h3 id="iptables工作原理图"><a href="#iptables工作原理图" class="headerlink" title="iptables工作原理图"></a>iptables工作原理图</h3><p>此图摘自 <a href="https://wiki.archlinux.org/title/Iptables">Archlinux 文档</a></p>
-<pre class="line-numbers language-none"><code class="language-none">                               XXXXXXXXXXXXXXXXXX
-                             XXX     Network    XXX
-                               XXXXXXXXXXXXXXXXXX
-                                       +
-                                       |
-                                       v
- +-------------+              +------------------+
- |table: filter| &lt;---+        | table: nat&#x2F;dnat  |
- |chain: INPUT |     |        | chain: PREROUTING|
- +-----+-------+     |        +--------+---------+
-       |             |                 |
-       v             |                 v
- [local process]     |           ****************          +--------------+
-       |             +---------+ Routing decision +------&gt; |table: filter |
-       v                         ****************          |chain: FORWARD|
-****************                                           +------+-------+
-Routing decision                                                  |
-****************                                                  |
-       |                                                          |
-       v                        ****************                  |
-+-------------+       +------&gt;  Routing decision  &lt;---------------+
-|table: nat   |       |         ****************
-|chain: OUTPUT|       |               +
-+-----+-------+       |               |
-      |               |               v
-      v               |      +-------------------+
-+--------------+      |      | table: nat&#x2F;snat   |
-|table: filter | +----+      | chain: POSTROUTING|
-|chain: OUTPUT |             +--------+----------+
-+--------------+                      |
-                                      v
-                               XXXXXXXXXXXXXXXXXX
-                             XXX    Network     XXX
-                               XXXXXXXXXXXXXXXXXX<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="为啥Linux默认不开启ip-forwarding"><a href="#为啥Linux默认不开启ip-forwarding" class="headerlink" title="为啥Linux默认不开启ip_forwarding?"></a>为啥Linux默认不开启ip_forwarding?</h3><p>因为在默认情况下，host只是扮演在网络中的一台主机的角色，根本不需要ip_forwarding的功能。</p>
-<blockquote>
-<p>A Linux machine acting as an ordinary host would not need to have IP forwarding enabled,<br>because it just generates and receives IP traffic for its own purposes</p>
-</blockquote>
-<h3 id="如何开启ip-forwarding"><a href="#如何开启ip-forwarding" class="headerlink" title="如何开启ip_forwarding?"></a>如何开启ip_forwarding?</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token number">1</span> <span class="token operator">></span> /proc/sys/net/ipv4/ip_forward<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>所以开启了ip_forwarding，相当于本机就具备一台路由器的能力了。<br/><br>如果再通过iptables配置了相应的nat规则，就相当于一台家用的路由器了。</p>
-<h2 id="本地多网卡curl公网地址问题"><a href="#本地多网卡curl公网地址问题" class="headerlink" title="本地多网卡curl公网地址问题"></a>本地多网卡curl公网地址问题</h2><ul>
-<li>如果本机有私网网卡virbr0, 公网网卡en0, 且开启了virbr0网段的SNAT规则. 则在本地curl公网地址, 则curl的出口网卡是啥? </li>
-<li>是通过virbr0, 然后走SNAT到en0出去么?</li>
-<li>还是直接通过en0出去?</li>
-</ul>
-<ol>
-<li><p>curl 支持指定出口网卡如下(实际只是使用了对应网卡的ip地址作为SIP): 如果不指定, 则使用默认网卡. </p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// curl指定网卡出口
-<span class="token function">curl</span> --interface virbr0 http://www.baidu.com
-// mac上查看默认网卡: 
-route -n get <span class="token number">0.0</span>.0.0 <span class="token operator">|</span> <span class="token function">grep</span> interface<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>The –interface options is used to figure determine what address on the system will be used as the source IP. <br/><br>It doesn’t magically change anything about routing.</p>
-</blockquote>
-</li>
-<li><p>参见<a href="#iptables%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE">iptables工作原理图</a>, 可知从curl公网地址, 就是从local process出去, 接下来会走route, 即查看Host的路由表, 确定出口网卡与网关信息.</p>
-</li>
-<li><p>接下来进入postrouting(SNAT)阶段, 如果配置有SNAT规则, 且刚好命中, 则执行SNAT.</p>
-</li>
-<li><p>所以结论是出口网卡是en0, 而不会经过virbr0(即使指定了<code>--interface virbr0</code>).</p>
-</li>
-<li><p>是否会SNAT, 取决于是否指定了<code>--interface virbr0</code>, 指定了, 则会走SNAT; 未指定, 则不需要走SNAT.</p>
-</li>
-</ol>
-<h2 id="本地多网卡Java应用获取HostIp问题"><a href="#本地多网卡Java应用获取HostIp问题" class="headerlink" title="本地多网卡Java应用获取HostIp问题"></a>本地多网卡Java应用获取HostIp问题</h2><ul>
-<li>如果本机有多块网卡, 在Java中如何获取到这些IP地址? </li>
-<li>我们通常使用获取本机IP的方式如下: <mark>当Host多块网卡时, 不好兼容, 存在严重缺陷, 尤其是在线上服务器网卡堆叠场景下!</mark></li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InetAddress</span> ip <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> hostname <span class="token operator">=</span> ip<span class="token punctuation">.</span><span class="token function">getHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<ul>
-<li>解决方案: </li>
-<li>方案1: 使用 <code>NetworkInterface.getNetworkInterfaces()</code> 接口, 获取所有网卡, 然后逐个获取IP信息.</li>
-<li>方案2: 获取本机的FQDN, 然后使用<code>InetAddress.getByName(FQDN)</code>来获取主网卡的IP信息.<ul>
-<li>本机的FQDN可以写在配置文件里.</li>
-</ul>
-</li>
-<li>Ref: <a href="https://crunchify.com/how-to-get-server-ip-address-and-hostname-in-java/">How to get Server IP Address and Hostname in Java</a></li>
-</ul>
-<h2 id="IP隧道"><a href="#IP隧道" class="headerlink" title="IP隧道"></a>IP隧道</h2><h2 id="LVS"><a href="#LVS" class="headerlink" title="LVS"></a>LVS</h2><h3 id="LVS-v-s-iptables-x2F-netfilters"><a href="#LVS-v-s-iptables-x2F-netfilters" class="headerlink" title="LVS v.s. iptables&#x2F;netfilters"></a>LVS v.s. iptables&#x2F;netfilters</h3><p>本质上, 两个都可以做四层的DNAT, 都是工作在内核空间. </p>
-<ul>
-<li>LVS: 更侧重于LoadBalancing, 实现上使用hash查表, 而不是iptables的顺序查询. 效率更高. </li>
-<li>iptables:</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png"></p>
-<ul>
-<li>可以看到, LVS本质上是与iptables配合使用</li>
-<li>客户访问虚拟 IP（VIP）时，数据包先在主机内核空间被 PREROUTING 链检测，根据数据包的目标地址进行路由判断，若目标地址是本地，则交由 INPUT 链进行处理。</li>
-<li>IPVS 工作于 INPUT 链，当数据包到达 INPUT 链时，会先由 IPVS 进行检查，并根据负载均衡算法选出真实服务器 IP。</li>
-<li>IPVS 转发模式为 NAT 模式时，将数据包由 FORWARD 链进行处理后由 POST-ROUTING 链发送给真实服务器。</li>
-<li>IPVS 转发模式为非 NAT 模式时，则将数据包由 POST-ROUTING 链发送给真实服务器。</li>
-</ul>
-<h3 id="LVS的几种模式分析"><a href="#LVS的几种模式分析" class="headerlink" title="LVS的几种模式分析"></a>LVS的几种模式分析</h3><p><a href="https://blog.csdn.net/Splend520/article/details/104587149">linux LVS负载均衡原理 NAT DR TUN FULLNAT 模式</a></p>
-<h4 id="LVS-NAT-–-gt-NAT-x2F-DNAT"><a href="#LVS-NAT-–-gt-NAT-x2F-DNAT" class="headerlink" title="LVS-NAT –&gt; NAT&#x2F;DNAT"></a>LVS-NAT –&gt; NAT&#x2F;DNAT</h4><p>本质是类似iptables的端口映射(PAT)–&gt; 注意这里全程没有DIP的参与.</p>
-<ul>
-<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
-<li>Client请求: {CIP, VIP}</li>
-<li>LVS映射: 修改目标IP, VIP-&gt;RIP, 构建新的请求: {CIP, RIP}</li>
-<li>Server处理: 完成后发送回包, {RIP, CIP}; 由于CIP与RIP不在同一个网段, 因此发送到网关(即LVS)</li>
-<li>LVS映射: 修改源IP, RIP-&gt;VIP, 构建新的响应: {VIP, CIP}</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052223099.png"></p>
-<ul>
-<li>缺点: <ul>
-<li>需要RS与DS在同一个二层网络里, 且需要把DS&#x2F;DIP配置为RS的网关.</li>
-</ul>
-</li>
-<li>优点: <ul>
-<li>&#x2F;&#x2F; TODO:</li>
-</ul>
-</li>
-</ul>
-<h4 id="LVS-NAT-–-gt-FullNAT"><a href="#LVS-NAT-–-gt-FullNAT" class="headerlink" title="LVS-NAT –&gt; FullNAT"></a>LVS-NAT –&gt; FullNAT</h4><ul>
-<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
-<li>Client请求: {CIP, VIP}</li>
-<li>LVS映射: 修改目标IP, VIP-&gt;RIP(RealServerIP); 修改源IP, CIP-&gt;DIP; 构建新的请求: {DIP, RIP}</li>
-<li>RealServer处理: 完成后发送回包, {RIP, DIP} (FullNAT模式, 不需要LVS必须是网关, 只要三层IP可达即可)</li>
-<li>LVS映射: 修改源IP, RIP-&gt;VIP; 通过conntrack查表, 修改目标IP, DIP-&gt;CIP; 构建新的响应: {VIP, CIP}</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052218872.png"></p>
-<ul>
-<li><p>注意: LVS 本身不支持 FULLNAT 模式，需要额外对内核打补丁后才能使用。</p>
-</li>
-<li><p>缺点: </p>
-<ul>
-<li>不管是请求数据包还是响应数据包，都要经过负载均衡器。但是响应数据包一般要比请求数据包大很多，这可能会成为系统的瓶颈。</li>
-</ul>
-</li>
-<li><p>优点:</p>
-<ul>
-<li>如上图, RealServer(DIP)不需要跟LVS在同一个网段, 只要IP包(三层路由)可达, 就能完成FullNAT</li>
-</ul>
-</li>
-</ul>
-<h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><h4 id="LVS-TUN"><a href="#LVS-TUN" class="headerlink" title="LVS-TUN"></a>LVS-TUN</h4><h4 id="实际"><a href="#实际" class="headerlink" title="实际"></a>实际</h4><ul>
-<li><a href="https://help.aliyun.com/document_detail/27544.html">阿里云CLB</a>使用的是哪种模式? NAT?<ul>
-<li>四层采用开源软件LVS（Linux Virtual Server）+ keepalived的方式实现负载均衡</li>
-<li>LVS应该使用的是NAT模式. 但如果是NAT模式, 则必须把LVS作为ECS的网关. &#x2F;&#x2F;TODO: 待验证</li>
-</ul>
-</li>
-</ul>
-<h1 id="HTTP-代理"><a href="#HTTP-代理" class="headerlink" title="HTTP 代理"></a>HTTP 代理</h1><h1 id="什么是”冷土豆路由”与”热土豆路由”"><a href="#什么是”冷土豆路由”与”热土豆路由”" class="headerlink" title="什么是”冷土豆路由”与”热土豆路由”?"></a>什么是”冷土豆路由”与”热土豆路由”?</h1><ul>
-<li>参见: <a href="https://docs.microsoft.com/zh-cn/azure/virtual-network/ip-services/routing-preference-overview">冷土豆路由&amp;热土豆路由</a></li>
-<li>热土豆:<ul>
-<li>入口流量: 如果来自新加坡的用户访问托管在芝加哥的 Azure 资源，则流量将通过公共 Internet 传输，并进入芝加哥的 Microsoft 全球网络。</li>
-<li>出口流量: 出口流量遵循相同的原则。 流量会在托管服务的同一区域退出 Microsoft 网络。 例如，如果来自 Azure 芝加哥服务的流量最终传输给来自新加坡的用户，流量将离开芝加哥的 Microsoft 网络，并通过公共 Internet 传输给新加坡的用户。</li>
-</ul>
-</li>
-<li>冷土豆:<ul>
-<li>入口流量: 如果来自新加坡的用户访问托管在美国芝加哥的 Azure 资源，则流量将进入位于新加坡 Edge POP 的 Microsoft 全球网络，并通过 Microsoft 网络传输到托管在芝加哥的服务。</li>
-<li>出口流量: 如果来自 Azure 芝加哥的流量最终传输给来自新加坡的用户，那么流量就会通过 Microsoft 网络从芝加哥传输到新加坡，并退出位于新加坡 Edge POP 的 Microsoft 网络。</li>
-</ul>
-</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>iaas</tag>
-        <tag>network</tag>
-        <tag>cloud-computing</tag>
-        <tag>nat</tag>
-        <tag>pat</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>常用的Linux命令之网络相关命令</title>
     <url>//2022-06-25-linux-network-scripts/</url>
     <content><![CDATA[<h1 id="ARP协议"><a href="#ARP协议" class="headerlink" title="ARP协议"></a>ARP协议</h1><h2 id="查看ARP缓存表"><a href="#查看ARP缓存表" class="headerlink" title="查看ARP缓存表"></a>查看ARP缓存表</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/PlayGround/nat$ arp -v
@@ -9062,6 +8829,239 @@ rtt min/avg/max/mdev <span class="token operator">=</span> <span class="token nu
         <tag>network</tag>
         <tag>nat</tag>
         <tag>arp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux网络之原理探讨与疑问总结</title>
+    <url>//2022-06-29-linux-network-faq/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="网卡混杂模式"><a href="#网卡混杂模式" class="headerlink" title="网卡混杂模式"></a>网卡混杂模式</h2><ul>
+<li><p>啥是网卡混杂模式？</p>
+</li>
+<li><p>正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。</p>
+</li>
+<li><p>开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。</p>
+</li>
+<li><p>啥时候需要开启？</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO:</p>
+</li>
+<li><p>如何开启？</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 开启混杂模式
+<span class="token function">ifconfig</span> eth0 promisc
+// 取消混杂模式
+<span class="token function">ifconfig</span> eth0 -promisc
+// 内核判断网卡是否处于混杂模式是看如下标识，如果置位了0x100，则处于混杂模式
+<span class="token function">cat</span> /sys/class/net/eth0/flags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>是否开启了混杂模式，就能嗅探局域网（二层网）内的所有数据包了？</p>
+</li>
+<li><p>不一定。</p>
+</li>
+<li><p>针对二层如果是集线器模式，可以嗅探到。</p>
+</li>
+<li><p>但现在大部分二层都是交换机模式。即交换机会根据CAM表，往对应的端口转发，不会无脑地全部端口都转发，因此嗅探不到。</p>
+</li>
+<li><p>开启混杂模式的例子</p>
+</li>
+<li><p>如下，docker0网桥就开启了混杂模式。</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO: 为啥docker0网桥开启混杂模式？具体怎么用的？</p>
+</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">cat</span> /sys/class/net/docker0/flags 
+0x1003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="路由器与NAT设备的关联与区别"><a href="#路由器与NAT设备的关联与区别" class="headerlink" title="路由器与NAT设备的关联与区别"></a>路由器与NAT设备的关联与区别</h2><h3 id="路由器工作原理："><a href="#路由器工作原理：" class="headerlink" title="路由器工作原理："></a>路由器工作原理：</h3><p>主要用来联通连个不同的网段，<mark>只修改sourceMac与targetMac，不修改sourceIp与targetIp</mark></p>
+<ol>
+<li>根据传入包指定的targetIp（传入包的MAC地址是路由器当前网卡的MAC地址，IP地址是真正的IP地址）</li>
+<li>查询自身路由表，查找到最近的下一跳的IP地址。<code>route -n</code></li>
+<li>再根据下一跳的IP地址，查找到对应的MAC地址。arp缓存表</li>
+<li>修改数据包的targetMAC地址为下一跳的MAC地址，sourceMAC为当前网卡出口的mac地址</li>
+<li>将数据包从对应网卡送出去。</li>
+</ol>
+<blockquote>
+<p>路由器的核心是路由表的维护，能生成最短最优路径。<br/><br>从sourceIp到targetIp的路由路径，很可能与回包，即从targetIp返回到sourceIp的路由路径不一样。<br>取决于当时的路径中路由器的路由表情况。</p>
+</blockquote>
+<h3 id="NAT工作原理："><a href="#NAT工作原理：" class="headerlink" title="NAT工作原理："></a>NAT工作原理：</h3><ul>
+<li><p>原理<br>需要修改sourceMac与targetMac。<br>同时如果是SNAT，则还要修改sourceIp。<br>如果是DNAT，则还要修改targetIp。</p>
+</li>
+<li><p>实现方式:<br>通过iptables可以设置nat表。<br>snat作用在postrouting阶段，dnat作用在prerouting阶段。<br>回包由内核的conntrack模块负责，不再由iptables负责。<br>详细参见 <a href="https://davyjones2010.github.io/2022-06-23-linux-network-nat">NAT之端口映射(PAT)原理总结&amp;实践</a></p>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>由此可知，家用的路由器，是附带了SNAT（也可以配置DNAT）功能的路由器。</p>
+<h2 id="ip-forwarding"><a href="#ip-forwarding" class="headerlink" title="ip_forwarding"></a>ip_forwarding</h2><h3 id="MAC地址匹配-但IP地址不匹配"><a href="#MAC地址匹配-但IP地址不匹配" class="headerlink" title="MAC地址匹配, 但IP地址不匹配"></a>MAC地址匹配, 但IP地址不匹配</h3><p>网卡会不会收到MAC地址与当前网卡MAC地址匹配, 但IP地址与当前网卡的IP不匹配的IP包?<br>具体咋处理? 直接丢弃? 还是可以使用?</p>
+<ul>
+<li>会收到。</li>
+<li>如果开启了ip_forwarding，则会进入FORWARD&#x2F;ROUTE阶段，查看本地 route 表，进入路由与postrouting阶段，找到对应的出口网卡，将包转发出去。与路由器的功能完全一致了。</li>
+<li>如果未开启ip_forwarding，则直接丢弃该包。</li>
+<li>所以，NAT模式下，必须要开启ip_forwarding。</li>
+</ul>
+<h3 id="iptables工作原理图"><a href="#iptables工作原理图" class="headerlink" title="iptables工作原理图"></a>iptables工作原理图</h3><p>此图摘自 <a href="https://wiki.archlinux.org/title/Iptables">Archlinux 文档</a></p>
+<pre class="line-numbers language-none"><code class="language-none">                               XXXXXXXXXXXXXXXXXX
+                             XXX     Network    XXX
+                               XXXXXXXXXXXXXXXXXX
+                                       +
+                                       |
+                                       v
+ +-------------+              +------------------+
+ |table: filter| &lt;---+        | table: nat&#x2F;dnat  |
+ |chain: INPUT |     |        | chain: PREROUTING|
+ +-----+-------+     |        +--------+---------+
+       |             |                 |
+       v             |                 v
+ [local process]     |           ****************          +--------------+
+       |             +---------+ Routing decision +------&gt; |table: filter |
+       v                         ****************          |chain: FORWARD|
+****************                                           +------+-------+
+Routing decision                                                  |
+****************                                                  |
+       |                                                          |
+       v                        ****************                  |
++-------------+       +------&gt;  Routing decision  &lt;---------------+
+|table: nat   |       |         ****************
+|chain: OUTPUT|       |               +
++-----+-------+       |               |
+      |               |               v
+      v               |      +-------------------+
++--------------+      |      | table: nat&#x2F;snat   |
+|table: filter | +----+      | chain: POSTROUTING|
+|chain: OUTPUT |             +--------+----------+
++--------------+                      |
+                                      v
+                               XXXXXXXXXXXXXXXXXX
+                             XXX    Network     XXX
+                               XXXXXXXXXXXXXXXXXX<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="为啥Linux默认不开启ip-forwarding"><a href="#为啥Linux默认不开启ip-forwarding" class="headerlink" title="为啥Linux默认不开启ip_forwarding?"></a>为啥Linux默认不开启ip_forwarding?</h3><p>因为在默认情况下，host只是扮演在网络中的一台主机的角色，根本不需要ip_forwarding的功能。</p>
+<blockquote>
+<p>A Linux machine acting as an ordinary host would not need to have IP forwarding enabled,<br>because it just generates and receives IP traffic for its own purposes</p>
+</blockquote>
+<h3 id="如何开启ip-forwarding"><a href="#如何开启ip-forwarding" class="headerlink" title="如何开启ip_forwarding?"></a>如何开启ip_forwarding?</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token number">1</span> <span class="token operator">></span> /proc/sys/net/ipv4/ip_forward<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>所以开启了ip_forwarding，相当于本机就具备一台路由器的能力了。<br/><br>如果再通过iptables配置了相应的nat规则，就相当于一台家用的路由器了。</p>
+<h2 id="本地多网卡curl公网地址问题"><a href="#本地多网卡curl公网地址问题" class="headerlink" title="本地多网卡curl公网地址问题"></a>本地多网卡curl公网地址问题</h2><ul>
+<li>如果本机有私网网卡virbr0, 公网网卡en0, 且开启了virbr0网段的SNAT规则. 则在本地curl公网地址, 则curl的出口网卡是啥? </li>
+<li>是通过virbr0, 然后走SNAT到en0出去么?</li>
+<li>还是直接通过en0出去?</li>
+</ul>
+<ol>
+<li><p>curl 支持指定出口网卡如下(实际只是使用了对应网卡的ip地址作为SIP): 如果不指定, 则使用默认网卡. </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// curl指定网卡出口
+<span class="token function">curl</span> --interface virbr0 http://www.baidu.com
+// mac上查看默认网卡: 
+route -n get <span class="token number">0.0</span>.0.0 <span class="token operator">|</span> <span class="token function">grep</span> interface<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>The –interface options is used to figure determine what address on the system will be used as the source IP. <br/><br>It doesn’t magically change anything about routing.</p>
+</blockquote>
+</li>
+<li><p>参见<a href="#iptables%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE">iptables工作原理图</a>, 可知从curl公网地址, 就是从local process出去, 接下来会走route, 即查看Host的路由表, 确定出口网卡与网关信息.</p>
+</li>
+<li><p>接下来进入postrouting(SNAT)阶段, 如果配置有SNAT规则, 且刚好命中, 则执行SNAT.</p>
+</li>
+<li><p>所以结论是出口网卡是en0, 而不会经过virbr0(即使指定了<code>--interface virbr0</code>).</p>
+</li>
+<li><p>是否会SNAT, 取决于是否指定了<code>--interface virbr0</code>, 指定了, 则会走SNAT; 未指定, 则不需要走SNAT.</p>
+</li>
+</ol>
+<h2 id="本地多网卡Java应用获取HostIp问题"><a href="#本地多网卡Java应用获取HostIp问题" class="headerlink" title="本地多网卡Java应用获取HostIp问题"></a>本地多网卡Java应用获取HostIp问题</h2><ul>
+<li>如果本机有多块网卡, 在Java中如何获取到这些IP地址? </li>
+<li>我们通常使用获取本机IP的方式如下: <mark>当Host多块网卡时, 不好兼容, 存在严重缺陷, 尤其是在线上服务器网卡堆叠场景下!</mark></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InetAddress</span> ip <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> hostname <span class="token operator">=</span> ip<span class="token punctuation">.</span><span class="token function">getHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>解决方案: </li>
+<li>方案1: 使用 <code>NetworkInterface.getNetworkInterfaces()</code> 接口, 获取所有网卡, 然后逐个获取IP信息.</li>
+<li>方案2: 获取本机的FQDN, 然后使用<code>InetAddress.getByName(FQDN)</code>来获取主网卡的IP信息.<ul>
+<li>本机的FQDN可以写在配置文件里.</li>
+</ul>
+</li>
+<li>Ref: <a href="https://crunchify.com/how-to-get-server-ip-address-and-hostname-in-java/">How to get Server IP Address and Hostname in Java</a></li>
+</ul>
+<h2 id="IP隧道"><a href="#IP隧道" class="headerlink" title="IP隧道"></a>IP隧道</h2><h2 id="LVS"><a href="#LVS" class="headerlink" title="LVS"></a>LVS</h2><h3 id="LVS-v-s-iptables-x2F-netfilters"><a href="#LVS-v-s-iptables-x2F-netfilters" class="headerlink" title="LVS v.s. iptables&#x2F;netfilters"></a>LVS v.s. iptables&#x2F;netfilters</h3><p>本质上, 两个都可以做四层的DNAT, 都是工作在内核空间. </p>
+<ul>
+<li>LVS: 更侧重于LoadBalancing, 实现上使用hash查表, 而不是iptables的顺序查询. 效率更高. </li>
+<li>iptables:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png"></p>
+<ul>
+<li>可以看到, LVS本质上是与iptables配合使用</li>
+<li>客户访问虚拟 IP（VIP）时，数据包先在主机内核空间被 PREROUTING 链检测，根据数据包的目标地址进行路由判断，若目标地址是本地，则交由 INPUT 链进行处理。</li>
+<li>IPVS 工作于 INPUT 链，当数据包到达 INPUT 链时，会先由 IPVS 进行检查，并根据负载均衡算法选出真实服务器 IP。</li>
+<li>IPVS 转发模式为 NAT 模式时，将数据包由 FORWARD 链进行处理后由 POST-ROUTING 链发送给真实服务器。</li>
+<li>IPVS 转发模式为非 NAT 模式时，则将数据包由 POST-ROUTING 链发送给真实服务器。</li>
+</ul>
+<h3 id="LVS的几种模式分析"><a href="#LVS的几种模式分析" class="headerlink" title="LVS的几种模式分析"></a>LVS的几种模式分析</h3><p><a href="https://blog.csdn.net/Splend520/article/details/104587149">linux LVS负载均衡原理 NAT DR TUN FULLNAT 模式</a></p>
+<h4 id="LVS-NAT-–-gt-NAT-x2F-DNAT"><a href="#LVS-NAT-–-gt-NAT-x2F-DNAT" class="headerlink" title="LVS-NAT –&gt; NAT&#x2F;DNAT"></a>LVS-NAT –&gt; NAT&#x2F;DNAT</h4><p>本质是类似iptables的端口映射(PAT)–&gt; 注意这里全程没有DIP的参与.</p>
+<ul>
+<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
+<li>Client请求: {CIP, VIP}</li>
+<li>LVS映射: 修改目标IP, VIP-&gt;RIP, 构建新的请求: {CIP, RIP}</li>
+<li>Server处理: 完成后发送回包, {RIP, CIP}; 由于CIP与RIP不在同一个网段, 因此发送到网关(即LVS)</li>
+<li>LVS映射: 修改源IP, RIP-&gt;VIP, 构建新的响应: {VIP, CIP}</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052223099.png"></p>
+<ul>
+<li>缺点: <ul>
+<li>需要RS与DS在同一个二层网络里, 且需要把DS&#x2F;DIP配置为RS的网关.</li>
+</ul>
+</li>
+<li>优点: <ul>
+<li>&#x2F;&#x2F; TODO:</li>
+</ul>
+</li>
+</ul>
+<h4 id="LVS-NAT-–-gt-FullNAT"><a href="#LVS-NAT-–-gt-FullNAT" class="headerlink" title="LVS-NAT –&gt; FullNAT"></a>LVS-NAT –&gt; FullNAT</h4><ul>
+<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
+<li>Client请求: {CIP, VIP}</li>
+<li>LVS映射: 修改目标IP, VIP-&gt;RIP(RealServerIP); 修改源IP, CIP-&gt;DIP; 构建新的请求: {DIP, RIP}</li>
+<li>RealServer处理: 完成后发送回包, {RIP, DIP} (FullNAT模式, 不需要LVS必须是网关, 只要三层IP可达即可)</li>
+<li>LVS映射: 修改源IP, RIP-&gt;VIP; 通过conntrack查表, 修改目标IP, DIP-&gt;CIP; 构建新的响应: {VIP, CIP}</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052218872.png"></p>
+<ul>
+<li><p>注意: LVS 本身不支持 FULLNAT 模式，需要额外对内核打补丁后才能使用。</p>
+</li>
+<li><p>缺点: </p>
+<ul>
+<li>不管是请求数据包还是响应数据包，都要经过负载均衡器。但是响应数据包一般要比请求数据包大很多，这可能会成为系统的瓶颈。</li>
+</ul>
+</li>
+<li><p>优点:</p>
+<ul>
+<li>如上图, RealServer(DIP)不需要跟LVS在同一个网段, 只要IP包(三层路由)可达, 就能完成FullNAT</li>
+</ul>
+</li>
+</ul>
+<h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><h4 id="LVS-TUN"><a href="#LVS-TUN" class="headerlink" title="LVS-TUN"></a>LVS-TUN</h4><h4 id="实际"><a href="#实际" class="headerlink" title="实际"></a>实际</h4><ul>
+<li><a href="https://help.aliyun.com/document_detail/27544.html">阿里云CLB</a>使用的是哪种模式? NAT?<ul>
+<li>四层采用开源软件LVS（Linux Virtual Server）+ keepalived的方式实现负载均衡</li>
+<li>LVS应该使用的是NAT模式. 但如果是NAT模式, 则必须把LVS作为ECS的网关. &#x2F;&#x2F;TODO: 待验证</li>
+</ul>
+</li>
+</ul>
+<h1 id="HTTP-代理"><a href="#HTTP-代理" class="headerlink" title="HTTP 代理"></a>HTTP 代理</h1><h1 id="什么是”冷土豆路由”与”热土豆路由”"><a href="#什么是”冷土豆路由”与”热土豆路由”" class="headerlink" title="什么是”冷土豆路由”与”热土豆路由”?"></a>什么是”冷土豆路由”与”热土豆路由”?</h1><ul>
+<li>参见: <a href="https://docs.microsoft.com/zh-cn/azure/virtual-network/ip-services/routing-preference-overview">冷土豆路由&amp;热土豆路由</a></li>
+<li>热土豆:<ul>
+<li>入口流量: 如果来自新加坡的用户访问托管在芝加哥的 Azure 资源，则流量将通过公共 Internet 传输，并进入芝加哥的 Microsoft 全球网络。</li>
+<li>出口流量: 出口流量遵循相同的原则。 流量会在托管服务的同一区域退出 Microsoft 网络。 例如，如果来自 Azure 芝加哥服务的流量最终传输给来自新加坡的用户，流量将离开芝加哥的 Microsoft 网络，并通过公共 Internet 传输给新加坡的用户。</li>
+</ul>
+</li>
+<li>冷土豆:<ul>
+<li>入口流量: 如果来自新加坡的用户访问托管在美国芝加哥的 Azure 资源，则流量将进入位于新加坡 Edge POP 的 Microsoft 全球网络，并通过 Microsoft 网络传输到托管在芝加哥的服务。</li>
+<li>出口流量: 如果来自 Azure 芝加哥的流量最终传输给来自新加坡的用户，那么流量就会通过 Microsoft 网络从芝加哥传输到新加坡，并退出位于新加坡 Edge POP 的 Microsoft 网络。</li>
+</ul>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>iaas</tag>
+        <tag>network</tag>
+        <tag>cloud-computing</tag>
+        <tag>nat</tag>
+        <tag>pat</tag>
       </tags>
   </entry>
   <entry>
@@ -13720,7 +13720,7 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
       </tags>
   </entry>
   <entry>
-    <title>methodology of learning</title>
+    <title>学习方法论</title>
     <url>//2023-09-11-methodology-of-learning/</url>
     <content><![CDATA[<h1 id="20230912-methodology-of-learning"><a href="#20230912-methodology-of-learning" class="headerlink" title="20230912-methodology-of-learning"></a>20230912-methodology-of-learning</h1><h1 id="通用方法论"><a href="#通用方法论" class="headerlink" title="通用方法论"></a>通用方法论</h1><p>自己学习一项新的技能的方法论总结: </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309122352915.png"></p>
@@ -13736,24 +13736,6 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
         <tag>thoughts</tag>
         <tag>learning</tag>
         <tag>methodology</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>chatgpt eval cont d</title>
-    <url>//2023-10-29-chatgpt-eval-cont-d/</url>
-    <content><![CDATA[<h1 id="20231030-chatgpt-eval-cont-d"><a href="#20231030-chatgpt-eval-cont-d" class="headerlink" title="20231030-chatgpt-eval-cont-d"></a>20231030-chatgpt-eval-cont-d</h1><h1 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h1><p>最近频繁地使用chatgpt进行文章的翻译. </p>
-<p>在翻译这个特定的场景下, 惊讶于chatgpt的语义识别度与准确度, 基本可以完美地进行翻译, 对俚语等进行解释. </p>
-<p>如下: </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled.png" alt="Untitled"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled-1.png" alt="Untitled"></p>
-<p>现在是时候摘下对ChatGPT的偏见墨镜了. 虽然之前在ground truth上多次欺骗与伤害了我.</p>
-<h1 id="shell-script"><a href="#shell-script" class="headerlink" title="shell script"></a>shell script</h1><p>对于Shell脚本编写, 简直是神器!!!</p>
-<p>持续更新</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>thoughts</tag>
-        <tag>ai</tag>
-        <tag>chatgpt</tag>
       </tags>
   </entry>
   <entry>
@@ -13813,7 +13795,7 @@ Wants&#x3D;sshd-keygen.service
       </tags>
   </entry>
   <entry>
-    <title>death stranding in iceland</title>
+    <title>死亡搁浅在冰岛</title>
     <url>//2023-10-27-death-stranding-in-iceland/</url>
     <content><![CDATA[<h1 id="20231028-death-stranding-in-iceland"><a href="#20231028-death-stranding-in-iceland" class="headerlink" title="20231028-death-stranding-in-iceland"></a>20231028-death-stranding-in-iceland</h1><p><a href="https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3">https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3</a></p>
 <h1 id="part1-冰岛🇮🇸🌠🌌"><a href="#part1-冰岛🇮🇸🌠🌌" class="headerlink" title="part1: 冰岛🇮🇸🌠🌌"></a>part1: 冰岛🇮🇸🌠🌌</h1><p>无意间B站刷到了 <a href="https://www.bilibili.com/video/BV1rc411o7PJ/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click">冰岛｜现在开始进入死亡搁浅 4K HDR_哔哩哔哩_bilibili</a><br>尤其是在漫天星光下, 飞舞的极光. 星空列车,<br>我看到了明亮的猎户座, 参宿, 三横三纵, 那是我认识的第一个星座.<br>我已经很久没有再次看到过星空了, 再次的重逢, 让我觉得有种久违的.<br>不禁泪流满面. 是被宝宝这两年束缚的委屈.</p>
@@ -13835,6 +13817,24 @@ Wants&#x3D;sshd-keygen.service
         <tag>thoughts</tag>
         <tag>gaming</tag>
         <tag>travel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>chatgpt eval cont d</title>
+    <url>//2023-10-29-chatgpt-eval-cont-d/</url>
+    <content><![CDATA[<h1 id="20231030-chatgpt-eval-cont-d"><a href="#20231030-chatgpt-eval-cont-d" class="headerlink" title="20231030-chatgpt-eval-cont-d"></a>20231030-chatgpt-eval-cont-d</h1><h1 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h1><p>最近频繁地使用chatgpt进行文章的翻译. </p>
+<p>在翻译这个特定的场景下, 惊讶于chatgpt的语义识别度与准确度, 基本可以完美地进行翻译, 对俚语等进行解释. </p>
+<p>如下: </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled-1.png" alt="Untitled"></p>
+<p>现在是时候摘下对ChatGPT的偏见墨镜了. 虽然之前在ground truth上多次欺骗与伤害了我.</p>
+<h1 id="shell-script"><a href="#shell-script" class="headerlink" title="shell script"></a>shell script</h1><p>对于Shell脚本编写, 简直是神器!!!</p>
+<p>持续更新</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>thoughts</tag>
+        <tag>ai</tag>
+        <tag>chatgpt</tag>
       </tags>
   </entry>
   <entry>
@@ -13975,7 +13975,7 @@ Rework  - Jason Fried
       </tags>
   </entry>
   <entry>
-    <title>sys stat page</title>
+    <title>系统统计页面实现</title>
     <url>//2023-10-31-sys-stat-page/</url>
     <content><![CDATA[<h1 id="20231101-sys-stat-page"><a href="#20231101-sys-stat-page" class="headerlink" title="20231101-sys-stat-page"></a>20231101-sys-stat-page</h1><p>无意间发现: <a href="https://www.37status.com/">37signals Status</a> 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:</p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-01-sys-stat-page/Untitled.png" alt="Untitled"></p>
@@ -13994,7 +13994,7 @@ Rework  - Jason Fried
       </tags>
   </entry>
   <entry>
-    <title>bot pitfall</title>
+    <title>Bot 开发中的陷阱</title>
     <url>//2023-11-01-bot-pitfall/</url>
     <content><![CDATA[<h1 id="20231102-bot-pitfall"><a href="#20231102-bot-pitfall" class="headerlink" title="20231102-bot-pitfall"></a>20231102-bot-pitfall</h1><p>想起了之前的一个误区, 很多业务的支持, 都想要通过聊天机器人来让用户实现自运维. </p>
 <p>由于最初的技术实现基本是都基于<strong>关键词提取</strong>, 因此</p>
@@ -14013,7 +14013,71 @@ Rework  - Jason Fried
       </tags>
   </entry>
   <entry>
-    <title>agile storys</title>
+    <title>2023 云栖大会观察与思考</title>
+    <url>//2023-11-02-apsara-conference/</url>
+    <content><![CDATA[<h1 id="20231103-apsara-conference"><a href="#20231103-apsara-conference" class="headerlink" title="20231103-apsara-conference"></a>20231103-apsara-conference</h1><h1 id="又是一年云起时"><a href="#又是一年云起时" class="headerlink" title="又是一年云起时"></a>又是一年云起时</h1><p>又到了一年一度的<a href="https://yunqi.aliyun.com/2023/live-aggregation">云栖大会</a>. 赶在最后一天来参加, 主要是一来给友军支持鼓劲儿, 二来想gain some insights of the future. </p>
+<p>全程用心听下来, 技术类的收获较少且较为零碎, 但当我尝试着从另外一些视角来看, 收获很多, 整理在这里. </p>
+<h1 id="演讲人"><a href="#演讲人" class="headerlink" title="演讲人"></a>演讲人</h1><p>我会想, 如果站在台上的人是我, 那么我应该怎么做更好? 庆幸此时作为观众, 作为局外人, 能看清楚很多. </p>
+<ol>
+<li>筛选自己的目标用户, 可以通过几个问题来开场. 或者说明下自己的目标群体, 需要有哪些背景知识. 发现这种临时的meetup, 演讲者与观众, 都是双向不可知的. 即</li>
+<li>需要能提出问题, 让观众思考回答, 提升参与度. 不然就是无趣的讲课了.</li>
+<li>需要说是什么, 但也要说不是什么. 不然就是没啥营养的产品介绍了. </li>
+<li>讲话内容需要与PPT一样, 不能干说, 需要手指在PPT上划出重点. PPT 里只列出需要强调的重点. </li>
+<li>最好能实时演示, 例如在线编程, 在线demo. 一定要防止成为产品介绍</li>
+<li>不要使用页面截图, 太小了, 大家看不清, 也不会耐心去看. –&gt; 突出重点即可. 内容不要堆砌太多, 讲不过来.</li>
+<li>缺少具体数据&amp;实际案例, 比较空<ol>
+<li>资源候补功能, 说了可以用, 但作为听众如果想使用这个功能, 其实更关注候补的成功率, 能否给出数据?</li>
+<li>实时演示页面实在太小了, 根本看不清.</li>
+</ol>
+</li>
+<li>讲清楚 背景, 背景很重要! </li>
+<li>要知道分享的目标是啥: <ol>
+<li>是单纯的秀肌肉么? —&gt; 不能认怂, 嘲讽友军. —&gt; Jobs的经典</li>
+<li>是让观众能学到东西? 能有所收获? —&gt; 内容要通俗易懂, 不要发明新名词, 不要buzzword. 可以认怂, 可以讲走的弯路. </li>
+<li>我个人习惯第二种, 我相信作为观众, 也更喜欢第二种.</li>
+</ol>
+</li>
+<li>架构前后变化点(例如ECI从ImageCache变到支持ImageCache+DataCache), 需要 highlight 出来!</li>
+<li>不要一一列举bulletpoint, 而要有层次地来将为啥有这些, 要关注在why, 而不是what. 例如主动运维的几个状态:<ol>
+<li>Inquiring:</li>
+<li>scheduled</li>
+<li>executing</li>
+<li>avoided:</li>
+<li>…</li>
+<li>可以站在设计者角度: 为啥设计这几种状态, 这几种状态的递进层次是咋样的? 为啥不能有其他状态? 等方式进行讲解. 或者讲清楚背景&amp;问题, 然后问观众, 假如让你来设计, 你会咋样?</li>
+<li>也可以站在使用者角度: 怎么用这几个状态, 能列举出具体的case&#x2F;sample. </li>
+<li>记住: <strong>人一次是记不住超过3项内容的.</strong></li>
+</ol>
+</li>
+<li>PPT里的文档链接地址, 实际上听众是拿不到PPT的, 所以无法访问到. 所以可以说明下, 然后在最后放个群二维码, 拉进群里, 统一把材料分发. </li>
+<li>需要自己把演讲录下来, 然后站在听众的角度来思考来分析. 这样<ol>
+<li></li>
+</ol>
+</li>
+</ol>
+<h1 id="组织者"><a href="#组织者" class="headerlink" title="组织者"></a>组织者</h1><ol>
+<li>中间没有休息, 导致全程听下来三个多小时, 腰酸背痛, 膀胱爆炸, 体验不好. </li>
+<li>没有QA环节, 导致气氛不够活跃.</li>
+<li>要注意多个演讲前后的连贯性, 防止使听众混淆. 例如 最开始A讲了 包年包月需要尽量转成 SP+OD; 但后边B&#x2F;C又开始讲稳态的使用包年包月. 前后打架了.</li>
+<li>排练的时候, 一定要也站在观众角度, 看演讲嘉宾的排练, 能提前发现问题, 给演讲者一些建议.<ol>
+<li>具体方式: 彩排时请组内的同学&#x2F;行业内的人来作为观众, 进行提前预演. 我相信如果是我作为, </li>
+<li>例如: 可以建议不要有API&#x2F;售卖页的实时演示了, 实在看不清. 或者可以提醒进行放大.</li>
+</ol>
+</li>
+<li>是个好的机会, 收集开发者微信(例如红包建群), 可以后续运营&#x2F;沟通, 连接开发者的通道. –&gt; 或者拉进到研发交流群里(例如SPOT交流群)</li>
+</ol>
+<h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1><p>当然, 这种也</p>
+<h2 id="good-case"><a href="#good-case" class="headerlink" title="good case"></a>good case</h2><h2 id="bad-case"><a href="#bad-case" class="headerlink" title="bad case"></a>bad case</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>thoughts</tag>
+        <tag>aliyun</tag>
+        <tag>cloud-computing</tag>
+        <tag>conference</tag>
+        <tag>public-speaking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>敏捷用户故事实践</title>
     <url>//2023-11-05-agile-storys/</url>
     <content><![CDATA[<h1 id="20231106-agile-storys"><a href="#20231106-agile-storys" class="headerlink" title="20231106-agile-storys"></a>20231106-agile-storys</h1><p><a href="https://world.hey.com/dhh/no-one-wants-to-be-a-code-monkey-151478dd">No one wants to be a code monkey</a> </p>
 <blockquote>
@@ -14180,71 +14244,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
-    <title>2023 云栖大会观察与思考</title>
-    <url>//2023-11-02-apsara-conference/</url>
-    <content><![CDATA[<h1 id="20231103-apsara-conference"><a href="#20231103-apsara-conference" class="headerlink" title="20231103-apsara-conference"></a>20231103-apsara-conference</h1><h1 id="又是一年云起时"><a href="#又是一年云起时" class="headerlink" title="又是一年云起时"></a>又是一年云起时</h1><p>又到了一年一度的<a href="https://yunqi.aliyun.com/2023/live-aggregation">云栖大会</a>. 赶在最后一天来参加, 主要是一来给友军支持鼓劲儿, 二来想gain some insights of the future. </p>
-<p>全程用心听下来, 技术类的收获较少且较为零碎, 但当我尝试着从另外一些视角来看, 收获很多, 整理在这里. </p>
-<h1 id="演讲人"><a href="#演讲人" class="headerlink" title="演讲人"></a>演讲人</h1><p>我会想, 如果站在台上的人是我, 那么我应该怎么做更好? 庆幸此时作为观众, 作为局外人, 能看清楚很多. </p>
-<ol>
-<li>筛选自己的目标用户, 可以通过几个问题来开场. 或者说明下自己的目标群体, 需要有哪些背景知识. 发现这种临时的meetup, 演讲者与观众, 都是双向不可知的. 即</li>
-<li>需要能提出问题, 让观众思考回答, 提升参与度. 不然就是无趣的讲课了.</li>
-<li>需要说是什么, 但也要说不是什么. 不然就是没啥营养的产品介绍了. </li>
-<li>讲话内容需要与PPT一样, 不能干说, 需要手指在PPT上划出重点. PPT 里只列出需要强调的重点. </li>
-<li>最好能实时演示, 例如在线编程, 在线demo. 一定要防止成为产品介绍</li>
-<li>不要使用页面截图, 太小了, 大家看不清, 也不会耐心去看. –&gt; 突出重点即可. 内容不要堆砌太多, 讲不过来.</li>
-<li>缺少具体数据&amp;实际案例, 比较空<ol>
-<li>资源候补功能, 说了可以用, 但作为听众如果想使用这个功能, 其实更关注候补的成功率, 能否给出数据?</li>
-<li>实时演示页面实在太小了, 根本看不清.</li>
-</ol>
-</li>
-<li>讲清楚 背景, 背景很重要! </li>
-<li>要知道分享的目标是啥: <ol>
-<li>是单纯的秀肌肉么? —&gt; 不能认怂, 嘲讽友军. —&gt; Jobs的经典</li>
-<li>是让观众能学到东西? 能有所收获? —&gt; 内容要通俗易懂, 不要发明新名词, 不要buzzword. 可以认怂, 可以讲走的弯路. </li>
-<li>我个人习惯第二种, 我相信作为观众, 也更喜欢第二种.</li>
-</ol>
-</li>
-<li>架构前后变化点(例如ECI从ImageCache变到支持ImageCache+DataCache), 需要 highlight 出来!</li>
-<li>不要一一列举bulletpoint, 而要有层次地来将为啥有这些, 要关注在why, 而不是what. 例如主动运维的几个状态:<ol>
-<li>Inquiring:</li>
-<li>scheduled</li>
-<li>executing</li>
-<li>avoided:</li>
-<li>…</li>
-<li>可以站在设计者角度: 为啥设计这几种状态, 这几种状态的递进层次是咋样的? 为啥不能有其他状态? 等方式进行讲解. 或者讲清楚背景&amp;问题, 然后问观众, 假如让你来设计, 你会咋样?</li>
-<li>也可以站在使用者角度: 怎么用这几个状态, 能列举出具体的case&#x2F;sample. </li>
-<li>记住: <strong>人一次是记不住超过3项内容的.</strong></li>
-</ol>
-</li>
-<li>PPT里的文档链接地址, 实际上听众是拿不到PPT的, 所以无法访问到. 所以可以说明下, 然后在最后放个群二维码, 拉进群里, 统一把材料分发. </li>
-<li>需要自己把演讲录下来, 然后站在听众的角度来思考来分析. 这样<ol>
-<li></li>
-</ol>
-</li>
-</ol>
-<h1 id="组织者"><a href="#组织者" class="headerlink" title="组织者"></a>组织者</h1><ol>
-<li>中间没有休息, 导致全程听下来三个多小时, 腰酸背痛, 膀胱爆炸, 体验不好. </li>
-<li>没有QA环节, 导致气氛不够活跃.</li>
-<li>要注意多个演讲前后的连贯性, 防止使听众混淆. 例如 最开始A讲了 包年包月需要尽量转成 SP+OD; 但后边B&#x2F;C又开始讲稳态的使用包年包月. 前后打架了.</li>
-<li>排练的时候, 一定要也站在观众角度, 看演讲嘉宾的排练, 能提前发现问题, 给演讲者一些建议.<ol>
-<li>具体方式: 彩排时请组内的同学&#x2F;行业内的人来作为观众, 进行提前预演. 我相信如果是我作为, </li>
-<li>例如: 可以建议不要有API&#x2F;售卖页的实时演示了, 实在看不清. 或者可以提醒进行放大.</li>
-</ol>
-</li>
-<li>是个好的机会, 收集开发者微信(例如红包建群), 可以后续运营&#x2F;沟通, 连接开发者的通道. –&gt; 或者拉进到研发交流群里(例如SPOT交流群)</li>
-</ol>
-<h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1><p>当然, 这种也</p>
-<h2 id="good-case"><a href="#good-case" class="headerlink" title="good case"></a>good case</h2><h2 id="bad-case"><a href="#bad-case" class="headerlink" title="bad case"></a>bad case</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>thoughts</tag>
-        <tag>aliyun</tag>
-        <tag>cloud-computing</tag>
-        <tag>conference</tag>
-        <tag>public-speaking</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>thin client pitfall</title>
+    <title>瘦客户端使用陷阱</title>
     <url>//2023-11-06-thin-client-pitfall/</url>
     <content><![CDATA[<h1 id="20231107-thin-client-pitfall"><a href="#20231107-thin-client-pitfall" class="headerlink" title="20231107-thin-client-pitfall"></a>20231107-thin-client-pitfall</h1><p>发现在开发很多问题排查&amp;提效工具时, 服务端同学仍然陷入定势思维. 强调服务端优先, 瘦客户端. 从而导致整体实现过为臃肿, 开发&amp;改造周期长, 性能不太好等问题. </p>
 <p>但个人思考, 要跳出定势思维与舒适区, 定义好服务端&amp;客户端的边界. 把很多功能放到 前端 或者 与Alfred整合, 可以很好地解决上边的问题. </p>
@@ -14280,7 +14280,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
-    <title>stateless multi zone multi flavor pitfall</title>
+    <title>无状态服务多可用区多规格部署陷阱</title>
     <url>//2023-11-07-stateless-multi-zone-multi-flavor-pitfall/</url>
     <content><![CDATA[<h1 id="20231108-stateless-multi-zone-multi-flavor-pitfall"><a href="#20231108-stateless-multi-zone-multi-flavor-pitfall" class="headerlink" title="20231108-stateless-multi-zone-multi-flavor-pitfall"></a>20231108-stateless-multi-zone-multi-flavor-pitfall</h1><h1 id="multi-zone-pitfall"><a href="#multi-zone-pitfall" class="headerlink" title="multi-zone pitfall"></a>multi-zone pitfall</h1><p>作为云计算厂商, 我们最喜欢的用户是能够在一个地域开启多个可用区. </p>
 <p>但实际在实践中, 发现这个看似简单的要求&#x2F;最佳实践, 有点儿, 真正down to the earth之后, 发现很多场景用户是不好做&#x2F;压根没办法做到跨AZ的. </p>
@@ -14320,7 +14320,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
-    <title>http post or get</title>
+    <title>HTTP POST 与 GET 的选择</title>
     <url>//2023-11-26-http-post-or-get/</url>
     <content><![CDATA[<h1 id="20231127-http-post-or-get"><a href="#20231127-http-post-or-get" class="headerlink" title="20231127-http-post-or-get"></a>20231127-http-post-or-get</h1><p>之前记得网上有过讨论, 有公司让所有请求都用POST. </p>
 <p>结合最近自己的感悟, 说下. </p>
@@ -14338,7 +14338,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
-    <title>long term thinking</title>
+    <title>长期主义思维</title>
     <url>//2023-11-26-long-term-thinking/</url>
     <content><![CDATA[<h1 id="20231127-long-term-thinking"><a href="#20231127-long-term-thinking" class="headerlink" title="20231127-long-term-thinking"></a>20231127-long-term-thinking</h1><p>经常说长期思维, 但具体是啥? 我用一些例子来说明: </p>
 <h1 id="backward-compatibility"><a href="#backward-compatibility" class="headerlink" title="backward compatibility"></a>backward compatibility</h1><ul>
@@ -14359,7 +14359,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
-    <title>go network socket</title>
+    <title>Go 网络 Socket 编程</title>
     <url>//2023-12-12-go-network-socket/</url>
     <content><![CDATA[<h1 id="go-network-socket"><a href="#go-network-socket" class="headerlink" title="go-network-socket"></a>go-network-socket</h1><h1 id="go-proxy"><a href="#go-proxy" class="headerlink" title="go proxy"></a>go proxy</h1><ul>
 <li>一定要按照下边的方式, 设置好proxy, 不然依赖包下载巨慢!~</li>
@@ -14550,7 +14550,7 @@ Example:
       </tags>
   </entry>
   <entry>
-    <title>node vpa pitfall</title>
+    <title>Node VPA 使用陷阱</title>
     <url>//2024-01-04-node-vpa-pitfall/</url>
     <content><![CDATA[<h1 id="20240105-node-vpa-pitfall"><a href="#20240105-node-vpa-pitfall" class="headerlink" title="20240105-node-vpa-pitfall"></a>20240105-node-vpa-pitfall</h1><p>节点垂直伸缩的概念, 看起来很美好, 都是大家鼓吹的. 但实际实现起来, 落地难度巨大. 本质上来说, 是需要应用层的适配. </p>
 <p>以下是落地不好导致的问题: </p>
@@ -14671,7 +14671,7 @@ Example:
       </tags>
   </entry>
   <entry>
-    <title>k8s memory manager deep dive</title>
+    <title>K8s Memory Manager 深入解析</title>
     <url>//2024-01-09-k8s-memory-manager-deep-dive/</url>
     <content><![CDATA[<h1 id="k8s-memory-manager-deep-dive"><a href="#k8s-memory-manager-deep-dive" class="headerlink" title="k8s-memory-manager-deep-dive"></a>k8s-memory-manager-deep-dive</h1><ul>
 <li>只能针对GU, 不保证burstable的pod是否跨numa访问.</li>
@@ -14704,7 +14704,7 @@ Example:
       </tags>
   </entry>
   <entry>
-    <title>go utils</title>
+    <title>Go 工具函数库</title>
     <url>//2024-01-17-go-utils/</url>
     <content><![CDATA[<h1 id="go-utils"><a href="#go-utils" class="headerlink" title="go-utils"></a>go-utils</h1><h1 id="cmd"><a href="#cmd" class="headerlink" title="cmd"></a>cmd</h1><h2 id="cobra"><a href="#cobra" class="headerlink" title="cobra"></a>cobra</h2><p>—&gt; 试着用 <a href="https://github.com/spf13/cobra-cli/blob/main/README.md">cobra-cli&#x2F;README.md at main · spf13&#x2F;cobra-cli</a>  cobra-generator 生成一个命令行小工具吧!</p>
 <p>参考文章: <a href="https://zhuanlan.zhihu.com/p/627848739?utm_id=0">万字长文——Go 语言现代命令行框架 Cobra 详解 - 知乎</a></p>
@@ -14814,7 +14814,7 @@ Example:
       </tags>
   </entry>
   <entry>
-    <title>linux cgroups</title>
+    <title>Linux Cgroups 详解</title>
     <url>//2024-01-18-linux-cgroups/</url>
     <content><![CDATA[<h1 id="linux-cgroups"><a href="#linux-cgroups" class="headerlink" title="linux-cgroups"></a>linux-cgroups</h1><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>nrm里通过cgroups来对各个pod资源进行限制(例如是否绑核), 但势必需要知道有哪些操作, 具体怎么操作?</p>
 <p>同时学习下CFS相关的</p>
@@ -15187,7 +15187,7 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
       </tags>
   </entry>
   <entry>
-    <title>hushi</title>
+    <title>虎寺</title>
     <url>//2024-01-20-hushi/</url>
     <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
 <blockquote>
@@ -15214,7 +15214,7 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
       </tags>
   </entry>
   <entry>
-    <title>cgroup qemu cfs</title>
+    <title>Cgroup、QEMU 与 CFS 调度</title>
     <url>//2024-01-24-cgroup-qemu-cfs/</url>
     <content><![CDATA[<h1 id="20240125-cgroup-qemu-cfs"><a href="#20240125-cgroup-qemu-cfs" class="headerlink" title="20240125-cgroup-qemu-cfs"></a>20240125-cgroup-qemu-cfs</h1><p>针对如何实现CPU的绑核逻辑, 一直有很多疑问. </p>
 <p>今天跟GPT聊了一会儿, 大致勾画出如下: </p>
@@ -15230,7 +15230,7 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
       </tags>
   </entry>
   <entry>
-    <title>cri containerd runc cli</title>
+    <title>CRI、Containerd、runc 与 CLI 工具链</title>
     <url>//2024-01-24-cri-containerd-runc-cli/</url>
     <content><![CDATA[<h1 id="cri-containerd-runc-cli"><a href="#cri-containerd-runc-cli" class="headerlink" title="cri-containerd-runc-cli"></a>cri-containerd-runc-cli</h1><h1 id="crictl"><a href="#crictl" class="headerlink" title="crictl"></a>crictl</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>配置endpoint为containerd</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go">runtime<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
@@ -15327,7 +15327,7 @@ $ sudo runc <span class="token builtin">delete</span> mycontainerid
       </tags>
   </entry>
   <entry>
-    <title>go basics</title>
+    <title>Go 语言基础</title>
     <url>//2024-01-30-go-basics/</url>
     <content><![CDATA[<h1 id="go-basics"><a href="#go-basics" class="headerlink" title="go-basics"></a>go-basics</h1><aside>
 💡 Happy gopher~
@@ -15636,7 +15636,7 @@ go <span class="token function-name function">func</span><span class="token punc
       </tags>
   </entry>
   <entry>
-    <title>docker deepdive</title>
+    <title>Docker 技术深入剖析</title>
     <url>//2024-02-19-docker-deepdive/</url>
     <content><![CDATA[<h1 id="docker-deepdive"><a href="#docker-deepdive" class="headerlink" title="docker-deepdive"></a>docker-deepdive</h1><h1 id="architecture"><a href="#architecture" class="headerlink" title="architecture"></a>architecture</h1><p>参见官方文档: </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png" alt="Untitled"></p>
@@ -15708,7 +15708,7 @@ go <span class="token function-name function">func</span><span class="token punc
       </tags>
   </entry>
   <entry>
-    <title>docker containerd cri deep dive</title>
+    <title>Docker、Containerd 与 CRI 深入解析</title>
     <url>//2024-02-20-docker-containerd-cri-deep-dive/</url>
     <content><![CDATA[<h1 id="docker-containerd-cri-deep-dive"><a href="#docker-containerd-cri-deep-dive" class="headerlink" title="docker-containerd-cri-deep-dive"></a>docker-containerd-cri-deep-dive</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled.png" alt="Untitled"></p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-1.png" alt="Untitled"></p>
@@ -16161,7 +16161,7 @@ message CreateTaskRequest <span class="token punctuation">&#123;</span>
       </tags>
   </entry>
   <entry>
-    <title>k8s cert</title>
+    <title>K8s 证书管理与配置</title>
     <url>//2024-02-27-k8s-cert/</url>
     <content><![CDATA[<h1 id="k8s-cert"><a href="#k8s-cert" class="headerlink" title="k8s-cert"></a>k8s-cert</h1><ol>
 <li>初始化时, cert先后流程是怎样的? </li>
@@ -16195,7 +16195,7 @@ message CreateTaskRequest <span class="token punctuation">&#123;</span>
       </tags>
   </entry>
   <entry>
-    <title>k8s deploy arch</title>
+    <title>K8s 部署架构设计</title>
     <url>//2024-02-27-k8s-deploy-arch/</url>
     <content><![CDATA[<h1 id="k8s-deploy-arch"><a href="#k8s-deploy-arch" class="headerlink" title="k8s-deploy-arch"></a>k8s-deploy-arch</h1><p>对于k8s搭建比较感兴趣: 例如 各个组件如何部署的? 有啥先后顺序? 分别是以啥形态部署等, 以此文详细来分析下.</p>
 <h1 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h1><p>如下图</p>
@@ -16331,7 +16331,7 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
       </tags>
   </entry>
   <entry>
-    <title>k8s basis</title>
+    <title>K8s 基础知识入门</title>
     <url>//2024-03-05-k8s-basis/</url>
     <content><![CDATA[<h1 id="k8s-basis"><a href="#k8s-basis" class="headerlink" title="k8s-basis"></a>k8s-basis</h1><p>这里记录一些基础的, 个人容易遗忘的零散知识点:</p>
 <hr>
@@ -16434,10 +16434,10 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
       </tags>
   </entry>
   <entry>
-    <title>k8s util</title>
+    <title>K8s 工具集与实用命令</title>
     <url>//2024-03-05-k8s-util/</url>
     <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#x69;&#115;&#101;&#114;&#x76;&#101;&#x72;&#64;&#118;&#x30;&#46;&#50;&#x34;&#x2e;&#x31;&#x35;">&#x61;&#112;&#x69;&#115;&#101;&#114;&#x76;&#101;&#x72;&#64;&#118;&#x30;&#46;&#50;&#x34;&#x2e;&#x31;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#97;&#112;&#105;&#115;&#x65;&#114;&#x76;&#101;&#x72;&#x40;&#118;&#x30;&#46;&#50;&#52;&#x2e;&#x31;&#53;">&#97;&#112;&#105;&#115;&#x65;&#114;&#x76;&#101;&#x72;&#x40;&#118;&#x30;&#46;&#50;&#52;&#x2e;&#x31;&#53;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
 </blockquote>
 <p>新建一个协程来启动HTTPServer. </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
@@ -16484,7 +16484,24 @@ time<span class="token punctuation">.</span><span class="token function">Sleep</
       </tags>
   </entry>
   <entry>
-    <title>k8s pdb</title>
+    <title>DTS 使用陷阱</title>
+    <url>//2024-03-27-dts-pitfall/</url>
+    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
+<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
+<p>可能的几种方案:</p>
+<ol>
+<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
+<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>thoughts</tag>
+        <tag>distributed-system</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s PodDisruptionBudget 详解</title>
     <url>//2024-03-27-k8s-pdb/</url>
     <content><![CDATA[<h1 id="k8s-pdb"><a href="#k8s-pdb" class="headerlink" title="k8s-pdb"></a>k8s-pdb</h1><h1 id="自愿中断-amp-非自愿中断"><a href="#自愿中断-amp-非自愿中断" class="headerlink" title="自愿中断&amp;非自愿中断"></a>自愿中断&amp;非自愿中断</h1><h2 id="非自愿中断"><a href="#非自愿中断" class="headerlink" title="非自愿中断"></a>非自愿中断</h2><ul>
 <li>物理机硬件故障</li>
@@ -16583,24 +16600,7 @@ StatefulSet<span aria-hidden="true" class="line-numbers-rows"><span></span><span
       </tags>
   </entry>
   <entry>
-    <title>dts pitfall</title>
-    <url>//2024-03-27-dts-pitfall/</url>
-    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
-<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
-<p>可能的几种方案:</p>
-<ol>
-<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
-<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>thoughts</tag>
-        <tag>distributed-system</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s cpumanager cgroupsv1</title>
+    <title>K8s CPU Manager 与 Cgroups v1</title>
     <url>//2024-04-10-k8s-cpumanager-cgroupsv1/</url>
     <content><![CDATA[<h1 id="k8s-cpumanager-cgroupsv1"><a href="#k8s-cpumanager-cgroupsv1" class="headerlink" title="k8s-cpumanager-cgroupsv1"></a>k8s-cpumanager-cgroupsv1</h1><p>主要来分析对cgroups的操作与设计逻辑, 底层driver使用的是sysd</p>
 <ul>
@@ -16933,7 +16933,7 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
       </tags>
   </entry>
   <entry>
-    <title>linux cfs</title>
+    <title>Linux CFS 调度器</title>
     <url>//2024-04-28-linux-cfs/</url>
     <content><![CDATA[<h1 id="linux-cfs"><a href="#linux-cfs" class="headerlink" title="linux-cfs"></a>linux-cfs</h1><h1 id="几个核心问题"><a href="#几个核心问题" class="headerlink" title="几个核心问题"></a>几个核心问题</h1><p>如何实现抢占调度 ? </p>
 <p>NICE值?</p>
@@ -16957,7 +16957,7 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
       </tags>
   </entry>
   <entry>
-    <title>nothing new under the sun</title>
+    <title>太阳底下无新事</title>
     <url>//2024-05-05-nothing-new-under-the-sun/</url>
     <content><![CDATA[<h1 id="20240506-nothing-new-under-the-sun"><a href="#20240506-nothing-new-under-the-sun" class="headerlink" title="20240506-nothing-new-under-the-sun"></a>20240506-nothing-new-under-the-sun</h1><p><a href="https://techcrunch.com/2024/05/03/nasa-is-expanding-its-wallops-island-facility-to-support-three-times-as-many-launches/?utm_campaign=tc_daily_pm&utm_medium=newsletter&_hsenc=p2ANqtz-_pt71sn4qCkCoiGwCCV0uyZogPkRC8nOveczoxht3PFxUOspVDaWEPhEHlgDAPV-SsURhiDVvoLKHDEVsrVw_9EUC8rA&_hsmi=305558670&utm_source=tc&guccounter=1">NASA is expanding its Wallops Island facility to support three times as many launches | TechCrunch</a></p>
 <ul>
@@ -16983,7 +16983,7 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
       </tags>
   </entry>
   <entry>
-    <title>find my passion</title>
+    <title>寻找我的热情所在</title>
     <url>//2024-05-16-find-my-passion/</url>
     <content><![CDATA[<h1 id="20240517-find-my-passion"><a href="#20240517-find-my-passion" class="headerlink" title="20240517-find-my-passion"></a>20240517-find-my-passion</h1><p>爱好太杂, 太浅. 没有找到自己的real passion. </p>
 <ul>
@@ -17002,7 +17002,7 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
       </tags>
   </entry>
   <entry>
-    <title>auto system test failed</title>
+    <title>自动化系统测试失败问题分析</title>
     <url>//2024-07-27-auto-system-test-failed/</url>
     <content><![CDATA[<h1 id="20240728-auto-system-test-failed"><a href="#20240728-auto-system-test-failed" class="headerlink" title="20240728-auto-system-test-failed"></a>20240728-auto-system-test-failed</h1><p>最近看到DHH的文章:    <a href="https://world.hey.com/dhh/system-tests-have-failed-d90af718">System tests have failed</a> </p>
 <p>想起来与BVT的窘境是何其的相似: </p>
@@ -17231,35 +17231,6 @@ Allocatable:
       </tags>
   </entry>
   <entry>
-    <title>2025 Annual Reading List</title>
-    <url>//2024-12-31-2025-annual-list/</url>
-    <content><![CDATA[<h2 id="📚-BookList-2025"><a href="#📚-BookList-2025" class="headerlink" title="📚 BookList 2025"></a>📚 BookList 2025</h2><ul>
-<li>📋 <a href="https://detail.tmall.com/item.htm?ali_trackid=2:mm_1721980159_2323450014_111392550115:1730372520060_560407301_0&bxsign=tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&id=842506021019&scm=moon.0.0.moon_linkconverter_0&spm=a21wq.b804539.1000.mainShare&tkSid=1730372520060_560407301_0.0&un=ad322868c9dc35e7b463cb48fb1832e7&union_lens=lensId:APP@1729497981@2167296e_2298_192ae1ce363_3417@033uhK55xEUqaLOkWRQPqshb;tkScm:appTrans_site_0_0_0_0_0_0;scm:moon.0.0.moon_linkconverter_0;recoveryid:560407301_0@1730372520061&ut_sk=1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&skuId=5781756430189">https://detail.tmall.com/item.htm?ali_trackid&#x3D;2%3Amm_1721980159_2323450014_111392550115%3A1730372520060_560407301_0&amp;bxsign&#x3D;tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&amp;id&#x3D;842506021019&amp;scm&#x3D;moon.0.0.moon_linkconverter_0&amp;spm&#x3D;a21wq.b804539.1000.mainShare&amp;tkSid&#x3D;1730372520060_560407301_0.0&amp;un&#x3D;ad322868c9dc35e7b463cb48fb1832e7&amp;union_lens&#x3D;lensId%3AAPP%401729497981%402167296e_2298_192ae1ce363_3417%40033uhK55xEUqaLOkWRQPqshb%3BtkScm%3AappTrans_site_0_0_0_0_0_0%3Bscm%3Amoon.0.0.moon_linkconverter_0%3Brecoveryid%3A560407301_0%401730372520061&amp;ut_sk&#x3D;1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&amp;skuId&#x3D;5781756430189</a></li>
-<li>✅ 一个天文学家的夜空漫游指南</li>
-<li>✅ 世上为什么要有图书馆</li>
-<li>✅ 碧玉刀</li>
-<li>✅ 深渊-by 深蓝</li>
-<li>✅ <a href="https://book.douban.com/subject/37339619/">https://book.douban.com/subject/37339619/</a></li>
-<li>✅ 草原动物园-马伯庸</li>
-<li>✅ 七杀手</li>
-<li>✅ 七侯笔录-马伯庸</li>
-<li>✅ 关乎天下-中小企业赢的秘诀</li>
-<li>✅ 关乎天下2</li>
-<li>📖 边界的诱惑</li>
-<li>📖 It Doesn’t Have to Be Crazy at Work</li>
-<li>📖 逆风顺水-阿嘉仁波切</li>
-<li>📖 生命不过一场遇合-沈从文自传</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>books</tag>
-        <tag>reading</tag>
-        <tag>movies</tag>
-        <tag>games</tag>
-        <tag>annual-review</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2024 Plans &amp; Goals 年度计划</title>
     <url>//2023-12-31-2024-plans-goals/</url>
     <content><![CDATA[<h1 id="Goals"><a href="#Goals" class="headerlink" title="Goals"></a>Goals</h1><h2 id="kube-scheduler-committer"><a href="#kube-scheduler-committer" class="headerlink" title="kube-scheduler committer"></a>kube-scheduler committer</h2><ol>
@@ -17293,7 +17264,36 @@ Allocatable:
       </tags>
   </entry>
   <entry>
-    <title>k8s troubleshooting</title>
+    <title>2025 Annual Reading List</title>
+    <url>//2024-12-31-2025-annual-list/</url>
+    <content><![CDATA[<h2 id="📚-BookList-2025"><a href="#📚-BookList-2025" class="headerlink" title="📚 BookList 2025"></a>📚 BookList 2025</h2><ul>
+<li>📋 <a href="https://detail.tmall.com/item.htm?ali_trackid=2:mm_1721980159_2323450014_111392550115:1730372520060_560407301_0&bxsign=tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&id=842506021019&scm=moon.0.0.moon_linkconverter_0&spm=a21wq.b804539.1000.mainShare&tkSid=1730372520060_560407301_0.0&un=ad322868c9dc35e7b463cb48fb1832e7&union_lens=lensId:APP@1729497981@2167296e_2298_192ae1ce363_3417@033uhK55xEUqaLOkWRQPqshb;tkScm:appTrans_site_0_0_0_0_0_0;scm:moon.0.0.moon_linkconverter_0;recoveryid:560407301_0@1730372520061&ut_sk=1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&skuId=5781756430189">https://detail.tmall.com/item.htm?ali_trackid&#x3D;2%3Amm_1721980159_2323450014_111392550115%3A1730372520060_560407301_0&amp;bxsign&#x3D;tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&amp;id&#x3D;842506021019&amp;scm&#x3D;moon.0.0.moon_linkconverter_0&amp;spm&#x3D;a21wq.b804539.1000.mainShare&amp;tkSid&#x3D;1730372520060_560407301_0.0&amp;un&#x3D;ad322868c9dc35e7b463cb48fb1832e7&amp;union_lens&#x3D;lensId%3AAPP%401729497981%402167296e_2298_192ae1ce363_3417%40033uhK55xEUqaLOkWRQPqshb%3BtkScm%3AappTrans_site_0_0_0_0_0_0%3Bscm%3Amoon.0.0.moon_linkconverter_0%3Brecoveryid%3A560407301_0%401730372520061&amp;ut_sk&#x3D;1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&amp;skuId&#x3D;5781756430189</a></li>
+<li>✅ 一个天文学家的夜空漫游指南</li>
+<li>✅ 世上为什么要有图书馆</li>
+<li>✅ 碧玉刀</li>
+<li>✅ 深渊-by 深蓝</li>
+<li>✅ <a href="https://book.douban.com/subject/37339619/">https://book.douban.com/subject/37339619/</a></li>
+<li>✅ 草原动物园-马伯庸</li>
+<li>✅ 七杀手</li>
+<li>✅ 七侯笔录-马伯庸</li>
+<li>✅ 关乎天下-中小企业赢的秘诀</li>
+<li>✅ 关乎天下2</li>
+<li>📖 边界的诱惑</li>
+<li>📖 It Doesn’t Have to Be Crazy at Work</li>
+<li>📖 逆风顺水-阿嘉仁波切</li>
+<li>📖 生命不过一场遇合-沈从文自传</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>books</tag>
+        <tag>reading</tag>
+        <tag>movies</tag>
+        <tag>games</tag>
+        <tag>annual-review</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s 故障排查指南</title>
     <url>//2025-05-14-k8s-troubleshooting/</url>
     <content><![CDATA[<h1 id="k8s-troubleshooting"><a href="#k8s-troubleshooting" class="headerlink" title="k8s-troubleshooting"></a>k8s-troubleshooting</h1><h1 id="Disk-Pressure"><a href="#Disk-Pressure" class="headerlink" title="Disk Pressure"></a>Disk Pressure</h1><h2 id="错误现象"><a href="#错误现象" class="headerlink" title="错误现象"></a>错误现象</h2><p>“Disk usage on image filesystem is over the high threshold, trying to free bytes down to the low threshold”</p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled.png" alt="Untitled"></p>
