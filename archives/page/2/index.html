@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-容器编排"><a href="/container-orchestration/" rel="section"><i class="fa fa-box fa-fw"></i>容器编排</a></li><li class="menu-item menu-item-后端开发"><a href="/backend-development/" rel="section"><i class="fa fa-server fa-fw"></i>后端开发</a></li><li class="menu-item menu-item-系统运维"><a href="/devops/" rel="section"><i class="fa fa-cogs fa-fw"></i>系统运维</a></li><li class="menu-item menu-item-技术随笔"><a href="/tech-notes/" rel="section"><i class="fa fa-pen-fancy fa-fw"></i>技术随笔</a></li><li class="menu-item menu-item-生活感悟"><a href="/life/" rel="section"><i class="fa fa-heart fa-fw"></i>生活感悟</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -211,111 +211,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-12-12-go-vs-java/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023-12-12-go-vs-java/" class="post-title-link" itemprop="url">go vs java</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-12-13 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T00:00:00+08:00">2023-12-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>194</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="go-v-s-Java"><a href="#go-v-s-Java" class="headerlink" title="go v.s. Java"></a>go v.s. Java</h1><p>作为准备转型为Gopher的Javaer , 总结下异同点</p>
-<p>协程 vs 线程</p>
-<p>虽然Java 21也已经引入了轻量级线程(用户态线程), 但毕竟还是太过遥远</p>
-<p>包级别 vs 类级别</p>
-<p>对go最不适应的, 就是 全局的变量名, 方法名 竟然都是包级别可见的. 导致很容易冲突(因为记不得同个包下其他文件中命名了相同的变量~). </p>
-<p>本质上, 编译阶段go就是把一个包下的所有文件都组合成一个大文件. </p>
-<p>面向过程 vs 面向对象</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023-12-12-go-vs-java/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-12-12-go-network-socket/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -352,7 +247,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
+        </span>
     </span>
 
   
@@ -442,6 +346,120 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-12-12-go-vs-java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-12-12-go-vs-java/" class="post-title-link" itemprop="url">go vs java</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-13 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T00:00:00+08:00">2023-12-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>194</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="go-v-s-Java"><a href="#go-v-s-Java" class="headerlink" title="go v.s. Java"></a>go v.s. Java</h1><p>作为准备转型为Gopher的Javaer , 总结下异同点</p>
+<p>协程 vs 线程</p>
+<p>虽然Java 21也已经引入了轻量级线程(用户态线程), 但毕竟还是太过遥远</p>
+<p>包级别 vs 类级别</p>
+<p>对go最不适应的, 就是 全局的变量名, 方法名 竟然都是包级别可见的. 导致很容易冲突(因为记不得同个包下其他文件中命名了相同的变量~). </p>
+<p>本质上, 编译阶段go就是把一个包下的所有文件都组合成一个大文件. </p>
+<p>面向过程 vs 面向对象</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-12-12-go-vs-java/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-26-http-post-or-get/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -478,7 +496,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -584,7 +611,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
+        </span>
     </span>
 
   
@@ -693,7 +729,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+        </span>
     </span>
 
   
@@ -799,7 +844,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -911,7 +965,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
+        </span>
     </span>
 
   
@@ -983,112 +1046,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-mac-setup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023-11-06-mac-setup/" class="post-title-link" itemprop="url">Mac Setup 初始化配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>108</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>iterm2</p>
-<ol>
-<li>下载使用 <code>HaX0R_GR33N</code> 的主题</li>
-<li>安装 <code>lsd</code> 比 <code>ls</code> 好看太多啦!</li>
-<li>安装 <code>brew install font-hack-nerd-font --cask</code> 不然文件前边会有奇怪的符号</li>
-</ol>
-<p>如下, 确实要美观好多, 可读性也好很多.</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/mac-setup/image.png" alt="image.png"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023-11-06-mac-setup/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-cpu-specs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1125,7 +1082,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -1376,7 +1342,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-my-devices/">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-mac-setup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
@@ -1394,7 +1360,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023-11-06-my-devices/" class="post-title-link" itemprop="url">My Devices - 设备折腾记录</a>
+          <a href="/2023-11-06-mac-setup/" class="post-title-link" itemprop="url">Mac Setup 初始化配置</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1412,7 +1378,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -1422,7 +1397,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>108</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1440,14 +1415,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="💻-My-PCs-amp-Devices"><a href="#💻-My-PCs-amp-Devices" class="headerlink" title="💻 My PCs &amp; Devices"></a>💻 My PCs &amp; Devices</h2><h3 id="Surface-Pro-4"><a href="#Surface-Pro-4" class="headerlink" title="Surface Pro 4"></a>Surface Pro 4</h3><p>Battery: 38Wh<br>CPU: Intel Core M3-7Y30 2C4HT<br>kabylake<br>Fans: 0<br>GPU: Intel HD Graphics 515<br>MEM: 0.9GHz~2.2GHz<br>No: 9<br>OS: Windows10<br>OfficialSpec: <a target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75">https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75</a><br>Power: SurfaceConnect<br>Price: 1800<br>ReleaseDate: 2015<br>Review: <a target="_blank" rel="noopener" href="https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html">https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html</a><br>Screen: 12.3’’<br>97% of sRGB<br>Usage: reading<br>Weight: 0.77Kg</p>
-<h3 id="ThinkPad-X1-Carbon-5th"><a href="#ThinkPad-X1-Carbon-5th" class="headerlink" title="ThinkPad X1 Carbon 5th"></a>ThinkPad X1 Carbon 5th</h3><p>CPU: Intel i5-7200U @2.5GHz~3.1GHz<br>Disk: 258GB Nvme<br>Fans: 1<br>GPU: Intel HD Graphics 620<br>Keyboard Travel Distance: 1.8mm<br>MEM: 8GB<br>1867MHz<br>LPDDR3<br>No: 8<br>OS: Windows10<br>CentOS7<br>Power: USB Type-C</p>
-<p>Price: 1000<br>ReleaseDate: 2017<br>Review: <a target="_blank" rel="noopener" href="https://www.laptopmag.com/reviews/laptops/lenovo-thinkpad-x1-carbon-5th-generation">https://www.laptopmag.com/reviews/laptops/lenovo-thinkpad-x1-carbon-5th-generation</a><br>Screen: 14.4’’<br>友达AUO313D;<br>1080P;<br>72% NTSC</p>
-<h3 id="X79"><a href="#X79" class="headerlink" title="X79"></a>X79</h3><p>Fans: 1<br>No: 1<br>OS: Windows10</p>
-<h3 id="X99"><a href="#X99" class="headerlink" title="X99"></a>X99</h3><p>Fans: 1<br>No: 2<br>OS: Windows10</p>
+          <p>iterm2</p>
+<ol>
+<li>下载使用 <code>HaX0R_GR33N</code> 的主题</li>
+<li>安装 <code>lsd</code> 比 <code>ls</code> 好看太多啦!</li>
+<li>安装 <code>brew install font-hack-nerd-font --cask</code> 不然文件前边会有奇怪的符号</li>
+</ol>
+<p>如下, 确实要美观好多, 可读性也好很多.</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/mac-setup/image.png" alt="image.png"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023-11-06-my-devices/#more" rel="contents">
+              <a class="btn" href="/2023-11-06-mac-setup/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1514,7 +1493,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
+        </span>
     </span>
 
   
@@ -1589,6 +1577,227 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-my-devices/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-my-devices/" class="post-title-link" itemprop="url">My Devices - 设备折腾记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="💻-My-PCs-amp-Devices"><a href="#💻-My-PCs-amp-Devices" class="headerlink" title="💻 My PCs &amp; Devices"></a>💻 My PCs &amp; Devices</h2><h3 id="Surface-Pro-4"><a href="#Surface-Pro-4" class="headerlink" title="Surface Pro 4"></a>Surface Pro 4</h3><p>Battery: 38Wh<br>CPU: Intel Core M3-7Y30 2C4HT<br>kabylake<br>Fans: 0<br>GPU: Intel HD Graphics 515<br>MEM: 0.9GHz~2.2GHz<br>No: 9<br>OS: Windows10<br>OfficialSpec: <a target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75">https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75</a><br>Power: SurfaceConnect<br>Price: 1800<br>ReleaseDate: 2015<br>Review: <a target="_blank" rel="noopener" href="https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html">https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html</a><br>Screen: 12.3’’<br>97% of sRGB<br>Usage: reading<br>Weight: 0.77Kg</p>
+<h3 id="ThinkPad-X1-Carbon-5th"><a href="#ThinkPad-X1-Carbon-5th" class="headerlink" title="ThinkPad X1 Carbon 5th"></a>ThinkPad X1 Carbon 5th</h3><p>CPU: Intel i5-7200U @2.5GHz~3.1GHz<br>Disk: 258GB Nvme<br>Fans: 1<br>GPU: Intel HD Graphics 620<br>Keyboard Travel Distance: 1.8mm<br>MEM: 8GB<br>1867MHz<br>LPDDR3<br>No: 8<br>OS: Windows10<br>CentOS7<br>Power: USB Type-C</p>
+<p>Price: 1000<br>ReleaseDate: 2017<br>Review: <a target="_blank" rel="noopener" href="https://www.laptopmag.com/reviews/laptops/lenovo-thinkpad-x1-carbon-5th-generation">https://www.laptopmag.com/reviews/laptops/lenovo-thinkpad-x1-carbon-5th-generation</a><br>Screen: 14.4’’<br>友达AUO313D;<br>1080P;<br>72% NTSC</p>
+<h3 id="X79"><a href="#X79" class="headerlink" title="X79"></a>X79</h3><p>Fans: 1<br>No: 1<br>OS: Windows10</p>
+<h3 id="X99"><a href="#X99" class="headerlink" title="X99"></a>X99</h3><p>Fans: 1<br>No: 2<br>OS: Windows10</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-my-devices/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-qemu-img/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023-11-06-qemu-img/" class="post-title-link" itemprop="url">qemu-img 使用笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>48</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png" alt="Untitled"></p>
+<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023-11-06-qemu-img/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-perf-tools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1625,7 +1834,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+        </span>
     </span>
 
   
@@ -1698,107 +1916,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-06-qemu-img/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023-11-06-qemu-img/" class="post-title-link" itemprop="url">qemu-img 使用笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-07T00:00:00+08:00">2023-11-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>48</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png" alt="Untitled"></p>
-<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023-11-06-qemu-img/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2023-11-05-agile-storys/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1835,7 +1952,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -1937,7 +2063,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+        </span>
     </span>
 
   
@@ -2086,7 +2221,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
+        </span>
     </span>
 
   
@@ -2193,7 +2337,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -2300,7 +2453,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
+        </span>
     </span>
 
   
@@ -2410,7 +2572,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -2514,7 +2685,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+        </span>
     </span>
 
   
@@ -2630,7 +2810,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -2737,7 +2926,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+        </span>
     </span>
 
   
@@ -2857,7 +3055,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -2964,7 +3171,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
     </span>
 
   
@@ -3067,7 +3283,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
+        </span>
     </span>
 
   
@@ -3176,7 +3401,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
+        </span>
     </span>
 
   
@@ -3294,7 +3528,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
+        </span>
     </span>
 
   
@@ -3410,7 +3653,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
+        </span>
     </span>
 
   
@@ -3527,7 +3779,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tech-notes/" itemprop="url" rel="index"><span itemprop="name">tech-notes</span></a>
+        </span>
     </span>
 
   
@@ -3662,7 +3923,7 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3785,7 +4046,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
+        </span>
     </span>
 
   
@@ -3893,7 +4163,16 @@ Wants&#x3D;sshd-keygen.service
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
+        </span>
     </span>
 
   

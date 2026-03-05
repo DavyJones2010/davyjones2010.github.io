@@ -23,17 +23,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"davyjones2010.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":{"disqus":{"text":"Load Disqus","order":-1}}},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="k8s-utilk8s常用包apiserver#RunServer &#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;&amp;#x61;&amp;#112;&amp;#x69;&amp;#x73;&amp;#101;&amp;#x72;&amp;#118;&amp;#101;&amp;#x72;&amp;#x40;&amp;#x76;&amp;#48;&amp;#x2e;&amp;#50;&amp;#x34;&amp;#46;&amp;#">
+    <meta name="description" content="k8s-utilk8s常用包apiserver#RunServer &#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;&amp;#x61;&amp;#x70;&amp;#x69;&amp;#x73;&amp;#x65;&amp;#114;&amp;#x76;&amp;#101;&amp;#x72;&amp;#x40;&amp;#x76;&amp;#x30;&amp;#46;&amp;#50;&amp;#52;&amp;#x2e;&amp;#">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="K8s 工具集与实用命令">
 <meta property="og:url" content="https://davyjones2010.github.io/2024-03-05-k8s-util/">
 <meta property="og:site_name" content="Coders@Work">
-<meta property="og:description" content="k8s-utilk8s常用包apiserver#RunServer &#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;&amp;#x61;&amp;#112;&amp;#x69;&amp;#x73;&amp;#101;&amp;#x72;&amp;#118;&amp;#101;&amp;#x72;&amp;#x40;&amp;#x76;&amp;#48;&amp;#x2e;&amp;#50;&amp;#x34;&amp;#46;&amp;#">
+<meta property="og:description" content="k8s-utilk8s常用包apiserver#RunServer &#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;&amp;#x61;&amp;#x70;&amp;#x69;&amp;#x73;&amp;#x65;&amp;#114;&amp;#x76;&amp;#101;&amp;#x72;&amp;#x40;&amp;#x76;&amp;#x30;&amp;#46;&amp;#50;&amp;#52;&amp;#x2e;&amp;#">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png">
 <meta property="og:image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled-1.png">
 <meta property="article:published_time" content="2024-03-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-05T14:16:38.122Z">
+<meta property="article:modified_time" content="2026-03-05T14:24:17.683Z">
 <meta property="article:author" content="Davy Walker">
 <meta property="article:tag" content="kubernetes">
 <meta property="article:tag" content="tools">
@@ -95,7 +95,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-容器编排"><a href="/container-orchestration/" rel="section"><i class="fa fa-box fa-fw"></i>容器编排</a></li><li class="menu-item menu-item-后端开发"><a href="/backend-development/" rel="section"><i class="fa fa-server fa-fw"></i>后端开发</a></li><li class="menu-item menu-item-系统运维"><a href="/devops/" rel="section"><i class="fa fa-cogs fa-fw"></i>系统运维</a></li><li class="menu-item menu-item-技术随笔"><a href="/tech-notes/" rel="section"><i class="fa fa-pen-fancy fa-fw"></i>技术随笔</a></li><li class="menu-item menu-item-生活感悟"><a href="/life/" rel="section"><i class="fa fa-heart fa-fw"></i>生活感悟</a></li><li class="menu-item menu-item-about"><a href="/aboutme" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -259,7 +259,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 22:16:38" itemprop="dateModified" datetime="2026-03-05T22:16:38+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 22:24:17" itemprop="dateModified" datetime="2026-03-05T22:24:17+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
+        </span>
     </span>
 
   
@@ -288,7 +297,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#x69;&#x73;&#101;&#x72;&#118;&#101;&#x72;&#x40;&#x76;&#48;&#x2e;&#50;&#x34;&#46;&#x31;&#x35;">&#x61;&#112;&#x69;&#x73;&#101;&#x72;&#118;&#101;&#x72;&#x40;&#x76;&#48;&#x2e;&#50;&#x34;&#46;&#x31;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#x70;&#x69;&#x73;&#x65;&#114;&#x76;&#101;&#x72;&#x40;&#x76;&#x30;&#46;&#50;&#52;&#x2e;&#x31;&#x35;">&#x61;&#x70;&#x69;&#x73;&#x65;&#114;&#x76;&#101;&#x72;&#x40;&#x76;&#x30;&#46;&#50;&#52;&#x2e;&#x31;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
 </blockquote>
 <p>新建一个协程来启动HTTPServer. </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
@@ -346,8 +355,8 @@ time<span class="token punctuation">.</span><span class="token function">Sleep</
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024-02-27-k8s-deploy-arch/" rel="prev" title="K8s 部署架构设计">
-                  <i class="fa fa-chevron-left"></i> K8s 部署架构设计
+                <a href="/2024-02-27-k8s-cert/" rel="prev" title="K8s 证书管理与配置">
+                  <i class="fa fa-chevron-left"></i> K8s 证书管理与配置
                 </a>
             </div>
             <div class="post-nav-item">
