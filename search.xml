@@ -294,19 +294,6 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       </tags>
   </entry>
   <entry>
-    <title>明朝那些事儿</title>
-    <url>//2021-09-04-ming-dynasty/</url>
-    <content><![CDATA[<h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
-<p>身在夜郎家万里，五云天北是神州！</p>
-<p>天地圣贤之道，并非存于万物，也无须存于万物，天人本是一体，何时可分？又何必分？<br>随心而动，随意而行，万法自然，便是圣贤之道。存天理，去人欲？天理即是人欲。</p>
-</blockquote>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>history</tag>
-        <tag>ming-dynasty</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Jekyll搭建博客总结</title>
     <url>//2021-09-05-jekyll-site/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>终于下定决心，花一些事件，把自己沉淀与思考，都用GitHubPages保存起来。</p>
@@ -369,6 +356,19 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>jekyll</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>明朝那些事儿</title>
+    <url>//2021-09-04-ming-dynasty/</url>
+    <content><![CDATA[<h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
+<p>身在夜郎家万里，五云天北是神州！</p>
+<p>天地圣贤之道，并非存于万物，也无须存于万物，天人本是一体，何时可分？又何必分？<br>随心而动，随意而行，万法自然，便是圣贤之道。存天理，去人欲？天理即是人欲。</p>
+</blockquote>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>history</tag>
+        <tag>ming-dynasty</tag>
       </tags>
   </entry>
   <entry>
@@ -5185,24 +5185,6 @@ pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="t
       </tags>
   </entry>
   <entry>
-    <title>一些有意思的记录-3</title>
-    <url>//2022-03-24-random-snippets/</url>
-    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
-<span class="token function">curl</span> cip.cc
-<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
-<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
-<ol>
-<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
-<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>net-tools</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker的一些总结</title>
     <url>//2022-03-18-docker-summary/</url>
     <content><![CDATA[<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
@@ -5574,6 +5556,24 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
+    <title>一些有意思的记录-3</title>
+    <url>//2022-03-24-random-snippets/</url>
+    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
+<span class="token function">curl</span> cip.cc
+<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
+<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
+<ol>
+<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
+<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>net-tools</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>容器生态的一些研究与对比</title>
     <url>//2022-03-27-container-ecosystem/</url>
     <content><![CDATA[<h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><table>
@@ -5740,98 +5740,6 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       <tags>
         <tag>k8s</tag>
         <tag>stateful-set</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记录一些有趣的产品设计</title>
-    <url>//2022-04-04-good-design/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
-<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
-<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
-</ul>
-<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
-<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
-<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
-</ul>
-<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
-<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
-</li>
-<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
-</li>
-</ul>
-<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
-<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
-</ul>
-<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
-<ul>
-<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
-<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
-</ul>
-<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
-<ol>
-<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
-<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
-</ol>
-<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
-<ul>
-<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
-</li>
-<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
-</li>
-</ul>
-<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
-<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
-</li>
-<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
-</li>
-</ol>
-<ul>
-<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
-<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
-<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
-</ul>
-<ol start="3">
-<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
-</ol>
-<ul>
-<li>最佳实践: 一些使用的小技巧.</li>
-<li>new feature: 新功能的介绍.</li>
-<li>case study: 用户案例.</li>
-<li>event: 线下&#x2F;线上的技术活动介绍.</li>
-<li>竞品比对: 例如与Gliffy,StarUML等.</li>
-<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
-</ul>
-<ol start="4">
-<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
-<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
-<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
-</blockquote>
-</li>
-</ol>
-<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>product-design</tag>
-        <tag>good-design</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>云计算笔记--aws的DefaultVpc实现调研</title>
-    <url>//2022-04-05-aws-default-vpc/</url>
-    <content><![CDATA[<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html">AWS Default VPCs</a></p>
-<ol>
-<li>默认每个账号下, 每个地域下, AWS都会自动创建 172.31.0.0&#x2F;16  CIDR的VPC</li>
-<li>会在账号下Default VPC内, 每个可用区都创建一个VSW, 范围是:<br>a. VSW网段范围: [172.31.00000000.0&#x2F;20, 172.31.11110000.0&#x2F;20] 共16个VSW<br>b. 每个VSW内, IP数量: 2^12&#x3D;4096 个</li>
-<li>新的可用区上线之后, 等待几天, AWS就会自动创建对应可用区的Default VSW.</li>
-<li>只要对默认VPC进行了配置修改, 那么新的可用区上线之后, 就不会为之自动创建DefaultVSW了.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>aws</tag>
-        <tag>cloud</tag>
-        <tag>iaas</tag>
-        <tag>default-vpc</tag>
-        <tag>vpc</tag>
       </tags>
   </entry>
   <entry>
@@ -6081,6 +5989,98 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
         <tag>java</tag>
         <tag>openapi</tag>
         <tag>next-token</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录一些有趣的产品设计</title>
+    <url>//2022-04-04-good-design/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
+<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
+<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
+</ul>
+<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
+<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
+<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
+</ul>
+<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
+<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
+</li>
+<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
+</li>
+</ul>
+<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
+<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
+</ul>
+<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
+<ul>
+<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
+<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
+</ul>
+<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
+<ol>
+<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
+<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
+</ol>
+<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
+<ul>
+<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
+</li>
+<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
+</li>
+</ul>
+<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
+<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
+</li>
+<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
+</li>
+</ol>
+<ul>
+<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
+<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
+<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
+</ul>
+<ol start="3">
+<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
+</ol>
+<ul>
+<li>最佳实践: 一些使用的小技巧.</li>
+<li>new feature: 新功能的介绍.</li>
+<li>case study: 用户案例.</li>
+<li>event: 线下&#x2F;线上的技术活动介绍.</li>
+<li>竞品比对: 例如与Gliffy,StarUML等.</li>
+<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
+</ul>
+<ol start="4">
+<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
+<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
+<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
+</blockquote>
+</li>
+</ol>
+<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>product-design</tag>
+        <tag>good-design</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>云计算笔记--aws的DefaultVpc实现调研</title>
+    <url>//2022-04-05-aws-default-vpc/</url>
+    <content><![CDATA[<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html">AWS Default VPCs</a></p>
+<ol>
+<li>默认每个账号下, 每个地域下, AWS都会自动创建 172.31.0.0&#x2F;16  CIDR的VPC</li>
+<li>会在账号下Default VPC内, 每个可用区都创建一个VSW, 范围是:<br>a. VSW网段范围: [172.31.00000000.0&#x2F;20, 172.31.11110000.0&#x2F;20] 共16个VSW<br>b. 每个VSW内, IP数量: 2^12&#x3D;4096 个</li>
+<li>新的可用区上线之后, 等待几天, AWS就会自动创建对应可用区的Default VSW.</li>
+<li>只要对默认VPC进行了配置修改, 那么新的可用区上线之后, 就不会为之自动创建DefaultVSW了.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>aws</tag>
+        <tag>cloud</tag>
+        <tag>iaas</tag>
+        <tag>default-vpc</tag>
+        <tag>vpc</tag>
       </tags>
   </entry>
   <entry>
@@ -13733,7 +13733,7 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 <h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>可以想下, 自己现在对于某个技术, 是处于哪个认知层次?</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>learning</tag>
         <tag>methodology</tag>
       </tags>
@@ -13814,7 +13814,7 @@ Wants&#x3D;sshd-keygen.service
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310290018579.png"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>gaming</tag>
         <tag>travel</tag>
       </tags>
@@ -13832,7 +13832,7 @@ Wants&#x3D;sshd-keygen.service
 <p>持续更新</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>ai</tag>
         <tag>chatgpt</tag>
       </tags>
@@ -13860,7 +13860,7 @@ Wants&#x3D;sshd-keygen.service
 </blockquote>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>cloud-computing</tag>
         <tag>cloud-exit</tag>
         <tag>architecture</tag>
@@ -13967,7 +13967,7 @@ Rework  - Jason Fried
 <p>2021~2023:  <a href="https://world.hey.com/dhh">David Heinemeier Hansson</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>cloud-exit</tag>
         <tag>dhh</tag>
         <tag>ruby-on-rails</tag>
@@ -13988,7 +13988,7 @@ Rework  - Jason Fried
 </ol>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>system-design</tag>
         <tag>dashboard</tag>
       </tags>
@@ -14008,7 +14008,7 @@ Rework  - Jason Fried
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>learn-from-failure</tag>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>bot</tag>
       </tags>
   </entry>
@@ -14069,7 +14069,7 @@ Rework  - Jason Fried
 <h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1><p>当然, 这种也</p>
 <h2 id="good-case"><a href="#good-case" class="headerlink" title="good case"></a>good case</h2><h2 id="bad-case"><a href="#bad-case" class="headerlink" title="bad case"></a>bad case</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>aliyun</tag>
         <tag>cloud-computing</tag>
         <tag>conference</tag>
@@ -14085,7 +14085,7 @@ Rework  - Jason Fried
 </blockquote>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>engineering-culture</tag>
         <tag>agile</tag>
       </tags>
@@ -14275,7 +14275,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>learn-from-failure</tag>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>architecture</tag>
       </tags>
   </entry>
@@ -14314,7 +14314,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>learn-from-failure</tag>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>cloud-computing</tag>
         <tag>architecture</tag>
       </tags>
@@ -14332,7 +14332,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>api-design</tag>
         <tag>http</tag>
       </tags>
@@ -14353,7 +14353,7 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
 <p>如果没人知道你的产品会啥时候突然下线, 那么信任就无从谈起.</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>career</tag>
         <tag>philosophy</tag>
       </tags>
@@ -14492,7 +14492,7 @@ Example:
 <p>Apollo</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>career</tag>
         <tag>life</tag>
       </tags>
@@ -14567,7 +14567,7 @@ Example:
       <tags>
         <tag>learn-from-failure</tag>
         <tag>k8s</tag>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>vpa</tag>
       </tags>
   </entry>
@@ -14700,7 +14700,7 @@ Example:
       <tags>
         <tag>k8s</tag>
         <tag>memory-manager</tag>
-        <tag>deep-dive</tag>
+        <tag>深入解析</tag>
       </tags>
   </entry>
   <entry>
@@ -14811,6 +14811,33 @@ Example:
         <tag>cobra</tag>
         <tag>tools</tag>
         <tag>cli</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>虎寺</title>
+    <url>//2024-01-20-hushi/</url>
+    <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
+<blockquote>
+<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
+</blockquote>
+<ul>
+<li>胡适<blockquote>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
+</blockquote>
+<ul>
+<li>胡适<blockquote>
+</blockquote>
+</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>思考</tag>
+        <tag>life</tag>
       </tags>
   </entry>
   <entry>
@@ -15187,33 +15214,6 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
       </tags>
   </entry>
   <entry>
-    <title>虎寺</title>
-    <url>//2024-01-20-hushi/</url>
-    <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
-<blockquote>
-<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<p><a href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>thoughts</tag>
-        <tag>life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Cgroup、QEMU 与 CFS 调度</title>
     <url>//2024-01-24-cgroup-qemu-cfs/</url>
     <content><![CDATA[<h1 id="20240125-cgroup-qemu-cfs"><a href="#20240125-cgroup-qemu-cfs" class="headerlink" title="20240125-cgroup-qemu-cfs"></a>20240125-cgroup-qemu-cfs</h1><p>针对如何实现CPU的绑核逻辑, 一直有很多疑问. </p>
@@ -15223,7 +15223,7 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-25-cgroup-qemu-cfs/Untitled.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>cgroups</tag>
         <tag>virtualization</tag>
         <tag>qemu</tag>
@@ -15704,7 +15704,7 @@ go <span class="token function-name function">func</span><span class="token punc
         <tag>container</tag>
         <tag>docker</tag>
         <tag>architecture</tag>
-        <tag>deep-dive</tag>
+        <tag>深入解析</tag>
       </tags>
   </entry>
   <entry>
@@ -16157,7 +16157,7 @@ message CreateTaskRequest <span class="token punctuation">&#123;</span>
         <tag>containerd</tag>
         <tag>docker</tag>
         <tag>cri</tag>
-        <tag>deep-dive</tag>
+        <tag>深入解析</tag>
       </tags>
   </entry>
   <entry>
@@ -16430,14 +16430,14 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
         <tag>k8s</tag>
         <tag>scheduler</tag>
         <tag>kube-scheduler</tag>
-        <tag>deep-dive</tag>
+        <tag>深入解析</tag>
       </tags>
   </entry>
   <entry>
     <title>K8s 工具集与实用命令</title>
     <url>//2024-03-05-k8s-util/</url>
     <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#97;&#112;&#105;&#115;&#x65;&#114;&#x76;&#101;&#x72;&#x40;&#118;&#x30;&#46;&#50;&#52;&#x2e;&#x31;&#53;">&#97;&#112;&#105;&#115;&#x65;&#114;&#x76;&#101;&#x72;&#x40;&#118;&#x30;&#46;&#50;&#52;&#x2e;&#x31;&#53;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#x69;&#x73;&#101;&#114;&#x76;&#x65;&#114;&#64;&#x76;&#x30;&#46;&#x32;&#52;&#46;&#49;&#x35;">&#x61;&#112;&#x69;&#x73;&#101;&#114;&#x76;&#x65;&#114;&#64;&#x76;&#x30;&#46;&#x32;&#52;&#46;&#49;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
 </blockquote>
 <p>新建一个协程来启动HTTPServer. </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
@@ -16496,7 +16496,7 @@ time<span class="token punctuation">.</span><span class="token function">Sleep</
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>learn-from-failure</tag>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>distributed-system</tag>
       </tags>
   </entry>
@@ -16977,7 +16977,7 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>history</tag>
         <tag>philosophy</tag>
       </tags>
@@ -16996,7 +16996,7 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>career</tag>
         <tag>passion</tag>
       </tags>
@@ -17012,7 +17012,7 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
 </aside><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>learn-from-failure</tag>
-        <tag>thoughts</tag>
+        <tag>思考</tag>
         <tag>automation</tag>
         <tag>testing</tag>
       </tags>
@@ -17226,7 +17226,7 @@ Allocatable:
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>k8s</tag>
-        <tag>deep-dive</tag>
+        <tag>深入解析</tag>
         <tag>cpu-manager</tag>
       </tags>
   </entry>
