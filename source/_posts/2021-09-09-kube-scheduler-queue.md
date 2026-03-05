@@ -1,7 +1,7 @@
 ---
 layout: post
 title: kube-scheduler笔记之Queue研究
-tags: [k8s, kube-scheduler, scheduler, kube-scheduler-queue]
+tags: ['kubernetes', 'kube-scheduler', 'scheduling', 'kube-scheduler-queue']
 lang: zh
 ---
 

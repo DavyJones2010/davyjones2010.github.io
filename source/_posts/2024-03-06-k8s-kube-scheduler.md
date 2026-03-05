@@ -1,7 +1,7 @@
 ---
 title: k8s kube scheduler
 date: 2024-03-06 00:00:00
-tags: [k8s, kube-scheduler, scheduler, deep-dive]
+tags: ['kubernetes', 'scheduling', 'core-components']
 ---
 
 # k8s-kube-scheduler

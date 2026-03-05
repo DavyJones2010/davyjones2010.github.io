@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 记一次由于JVM优化导致异常堆栈丢失的问题
-tags: [learn-from-failure, java, stacktrace]
+tags: ['lessons-learned', 'java', 'troubleshooting']
 lang: zh
 ---
 

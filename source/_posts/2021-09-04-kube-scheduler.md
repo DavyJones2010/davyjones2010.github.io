@@ -2,7 +2,7 @@
 layout: post
 title: K8S调度器研究
 subtitle: kube-scheduler初探
-tags: [k8s, scheduler]
+tags: ['kubernetes', 'scheduling']
 lang: zh
 ---
 

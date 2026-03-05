@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 一个通用数据巡检框架的设计
-tags: [java, software-engineering, best-practice, cruiser, software-design, arch]
+tags: ['java', 'software-engineering', 'best-practices', 'cruiser', 'architecture']
 ---
 
 

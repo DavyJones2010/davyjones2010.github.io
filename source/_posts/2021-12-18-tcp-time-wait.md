@@ -2,7 +2,7 @@
 layout: post
 title: TCP协议中TIME_WAIT疑问与思考
 subtitle: TCP协议中TIME_WAIT疑问与思考
-tags: [tcp, timewait]
+tags: ['tcp']
 ---
 
 ---

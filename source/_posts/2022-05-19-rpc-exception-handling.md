@@ -1,7 +1,7 @@
 ---
 layout: post
 title: RPC调用异常行为与处理方案总结
-tags: [rpc, java, exception, learn-from-failure]
+tags: ['rpc', 'java', 'exception', 'lessons-learned']
 lang: zh
 ---
 

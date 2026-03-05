@@ -1,7 +1,7 @@
 ---
 title: k8s cpu manager deep dive
 date: 2024-12-06 00:00:00
-tags: [k8s, cpu-manager, deep-dive]
+tags: ['kubernetes', 'cpu-manager', 'performance', 'resource-management']
 ---
 
 # k8s-cpu-manager-deep-dive

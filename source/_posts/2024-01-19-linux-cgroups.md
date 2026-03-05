@@ -1,7 +1,7 @@
 ---
-title: linux cgroups
+title: 'Linux Cgroups 详解'
 date: 2024-01-19 00:00:00
-tags: [linux, cgroups, resource-management]
+tags: ['linux', 'cgroups', 'resource-management', 'process-management']
 ---
 
 # linux-cgroups

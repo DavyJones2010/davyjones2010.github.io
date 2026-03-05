@@ -1,7 +1,7 @@
 ---
-title: node vpa pitfall
+title: 'Node VPA 使用陷阱'
 date: 2024-01-05 00:00:00
-tags: [thoughts, k8s, vpa, learn-from-failure]
+tags: ['kubernetes', 'vpa', 'lessons-learned']
 ---
 
 # 20240105-node-vpa-pitfall

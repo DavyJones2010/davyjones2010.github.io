@@ -1,7 +1,7 @@
 ---
-title: auto system test failed
+title: '自动化系统测试失败问题分析'
 date: 2024-07-28 00:00:00
-tags: [thoughts, learn-from-failure, testing, automation]
+tags: ['testing', 'troubleshooting', 'quality-assurance']
 ---
 
 # 20240728-auto-system-test-failed

@@ -1,7 +1,7 @@
 ---
-title: docker deepdive
+title: 'Docker 技术深入剖析'
 date: 2024-02-20 00:00:00
-tags: [docker, container, architecture, deep-dive]
+tags: ['docker', 'containers', 'images', 'deep-dive']
 ---
 
 # docker-deepdive

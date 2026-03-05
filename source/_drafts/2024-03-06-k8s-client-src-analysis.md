@@ -1,7 +1,7 @@
 ---
-title: k8s client src analysis
+title: 'K8s Client 源码分析'
 date: 2024-03-06 00:00:00
-tags: [k8s, client-go, source-analysis]
+tags: ['kubernetes', 'client-go', 'source-code', 'api']
 ---
 
 # k8s-client-src-analysis

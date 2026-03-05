@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 记一次分布式场景下状态机设计缺陷导致的问题
-tags: [learn-from-failure, java, state-machine, lock, good-design, bad-design]
+tags: ['lessons-learned', 'java', 'state-machine', 'lock', 'design']
 lang: zh
 ---
 

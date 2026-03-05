@@ -1,7 +1,7 @@
 ---
 layout: post
 title: k8s virtual-kubelet的实现原理研究
-tags: [k8s, virtual-kubelet, vk]
+tags: ['kubernetes', 'virtual-kubelet', 'vk']
 lang: zh
 ---
 

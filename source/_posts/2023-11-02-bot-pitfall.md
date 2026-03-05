@@ -1,7 +1,7 @@
 ---
-title: bot pitfall
+title: 'Bot 开发中的陷阱'
 date: 2023-11-02 00:00:00
-tags: [thoughts, learn-from-failure, bot]
+tags: ['bot', 'lessons-learned']
 ---
 
 # 20231102-bot-pitfall

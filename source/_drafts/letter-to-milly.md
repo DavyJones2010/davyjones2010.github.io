@@ -1,6 +1,6 @@
 ---
 title: 给小米粒的第一封信
-tags: [letter-to-milly]
+tags: ['letter']
 ---
 
 亲爱的小米粒:

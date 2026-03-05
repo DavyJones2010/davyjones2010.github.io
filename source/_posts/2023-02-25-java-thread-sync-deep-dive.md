@@ -1,7 +1,7 @@
 ---
 title: Java线程BLOCKED与WAITING状态深入研究
 date: 2023-02-25 17:01:22
-tags: [java, javase, thread, sync, concurrent, know-why]
+tags: ['java', 'concurrency', 'concurrent', 'know-why']
 ---
 
 # 背景

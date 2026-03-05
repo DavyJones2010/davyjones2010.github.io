@@ -1,7 +1,7 @@
 ---
-title: cloudflare outage report
+title: 'Cloudflare 故障报告分析'
 date: 2023-11-22 00:00:00
-tags: [thoughts, learn-from-failure, incident-report]
+tags: ['cloudflare', 'high-availability']
 ---
 
 # 20231122-cloudflare-outage-report

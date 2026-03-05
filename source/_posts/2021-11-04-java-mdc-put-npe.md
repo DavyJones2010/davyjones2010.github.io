@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 记一次由于MDC.put引发的NPE
-tags: [learn-from-failure, java, mdc, npe]
+tags: ['lessons-learned', 'java', 'mdc', 'npe']
 lang: zh
 ---
 

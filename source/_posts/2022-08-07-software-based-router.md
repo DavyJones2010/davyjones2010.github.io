@@ -2,7 +2,7 @@
 title: 瞎折腾软路由笔记
 date: 2022-08-07 20:38:43
 categories: 瞎折腾
-tags: [linux, open-wrt, software-based-router, router, network]
+tags: ['linux', 'open-wrt', 'software-based-router', 'router', 'networking']
 ---
 垃圾佬的周末, 没事儿就是瞎折腾, 前段时间被种草了软路由, 一直心痒痒. 月底下单奢侈一把, 今天给彻底搞起来了. 现在总结下.
 

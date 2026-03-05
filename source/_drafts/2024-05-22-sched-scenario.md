@@ -1,7 +1,7 @@
 ---
-title: sched scenario
+title: '调度场景与实践'
 date: 2024-05-22 00:00:00
-tags: [thoughts, k8s, scheduler]
+tags: ['scheduling', 'scenarios', 'kubernetes', 'performance']
 ---
 
 # 20240522-sched-scenario

@@ -1,7 +1,7 @@
 ---
-title: k8s troubleshooting
+title: 'K8s 故障排查指南'
 date: 2025-05-15 00:00:00
-tags: [k8s, troubleshooting, learn-from-failure]
+tags: ['kubernetes', 'troubleshooting', 'operations']
 ---
 
 # k8s-troubleshooting

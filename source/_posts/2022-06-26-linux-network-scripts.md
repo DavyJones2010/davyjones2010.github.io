@@ -2,7 +2,7 @@
 layout: post 
 title: 常用的Linux命令之网络相关命令
 subtitle: 常用的Linux命令之网络相关命令
-tags: [code-snippets, linux, network, arp, nat]
+tags: ['code-snippets', 'linux', 'networking', 'arp', 'nat']
 ---
 
 # ARP协议

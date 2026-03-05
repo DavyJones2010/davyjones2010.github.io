@@ -3,7 +3,7 @@ layout: post
 title: Linux网络之原理探讨与疑问总结
 subtitle: Linux网络之原理探讨与疑问总结
 date: 2022-06-30
-tags: [linux, network, cloud-computing, iaas, nat, pat]
+tags: ['linux', 'networking', 'cloud-computing', 'nat', 'pat']
 ---
 
 # 背景

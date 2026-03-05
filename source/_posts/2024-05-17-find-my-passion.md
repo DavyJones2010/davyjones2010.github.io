@@ -1,7 +1,7 @@
 ---
-title: find my passion
+title: '寻找我的热情所在'
 date: 2024-05-17 00:00:00
-tags: [thoughts, career, passion]
+tags: ['career']
 ---
 
 # 20240517-find-my-passion

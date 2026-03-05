@@ -1,7 +1,7 @@
 ---
 title: K8s containerd 等研究
 date: 2023-05-24 23:31:29
-tags: [k8s, container, containerd, cri, runc, container-runtime]
+tags: ['kubernetes', 'containers', 'containerd', 'cri', 'runc', 'container-runtime']
 ---
 容器运行时: 运行和管理容器进程、镜像的工具
 ## 低层运行时:

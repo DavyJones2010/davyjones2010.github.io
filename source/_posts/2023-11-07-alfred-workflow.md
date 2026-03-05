@@ -1,7 +1,7 @@
 ---
 title: Alfred Workflow 使用指南
 date: 2023-11-07 00:00:00
-tags: [alfred, workflow, automation, macos, productivity]
+tags: ['alfred', 'macos', 'productivity']
 ---
 
 # Components

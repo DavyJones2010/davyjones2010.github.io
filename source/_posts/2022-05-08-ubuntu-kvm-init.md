@@ -2,7 +2,7 @@
 layout: post
 title: ubuntu kvm虚拟化配置
 subtitle: 记录ubuntu kvm配置，便于进行虚拟化学习实践
-tags: [ubuntu, system-init, system-config, kvm, virtualization]
+tags: ['ubuntu', 'system-init', 'system-config', 'virtualization']
 ---
 
 # 环境说明

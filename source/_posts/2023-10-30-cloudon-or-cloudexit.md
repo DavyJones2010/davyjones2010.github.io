@@ -1,7 +1,7 @@
 ---
 title: 上云还是下云？对 Cloud Exit 趋势的思考
 date: 2023-10-30 00:00:00
-tags: [cloud-computing, cloud-exit, thoughts, architecture]
+tags: ['cloud-computing', 'cloud-exit', 'architecture', 'strategy']
 ---
 
 # 20231030-CloudOn-or-CloudExit?

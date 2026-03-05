@@ -1,7 +1,7 @@
 ---
-title: death stranding in iceland
+title: '死亡搁浅在冰岛'
 date: 2023-10-28 00:00:00
-tags: [thoughts, gaming, travel]
+tags: ['death-stranding', 'gaming', 'iceland', 'culture']
 ---
 
 # 20231028-death-stranding-in-iceland

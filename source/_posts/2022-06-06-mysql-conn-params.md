@@ -1,7 +1,7 @@
 ---
 layout: post
 title: MySQL连接池重要参数配置原理研究 
-tags: [java, mysql, database, connection-pool, druid]
+tags: ['java', 'mysql', 'database', 'connection-pool']
 ---
 
 # 重要参数

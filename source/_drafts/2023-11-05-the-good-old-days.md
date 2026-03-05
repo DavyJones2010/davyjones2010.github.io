@@ -1,7 +1,7 @@
 ---
-title: the good old days
+title: '怀念往昔岁月'
 date: 2023-11-05 00:00:00
-tags: [thoughts, retrospective]
+tags: ['reflection', 'life']
 ---
 
 # 20231105-the-good-old-days

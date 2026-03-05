@@ -1,7 +1,7 @@
 ---
 layout: post
 title: k8s基础架构笔记--kube-proxy原理
-tags: [k8s, k8s-architect, kube-proxy]
+tags: ['kubernetes', 'k8s-architect', 'kube-proxy']
 lang: zh
 ---
 # k8s网络模型

@@ -1,7 +1,7 @@
 ---
-title: container learning roadmap
+title: '容器技术学习路线图'
 date: 2024-01-31 00:00:00
-tags: [container, docker, k8s, learning]
+tags: ['containers', 'learning-path', 'docker', 'kubernetes']
 ---
 
 # container-learning-roadmap

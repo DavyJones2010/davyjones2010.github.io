@@ -1,7 +1,7 @@
 ---
-title: stateless multi zone multi flavor pitfall
+title: '无状态服务多可用区多规格部署陷阱'
 date: 2023-11-08 00:00:00
-tags: [thoughts, learn-from-failure, cloud-computing, architecture]
+tags: ['stateless', 'multi-zone', 'multi-flavor', 'lessons-learned']
 ---
 
 # 20231108-stateless-multi-zone-multi-flavor-pitfall

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: k8s基础架构笔记--list&watch机制
-tags: [k8s, k8s-architect, list-watch]
+tags: ['kubernetes', 'list-watch', 'api']
 lang: zh
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 软件工程中的一些最佳实践沉淀
-tags: [java, software-engineering, best-practice]
+tags: ['java', 'software-engineering', 'best-practices']
 ---
 
 # jar/maven版本号定义

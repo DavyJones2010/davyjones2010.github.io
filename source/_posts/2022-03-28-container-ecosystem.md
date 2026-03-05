@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 容器生态的一些研究与对比
-tags: [k8s, container, aliyun, aws]
+tags: ['kubernetes', 'containers', 'aliyun', 'aws']
 lang: zh
 ---
 

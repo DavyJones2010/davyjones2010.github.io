@@ -2,7 +2,7 @@
 layout: post 
 title: 常用的KubeCtl命令 
 subtitle: 常用的KubeCtl命令
-tags: [code-snippets, kubectl]
+tags: ['code-snippets', 'tools']
 ---
 
 # 个人习惯

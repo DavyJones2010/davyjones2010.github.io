@@ -1,7 +1,7 @@
 ---
 title: draw.io使用技巧总结
 date: 2023-05-15 22:24:12
-tags: [soft-skills, diagrams, software-engineering, best-practice]
+tags: ['soft-skills', 'diagrams', 'software-engineering', 'best-practices']
 ---
 # 前言
 自从上次发奋要好好学习做图, 做PPT, 数据可视化之后. 近两个月对draw.io进行了深度的使用.

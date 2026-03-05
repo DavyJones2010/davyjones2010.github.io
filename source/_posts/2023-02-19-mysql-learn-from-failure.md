@@ -1,7 +1,7 @@
 ---
 title: SQL/MySQL使用过程中的踩坑合集
 date: 2023-02-19 10:24:18
-tags: [learn-from-failure, mysql]
+tags: ['lessons-learned', 'mysql']
 ---
 
 # left join

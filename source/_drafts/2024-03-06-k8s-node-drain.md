@@ -1,7 +1,7 @@
 ---
-title: k8s node drain
+title: 'K8s Node Drain 操作与实践'
 date: 2024-03-06 00:00:00
-tags: [k8s, node-drain, operations]
+tags: ['kubernetes', 'node-drain', 'operations']
 ---
 
 # k8s-node-drain

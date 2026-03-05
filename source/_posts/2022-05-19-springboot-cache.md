@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 记SpringBootCache使用的问题总结
-tags: [learn-from-failure, java, springboot, spring-cache]
+tags: ['lessons-learned', 'java', 'springboot', 'spring-cache']
 lang: zh
 ---
 

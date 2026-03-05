@@ -1,7 +1,7 @@
 ---
 title: 使用 AI 辅助修改开源项目的实践：以浏览器插件开发为例
 date: 2026-03-04 10:00:00
-tags: [ai, opensource, browser-extension, markdown]
+tags: ['ai', 'open-source', 'browser-extension', 'markdown']
 ---
 
 ## 背景

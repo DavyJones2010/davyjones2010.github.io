@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 一些日常踩的小坑笔记
-tags: [learn-from-failure, java, mdc, npe]
+tags: ['lessons-learned', 'java', 'mdc', 'npe']
 lang: zh
 ---
 

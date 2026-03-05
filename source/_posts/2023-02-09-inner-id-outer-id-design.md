@@ -1,7 +1,7 @@
 ---
 title: 工作流框架中ID与Token使用引发的思考
 date: 2023-02-09 22:11:42
-tags: [learn-from-failure, java, good-design]
+tags: ['lessons-learned', 'java', 'design']
 ---
 # 背景
 

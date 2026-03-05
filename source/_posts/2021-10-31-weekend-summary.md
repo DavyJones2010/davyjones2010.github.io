@@ -3,7 +3,7 @@ layout: post
 title: 2021年10月第五周
 thumbnail-img: "/_assets/img/20211031-code83.png"
 cover-img: ["/_assets/img/20211031-code83.png", "/_assets/img/20211031-code83-2.png"]
-tags: [weekend, diary, books]
+tags: ['weekend-summary', 'diary', 'books']
 lang: zh
 ---
 第一次完整地参加了一次代码大赛, 即阿里云举办的 [83行代码](https://code83.ide.aliyun.com/billboard). 

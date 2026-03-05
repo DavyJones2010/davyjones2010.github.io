@@ -1,7 +1,7 @@
 ---
 title: Q&A layout
 date: 2023-11-01 00:00:00
-tags: [thoughts, experience]
+tags: ['qa', 'experience']
 ---
 
 # 20231101-Q&A-layout

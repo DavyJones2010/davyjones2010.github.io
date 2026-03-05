@@ -1,7 +1,7 @@
 ---
-title: thin client pitfall
+title: '瘦客户端使用陷阱'
 date: 2023-11-07 00:00:00
-tags: [thoughts, learn-from-failure, architecture]
+tags: ['thin-client', 'lessons-learned', 'architecture']
 ---
 
 # 20231107-thin-client-pitfall

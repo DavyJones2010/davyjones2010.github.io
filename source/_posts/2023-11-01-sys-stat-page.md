@@ -1,7 +1,7 @@
 ---
-title: sys stat page
+title: '系统统计页面实现'
 date: 2023-11-01 00:00:00
-tags: [thoughts, system-design, dashboard]
+tags: ['system-monitoring', 'statistics', 'dashboard', 'visualization']
 ---
 
 # 20231101-sys-stat-page

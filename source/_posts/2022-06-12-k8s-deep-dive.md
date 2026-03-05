@@ -2,7 +2,7 @@
 layout: post
 title: 深入剖析Kubernetes笔记
 cover-img: ["https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202206121715361.png"]
-tags: [2022, books, k8s, docker, container]
+tags: ['2022', 'books', 'kubernetes', 'docker', 'containers']
 lang: zh
 ---
 

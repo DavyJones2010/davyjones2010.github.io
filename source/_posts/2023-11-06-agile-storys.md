@@ -1,7 +1,7 @@
 ---
-title: agile storys
+title: '敏捷用户故事实践'
 date: 2023-11-06 00:00:00
-tags: [thoughts, agile, engineering-culture]
+tags: ['agile', 'user-stories', 'project-management', 'methodology']
 ---
 
 # 20231106-agile-storys

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Java中Log4j的最佳实践
-tags: [java, log4j, logging, best-practice]
+tags: ['java', 'log4j', 'logging', 'best-practices']
 ---
 
 ## 通用

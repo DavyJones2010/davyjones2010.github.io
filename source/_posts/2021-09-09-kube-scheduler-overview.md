@@ -1,7 +1,7 @@
 ---
 layout: post
 title: kube-scheduler笔记
-tags: [k8s, kube-scheduler, scheduler]
+tags: ['kubernetes', 'kube-scheduler', 'scheduling']
 lang: zh
 ---
 

@@ -1,7 +1,7 @@
 ---
-title: http post or get
+title: 'HTTP POST 与 GET 的选择'
 date: 2023-11-27 00:00:00
-tags: [thoughts, http, api-design]
+tags: ['http', 'post', 'get', 'api-design']
 ---
 
 # 20231127-http-post-or-get

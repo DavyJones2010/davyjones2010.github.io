@@ -1,7 +1,7 @@
 ---
 title: K8s部署使用错误排查
 date: 2022-11-01 21:45:41
-tags: [k8s, kubectl, trouble-shooting]
+tags: ['kubernetes', 'tools', 'trouble-shooting']
 ---
 
 # ImagePullBackOff

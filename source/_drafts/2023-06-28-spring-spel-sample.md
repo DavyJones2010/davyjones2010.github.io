@@ -1,7 +1,7 @@
 ---
 title: Spring SPEL语法常用样例
 date: 2023-06-28 22:26:04
-tags: [java, spring, spring-spel, spring-cache]
+tags: ['java', 'spring', 'spel', 'spring-cache']
 ---
 
 工作中使用了SpringCache, 因此需要经常写cacheKey的表达式, 而这些表达式就是[Spring Expression Language (SpEL)](https://docs.spring.io/spring-framework/docs/3.0.x/reference/expressions.html) 
