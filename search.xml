@@ -1688,26 +1688,6 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       </tags>
   </entry>
   <entry>
-    <title>精神训练与身体训练</title>
-    <url>//2021-09-08-physical-psychological/</url>
-    <content><![CDATA[<blockquote>
-<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
-</blockquote>
-<blockquote>
-<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
-</blockquote>
-<blockquote>
-<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
-</blockquote>
-<p>所以要注意加强锻炼身体哦~</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>snippets</tag>
-        <tag>physical</tag>
-        <tag>psychological</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kube-scheduler笔记之Queue研究</title>
     <url>//2021-09-08-kube-scheduler-queue/</url>
     <content><![CDATA[<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type PriorityQueue struct &#123;
@@ -1779,6 +1759,26 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
         <tag>scheduler</tag>
         <tag>kube-scheduler</tag>
         <tag>kube-scheduler-queue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>精神训练与身体训练</title>
+    <url>//2021-09-08-physical-psychological/</url>
+    <content><![CDATA[<blockquote>
+<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
+</blockquote>
+<blockquote>
+<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
+</blockquote>
+<blockquote>
+<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
+</blockquote>
+<p>所以要注意加强锻炼身体哦~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>snippets</tag>
+        <tag>physical</tag>
+        <tag>psychological</tag>
       </tags>
   </entry>
   <entry>
@@ -3787,6 +3787,44 @@ Linux localhost.localdomain <span class="token number">3.10</span>.0-1160.el7.x8
       </tags>
   </entry>
   <entry>
+    <title>TCP协议中TIME_WAIT疑问与思考</title>
+    <url>//2021-12-17-tcp-time-wait/</url>
+    <content><![CDATA[<hr>
+<p>疑问: 从下图可以看出, 客户端可能会是TIME_WAIT状态. 但如果是服务端主动关闭的呢? 服务端可能会是TIME_WAIT状态么?<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-12-18-tcp-time-wait/tcp.png" alt="img.png"></p>
+<p>答案: 是可能的. 服务端主动关闭, 那么四次挥手的过程, 上图中客户端&#x2F;服务端就要翻转下了. </p>
+<hr>
+<p>疑问: 为啥TIME_WAIT要持续2MSL?</p>
+<ul>
+<li>MSL: 最大分段生存期, 指明TCP报文在Internet上最长生存时间，每个具体的TCP实现都必须选择一个确定的MSL值。</li>
+</ul>
+<p>TIME_WAIT状态必须要有一定的持续时间，所以TIME_WAIT也被称为2MSL等待状态，一般持续时间在1分钟到4分钟之间。<br>RFC793定义了MSL为2分钟，Linux设置成了30s</p>
+<p>主要有两个原因：<br>1、我们没有任何机制保证最后的一个ACK能够正常送达, TIME_WAIT确保有足够的时间让对端收到了ACK，<br>    * 如果被动关闭的那方没有收到ACK，就会触发被动端重发Fin，<br>    * 从上图查看, ACK到服务端1个MSL, 服务端如果在MSL里没收到ACK, 则会重发FIN, FIN到达客户端.<br>    * 上边ACK + FIN 耗时, 正好2个MSL；<br>2、有足够的时间让这个连接不会跟后面的连接混在一起（如果连接被重用了，那么这些延迟收到的包就有可能会跟新连接混在一起）。<br>    * </p>
+<p>我们经常就会在服务器上发现有很多的wait_timeout，特别常见的就是http服务器，从上面的描述来看，这个状态应该是主动关闭的一方，才会有的状态，我们有没有想过，就是为什么服务器端会主动断开连接呢？不应该是客户端主动断开吗？</p>
+<p>据说，其实在最初的http协议，服务器在发送完客户端需要的内容后，就主动关闭连接，因为当时的客户端，需要等待所有效果渲染完毕，才会主动断开连接，为了照顾当时性能低下的服务器，更好的服务其他客户，才在协议中这样规定，说到底就是http协议太老了，所以Google才会推他的SPDY协议。</p>
+<hr>
+<p>疑问: 实际上, 我们看到经常服务端会处于CLOSE_WAIT状态, 理论上CLOSE_WAIT应该持续时间很短, 为啥会经常处于这个状态?<br>解释: 出现大量close_wait的现象，主要原因是某种情况下对方关闭了socket链接，但是我方忙与读或者写，没有关闭连接。<br>    就是说CLOSE_WAIT时, 服务端还有数据要写给客户端, 所以没有给客户端发FIN<br>    代码需要判断socket，一旦读到0，断开连接，read返回负，检查一下errno，如果不是AGAIN，就断开连接。</p>
+<hr>
+<p>疑问: 可以从上图看出, 如果客户端在TIME_WAIT内重发了一次ACK, 但ACK还是没有被服务端收到, 那么服务端就会在LAST_ACK状态. 具体LAST_ACK会持续多久?<br>解释: LAST_ACK-&gt;CLOSE不靠超时. 加入服务端发送了FIN之后, 等待LAST_ACK.<br>但客户端回复的ACK丢失了, 在MSL里, 服务端重新发送了FIN, 客户端收到之后, 重新发送ACK, 此时ACK重新丢失.<br>客户端由于2MSL到期, 因此变为CLOSED状态;<br>服务端重新发送FIN, 由于客户端已经处于CLOSED状态, 因此连接丢失, 客户端回复RST, B收到RST进入CLOSED状态.</p>
+<hr>
+<p>疑问: 有啥最佳实践?<br>高并发TCP服务器中进行主动关闭的一方最好是客户端：</p>
+<ul>
+<li>因为对于高并发服务器来说文件描述符资源是很重要的资源，</li>
+<li>如果对于每一个连接都要经历TIME_WAIT这个2MSL的时长，势必造成资源不能立马复用的浪费。</li>
+<li>虽然对于客户端来说TIME_WAIT状态会占用端口和句柄资源，但是客户端一般很少有并发资源限制，所以客户端执行主动关闭是比较合适的。</li>
+</ul>
+<p>服务器端程序最好启用SO_REUSEADDR选项：</p>
+<ul>
+<li>我们想这样做一种情况，如果生产环境中服务端程序由于某种错误操作关闭了，我们肯定是要立马重启服务程序，</li>
+<li>但是TIME_WAIT还在占用着这些地址端口资源让你的服务起不来，那你着不着急。</li>
+<li>SOREUSEADDR这个选项正是允许地址端口的重复绑定。</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>tcp</tag>
+        <tag>timewait</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java NIO疑问与总结</title>
     <url>//2021-12-17-java-nio/</url>
     <content><![CDATA[<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ByteBuffer</span> dst <span class="token operator">=</span> <span class="token class-name">ByteBuffer</span><span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -3827,44 +3865,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <tag>java</tag>
         <tag>code-snippets</tag>
         <tag>nio</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TCP协议中TIME_WAIT疑问与思考</title>
-    <url>//2021-12-17-tcp-time-wait/</url>
-    <content><![CDATA[<hr>
-<p>疑问: 从下图可以看出, 客户端可能会是TIME_WAIT状态. 但如果是服务端主动关闭的呢? 服务端可能会是TIME_WAIT状态么?<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-12-18-tcp-time-wait/tcp.png" alt="img.png"></p>
-<p>答案: 是可能的. 服务端主动关闭, 那么四次挥手的过程, 上图中客户端&#x2F;服务端就要翻转下了. </p>
-<hr>
-<p>疑问: 为啥TIME_WAIT要持续2MSL?</p>
-<ul>
-<li>MSL: 最大分段生存期, 指明TCP报文在Internet上最长生存时间，每个具体的TCP实现都必须选择一个确定的MSL值。</li>
-</ul>
-<p>TIME_WAIT状态必须要有一定的持续时间，所以TIME_WAIT也被称为2MSL等待状态，一般持续时间在1分钟到4分钟之间。<br>RFC793定义了MSL为2分钟，Linux设置成了30s</p>
-<p>主要有两个原因：<br>1、我们没有任何机制保证最后的一个ACK能够正常送达, TIME_WAIT确保有足够的时间让对端收到了ACK，<br>    * 如果被动关闭的那方没有收到ACK，就会触发被动端重发Fin，<br>    * 从上图查看, ACK到服务端1个MSL, 服务端如果在MSL里没收到ACK, 则会重发FIN, FIN到达客户端.<br>    * 上边ACK + FIN 耗时, 正好2个MSL；<br>2、有足够的时间让这个连接不会跟后面的连接混在一起（如果连接被重用了，那么这些延迟收到的包就有可能会跟新连接混在一起）。<br>    * </p>
-<p>我们经常就会在服务器上发现有很多的wait_timeout，特别常见的就是http服务器，从上面的描述来看，这个状态应该是主动关闭的一方，才会有的状态，我们有没有想过，就是为什么服务器端会主动断开连接呢？不应该是客户端主动断开吗？</p>
-<p>据说，其实在最初的http协议，服务器在发送完客户端需要的内容后，就主动关闭连接，因为当时的客户端，需要等待所有效果渲染完毕，才会主动断开连接，为了照顾当时性能低下的服务器，更好的服务其他客户，才在协议中这样规定，说到底就是http协议太老了，所以Google才会推他的SPDY协议。</p>
-<hr>
-<p>疑问: 实际上, 我们看到经常服务端会处于CLOSE_WAIT状态, 理论上CLOSE_WAIT应该持续时间很短, 为啥会经常处于这个状态?<br>解释: 出现大量close_wait的现象，主要原因是某种情况下对方关闭了socket链接，但是我方忙与读或者写，没有关闭连接。<br>    就是说CLOSE_WAIT时, 服务端还有数据要写给客户端, 所以没有给客户端发FIN<br>    代码需要判断socket，一旦读到0，断开连接，read返回负，检查一下errno，如果不是AGAIN，就断开连接。</p>
-<hr>
-<p>疑问: 可以从上图看出, 如果客户端在TIME_WAIT内重发了一次ACK, 但ACK还是没有被服务端收到, 那么服务端就会在LAST_ACK状态. 具体LAST_ACK会持续多久?<br>解释: LAST_ACK-&gt;CLOSE不靠超时. 加入服务端发送了FIN之后, 等待LAST_ACK.<br>但客户端回复的ACK丢失了, 在MSL里, 服务端重新发送了FIN, 客户端收到之后, 重新发送ACK, 此时ACK重新丢失.<br>客户端由于2MSL到期, 因此变为CLOSED状态;<br>服务端重新发送FIN, 由于客户端已经处于CLOSED状态, 因此连接丢失, 客户端回复RST, B收到RST进入CLOSED状态.</p>
-<hr>
-<p>疑问: 有啥最佳实践?<br>高并发TCP服务器中进行主动关闭的一方最好是客户端：</p>
-<ul>
-<li>因为对于高并发服务器来说文件描述符资源是很重要的资源，</li>
-<li>如果对于每一个连接都要经历TIME_WAIT这个2MSL的时长，势必造成资源不能立马复用的浪费。</li>
-<li>虽然对于客户端来说TIME_WAIT状态会占用端口和句柄资源，但是客户端一般很少有并发资源限制，所以客户端执行主动关闭是比较合适的。</li>
-</ul>
-<p>服务器端程序最好启用SO_REUSEADDR选项：</p>
-<ul>
-<li>我们想这样做一种情况，如果生产环境中服务端程序由于某种错误操作关闭了，我们肯定是要立马重启服务程序，</li>
-<li>但是TIME_WAIT还在占用着这些地址端口资源让你的服务起不来，那你着不着急。</li>
-<li>SOREUSEADDR这个选项正是允许地址端口的重复绑定。</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>tcp</tag>
-        <tag>timewait</tag>
       </tags>
   </entry>
   <entry>
@@ -4210,6 +4210,118 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       </tags>
   </entry>
   <entry>
+    <title>2021 年度总结</title>
+    <url>//2021-12-31-summary-for-2021/</url>
+    <content><![CDATA[<p>2021年马上就要过去了, 是时候回顾一年的得失, 展望下未来了:</p>
+<h1 id="0x00-工作总结"><a href="#0x00-工作总结" class="headerlink" title="0x00 工作总结"></a>0x00 工作总结</h1><p>一个字: “稳”</p>
+<ul>
+<li><p>稳定性上识别到了很多风险, perf tunning 等, 做的还不错. 全年无故障.<br>但”稳”另一方面, 也代表着没有惊喜, 没有突破. 这也是很头疼的点, 只能守着自己的一亩三分地, 找不到突破的方向.<br>个人认为瓶颈可能并不在技术侧. </p>
+</li>
+<li><p>不能妄自菲薄: 对比友商(aws), 相似的问题其实也一直都存在, 做的可能还没有我们好.</p>
+</li>
+<li><p>但也不能妄自尊大: 毕竟规模比我们大那么多, 与二方产品融合得也很好, 与我们简直是天壤之别.<br>不过技术上业务上确实有一些不错的创新点, 专利要开始申请起来. </p>
+</li>
+<li><p>除此之外, 技术上也发现并解决了一些有意思的问题. 后边需要陆续整理下.</p>
+</li>
+</ul>
+<h1 id="0x01-学习成长总结"><a href="#0x01-学习成长总结" class="headerlink" title="0x01 学习成长总结"></a>0x01 学习成长总结</h1><p>一个字: “杂”,</p>
+<ul>
+<li>“杂”, 绝不是一个好词. 代表着啥都感兴趣, 啥知道一点儿, 但啥都不精通. 从书单里就可以看出来.</li>
+</ul>
+<h2 id="技术上"><a href="#技术上" class="headerlink" title="技术上"></a>技术上</h2><ul>
+<li>这点导致真的很慌. 担心后边一事无成. 不过杂归杂, 也还是总结下吧: </li>
+<li>研究了 <a href="https://github.com/DavyJones2010/kubernetes/tree/feature/20210830_code_review">kube-scheduler</a> &amp; vk的源代码与实现原理, 基本也算是把这些代码翻了个底儿朝天了. <ul>
+<li>原理研究方面: 但整体对k8s的具体内部实现细节(细节太多啦), 以及扩展方式等.</li>
+<li>动手实践方面: 对于k8s整体的使用运维, 实际运维经验太少.</li>
+<li>语言层面: 对于go仍然不能说很熟练地使用, 只能说能看懂代码了. 这点也需要加强.</li>
+</ul>
+</li>
+<li>了解了: 模拟电路, 数字电路, 以及底层门电路的构成, 门电路如何构成加法器. 感谢 <a href="https://www.bilibili.com/video/BV1wi4y157D3">ELE实验室</a> 满足了自己极大的好奇心.</li>
+<li>了解了: CPU的生产, 现代计算机的架构. 真心感谢 <a href="https://zhuanlan.zhihu.com/p/35786702">老狼</a> <ul>
+<li>从而明确知道了各种cpu的参数, 也基本能看懂 intel cpu 的架构图了</li>
+<li>从而对numa node有了更清晰的认识.</li>
+<li>等等很多很多的疑问(例如为啥现在都用串口, 并口速度不是更快么? 内存的通道是啥意思? 多核是啥意思? 超线程是啥意思? ), 对很多指标(例如晶体管数量, cacheline大小, 工艺)有了定量的认识.</li>
+</ul>
+</li>
+<li>了解了: 各种计算机接口参数指标, 以及悠久的发展历史.</li>
+<li>由于对操作系统硬件的更深一层理解, 从而更加能理解Java NIO的编程模型.</li>
+<li>深入研究了zkclient的连接以及传输机制.</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>对历史也萌生了极大的兴趣. 因为看历史, 就是在看现在, 就是在看未来. <ul>
+<li>&lt;明朝那些事儿&gt; </li>
+<li>袁腾飞</li>
+<li>&lt;大明王朝1566&gt;</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>“夏天过完了，好像什么事也没有做。” 　　</p>
+<p>“是啊，我们就只是跑来跑去，什么都没有做。”</p>
+<p>-《蓝色大门》</p>
+</blockquote>
+<h1 id="0x02-生活总结"><a href="#0x02-生活总结" class="headerlink" title="0x02 生活总结"></a>0x02 生活总结</h1><p>一个字: “喜”</p>
+<ul>
+<li>意外的惊喜很多. </li>
+<li>其一, 老婆终于怀孕了, 想到即将拥有自己的baby, 心里就会有一种喜悦, 但同时也多了一份责任感. 为人父, 亦为人表. 时刻督促我变成更优秀的自己.</li>
+<li>其二, 终于明年6月份公司要搬到家附近了. 终于可以结束为期两年的周末夫妻生活了, 到时候孩子应该也快诞生了.</li>
+</ul>
+<h1 id="0x03-总体反思-amp-回顾"><a href="#0x03-总体反思-amp-回顾" class="headerlink" title="0x03 总体反思&amp;回顾"></a>0x03 总体反思&amp;回顾</h1><p>总体来说今年的思想成熟很多, 写代码做业务研究技术, 也更加有方法论:  </p>
+<ul>
+<li>技术方案的设计更加完善: <ul>
+<li>能充分考虑到问题的复杂性与潜在的坑, 以及可能的解决方案以及优先级. 而不是一过来需求没考虑到就开始编码, 上线之后, 发现出现了问题而手忙脚乱地进行打补丁修复.</li>
+</ul>
+</li>
+<li>认知提升: <ul>
+<li>对于”重要但不紧急”的事情, 抛弃了过去没动力做, 想磨洋工, 靠别人给deadline的想法. 能充分认识到这些事情的重要性必要性. 哪怕没人肯定, 但只要是重要的, 该做的还是会坚持做下去.</li>
+</ul>
+</li>
+<li>更加积极乐观了.<ul>
+<li>更能””<br>有时候做技术跟业务, 就是要有一种坚守. </li>
+<li>坚持相信自己做的事情是有价值的, 并能确实创造价值.</li>
+<li>用准确无误的数字, 说服那些质疑的人, 这些事情的价值.</li>
+</ul>
+</li>
+</ul>
+<h1 id="0x04-工作规划"><a href="#0x04-工作规划" class="headerlink" title="0x04 工作规划"></a>0x04 工作规划</h1><ul>
+<li>把价格策略合理自动制定完成. </li>
+<li>一定要在容器调度层面有所突破. 无论是客户端, 还是服务端.<ul>
+<li>本身自己是在做调度, 所以深刻地理解, 调度是有很多事情要解决的. </li>
+<li>立下一个flag, 明年一定要成为kube-scheduler的committer!!!</li>
+</ul>
+</li>
+</ul>
+<h1 id="0x05-学习规划"><a href="#0x05-学习规划" class="headerlink" title="0x05 学习规划"></a>0x05 学习规划</h1><p>这里限制下自己明年的范围吧, 省得到时候又是杂乱无章, 一事无成:  </p>
+<ul>
+<li>向下钻研: 仍然需要在硬件层面, 在操作系统底层, 在汇编语言, C语言层面深入了解学习. <ul>
+<li>以书单里: &lt;深度探索嵌入式操作系统：从零开始设计、架构和开发&gt; 为索引</li>
+</ul>
+</li>
+<li>以Java NIO为契机基础:<ul>
+<li>向下, 把底层C的实现, 操作系统层面的实现研究下.</li>
+<li>向上, 把Netty再深入研究下吧. 写出来一个高性能nio server&#x2F;client, 绝对不是一件容易的事情.</li>
+<li>向上, 把AsyncHttpClient也研究下吧, 深入理解这里的http connection pool到底是啥? </li>
+<li>向上, 把Curator的重连机制研究下, 同时与自己直接通过zkClient做, 优缺点深入研究比较下.</li>
+</ul>
+</li>
+<li>最好同时能把sr-iov这些虚拟化技术也研究了解下</li>
+</ul>
+<h1 id="0x06-生活规划"><a href="#0x06-生活规划" class="headerlink" title="0x06 生活规划"></a>0x06 生活规划</h1><ul>
+<li>花更多时间在锻炼上, 不论是游泳, 划船, 还是乒乓球. 培养一个运动的爱好吧.</li>
+<li>身材管理: 一定要减肥, 再也忍受不了自己油腻的样子了. 今年已经戒断了吃夜宵的恶习, 有了一个好的开始, 明年继续加油, 体检一定要有个好结果!</li>
+<li>是时候重拾起吉他了.</li>
+<li>更加认真地对待生活, 博客长期认真地维护起来.</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>年度总结</category>
+      </categories>
+      <tags>
+        <tag>2021</tag>
+        <tag>year-in-review</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Netty权威指南笔记</title>
     <url>//2022-01-03-netty/</url>
     <content><![CDATA[<h2 id="TCP黏包拆包问题"><a href="#TCP黏包拆包问题" class="headerlink" title="TCP黏包拆包问题"></a>TCP黏包拆包问题</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>黏包:<br>    1. 一次从缓冲区, 读取到了多个完整数据包, 需要将这几个数据包分别解析.<br>拆包:<br>    1. 一次从缓冲区, 读到了一个数据包的部分(可能由于服务端TCP接收滑窗非常小), 需要多次读取才能构建完整的数据包<br>黏包+拆包:<br>    1. 一次从缓冲区, 读取到一个数据包+另一个数据包的部分</p>
@@ -4342,118 +4454,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
         <tag>Netty</tag>
         <tag>Java</tag>
         <tag>Nio</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2021 年度总结</title>
-    <url>//2021-12-31-summary-for-2021/</url>
-    <content><![CDATA[<p>2021年马上就要过去了, 是时候回顾一年的得失, 展望下未来了:</p>
-<h1 id="0x00-工作总结"><a href="#0x00-工作总结" class="headerlink" title="0x00 工作总结"></a>0x00 工作总结</h1><p>一个字: “稳”</p>
-<ul>
-<li><p>稳定性上识别到了很多风险, perf tunning 等, 做的还不错. 全年无故障.<br>但”稳”另一方面, 也代表着没有惊喜, 没有突破. 这也是很头疼的点, 只能守着自己的一亩三分地, 找不到突破的方向.<br>个人认为瓶颈可能并不在技术侧. </p>
-</li>
-<li><p>不能妄自菲薄: 对比友商(aws), 相似的问题其实也一直都存在, 做的可能还没有我们好.</p>
-</li>
-<li><p>但也不能妄自尊大: 毕竟规模比我们大那么多, 与二方产品融合得也很好, 与我们简直是天壤之别.<br>不过技术上业务上确实有一些不错的创新点, 专利要开始申请起来. </p>
-</li>
-<li><p>除此之外, 技术上也发现并解决了一些有意思的问题. 后边需要陆续整理下.</p>
-</li>
-</ul>
-<h1 id="0x01-学习成长总结"><a href="#0x01-学习成长总结" class="headerlink" title="0x01 学习成长总结"></a>0x01 学习成长总结</h1><p>一个字: “杂”,</p>
-<ul>
-<li>“杂”, 绝不是一个好词. 代表着啥都感兴趣, 啥知道一点儿, 但啥都不精通. 从书单里就可以看出来.</li>
-</ul>
-<h2 id="技术上"><a href="#技术上" class="headerlink" title="技术上"></a>技术上</h2><ul>
-<li>这点导致真的很慌. 担心后边一事无成. 不过杂归杂, 也还是总结下吧: </li>
-<li>研究了 <a href="https://github.com/DavyJones2010/kubernetes/tree/feature/20210830_code_review">kube-scheduler</a> &amp; vk的源代码与实现原理, 基本也算是把这些代码翻了个底儿朝天了. <ul>
-<li>原理研究方面: 但整体对k8s的具体内部实现细节(细节太多啦), 以及扩展方式等.</li>
-<li>动手实践方面: 对于k8s整体的使用运维, 实际运维经验太少.</li>
-<li>语言层面: 对于go仍然不能说很熟练地使用, 只能说能看懂代码了. 这点也需要加强.</li>
-</ul>
-</li>
-<li>了解了: 模拟电路, 数字电路, 以及底层门电路的构成, 门电路如何构成加法器. 感谢 <a href="https://www.bilibili.com/video/BV1wi4y157D3">ELE实验室</a> 满足了自己极大的好奇心.</li>
-<li>了解了: CPU的生产, 现代计算机的架构. 真心感谢 <a href="https://zhuanlan.zhihu.com/p/35786702">老狼</a> <ul>
-<li>从而明确知道了各种cpu的参数, 也基本能看懂 intel cpu 的架构图了</li>
-<li>从而对numa node有了更清晰的认识.</li>
-<li>等等很多很多的疑问(例如为啥现在都用串口, 并口速度不是更快么? 内存的通道是啥意思? 多核是啥意思? 超线程是啥意思? ), 对很多指标(例如晶体管数量, cacheline大小, 工艺)有了定量的认识.</li>
-</ul>
-</li>
-<li>了解了: 各种计算机接口参数指标, 以及悠久的发展历史.</li>
-<li>由于对操作系统硬件的更深一层理解, 从而更加能理解Java NIO的编程模型.</li>
-<li>深入研究了zkclient的连接以及传输机制.</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>对历史也萌生了极大的兴趣. 因为看历史, 就是在看现在, 就是在看未来. <ul>
-<li>&lt;明朝那些事儿&gt; </li>
-<li>袁腾飞</li>
-<li>&lt;大明王朝1566&gt;</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>“夏天过完了，好像什么事也没有做。” 　　</p>
-<p>“是啊，我们就只是跑来跑去，什么都没有做。”</p>
-<p>-《蓝色大门》</p>
-</blockquote>
-<h1 id="0x02-生活总结"><a href="#0x02-生活总结" class="headerlink" title="0x02 生活总结"></a>0x02 生活总结</h1><p>一个字: “喜”</p>
-<ul>
-<li>意外的惊喜很多. </li>
-<li>其一, 老婆终于怀孕了, 想到即将拥有自己的baby, 心里就会有一种喜悦, 但同时也多了一份责任感. 为人父, 亦为人表. 时刻督促我变成更优秀的自己.</li>
-<li>其二, 终于明年6月份公司要搬到家附近了. 终于可以结束为期两年的周末夫妻生活了, 到时候孩子应该也快诞生了.</li>
-</ul>
-<h1 id="0x03-总体反思-amp-回顾"><a href="#0x03-总体反思-amp-回顾" class="headerlink" title="0x03 总体反思&amp;回顾"></a>0x03 总体反思&amp;回顾</h1><p>总体来说今年的思想成熟很多, 写代码做业务研究技术, 也更加有方法论:  </p>
-<ul>
-<li>技术方案的设计更加完善: <ul>
-<li>能充分考虑到问题的复杂性与潜在的坑, 以及可能的解决方案以及优先级. 而不是一过来需求没考虑到就开始编码, 上线之后, 发现出现了问题而手忙脚乱地进行打补丁修复.</li>
-</ul>
-</li>
-<li>认知提升: <ul>
-<li>对于”重要但不紧急”的事情, 抛弃了过去没动力做, 想磨洋工, 靠别人给deadline的想法. 能充分认识到这些事情的重要性必要性. 哪怕没人肯定, 但只要是重要的, 该做的还是会坚持做下去.</li>
-</ul>
-</li>
-<li>更加积极乐观了.<ul>
-<li>更能””<br>有时候做技术跟业务, 就是要有一种坚守. </li>
-<li>坚持相信自己做的事情是有价值的, 并能确实创造价值.</li>
-<li>用准确无误的数字, 说服那些质疑的人, 这些事情的价值.</li>
-</ul>
-</li>
-</ul>
-<h1 id="0x04-工作规划"><a href="#0x04-工作规划" class="headerlink" title="0x04 工作规划"></a>0x04 工作规划</h1><ul>
-<li>把价格策略合理自动制定完成. </li>
-<li>一定要在容器调度层面有所突破. 无论是客户端, 还是服务端.<ul>
-<li>本身自己是在做调度, 所以深刻地理解, 调度是有很多事情要解决的. </li>
-<li>立下一个flag, 明年一定要成为kube-scheduler的committer!!!</li>
-</ul>
-</li>
-</ul>
-<h1 id="0x05-学习规划"><a href="#0x05-学习规划" class="headerlink" title="0x05 学习规划"></a>0x05 学习规划</h1><p>这里限制下自己明年的范围吧, 省得到时候又是杂乱无章, 一事无成:  </p>
-<ul>
-<li>向下钻研: 仍然需要在硬件层面, 在操作系统底层, 在汇编语言, C语言层面深入了解学习. <ul>
-<li>以书单里: &lt;深度探索嵌入式操作系统：从零开始设计、架构和开发&gt; 为索引</li>
-</ul>
-</li>
-<li>以Java NIO为契机基础:<ul>
-<li>向下, 把底层C的实现, 操作系统层面的实现研究下.</li>
-<li>向上, 把Netty再深入研究下吧. 写出来一个高性能nio server&#x2F;client, 绝对不是一件容易的事情.</li>
-<li>向上, 把AsyncHttpClient也研究下吧, 深入理解这里的http connection pool到底是啥? </li>
-<li>向上, 把Curator的重连机制研究下, 同时与自己直接通过zkClient做, 优缺点深入研究比较下.</li>
-</ul>
-</li>
-<li>最好同时能把sr-iov这些虚拟化技术也研究了解下</li>
-</ul>
-<h1 id="0x06-生活规划"><a href="#0x06-生活规划" class="headerlink" title="0x06 生活规划"></a>0x06 生活规划</h1><ul>
-<li>花更多时间在锻炼上, 不论是游泳, 划船, 还是乒乓球. 培养一个运动的爱好吧.</li>
-<li>身材管理: 一定要减肥, 再也忍受不了自己油腻的样子了. 今年已经戒断了吃夜宵的恶习, 有了一个好的开始, 明年继续加油, 体检一定要有个好结果!</li>
-<li>是时候重拾起吉他了.</li>
-<li>更加认真地对待生活, 博客长期认真地维护起来.</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>年度总结</category>
-      </categories>
-      <tags>
-        <tag>2021</tag>
-        <tag>year-in-review</tag>
       </tags>
   </entry>
   <entry>
@@ -5693,129 +5693,6 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
-    <title>k8s statefulset的研究与实践</title>
-    <url>//2022-03-27-k8s-stateful-set/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
-<ul>
-<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
-<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
-<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
-</ul>
-<p>这样就保证了Pod销毁重建之后: </p>
-<ul>
-<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
-<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
-</ul>
-<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
-<ul>
-<li>为每个pod创建单独的pvc, 命名规则 ${PvcName}-${StatefulSetName}-${idx}, 并绑定单独的pv, 而不是像deployment为所有pod创建(一个?还是多个?pvc)并绑定同一份pv</li>
-<li>pod销毁重建之后, 由于hostname稳定, 所以还能关联到之前的pv</li>
-</ul>
-<h3 id="其他顺序化的部署特性"><a href="#其他顺序化的部署特性" class="headerlink" title="其他顺序化的部署特性:"></a>其他顺序化的部署特性:</h3><ul>
-<li>Ordered Pod Creation: Pod创建是有序的, 即pod-0先创建, 只有pod-0成功后, pod-1才会创建</li>
-<li>scale-down时, 会按照index倒序删除pod</li>
-<li>滚动升级(Rolling Update)时, 会按照index倒序删除&amp;重建pod</li>
-</ul>
-<h2 id="statefulset的设计原理模型"><a href="#statefulset的设计原理模型" class="headerlink" title="statefulset的设计原理模型"></a>statefulset的设计原理模型</h2><ul>
-<li>拓扑状态: 应用的多个实例之间不是完全对等的关系, 这个应用实例的启动必须按照某些顺序启动. 比如应用的主节点A要先于从节点B启动. 而如果你把A和B两个Pod删除掉, 他们再次被创建出来是也必须严格按照这个顺序才行. 并且, 新创建出来的Pod, 必须和原来的Pod的网络标识一样, 这样原先的访问者才能使用同样的方法, 访问到这个新的Pod.</li>
-<li>存储状态: 应用的多个实例分别绑定了不同的存储数据. 对于这些应用实例来说, Pod A第一次读取到的数据, 和隔了十分钟之后再次读取到的数据, 应该是同一份, 哪怕在此期间Pod A被重新创建过. 一个数据库应用的多个存储实例.</li>
-</ul>
-<h1 id="ZK-on-K8S"><a href="#ZK-on-K8S" class="headerlink" title="ZK on K8S"></a>ZK on K8S</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><p>为啥 <a href="https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/">zookeeper</a> 通过k8s的statefulset创建zk服务, 看yaml文件里,</p>
-<ol>
-<li>没有创建myid文件</li>
-<li>没有在conf里配置 server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT 这种</li>
-</ol>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原因: 因为启动zk的脚本是start-zookeeper, 不是start.sh<br>所以是因为docker镜像里边对zk进行了封装, 对k8s环境变量进行了适配. 具体查看脚本:<br><a href="https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper">start-zookeeper</a></p>
-<h3 id="如何生成myid文件"><a href="#如何生成myid文件" class="headerlink" title="如何生成myid文件?"></a>如何生成myid文件?</h3><ul>
-<li>依赖statefulset的hostname全局有序且保持稳定的特性</li>
-<li>在pod内部执行”hostname”命令, 读取hostname, 参见上边hostname命名规则, 读取到${idx}值, myid&#x3D;${idx}+1</li>
-</ul>
-<h3 id="如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录"><a href="#如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录" class="headerlink" title="如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?"></a>如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?</h3><ul>
-<li>server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT</li>
-<li>$NAME: 从hostname读取到 ${StatefulSetName}</li>
-<li>$DOMAIN: 从 ‘hostname -d’ 命令中读取到domain信息</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>stateful-set</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记录一些有趣的产品设计</title>
-    <url>//2022-04-04-good-design/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
-<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
-<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
-</ul>
-<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
-<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
-<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
-</ul>
-<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
-<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
-</li>
-<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
-</li>
-</ul>
-<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
-<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
-</ul>
-<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
-<ul>
-<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
-<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
-</ul>
-<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
-<ol>
-<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
-<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
-</ol>
-<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
-<ul>
-<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
-</li>
-<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
-</li>
-</ul>
-<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
-<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
-</li>
-<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
-</li>
-</ol>
-<ul>
-<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
-<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
-<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
-</ul>
-<ol start="3">
-<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
-</ol>
-<ul>
-<li>最佳实践: 一些使用的小技巧.</li>
-<li>new feature: 新功能的介绍.</li>
-<li>case study: 用户案例.</li>
-<li>event: 线下&#x2F;线上的技术活动介绍.</li>
-<li>竞品比对: 例如与Gliffy,StarUML等.</li>
-<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
-</ul>
-<ol start="4">
-<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
-<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
-<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
-</blockquote>
-</li>
-</ol>
-<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>product-design</tag>
-        <tag>good-design</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenAPI设计之NextToken</title>
     <url>//2022-03-28-openapi-nexttoken/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景:"></a>背景:</h1><p>在API设计时, 如果是<code>list</code>接口, 通常需要对返回的结果进行分页.</p>
@@ -6065,6 +5942,79 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
       </tags>
   </entry>
   <entry>
+    <title>记录一些有趣的产品设计</title>
+    <url>//2022-04-04-good-design/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
+<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
+<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
+</ul>
+<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
+<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
+<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
+</ul>
+<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
+<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
+</li>
+<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
+</li>
+</ul>
+<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
+<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
+</ul>
+<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
+<ul>
+<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
+<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
+</ul>
+<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
+<ol>
+<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
+<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
+</ol>
+<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
+<ul>
+<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
+</li>
+<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
+</li>
+</ul>
+<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
+<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
+</li>
+<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
+</li>
+</ol>
+<ul>
+<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
+<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
+<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
+</ul>
+<ol start="3">
+<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
+</ol>
+<ul>
+<li>最佳实践: 一些使用的小技巧.</li>
+<li>new feature: 新功能的介绍.</li>
+<li>case study: 用户案例.</li>
+<li>event: 线下&#x2F;线上的技术活动介绍.</li>
+<li>竞品比对: 例如与Gliffy,StarUML等.</li>
+<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
+</ul>
+<ol start="4">
+<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
+<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
+<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
+</blockquote>
+</li>
+</ol>
+<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>product-design</tag>
+        <tag>good-design</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>云计算笔记--aws的DefaultVpc实现调研</title>
     <url>//2022-04-05-aws-default-vpc/</url>
     <content><![CDATA[<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html">AWS Default VPCs</a></p>
@@ -6081,6 +6031,56 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
         <tag>iaas</tag>
         <tag>default-vpc</tag>
         <tag>vpc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s statefulset的研究与实践</title>
+    <url>//2022-03-27-k8s-stateful-set/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
+<ul>
+<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
+<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
+<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
+</ul>
+<p>这样就保证了Pod销毁重建之后: </p>
+<ul>
+<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
+<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
+</ul>
+<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
+<ul>
+<li>为每个pod创建单独的pvc, 命名规则 ${PvcName}-${StatefulSetName}-${idx}, 并绑定单独的pv, 而不是像deployment为所有pod创建(一个?还是多个?pvc)并绑定同一份pv</li>
+<li>pod销毁重建之后, 由于hostname稳定, 所以还能关联到之前的pv</li>
+</ul>
+<h3 id="其他顺序化的部署特性"><a href="#其他顺序化的部署特性" class="headerlink" title="其他顺序化的部署特性:"></a>其他顺序化的部署特性:</h3><ul>
+<li>Ordered Pod Creation: Pod创建是有序的, 即pod-0先创建, 只有pod-0成功后, pod-1才会创建</li>
+<li>scale-down时, 会按照index倒序删除pod</li>
+<li>滚动升级(Rolling Update)时, 会按照index倒序删除&amp;重建pod</li>
+</ul>
+<h2 id="statefulset的设计原理模型"><a href="#statefulset的设计原理模型" class="headerlink" title="statefulset的设计原理模型"></a>statefulset的设计原理模型</h2><ul>
+<li>拓扑状态: 应用的多个实例之间不是完全对等的关系, 这个应用实例的启动必须按照某些顺序启动. 比如应用的主节点A要先于从节点B启动. 而如果你把A和B两个Pod删除掉, 他们再次被创建出来是也必须严格按照这个顺序才行. 并且, 新创建出来的Pod, 必须和原来的Pod的网络标识一样, 这样原先的访问者才能使用同样的方法, 访问到这个新的Pod.</li>
+<li>存储状态: 应用的多个实例分别绑定了不同的存储数据. 对于这些应用实例来说, Pod A第一次读取到的数据, 和隔了十分钟之后再次读取到的数据, 应该是同一份, 哪怕在此期间Pod A被重新创建过. 一个数据库应用的多个存储实例.</li>
+</ul>
+<h1 id="ZK-on-K8S"><a href="#ZK-on-K8S" class="headerlink" title="ZK on K8S"></a>ZK on K8S</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><p>为啥 <a href="https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/">zookeeper</a> 通过k8s的statefulset创建zk服务, 看yaml文件里,</p>
+<ol>
+<li>没有创建myid文件</li>
+<li>没有在conf里配置 server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT 这种</li>
+</ol>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原因: 因为启动zk的脚本是start-zookeeper, 不是start.sh<br>所以是因为docker镜像里边对zk进行了封装, 对k8s环境变量进行了适配. 具体查看脚本:<br><a href="https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper">start-zookeeper</a></p>
+<h3 id="如何生成myid文件"><a href="#如何生成myid文件" class="headerlink" title="如何生成myid文件?"></a>如何生成myid文件?</h3><ul>
+<li>依赖statefulset的hostname全局有序且保持稳定的特性</li>
+<li>在pod内部执行”hostname”命令, 读取hostname, 参见上边hostname命名规则, 读取到${idx}值, myid&#x3D;${idx}+1</li>
+</ul>
+<h3 id="如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录"><a href="#如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录" class="headerlink" title="如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?"></a>如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?</h3><ul>
+<li>server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT</li>
+<li>$NAME: 从hostname读取到 ${StatefulSetName}</li>
+<li>$DOMAIN: 从 ‘hostname -d’ 命令中读取到domain信息</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>stateful-set</tag>
       </tags>
   </entry>
   <entry>
@@ -6135,34 +6135,6 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
         <tag>k8s</tag>
         <tag>k8s-architect</tag>
         <tag>kube-proxy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s基础架构笔记--list&amp;watch机制</title>
-    <url>//2022-04-05-k8s-list-watch/</url>
-    <content><![CDATA[<p>本质上:  </p>
-<ul>
-<li>list: 就是一个GET的HTTP操作, 请求到apiserver, 是个短连接. list结束, 连接就关闭.</li>
-<li>watch: 是一个基于<code>Transfer-Encoding: chunked</code>的<a href="https://imququ.com/post/transfer-encoding-header-in-http.html">HTTP长连接</a>, apiserver作为http server, kube-proxy&#x2F;kubelet&#x2F;kube-scheduler等作为http client.</li>
-</ul>
-<p>这样: </p>
-<ul>
-<li>list: 来实现kube-proxy, kubelet, kube-scheduler等角色启动初始化时, 存量数据的一次拉取.</li>
-<li>watch: 来实现后续各种资源的增量更新</li>
-</ul>
-<p>扩展: </p>
-<ul>
-<li>watch: <ul>
-<li>k8s java client中watch机制, 是基于OkHttpClient. &#x2F;&#x2F; TODO: 补上具体实现例子</li>
-<li>watch机制也可以基于websocket来实现</li>
-</ul>
-</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>list-watch</tag>
-        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -6280,6 +6252,34 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
       <tags>
         <tag>kubectl</tag>
         <tag>code-snippets</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记--list&amp;watch机制</title>
+    <url>//2022-04-05-k8s-list-watch/</url>
+    <content><![CDATA[<p>本质上:  </p>
+<ul>
+<li>list: 就是一个GET的HTTP操作, 请求到apiserver, 是个短连接. list结束, 连接就关闭.</li>
+<li>watch: 是一个基于<code>Transfer-Encoding: chunked</code>的<a href="https://imququ.com/post/transfer-encoding-header-in-http.html">HTTP长连接</a>, apiserver作为http server, kube-proxy&#x2F;kubelet&#x2F;kube-scheduler等作为http client.</li>
+</ul>
+<p>这样: </p>
+<ul>
+<li>list: 来实现kube-proxy, kubelet, kube-scheduler等角色启动初始化时, 存量数据的一次拉取.</li>
+<li>watch: 来实现后续各种资源的增量更新</li>
+</ul>
+<p>扩展: </p>
+<ul>
+<li>watch: <ul>
+<li>k8s java client中watch机制, 是基于OkHttpClient. &#x2F;&#x2F; TODO: 补上具体实现例子</li>
+<li>watch机制也可以基于websocket来实现</li>
+</ul>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>k8s</tag>
+        <tag>list-watch</tag>
+        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -6443,61 +6443,6 @@ kube-dns                             ClusterIP      <span class="token number">1
         <tag>product-design</tag>
         <tag>good-design</tag>
         <tag>bad-design</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记一次由于remoteCache类型不兼容修改导致的异常问题</title>
-    <url>//2022-04-30-cache-incompatible/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>进行Redis缓存升级改造, 缓存访问层统一进行了修改:<br>修改前代码如下, 按照Java原生序列化方式: </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写缓存, Long类型</span>
-cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span> <span class="token number">123L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 读缓存, Long类型</span>
-<span class="token punctuation">(</span><span class="token class-name">Long</span><span class="token punctuation">)</span>cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>修改后代码如下, 统一按照String类型进行序列化&#x2F;反序列化:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写缓存, 转成String类型</span>
-cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span> <span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 读缓存, 获取String类型</span>
-<span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">)</span>cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>线上发布过程中报出异常, <code>ClassCastException</code>, Long类型无法被cast成String类型.<br>经分析, 由于是集群的环境, 发布过程中, 针对同一个”key”, </p>
-<ul>
-<li>未布机器写入的还是Long类型</li>
-<li>已发布的机器读取该”key”对应的value, 尝试强转成String,<br>反之亦然, 也会有 String类型无法被cast成Long类型的报错.</li>
-</ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在分布式环境下, 对remote cache的修改, 一定要注意兼容性:</p>
-<ul>
-<li>不止新版本旧版本的兼容性</li>
-<li>更要考虑到发布过程中新老机器, 针对同一个key的类型的兼容性.</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>java</tag>
-        <tag>cache</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记一次由于JVM优化导致异常堆栈丢失的问题</title>
-    <url>//2022-04-30-java-exception-stack-trace-missing/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>线上某次故障排查, 发现线上有异常, 但无堆栈信息.<br>实际查看打印异常的地方, 确实是会打印出堆栈的. 那么堆栈信息为啥会丢呢? </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassCastException</span><span class="token operator">:</span> <span class="token keyword">null</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="原因排查"><a href="#原因排查" class="headerlink" title="原因排查"></a>原因排查</h1><p>JVM默认会优化掉相同堆栈的信息:<br><a href="https://stackoverflow.com/questions/40502576/java-lang-classcastexception-with-null-message-and-cause">java.lang.ClassCastException with null message and cause</a></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
-<li>如 <a href="https://blog.csdn.net/lisheng19870305/article/details/106361875">“java.lang.ClassCastException: null”原因解决</a>, 针对如下类型的异常, JVM默认都会优化: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">NullPointerException</span>
-<span class="token class-name">ArrayIndexOutOfBoundsException</span>
-<span class="token class-name">ClassCastException</span>
-<span class="token class-name">ArrayIndexOutOfBoundsException</span>
-<span class="token class-name">ArrayStoreException</span>
-<span class="token class-name">ArithmeticException</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>以后错误日志最好保留时间长一点, 这样才能定位出异常首次出现的位置, 才能看到完整的堆栈信息. </li>
-<li>或者可以增加: <code>-XX:-OmitStackTraceInFastThrow</code> 参数来防止JVM优化.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>java</tag>
-        <tag>stacktrace</tag>
       </tags>
   </entry>
   <entry>
@@ -6666,6 +6611,37 @@ Shift + Ctrl + PrintScreen # 自由选取<span aria-hidden="true" class="line-nu
       </tags>
   </entry>
   <entry>
+    <title>记一次由于remoteCache类型不兼容修改导致的异常问题</title>
+    <url>//2022-04-30-cache-incompatible/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>进行Redis缓存升级改造, 缓存访问层统一进行了修改:<br>修改前代码如下, 按照Java原生序列化方式: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写缓存, Long类型</span>
+cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span> <span class="token number">123L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 读缓存, Long类型</span>
+<span class="token punctuation">(</span><span class="token class-name">Long</span><span class="token punctuation">)</span>cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>修改后代码如下, 统一按照String类型进行序列化&#x2F;反序列化:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写缓存, 转成String类型</span>
+cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span> <span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 读缓存, 获取String类型</span>
+<span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">)</span>cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>线上发布过程中报出异常, <code>ClassCastException</code>, Long类型无法被cast成String类型.<br>经分析, 由于是集群的环境, 发布过程中, 针对同一个”key”, </p>
+<ul>
+<li>未布机器写入的还是Long类型</li>
+<li>已发布的机器读取该”key”对应的value, 尝试强转成String,<br>反之亦然, 也会有 String类型无法被cast成Long类型的报错.</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在分布式环境下, 对remote cache的修改, 一定要注意兼容性:</p>
+<ul>
+<li>不止新版本旧版本的兼容性</li>
+<li>更要考虑到发布过程中新老机器, 针对同一个key的类型的兼容性.</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>java</tag>
+        <tag>cache</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>深度思考：不断逼近问题的本质 读后感</title>
     <url>//2022-05-03-Beyond-the-Label/</url>
     <content><![CDATA[<p>总体来说，鸡汤不少，但没啥干货，说的都是一些虚无缥缈且人尽皆知的大道理。</p>
@@ -6682,6 +6658,30 @@ Shift + Ctrl + PrintScreen # 自由选取<span aria-hidden="true" class="line-nu
       <tags>
         <tag>books</tag>
         <tag>2022</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次由于JVM优化导致异常堆栈丢失的问题</title>
+    <url>//2022-04-30-java-exception-stack-trace-missing/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>线上某次故障排查, 发现线上有异常, 但无堆栈信息.<br>实际查看打印异常的地方, 确实是会打印出堆栈的. 那么堆栈信息为啥会丢呢? </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>ClassCastException</span><span class="token operator">:</span> <span class="token keyword">null</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="原因排查"><a href="#原因排查" class="headerlink" title="原因排查"></a>原因排查</h1><p>JVM默认会优化掉相同堆栈的信息:<br><a href="https://stackoverflow.com/questions/40502576/java-lang-classcastexception-with-null-message-and-cause">java.lang.ClassCastException with null message and cause</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>如 <a href="https://blog.csdn.net/lisheng19870305/article/details/106361875">“java.lang.ClassCastException: null”原因解决</a>, 针对如下类型的异常, JVM默认都会优化: <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">NullPointerException</span>
+<span class="token class-name">ArrayIndexOutOfBoundsException</span>
+<span class="token class-name">ClassCastException</span>
+<span class="token class-name">ArrayIndexOutOfBoundsException</span>
+<span class="token class-name">ArrayStoreException</span>
+<span class="token class-name">ArithmeticException</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>以后错误日志最好保留时间长一点, 这样才能定位出异常首次出现的位置, 才能看到完整的堆栈信息. </li>
+<li>或者可以增加: <code>-XX:-OmitStackTraceInFastThrow</code> 参数来防止JVM优化.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>learn-from-failure</tag>
+        <tag>java</tag>
+        <tag>stacktrace</tag>
       </tags>
   </entry>
   <entry>
@@ -8512,6 +8512,239 @@ yum <span class="token function">install</span> bridge-utils -y<span aria-hidden
       </tags>
   </entry>
   <entry>
+    <title>Linux网络之原理探讨与疑问总结</title>
+    <url>//2022-06-29-linux-network-faq/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="网卡混杂模式"><a href="#网卡混杂模式" class="headerlink" title="网卡混杂模式"></a>网卡混杂模式</h2><ul>
+<li><p>啥是网卡混杂模式？</p>
+</li>
+<li><p>正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。</p>
+</li>
+<li><p>开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。</p>
+</li>
+<li><p>啥时候需要开启？</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO:</p>
+</li>
+<li><p>如何开启？</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 开启混杂模式
+<span class="token function">ifconfig</span> eth0 promisc
+// 取消混杂模式
+<span class="token function">ifconfig</span> eth0 -promisc
+// 内核判断网卡是否处于混杂模式是看如下标识，如果置位了0x100，则处于混杂模式
+<span class="token function">cat</span> /sys/class/net/eth0/flags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>是否开启了混杂模式，就能嗅探局域网（二层网）内的所有数据包了？</p>
+</li>
+<li><p>不一定。</p>
+</li>
+<li><p>针对二层如果是集线器模式，可以嗅探到。</p>
+</li>
+<li><p>但现在大部分二层都是交换机模式。即交换机会根据CAM表，往对应的端口转发，不会无脑地全部端口都转发，因此嗅探不到。</p>
+</li>
+<li><p>开启混杂模式的例子</p>
+</li>
+<li><p>如下，docker0网桥就开启了混杂模式。</p>
+</li>
+<li><p>&#x2F;&#x2F; TODO: 为啥docker0网桥开启混杂模式？具体怎么用的？</p>
+</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">cat</span> /sys/class/net/docker0/flags 
+0x1003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="路由器与NAT设备的关联与区别"><a href="#路由器与NAT设备的关联与区别" class="headerlink" title="路由器与NAT设备的关联与区别"></a>路由器与NAT设备的关联与区别</h2><h3 id="路由器工作原理："><a href="#路由器工作原理：" class="headerlink" title="路由器工作原理："></a>路由器工作原理：</h3><p>主要用来联通连个不同的网段，<mark>只修改sourceMac与targetMac，不修改sourceIp与targetIp</mark></p>
+<ol>
+<li>根据传入包指定的targetIp（传入包的MAC地址是路由器当前网卡的MAC地址，IP地址是真正的IP地址）</li>
+<li>查询自身路由表，查找到最近的下一跳的IP地址。<code>route -n</code></li>
+<li>再根据下一跳的IP地址，查找到对应的MAC地址。arp缓存表</li>
+<li>修改数据包的targetMAC地址为下一跳的MAC地址，sourceMAC为当前网卡出口的mac地址</li>
+<li>将数据包从对应网卡送出去。</li>
+</ol>
+<blockquote>
+<p>路由器的核心是路由表的维护，能生成最短最优路径。<br/><br>从sourceIp到targetIp的路由路径，很可能与回包，即从targetIp返回到sourceIp的路由路径不一样。<br>取决于当时的路径中路由器的路由表情况。</p>
+</blockquote>
+<h3 id="NAT工作原理："><a href="#NAT工作原理：" class="headerlink" title="NAT工作原理："></a>NAT工作原理：</h3><ul>
+<li><p>原理<br>需要修改sourceMac与targetMac。<br>同时如果是SNAT，则还要修改sourceIp。<br>如果是DNAT，则还要修改targetIp。</p>
+</li>
+<li><p>实现方式:<br>通过iptables可以设置nat表。<br>snat作用在postrouting阶段，dnat作用在prerouting阶段。<br>回包由内核的conntrack模块负责，不再由iptables负责。<br>详细参见 <a href="https://davyjones2010.github.io/2022-06-23-linux-network-nat">NAT之端口映射(PAT)原理总结&amp;实践</a></p>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>由此可知，家用的路由器，是附带了SNAT（也可以配置DNAT）功能的路由器。</p>
+<h2 id="ip-forwarding"><a href="#ip-forwarding" class="headerlink" title="ip_forwarding"></a>ip_forwarding</h2><h3 id="MAC地址匹配-但IP地址不匹配"><a href="#MAC地址匹配-但IP地址不匹配" class="headerlink" title="MAC地址匹配, 但IP地址不匹配"></a>MAC地址匹配, 但IP地址不匹配</h3><p>网卡会不会收到MAC地址与当前网卡MAC地址匹配, 但IP地址与当前网卡的IP不匹配的IP包?<br>具体咋处理? 直接丢弃? 还是可以使用?</p>
+<ul>
+<li>会收到。</li>
+<li>如果开启了ip_forwarding，则会进入FORWARD&#x2F;ROUTE阶段，查看本地 route 表，进入路由与postrouting阶段，找到对应的出口网卡，将包转发出去。与路由器的功能完全一致了。</li>
+<li>如果未开启ip_forwarding，则直接丢弃该包。</li>
+<li>所以，NAT模式下，必须要开启ip_forwarding。</li>
+</ul>
+<h3 id="iptables工作原理图"><a href="#iptables工作原理图" class="headerlink" title="iptables工作原理图"></a>iptables工作原理图</h3><p>此图摘自 <a href="https://wiki.archlinux.org/title/Iptables">Archlinux 文档</a></p>
+<pre class="line-numbers language-none"><code class="language-none">                               XXXXXXXXXXXXXXXXXX
+                             XXX     Network    XXX
+                               XXXXXXXXXXXXXXXXXX
+                                       +
+                                       |
+                                       v
+ +-------------+              +------------------+
+ |table: filter| &lt;---+        | table: nat&#x2F;dnat  |
+ |chain: INPUT |     |        | chain: PREROUTING|
+ +-----+-------+     |        +--------+---------+
+       |             |                 |
+       v             |                 v
+ [local process]     |           ****************          +--------------+
+       |             +---------+ Routing decision +------&gt; |table: filter |
+       v                         ****************          |chain: FORWARD|
+****************                                           +------+-------+
+Routing decision                                                  |
+****************                                                  |
+       |                                                          |
+       v                        ****************                  |
++-------------+       +------&gt;  Routing decision  &lt;---------------+
+|table: nat   |       |         ****************
+|chain: OUTPUT|       |               +
++-----+-------+       |               |
+      |               |               v
+      v               |      +-------------------+
++--------------+      |      | table: nat&#x2F;snat   |
+|table: filter | +----+      | chain: POSTROUTING|
+|chain: OUTPUT |             +--------+----------+
++--------------+                      |
+                                      v
+                               XXXXXXXXXXXXXXXXXX
+                             XXX    Network     XXX
+                               XXXXXXXXXXXXXXXXXX<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="为啥Linux默认不开启ip-forwarding"><a href="#为啥Linux默认不开启ip-forwarding" class="headerlink" title="为啥Linux默认不开启ip_forwarding?"></a>为啥Linux默认不开启ip_forwarding?</h3><p>因为在默认情况下，host只是扮演在网络中的一台主机的角色，根本不需要ip_forwarding的功能。</p>
+<blockquote>
+<p>A Linux machine acting as an ordinary host would not need to have IP forwarding enabled,<br>because it just generates and receives IP traffic for its own purposes</p>
+</blockquote>
+<h3 id="如何开启ip-forwarding"><a href="#如何开启ip-forwarding" class="headerlink" title="如何开启ip_forwarding?"></a>如何开启ip_forwarding?</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token number">1</span> <span class="token operator">></span> /proc/sys/net/ipv4/ip_forward<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>所以开启了ip_forwarding，相当于本机就具备一台路由器的能力了。<br/><br>如果再通过iptables配置了相应的nat规则，就相当于一台家用的路由器了。</p>
+<h2 id="本地多网卡curl公网地址问题"><a href="#本地多网卡curl公网地址问题" class="headerlink" title="本地多网卡curl公网地址问题"></a>本地多网卡curl公网地址问题</h2><ul>
+<li>如果本机有私网网卡virbr0, 公网网卡en0, 且开启了virbr0网段的SNAT规则. 则在本地curl公网地址, 则curl的出口网卡是啥? </li>
+<li>是通过virbr0, 然后走SNAT到en0出去么?</li>
+<li>还是直接通过en0出去?</li>
+</ul>
+<ol>
+<li><p>curl 支持指定出口网卡如下(实际只是使用了对应网卡的ip地址作为SIP): 如果不指定, 则使用默认网卡. </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// curl指定网卡出口
+<span class="token function">curl</span> --interface virbr0 http://www.baidu.com
+// mac上查看默认网卡: 
+route -n get <span class="token number">0.0</span>.0.0 <span class="token operator">|</span> <span class="token function">grep</span> interface<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>The –interface options is used to figure determine what address on the system will be used as the source IP. <br/><br>It doesn’t magically change anything about routing.</p>
+</blockquote>
+</li>
+<li><p>参见<a href="#iptables%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE">iptables工作原理图</a>, 可知从curl公网地址, 就是从local process出去, 接下来会走route, 即查看Host的路由表, 确定出口网卡与网关信息.</p>
+</li>
+<li><p>接下来进入postrouting(SNAT)阶段, 如果配置有SNAT规则, 且刚好命中, 则执行SNAT.</p>
+</li>
+<li><p>所以结论是出口网卡是en0, 而不会经过virbr0(即使指定了<code>--interface virbr0</code>).</p>
+</li>
+<li><p>是否会SNAT, 取决于是否指定了<code>--interface virbr0</code>, 指定了, 则会走SNAT; 未指定, 则不需要走SNAT.</p>
+</li>
+</ol>
+<h2 id="本地多网卡Java应用获取HostIp问题"><a href="#本地多网卡Java应用获取HostIp问题" class="headerlink" title="本地多网卡Java应用获取HostIp问题"></a>本地多网卡Java应用获取HostIp问题</h2><ul>
+<li>如果本机有多块网卡, 在Java中如何获取到这些IP地址? </li>
+<li>我们通常使用获取本机IP的方式如下: <mark>当Host多块网卡时, 不好兼容, 存在严重缺陷, 尤其是在线上服务器网卡堆叠场景下!</mark></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InetAddress</span> ip <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> hostname <span class="token operator">=</span> ip<span class="token punctuation">.</span><span class="token function">getHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>解决方案: </li>
+<li>方案1: 使用 <code>NetworkInterface.getNetworkInterfaces()</code> 接口, 获取所有网卡, 然后逐个获取IP信息.</li>
+<li>方案2: 获取本机的FQDN, 然后使用<code>InetAddress.getByName(FQDN)</code>来获取主网卡的IP信息.<ul>
+<li>本机的FQDN可以写在配置文件里.</li>
+</ul>
+</li>
+<li>Ref: <a href="https://crunchify.com/how-to-get-server-ip-address-and-hostname-in-java/">How to get Server IP Address and Hostname in Java</a></li>
+</ul>
+<h2 id="IP隧道"><a href="#IP隧道" class="headerlink" title="IP隧道"></a>IP隧道</h2><h2 id="LVS"><a href="#LVS" class="headerlink" title="LVS"></a>LVS</h2><h3 id="LVS-v-s-iptables-x2F-netfilters"><a href="#LVS-v-s-iptables-x2F-netfilters" class="headerlink" title="LVS v.s. iptables&#x2F;netfilters"></a>LVS v.s. iptables&#x2F;netfilters</h3><p>本质上, 两个都可以做四层的DNAT, 都是工作在内核空间. </p>
+<ul>
+<li>LVS: 更侧重于LoadBalancing, 实现上使用hash查表, 而不是iptables的顺序查询. 效率更高. </li>
+<li>iptables:</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png"></p>
+<ul>
+<li>可以看到, LVS本质上是与iptables配合使用</li>
+<li>客户访问虚拟 IP（VIP）时，数据包先在主机内核空间被 PREROUTING 链检测，根据数据包的目标地址进行路由判断，若目标地址是本地，则交由 INPUT 链进行处理。</li>
+<li>IPVS 工作于 INPUT 链，当数据包到达 INPUT 链时，会先由 IPVS 进行检查，并根据负载均衡算法选出真实服务器 IP。</li>
+<li>IPVS 转发模式为 NAT 模式时，将数据包由 FORWARD 链进行处理后由 POST-ROUTING 链发送给真实服务器。</li>
+<li>IPVS 转发模式为非 NAT 模式时，则将数据包由 POST-ROUTING 链发送给真实服务器。</li>
+</ul>
+<h3 id="LVS的几种模式分析"><a href="#LVS的几种模式分析" class="headerlink" title="LVS的几种模式分析"></a>LVS的几种模式分析</h3><p><a href="https://blog.csdn.net/Splend520/article/details/104587149">linux LVS负载均衡原理 NAT DR TUN FULLNAT 模式</a></p>
+<h4 id="LVS-NAT-–-gt-NAT-x2F-DNAT"><a href="#LVS-NAT-–-gt-NAT-x2F-DNAT" class="headerlink" title="LVS-NAT –&gt; NAT&#x2F;DNAT"></a>LVS-NAT –&gt; NAT&#x2F;DNAT</h4><p>本质是类似iptables的端口映射(PAT)–&gt; 注意这里全程没有DIP的参与.</p>
+<ul>
+<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
+<li>Client请求: {CIP, VIP}</li>
+<li>LVS映射: 修改目标IP, VIP-&gt;RIP, 构建新的请求: {CIP, RIP}</li>
+<li>Server处理: 完成后发送回包, {RIP, CIP}; 由于CIP与RIP不在同一个网段, 因此发送到网关(即LVS)</li>
+<li>LVS映射: 修改源IP, RIP-&gt;VIP, 构建新的响应: {VIP, CIP}</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052223099.png"></p>
+<ul>
+<li>缺点: <ul>
+<li>需要RS与DS在同一个二层网络里, 且需要把DS&#x2F;DIP配置为RS的网关.</li>
+</ul>
+</li>
+<li>优点: <ul>
+<li>&#x2F;&#x2F; TODO:</li>
+</ul>
+</li>
+</ul>
+<h4 id="LVS-NAT-–-gt-FullNAT"><a href="#LVS-NAT-–-gt-FullNAT" class="headerlink" title="LVS-NAT –&gt; FullNAT"></a>LVS-NAT –&gt; FullNAT</h4><ul>
+<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
+<li>Client请求: {CIP, VIP}</li>
+<li>LVS映射: 修改目标IP, VIP-&gt;RIP(RealServerIP); 修改源IP, CIP-&gt;DIP; 构建新的请求: {DIP, RIP}</li>
+<li>RealServer处理: 完成后发送回包, {RIP, DIP} (FullNAT模式, 不需要LVS必须是网关, 只要三层IP可达即可)</li>
+<li>LVS映射: 修改源IP, RIP-&gt;VIP; 通过conntrack查表, 修改目标IP, DIP-&gt;CIP; 构建新的响应: {VIP, CIP}</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052218872.png"></p>
+<ul>
+<li><p>注意: LVS 本身不支持 FULLNAT 模式，需要额外对内核打补丁后才能使用。</p>
+</li>
+<li><p>缺点: </p>
+<ul>
+<li>不管是请求数据包还是响应数据包，都要经过负载均衡器。但是响应数据包一般要比请求数据包大很多，这可能会成为系统的瓶颈。</li>
+</ul>
+</li>
+<li><p>优点:</p>
+<ul>
+<li>如上图, RealServer(DIP)不需要跟LVS在同一个网段, 只要IP包(三层路由)可达, 就能完成FullNAT</li>
+</ul>
+</li>
+</ul>
+<h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><h4 id="LVS-TUN"><a href="#LVS-TUN" class="headerlink" title="LVS-TUN"></a>LVS-TUN</h4><h4 id="实际"><a href="#实际" class="headerlink" title="实际"></a>实际</h4><ul>
+<li><a href="https://help.aliyun.com/document_detail/27544.html">阿里云CLB</a>使用的是哪种模式? NAT?<ul>
+<li>四层采用开源软件LVS（Linux Virtual Server）+ keepalived的方式实现负载均衡</li>
+<li>LVS应该使用的是NAT模式. 但如果是NAT模式, 则必须把LVS作为ECS的网关. &#x2F;&#x2F;TODO: 待验证</li>
+</ul>
+</li>
+</ul>
+<h1 id="HTTP-代理"><a href="#HTTP-代理" class="headerlink" title="HTTP 代理"></a>HTTP 代理</h1><h1 id="什么是”冷土豆路由”与”热土豆路由”"><a href="#什么是”冷土豆路由”与”热土豆路由”" class="headerlink" title="什么是”冷土豆路由”与”热土豆路由”?"></a>什么是”冷土豆路由”与”热土豆路由”?</h1><ul>
+<li>参见: <a href="https://docs.microsoft.com/zh-cn/azure/virtual-network/ip-services/routing-preference-overview">冷土豆路由&amp;热土豆路由</a></li>
+<li>热土豆:<ul>
+<li>入口流量: 如果来自新加坡的用户访问托管在芝加哥的 Azure 资源，则流量将通过公共 Internet 传输，并进入芝加哥的 Microsoft 全球网络。</li>
+<li>出口流量: 出口流量遵循相同的原则。 流量会在托管服务的同一区域退出 Microsoft 网络。 例如，如果来自 Azure 芝加哥服务的流量最终传输给来自新加坡的用户，流量将离开芝加哥的 Microsoft 网络，并通过公共 Internet 传输给新加坡的用户。</li>
+</ul>
+</li>
+<li>冷土豆:<ul>
+<li>入口流量: 如果来自新加坡的用户访问托管在美国芝加哥的 Azure 资源，则流量将进入位于新加坡 Edge POP 的 Microsoft 全球网络，并通过 Microsoft 网络传输到托管在芝加哥的服务。</li>
+<li>出口流量: 如果来自 Azure 芝加哥的流量最终传输给来自新加坡的用户，那么流量就会通过 Microsoft 网络从芝加哥传输到新加坡，并退出位于新加坡 Edge POP 的 Microsoft 网络。</li>
+</ul>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>iaas</tag>
+        <tag>network</tag>
+        <tag>cloud-computing</tag>
+        <tag>nat</tag>
+        <tag>pat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常用的Linux命令之网络相关命令</title>
     <url>//2022-06-25-linux-network-scripts/</url>
     <content><![CDATA[<h1 id="ARP协议"><a href="#ARP协议" class="headerlink" title="ARP协议"></a>ARP协议</h1><h2 id="查看ARP缓存表"><a href="#查看ARP缓存表" class="headerlink" title="查看ARP缓存表"></a>查看ARP缓存表</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~/PlayGround/nat$ arp -v
@@ -8832,236 +9065,180 @@ rtt min/avg/max/mdev <span class="token operator">=</span> <span class="token nu
       </tags>
   </entry>
   <entry>
-    <title>Linux网络之原理探讨与疑问总结</title>
-    <url>//2022-06-29-linux-network-faq/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="网卡混杂模式"><a href="#网卡混杂模式" class="headerlink" title="网卡混杂模式"></a>网卡混杂模式</h2><ul>
-<li><p>啥是网卡混杂模式？</p>
-</li>
-<li><p>正常情况下，在网卡收到二层帧之后，会查看TargetMac是否与自身的Mac地址相同，如果不同，则丢弃该帧。</p>
-</li>
-<li><p>开启了混杂模式之后，即使MAC地址不匹配，也不会丢弃。还是会进入TCP&#x2F;IP协议栈处理。</p>
-</li>
-<li><p>啥时候需要开启？</p>
-</li>
-<li><p>&#x2F;&#x2F; TODO:</p>
-</li>
-<li><p>如何开启？</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 开启混杂模式
-<span class="token function">ifconfig</span> eth0 promisc
-// 取消混杂模式
-<span class="token function">ifconfig</span> eth0 -promisc
-// 内核判断网卡是否处于混杂模式是看如下标识，如果置位了0x100，则处于混杂模式
-<span class="token function">cat</span> /sys/class/net/eth0/flags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>是否开启了混杂模式，就能嗅探局域网（二层网）内的所有数据包了？</p>
-</li>
-<li><p>不一定。</p>
-</li>
-<li><p>针对二层如果是集线器模式，可以嗅探到。</p>
-</li>
-<li><p>但现在大部分二层都是交换机模式。即交换机会根据CAM表，往对应的端口转发，不会无脑地全部端口都转发，因此嗅探不到。</p>
-</li>
-<li><p>开启混杂模式的例子</p>
-</li>
-<li><p>如下，docker0网桥就开启了混杂模式。</p>
-</li>
-<li><p>&#x2F;&#x2F; TODO: 为啥docker0网桥开启混杂模式？具体怎么用的？</p>
-</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">cat</span> /sys/class/net/docker0/flags 
-0x1003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+    <title>Java&amp;JVM&amp;OQL&amp;MVN 常用命令与脚本总结</title>
+    <url>//2022-07-01-java-jvm/</url>
+    <content><![CDATA[<h1 id="Java-amp-JVM"><a href="#Java-amp-JVM" class="headerlink" title="Java&amp;JVM"></a>Java&amp;JVM</h1><h2 id="打-HeapDump"><a href="#打-HeapDump" class="headerlink" title="打 HeapDump"></a>打 HeapDump</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jmap -dump:live,file<span class="token operator">=</span>heapdump.phrof <span class="token variable">$pid</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="路由器与NAT设备的关联与区别"><a href="#路由器与NAT设备的关联与区别" class="headerlink" title="路由器与NAT设备的关联与区别"></a>路由器与NAT设备的关联与区别</h2><h3 id="路由器工作原理："><a href="#路由器工作原理：" class="headerlink" title="路由器工作原理："></a>路由器工作原理：</h3><p>主要用来联通连个不同的网段，<mark>只修改sourceMac与targetMac，不修改sourceIp与targetIp</mark></p>
+<p>或者</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jmap -dump:live,file<span class="token operator">=</span>heapdump.phrof -F <span class="token variable">$pid</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>一般情况下，<mark>尽量不要使用-F参数。</mark> 因为-F使用的是Linux操作系统层面的实现，而不是JVM层面的实现，会导致 打印堆信息很慢。<br/><br>如果提示第一种方式打印不出来堆的信息，需要增加-F，那么可以先检查下：</p>
 <ol>
-<li>根据传入包指定的targetIp（传入包的MAC地址是路由器当前网卡的MAC地址，IP地址是真正的IP地址）</li>
-<li>查询自身路由表，查找到最近的下一跳的IP地址。<code>route -n</code></li>
-<li>再根据下一跳的IP地址，查找到对应的MAC地址。arp缓存表</li>
-<li>修改数据包的targetMAC地址为下一跳的MAC地址，sourceMAC为当前网卡出口的mac地址</li>
-<li>将数据包从对应网卡送出去。</li>
+<li>Java应用进程的user_name是否与当前的user_name相同？ 如果不同，需要切换为同一个账号。</li>
+<li>Java应用进程的Java路径是否与当前jmap命令的路径相同？ 如果不同，需要切换为同一个路径。</li>
 </ol>
-<blockquote>
-<p>路由器的核心是路由表的维护，能生成最短最优路径。<br/><br>从sourceIp到targetIp的路由路径，很可能与回包，即从targetIp返回到sourceIp的路由路径不一样。<br>取决于当时的路径中路由器的路由表情况。</p>
 </blockquote>
-<h3 id="NAT工作原理："><a href="#NAT工作原理：" class="headerlink" title="NAT工作原理："></a>NAT工作原理：</h3><ul>
-<li><p>原理<br>需要修改sourceMac与targetMac。<br>同时如果是SNAT，则还要修改sourceIp。<br>如果是DNAT，则还要修改targetIp。</p>
-</li>
-<li><p>实现方式:<br>通过iptables可以设置nat表。<br>snat作用在postrouting阶段，dnat作用在prerouting阶段。<br>回包由内核的conntrack模块负责，不再由iptables负责。<br>详细参见 <a href="https://davyjones2010.github.io/2022-06-23-linux-network-nat">NAT之端口映射(PAT)原理总结&amp;实践</a></p>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>由此可知，家用的路由器，是附带了SNAT（也可以配置DNAT）功能的路由器。</p>
-<h2 id="ip-forwarding"><a href="#ip-forwarding" class="headerlink" title="ip_forwarding"></a>ip_forwarding</h2><h3 id="MAC地址匹配-但IP地址不匹配"><a href="#MAC地址匹配-但IP地址不匹配" class="headerlink" title="MAC地址匹配, 但IP地址不匹配"></a>MAC地址匹配, 但IP地址不匹配</h3><p>网卡会不会收到MAC地址与当前网卡MAC地址匹配, 但IP地址与当前网卡的IP不匹配的IP包?<br>具体咋处理? 直接丢弃? 还是可以使用?</p>
-<ul>
-<li>会收到。</li>
-<li>如果开启了ip_forwarding，则会进入FORWARD&#x2F;ROUTE阶段，查看本地 route 表，进入路由与postrouting阶段，找到对应的出口网卡，将包转发出去。与路由器的功能完全一致了。</li>
-<li>如果未开启ip_forwarding，则直接丢弃该包。</li>
-<li>所以，NAT模式下，必须要开启ip_forwarding。</li>
-</ul>
-<h3 id="iptables工作原理图"><a href="#iptables工作原理图" class="headerlink" title="iptables工作原理图"></a>iptables工作原理图</h3><p>此图摘自 <a href="https://wiki.archlinux.org/title/Iptables">Archlinux 文档</a></p>
-<pre class="line-numbers language-none"><code class="language-none">                               XXXXXXXXXXXXXXXXXX
-                             XXX     Network    XXX
-                               XXXXXXXXXXXXXXXXXX
-                                       +
-                                       |
-                                       v
- +-------------+              +------------------+
- |table: filter| &lt;---+        | table: nat&#x2F;dnat  |
- |chain: INPUT |     |        | chain: PREROUTING|
- +-----+-------+     |        +--------+---------+
-       |             |                 |
-       v             |                 v
- [local process]     |           ****************          +--------------+
-       |             +---------+ Routing decision +------&gt; |table: filter |
-       v                         ****************          |chain: FORWARD|
-****************                                           +------+-------+
-Routing decision                                                  |
-****************                                                  |
-       |                                                          |
-       v                        ****************                  |
-+-------------+       +------&gt;  Routing decision  &lt;---------------+
-|table: nat   |       |         ****************
-|chain: OUTPUT|       |               +
-+-----+-------+       |               |
-      |               |               v
-      v               |      +-------------------+
-+--------------+      |      | table: nat&#x2F;snat   |
-|table: filter | +----+      | chain: POSTROUTING|
-|chain: OUTPUT |             +--------+----------+
-+--------------+                      |
-                                      v
-                               XXXXXXXXXXXXXXXXXX
-                             XXX    Network     XXX
-                               XXXXXXXXXXXXXXXXXX<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="打-ThreadDump"><a href="#打-ThreadDump" class="headerlink" title="打 ThreadDump"></a>打 ThreadDump</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jstack <span class="token variable">$pid</span> <span class="token operator">></span> tmp.jstack<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="为啥Linux默认不开启ip-forwarding"><a href="#为啥Linux默认不开启ip-forwarding" class="headerlink" title="为啥Linux默认不开启ip_forwarding?"></a>为啥Linux默认不开启ip_forwarding?</h3><p>因为在默认情况下，host只是扮演在网络中的一台主机的角色，根本不需要ip_forwarding的功能。</p>
 <blockquote>
-<p>A Linux machine acting as an ordinary host would not need to have IP forwarding enabled,<br>because it just generates and receives IP traffic for its own purposes</p>
+<p>注意: 当CPU利用率高或者想看下线程卡在哪里时，<mark>最好隔几秒就打一个线程栈，每个线程栈都保留下来</mark> <br/><br>多个线程栈对比起来看，会更能更好地发现问题。</p>
 </blockquote>
-<h3 id="如何开启ip-forwarding"><a href="#如何开启ip-forwarding" class="headerlink" title="如何开启ip_forwarding?"></a>如何开启ip_forwarding?</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token number">1</span> <span class="token operator">></span> /proc/sys/net/ipv4/ip_forward<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>所以开启了ip_forwarding，相当于本机就具备一台路由器的能力了。<br/><br>如果再通过iptables配置了相应的nat规则，就相当于一台家用的路由器了。</p>
-<h2 id="本地多网卡curl公网地址问题"><a href="#本地多网卡curl公网地址问题" class="headerlink" title="本地多网卡curl公网地址问题"></a>本地多网卡curl公网地址问题</h2><ul>
-<li>如果本机有私网网卡virbr0, 公网网卡en0, 且开启了virbr0网段的SNAT规则. 则在本地curl公网地址, 则curl的出口网卡是啥? </li>
-<li>是通过virbr0, 然后走SNAT到en0出去么?</li>
-<li>还是直接通过en0出去?</li>
-</ul>
+<h2 id="查看消耗CPU时间片最多的线程信息"><a href="#查看消耗CPU时间片最多的线程信息" class="headerlink" title="查看消耗CPU时间片最多的线程信息"></a>查看消耗CPU时间片最多的线程信息</h2><p>需要与ThreadDump一起使用，才能定位到具体是Java中哪个线程。</p>
 <ol>
-<li><p>curl 支持指定出口网卡如下(实际只是使用了对应网卡的ip地址作为SIP): 如果不指定, 则使用默认网卡. </p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// curl指定网卡出口
-<span class="token function">curl</span> --interface virbr0 http://www.baidu.com
-// mac上查看默认网卡: 
-route -n get <span class="token number">0.0</span>.0.0 <span class="token operator">|</span> <span class="token function">grep</span> interface<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>The –interface options is used to figure determine what address on the system will be used as the source IP. <br/><br>It doesn’t magically change anything about routing.</p>
-</blockquote>
-</li>
-<li><p>参见<a href="#iptables%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%9B%BE">iptables工作原理图</a>, 可知从curl公网地址, 就是从local process出去, 接下来会走route, 即查看Host的路由表, 确定出口网卡与网关信息.</p>
-</li>
-<li><p>接下来进入postrouting(SNAT)阶段, 如果配置有SNAT规则, 且刚好命中, 则执行SNAT.</p>
-</li>
-<li><p>所以结论是出口网卡是en0, 而不会经过virbr0(即使指定了<code>--interface virbr0</code>).</p>
-</li>
-<li><p>是否会SNAT, 取决于是否指定了<code>--interface virbr0</code>, 指定了, 则会走SNAT; 未指定, 则不需要走SNAT.</p>
-</li>
+<li>查看消耗cpu时间片最多的进程号<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 查看瞬时消耗CPU，倒序排列
+<span class="token function">top</span> -o %CPU
+// 查看累计消耗CPU时间片，倒序排列
+<span class="token function">top</span> -o TIME+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
-<h2 id="本地多网卡Java应用获取HostIp问题"><a href="#本地多网卡Java应用获取HostIp问题" class="headerlink" title="本地多网卡Java应用获取HostIp问题"></a>本地多网卡Java应用获取HostIp问题</h2><ul>
-<li>如果本机有多块网卡, 在Java中如何获取到这些IP地址? </li>
-<li>我们通常使用获取本机IP的方式如下: <mark>当Host多块网卡时, 不好兼容, 存在严重缺陷, 尤其是在线上服务器网卡堆叠场景下!</mark></li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InetAddress</span> ip <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> hostname <span class="token operator">=</span> ip<span class="token punctuation">.</span><span class="token function">getHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">top</span> -o %CPU
+<span class="token function">top</span> - <span class="token number">21</span>:39:35 up <span class="token number">10</span>:52,  <span class="token number">1</span> user,  load average: <span class="token number">1.47</span>, <span class="token number">1.36</span>, <span class="token number">1.14</span>
+Tasks: <span class="token number">325</span> total,   <span class="token number">4</span> running, <span class="token number">320</span> sleeping,   <span class="token number">0</span> stopped,   <span class="token number">1</span> zombie
+%Cpu0  <span class="token builtin class-name">:</span>  <span class="token number">8.2</span> us,  <span class="token number">4.1</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">87.4</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.3</span> si,  <span class="token number">0.0</span> st
+%Cpu1  <span class="token builtin class-name">:</span>  <span class="token number">7.5</span> us,  <span class="token number">3.8</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">88.7</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.0</span> si,  <span class="token number">0.0</span> st
+%Cpu2  <span class="token builtin class-name">:</span> <span class="token number">11.6</span> us,  <span class="token number">2.7</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">85.4</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.3</span> si,  <span class="token number">0.0</span> st
+%Cpu3  <span class="token builtin class-name">:</span>  <span class="token number">8.4</span> us,  <span class="token number">3.0</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">88.6</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.0</span> si,  <span class="token number">0.0</span> st
+MiB Mem <span class="token builtin class-name">:</span>   <span class="token number">7823.4</span> total,    <span class="token number">172.0</span> free,   <span class="token number">5254.4</span> used,   <span class="token number">2397.0</span> buff/cache
+MiB Swap:   <span class="token number">2048.0</span> total,    <span class="token number">252.2</span> free,   <span class="token number">1795.7</span> used.   <span class="token number">1107.3</span> avail Mem 
+
+    PID <span class="token environment constant">USER</span>      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                      
+   <span class="token number">2318</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">5178536</span> <span class="token number">247920</span>  <span class="token number">52372</span> R  <span class="token number">12.5</span>   <span class="token number">3.1</span>  <span class="token number">24</span>:33.00 gnome-shell                                  
+   <span class="token number">2099</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">1008428</span> <span class="token number">112204</span>  <span class="token number">78172</span> R  <span class="token number">11.2</span>   <span class="token number">1.4</span>  <span class="token number">23</span>:31.71 Xorg                                         
+   <span class="token number">6521</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span>  <span class="token number">868244</span>  <span class="token number">35580</span>  <span class="token number">23924</span> R   <span class="token number">5.9</span>   <span class="token number">0.4</span>   <span class="token number">0</span>:38.61 gnome-terminal-                              
+   <span class="token number">5308</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">6370752</span> <span class="token number">517952</span> <span class="token number">219108</span> S   <span class="token number">2.6</span>   <span class="token number">6.5</span>  <span class="token number">39</span>:38.79 firefox                                      <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>查看进程下消耗时间片最多的线程号</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">top</span> -Hp <span class="token variable">$pid</span> -o %CPU
+<span class="token function">top</span> -Hp <span class="token variable">$pid</span> -o TIME+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">top</span> -Hp <span class="token number">2318</span>
+<span class="token function">top</span> - <span class="token number">21</span>:42:00 up <span class="token number">10</span>:55,  <span class="token number">1</span> user,  load average: <span class="token number">1.08</span>, <span class="token number">1.38</span>, <span class="token number">1.19</span>
+Threads:  <span class="token number">15</span> total,   <span class="token number">0</span> running,  <span class="token number">15</span> sleeping,   <span class="token number">0</span> stopped,   <span class="token number">0</span> zombie
+%Cpu<span class="token punctuation">(</span>s<span class="token punctuation">)</span>:  <span class="token number">5.7</span> us,  <span class="token number">1.9</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">92.3</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.1</span> si,  <span class="token number">0.0</span> st
+MiB Mem <span class="token builtin class-name">:</span>   <span class="token number">7823.4</span> total,    <span class="token number">158.1</span> free,   <span class="token number">5264.5</span> used,   <span class="token number">2400.9</span> buff/cache
+MiB Swap:   <span class="token number">2048.0</span> total,    <span class="token number">250.8</span> free,   <span class="token number">1797.2</span> used.   <span class="token number">1092.3</span> avail Mem 
+
+    PID <span class="token environment constant">USER</span>      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                      
+   <span class="token number">2318</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">5178588</span> <span class="token number">247724</span>  <span class="token number">52288</span> S   <span class="token number">5.7</span>   <span class="token number">3.1</span>  <span class="token number">24</span>:28.42 gnome-shell                                  
+   <span class="token number">2331</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">5178588</span> <span class="token number">247724</span>  <span class="token number">52288</span> S   <span class="token number">0.0</span>   <span class="token number">3.1</span>   <span class="token number">0</span>:00.34 gmain                                        
+   <span class="token number">2335</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">5178588</span> <span class="token number">247724</span>  <span class="token number">52288</span> S   <span class="token number">0.0</span>   <span class="token number">3.1</span>   <span class="token number">0</span>:11.10 gdbus                                        <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>将10进制转成16进制<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">printf</span> <span class="token string">'%x\n'</span> <span class="token environment constant">$PPID</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// <span class="token number">10</span>进制转成16进制
+davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token builtin class-name">printf</span> <span class="token string">'%x\n'</span> <span class="token number">2318</span>
+90e
+
+// <span class="token number">16</span>进制转成10进制
+davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token builtin class-name">printf</span> <span class="token string">'%d\n'</span> 0x90e
+<span class="token number">2318</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="4">
+<li>查看jstack中对应的线程信息</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">fgrep</span> <span class="token string">"0x90e"</span> tmp.jstack -C <span class="token number">50</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="查看JVM默认HeapSize"><a href="#查看JVM默认HeapSize" class="headerlink" title="查看JVM默认HeapSize"></a>查看JVM默认HeapSize</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">java -XX:+PrintFlagsFinal -version <span class="token operator">|</span> <span class="token function">fgrep</span> HeapSize
+// 查看java_home, class_path等默认配置与系统环境变量
+java -XshowSettings:all<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ul>
-<li>解决方案: </li>
-<li>方案1: 使用 <code>NetworkInterface.getNetworkInterfaces()</code> 接口, 获取所有网卡, 然后逐个获取IP信息.</li>
-<li>方案2: 获取本机的FQDN, 然后使用<code>InetAddress.getByName(FQDN)</code>来获取主网卡的IP信息.<ul>
-<li>本机的FQDN可以写在配置文件里.</li>
+<li>如下，默认HeapSize为130023424&#x2F;1024&#x2F;1024&#x3D;124MB<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ java -XX:+PrintFlagsFinal -version <span class="token operator">|</span> <span class="token function">fgrep</span> HeapSize
+    uintx ErgoHeapSizeLimit                         <span class="token operator">=</span> <span class="token number">0</span>                                   <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
+    uintx HeapSizePerGCThread                       <span class="token operator">=</span> <span class="token number">87241520</span>                            <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
+    uintx InitialHeapSize                          :<span class="token operator">=</span> <span class="token number">130023424</span>                           <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
+    uintx LargePageHeapSizeThreshold                <span class="token operator">=</span> <span class="token number">134217728</span>                           <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
+    uintx MaxHeapSize                              :<span class="token operator">=</span> <span class="token number">2051014656</span>                          <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
+openjdk version <span class="token string">"1.8.0_312"</span>
+OpenJDK Runtime Environment <span class="token punctuation">(</span>build <span class="token number">1.8</span>.0_312-8u312-b07-0ubuntu1~20.04-b07<span class="token punctuation">)</span>
+OpenJDK <span class="token number">64</span>-Bit Server VM <span class="token punctuation">(</span>build <span class="token number">25.312</span>-b07, mixed mode<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ java -XshowSettings:all
+VM settings:
+    Max. Heap Size <span class="token punctuation">(</span>Estimated<span class="token punctuation">)</span>: <span class="token number">1</span>.70G
+    Ergonomics Machine Class: server
+    Using VM: OpenJDK <span class="token number">64</span>-Bit Server VM
+
+Property settings:
+    awt.toolkit <span class="token operator">=</span> sun.awt.X11.XToolkit
+    file.encoding <span class="token operator">=</span> UTF-8
+    file.encoding.pkg <span class="token operator">=</span> sun.io<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="OQL"><a href="#OQL" class="headerlink" title="OQL"></a>OQL</h1><ul>
+<li><p><a href="https://wiki.eclipse.org/MemoryAnalyzer/OQL">如何使用OQL</a></p>
 </li>
-<li>Ref: <a href="https://crunchify.com/how-to-get-server-ip-address-and-hostname-in-java/">How to get Server IP Address and Hostname in Java</a></li>
-</ul>
-<h2 id="IP隧道"><a href="#IP隧道" class="headerlink" title="IP隧道"></a>IP隧道</h2><h2 id="LVS"><a href="#LVS" class="headerlink" title="LVS"></a>LVS</h2><h3 id="LVS-v-s-iptables-x2F-netfilters"><a href="#LVS-v-s-iptables-x2F-netfilters" class="headerlink" title="LVS v.s. iptables&#x2F;netfilters"></a>LVS v.s. iptables&#x2F;netfilters</h3><p>本质上, 两个都可以做四层的DNAT, 都是工作在内核空间. </p>
-<ul>
-<li>LVS: 更侧重于LoadBalancing, 实现上使用hash查表, 而不是iptables的顺序查询. 效率更高. </li>
-<li>iptables:</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207042336674.png"></p>
-<ul>
-<li>可以看到, LVS本质上是与iptables配合使用</li>
-<li>客户访问虚拟 IP（VIP）时，数据包先在主机内核空间被 PREROUTING 链检测，根据数据包的目标地址进行路由判断，若目标地址是本地，则交由 INPUT 链进行处理。</li>
-<li>IPVS 工作于 INPUT 链，当数据包到达 INPUT 链时，会先由 IPVS 进行检查，并根据负载均衡算法选出真实服务器 IP。</li>
-<li>IPVS 转发模式为 NAT 模式时，将数据包由 FORWARD 链进行处理后由 POST-ROUTING 链发送给真实服务器。</li>
-<li>IPVS 转发模式为非 NAT 模式时，则将数据包由 POST-ROUTING 链发送给真实服务器。</li>
-</ul>
-<h3 id="LVS的几种模式分析"><a href="#LVS的几种模式分析" class="headerlink" title="LVS的几种模式分析"></a>LVS的几种模式分析</h3><p><a href="https://blog.csdn.net/Splend520/article/details/104587149">linux LVS负载均衡原理 NAT DR TUN FULLNAT 模式</a></p>
-<h4 id="LVS-NAT-–-gt-NAT-x2F-DNAT"><a href="#LVS-NAT-–-gt-NAT-x2F-DNAT" class="headerlink" title="LVS-NAT –&gt; NAT&#x2F;DNAT"></a>LVS-NAT –&gt; NAT&#x2F;DNAT</h4><p>本质是类似iptables的端口映射(PAT)–&gt; 注意这里全程没有DIP的参与.</p>
-<ul>
-<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
-<li>Client请求: {CIP, VIP}</li>
-<li>LVS映射: 修改目标IP, VIP-&gt;RIP, 构建新的请求: {CIP, RIP}</li>
-<li>Server处理: 完成后发送回包, {RIP, CIP}; 由于CIP与RIP不在同一个网段, 因此发送到网关(即LVS)</li>
-<li>LVS映射: 修改源IP, RIP-&gt;VIP, 构建新的响应: {VIP, CIP}</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052223099.png"></p>
-<ul>
-<li>缺点: <ul>
-<li>需要RS与DS在同一个二层网络里, 且需要把DS&#x2F;DIP配置为RS的网关.</li>
-</ul>
+<li><p>查询某规格类的对象</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li>优点: <ul>
-<li>&#x2F;&#x2F; TODO:</li>
-</ul>
+<li><p>查询对象某个属性(这里只能根据类, 查到该类下所有对象的属性)</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> t<span class="token punctuation">.</span>initd<span class="token punctuation">,</span> t<span class="token punctuation">.</span>initAsyn<span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>publicCloud<span class="token punctuation">)</span><span class="token punctuation">,</span> namespace<span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>regionId<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>useNuwa<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>nuwaConfigDns<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>nuwaCluster<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>rootPath<span class="token punctuation">)</span> <span class="token keyword">FROM</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-</ul>
-<h4 id="LVS-NAT-–-gt-FullNAT"><a href="#LVS-NAT-–-gt-FullNAT" class="headerlink" title="LVS-NAT –&gt; FullNAT"></a>LVS-NAT –&gt; FullNAT</h4><ul>
-<li>LVS本身有两个IP, 对外是VIP, 对内是DIP(Director IP)</li>
-<li>Client请求: {CIP, VIP}</li>
-<li>LVS映射: 修改目标IP, VIP-&gt;RIP(RealServerIP); 修改源IP, CIP-&gt;DIP; 构建新的请求: {DIP, RIP}</li>
-<li>RealServer处理: 完成后发送回包, {RIP, DIP} (FullNAT模式, 不需要LVS必须是网关, 只要三层IP可达即可)</li>
-<li>LVS映射: 修改源IP, RIP-&gt;VIP; 通过conntrack查表, 修改目标IP, DIP-&gt;CIP; 构建新的响应: {VIP, CIP}</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207052218872.png"></p>
-<ul>
-<li><p>注意: LVS 本身不支持 FULLNAT 模式，需要额外对内核打补丁后才能使用。</p>
+<li><p>查询对象某个属性(如何根据对象ID, 精确查询到该对象的某些属性?)</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> t<span class="token punctuation">.</span>initd<span class="token punctuation">,</span> t<span class="token punctuation">.</span>initAsyn<span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>publicCloud<span class="token punctuation">)</span><span class="token punctuation">,</span> namespace<span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>regionId<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>useNuwa<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>nuwaConfigDns<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>nuwaCluster<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>rootPath<span class="token punctuation">)</span> <span class="token keyword">FROM</span> OBJECTS <span class="token number">0x7480633e0</span> t<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>缺点: </p>
-<ul>
-<li>不管是请求数据包还是响应数据包，都要经过负载均衡器。但是响应数据包一般要比请求数据包大很多，这可能会成为系统的瓶颈。</li>
-</ul>
+<li><p>根据类的hash地址, 获取对应实例</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> instanceof <span class="token number">0x733ccc9f0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>优点:</p>
-<ul>
-<li>如上图, RealServer(DIP)不需要跟LVS在同一个网段, 只要IP包(三层路由)可达, 就能完成FullNAT</li>
-</ul>
+<li><p>根据对象hash值获取对象信息</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span>  OBJECTS <span class="token number">0xdc2819e0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
+<li><p>根据条件筛选出对象信息</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t <span class="token keyword">where</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>hostType<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"ddh.ebmec3metest"</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t <span class="token keyword">where</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"28745-27"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 </ul>
-<h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><h4 id="LVS-TUN"><a href="#LVS-TUN" class="headerlink" title="LVS-TUN"></a>LVS-TUN</h4><h4 id="实际"><a href="#实际" class="headerlink" title="实际"></a>实际</h4><ul>
-<li><a href="https://help.aliyun.com/document_detail/27544.html">阿里云CLB</a>使用的是哪种模式? NAT?<ul>
-<li>四层采用开源软件LVS（Linux Virtual Server）+ keepalived的方式实现负载均衡</li>
-<li>LVS应该使用的是NAT模式. 但如果是NAT模式, 则必须把LVS作为ECS的网关. &#x2F;&#x2F;TODO: 待验证</li>
-</ul>
+<h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><ul>
+<li><p>下载源代码. 有时候IDE无法自动下载jar包的源代码, 此时使用如下命令就能下载</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn dependency:sources<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-</ul>
-<h1 id="HTTP-代理"><a href="#HTTP-代理" class="headerlink" title="HTTP 代理"></a>HTTP 代理</h1><h1 id="什么是”冷土豆路由”与”热土豆路由”"><a href="#什么是”冷土豆路由”与”热土豆路由”" class="headerlink" title="什么是”冷土豆路由”与”热土豆路由”?"></a>什么是”冷土豆路由”与”热土豆路由”?</h1><ul>
-<li>参见: <a href="https://docs.microsoft.com/zh-cn/azure/virtual-network/ip-services/routing-preference-overview">冷土豆路由&amp;热土豆路由</a></li>
-<li>热土豆:<ul>
-<li>入口流量: 如果来自新加坡的用户访问托管在芝加哥的 Azure 资源，则流量将通过公共 Internet 传输，并进入芝加哥的 Microsoft 全球网络。</li>
-<li>出口流量: 出口流量遵循相同的原则。 流量会在托管服务的同一区域退出 Microsoft 网络。 例如，如果来自 Azure 芝加哥服务的流量最终传输给来自新加坡的用户，流量将离开芝加哥的 Microsoft 网络，并通过公共 Internet 传输给新加坡的用户。</li>
-</ul>
+<li><p>编译源码.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean compile -DskipTests<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li>冷土豆:<ul>
-<li>入口流量: 如果来自新加坡的用户访问托管在美国芝加哥的 Azure 资源，则流量将进入位于新加坡 Edge POP 的 Microsoft 全球网络，并通过 Microsoft 网络传输到托管在芝加哥的服务。</li>
-<li>出口流量: 如果来自 Azure 芝加哥的流量最终传输给来自新加坡的用户，那么流量就会通过 Microsoft 网络从芝加哥传输到新加坡，并退出位于新加坡 Edge POP 的 Microsoft 网络。</li>
-</ul>
+<li><p>编译源码, 且把编译的jar包等产物安装到本地Repo中.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean <span class="token function">install</span> -DskipTests<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
+<li><p>强制重新下载SNAPSHOT包</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean compile -U<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>不再联网下载依赖, 即offline mode</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 先验证所有依赖都下载到了本地</span>
+<span class="token comment"># mvn dependency:go-offline</span>
+
+<span class="token comment"># 2. 再执行如下命令, 开启offline编译模式</span>
+<span class="token comment"># mvn -o install</span>
+<span class="token comment"># mvn -offline install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>依赖解析相关</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 把依赖树打印出来</span>
+<span class="token comment"># mvn dependency:tree</span>
+
+<span class="token comment"># 分析无用的依赖</span>
+<span class="token comment"># mvn dependency: analyze</span>
+
+<span class="token comment"># 分析重复的依赖</span>
+<span class="token comment"># mvn dependency:analyze-duplicate</span>
+
+<span class="token comment"># 当使用shell脚本执行jar命令启动项目时, 需要把项目依赖的jar包都放到classpath参数下. </span>
+<span class="token comment"># 但人肉一个一个加很麻烦, 执行这个命令就把所有jar包全路径都拼接打印出来. </span>
+<span class="token comment"># mvn dependency:build-classpath</span>
+
+<span class="token comment"># 把所有解析好的依赖, 平铺打印</span>
+<span class="token comment"># mvn dependency:resolve</span>
+
+<span class="token comment"># 列出所有配置好的remote repo</span>
+<span class="token comment"># mvn dependency:list-repositories</span>
+
+<span class="token comment"># 把项目所有依赖的jar包都拷贝到目标目录下</span>
+<span class="token comment"># mvn dependency:copy-dependencies -DoutputDirectory="~/lib/"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>linux</tag>
-        <tag>iaas</tag>
-        <tag>network</tag>
-        <tag>cloud-computing</tag>
-        <tag>nat</tag>
-        <tag>pat</tag>
+        <tag>java</tag>
+        <tag>code-snippets</tag>
+        <tag>jvm</tag>
       </tags>
   </entry>
   <entry>
@@ -9358,183 +9535,6 @@ route -n get <span class="token number">0.0</span>.0.0 <span class="token operat
         <tag>bad-design</tag>
         <tag>state-machine</tag>
         <tag>lock</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java&amp;JVM&amp;OQL&amp;MVN 常用命令与脚本总结</title>
-    <url>//2022-07-01-java-jvm/</url>
-    <content><![CDATA[<h1 id="Java-amp-JVM"><a href="#Java-amp-JVM" class="headerlink" title="Java&amp;JVM"></a>Java&amp;JVM</h1><h2 id="打-HeapDump"><a href="#打-HeapDump" class="headerlink" title="打 HeapDump"></a>打 HeapDump</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jmap -dump:live,file<span class="token operator">=</span>heapdump.phrof <span class="token variable">$pid</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>或者</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jmap -dump:live,file<span class="token operator">=</span>heapdump.phrof -F <span class="token variable">$pid</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<blockquote>
-<p>一般情况下，<mark>尽量不要使用-F参数。</mark> 因为-F使用的是Linux操作系统层面的实现，而不是JVM层面的实现，会导致 打印堆信息很慢。<br/><br>如果提示第一种方式打印不出来堆的信息，需要增加-F，那么可以先检查下：</p>
-<ol>
-<li>Java应用进程的user_name是否与当前的user_name相同？ 如果不同，需要切换为同一个账号。</li>
-<li>Java应用进程的Java路径是否与当前jmap命令的路径相同？ 如果不同，需要切换为同一个路径。</li>
-</ol>
-</blockquote>
-<h2 id="打-ThreadDump"><a href="#打-ThreadDump" class="headerlink" title="打 ThreadDump"></a>打 ThreadDump</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jstack <span class="token variable">$pid</span> <span class="token operator">></span> tmp.jstack<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<blockquote>
-<p>注意: 当CPU利用率高或者想看下线程卡在哪里时，<mark>最好隔几秒就打一个线程栈，每个线程栈都保留下来</mark> <br/><br>多个线程栈对比起来看，会更能更好地发现问题。</p>
-</blockquote>
-<h2 id="查看消耗CPU时间片最多的线程信息"><a href="#查看消耗CPU时间片最多的线程信息" class="headerlink" title="查看消耗CPU时间片最多的线程信息"></a>查看消耗CPU时间片最多的线程信息</h2><p>需要与ThreadDump一起使用，才能定位到具体是Java中哪个线程。</p>
-<ol>
-<li>查看消耗cpu时间片最多的进程号<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 查看瞬时消耗CPU，倒序排列
-<span class="token function">top</span> -o %CPU
-// 查看累计消耗CPU时间片，倒序排列
-<span class="token function">top</span> -o TIME+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">top</span> -o %CPU
-<span class="token function">top</span> - <span class="token number">21</span>:39:35 up <span class="token number">10</span>:52,  <span class="token number">1</span> user,  load average: <span class="token number">1.47</span>, <span class="token number">1.36</span>, <span class="token number">1.14</span>
-Tasks: <span class="token number">325</span> total,   <span class="token number">4</span> running, <span class="token number">320</span> sleeping,   <span class="token number">0</span> stopped,   <span class="token number">1</span> zombie
-%Cpu0  <span class="token builtin class-name">:</span>  <span class="token number">8.2</span> us,  <span class="token number">4.1</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">87.4</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.3</span> si,  <span class="token number">0.0</span> st
-%Cpu1  <span class="token builtin class-name">:</span>  <span class="token number">7.5</span> us,  <span class="token number">3.8</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">88.7</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.0</span> si,  <span class="token number">0.0</span> st
-%Cpu2  <span class="token builtin class-name">:</span> <span class="token number">11.6</span> us,  <span class="token number">2.7</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">85.4</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.3</span> si,  <span class="token number">0.0</span> st
-%Cpu3  <span class="token builtin class-name">:</span>  <span class="token number">8.4</span> us,  <span class="token number">3.0</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">88.6</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.0</span> si,  <span class="token number">0.0</span> st
-MiB Mem <span class="token builtin class-name">:</span>   <span class="token number">7823.4</span> total,    <span class="token number">172.0</span> free,   <span class="token number">5254.4</span> used,   <span class="token number">2397.0</span> buff/cache
-MiB Swap:   <span class="token number">2048.0</span> total,    <span class="token number">252.2</span> free,   <span class="token number">1795.7</span> used.   <span class="token number">1107.3</span> avail Mem 
-
-    PID <span class="token environment constant">USER</span>      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                      
-   <span class="token number">2318</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">5178536</span> <span class="token number">247920</span>  <span class="token number">52372</span> R  <span class="token number">12.5</span>   <span class="token number">3.1</span>  <span class="token number">24</span>:33.00 gnome-shell                                  
-   <span class="token number">2099</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">1008428</span> <span class="token number">112204</span>  <span class="token number">78172</span> R  <span class="token number">11.2</span>   <span class="token number">1.4</span>  <span class="token number">23</span>:31.71 Xorg                                         
-   <span class="token number">6521</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span>  <span class="token number">868244</span>  <span class="token number">35580</span>  <span class="token number">23924</span> R   <span class="token number">5.9</span>   <span class="token number">0.4</span>   <span class="token number">0</span>:38.61 gnome-terminal-                              
-   <span class="token number">5308</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">6370752</span> <span class="token number">517952</span> <span class="token number">219108</span> S   <span class="token number">2.6</span>   <span class="token number">6.5</span>  <span class="token number">39</span>:38.79 firefox                                      <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol start="2">
-<li>查看进程下消耗时间片最多的线程号</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">top</span> -Hp <span class="token variable">$pid</span> -o %CPU
-<span class="token function">top</span> -Hp <span class="token variable">$pid</span> -o TIME+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token function">top</span> -Hp <span class="token number">2318</span>
-<span class="token function">top</span> - <span class="token number">21</span>:42:00 up <span class="token number">10</span>:55,  <span class="token number">1</span> user,  load average: <span class="token number">1.08</span>, <span class="token number">1.38</span>, <span class="token number">1.19</span>
-Threads:  <span class="token number">15</span> total,   <span class="token number">0</span> running,  <span class="token number">15</span> sleeping,   <span class="token number">0</span> stopped,   <span class="token number">0</span> zombie
-%Cpu<span class="token punctuation">(</span>s<span class="token punctuation">)</span>:  <span class="token number">5.7</span> us,  <span class="token number">1.9</span> sy,  <span class="token number">0.0</span> ni, <span class="token number">92.3</span> id,  <span class="token number">0.0</span> wa,  <span class="token number">0.0</span> hi,  <span class="token number">0.1</span> si,  <span class="token number">0.0</span> st
-MiB Mem <span class="token builtin class-name">:</span>   <span class="token number">7823.4</span> total,    <span class="token number">158.1</span> free,   <span class="token number">5264.5</span> used,   <span class="token number">2400.9</span> buff/cache
-MiB Swap:   <span class="token number">2048.0</span> total,    <span class="token number">250.8</span> free,   <span class="token number">1797.2</span> used.   <span class="token number">1092.3</span> avail Mem 
-
-    PID <span class="token environment constant">USER</span>      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                      
-   <span class="token number">2318</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">5178588</span> <span class="token number">247724</span>  <span class="token number">52288</span> S   <span class="token number">5.7</span>   <span class="token number">3.1</span>  <span class="token number">24</span>:28.42 gnome-shell                                  
-   <span class="token number">2331</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">5178588</span> <span class="token number">247724</span>  <span class="token number">52288</span> S   <span class="token number">0.0</span>   <span class="token number">3.1</span>   <span class="token number">0</span>:00.34 gmain                                        
-   <span class="token number">2335</span> davywal+  <span class="token number">20</span>   <span class="token number">0</span> <span class="token number">5178588</span> <span class="token number">247724</span>  <span class="token number">52288</span> S   <span class="token number">0.0</span>   <span class="token number">3.1</span>   <span class="token number">0</span>:11.10 gdbus                                        <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol start="3">
-<li>将10进制转成16进制<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">printf</span> <span class="token string">'%x\n'</span> <span class="token environment constant">$PPID</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// <span class="token number">10</span>进制转成16进制
-davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token builtin class-name">printf</span> <span class="token string">'%x\n'</span> <span class="token number">2318</span>
-90e
-
-// <span class="token number">16</span>进制转成10进制
-davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ <span class="token builtin class-name">printf</span> <span class="token string">'%d\n'</span> 0x90e
-<span class="token number">2318</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol start="4">
-<li>查看jstack中对应的线程信息</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">fgrep</span> <span class="token string">"0x90e"</span> tmp.jstack -C <span class="token number">50</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="查看JVM默认HeapSize"><a href="#查看JVM默认HeapSize" class="headerlink" title="查看JVM默认HeapSize"></a>查看JVM默认HeapSize</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">java -XX:+PrintFlagsFinal -version <span class="token operator">|</span> <span class="token function">fgrep</span> HeapSize
-// 查看java_home, class_path等默认配置与系统环境变量
-java -XshowSettings:all<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>如下，默认HeapSize为130023424&#x2F;1024&#x2F;1024&#x3D;124MB<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ java -XX:+PrintFlagsFinal -version <span class="token operator">|</span> <span class="token function">fgrep</span> HeapSize
-    uintx ErgoHeapSizeLimit                         <span class="token operator">=</span> <span class="token number">0</span>                                   <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
-    uintx HeapSizePerGCThread                       <span class="token operator">=</span> <span class="token number">87241520</span>                            <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
-    uintx InitialHeapSize                          :<span class="token operator">=</span> <span class="token number">130023424</span>                           <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
-    uintx LargePageHeapSizeThreshold                <span class="token operator">=</span> <span class="token number">134217728</span>                           <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
-    uintx MaxHeapSize                              :<span class="token operator">=</span> <span class="token number">2051014656</span>                          <span class="token punctuation">&#123;</span>product<span class="token punctuation">&#125;</span>
-openjdk version <span class="token string">"1.8.0_312"</span>
-OpenJDK Runtime Environment <span class="token punctuation">(</span>build <span class="token number">1.8</span>.0_312-8u312-b07-0ubuntu1~20.04-b07<span class="token punctuation">)</span>
-OpenJDK <span class="token number">64</span>-Bit Server VM <span class="token punctuation">(</span>build <span class="token number">25.312</span>-b07, mixed mode<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">davywalker@davywalker-ThinkPad-X1-Carbon-4th:~$ java -XshowSettings:all
-VM settings:
-    Max. Heap Size <span class="token punctuation">(</span>Estimated<span class="token punctuation">)</span>: <span class="token number">1</span>.70G
-    Ergonomics Machine Class: server
-    Using VM: OpenJDK <span class="token number">64</span>-Bit Server VM
-
-Property settings:
-    awt.toolkit <span class="token operator">=</span> sun.awt.X11.XToolkit
-    file.encoding <span class="token operator">=</span> UTF-8
-    file.encoding.pkg <span class="token operator">=</span> sun.io<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<h1 id="OQL"><a href="#OQL" class="headerlink" title="OQL"></a>OQL</h1><ul>
-<li><p><a href="https://wiki.eclipse.org/MemoryAnalyzer/OQL">如何使用OQL</a></p>
-</li>
-<li><p>查询某规格类的对象</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>查询对象某个属性(这里只能根据类, 查到该类下所有对象的属性)</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> t<span class="token punctuation">.</span>initd<span class="token punctuation">,</span> t<span class="token punctuation">.</span>initAsyn<span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>publicCloud<span class="token punctuation">)</span><span class="token punctuation">,</span> namespace<span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>regionId<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>useNuwa<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>nuwaConfigDns<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>nuwaCluster<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>rootPath<span class="token punctuation">)</span> <span class="token keyword">FROM</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>查询对象某个属性(如何根据对象ID, 精确查询到该对象的某些属性?)</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> t<span class="token punctuation">.</span>initd<span class="token punctuation">,</span> t<span class="token punctuation">.</span>initAsyn<span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>publicCloud<span class="token punctuation">)</span><span class="token punctuation">,</span> namespace<span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>regionId<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>useNuwa<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>nuwaConfigDns<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>nuwaCluster<span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>rootPath<span class="token punctuation">)</span> <span class="token keyword">FROM</span> OBJECTS <span class="token number">0x7480633e0</span> t<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>根据类的hash地址, 获取对应实例</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> instanceof <span class="token number">0x733ccc9f0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>根据对象hash值获取对象信息</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span>  OBJECTS <span class="token number">0xdc2819e0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>根据条件筛选出对象信息</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t <span class="token keyword">where</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>hostType<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"ddh.ebmec3metest"</span>
-<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>UserServiceImpl t <span class="token keyword">where</span> toString<span class="token punctuation">(</span>t<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"28745-27"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-</ul>
-<h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><ul>
-<li><p>下载源代码. 有时候IDE无法自动下载jar包的源代码, 此时使用如下命令就能下载</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn dependency:sources<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>编译源码.</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean compile -DskipTests<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>编译源码, 且把编译的jar包等产物安装到本地Repo中.</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean <span class="token function">install</span> -DskipTests<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>强制重新下载SNAPSHOT包</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn clean compile -U<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>不再联网下载依赖, 即offline mode</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 先验证所有依赖都下载到了本地</span>
-<span class="token comment"># mvn dependency:go-offline</span>
-
-<span class="token comment"># 2. 再执行如下命令, 开启offline编译模式</span>
-<span class="token comment"># mvn -o install</span>
-<span class="token comment"># mvn -offline install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>依赖解析相关</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 把依赖树打印出来</span>
-<span class="token comment"># mvn dependency:tree</span>
-
-<span class="token comment"># 分析无用的依赖</span>
-<span class="token comment"># mvn dependency: analyze</span>
-
-<span class="token comment"># 分析重复的依赖</span>
-<span class="token comment"># mvn dependency:analyze-duplicate</span>
-
-<span class="token comment"># 当使用shell脚本执行jar命令启动项目时, 需要把项目依赖的jar包都放到classpath参数下. </span>
-<span class="token comment"># 但人肉一个一个加很麻烦, 执行这个命令就把所有jar包全路径都拼接打印出来. </span>
-<span class="token comment"># mvn dependency:build-classpath</span>
-
-<span class="token comment"># 把所有解析好的依赖, 平铺打印</span>
-<span class="token comment"># mvn dependency:resolve</span>
-
-<span class="token comment"># 列出所有配置好的remote repo</span>
-<span class="token comment"># mvn dependency:list-repositories</span>
-
-<span class="token comment"># 把项目所有依赖的jar包都拷贝到目标目录下</span>
-<span class="token comment"># mvn dependency:copy-dependencies -DoutputDirectory="~/lib/"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>code-snippets</tag>
-        <tag>jvm</tag>
       </tags>
   </entry>
   <entry>
@@ -12827,81 +12827,6 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       </tags>
   </entry>
   <entry>
-    <title>revealjs制作PPT笔记</title>
-    <url>//2023-03-05-head-first-revealjs/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近在B站学习蒋炎岩老师的OS: </p>
-<ul>
-<li>内容自是不必多说, 干货满满.</li>
-<li>对课件PPT更是十分欣赏. </li>
-<li><a href="https://jyywiki.cn/OS/2022/slides/3.slides#/">实际样例</a></li>
-</ul>
-<h2 id="特点1-导航清晰"><a href="#特点1-导航清晰" class="headerlink" title="特点1: 导航清晰"></a>特点1: 导航清晰</h2><p>风格简约专业:</p>
-<ul>
-<li>横向导航区分大类</li>
-<li>纵向导航来区分小类</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052225650.png"></p>
-<h2 id="特点2-管理轻量"><a href="#特点2-管理轻量" class="headerlink" title="特点2: 管理轻量"></a>特点2: 管理轻量</h2><ul>
-<li>基于代码生成与管理(支持Markdown), 不使用笨重的Microsoft PPT. </li>
-<li>可以使用git进行版本管理(例如showcase中本文就会转成ppt).</li>
-</ul>
-<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><blockquote>
-<p>revealjs + pandoc 组合神器</p>
-</blockquote>
-<ul>
-<li><a href="https://revealjs.com/markdown/">revealjs</a></li>
-<li><a href="https://pandoc.org/installing.html">pandoc</a></li>
-</ul>
-<p>刚好自己平时要做PPT, 但作为程序员, 又十分抵触内容与样式不分离的方式, 制作起来也耗时.<br>借鉴这种方案, 轻松写出专业且简约的PPT.</p>
-<h1 id="安装-amp-配置"><a href="#安装-amp-配置" class="headerlink" title="安装&amp;配置"></a>安装&amp;配置</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
-<li>revealjs: <a href="https://revealjs.com/installation/#full-setup">安装手册</a></li>
-<li>pandoc: 把markdown转成revealjs的html, <a href="https://pandoc.org/installing.html">安装手册</a></li>
-<li><a href="https://tailwindcss.com/">tailwind css</a>: JYY老师的, 个人还在研究中</li>
-</ul>
-<h2 id="revealjs个人配置"><a href="#revealjs个人配置" class="headerlink" title="revealjs个人配置"></a>revealjs个人配置</h2><ul>
-<li>Enable <a href="https://revealjs.com/slide-numbers/">Slide Numbers</a></li>
-<li>Disable <a href="https://revealjs.com/config/">Vertical centering of slides</a></li>
-<li>Disable <a href="https://revealjs.com/config/">controlsTutorial</a></li>
-</ul>
-<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
-<li><p>revealjs</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认8000端口</span>
-<span class="token function">npm</span> start
-<span class="token comment"># 指定8001端口</span>
-<span class="token function">npm</span> start -- --port<span class="token operator">=</span><span class="token number">8001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>pandoc</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># md to html. 注意需要设置 --slide-level=2 参数. 一级标题设置horizontal大类, 二级标题内容为vertical子类. </span>
-pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white --slide-level<span class="token operator">=</span><span class="token number">2</span>
-<span class="token comment"># 所有revealjs的参数, 都可以通过 -V xxx=xxx 来设置</span>
-pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white -V <span class="token assign-left variable">center</span><span class="token operator">=</span>false -V <span class="token assign-left variable">controlsTutorial</span><span class="token operator">=</span>false -V <span class="token assign-left variable">slideNumber</span><span class="token operator">=</span>true --slide-level<span class="token operator">=</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><ul>
-<li><code>o</code> 进入缩略图模式.</li>
-<li><code>b</code> 屏蔽当前PPT</li>
-<li><code>f</code> 进入全屏模式</li>
-<li><code>ctrl+shift+f</code>: 全局搜索</li>
-</ul>
-<h1 id="showcase"><a href="#showcase" class="headerlink" title="showcase"></a>showcase</h1><h2 id="self-explained"><a href="#self-explained" class="headerlink" title="self-explained"></a>self-explained</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052309110.png"></p>
-<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><h2 id="样式优化"><a href="#样式优化" class="headerlink" title="样式优化"></a>样式优化</h2><p>与JYY老师相比, 页面还是过于简陋</p>
-<ul>
-<li>Header: 类似markdown的分隔符</li>
-<li>Image: 图片有些显示不全❗</li>
-<li>Align: 字默认居中, 需要<font color='red'><strong>居左</strong></font></li>
-<li>Syntax Highlighting: 现在<strong>太丑</strong></li>
-<li>Citation&#x2F;Quote: 也<strong>太丑</strong></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>工程提效工具</category>
-      </categories>
-      <tags>
-        <tag>tools</tag>
-        <tag>ppt</tag>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于JVM DNS Cache问题的研究</title>
     <url>//2023-03-04-java-jvm-dns-caching/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>某次jstack发现应用卡在DNS解析上, 发现应用为了做负载均衡, 故意将JVM DNS Cache失效时间设置为了0, 即永不缓存.<br>这才知道原来还有这个参数. 因此借此机会就查阅资料, 详细研究下.</p>
@@ -12976,6 +12901,81 @@ networkaddress<span class="token punctuation">.</span>cache<span class="token pu
         <tag>java</tag>
         <tag>dns</tag>
         <tag>jvm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>revealjs制作PPT笔记</title>
+    <url>//2023-03-05-head-first-revealjs/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近在B站学习蒋炎岩老师的OS: </p>
+<ul>
+<li>内容自是不必多说, 干货满满.</li>
+<li>对课件PPT更是十分欣赏. </li>
+<li><a href="https://jyywiki.cn/OS/2022/slides/3.slides#/">实际样例</a></li>
+</ul>
+<h2 id="特点1-导航清晰"><a href="#特点1-导航清晰" class="headerlink" title="特点1: 导航清晰"></a>特点1: 导航清晰</h2><p>风格简约专业:</p>
+<ul>
+<li>横向导航区分大类</li>
+<li>纵向导航来区分小类</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052225650.png"></p>
+<h2 id="特点2-管理轻量"><a href="#特点2-管理轻量" class="headerlink" title="特点2: 管理轻量"></a>特点2: 管理轻量</h2><ul>
+<li>基于代码生成与管理(支持Markdown), 不使用笨重的Microsoft PPT. </li>
+<li>可以使用git进行版本管理(例如showcase中本文就会转成ppt).</li>
+</ul>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><blockquote>
+<p>revealjs + pandoc 组合神器</p>
+</blockquote>
+<ul>
+<li><a href="https://revealjs.com/markdown/">revealjs</a></li>
+<li><a href="https://pandoc.org/installing.html">pandoc</a></li>
+</ul>
+<p>刚好自己平时要做PPT, 但作为程序员, 又十分抵触内容与样式不分离的方式, 制作起来也耗时.<br>借鉴这种方案, 轻松写出专业且简约的PPT.</p>
+<h1 id="安装-amp-配置"><a href="#安装-amp-配置" class="headerlink" title="安装&amp;配置"></a>安装&amp;配置</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+<li>revealjs: <a href="https://revealjs.com/installation/#full-setup">安装手册</a></li>
+<li>pandoc: 把markdown转成revealjs的html, <a href="https://pandoc.org/installing.html">安装手册</a></li>
+<li><a href="https://tailwindcss.com/">tailwind css</a>: JYY老师的, 个人还在研究中</li>
+</ul>
+<h2 id="revealjs个人配置"><a href="#revealjs个人配置" class="headerlink" title="revealjs个人配置"></a>revealjs个人配置</h2><ul>
+<li>Enable <a href="https://revealjs.com/slide-numbers/">Slide Numbers</a></li>
+<li>Disable <a href="https://revealjs.com/config/">Vertical centering of slides</a></li>
+<li>Disable <a href="https://revealjs.com/config/">controlsTutorial</a></li>
+</ul>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
+<li><p>revealjs</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认8000端口</span>
+<span class="token function">npm</span> start
+<span class="token comment"># 指定8001端口</span>
+<span class="token function">npm</span> start -- --port<span class="token operator">=</span><span class="token number">8001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>pandoc</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># md to html. 注意需要设置 --slide-level=2 参数. 一级标题设置horizontal大类, 二级标题内容为vertical子类. </span>
+pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white --slide-level<span class="token operator">=</span><span class="token number">2</span>
+<span class="token comment"># 所有revealjs的参数, 都可以通过 -V xxx=xxx 来设置</span>
+pandoc id-token-in-wf.md -o id-token-in-wf.html -t revealjs -s -V <span class="token assign-left variable">theme</span><span class="token operator">=</span>white -V <span class="token assign-left variable">center</span><span class="token operator">=</span>false -V <span class="token assign-left variable">controlsTutorial</span><span class="token operator">=</span>false -V <span class="token assign-left variable">slideNumber</span><span class="token operator">=</span>true --slide-level<span class="token operator">=</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><ul>
+<li><code>o</code> 进入缩略图模式.</li>
+<li><code>b</code> 屏蔽当前PPT</li>
+<li><code>f</code> 进入全屏模式</li>
+<li><code>ctrl+shift+f</code>: 全局搜索</li>
+</ul>
+<h1 id="showcase"><a href="#showcase" class="headerlink" title="showcase"></a>showcase</h1><h2 id="self-explained"><a href="#self-explained" class="headerlink" title="self-explained"></a>self-explained</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202303052309110.png"></p>
+<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><h2 id="样式优化"><a href="#样式优化" class="headerlink" title="样式优化"></a>样式优化</h2><p>与JYY老师相比, 页面还是过于简陋</p>
+<ul>
+<li>Header: 类似markdown的分隔符</li>
+<li>Image: 图片有些显示不全❗</li>
+<li>Align: 字默认居中, 需要<font color='red'><strong>居左</strong></font></li>
+<li>Syntax Highlighting: 现在<strong>太丑</strong></li>
+<li>Citation&#x2F;Quote: 也<strong>太丑</strong></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>工程提效工具</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+        <tag>ppt</tag>
+        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -13739,6 +13739,24 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
       </tags>
   </entry>
   <entry>
+    <title>chatgpt eval cont d</title>
+    <url>//2023-10-29-chatgpt-eval-cont-d/</url>
+    <content><![CDATA[<h1 id="20231030-chatgpt-eval-cont-d"><a href="#20231030-chatgpt-eval-cont-d" class="headerlink" title="20231030-chatgpt-eval-cont-d"></a>20231030-chatgpt-eval-cont-d</h1><h1 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h1><p>最近频繁地使用chatgpt进行文章的翻译. </p>
+<p>在翻译这个特定的场景下, 惊讶于chatgpt的语义识别度与准确度, 基本可以完美地进行翻译, 对俚语等进行解释. </p>
+<p>如下: </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled-1.png" alt="Untitled"></p>
+<p>现在是时候摘下对ChatGPT的偏见墨镜了. 虽然之前在ground truth上多次欺骗与伤害了我.</p>
+<h1 id="shell-script"><a href="#shell-script" class="headerlink" title="shell script"></a>shell script</h1><p>对于Shell脚本编写, 简直是神器!!!</p>
+<p>持续更新</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>thoughts</tag>
+        <tag>ai</tag>
+        <tag>chatgpt</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS 7 systemd 与 SysV init 对比</title>
     <url>//2023-10-20-centos-systemd-sysv/</url>
     <content><![CDATA[<h1 id="20231021-centos-systemd-sysv"><a href="#20231021-centos-systemd-sysv" class="headerlink" title="20231021-centos-systemd-sysv"></a>20231021-centos-systemd-sysv</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>centos7之后, 所有的service都推荐使用systemd&#x2F;systemctl来管理.</p>
@@ -13820,21 +13838,32 @@ Wants&#x3D;sshd-keygen.service
       </tags>
   </entry>
   <entry>
-    <title>chatgpt eval cont d</title>
-    <url>//2023-10-29-chatgpt-eval-cont-d/</url>
-    <content><![CDATA[<h1 id="20231030-chatgpt-eval-cont-d"><a href="#20231030-chatgpt-eval-cont-d" class="headerlink" title="20231030-chatgpt-eval-cont-d"></a>20231030-chatgpt-eval-cont-d</h1><h1 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h1><p>最近频繁地使用chatgpt进行文章的翻译. </p>
-<p>在翻译这个特定的场景下, 惊讶于chatgpt的语义识别度与准确度, 基本可以完美地进行翻译, 对俚语等进行解释. </p>
-<p>如下: </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled.png" alt="Untitled"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled-1.png" alt="Untitled"></p>
-<p>现在是时候摘下对ChatGPT的偏见墨镜了. 虽然之前在ground truth上多次欺骗与伤害了我.</p>
-<h1 id="shell-script"><a href="#shell-script" class="headerlink" title="shell script"></a>shell script</h1><p>对于Shell脚本编写, 简直是神器!!!</p>
-<p>持续更新</p>
+    <title>上云还是下云？对 Cloud Exit 趋势的思考</title>
+    <url>//2023-10-29-cloudon-or-cloudexit/</url>
+    <content><![CDATA[<h1 id="20231030-CloudOn-or-CloudExit"><a href="#20231030-CloudOn-or-CloudExit" class="headerlink" title="20231030-CloudOn-or-CloudExit?"></a>20231030-CloudOn-or-CloudExit?</h1><p>作为云计算从业者, 始终也是上云的坚定. 也不知道是因为屁股决定态度, 还是”因为相信所以看见”.</p>
+<p>但今天看到一则推送, <a href="https://mp.weixin.qq.com/s/DpTtIjmfS8Nj09etY83svA">马斯克440亿美元收购Twitter一年后：全力“下云”，成本速降60%，功能代码从70万行减少至7万！</a> 真的让自己大跌眼镜, 不得不仔细思考. </p>
+<ul>
+<li>20221019: <a href="https://world.hey.com/dhh/why-we-re-leaving-the-cloud-654b47e0">Why we’re leaving the cloud</a></li>
+<li>20230110: <a href="https://world.hey.com/dhh/the-only-thing-worse-than-cloud-pricing-is-the-enterprisey-alternatives-854e98f3">The only thing worse than cloud pricing is the enterprisey alternatives</a></li>
+<li>20230221: <a href="https://world.hey.com/dhh/we-stand-to-save-7m-over-five-years-from-our-cloud-exit-53996caa">We stand to save $7m over five years from our cloud exit</a></li>
+<li>20230323: <a href="https://world.hey.com/dhh/cut-cloud-before-payroll-a4530ebd">Cut cloud before payroll</a></li>
+<li>20230406: <a href="https://world.hey.com/dhh/the-hardware-we-need-for-our-cloud-exit-has-arrived-99d66966">The hardware we need for our cloud exit has arrived</a></li>
+<li>20230502: <a href="https://world.hey.com/dhh/cloud-exit-pays-off-in-performance-too-4c53b697">Cloud exit pays off in performance too</a></li>
+<li>20230503: <a href="https://world.hey.com/dhh/sovereign-clouds-661eb5e4">Sovereign clouds</a></li>
+<li>20230511: <a href="https://world.hey.com/dhh/it-s-not-just-cloud-costs-that-are-out-of-control-efcd098c">It’s not just cloud costs that are out of control</a></li>
+<li>20230623: <a href="https://world.hey.com/dhh/we-have-left-the-cloud-251760fb">We have left the cloud</a></li>
+<li>20230915: <a href="https://world.hey.com/dhh/our-cloud-exit-has-already-yielded-1m-year-in-savings-db358dea">Our cloud exit has already yielded $1m&#x2F;year in savings</a></li>
+<li>20231027: <a href="https://world.hey.com/dhh/x-celebrates-60-savings-from-cloud-exit-7cc26895">X celebrates 60% savings from cloud exit</a></li>
+</ul>
+<blockquote>
+<p>The cloud excels at two ends of the spectrum.<br>The first end is when your application is so simple and low traffic that you really do save on complexity by starting with fully managed services.<br>The second is when your load is highly irregular.</p>
+</blockquote>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>thoughts</tag>
-        <tag>ai</tag>
-        <tag>chatgpt</tag>
+        <tag>cloud-computing</tag>
+        <tag>cloud-exit</tag>
+        <tag>architecture</tag>
       </tags>
   </entry>
   <entry>
@@ -13946,35 +13975,6 @@ Rework  - Jason Fried
       </tags>
   </entry>
   <entry>
-    <title>上云还是下云？对 Cloud Exit 趋势的思考</title>
-    <url>//2023-10-29-cloudon-or-cloudexit/</url>
-    <content><![CDATA[<h1 id="20231030-CloudOn-or-CloudExit"><a href="#20231030-CloudOn-or-CloudExit" class="headerlink" title="20231030-CloudOn-or-CloudExit?"></a>20231030-CloudOn-or-CloudExit?</h1><p>作为云计算从业者, 始终也是上云的坚定. 也不知道是因为屁股决定态度, 还是”因为相信所以看见”.</p>
-<p>但今天看到一则推送, <a href="https://mp.weixin.qq.com/s/DpTtIjmfS8Nj09etY83svA">马斯克440亿美元收购Twitter一年后：全力“下云”，成本速降60%，功能代码从70万行减少至7万！</a> 真的让自己大跌眼镜, 不得不仔细思考. </p>
-<ul>
-<li>20221019: <a href="https://world.hey.com/dhh/why-we-re-leaving-the-cloud-654b47e0">Why we’re leaving the cloud</a></li>
-<li>20230110: <a href="https://world.hey.com/dhh/the-only-thing-worse-than-cloud-pricing-is-the-enterprisey-alternatives-854e98f3">The only thing worse than cloud pricing is the enterprisey alternatives</a></li>
-<li>20230221: <a href="https://world.hey.com/dhh/we-stand-to-save-7m-over-five-years-from-our-cloud-exit-53996caa">We stand to save $7m over five years from our cloud exit</a></li>
-<li>20230323: <a href="https://world.hey.com/dhh/cut-cloud-before-payroll-a4530ebd">Cut cloud before payroll</a></li>
-<li>20230406: <a href="https://world.hey.com/dhh/the-hardware-we-need-for-our-cloud-exit-has-arrived-99d66966">The hardware we need for our cloud exit has arrived</a></li>
-<li>20230502: <a href="https://world.hey.com/dhh/cloud-exit-pays-off-in-performance-too-4c53b697">Cloud exit pays off in performance too</a></li>
-<li>20230503: <a href="https://world.hey.com/dhh/sovereign-clouds-661eb5e4">Sovereign clouds</a></li>
-<li>20230511: <a href="https://world.hey.com/dhh/it-s-not-just-cloud-costs-that-are-out-of-control-efcd098c">It’s not just cloud costs that are out of control</a></li>
-<li>20230623: <a href="https://world.hey.com/dhh/we-have-left-the-cloud-251760fb">We have left the cloud</a></li>
-<li>20230915: <a href="https://world.hey.com/dhh/our-cloud-exit-has-already-yielded-1m-year-in-savings-db358dea">Our cloud exit has already yielded $1m&#x2F;year in savings</a></li>
-<li>20231027: <a href="https://world.hey.com/dhh/x-celebrates-60-savings-from-cloud-exit-7cc26895">X celebrates 60% savings from cloud exit</a></li>
-</ul>
-<blockquote>
-<p>The cloud excels at two ends of the spectrum.<br>The first end is when your application is so simple and low traffic that you really do save on complexity by starting with fully managed services.<br>The second is when your load is highly irregular.</p>
-</blockquote>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>thoughts</tag>
-        <tag>cloud-computing</tag>
-        <tag>cloud-exit</tag>
-        <tag>architecture</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>sys stat page</title>
     <url>//2023-10-31-sys-stat-page/</url>
     <content><![CDATA[<h1 id="20231101-sys-stat-page"><a href="#20231101-sys-stat-page" class="headerlink" title="20231101-sys-stat-page"></a>20231101-sys-stat-page</h1><p>无意间发现: <a href="https://www.37status.com/">37signals Status</a> 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:</p>
@@ -14010,70 +14010,6 @@ Rework  - Jason Fried
         <tag>learn-from-failure</tag>
         <tag>thoughts</tag>
         <tag>bot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2023 云栖大会观察与思考</title>
-    <url>//2023-11-02-apsara-conference/</url>
-    <content><![CDATA[<h1 id="20231103-apsara-conference"><a href="#20231103-apsara-conference" class="headerlink" title="20231103-apsara-conference"></a>20231103-apsara-conference</h1><h1 id="又是一年云起时"><a href="#又是一年云起时" class="headerlink" title="又是一年云起时"></a>又是一年云起时</h1><p>又到了一年一度的<a href="https://yunqi.aliyun.com/2023/live-aggregation">云栖大会</a>. 赶在最后一天来参加, 主要是一来给友军支持鼓劲儿, 二来想gain some insights of the future. </p>
-<p>全程用心听下来, 技术类的收获较少且较为零碎, 但当我尝试着从另外一些视角来看, 收获很多, 整理在这里. </p>
-<h1 id="演讲人"><a href="#演讲人" class="headerlink" title="演讲人"></a>演讲人</h1><p>我会想, 如果站在台上的人是我, 那么我应该怎么做更好? 庆幸此时作为观众, 作为局外人, 能看清楚很多. </p>
-<ol>
-<li>筛选自己的目标用户, 可以通过几个问题来开场. 或者说明下自己的目标群体, 需要有哪些背景知识. 发现这种临时的meetup, 演讲者与观众, 都是双向不可知的. 即</li>
-<li>需要能提出问题, 让观众思考回答, 提升参与度. 不然就是无趣的讲课了.</li>
-<li>需要说是什么, 但也要说不是什么. 不然就是没啥营养的产品介绍了. </li>
-<li>讲话内容需要与PPT一样, 不能干说, 需要手指在PPT上划出重点. PPT 里只列出需要强调的重点. </li>
-<li>最好能实时演示, 例如在线编程, 在线demo. 一定要防止成为产品介绍</li>
-<li>不要使用页面截图, 太小了, 大家看不清, 也不会耐心去看. –&gt; 突出重点即可. 内容不要堆砌太多, 讲不过来.</li>
-<li>缺少具体数据&amp;实际案例, 比较空<ol>
-<li>资源候补功能, 说了可以用, 但作为听众如果想使用这个功能, 其实更关注候补的成功率, 能否给出数据?</li>
-<li>实时演示页面实在太小了, 根本看不清.</li>
-</ol>
-</li>
-<li>讲清楚 背景, 背景很重要! </li>
-<li>要知道分享的目标是啥: <ol>
-<li>是单纯的秀肌肉么? —&gt; 不能认怂, 嘲讽友军. —&gt; Jobs的经典</li>
-<li>是让观众能学到东西? 能有所收获? —&gt; 内容要通俗易懂, 不要发明新名词, 不要buzzword. 可以认怂, 可以讲走的弯路. </li>
-<li>我个人习惯第二种, 我相信作为观众, 也更喜欢第二种.</li>
-</ol>
-</li>
-<li>架构前后变化点(例如ECI从ImageCache变到支持ImageCache+DataCache), 需要 highlight 出来!</li>
-<li>不要一一列举bulletpoint, 而要有层次地来将为啥有这些, 要关注在why, 而不是what. 例如主动运维的几个状态:<ol>
-<li>Inquiring:</li>
-<li>scheduled</li>
-<li>executing</li>
-<li>avoided:</li>
-<li>…</li>
-<li>可以站在设计者角度: 为啥设计这几种状态, 这几种状态的递进层次是咋样的? 为啥不能有其他状态? 等方式进行讲解. 或者讲清楚背景&amp;问题, 然后问观众, 假如让你来设计, 你会咋样?</li>
-<li>也可以站在使用者角度: 怎么用这几个状态, 能列举出具体的case&#x2F;sample. </li>
-<li>记住: <strong>人一次是记不住超过3项内容的.</strong></li>
-</ol>
-</li>
-<li>PPT里的文档链接地址, 实际上听众是拿不到PPT的, 所以无法访问到. 所以可以说明下, 然后在最后放个群二维码, 拉进群里, 统一把材料分发. </li>
-<li>需要自己把演讲录下来, 然后站在听众的角度来思考来分析. 这样<ol>
-<li></li>
-</ol>
-</li>
-</ol>
-<h1 id="组织者"><a href="#组织者" class="headerlink" title="组织者"></a>组织者</h1><ol>
-<li>中间没有休息, 导致全程听下来三个多小时, 腰酸背痛, 膀胱爆炸, 体验不好. </li>
-<li>没有QA环节, 导致气氛不够活跃.</li>
-<li>要注意多个演讲前后的连贯性, 防止使听众混淆. 例如 最开始A讲了 包年包月需要尽量转成 SP+OD; 但后边B&#x2F;C又开始讲稳态的使用包年包月. 前后打架了.</li>
-<li>排练的时候, 一定要也站在观众角度, 看演讲嘉宾的排练, 能提前发现问题, 给演讲者一些建议.<ol>
-<li>具体方式: 彩排时请组内的同学&#x2F;行业内的人来作为观众, 进行提前预演. 我相信如果是我作为, </li>
-<li>例如: 可以建议不要有API&#x2F;售卖页的实时演示了, 实在看不清. 或者可以提醒进行放大.</li>
-</ol>
-</li>
-<li>是个好的机会, 收集开发者微信(例如红包建群), 可以后续运营&#x2F;沟通, 连接开发者的通道. –&gt; 或者拉进到研发交流群里(例如SPOT交流群)</li>
-</ol>
-<h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1><p>当然, 这种也</p>
-<h2 id="good-case"><a href="#good-case" class="headerlink" title="good case"></a>good case</h2><h2 id="bad-case"><a href="#bad-case" class="headerlink" title="bad case"></a>bad case</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>thoughts</tag>
-        <tag>aliyun</tag>
-        <tag>cloud-computing</tag>
-        <tag>conference</tag>
-        <tag>public-speaking</tag>
       </tags>
   </entry>
   <entry>
@@ -14241,6 +14177,70 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
         <tag>automation</tag>
         <tag>macos</tag>
         <tag>productivity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2023 云栖大会观察与思考</title>
+    <url>//2023-11-02-apsara-conference/</url>
+    <content><![CDATA[<h1 id="20231103-apsara-conference"><a href="#20231103-apsara-conference" class="headerlink" title="20231103-apsara-conference"></a>20231103-apsara-conference</h1><h1 id="又是一年云起时"><a href="#又是一年云起时" class="headerlink" title="又是一年云起时"></a>又是一年云起时</h1><p>又到了一年一度的<a href="https://yunqi.aliyun.com/2023/live-aggregation">云栖大会</a>. 赶在最后一天来参加, 主要是一来给友军支持鼓劲儿, 二来想gain some insights of the future. </p>
+<p>全程用心听下来, 技术类的收获较少且较为零碎, 但当我尝试着从另外一些视角来看, 收获很多, 整理在这里. </p>
+<h1 id="演讲人"><a href="#演讲人" class="headerlink" title="演讲人"></a>演讲人</h1><p>我会想, 如果站在台上的人是我, 那么我应该怎么做更好? 庆幸此时作为观众, 作为局外人, 能看清楚很多. </p>
+<ol>
+<li>筛选自己的目标用户, 可以通过几个问题来开场. 或者说明下自己的目标群体, 需要有哪些背景知识. 发现这种临时的meetup, 演讲者与观众, 都是双向不可知的. 即</li>
+<li>需要能提出问题, 让观众思考回答, 提升参与度. 不然就是无趣的讲课了.</li>
+<li>需要说是什么, 但也要说不是什么. 不然就是没啥营养的产品介绍了. </li>
+<li>讲话内容需要与PPT一样, 不能干说, 需要手指在PPT上划出重点. PPT 里只列出需要强调的重点. </li>
+<li>最好能实时演示, 例如在线编程, 在线demo. 一定要防止成为产品介绍</li>
+<li>不要使用页面截图, 太小了, 大家看不清, 也不会耐心去看. –&gt; 突出重点即可. 内容不要堆砌太多, 讲不过来.</li>
+<li>缺少具体数据&amp;实际案例, 比较空<ol>
+<li>资源候补功能, 说了可以用, 但作为听众如果想使用这个功能, 其实更关注候补的成功率, 能否给出数据?</li>
+<li>实时演示页面实在太小了, 根本看不清.</li>
+</ol>
+</li>
+<li>讲清楚 背景, 背景很重要! </li>
+<li>要知道分享的目标是啥: <ol>
+<li>是单纯的秀肌肉么? —&gt; 不能认怂, 嘲讽友军. —&gt; Jobs的经典</li>
+<li>是让观众能学到东西? 能有所收获? —&gt; 内容要通俗易懂, 不要发明新名词, 不要buzzword. 可以认怂, 可以讲走的弯路. </li>
+<li>我个人习惯第二种, 我相信作为观众, 也更喜欢第二种.</li>
+</ol>
+</li>
+<li>架构前后变化点(例如ECI从ImageCache变到支持ImageCache+DataCache), 需要 highlight 出来!</li>
+<li>不要一一列举bulletpoint, 而要有层次地来将为啥有这些, 要关注在why, 而不是what. 例如主动运维的几个状态:<ol>
+<li>Inquiring:</li>
+<li>scheduled</li>
+<li>executing</li>
+<li>avoided:</li>
+<li>…</li>
+<li>可以站在设计者角度: 为啥设计这几种状态, 这几种状态的递进层次是咋样的? 为啥不能有其他状态? 等方式进行讲解. 或者讲清楚背景&amp;问题, 然后问观众, 假如让你来设计, 你会咋样?</li>
+<li>也可以站在使用者角度: 怎么用这几个状态, 能列举出具体的case&#x2F;sample. </li>
+<li>记住: <strong>人一次是记不住超过3项内容的.</strong></li>
+</ol>
+</li>
+<li>PPT里的文档链接地址, 实际上听众是拿不到PPT的, 所以无法访问到. 所以可以说明下, 然后在最后放个群二维码, 拉进群里, 统一把材料分发. </li>
+<li>需要自己把演讲录下来, 然后站在听众的角度来思考来分析. 这样<ol>
+<li></li>
+</ol>
+</li>
+</ol>
+<h1 id="组织者"><a href="#组织者" class="headerlink" title="组织者"></a>组织者</h1><ol>
+<li>中间没有休息, 导致全程听下来三个多小时, 腰酸背痛, 膀胱爆炸, 体验不好. </li>
+<li>没有QA环节, 导致气氛不够活跃.</li>
+<li>要注意多个演讲前后的连贯性, 防止使听众混淆. 例如 最开始A讲了 包年包月需要尽量转成 SP+OD; 但后边B&#x2F;C又开始讲稳态的使用包年包月. 前后打架了.</li>
+<li>排练的时候, 一定要也站在观众角度, 看演讲嘉宾的排练, 能提前发现问题, 给演讲者一些建议.<ol>
+<li>具体方式: 彩排时请组内的同学&#x2F;行业内的人来作为观众, 进行提前预演. 我相信如果是我作为, </li>
+<li>例如: 可以建议不要有API&#x2F;售卖页的实时演示了, 实在看不清. 或者可以提醒进行放大.</li>
+</ol>
+</li>
+<li>是个好的机会, 收集开发者微信(例如红包建群), 可以后续运营&#x2F;沟通, 连接开发者的通道. –&gt; 或者拉进到研发交流群里(例如SPOT交流群)</li>
+</ol>
+<h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1><p>当然, 这种也</p>
+<h2 id="good-case"><a href="#good-case" class="headerlink" title="good case"></a>good case</h2><h2 id="bad-case"><a href="#bad-case" class="headerlink" title="bad case"></a>bad case</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>thoughts</tag>
+        <tag>aliyun</tag>
+        <tag>cloud-computing</tag>
+        <tag>conference</tag>
+        <tag>public-speaking</tag>
       </tags>
   </entry>
   <entry>
@@ -16434,27 +16434,10 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
       </tags>
   </entry>
   <entry>
-    <title>dts pitfall</title>
-    <url>//2024-03-27-dts-pitfall/</url>
-    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
-<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
-<p>可能的几种方案:</p>
-<ol>
-<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
-<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>thoughts</tag>
-        <tag>distributed-system</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s util</title>
     <url>//2024-03-05-k8s-util/</url>
     <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#97;&#x70;&#105;&#x73;&#x65;&#114;&#x76;&#x65;&#x72;&#64;&#118;&#x30;&#46;&#50;&#52;&#46;&#49;&#x35;">&#97;&#x70;&#105;&#x73;&#x65;&#114;&#x76;&#x65;&#x72;&#64;&#118;&#x30;&#46;&#50;&#52;&#46;&#49;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#x69;&#115;&#101;&#114;&#x76;&#101;&#x72;&#64;&#118;&#x30;&#46;&#50;&#x34;&#x2e;&#x31;&#x35;">&#x61;&#112;&#x69;&#115;&#101;&#114;&#x76;&#101;&#x72;&#64;&#118;&#x30;&#46;&#50;&#x34;&#x2e;&#x31;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
 </blockquote>
 <p>新建一个协程来启动HTTPServer. </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
@@ -16600,27 +16583,20 @@ StatefulSet<span aria-hidden="true" class="line-numbers-rows"><span></span><span
       </tags>
   </entry>
   <entry>
-    <title>linux cfs</title>
-    <url>//2024-04-28-linux-cfs/</url>
-    <content><![CDATA[<h1 id="linux-cfs"><a href="#linux-cfs" class="headerlink" title="linux-cfs"></a>linux-cfs</h1><h1 id="几个核心问题"><a href="#几个核心问题" class="headerlink" title="几个核心问题"></a>几个核心问题</h1><p>如何实现抢占调度 ? </p>
-<p>NICE值?</p>
-<p>多核情况下如何处理? </p>
-<p>如何与cgroups里的cfs_quota cfs_quota_period 联动? </p>
-<ul>
-<li>传统调度最小粒度是: 进程, 但无法避免 某些用户开了很多进程, 其他用户只开了1个进程, 从而造成的不公平.</li>
-<li>解决方案:  使用task_group结构来管理组调度的组。所有存在的task_group组成一个树型结构（与cgroup的目录结构相对应）这样把用户A放到group1, 用户B放到group2, 可以管理2个</li>
-<li>但怎么管理组内进程的调度?</li>
-</ul>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://cloud.tencent.com/developer/article/1116144">Linux 组调度浅析-腾讯云开发者社区-腾讯云</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/75243145">Linux内核浅析-进程调度的算法和数据结构 - 知乎</a></li>
-</ul>
+    <title>dts pitfall</title>
+    <url>//2024-03-27-dts-pitfall/</url>
+    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
+<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
+<p>可能的几种方案:</p>
+<ol>
+<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
+<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
+</ol>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>linux</tag>
-        <tag>scheduler</tag>
-        <tag>cpu</tag>
-        <tag>cfs</tag>
+        <tag>learn-from-failure</tag>
+        <tag>thoughts</tag>
+        <tag>distributed-system</tag>
       </tags>
   </entry>
   <entry>
@@ -16957,6 +16933,30 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
       </tags>
   </entry>
   <entry>
+    <title>linux cfs</title>
+    <url>//2024-04-28-linux-cfs/</url>
+    <content><![CDATA[<h1 id="linux-cfs"><a href="#linux-cfs" class="headerlink" title="linux-cfs"></a>linux-cfs</h1><h1 id="几个核心问题"><a href="#几个核心问题" class="headerlink" title="几个核心问题"></a>几个核心问题</h1><p>如何实现抢占调度 ? </p>
+<p>NICE值?</p>
+<p>多核情况下如何处理? </p>
+<p>如何与cgroups里的cfs_quota cfs_quota_period 联动? </p>
+<ul>
+<li>传统调度最小粒度是: 进程, 但无法避免 某些用户开了很多进程, 其他用户只开了1个进程, 从而造成的不公平.</li>
+<li>解决方案:  使用task_group结构来管理组调度的组。所有存在的task_group组成一个树型结构（与cgroup的目录结构相对应）这样把用户A放到group1, 用户B放到group2, 可以管理2个</li>
+<li>但怎么管理组内进程的调度?</li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://cloud.tencent.com/developer/article/1116144">Linux 组调度浅析-腾讯云开发者社区-腾讯云</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/75243145">Linux内核浅析-进程调度的算法和数据结构 - 知乎</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>scheduler</tag>
+        <tag>cpu</tag>
+        <tag>cfs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>nothing new under the sun</title>
     <url>//2024-05-05-nothing-new-under-the-sun/</url>
     <content><![CDATA[<h1 id="20240506-nothing-new-under-the-sun"><a href="#20240506-nothing-new-under-the-sun" class="headerlink" title="20240506-nothing-new-under-the-sun"></a>20240506-nothing-new-under-the-sun</h1><p><a href="https://techcrunch.com/2024/05/03/nasa-is-expanding-its-wallops-island-facility-to-support-three-times-as-many-launches/?utm_campaign=tc_daily_pm&utm_medium=newsletter&_hsenc=p2ANqtz-_pt71sn4qCkCoiGwCCV0uyZogPkRC8nOveczoxht3PFxUOspVDaWEPhEHlgDAPV-SsURhiDVvoLKHDEVsrVw_9EUC8rA&_hsmi=305558670&utm_source=tc&guccounter=1">NASA is expanding its Wallops Island facility to support three times as many launches | TechCrunch</a></p>
@@ -17231,6 +17231,35 @@ Allocatable:
       </tags>
   </entry>
   <entry>
+    <title>2025 Annual Reading List</title>
+    <url>//2024-12-31-2025-annual-list/</url>
+    <content><![CDATA[<h2 id="📚-BookList-2025"><a href="#📚-BookList-2025" class="headerlink" title="📚 BookList 2025"></a>📚 BookList 2025</h2><ul>
+<li>📋 <a href="https://detail.tmall.com/item.htm?ali_trackid=2:mm_1721980159_2323450014_111392550115:1730372520060_560407301_0&bxsign=tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&id=842506021019&scm=moon.0.0.moon_linkconverter_0&spm=a21wq.b804539.1000.mainShare&tkSid=1730372520060_560407301_0.0&un=ad322868c9dc35e7b463cb48fb1832e7&union_lens=lensId:APP@1729497981@2167296e_2298_192ae1ce363_3417@033uhK55xEUqaLOkWRQPqshb;tkScm:appTrans_site_0_0_0_0_0_0;scm:moon.0.0.moon_linkconverter_0;recoveryid:560407301_0@1730372520061&ut_sk=1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&skuId=5781756430189">https://detail.tmall.com/item.htm?ali_trackid&#x3D;2%3Amm_1721980159_2323450014_111392550115%3A1730372520060_560407301_0&amp;bxsign&#x3D;tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&amp;id&#x3D;842506021019&amp;scm&#x3D;moon.0.0.moon_linkconverter_0&amp;spm&#x3D;a21wq.b804539.1000.mainShare&amp;tkSid&#x3D;1730372520060_560407301_0.0&amp;un&#x3D;ad322868c9dc35e7b463cb48fb1832e7&amp;union_lens&#x3D;lensId%3AAPP%401729497981%402167296e_2298_192ae1ce363_3417%40033uhK55xEUqaLOkWRQPqshb%3BtkScm%3AappTrans_site_0_0_0_0_0_0%3Bscm%3Amoon.0.0.moon_linkconverter_0%3Brecoveryid%3A560407301_0%401730372520061&amp;ut_sk&#x3D;1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&amp;skuId&#x3D;5781756430189</a></li>
+<li>✅ 一个天文学家的夜空漫游指南</li>
+<li>✅ 世上为什么要有图书馆</li>
+<li>✅ 碧玉刀</li>
+<li>✅ 深渊-by 深蓝</li>
+<li>✅ <a href="https://book.douban.com/subject/37339619/">https://book.douban.com/subject/37339619/</a></li>
+<li>✅ 草原动物园-马伯庸</li>
+<li>✅ 七杀手</li>
+<li>✅ 七侯笔录-马伯庸</li>
+<li>✅ 关乎天下-中小企业赢的秘诀</li>
+<li>✅ 关乎天下2</li>
+<li>📖 边界的诱惑</li>
+<li>📖 It Doesn’t Have to Be Crazy at Work</li>
+<li>📖 逆风顺水-阿嘉仁波切</li>
+<li>📖 生命不过一场遇合-沈从文自传</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>books</tag>
+        <tag>reading</tag>
+        <tag>movies</tag>
+        <tag>games</tag>
+        <tag>annual-review</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2024 Plans &amp; Goals 年度计划</title>
     <url>//2023-12-31-2024-plans-goals/</url>
     <content><![CDATA[<h1 id="Goals"><a href="#Goals" class="headerlink" title="Goals"></a>Goals</h1><h2 id="kube-scheduler-committer"><a href="#kube-scheduler-committer" class="headerlink" title="kube-scheduler committer"></a>kube-scheduler committer</h2><ol>
@@ -17261,35 +17290,6 @@ Allocatable:
         <tag>plans</tag>
         <tag>goals</tag>
         <tag>2024</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2025 Annual Reading List</title>
-    <url>//2024-12-31-2025-annual-list/</url>
-    <content><![CDATA[<h2 id="📚-BookList-2025"><a href="#📚-BookList-2025" class="headerlink" title="📚 BookList 2025"></a>📚 BookList 2025</h2><ul>
-<li>📋 <a href="https://detail.tmall.com/item.htm?ali_trackid=2:mm_1721980159_2323450014_111392550115:1730372520060_560407301_0&bxsign=tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&id=842506021019&scm=moon.0.0.moon_linkconverter_0&spm=a21wq.b804539.1000.mainShare&tkSid=1730372520060_560407301_0.0&un=ad322868c9dc35e7b463cb48fb1832e7&union_lens=lensId:APP@1729497981@2167296e_2298_192ae1ce363_3417@033uhK55xEUqaLOkWRQPqshb;tkScm:appTrans_site_0_0_0_0_0_0;scm:moon.0.0.moon_linkconverter_0;recoveryid:560407301_0@1730372520061&ut_sk=1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&skuId=5781756430189">https://detail.tmall.com/item.htm?ali_trackid&#x3D;2%3Amm_1721980159_2323450014_111392550115%3A1730372520060_560407301_0&amp;bxsign&#x3D;tbkCB_wPiNNqsJ6JqpgBV1DrpsSV7p4NdSfh2n8GqwjPx2ywsPf0jVALSgPuSFp9A3u9YvBZ3Vvtiy65G8LoOan4DqxoNmMGpqxs70A6SaQ7mN0t-u1ZSychiz8BzbnorDXJU7jFEaLtzPwutFYtPfzWqik9yzc-ID2OEG46duzIeIn5wZvXZR6GTSKa0JIntan&amp;id&#x3D;842506021019&amp;scm&#x3D;moon.0.0.moon_linkconverter_0&amp;spm&#x3D;a21wq.b804539.1000.mainShare&amp;tkSid&#x3D;1730372520060_560407301_0.0&amp;un&#x3D;ad322868c9dc35e7b463cb48fb1832e7&amp;union_lens&#x3D;lensId%3AAPP%401729497981%402167296e_2298_192ae1ce363_3417%40033uhK55xEUqaLOkWRQPqshb%3BtkScm%3AappTrans_site_0_0_0_0_0_0%3Bscm%3Amoon.0.0.moon_linkconverter_0%3Brecoveryid%3A560407301_0%401730372520061&amp;ut_sk&#x3D;1.utdid_null_1729497984749.TaoPassword-Outside.lianmeng-app&amp;skuId&#x3D;5781756430189</a></li>
-<li>✅ 一个天文学家的夜空漫游指南</li>
-<li>✅ 世上为什么要有图书馆</li>
-<li>✅ 碧玉刀</li>
-<li>✅ 深渊-by 深蓝</li>
-<li>✅ <a href="https://book.douban.com/subject/37339619/">https://book.douban.com/subject/37339619/</a></li>
-<li>✅ 草原动物园-马伯庸</li>
-<li>✅ 七杀手</li>
-<li>✅ 七侯笔录-马伯庸</li>
-<li>✅ 关乎天下-中小企业赢的秘诀</li>
-<li>✅ 关乎天下2</li>
-<li>📖 边界的诱惑</li>
-<li>📖 It Doesn’t Have to Be Crazy at Work</li>
-<li>📖 逆风顺水-阿嘉仁波切</li>
-<li>📖 生命不过一场遇合-沈从文自传</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>books</tag>
-        <tag>reading</tag>
-        <tag>movies</tag>
-        <tag>games</tag>
-        <tag>annual-review</tag>
       </tags>
   </entry>
   <entry>
@@ -17975,20 +17975,6 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>qemu-img 使用笔记</title>
-    <url>//2023-11-06-qemu-img/</url>
-    <content><![CDATA[<h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png" alt="Untitled"></p>
-<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>virtualization</tag>
-        <tag>qemu</tag>
-        <tag>vm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Perf Tools 性能工具速查</title>
     <url>//2023-11-06-perf-tools/</url>
     <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>cpuz</p>
@@ -18008,6 +17994,20 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
         <tag>tools</tag>
         <tag>performance</tag>
         <tag>profiling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>qemu-img 使用笔记</title>
+    <url>//2023-11-06-qemu-img/</url>
+    <content><![CDATA[<h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png" alt="Untitled"></p>
+<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>virtualization</tag>
+        <tag>qemu</tag>
+        <tag>vm</tag>
       </tags>
   </entry>
   <entry>
