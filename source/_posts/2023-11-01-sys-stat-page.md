@@ -8,7 +8,7 @@ tags: [thoughts, system-design, dashboard]
 
 无意间发现: [37signals Status](https://www.37status.com/) 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:
 
-![Untitled](/_assets/2023-11-01-sys-stat-page/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-01-sys-stat-page/Untitled.png)
 
 另外顺便搜索了下, 发现这个页面还是Atlassian 提供的服务: [Statuspage | Atlassian](https://www.atlassian.com/software/statuspage?utm_campaign=www.37status.com&utm_content=SP-notifications&utm_medium=powered-by&utm_source=inapp)
 

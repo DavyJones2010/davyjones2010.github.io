@@ -60,7 +60,7 @@ mysql>  select * from employees  order by emp_no desc limit 300000, 3;
 第二步: 根据叶子节点上的主键值去聚簇索引上查询需要的全部字段值
 ```
 
-![img.png](source/_posts/learn-from-failure/img.png)
+![img.png](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2022-03-29-source/_posts/learn-from-failure/img.png)
 
 > 像上面这样，需要查询1000000次索引节点，查询1000100次聚簇索引的数据，最后再将结果过滤掉前1000000条，取出最后100条。
 > MySQL耗费了大量随机I/O在查询聚簇索引的数据上，而有1000000次随机I/O查询到的数据是不会出现在结果集当中的。

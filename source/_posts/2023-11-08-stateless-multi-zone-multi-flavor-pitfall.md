@@ -44,7 +44,7 @@ tags: [thoughts, learn-from-failure, cloud-computing, architecture]
 
 以 阿里云上海地域为例, 总共有12个可用区, 但ECI最多支持10个vsw
 
-![Untitled](/_assets/2023-11-08-stateless-multi-zone-multi-flavor-pitfall/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-08-stateless-multi-zone-multi-flavor-pitfall/Untitled.png)
 
 - 反观AWS, 最多6个AZ, 永续
 

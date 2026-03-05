@@ -12,7 +12,7 @@ tags: [k8s, troubleshooting, learn-from-failure]
 
 "Disk usage on image filesystem is over the high threshold, trying to free bytes down to the low threshold"
 
-![Untitled](k8s-troubleshooting/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled.png)
 
 ## 如何排查?
 
@@ -24,9 +24,9 @@ tags: [k8s, troubleshooting, learn-from-failure]
 - allocatable 是:
 - allocated:
 
-![Untitled](k8s-troubleshooting/Untitled%201.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-1.png)
 
-![Untitled](k8s-troubleshooting/Untitled%202.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-2.png)
 
 ### 登录node查看
 
@@ -34,7 +34,7 @@ tags: [k8s, troubleshooting, learn-from-failure]
 
 [https://support.d2iq.com/hc/en-us/articles/4409472622868-Pods-being-evicted-Attempting-to-reclaim-ephemeral-storage](https://support.d2iq.com/hc/en-us/articles/4409472622868-Pods-being-evicted-Attempting-to-reclaim-ephemeral-storage)
 
-![Untitled](k8s-troubleshooting/Untitled%203.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-3.png)
 
 ## 如何处理?
 
@@ -64,11 +64,11 @@ docker volume prune
 
 # Pod Evicted
 
-![Untitled](k8s-troubleshooting/Untitled%204.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-4.png)
 
 1. 如何查询pod为啥会被evicted?     
 
-![Untitled](k8s-troubleshooting/Untitled%205.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-5.png)
 
 1. 一般如何处理这种evicted的pod?
 
@@ -83,9 +83,9 @@ docker volume prune
 
 # Nameserver limits exceeded
 
-![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled.png)
-![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-1.png)
-![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-2.png)
-![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-3.png)
-![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-4.png)
-![Untitled](/_assets/2025-05-15-k8s-troubleshooting/Untitled-5.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-1.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-2.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-3.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-4.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-5.png)

@@ -20,7 +20,7 @@ lang: zh
   - 所以虽然实际Node对象中只有一个char/byte, 但实际占用空间至少是 16B+1B 
   - 所以官方给出的优化方案是: 
     - 减少Node对象数量:
-      - 使用 [RadixTree](https://www.cs.usfca.edu/~galles/visualization/RadixTree.html) ![radix-tree.png](../_assets/2021-10-31-weekend-summary/radix-tree.png)
+      - 使用 [RadixTree](https://www.cs.usfca.edu/~galles/visualization/RadixTree.html) ![radix-tree.png](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-10-31-weekend-summary/radix-tree.png)
       - 使用数组等方式, 不生产对象
 
 ---
@@ -33,7 +33,7 @@ lang: zh
   - 但由于题目里没有说清楚到底怎么评判结果, 个人以为是通过sysout等方式, 但实际推测应该是将构造函数中的items都在外部重新循环一遍查看.
   - 由于我的实现里, 新new出了新的items, 完全没有使用外部传入的. 所以评判结果一直是错误. 后续按照官方的意图修改了下, 就OK了.
   - 这个真是坑爹!!! 
-![img.png](../_assets/2021-10-31-weekend-summary/round3.png)
+![img.png](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-10-31-weekend-summary/round3.png)
 
 
 --- 

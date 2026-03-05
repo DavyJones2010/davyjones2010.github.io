@@ -12,4 +12,4 @@ iterm2
 
 如下, 确实要美观好多, 可读性也好很多.
 
-![image.png](/_assets/mac-setup/image.png)
+![image.png](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/mac-setup/image.png)

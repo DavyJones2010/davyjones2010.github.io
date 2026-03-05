@@ -14,4 +14,4 @@ tags: [thoughts, cgroups, qemu, virtualization]
 
 TODO: 底层还是要研究下cfs-scheduler具体的工作机制, 才能彻底透彻.
 
-![Untitled](/_assets/2024-01-25-cgroup-qemu-cfs/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-25-cgroup-qemu-cfs/Untitled.png)

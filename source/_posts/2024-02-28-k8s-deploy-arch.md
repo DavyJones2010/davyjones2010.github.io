@@ -12,7 +12,7 @@ tags: [k8s, deployment, architecture]
 
 如下图
 
-![Untitled](k8s-deploy-arch/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-28-k8s-deploy-arch/Untitled.png)
 
 # 分析
 
@@ -145,4 +145,4 @@ Kubernetes中的某些类型的Pod（例如kube-apiserver、kube-scheduler和kub
 
 ## configmap的使用
 
-![Untitled](/_assets/2024-02-28-k8s-deploy-arch/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-28-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-28-k8s-deploy-arch/Untitled.png)

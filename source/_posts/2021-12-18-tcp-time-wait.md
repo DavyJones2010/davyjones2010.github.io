@@ -7,7 +7,7 @@ tags: [tcp, timewait]
 
 ---
 疑问: 从下图可以看出, 客户端可能会是TIME_WAIT状态. 但如果是服务端主动关闭的呢? 服务端可能会是TIME_WAIT状态么?
-![img.png](../_assets/2021-12-18-tcp-time-wait/tcp.png)
+![img.png](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-12-18-tcp-time-wait/tcp.png)
 
 答案: 是可能的. 服务端主动关闭, 那么四次挥手的过程, 上图中客户端/服务端就要翻转下了. 
 

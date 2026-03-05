@@ -17,11 +17,11 @@ tags: [k8s, memory-manager, deep-dive]
 
 答案: 参见 [Node-pressure Eviction | Kubernetes](https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-out-of-memory-behavior) 底层是给不同QoS的Pod设定不同的oom_score_adj, 然后通过Linux的 oom_killer 识别&执行.
 
-![Untitled](k8s-memory-manager-deep-dive/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled.png)
 
 1. 为啥下边的场景, Pod2创建会失败? ❌
 
-![Untitled](k8s-memory-manager-deep-dive/Untitled%201.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled-1.png)
 
 1. 怎么跟cpumanager进行交互? 
 

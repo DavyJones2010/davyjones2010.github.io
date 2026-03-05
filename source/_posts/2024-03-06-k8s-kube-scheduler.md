@@ -8,25 +8,25 @@ tags: [k8s, kube-scheduler, scheduler, deep-dive]
 
 # 代码结构梳理
 
-![Untitled](k8s-kube-scheduler/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled.png)
 
 # 调度流程梳理-正常
 
-![Untitled](k8s-kube-scheduler/Untitled%201.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-1.png)
 
 - 关键点在上图标红的部分: 实际Bind成功之后, 只watch到了1个PodUpdate事件, 但由于 FilteringResourceEventHandler 的特殊处理, 如下, 会把事件修正为
     - 1个OnAdd事件
     - 1个OnDelete事件
 
-![Untitled](k8s-kube-scheduler/Untitled%202.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-2.png)
 
 - 详细trace参见如下: 发现在kube-sched日志中, bind成功后, 触发了 “Delete event” + “Add event”
 
-![Untitled](k8s-kube-scheduler/Untitled%203.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-3.png)
 
 # SchedulingQueue处理流程
 
-![Untitled](k8s-kube-scheduler/Untitled%204.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-4.png)
 
 # 初始化流程梳理
 
@@ -104,8 +104,8 @@ pkg/scheduler/framework/plugins/noderesources/fit.go:164
 
 // todo: 增加图例
 
-![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled.png)
-![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled-1.png)
-![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled-2.png)
-![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled-3.png)
-![Untitled](/_assets/2024-03-06-k8s-kube-scheduler/Untitled-4.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-1.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-2.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-3.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-4.png)

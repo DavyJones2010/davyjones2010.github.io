@@ -25,7 +25,7 @@ systemctl status kubepods.slice
 
 核心就是使用 `go-systemd` 库, 依赖关系如下: 
 
-![Untitled](k8s-cpumanager-cgroupsv1/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled.png)
 
 ## 带着疑问出发
 
@@ -359,7 +359,7 @@ $cat cpuset.cpus
 
 ```
 
-![Untitled](k8s-cpumanager-cgroupsv1/Untitled%201.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-1.png)
 
 # k8s系统组件
 
@@ -388,12 +388,12 @@ $sudo vim /var/lib/kubelet/config.yaml
 cgroupDriver: systemd
 ```
 
-![Untitled](k8s-cpumanager-cgroupsv1/Untitled%202.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-2.png)
 
 ## Pod里视角:
 
 Pod会限制每个Container的cpu/mem:
 
-![Untitled](/_assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled.png)
-![Untitled](/_assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-1.png)
-![Untitled](/_assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-2.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-1.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-2.png)

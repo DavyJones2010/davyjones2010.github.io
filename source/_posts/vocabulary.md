@@ -942,7 +942,7 @@ in third division
 > 三流团队
 > 
 
-![Untitled](/_assets/vocabulary/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/vocabulary/Untitled.png)
 
 oblivious
 

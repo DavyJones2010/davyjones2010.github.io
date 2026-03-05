@@ -6,4 +6,4 @@ tags: [container, docker, k8s, learning]
 
 # container-learning-roadmap
 
-![Untitled](container-learning-roadmap/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-31-container-learning-roadmap/Untitled.png)

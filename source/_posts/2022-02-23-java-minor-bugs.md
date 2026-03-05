@@ -13,7 +13,7 @@ lang: zh
 这里比较坑的一点是, 在IntelliJ IDEA中, 会默认flatten package, 即将目录路径层级用`.`连接, 因此
 `main/resources/META-INF/services/MyInterface` 与 `main/resources/META-INF.services/MyInterface`
 两个目录看起来是一样的, 如下(根本分不清楚到底是文件夹名字叫`codecontest.bloomfilter`还是文件夹是`codecontest/bloomfilter`): 
-![2022-02-23-java-minor-bugs-idea-path.png](../_assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png)
+![2022-02-23-java-minor-bugs-idea-path.png](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2022-02-23-java-minor-bugs/2022-02-23-java-minor-bugs-idea-path.png)
 
 随便搜了下, 发现大家踩同样坑的也不少, 目前看貌似没有好的办法避免, 记住有这个坑, 后续引以为戒吧!
 - [intellij idea包路径和文件夹目录的坑](https://blog.csdn.net/tszxlzc/article/details/65938891)

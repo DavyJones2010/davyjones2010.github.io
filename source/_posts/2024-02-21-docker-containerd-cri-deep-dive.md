@@ -8,9 +8,9 @@ tags: [docker, containerd, cri, deep-dive]
 
 # Overview
 
-![Untitled](docker-containerd-cri-deep-dive/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled.png)
 
-![Untitled](docker-containerd-cri-deep-dive/Untitled%201.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-1.png)
 
 个人总结下. 
 
@@ -443,7 +443,7 @@ OCI runtime spec: [runtime-spec/runtime.md at main · opencontainers/runtime-spe
 
 # 总体交互流程
 
-![Untitled](docker-containerd-cri-deep-dive/Untitled%202.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-2.png)
 
 # 详细
 
@@ -513,6 +513,6 @@ func (in *instrumentedService) RunPodSandbox(ctx context.Context, r *runtime.Run
 - [The differences between Docker, containerd, CRI-O and runc - Tutorial Works](https://www.tutorialworks.com/difference-docker-containerd-runc-crio-oci/)
 - [Container Runtimes Part 4: Kubernetes Container Runtimes & CRI](https://www.ianlewis.org/en/container-runtimes-part-4-kubernetes-container-run)
 
-![Untitled](/_assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled.png)
-![Untitled](/_assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-1.png)
-![Untitled](/_assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-2.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-1.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled-2.png)

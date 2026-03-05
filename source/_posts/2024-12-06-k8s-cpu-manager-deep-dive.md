@@ -24,7 +24,7 @@ tags: [k8s, cpu-manager, deep-dive]
 
 ## 资源逻辑
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png)
 
 - 这也就解释了为啥一旦开启 static 策略, 要求必须要有 kube-reserved/system-reserved 设定. 因为假设没有设置, 那么allocatable的就是整台物理机, 也就是存在GU Pod把CPU全给绑定完导致CPU耗尽,
 - 一是导致系统组件等没有CPU可以使用; —> 勘误, 此处实际系统组件是可以使用allocatable的cpu的.
@@ -129,7 +129,7 @@ Only containers that are both part of a Guaranteed pod and have integer CPU requ
 
 # 整体梳理
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled%201.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-1.png)
 
 > pkg/kubelet/cm/cpumanager/cpu_assignment.go:186 takeByTopology
 > 
@@ -154,12 +154,12 @@ Only containers that are both part of a Guaranteed pod and have integer CPU requ
 
 如下拓扑结构, 请求了 4C 的GU Pod, (没有配置bindToNuma, 没有配置FullPCPUsOnlyOption) 那么会如何分配&绑核? 
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled%202.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-2.png)
 
 - 可能性1: [1,3,7,9]
 - 可能性2: [1,4,7,10] ✅
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled%203.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-3.png)
 
 为啥会这样? 本质还是看代码的实现: 
 
@@ -178,7 +178,7 @@ Only containers that are both part of a Guaranteed pod and have integer CPU requ
 
 如下拓扑结构, 请求了 4C 的GU Pod, (没有配置bindToNuma, 没有配置FullPCPUsOnlyOption) 那么会如何分配&绑核? 
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled%204.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-4.png)
 
 1. 可能性1: [2,4,8,10]
 2. 可能性2: [2,5,8,11] ✅
@@ -189,13 +189,13 @@ Only containers that are both part of a Guaranteed pod and have integer CPU requ
 
 如下拓扑结构, 请求了 4C 的GU Pod, (没有配置bindToNuma, 没有配置FullPCPUsOnlyOption) 那么会如何分配&绑核? 
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled%205.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-5.png)
 
 - 很容易得出结论: [3,5,9,11]
 
 ### case4
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled%206.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-6.png)
 
 - 结论: [2,4,8,10] ✅
 
@@ -211,7 +211,7 @@ Only containers that are both part of a Guaranteed pod and have integer CPU requ
 
 ## case分析: distribute-cpus-across-numa
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled%207.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-7.png)
 
 逻辑概览: 
 
@@ -241,7 +241,7 @@ AlignBySocket —> 即socket聚合
 
 AlignBySocket 选项 与 TopologyManager的 PolicySingleNumaNode 是不兼容的. —> 为啥不兼容? 
 
-![Untitled](k8s-cpu-manager-deep-dive/Untitled%208.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-8.png)
 
 术语一直不统一, 但至少在cpumanager里
 
@@ -256,12 +256,12 @@ AlignBySocket 选项 与 TopologyManager的 PolicySingleNumaNode 是不兼容的
 - [K8s 节点 CPU 升级，导致 kubelet 无法启动故障一例](https://mp.weixin.qq.com/s/i0A2thWt1Ut7deDg-fmaog)
 - [Kubernetes 陈年老 bug - 绑核](https://mp.weixin.qq.com/s/QPA-1pf-V_zpcJcdghWHQA)
 
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png)
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-1.png)
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-2.png)
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-3.png)
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-4.png)
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-5.png)
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-6.png)
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-7.png)
-![Untitled](/_assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-8.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-1.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-2.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-3.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-4.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-5.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-6.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-7.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-8.png)

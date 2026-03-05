@@ -10,7 +10,7 @@ tags: [docker, container, architecture, deep-dive]
 
 参见官方文档: 
 
-![Untitled](docker-deepdive/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png)
 
 - 其中 `docker daemon` 默认是通过 uds 来listen本地的client请求, 优点是权限好控制. 只允许 **root 用户**在**本机访问**
 
@@ -88,4 +88,4 @@ tags: [docker, container, architecture, deep-dive]
 > 为了优化这个过程，通常建议在 `.dockerignore` 文件中列出不需要包括在构建上下文中的文件和目录，类似于 `.gitignore` 文件。这样可以减小 tar 归档的大小，提高构建效率，并且防止不必要的文件被发送到 Docker 守护进程。
 >
 
-![Untitled](/_assets/2024-02-20-docker-deepdive/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png)

@@ -16,13 +16,13 @@ FXXK!!!
 
 ## 内存不足
 
-![Untitled](/_assets/minikube-playground/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled.png)
 
-![Untitled](/_assets/minikube-playground/Untitled-1.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-1.png)
 
 ## checksum文件下载失败
 
-![Untitled](/_assets/minikube-playground/Untitled-2.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-2.png)
 
 修复: 
 
@@ -36,7 +36,7 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
 ## 下载速度太慢啦!
 
-![Untitled](/_assets/minikube-playground/Untitled-3.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-3.png)
 
 ```bash
 minikube start --kubernetes-version v1.17.5 \
@@ -51,7 +51,7 @@ minikube start --kubernetes-version v1.17.5 \
 
 ## conntrack 需要提前安装
 
-![Untitled](/_assets/minikube-playground/Untitled-4.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-4.png)
 
 ```bash
 
@@ -60,7 +60,7 @@ sudo yum install -y conntrack
 
 ## crictl 需要提前安装
 
-![Untitled](/_assets/minikube-playground/Untitled-5.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-5.png)
 
 参见: 手动把tgz下载下来:
 
@@ -68,7 +68,7 @@ sudo yum install -y conntrack
 
 ## kubectl 下载太慢
 
-![Untitled](/_assets/minikube-playground/Untitled-6.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-6.png)
 
 1. 根据: [Install and Set Up kubectl on Linux | Kubernetes](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/) 中说明, 直接配置yum源, 使用yum 安装要快很多. 
 2. 安装好之后, 直接 kubectl 就可以连接到minikube集群里了. 不需要再使用 `minikube kubectl`这种命令

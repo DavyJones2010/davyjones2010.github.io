@@ -14,9 +14,9 @@ tags: [thoughts, ai, chatgpt]
 
 如下: 
 
-![Untitled](/_assets/2023-10-30-chatgpt-eval-cont-d/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled.png)
 
-![Untitled](/_assets/2023-10-30-chatgpt-eval-cont-d/Untitled-1.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled-1.png)
 
 现在是时候摘下对ChatGPT的偏见墨镜了. 虽然之前在ground truth上多次欺骗与伤害了我.
 

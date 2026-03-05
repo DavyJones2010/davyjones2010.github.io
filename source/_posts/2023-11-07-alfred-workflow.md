@@ -16,11 +16,11 @@ tags: [alfred, workflow, automation, macos, productivity]
 2. 后续可以使用 {var:my_task} 来引用该值.
 - 如下, 把 {query} 保存到 task 参数中
 
-![Untitled](/_assets/2023-11-07-alfred-workflow/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-07-alfred-workflow/Untitled.png)
 
 - 如下, 使用参数 {var:task}
 
-![Untitled](/_assets/2023-11-07-alfred-workflow/Untitled-1.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-07-alfred-workflow/Untitled-1.png)
 
 ## ListFilter
 
@@ -173,7 +173,7 @@ translate "$1"
 
 如下图,  增加 `Arg and Vars` 组件: 
 
-![Untitled](/_assets/2023-11-07-alfred-workflow/Untitled-2.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-07-alfred-workflow/Untitled-2.png)
 
 ### 2. 设置时间格式:
 
@@ -185,4 +185,4 @@ translate "$1"
 
 如下图, 使用 `{var:starTime}` 的方式引用变量
 
-![Untitled](/_assets/2023-11-07-alfred-workflow/Untitled-3.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-07-alfred-workflow/Untitled-3.png)

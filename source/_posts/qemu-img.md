@@ -10,6 +10,6 @@ tags: [qemu, vm, virtualization, linux]
 qemu-img info xxx.qcow2
 ```
 
-![Untitled](/_assets/qemu-img/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png)
 
 # shrink qcow2 img size

@@ -6,4 +6,4 @@ tags: [k8s, list-watch, informer]
 
 # k8s-list-watch
 
-![Untitled](k8s-list-watch/Untitled.png)
+![Untitled](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-04-k8s-list-watch/Untitled.png)

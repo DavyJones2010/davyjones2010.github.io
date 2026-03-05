@@ -47,10 +47,10 @@ bundle install
 
 相关日志如下，怀疑是由于时间戳的问题。因为Post的时间戳是2021-09-05，且本机当前时间也是2021-09-05，但看如下本地服务器启动的时间戳，应该是UTC+0的时区，
 还是在2021-09-04。Jekyll应该有这种潜规则或者限制，<mark><font color=red>大于当前日期的Post默认不显示</font></mark>。
-![site-generate-error.png](../assets/img/site-generate-error.png)
+![site-generate-error.png](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-09-05-../assets/img/site-generate-error.png)
 ### 解决方案
 如下图，修改`_config.yaml`文件中`timezone`配置即可，修改成`Asia/Shanghai`
-![2021-09-05-jekyll-site-timezone-config-yaml.png](../assets/img/2021-09-05-jekyll-site-timezone-config-yaml.png)
+![2021-09-05-jekyll-site-timezone-config-yaml.png](https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2021-09-05-../assets/img/2021-09-05-jekyll-site-timezone-config-yaml.png)
 
 ---
 
