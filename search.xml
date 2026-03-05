@@ -1688,6 +1688,26 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
       </tags>
   </entry>
   <entry>
+    <title>精神训练与身体训练</title>
+    <url>//2021-09-08-physical-psychological/</url>
+    <content><![CDATA[<blockquote>
+<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
+</blockquote>
+<blockquote>
+<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
+</blockquote>
+<blockquote>
+<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
+</blockquote>
+<p>所以要注意加强锻炼身体哦~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>snippets</tag>
+        <tag>physical</tag>
+        <tag>psychological</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>kube-scheduler笔记之Queue研究</title>
     <url>//2021-09-08-kube-scheduler-queue/</url>
     <content><![CDATA[<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">type PriorityQueue struct &#123;
@@ -1759,26 +1779,6 @@ func (n *NodeInfo) RemovePod(pod *v1.Pod) error &#123;
         <tag>scheduler</tag>
         <tag>kube-scheduler</tag>
         <tag>kube-scheduler-queue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>精神训练与身体训练</title>
-    <url>//2021-09-08-physical-psychological/</url>
-    <content><![CDATA[<blockquote>
-<p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
-</blockquote>
-<blockquote>
-<p>他拒绝的是精英圈子本身。<br>他拒绝的是人活着就要往上爬的这种事本身。</p>
-</blockquote>
-<blockquote>
-<p>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄；苟野蛮其体魄矣，则文明之精神随之。 <br><br>– 毛泽东 &lt;体育之研究&gt;</p>
-</blockquote>
-<p>所以要注意加强锻炼身体哦~</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>snippets</tag>
-        <tag>physical</tag>
-        <tag>psychological</tag>
       </tags>
   </entry>
   <entry>
@@ -5185,6 +5185,24 @@ pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="t
       </tags>
   </entry>
   <entry>
+    <title>一些有意思的记录-3</title>
+    <url>//2022-03-24-random-snippets/</url>
+    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
+<span class="token function">curl</span> cip.cc
+<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
+<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
+<ol>
+<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
+<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>net-tools</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker的一些总结</title>
     <url>//2022-03-18-docker-summary/</url>
     <content><![CDATA[<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
@@ -5551,26 +5569,8 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>k8s</tag>
-        <tag>container</tag>
         <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一些有意思的记录-3</title>
-    <url>//2022-03-24-random-snippets/</url>
-    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
-<span class="token function">curl</span> cip.cc
-<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
-<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
-<ol>
-<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
-<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>net-tools</tag>
+        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -5992,6 +5992,25 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
       </tags>
   </entry>
   <entry>
+    <title>云计算笔记--aws的DefaultVpc实现调研</title>
+    <url>//2022-04-05-aws-default-vpc/</url>
+    <content><![CDATA[<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html">AWS Default VPCs</a></p>
+<ol>
+<li>默认每个账号下, 每个地域下, AWS都会自动创建 172.31.0.0&#x2F;16  CIDR的VPC</li>
+<li>会在账号下Default VPC内, 每个可用区都创建一个VSW, 范围是:<br>a. VSW网段范围: [172.31.00000000.0&#x2F;20, 172.31.11110000.0&#x2F;20] 共16个VSW<br>b. 每个VSW内, IP数量: 2^12&#x3D;4096 个</li>
+<li>新的可用区上线之后, 等待几天, AWS就会自动创建对应可用区的Default VSW.</li>
+<li>只要对默认VPC进行了配置修改, 那么新的可用区上线之后, 就不会为之自动创建DefaultVSW了.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>aws</tag>
+        <tag>cloud</tag>
+        <tag>iaas</tag>
+        <tag>default-vpc</tag>
+        <tag>vpc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记录一些有趣的产品设计</title>
     <url>//2022-04-04-good-design/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
@@ -6062,25 +6081,6 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
       <tags>
         <tag>product-design</tag>
         <tag>good-design</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>云计算笔记--aws的DefaultVpc实现调研</title>
-    <url>//2022-04-05-aws-default-vpc/</url>
-    <content><![CDATA[<p><a href="https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html">AWS Default VPCs</a></p>
-<ol>
-<li>默认每个账号下, 每个地域下, AWS都会自动创建 172.31.0.0&#x2F;16  CIDR的VPC</li>
-<li>会在账号下Default VPC内, 每个可用区都创建一个VSW, 范围是:<br>a. VSW网段范围: [172.31.00000000.0&#x2F;20, 172.31.11110000.0&#x2F;20] 共16个VSW<br>b. 每个VSW内, IP数量: 2^12&#x3D;4096 个</li>
-<li>新的可用区上线之后, 等待几天, AWS就会自动创建对应可用区的Default VSW.</li>
-<li>只要对默认VPC进行了配置修改, 那么新的可用区上线之后, 就不会为之自动创建DefaultVSW了.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>aws</tag>
-        <tag>cloud</tag>
-        <tag>iaas</tag>
-        <tag>default-vpc</tag>
-        <tag>vpc</tag>
       </tags>
   </entry>
   <entry>
@@ -6277,9 +6277,10 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
+        <tag>kubernetes</tag>
         <tag>list-watch</tag>
-        <tag>k8s-architect</tag>
+        <tag>informer</tag>
+        <tag>api-server</tag>
       </tags>
   </entry>
   <entry>
@@ -7287,6 +7288,41 @@ prometheus_http_request_duration_seconds_bucket&#123;handler&#x3D;&quot;&#x2F;&q
       </tags>
   </entry>
   <entry>
+    <title>资源调度API设计的思考</title>
+    <url>//2022-05-23-scheduler-api-design/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀.</p>
+<h1 id="批量调度"><a href="#批量调度" class="headerlink" title="批量调度"></a>批量调度</h1><h2 id="amount-amp-minAmount-模式"><a href="#amount-amp-minAmount-模式" class="headerlink" title="amount &amp; minAmount 模式:"></a>amount &amp; minAmount 模式:</h2><h3 id="模式解释"><a href="#模式解释" class="headerlink" title="模式解释"></a>模式解释</h3><p>样例请求如下:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">BatchParam</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Integer</span> minAmount<span class="token punctuation">;</span>
+    <span class="token class-name">Integer</span> amount<span class="token punctuation">;</span>    
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>语义解释: </p>
+<ul>
+<li>minAmount: 代表请求方需求的最小的资源量. </li>
+<li>amount: 代表请求方需要的最大资源量.</li>
+</ul>
+<p>有点儿抽象, 我们站在scheduler的角度看.<br>批量调度资源, 资源不一定总会满足用户需求的资源, 此时就需要做个妥协,<br>如果能调度出来的资源量(realAmount)范围:</p>
+<ul>
+<li>[0, minAmount), 则代表无法满足用户最小需求量, 直接返回失败, 不扣减任何资源.</li>
+<li>[minAmount, amount), 则代表满足用户最小需求量, 则返回部分成功, 扣减realAmount的资源量, 并把realAmount透出给调用方.</li>
+<li>&#x3D;&#x3D;amount, 则代表可以完全满足用户资源需求, 则返回成功, 扣减realAmount&#x3D;amount的资源量.</li>
+</ul>
+<h3 id="模式样例"><a href="#模式样例" class="headerlink" title="模式样例"></a>模式样例</h3><p>这种双参数的方案, 本质是单参数 <code>amount</code> 的超集. 更加灵活.</p>
+<ul>
+<li>allOrNothing模式: 严格要求必须是amount, 则参数中 minAmount &#x3D; amount 即可实现.</li>
+<li>tryBest模式: 能创建几个是几个, 但最好能创建出amount数量. 则参数中, minAmount &#x3D; 0 即可实现.</li>
+</ul>
+<p>而实际应用上, 阿里云的API <a href="https://help.aliyun.com/document_detail/63440.html">RunInstances</a> 也是如此设计的.</p>
+<h2 id="tryBest-amp-allOrNothing-模式"><a href="#tryBest-amp-allOrNothing-模式" class="headerlink" title="tryBest &amp; allOrNothing 模式:"></a>tryBest &amp; allOrNothing 模式:</h2><p>本质上可以用上边的 <code>minAmount, amount</code> 两个参数进行描述, 更加优雅与灵活.</p>
+<h2 id="批量调度性能优化的思考"><a href="#批量调度性能优化的思考" class="headerlink" title="批量调度性能优化的思考"></a>批量调度性能优化的思考</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>scheduler-design</tag>
+        <tag>api-design</tag>
+        <tag>scheduler-api</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java中常用的数据库连接池以及事务框架的原理探究</title>
     <url>//2022-05-23-java-db-connection-transaction/</url>
     <content><![CDATA[<h1 id="思考1-Spring里各种事务隔离级别-本质上是如何实现的"><a href="#思考1-Spring里各种事务隔离级别-本质上是如何实现的" class="headerlink" title="思考1: Spring里各种事务隔离级别, 本质上是如何实现的?"></a>思考1: Spring里各种事务隔离级别, 本质上是如何实现的?</h1><p>很有意思的一个问题. 单个connection或者DB原生是无法实现的, 本质上是通过不同的connection来实现的.</p>
@@ -7487,41 +7523,6 @@ public synchronized void close() throws SQLException &#123;
         <tag>database</tag>
         <tag>connection</tag>
         <tag>transaction</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>资源调度API设计的思考</title>
-    <url>//2022-05-23-scheduler-api-design/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀.</p>
-<h1 id="批量调度"><a href="#批量调度" class="headerlink" title="批量调度"></a>批量调度</h1><h2 id="amount-amp-minAmount-模式"><a href="#amount-amp-minAmount-模式" class="headerlink" title="amount &amp; minAmount 模式:"></a>amount &amp; minAmount 模式:</h2><h3 id="模式解释"><a href="#模式解释" class="headerlink" title="模式解释"></a>模式解释</h3><p>样例请求如下:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">BatchParam</span> <span class="token punctuation">&#123;</span>
-    <span class="token class-name">Integer</span> minAmount<span class="token punctuation">;</span>
-    <span class="token class-name">Integer</span> amount<span class="token punctuation">;</span>    
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>语义解释: </p>
-<ul>
-<li>minAmount: 代表请求方需求的最小的资源量. </li>
-<li>amount: 代表请求方需要的最大资源量.</li>
-</ul>
-<p>有点儿抽象, 我们站在scheduler的角度看.<br>批量调度资源, 资源不一定总会满足用户需求的资源, 此时就需要做个妥协,<br>如果能调度出来的资源量(realAmount)范围:</p>
-<ul>
-<li>[0, minAmount), 则代表无法满足用户最小需求量, 直接返回失败, 不扣减任何资源.</li>
-<li>[minAmount, amount), 则代表满足用户最小需求量, 则返回部分成功, 扣减realAmount的资源量, 并把realAmount透出给调用方.</li>
-<li>&#x3D;&#x3D;amount, 则代表可以完全满足用户资源需求, 则返回成功, 扣减realAmount&#x3D;amount的资源量.</li>
-</ul>
-<h3 id="模式样例"><a href="#模式样例" class="headerlink" title="模式样例"></a>模式样例</h3><p>这种双参数的方案, 本质是单参数 <code>amount</code> 的超集. 更加灵活.</p>
-<ul>
-<li>allOrNothing模式: 严格要求必须是amount, 则参数中 minAmount &#x3D; amount 即可实现.</li>
-<li>tryBest模式: 能创建几个是几个, 但最好能创建出amount数量. 则参数中, minAmount &#x3D; 0 即可实现.</li>
-</ul>
-<p>而实际应用上, 阿里云的API <a href="https://help.aliyun.com/document_detail/63440.html">RunInstances</a> 也是如此设计的.</p>
-<h2 id="tryBest-amp-allOrNothing-模式"><a href="#tryBest-amp-allOrNothing-模式" class="headerlink" title="tryBest &amp; allOrNothing 模式:"></a>tryBest &amp; allOrNothing 模式:</h2><p>本质上可以用上边的 <code>minAmount, amount</code> 两个参数进行描述, 更加优雅与灵活.</p>
-<h2 id="批量调度性能优化的思考"><a href="#批量调度性能优化的思考" class="headerlink" title="批量调度性能优化的思考"></a>批量调度性能优化的思考</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>scheduler-design</tag>
-        <tag>api-design</tag>
-        <tag>scheduler-api</tag>
       </tags>
   </entry>
   <entry>
@@ -8144,8 +8145,8 @@ public synchronized void close() throws SQLException &#123;
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>k8s</tag>
-        <tag>container</tag>
         <tag>docker</tag>
+        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -8177,10 +8178,10 @@ public synchronized void close() throws SQLException &#123;
 <h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>k8s</tag>
-        <tag>container</tag>
         <tag>docker</tag>
         <tag>books</tag>
         <tag>2022</tag>
+        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -13713,10 +13714,10 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
       <tags>
         <tag>k8s</tag>
         <tag>containerd</tag>
+        <tag>container-runtime</tag>
         <tag>container</tag>
         <tag>cri</tag>
         <tag>runc</tag>
-        <tag>container-runtime</tag>
       </tags>
   </entry>
   <entry>
@@ -13733,9 +13734,10 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
 <h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>可以想下, 自己现在对于某个技术, 是处于哪个认知层次?</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
         <tag>learning</tag>
         <tag>methodology</tag>
+        <tag>self-improvement</tag>
+        <tag>knowledge</tag>
       </tags>
   </entry>
   <entry>
@@ -13814,9 +13816,10 @@ Wants&#x3D;sshd-keygen.service
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310290018579.png"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
+        <tag>death-stranding</tag>
         <tag>gaming</tag>
-        <tag>travel</tag>
+        <tag>iceland</tag>
+        <tag>culture</tag>
       </tags>
   </entry>
   <entry>
@@ -13832,9 +13835,10 @@ Wants&#x3D;sshd-keygen.service
 <p>持续更新</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
-        <tag>ai</tag>
         <tag>chatgpt</tag>
+        <tag>ai</tag>
+        <tag>evaluation</tag>
+        <tag>llm</tag>
       </tags>
   </entry>
   <entry>
@@ -13860,10 +13864,10 @@ Wants&#x3D;sshd-keygen.service
 </blockquote>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
         <tag>cloud-computing</tag>
         <tag>cloud-exit</tag>
         <tag>architecture</tag>
+        <tag>strategy</tag>
       </tags>
   </entry>
   <entry>
@@ -13967,10 +13971,9 @@ Rework  - Jason Fried
 <p>2021~2023:  <a href="https://world.hey.com/dhh">David Heinemeier Hansson</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
         <tag>cloud-exit</tag>
         <tag>dhh</tag>
-        <tag>ruby-on-rails</tag>
+        <tag>hey</tag>
         <tag>entrepreneurship</tag>
       </tags>
   </entry>
@@ -13988,9 +13991,10 @@ Rework  - Jason Fried
 </ol>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
-        <tag>system-design</tag>
+        <tag>system-monitoring</tag>
+        <tag>statistics</tag>
         <tag>dashboard</tag>
+        <tag>visualization</tag>
       </tags>
   </entry>
   <entry>
@@ -14007,9 +14011,10 @@ Rework  - Jason Fried
 <p>目前LLM或许可以解决这个问题. 但在具备LLM能力前, 我们还是好好地完善webUI或者API能力吧.</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>learn-from-failure</tag>
-        <tag>思考</tag>
         <tag>bot</tag>
+        <tag>pitfalls</tag>
+        <tag>lessons-learned</tag>
+        <tag>development</tag>
       </tags>
   </entry>
   <entry>
@@ -14069,25 +14074,10 @@ Rework  - Jason Fried
 <h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1><p>当然, 这种也</p>
 <h2 id="good-case"><a href="#good-case" class="headerlink" title="good case"></a>good case</h2><h2 id="bad-case"><a href="#bad-case" class="headerlink" title="bad case"></a>bad case</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
         <tag>aliyun</tag>
         <tag>cloud-computing</tag>
         <tag>conference</tag>
-        <tag>public-speaking</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>敏捷用户故事实践</title>
-    <url>//2023-11-05-agile-storys/</url>
-    <content><![CDATA[<h1 id="20231106-agile-storys"><a href="#20231106-agile-storys" class="headerlink" title="20231106-agile-storys"></a>20231106-agile-storys</h1><p><a href="https://world.hey.com/dhh/no-one-wants-to-be-a-code-monkey-151478dd">No one wants to be a code monkey</a> </p>
-<blockquote>
-<p>Software developers and designers aren’t happy doing assembly line work.<br>Calling that work “stories” is the great con of many modern agile processes.<br><strong>A story without a beginning, a middle, or an end is a shitty one.</strong><br>It’s more like just a scene, shot out of sequence.</p>
-</blockquote>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>思考</tag>
-        <tag>engineering-culture</tag>
-        <tag>agile</tag>
+        <tag>event</tag>
       </tags>
   </entry>
   <entry>
@@ -14244,6 +14234,21 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
+    <title>敏捷用户故事实践</title>
+    <url>//2023-11-05-agile-storys/</url>
+    <content><![CDATA[<h1 id="20231106-agile-storys"><a href="#20231106-agile-storys" class="headerlink" title="20231106-agile-storys"></a>20231106-agile-storys</h1><p><a href="https://world.hey.com/dhh/no-one-wants-to-be-a-code-monkey-151478dd">No one wants to be a code monkey</a> </p>
+<blockquote>
+<p>Software developers and designers aren’t happy doing assembly line work.<br>Calling that work “stories” is the great con of many modern agile processes.<br><strong>A story without a beginning, a middle, or an end is a shitty one.</strong><br>It’s more like just a scene, shot out of sequence.</p>
+</blockquote>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>project-management</tag>
+        <tag>methodology</tag>
+        <tag>agile</tag>
+        <tag>user-stories</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>瘦客户端使用陷阱</title>
     <url>//2023-11-06-thin-client-pitfall/</url>
     <content><![CDATA[<h1 id="20231107-thin-client-pitfall"><a href="#20231107-thin-client-pitfall" class="headerlink" title="20231107-thin-client-pitfall"></a>20231107-thin-client-pitfall</h1><p>发现在开发很多问题排查&amp;提效工具时, 服务端同学仍然陷入定势思维. 强调服务端优先, 瘦客户端. 从而导致整体实现过为臃肿, 开发&amp;改造周期长, 性能不太好等问题. </p>
@@ -14274,9 +14279,10 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
 <p>Small is beautiful, small is powerful~</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>learn-from-failure</tag>
-        <tag>思考</tag>
         <tag>architecture</tag>
+        <tag>pitfalls</tag>
+        <tag>lessons-learned</tag>
+        <tag>thin-client</tag>
       </tags>
   </entry>
   <entry>
@@ -14313,10 +14319,10 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
 </ol>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>learn-from-failure</tag>
-        <tag>思考</tag>
-        <tag>cloud-computing</tag>
-        <tag>architecture</tag>
+        <tag>pitfalls</tag>
+        <tag>stateless-services</tag>
+        <tag>multi-zone</tag>
+        <tag>multi-flavor</tag>
       </tags>
   </entry>
   <entry>
@@ -14332,9 +14338,10 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
         <tag>api-design</tag>
         <tag>http</tag>
+        <tag>post</tag>
+        <tag>get</tag>
       </tags>
   </entry>
   <entry>
@@ -14353,9 +14360,10 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
 <p>如果没人知道你的产品会啥时候突然下线, 那么信任就无从谈起.</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
         <tag>career</tag>
+        <tag>long-term-thinking</tag>
         <tag>philosophy</tag>
+        <tag>life-planning</tag>
       </tags>
   </entry>
   <entry>
@@ -14457,10 +14465,9 @@ Example:
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>golang</tag>
-        <tag>network</tag>
-        <tag>proxy</tag>
-        <tag>http</tag>
-        <tag>socket</tag>
+        <tag>networking</tag>
+        <tag>sockets</tag>
+        <tag>concurrency</tag>
       </tags>
   </entry>
   <entry>
@@ -14492,9 +14499,10 @@ Example:
 <p>Apollo</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
+        <tag>reflection</tag>
         <tag>career</tag>
-        <tag>life</tag>
+        <tag>life-decisions</tag>
+        <tag>personal-growth</tag>
       </tags>
   </entry>
   <entry>
@@ -14565,10 +14573,44 @@ Example:
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>learn-from-failure</tag>
-        <tag>k8s</tag>
-        <tag>思考</tag>
+        <tag>kubernetes</tag>
+        <tag>pitfalls</tag>
+        <tag>lessons-learned</tag>
         <tag>vpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s Memory Manager 深入解析</title>
+    <url>//2024-01-09-k8s-memory-manager-deep-dive/</url>
+    <content><![CDATA[<h1 id="k8s-memory-manager-deep-dive"><a href="#k8s-memory-manager-deep-dive" class="headerlink" title="k8s-memory-manager-deep-dive"></a>k8s-memory-manager-deep-dive</h1><ul>
+<li>只能针对GU, 不保证burstable的pod是否跨numa访问.</li>
+<li>kube-scheduler无法感知numa: The default Kubernetes scheduler is not aware of the node’s NUMA topology, and it can be a reason for many admission errors during the pod start.</li>
+</ul>
+<h1 id="疑问汇总"><a href="#疑问汇总" class="headerlink" title="疑问汇总"></a>疑问汇总</h1><ol>
+<li><p>mm怎么跟cadvisor交互, 来获取内存信息? 详细代码实现. ❌</p>
+</li>
+<li><p>如下图, 如果到操作系统来给pod发送OOM, 如何保证 “Low-priority containers are targeted before the high-priority containers”? 在进程优先级上有设定? 底层是怎么实现的? ✅</p>
+</li>
+</ol>
+<p>答案: 参见 <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-out-of-memory-behavior">Node-pressure Eviction | Kubernetes</a> 底层是给不同QoS的Pod设定不同的oom_score_adj, 然后通过Linux的 oom_killer 识别&amp;执行.</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled.png" alt="Untitled"></p>
+<ol>
+<li>为啥下边的场景, Pod2创建会失败? ❌</li>
+</ol>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled-1.png" alt="Untitled"></p>
+<ol>
+<li>怎么跟cpumanager进行交互?</li>
+</ol>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="%5Bhttps://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work?">Kubernetes Memory Manager moves to beta | Kubernetes</a>](<a href="https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work">https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work</a>?))</li>
+<li><a href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/1769-memory-manager">enhancements&#x2F;keps&#x2F;sig-node&#x2F;1769-memory-manager&#x2F;mm_tm_diagram.png at master · kubernetes&#x2F;enhancements</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>resource-management</tag>
+        <tag>kubernetes</tag>
+        <tag>memory-manager</tag>
+        <tag>kubelet</tag>
       </tags>
   </entry>
   <entry>
@@ -14668,39 +14710,6 @@ Example:
         <tag>cpu</tag>
         <tag>libvirt</tag>
         <tag>hyperthreading</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>K8s Memory Manager 深入解析</title>
-    <url>//2024-01-09-k8s-memory-manager-deep-dive/</url>
-    <content><![CDATA[<h1 id="k8s-memory-manager-deep-dive"><a href="#k8s-memory-manager-deep-dive" class="headerlink" title="k8s-memory-manager-deep-dive"></a>k8s-memory-manager-deep-dive</h1><ul>
-<li>只能针对GU, 不保证burstable的pod是否跨numa访问.</li>
-<li>kube-scheduler无法感知numa: The default Kubernetes scheduler is not aware of the node’s NUMA topology, and it can be a reason for many admission errors during the pod start.</li>
-</ul>
-<h1 id="疑问汇总"><a href="#疑问汇总" class="headerlink" title="疑问汇总"></a>疑问汇总</h1><ol>
-<li><p>mm怎么跟cadvisor交互, 来获取内存信息? 详细代码实现. ❌</p>
-</li>
-<li><p>如下图, 如果到操作系统来给pod发送OOM, 如何保证 “Low-priority containers are targeted before the high-priority containers”? 在进程优先级上有设定? 底层是怎么实现的? ✅</p>
-</li>
-</ol>
-<p>答案: 参见 <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-out-of-memory-behavior">Node-pressure Eviction | Kubernetes</a> 底层是给不同QoS的Pod设定不同的oom_score_adj, 然后通过Linux的 oom_killer 识别&amp;执行.</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled.png" alt="Untitled"></p>
-<ol>
-<li>为啥下边的场景, Pod2创建会失败? ❌</li>
-</ol>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-10-k8s-memory-manager-deep-dive/Untitled-1.png" alt="Untitled"></p>
-<ol>
-<li>怎么跟cpumanager进行交互?</li>
-</ol>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="%5Bhttps://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work?">Kubernetes Memory Manager moves to beta | Kubernetes</a>](<a href="https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work">https://kubernetes.io/blog/2021/08/11/kubernetes-1-22-feature-memory-manager-moves-to-beta/#How-does-it-work</a>?))</li>
-<li><a href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/1769-memory-manager">enhancements&#x2F;keps&#x2F;sig-node&#x2F;1769-memory-manager&#x2F;mm_tm_diagram.png at master · kubernetes&#x2F;enhancements</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>memory-manager</tag>
-        <tag>深入解析</tag>
       </tags>
   </entry>
   <entry>
@@ -14808,36 +14817,9 @@ Example:
 <h2 id="ginkgo库"><a href="#ginkgo库" class="headerlink" title="ginkgo库"></a>ginkgo库</h2><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>golang</tag>
-        <tag>cobra</tag>
-        <tag>tools</tag>
-        <tag>cli</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>虎寺</title>
-    <url>//2024-01-20-hushi/</url>
-    <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
-<blockquote>
-<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
-</blockquote>
-<ul>
-<li>胡适<blockquote>
-</blockquote>
-</li>
-</ul>
-<p><a href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>思考</tag>
-        <tag>life</tag>
+        <tag>utilities</tag>
+        <tag>helper-functions</tag>
+        <tag>best-practices</tag>
       </tags>
   </entry>
   <entry>
@@ -15209,8 +15191,38 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>linux</tag>
-        <tag>resource-management</tag>
         <tag>cgroups</tag>
+        <tag>resource-control</tag>
+        <tag>process-management</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>虎寺</title>
+    <url>//2024-01-20-hushi/</url>
+    <content><![CDATA[<h1 id="20240121-hushi"><a href="#20240121-hushi" class="headerlink" title="20240121-hushi"></a>20240121-hushi</h1><p>当发生一些政治性的大事件, 你感觉到完全无能为力的时候, 最好选择一个离政治最远的一个角落, 去做一些纯学术的研究. </p>
+<blockquote>
+<p>发现一个字的古代的读音, 跟发现一个小行星的价值, 是没有差别的.</p>
+</blockquote>
+<ul>
+<li>胡适<blockquote>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>做人的人生底线是, 不降志, 不辱身, 不追求时髦, 也不躲避危险.</p>
+</blockquote>
+<ul>
+<li>胡适<blockquote>
+</blockquote>
+</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=ksQyUSaG2oI&ab_channel=%E6%9F%B4%E9%9D%99ChaiJing">柴静访谈贺卫方：没有独立的司法，没有一个人是安全的 - YouTube</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>experience</tag>
+        <tag>culture</tag>
+        <tag>travel</tag>
+        <tag>japan</tag>
       </tags>
   </entry>
   <entry>
@@ -15223,10 +15235,11 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-01-25-cgroup-qemu-cfs/Untitled.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
+        <tag>linux</tag>
         <tag>cgroups</tag>
         <tag>virtualization</tag>
         <tag>qemu</tag>
+        <tag>cfs</tag>
       </tags>
   </entry>
   <entry>
@@ -15319,11 +15332,82 @@ $ sudo runc list
 $ sudo runc <span class="token builtin">delete</span> mycontainerid
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
         <tag>containerd</tag>
         <tag>cri</tag>
         <tag>runc</tag>
-        <tag>crictl</tag>
+        <tag>cli-tools</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 技术深入剖析</title>
+    <url>//2024-02-19-docker-deepdive/</url>
+    <content><![CDATA[<h1 id="docker-deepdive"><a href="#docker-deepdive" class="headerlink" title="docker-deepdive"></a>docker-deepdive</h1><h1 id="architecture"><a href="#architecture" class="headerlink" title="architecture"></a>architecture</h1><p>参见官方文档: </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png" alt="Untitled"></p>
+<ul>
+<li>其中 <code>docker daemon</code> 默认是通过 uds 来listen本地的client请求, 优点是权限好控制. 只允许 <strong>root 用户</strong>在<strong>本机访问</strong></li>
+</ul>
+<aside>
+💡 - By default, the Docker daemon listens for connections on a Unix socket to accept requests from local clients.
+- By default, it will listen on `unix:///var/run/docker.sock` to allow **only local connections by the *root* user**.
+
+</aside>
+
+<ul>
+<li>也可以配置按照TCP方式listen, 从而允许远程来访问, 详细参见: <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#bind-docker-to-another-hostport-or-a-unix-socket">dockerd | Docker Docs</a> 但需要注意安全风险</li>
+</ul>
+<h1 id="docker-sock"><a href="#docker-sock" class="headerlink" title="docker.sock"></a>docker.sock</h1><p>之前不太理解为啥docker要监听在: <code>/run/docker.sock</code>  这个地址上? 对<a href="go-network-socket%20a9506a8dfda64f9aab81c62f89215379.md">uds有了完整的实践与测试</a>之后, 对此有了透彻的认知. </p>
+<p>从而也理解了为啥 <a href="https://help.aliyun.com/zh/sls/user-guide/use-the-log-service-console-to-collect-container-text-logs-in-daemonset-mode?spm=a2c4g.11186623.0.0.3b131a21Bt0peR">如何创建Logtail配置并以DaemonSet方式采集容器文本日志_日志服务(SLS)-阿里云帮助中心</a> 中, 需要按照 <code>Logtail通过/run/docker.sock访问Docker，请确保该路径存在且具备访问权限。</code> 方式来收集日志. </p>
+<h1 id="image-build"><a href="#image-build" class="headerlink" title="image build"></a>image build</h1><p>镜像构建流程</p>
+<blockquote>
+<p>Docker 镜像构建实际上是在 Docker 守护进程（Docker Daemon）上执行的。当你运行 <code>docker build</code> 命令时，构建过程中的所有操作都是由 Docker 守护进程在服务器的沙箱环境中进行的。这个沙箱环境被称作构建上下文（build context）。</p>
+<p>这里有一些详细步骤：</p>
+<ol>
+<li><strong>构建上下文（Build Context）传递：</strong><br>当你执行 <code>docker build</code> 命令时，当前目录（或你指定的上下文目录）下的所有内容都会被发送给 Docker 守护进程。这就是为什么通常在最后加上一个点 <code>.</code> 来指定当前目录作为上下文。上下文中包含了 <code>Dockerfile</code> 和所有可能被 <code>Dockerfile</code> 中的指令（如 <code>COPY</code>, <code>ADD</code>）引用的文件和目录。</li>
+<li><strong>构建过程：</strong><br>Docker 守护进程接收到构建上下文后，会开始解析 <code>Dockerfile</code> 并逐步执行里面的指令。每执行一个指令，实际上 Docker 守护进程都会创建一个临时的容器来运行这些指令，并捕获其变更作为新的镜像层。当执行完成后，这个临时容器会被删除，但是新的镜像层会被保留。—&gt; 在执行<code>COPY</code>命令时，Docker不会创建一个临时的容器来执行这条命令。 Docker在处理不同类型的Dockerfile指令时，采用不同的策略：</li>
+</ol>
+<ul>
+<li>对于<code>COPY</code>和<code>ADD</code>等涉及文件复制的操作，Docker直接在镜像层上执行，不需要创建容器。</li>
+<li>对于<code>RUN</code>指令，需要在容器环境中运行命令，因此Docker会创建一个临时容器来执行这些指令，并捕获其变更作为新的镜像层。</li>
+</ul>
+<ol>
+<li><strong>镜像层的创建：</strong><br>每个 <code>Dockerfile</code> 指令都可能创建一个新的镜像层。例如，<code>RUN</code> 指令会运行一条命令并创建一个新层，<code>COPY</code> 或 <code>ADD</code> 指令会将文件复制到镜像并创建新层。所有这些镜像层加起来就形成了最终的 Docker 镜像。</li>
+<li><strong>运行于主机上：</strong><br>虽然 Docker 守护进程可以在远程服务器上运行，但是通常情况下，它是在你的本地机器上作为一个后台服务运行的（如果你在本地机器上使用 Docker 的话）。这意味着所有构建操作都在你的机器上发生，只要你的机器上安装了 Docker。</li>
+<li><strong>隔离性：</strong><br>Docker 使用容器技术来保证构建过程的隔离性，确保每一次构建都在干净的环境中开始，并且构建过程中的变更不会污染宿主机或其他构建。</li>
+</ol>
+<p>构建完成后，新创建的镜像会存储在本地 Docker 守护进程的镜像仓库中，你可以使用 <code>docker images</code> 查看。如果需要，还可以将其推送到远程镜像仓库，如 Docker Hub。</p>
+</blockquote>
+<blockquote>
+<p>是的，当你使用 <code>docker build</code> 命令构建 Docker 镜像时，Docker 守护进程会在构建过程中暂时性地创建和启动容器。这些容器被用来执行 <code>Dockerfile</code> 中的指令，并捕获这些指令执行后的文件系统变更，从而创建新的镜像层。</p>
+<p>每个 <code>RUN</code>, <code>COPY</code>, <code>ADD</code> 指令等都会创建一个新的层，而且每个 <code>RUN</code> 指令实际上都会在一个新的临时容器内执行。例如，如果你的 <code>Dockerfile</code> 中有一个 <code>RUN apt-get update &amp;&amp; apt-get install -y some-package</code> 指令，Docker 会：</p>
+<ol>
+<li>从当前镜像创建一个新的临时容器。</li>
+<li>在这个临时容器中执行 <code>apt-get update &amp;&amp; apt-get install -y some-package</code> 命令。</li>
+<li>捕获执行后的文件系统变更。</li>
+<li>提交这些变更作为新的镜像层。</li>
+<li>删除这个临时容器。</li>
+</ol>
+<p>整个构建过程中可能会启动多个这样的临时容器，每个 <code>RUN</code> 指令都会创建一个。这些容器在执行完相应的 <code>Dockerfile</code> 指令后就会被删除，但是它们的影响（即新的镜像层）会被保存下来以构建最终的镜像。</p>
+<p>这种方式保证了构建过程的每一步都是在干净且隔离的环境中进行的，避免了不同构建步骤之间的潜在冲突，并且确保了构建结果的可重复性。</p>
+</blockquote>
+<p>难道这就是为啥dockerfile的第一行必须是 FROM xxx 的原因? docker daemon会依据该镜像临时创建一个容器</p>
+<blockquote>
+<p>当你执行 <code>docker build</code> 命令时，Docker 客户端（Client）会将构建上下文发送到 Docker 守护进程（Daemon）。这一步骤是通过以下方式实现的：</p>
+<ol>
+<li><strong>打包构建上下文：</strong><br>Docker 客户端会将指定的上下文目录（通常是当前目录，除非你指定了其他目录）中的所有内容递归地打包成一个临时的 tar 归档文件。这个归档文件包括了 <code>Dockerfile</code> 以及任何可能在构建过程中被 <code>Dockerfile</code> 中的指令引用的文件和目录。</li>
+<li><strong>发送归档文件：</strong><br>Docker 客户端通过与 Docker 守护进程的 REST API 通信，将这个 tar 归档文件发送到守护进程。这个过程通常是通过 Unix 套接字（在 Linux 系统上）或者 TCP 套接字（如果配置了远程访问）完成的。</li>
+<li><strong>展开归档文件：</strong><br>Docker 守护进程接收到 tar 归档文件后，会在服务器端将其展开到一个临时的目录中。这允许守护进程访问所有文件和目录，这些文件和目录将作为构建过程的一部分。</li>
+<li><strong>执行 <code>Dockerfile</code> 指令：</strong><br>展开构建上下文后，Docker 守护进程开始按顺序执行 <code>Dockerfile</code> 中的指令来构建最终的 Docker 镜像。守护进程会在服务器端的临时目录中操作，同时对相应的文件和目录进行必要的修改。</li>
+</ol>
+<p>以上步骤即完成了将构建上下文从 Docker 客户端发送到 Docker 守护进程的过程。这是为什么在运行 <code>docker build</code> 时，通常会看到 “Sending build context to Docker daemon” 之类的消息输出。</p>
+<p>为了优化这个过程，通常建议在 <code>.dockerignore</code> 文件中列出不需要包括在构建上下文中的文件和目录，类似于 <code>.gitignore</code> 文件。这样可以减小 tar 归档的大小，提高构建效率，并且防止不必要的文件被发送到 Docker 守护进程。</p>
+</blockquote>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png" alt="Untitled"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>containers</tag>
+        <tag>docker</tag>
+        <tag>images</tag>
+        <tag>deep-dive</tag>
       </tags>
   </entry>
   <entry>
@@ -15633,78 +15717,7 @@ go <span class="token function-name function">func</span><span class="token punc
         <tag>golang</tag>
         <tag>programming</tag>
         <tag>basics</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker 技术深入剖析</title>
-    <url>//2024-02-19-docker-deepdive/</url>
-    <content><![CDATA[<h1 id="docker-deepdive"><a href="#docker-deepdive" class="headerlink" title="docker-deepdive"></a>docker-deepdive</h1><h1 id="architecture"><a href="#architecture" class="headerlink" title="architecture"></a>architecture</h1><p>参见官方文档: </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png" alt="Untitled"></p>
-<ul>
-<li>其中 <code>docker daemon</code> 默认是通过 uds 来listen本地的client请求, 优点是权限好控制. 只允许 <strong>root 用户</strong>在<strong>本机访问</strong></li>
-</ul>
-<aside>
-💡 - By default, the Docker daemon listens for connections on a Unix socket to accept requests from local clients.
-- By default, it will listen on `unix:///var/run/docker.sock` to allow **only local connections by the *root* user**.
-
-</aside>
-
-<ul>
-<li>也可以配置按照TCP方式listen, 从而允许远程来访问, 详细参见: <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#bind-docker-to-another-hostport-or-a-unix-socket">dockerd | Docker Docs</a> 但需要注意安全风险</li>
-</ul>
-<h1 id="docker-sock"><a href="#docker-sock" class="headerlink" title="docker.sock"></a>docker.sock</h1><p>之前不太理解为啥docker要监听在: <code>/run/docker.sock</code>  这个地址上? 对<a href="go-network-socket%20a9506a8dfda64f9aab81c62f89215379.md">uds有了完整的实践与测试</a>之后, 对此有了透彻的认知. </p>
-<p>从而也理解了为啥 <a href="https://help.aliyun.com/zh/sls/user-guide/use-the-log-service-console-to-collect-container-text-logs-in-daemonset-mode?spm=a2c4g.11186623.0.0.3b131a21Bt0peR">如何创建Logtail配置并以DaemonSet方式采集容器文本日志_日志服务(SLS)-阿里云帮助中心</a> 中, 需要按照 <code>Logtail通过/run/docker.sock访问Docker，请确保该路径存在且具备访问权限。</code> 方式来收集日志. </p>
-<h1 id="image-build"><a href="#image-build" class="headerlink" title="image build"></a>image build</h1><p>镜像构建流程</p>
-<blockquote>
-<p>Docker 镜像构建实际上是在 Docker 守护进程（Docker Daemon）上执行的。当你运行 <code>docker build</code> 命令时，构建过程中的所有操作都是由 Docker 守护进程在服务器的沙箱环境中进行的。这个沙箱环境被称作构建上下文（build context）。</p>
-<p>这里有一些详细步骤：</p>
-<ol>
-<li><strong>构建上下文（Build Context）传递：</strong><br>当你执行 <code>docker build</code> 命令时，当前目录（或你指定的上下文目录）下的所有内容都会被发送给 Docker 守护进程。这就是为什么通常在最后加上一个点 <code>.</code> 来指定当前目录作为上下文。上下文中包含了 <code>Dockerfile</code> 和所有可能被 <code>Dockerfile</code> 中的指令（如 <code>COPY</code>, <code>ADD</code>）引用的文件和目录。</li>
-<li><strong>构建过程：</strong><br>Docker 守护进程接收到构建上下文后，会开始解析 <code>Dockerfile</code> 并逐步执行里面的指令。每执行一个指令，实际上 Docker 守护进程都会创建一个临时的容器来运行这些指令，并捕获其变更作为新的镜像层。当执行完成后，这个临时容器会被删除，但是新的镜像层会被保留。—&gt; 在执行<code>COPY</code>命令时，Docker不会创建一个临时的容器来执行这条命令。 Docker在处理不同类型的Dockerfile指令时，采用不同的策略：</li>
-</ol>
-<ul>
-<li>对于<code>COPY</code>和<code>ADD</code>等涉及文件复制的操作，Docker直接在镜像层上执行，不需要创建容器。</li>
-<li>对于<code>RUN</code>指令，需要在容器环境中运行命令，因此Docker会创建一个临时容器来执行这些指令，并捕获其变更作为新的镜像层。</li>
-</ul>
-<ol>
-<li><strong>镜像层的创建：</strong><br>每个 <code>Dockerfile</code> 指令都可能创建一个新的镜像层。例如，<code>RUN</code> 指令会运行一条命令并创建一个新层，<code>COPY</code> 或 <code>ADD</code> 指令会将文件复制到镜像并创建新层。所有这些镜像层加起来就形成了最终的 Docker 镜像。</li>
-<li><strong>运行于主机上：</strong><br>虽然 Docker 守护进程可以在远程服务器上运行，但是通常情况下，它是在你的本地机器上作为一个后台服务运行的（如果你在本地机器上使用 Docker 的话）。这意味着所有构建操作都在你的机器上发生，只要你的机器上安装了 Docker。</li>
-<li><strong>隔离性：</strong><br>Docker 使用容器技术来保证构建过程的隔离性，确保每一次构建都在干净的环境中开始，并且构建过程中的变更不会污染宿主机或其他构建。</li>
-</ol>
-<p>构建完成后，新创建的镜像会存储在本地 Docker 守护进程的镜像仓库中，你可以使用 <code>docker images</code> 查看。如果需要，还可以将其推送到远程镜像仓库，如 Docker Hub。</p>
-</blockquote>
-<blockquote>
-<p>是的，当你使用 <code>docker build</code> 命令构建 Docker 镜像时，Docker 守护进程会在构建过程中暂时性地创建和启动容器。这些容器被用来执行 <code>Dockerfile</code> 中的指令，并捕获这些指令执行后的文件系统变更，从而创建新的镜像层。</p>
-<p>每个 <code>RUN</code>, <code>COPY</code>, <code>ADD</code> 指令等都会创建一个新的层，而且每个 <code>RUN</code> 指令实际上都会在一个新的临时容器内执行。例如，如果你的 <code>Dockerfile</code> 中有一个 <code>RUN apt-get update &amp;&amp; apt-get install -y some-package</code> 指令，Docker 会：</p>
-<ol>
-<li>从当前镜像创建一个新的临时容器。</li>
-<li>在这个临时容器中执行 <code>apt-get update &amp;&amp; apt-get install -y some-package</code> 命令。</li>
-<li>捕获执行后的文件系统变更。</li>
-<li>提交这些变更作为新的镜像层。</li>
-<li>删除这个临时容器。</li>
-</ol>
-<p>整个构建过程中可能会启动多个这样的临时容器，每个 <code>RUN</code> 指令都会创建一个。这些容器在执行完相应的 <code>Dockerfile</code> 指令后就会被删除，但是它们的影响（即新的镜像层）会被保存下来以构建最终的镜像。</p>
-<p>这种方式保证了构建过程的每一步都是在干净且隔离的环境中进行的，避免了不同构建步骤之间的潜在冲突，并且确保了构建结果的可重复性。</p>
-</blockquote>
-<p>难道这就是为啥dockerfile的第一行必须是 FROM xxx 的原因? docker daemon会依据该镜像临时创建一个容器</p>
-<blockquote>
-<p>当你执行 <code>docker build</code> 命令时，Docker 客户端（Client）会将构建上下文发送到 Docker 守护进程（Daemon）。这一步骤是通过以下方式实现的：</p>
-<ol>
-<li><strong>打包构建上下文：</strong><br>Docker 客户端会将指定的上下文目录（通常是当前目录，除非你指定了其他目录）中的所有内容递归地打包成一个临时的 tar 归档文件。这个归档文件包括了 <code>Dockerfile</code> 以及任何可能在构建过程中被 <code>Dockerfile</code> 中的指令引用的文件和目录。</li>
-<li><strong>发送归档文件：</strong><br>Docker 客户端通过与 Docker 守护进程的 REST API 通信，将这个 tar 归档文件发送到守护进程。这个过程通常是通过 Unix 套接字（在 Linux 系统上）或者 TCP 套接字（如果配置了远程访问）完成的。</li>
-<li><strong>展开归档文件：</strong><br>Docker 守护进程接收到 tar 归档文件后，会在服务器端将其展开到一个临时的目录中。这允许守护进程访问所有文件和目录，这些文件和目录将作为构建过程的一部分。</li>
-<li><strong>执行 <code>Dockerfile</code> 指令：</strong><br>展开构建上下文后，Docker 守护进程开始按顺序执行 <code>Dockerfile</code> 中的指令来构建最终的 Docker 镜像。守护进程会在服务器端的临时目录中操作，同时对相应的文件和目录进行必要的修改。</li>
-</ol>
-<p>以上步骤即完成了将构建上下文从 Docker 客户端发送到 Docker 守护进程的过程。这是为什么在运行 <code>docker build</code> 时，通常会看到 “Sending build context to Docker daemon” 之类的消息输出。</p>
-<p>为了优化这个过程，通常建议在 <code>.dockerignore</code> 文件中列出不需要包括在构建上下文中的文件和目录，类似于 <code>.gitignore</code> 文件。这样可以减小 tar 归档的大小，提高构建效率，并且防止不必要的文件被发送到 Docker 守护进程。</p>
-</blockquote>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-20-docker-deepdive/Untitled.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>container</tag>
-        <tag>docker</tag>
-        <tag>architecture</tag>
-        <tag>深入解析</tag>
+        <tag>language-features</tag>
       </tags>
   </entry>
   <entry>
@@ -16155,9 +16168,9 @@ message CreateTaskRequest <span class="token punctuation">&#123;</span>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>containerd</tag>
+        <tag>container-runtime</tag>
         <tag>docker</tag>
         <tag>cri</tag>
-        <tag>深入解析</tag>
       </tags>
   </entry>
   <entry>
@@ -16188,10 +16201,43 @@ message CreateTaskRequest <span class="token punctuation">&#123;</span>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
-        <tag>certificate</tag>
-        <tag>tls</tag>
+        <tag>kubernetes</tag>
         <tag>security</tag>
+        <tag>certificates</tag>
+        <tag>pki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s 基础知识入门</title>
+    <url>//2024-03-05-k8s-basis/</url>
+    <content><![CDATA[<h1 id="k8s-basis"><a href="#k8s-basis" class="headerlink" title="k8s-basis"></a>k8s-basis</h1><p>这里记录一些基础的, 个人容易遗忘的零散知识点:</p>
+<hr>
+<p>label&amp;annotation的区别: </p>
+<ol>
+<li>label: 可以用于表达式等匹配(selector)</li>
+<li>annotation: 只能作为一个附加的标签. <code>annotations</code> 没有像 <code>labels</code> 那样的大小限制，因此可以存储更长的数据，包括多行文本。</li>
+</ol>
+<p>实际样例: </p>
+<ul>
+<li><strong>Labels 示例</strong>：<ul>
+<li>将一个 <code>label</code> <code>environment: production</code> 添加到生产环境的所有资源上，以便可以通过该 <code>label</code> 查询所有生产环境资源。</li>
+<li>使用 <code>labels</code> 来表示一个 Pod 是属于前端还是后端分层，比如 <code>tier: frontend</code> 或 <code>tier: backend</code>。</li>
+</ul>
+</li>
+<li><strong>Annotations 示例</strong>：<ul>
+<li>存储描述性信息，如说明、发布信息或联系信息，例如 <code>kubernetes.io/description: &quot;This service routes traffic to front-end pods.&quot;</code></li>
+<li>在构建或部署流程中，使用 <code>annotations</code> 存储版本控制系统的提交信息，构建服务器的信息，或者跟踪工具的信息。</li>
+</ul>
+</li>
+</ul>
+<p>总结来说，<code>labels</code> 是用于快速、有效地组织和选择资源的，而 <code>annotations</code> 是用来存储额外的、可能被客户端工具使用的信息。在设计 Kubernetes 资源时，应根据实际需要恰当地使用这两种机制。</p>
+<hr>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>basics</tag>
+        <tag>fundamentals</tag>
+        <tag>introduction</tag>
       </tags>
   </entry>
   <entry>
@@ -16325,41 +16371,60 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
 <h2 id="kube-proxy与coredns"><a href="#kube-proxy与coredns" class="headerlink" title="kube-proxy与coredns"></a>kube-proxy与coredns</h2><h2 id="configmap的使用"><a href="#configmap的使用" class="headerlink" title="configmap的使用"></a>configmap的使用</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-28-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-28-k8s-deploy-arch/Untitled.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
+        <tag>kubernetes</tag>
         <tag>architecture</tag>
         <tag>deployment</tag>
+        <tag>high-availability</tag>
       </tags>
   </entry>
   <entry>
-    <title>K8s 基础知识入门</title>
-    <url>//2024-03-05-k8s-basis/</url>
-    <content><![CDATA[<h1 id="k8s-basis"><a href="#k8s-basis" class="headerlink" title="k8s-basis"></a>k8s-basis</h1><p>这里记录一些基础的, 个人容易遗忘的零散知识点:</p>
-<hr>
-<p>label&amp;annotation的区别: </p>
-<ol>
-<li>label: 可以用于表达式等匹配(selector)</li>
-<li>annotation: 只能作为一个附加的标签. <code>annotations</code> 没有像 <code>labels</code> 那样的大小限制，因此可以存储更长的数据，包括多行文本。</li>
-</ol>
-<p>实际样例: </p>
-<ul>
-<li><strong>Labels 示例</strong>：<ul>
-<li>将一个 <code>label</code> <code>environment: production</code> 添加到生产环境的所有资源上，以便可以通过该 <code>label</code> 查询所有生产环境资源。</li>
-<li>使用 <code>labels</code> 来表示一个 Pod 是属于前端还是后端分层，比如 <code>tier: frontend</code> 或 <code>tier: backend</code>。</li>
-</ul>
-</li>
-<li><strong>Annotations 示例</strong>：<ul>
-<li>存储描述性信息，如说明、发布信息或联系信息，例如 <code>kubernetes.io/description: &quot;This service routes traffic to front-end pods.&quot;</code></li>
-<li>在构建或部署流程中，使用 <code>annotations</code> 存储版本控制系统的提交信息，构建服务器的信息，或者跟踪工具的信息。</li>
-</ul>
-</li>
-</ul>
-<p>总结来说，<code>labels</code> 是用于快速、有效地组织和选择资源的，而 <code>annotations</code> 是用来存储额外的、可能被客户端工具使用的信息。在设计 Kubernetes 资源时，应根据实际需要恰当地使用这两种机制。</p>
-<hr>
+    <title>K8s 工具集与实用命令</title>
+    <url>//2024-03-05-k8s-util/</url>
+    <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#97;&#x70;&#x69;&#x73;&#x65;&#x72;&#118;&#x65;&#114;&#64;&#118;&#48;&#x2e;&#50;&#52;&#46;&#49;&#x35;">&#97;&#x70;&#x69;&#x73;&#x65;&#x72;&#118;&#x65;&#114;&#64;&#118;&#48;&#x2e;&#50;&#52;&#46;&#49;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+</blockquote>
+<p>新建一个协程来启动HTTPServer. </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
+<h1 id="wait机制"><a href="#wait机制" class="headerlink" title="wait机制"></a>wait机制</h1><p><code>k8s.io/apimachinery/pkg/util/wait</code></p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">"context"</span>
+	<span class="token string">"fmt"</span>
+	<span class="token string">"k8s.io/apimachinery/pkg/util/wait"</span>
+	<span class="token string">"math/rand"</span>
+	<span class="token string">"time"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	ctx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token boolean">_</span> <span class="token operator">=</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	rand<span class="token punctuation">.</span><span class="token function">Seed</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">UnixNano</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">doSomething</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"doSomething called"</span><span class="token punctuation">)</span>
+	n <span class="token operator">:=</span> rand<span class="token punctuation">.</span><span class="token function">Intn</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span>
+	time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"Hello"</span><span class="token punctuation">)</span>
+	ctx<span class="token punctuation">.</span><span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>wait.UntilWithContext</code>是<code>wait</code>包中的一个函数，它会按指定的时间间隔（本例中为1纳秒）重复执行<code>doSomething</code>函数，直到上下文<code>ctx</code>被取消。由于间隔设置为1纳秒，实际上操作会持续不断地执行，因为1纳秒是极短的时间。</p>
+<p>会在当前主线程中持续不断地执行 <code>doSomething</code> </p>
+<p>另外一种方式, 可以直接启动一个routine来不间断地执行: </p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">go</span> wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h1 id="Parallelizer机制"><a href="#Parallelizer机制" class="headerlink" title="Parallelizer机制"></a>Parallelizer机制</h1><p>参见kube-sched的代码, 实现了fork&amp;join的功能:<br><code>fh.Parallelizer().Until(parallelCtx, len(potentialNodes), checkNode)</code></p>
+<h1 id="k8s-client"><a href="#k8s-client" class="headerlink" title="k8s-client"></a>k8s-client</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled-1.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
-        <tag>basics</tag>
-        <tag>concepts</tag>
+        <tag>kubectl</tag>
+        <tag>kubernetes</tag>
+        <tag>tools</tag>
+        <tag>commands</tag>
       </tags>
   </entry>
   <entry>
@@ -16427,77 +16492,10 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-1.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-2.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-3.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled-4.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
+        <tag>kubernetes</tag>
         <tag>scheduler</tag>
-        <tag>kube-scheduler</tag>
-        <tag>深入解析</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>K8s 工具集与实用命令</title>
-    <url>//2024-03-05-k8s-util/</url>
-    <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#x69;&#x73;&#101;&#114;&#x76;&#x65;&#114;&#64;&#x76;&#x30;&#46;&#x32;&#52;&#46;&#49;&#x35;">&#x61;&#112;&#x69;&#x73;&#101;&#114;&#x76;&#x65;&#114;&#64;&#x76;&#x30;&#46;&#x32;&#52;&#46;&#49;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
-</blockquote>
-<p>新建一个协程来启动HTTPServer. </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
-<h1 id="wait机制"><a href="#wait机制" class="headerlink" title="wait机制"></a>wait机制</h1><p><code>k8s.io/apimachinery/pkg/util/wait</code></p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">import</span> <span class="token punctuation">(</span>
-	<span class="token string">"context"</span>
-	<span class="token string">"fmt"</span>
-	<span class="token string">"k8s.io/apimachinery/pkg/util/wait"</span>
-	<span class="token string">"math/rand"</span>
-	<span class="token string">"time"</span>
-<span class="token punctuation">)</span>
-
-<span class="token keyword">func</span> <span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	ctx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-	<span class="token boolean">_</span> <span class="token operator">=</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-	<span class="token punctuation">&#125;</span>
-	rand<span class="token punctuation">.</span><span class="token function">Seed</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">UnixNano</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-	wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">func</span> <span class="token function">doSomething</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"doSomething called"</span><span class="token punctuation">)</span>
-	n <span class="token operator">:=</span> rand<span class="token punctuation">.</span><span class="token function">Intn</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span>
-	time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"Hello"</span><span class="token punctuation">)</span>
-	ctx<span class="token punctuation">.</span><span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><code>wait.UntilWithContext</code>是<code>wait</code>包中的一个函数，它会按指定的时间间隔（本例中为1纳秒）重复执行<code>doSomething</code>函数，直到上下文<code>ctx</code>被取消。由于间隔设置为1纳秒，实际上操作会持续不断地执行，因为1纳秒是极短的时间。</p>
-<p>会在当前主线程中持续不断地执行 <code>doSomething</code> </p>
-<p>另外一种方式, 可以直接启动一个routine来不间断地执行: </p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">go</span> wait<span class="token punctuation">.</span><span class="token function">UntilWithContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> doSomething<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h1 id="Parallelizer机制"><a href="#Parallelizer机制" class="headerlink" title="Parallelizer机制"></a>Parallelizer机制</h1><p>参见kube-sched的代码, 实现了fork&amp;join的功能:<br><code>fh.Parallelizer().Until(parallelCtx, len(potentialNodes), checkNode)</code></p>
-<h1 id="k8s-client"><a href="#k8s-client" class="headerlink" title="k8s-client"></a>k8s-client</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled-1.png" alt="Untitled"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>k8s</tag>
-        <tag>kubectl</tag>
-        <tag>snippets</tag>
-        <tag>tools</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DTS 使用陷阱</title>
-    <url>//2024-03-27-dts-pitfall/</url>
-    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
-<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
-<p>可能的几种方案:</p>
-<ol>
-<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
-<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>learn-from-failure</tag>
-        <tag>思考</tag>
-        <tag>distributed-system</tag>
+        <tag>scheduling-algorithms</tag>
+        <tag>core-components</tag>
       </tags>
   </entry>
   <entry>
@@ -16594,9 +16592,28 @@ StatefulSet<span aria-hidden="true" class="line-numbers-rows"><span></span><span
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-28-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-28-k8s-pdb/Untitled.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-28-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-28-k8s-pdb/Untitled.tif" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-28-k8s-pdb/Untitled-1.tif" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-28-k8s-pdb/Untitled-1.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-28-k8s-pdb/Untitled-2.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
+        <tag>reliability</tag>
+        <tag>kubernetes</tag>
         <tag>pdb</tag>
-        <tag>high-availability</tag>
+        <tag>pod-disruption-budget</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DTS 使用陷阱</title>
+    <url>//2024-03-27-dts-pitfall/</url>
+    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
+<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
+<p>可能的几种方案:</p>
+<ol>
+<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
+<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>pitfalls</tag>
+        <tag>lessons-learned</tag>
+        <tag>dts</tag>
+        <tag>data-transfer</tag>
       </tags>
   </entry>
   <entry>
@@ -16927,33 +16944,10 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-1.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-04-11-k8s-cpumanager-cgroupsv1/Untitled-2.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
+        <tag>kubernetes</tag>
         <tag>cgroups</tag>
+        <tag>scheduling</tag>
         <tag>cpu-manager</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux CFS 调度器</title>
-    <url>//2024-04-28-linux-cfs/</url>
-    <content><![CDATA[<h1 id="linux-cfs"><a href="#linux-cfs" class="headerlink" title="linux-cfs"></a>linux-cfs</h1><h1 id="几个核心问题"><a href="#几个核心问题" class="headerlink" title="几个核心问题"></a>几个核心问题</h1><p>如何实现抢占调度 ? </p>
-<p>NICE值?</p>
-<p>多核情况下如何处理? </p>
-<p>如何与cgroups里的cfs_quota cfs_quota_period 联动? </p>
-<ul>
-<li>传统调度最小粒度是: 进程, 但无法避免 某些用户开了很多进程, 其他用户只开了1个进程, 从而造成的不公平.</li>
-<li>解决方案:  使用task_group结构来管理组调度的组。所有存在的task_group组成一个树型结构（与cgroup的目录结构相对应）这样把用户A放到group1, 用户B放到group2, 可以管理2个</li>
-<li>但怎么管理组内进程的调度?</li>
-</ul>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://cloud.tencent.com/developer/article/1116144">Linux 组调度浅析-腾讯云开发者社区-腾讯云</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/75243145">Linux内核浅析-进程调度的算法和数据结构 - 知乎</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>scheduler</tag>
-        <tag>cpu</tag>
-        <tag>cfs</tag>
       </tags>
   </entry>
   <entry>
@@ -16977,9 +16971,34 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
+        <tag>reflection</tag>
         <tag>history</tag>
         <tag>philosophy</tag>
+        <tag>innovation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux CFS 调度器</title>
+    <url>//2024-04-28-linux-cfs/</url>
+    <content><![CDATA[<h1 id="linux-cfs"><a href="#linux-cfs" class="headerlink" title="linux-cfs"></a>linux-cfs</h1><h1 id="几个核心问题"><a href="#几个核心问题" class="headerlink" title="几个核心问题"></a>几个核心问题</h1><p>如何实现抢占调度 ? </p>
+<p>NICE值?</p>
+<p>多核情况下如何处理? </p>
+<p>如何与cgroups里的cfs_quota cfs_quota_period 联动? </p>
+<ul>
+<li>传统调度最小粒度是: 进程, 但无法避免 某些用户开了很多进程, 其他用户只开了1个进程, 从而造成的不公平.</li>
+<li>解决方案:  使用task_group结构来管理组调度的组。所有存在的task_group组成一个树型结构（与cgroup的目录结构相对应）这样把用户A放到group1, 用户B放到group2, 可以管理2个</li>
+<li>但怎么管理组内进程的调度?</li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://cloud.tencent.com/developer/article/1116144">Linux 组调度浅析-腾讯云开发者社区-腾讯云</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/75243145">Linux内核浅析-进程调度的算法和数据结构 - 知乎</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>scheduler</tag>
+        <tag>cfs</tag>
+        <tag>kernel</tag>
       </tags>
   </entry>
   <entry>
@@ -16996,9 +17015,10 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>思考</tag>
         <tag>career</tag>
+        <tag>life-planning</tag>
         <tag>passion</tag>
+        <tag>self-discovery</tag>
       </tags>
   </entry>
   <entry>
@@ -17011,10 +17031,10 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
 
 </aside><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>learn-from-failure</tag>
-        <tag>思考</tag>
-        <tag>automation</tag>
-        <tag>testing</tag>
+        <tag>automated-testing</tag>
+        <tag>system-testing</tag>
+        <tag>debugging</tag>
+        <tag>quality-assurance</tag>
       </tags>
   </entry>
   <entry>
@@ -17225,8 +17245,9 @@ Allocatable:
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-1.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-2.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-3.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-4.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-5.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-6.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-7.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-12-06-k8s-cpu-manager-deep-dive/Untitled-8.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>k8s</tag>
-        <tag>深入解析</tag>
+        <tag>resource-management</tag>
+        <tag>kubernetes</tag>
+        <tag>performance</tag>
         <tag>cpu-manager</tag>
       </tags>
   </entry>
@@ -17349,8 +17370,9 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <h1 id="Nameserver-limits-exceeded"><a href="#Nameserver-limits-exceeded" class="headerlink" title="Nameserver limits exceeded"></a>Nameserver limits exceeded</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-1.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-2.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-3.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-4.png" alt="Untitled"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2025-05-15-k8s-troubleshooting/Untitled-5.png" alt="Untitled"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
-        <tag>learn-from-failure</tag>
-        <tag>k8s</tag>
+        <tag>kubernetes</tag>
+        <tag>operations</tag>
+        <tag>debugging</tag>
         <tag>troubleshooting</tag>
       </tags>
   </entry>
@@ -17991,8 +18013,8 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>linux</tag>
-        <tag>tools</tag>
         <tag>performance</tag>
+        <tag>tools</tag>
         <tag>profiling</tag>
       </tags>
   </entry>
