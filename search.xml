@@ -300,6 +300,39 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       </tags>
   </entry>
   <entry>
+    <title>明朝那些事儿</title>
+    <url>//2021-09-04-ming-dynasty/</url>
+    <content><![CDATA[<h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
+<p>身在夜郎家万里，五云天北是神州！</p>
+<p>天地圣贤之道，并非存于万物，也无须存于万物，天人本是一体，何时可分？又何必分？<br>随心而动，随意而行，万法自然，便是圣贤之道。存天理，去人欲？天理即是人欲。</p>
+</blockquote>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>history</tag>
+        <tag>ming-dynasty</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>golang入门笔记之常用基础库</title>
+    <url>//2021-09-06-golang-common-lib/</url>
+    <content><![CDATA[<p>go-http 是kube-scheduler healthz, metrics的实现基础</p>
+<p><a href="https://learnku.com/docs/build-web-application-with-golang/034-gos-http-package-detailed-solution/3171">go-http</a></p>
+<hr>
+<p>go-restful 是kube-apiserver的基础, 只用到了它最基础的功能，即路由功能<br><a href="https://github.com/emicklei/go-restful">go-restful</a><br><a href="https://hackerain.me/2020/09/28/golang/go-restful-overview.html">go-restful-sample</a></p>
+<hr>
+<p>Semantic Versioning: 实现语义化版本比较与管理, k8s使用该库进行版本判断<br><a href="https://github.com/blang/semver">semver</a></p>
+<hr>
+<p>testify: 用于单测<br><a href="http://github.com/stretchr/testify">testify</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+        <tag>golang-lib</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Jekyll搭建博客总结</title>
     <url>//2021-09-05-jekyll-site/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>终于下定决心，花一些事件，把自己沉淀与思考，都用GitHubPages保存起来。</p>
@@ -362,39 +395,6 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>jekyll</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>明朝那些事儿</title>
-    <url>//2021-09-04-ming-dynasty/</url>
-    <content><![CDATA[<h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
-<p>身在夜郎家万里，五云天北是神州！</p>
-<p>天地圣贤之道，并非存于万物，也无须存于万物，天人本是一体，何时可分？又何必分？<br>随心而动，随意而行，万法自然，便是圣贤之道。存天理，去人欲？天理即是人欲。</p>
-</blockquote>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>history</tag>
-        <tag>ming-dynasty</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>golang入门笔记之常用基础库</title>
-    <url>//2021-09-06-golang-common-lib/</url>
-    <content><![CDATA[<p>go-http 是kube-scheduler healthz, metrics的实现基础</p>
-<p><a href="https://learnku.com/docs/build-web-application-with-golang/034-gos-http-package-detailed-solution/3171">go-http</a></p>
-<hr>
-<p>go-restful 是kube-apiserver的基础, 只用到了它最基础的功能，即路由功能<br><a href="https://github.com/emicklei/go-restful">go-restful</a><br><a href="https://hackerain.me/2020/09/28/golang/go-restful-overview.html">go-restful-sample</a></p>
-<hr>
-<p>Semantic Versioning: 实现语义化版本比较与管理, k8s使用该库进行版本判断<br><a href="https://github.com/blang/semver">semver</a></p>
-<hr>
-<p>testify: 用于单测<br><a href="http://github.com/stretchr/testify">testify</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>golang</tag>
-        <tag>golang-lib</tag>
       </tags>
   </entry>
   <entry>
@@ -3144,6 +3144,133 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
       </tags>
   </entry>
   <entry>
+    <title>常用的Git命令</title>
+    <url>//2021-11-22-git/</url>
+    <content><![CDATA[<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><ul>
+<li>HEAD: 默认是本地已commit的最新commit_id</li>
+<li>origion&#x2F;master: 默认是远程已push的最新commit_id</li>
+</ul>
+<h1 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h1><h2 id="本地分支"><a href="#本地分支" class="headerlink" title="本地分支:"></a>本地分支:</h2><h3 id="新建"><a href="#新建" class="headerlink" title="新建:"></a>新建:</h3><ul>
+<li>远程不存在: git branch ${branch_name}</li>
+<li>远程存在: git checkout -b ${branch_name} origin&#x2F;${branch_name}</li>
+</ul>
+<h3 id="切换"><a href="#切换" class="headerlink" title="切换:"></a>切换:</h3><ul>
+<li>git checkout ${branch_name}</li>
+</ul>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看:"></a>查看:</h3><ul>
+<li>列出本地所有分支: git branch</li>
+<li>列出当前分支: git branch 会在当前分支前加星号.</li>
+</ul>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改:"></a>修改:</h3><h3 id="删除-需要切换到其他分支-不能在当前分支下删除当前分支"><a href="#删除-需要切换到其他分支-不能在当前分支下删除当前分支" class="headerlink" title="删除:(需要切换到其他分支, 不能在当前分支下删除当前分支)"></a>删除:(需要切换到其他分支, 不能在当前分支下删除当前分支)</h3><ul>
+<li>未跟踪远程分支: git branch -d ${branch_name}</li>
+<li>已跟踪远程分支:</li>
+</ul>
+<ol>
+<li>git branch -d ${branch_name} &#x2F;&#x2F;删除本地分支</li>
+<li>git push origin –delete ${branch_name} &#x2F;&#x2F;删除远程分支</li>
+</ol>
+<h2 id="远程分支"><a href="#远程分支" class="headerlink" title="远程分支:"></a>远程分支:</h2><h3 id="推送"><a href="#推送" class="headerlink" title="推送:"></a>推送:</h3><ul>
+<li>远程分支不存在(则新建): git push origin ${branch_name}</li>
+<li>远程分支存在: git push</li>
+</ul>
+<h3 id="新建-1"><a href="#新建-1" class="headerlink" title="新建:"></a>新建:</h3><h3 id="查看-1"><a href="#查看-1" class="headerlink" title="查看:"></a>查看:</h3><ul>
+<li>远程仓库具体地址: git remote -v</li>
+<li>远程分支列表: git branch -a; git branch -r</li>
+</ul>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
+<li>仅删除远程分支:</li>
+</ul>
+<ol>
+<li>git branch -d -r origin&#x2F;${branch_name}</li>
+<li>git push origin :${branch_name}</li>
+</ol>
+<ul>
+<li>删除本地+远程:</li>
+</ul>
+<ol>
+<li>git branch -d ${branch_name} &#x2F;&#x2F;删除本地分支</li>
+<li>git push origin –delete ${branch_name} &#x2F;&#x2F;删除远程分支</li>
+</ol>
+<h2 id="本地-amp-远程关联关系"><a href="#本地-amp-远程关联关系" class="headerlink" title="本地&amp;远程关联关系:"></a>本地&amp;远程关联关系:</h2><h3 id="查看-2"><a href="#查看-2" class="headerlink" title="查看:"></a>查看:</h3><p>git branch -vv</p>
+<h3 id="添加绑定"><a href="#添加绑定" class="headerlink" title="添加绑定:"></a>添加绑定:</h3><ul>
+<li>远程分支已存在:</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> branch --set-upstream <span class="token variable">$&#123;branch_name&#125;</span> origin/<span class="token variable">$&#123;branch_name&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>远程分支未存在:</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> push -u origin <span class="token variable">$&#123;branch_name&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="删除-1"><a href="#删除-1" class="headerlink" title="删除:"></a>删除:</h3><ul>
+<li>仅删除绑定关系, 本地与远程分支都不删除: git branch –unset-upstream</li>
+<li>仅删除远程分支: git branch -d -r origin&#x2F;${remote_branch}</li>
+</ul>
+<h1 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h1><h2 id="查看-3"><a href="#查看-3" class="headerlink" title="查看"></a>查看</h2><ul>
+<li>当前分支: git log</li>
+<li>指定分支: git log ${branch_name}</li>
+</ul>
+<h1 id="变更"><a href="#变更" class="headerlink" title="变更"></a>变更</h1><h2 id="未stage的变更"><a href="#未stage的变更" class="headerlink" title="未stage的变更:"></a>未stage的变更:</h2><ul>
+<li>添加至stage: git add</li>
+<li>添加至stash: git stash save “comments”</li>
+<li>查看diff具体内容: git diff</li>
+<li>丢弃(覆盖本地变更): git checkout .</li>
+<li>删除本地(未加入.gitigonre的文件): git clean -f</li>
+<li>删除本地目录: git clean -fd</li>
+<li>删除本地(已经加入.gitigonre的文件): git clean -fX</li>
+</ul>
+<h2 id="已stage-未commit的变更"><a href="#已stage-未commit的变更" class="headerlink" title="已stage, 未commit的变更:"></a>已stage, 未commit的变更:</h2><ul>
+<li>添加至本地repo: git commit -m “comments”</li>
+<li>查看diff具体内容: git diff HEAD</li>
+<li>丢弃<ul>
+<li>变更内容退回至unstage: git reset HEAD .</li>
+<li>变更内容退回至彻底丢弃: git reset –hard HEAD .</li>
+</ul>
+</li>
+</ul>
+<h2 id="已commit-未push的变更"><a href="#已commit-未push的变更" class="headerlink" title="已commit, 未push的变更:"></a>已commit, 未push的变更:</h2><ul>
+<li>push: git push</li>
+<li>查看diff具体内容:<ul>
+<li>git log &#x2F;&#x2F; 拿到commit_id</li>
+<li>git diff origin&#x2F;master commit_id</li>
+</ul>
+</li>
+<li>丢弃:<ul>
+<li>变更内容退回至unstage: git reset commit_id</li>
+<li>变更内容退回至彻底丢弃:  git reset –hard commit_id</li>
+</ul>
+</li>
+</ul>
+<h2 id="已push的变更"><a href="#已push的变更" class="headerlink" title="已push的变更:"></a>已push的变更:</h2><ul>
+<li>查看diff具体内容: git diff commit_a commit_b 或者 git show commit_no</li>
+<li>丢弃:</li>
+</ul>
+<h2 id="stash的详细变更信息"><a href="#stash的详细变更信息" class="headerlink" title="stash的详细变更信息"></a>stash的详细变更信息</h2><ul>
+<li>查看stash列表: git stash list</li>
+<li>将stash的内容进行unstage: git pop stash_id</li>
+<li>查看stash具体内容(而不pop出来):  git stash show -p stash_id</li>
+</ul>
+<h2 id="将stash内容删除"><a href="#将stash内容删除" class="headerlink" title="将stash内容删除"></a>将stash内容删除</h2><p>git stash drop stash_id</p>
+<h1 id="问题排查-amp-修复"><a href="#问题排查-amp-修复" class="headerlink" title="问题排查&amp;修复"></a>问题排查&amp;修复</h1><h2 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">LibreSSL SSL_connect: SSL_ERROR_SYSCALL <span class="token keyword">in</span> connection to github.com:443<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config --global --unset http.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<h1 id="常用技巧"><a href="#常用技巧" class="headerlink" title="常用技巧"></a>常用技巧</h1><ul>
+<li>压缩commit</li>
+<li>resolve conflicts</li>
+<li>cherry-pick</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>code-snippets</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计算机常用接口标准与速度的常识</title>
     <url>//2021-11-18-throughput/</url>
     <content><![CDATA[<h1 id="常见接口协议速度"><a href="#常见接口协议速度" class="headerlink" title="常见接口协议速度"></a>常见接口协议速度</h1><hr>
@@ -3434,133 +3561,6 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
       <tags>
         <tag>common-sense</tag>
         <tag>throughput</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>常用的Git命令</title>
-    <url>//2021-11-22-git/</url>
-    <content><![CDATA[<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><ul>
-<li>HEAD: 默认是本地已commit的最新commit_id</li>
-<li>origion&#x2F;master: 默认是远程已push的最新commit_id</li>
-</ul>
-<h1 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h1><h2 id="本地分支"><a href="#本地分支" class="headerlink" title="本地分支:"></a>本地分支:</h2><h3 id="新建"><a href="#新建" class="headerlink" title="新建:"></a>新建:</h3><ul>
-<li>远程不存在: git branch ${branch_name}</li>
-<li>远程存在: git checkout -b ${branch_name} origin&#x2F;${branch_name}</li>
-</ul>
-<h3 id="切换"><a href="#切换" class="headerlink" title="切换:"></a>切换:</h3><ul>
-<li>git checkout ${branch_name}</li>
-</ul>
-<h3 id="查看"><a href="#查看" class="headerlink" title="查看:"></a>查看:</h3><ul>
-<li>列出本地所有分支: git branch</li>
-<li>列出当前分支: git branch 会在当前分支前加星号.</li>
-</ul>
-<h3 id="修改"><a href="#修改" class="headerlink" title="修改:"></a>修改:</h3><h3 id="删除-需要切换到其他分支-不能在当前分支下删除当前分支"><a href="#删除-需要切换到其他分支-不能在当前分支下删除当前分支" class="headerlink" title="删除:(需要切换到其他分支, 不能在当前分支下删除当前分支)"></a>删除:(需要切换到其他分支, 不能在当前分支下删除当前分支)</h3><ul>
-<li>未跟踪远程分支: git branch -d ${branch_name}</li>
-<li>已跟踪远程分支:</li>
-</ul>
-<ol>
-<li>git branch -d ${branch_name} &#x2F;&#x2F;删除本地分支</li>
-<li>git push origin –delete ${branch_name} &#x2F;&#x2F;删除远程分支</li>
-</ol>
-<h2 id="远程分支"><a href="#远程分支" class="headerlink" title="远程分支:"></a>远程分支:</h2><h3 id="推送"><a href="#推送" class="headerlink" title="推送:"></a>推送:</h3><ul>
-<li>远程分支不存在(则新建): git push origin ${branch_name}</li>
-<li>远程分支存在: git push</li>
-</ul>
-<h3 id="新建-1"><a href="#新建-1" class="headerlink" title="新建:"></a>新建:</h3><h3 id="查看-1"><a href="#查看-1" class="headerlink" title="查看:"></a>查看:</h3><ul>
-<li>远程仓库具体地址: git remote -v</li>
-<li>远程分支列表: git branch -a; git branch -r</li>
-</ul>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
-<li>仅删除远程分支:</li>
-</ul>
-<ol>
-<li>git branch -d -r origin&#x2F;${branch_name}</li>
-<li>git push origin :${branch_name}</li>
-</ol>
-<ul>
-<li>删除本地+远程:</li>
-</ul>
-<ol>
-<li>git branch -d ${branch_name} &#x2F;&#x2F;删除本地分支</li>
-<li>git push origin –delete ${branch_name} &#x2F;&#x2F;删除远程分支</li>
-</ol>
-<h2 id="本地-amp-远程关联关系"><a href="#本地-amp-远程关联关系" class="headerlink" title="本地&amp;远程关联关系:"></a>本地&amp;远程关联关系:</h2><h3 id="查看-2"><a href="#查看-2" class="headerlink" title="查看:"></a>查看:</h3><p>git branch -vv</p>
-<h3 id="添加绑定"><a href="#添加绑定" class="headerlink" title="添加绑定:"></a>添加绑定:</h3><ul>
-<li>远程分支已存在:</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> branch --set-upstream <span class="token variable">$&#123;branch_name&#125;</span> origin/<span class="token variable">$&#123;branch_name&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ul>
-<li>远程分支未存在:</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> push -u origin <span class="token variable">$&#123;branch_name&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="删除-1"><a href="#删除-1" class="headerlink" title="删除:"></a>删除:</h3><ul>
-<li>仅删除绑定关系, 本地与远程分支都不删除: git branch –unset-upstream</li>
-<li>仅删除远程分支: git branch -d -r origin&#x2F;${remote_branch}</li>
-</ul>
-<h1 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h1><h2 id="查看-3"><a href="#查看-3" class="headerlink" title="查看"></a>查看</h2><ul>
-<li>当前分支: git log</li>
-<li>指定分支: git log ${branch_name}</li>
-</ul>
-<h1 id="变更"><a href="#变更" class="headerlink" title="变更"></a>变更</h1><h2 id="未stage的变更"><a href="#未stage的变更" class="headerlink" title="未stage的变更:"></a>未stage的变更:</h2><ul>
-<li>添加至stage: git add</li>
-<li>添加至stash: git stash save “comments”</li>
-<li>查看diff具体内容: git diff</li>
-<li>丢弃(覆盖本地变更): git checkout .</li>
-<li>删除本地(未加入.gitigonre的文件): git clean -f</li>
-<li>删除本地目录: git clean -fd</li>
-<li>删除本地(已经加入.gitigonre的文件): git clean -fX</li>
-</ul>
-<h2 id="已stage-未commit的变更"><a href="#已stage-未commit的变更" class="headerlink" title="已stage, 未commit的变更:"></a>已stage, 未commit的变更:</h2><ul>
-<li>添加至本地repo: git commit -m “comments”</li>
-<li>查看diff具体内容: git diff HEAD</li>
-<li>丢弃<ul>
-<li>变更内容退回至unstage: git reset HEAD .</li>
-<li>变更内容退回至彻底丢弃: git reset –hard HEAD .</li>
-</ul>
-</li>
-</ul>
-<h2 id="已commit-未push的变更"><a href="#已commit-未push的变更" class="headerlink" title="已commit, 未push的变更:"></a>已commit, 未push的变更:</h2><ul>
-<li>push: git push</li>
-<li>查看diff具体内容:<ul>
-<li>git log &#x2F;&#x2F; 拿到commit_id</li>
-<li>git diff origin&#x2F;master commit_id</li>
-</ul>
-</li>
-<li>丢弃:<ul>
-<li>变更内容退回至unstage: git reset commit_id</li>
-<li>变更内容退回至彻底丢弃:  git reset –hard commit_id</li>
-</ul>
-</li>
-</ul>
-<h2 id="已push的变更"><a href="#已push的变更" class="headerlink" title="已push的变更:"></a>已push的变更:</h2><ul>
-<li>查看diff具体内容: git diff commit_a commit_b 或者 git show commit_no</li>
-<li>丢弃:</li>
-</ul>
-<h2 id="stash的详细变更信息"><a href="#stash的详细变更信息" class="headerlink" title="stash的详细变更信息"></a>stash的详细变更信息</h2><ul>
-<li>查看stash列表: git stash list</li>
-<li>将stash的内容进行unstage: git pop stash_id</li>
-<li>查看stash具体内容(而不pop出来):  git stash show -p stash_id</li>
-</ul>
-<h2 id="将stash内容删除"><a href="#将stash内容删除" class="headerlink" title="将stash内容删除"></a>将stash内容删除</h2><p>git stash drop stash_id</p>
-<h1 id="问题排查-amp-修复"><a href="#问题排查-amp-修复" class="headerlink" title="问题排查&amp;修复"></a>问题排查&amp;修复</h1><h2 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">LibreSSL SSL_connect: SSL_ERROR_SYSCALL <span class="token keyword">in</span> connection to github.com:443<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config --global --unset http.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-<h1 id="常用技巧"><a href="#常用技巧" class="headerlink" title="常用技巧"></a>常用技巧</h1><ul>
-<li>压缩commit</li>
-<li>resolve conflicts</li>
-<li>cherry-pick</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>code-snippets</tag>
-        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -5089,6 +5089,98 @@ spring.datasource.driver.initialSize&#x3D;20<span aria-hidden="true" class="line
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot+MyBatis使用XML配置方案</title>
+    <url>//2022-03-03-springboot-mybatis-xml/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目代码之前是基于ibatis, 而且SQL语句是基于sqlmap.xml文件的.<br>现在升级到mybatis 3.4.2, 但mybatis的默认方案是基于annotation的.<br>个人非常不习惯annotation的方式, 每次排查问题拼接SQL, 以及后续修改SQL, 极其麻烦, 不直观.<br>因此想要使用xml的方式配置. 在这个过程中踩了很多坑, 现在记录下来.</p>
+<h1 id="annotation-sql的问题"><a href="#annotation-sql的问题" class="headerlink" title="annotation sql的问题"></a>annotation sql的问题</h1><p>无论是下边的方式1, 还是方式2, SQL字符串都会自动换行, 然后用<code>+</code>以及<code>&quot;</code>等符号连接. </p>
+<ol>
+<li>从而如果线上出现问题, 需要手动重建SQL时, 很难直接拷贝出来替换参数找到目标SQL. 尤其是在SQL长度很长, 从而被换行成为N行场景下, 重建SQL简直就是灾难:</li>
+<li>另外修改SQL, 也非常不方便, 不直观.</li>
+</ol>
+<h2 id="方式1-SQL直接在annotation上"><a href="#方式1-SQL直接在annotation上" class="headerlink" title="方式1: SQL直接在annotation上"></a>方式1: SQL直接在annotation上</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IUserDAO</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"INSERT INTO user(userName,userAge,userAddress) VALUES(#&#123;userName&#125;,"</span>
+            <span class="token operator">+</span> <span class="token string">"#&#123;userAge&#125;,#&#123;userAddress&#125;)"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addNewUser</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="方式2-SQL单独用String定义"><a href="#方式2-SQL单独用String定义" class="headerlink" title="方式2: SQL单独用String定义"></a>方式2: SQL单独用String定义</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IUserDAO</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> addNewUserSql <span class="token operator">=</span> 
+            <span class="token string">"INSERT INTO user(userName,userAge,userAddress) VALUES(#&#123;userName&#125;,"</span>
+            <span class="token operator">+</span> <span class="token string">"#&#123;userAge&#125;,#&#123;userAddress&#125;)"</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span>addNewUserSql<span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addNewUser</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="xml-sql的优势"><a href="#xml-sql的优势" class="headerlink" title="xml sql的优势"></a>xml sql的优势</h1><p>由于sql是放在xml里, 因此: </p>
+<ol>
+<li>重建SQL时, 可以直接把SQL拷贝出来, 人肉替换参数即可.</li>
+<li>修改SQL时, 易读性要好很多.</li>
+<li>另外一个优势, <a href="http://www.mybatis.cn/archives/695.html">XML文件的SQL片段的复用极为好用</a>.</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
+<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">mapper</span> <span class="token name">PUBLIC</span> <span class="token string">"-//mybatis.org//DTD Mapper 3.0//EN"</span>
+    <span class="token string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>edu.xmu.mybatis.somemapper.UserMapper<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>getUserId<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>int<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        SELECT id
+        FROM `user`
+        WHERE user_name = #&#123;userName&#125;
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="xml-sql的配置"><a href="#xml-sql的配置" class="headerlink" title="xml sql的配置"></a>xml sql的配置</h1><h2 id="第一步-mapper-interface定义"><a href="#第一步-mapper-interface定义" class="headerlink" title="第一步: mapper interface定义"></a>第一步: mapper interface定义</h2><ul>
+<li>注意一定要使用 <code>@Repository</code> 注释 <code>UserMapper</code>, 否则该Mapper无法被Spring容器管理</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>somemapper</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span></span><span class="token class-name">Param</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span></span><span class="token class-name">Repository</span></span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * SQLMap文件参见: &#123;@linkplain UserMapper.xml&#125;
+ *
+ * @author kunlun.ykl
+ */</span>
+<span class="token annotation punctuation">@Repository</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserMapper</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/**
+     * 根据userName获取userId
+     *
+     * @param userName
+     * @return
+     */</span>
+    <span class="token class-name">Integer</span> <span class="token function">getUserId</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Param</span><span class="token punctuation">(</span><span class="token string">"userName"</span><span class="token punctuation">)</span> <span class="token class-name">String</span> userName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="第二步-mapper-xml文件"><a href="#第二步-mapper-xml文件" class="headerlink" title="第二步: mapper xml文件"></a>第二步: mapper xml文件</h2><ul>
+<li>注意mapper文件一定要放在 <code>src/main/resources/edu/xmu/mybatis/somemapper/</code> 目录下</li>
+<li>且mapper文件名一定要与interface的名称一样, 即本例中 <code>UserMapper.xml</code></li>
+</ul>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
+<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">mapper</span> <span class="token name">PUBLIC</span> <span class="token string">"-//mybatis.org//DTD Mapper 3.0//EN"</span>
+    <span class="token string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>edu.xmu.mybatis.somemapper.UserMapper<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>getUserId<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>int<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        SELECT id
+        FROM `user`
+        WHERE user_name = #&#123;userName&#125;
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>异步HttpClient使用Netty作为SocketChannel的Provider</title>
     <url>//2022-03-14-http-client-netty/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
@@ -5190,95 +5282,21 @@ pooledConnectionIdleTimeout <span class="token operator">=</span> <span class="t
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot+MyBatis使用XML配置方案</title>
-    <url>//2022-03-03-springboot-mybatis-xml/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目代码之前是基于ibatis, 而且SQL语句是基于sqlmap.xml文件的.<br>现在升级到mybatis 3.4.2, 但mybatis的默认方案是基于annotation的.<br>个人非常不习惯annotation的方式, 每次排查问题拼接SQL, 以及后续修改SQL, 极其麻烦, 不直观.<br>因此想要使用xml的方式配置. 在这个过程中踩了很多坑, 现在记录下来.</p>
-<h1 id="annotation-sql的问题"><a href="#annotation-sql的问题" class="headerlink" title="annotation sql的问题"></a>annotation sql的问题</h1><p>无论是下边的方式1, 还是方式2, SQL字符串都会自动换行, 然后用<code>+</code>以及<code>&quot;</code>等符号连接. </p>
+    <title>一些有意思的记录-3</title>
+    <url>//2022-03-24-random-snippets/</url>
+    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
+<span class="token function">curl</span> cip.cc
+<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
+<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
 <ol>
-<li>从而如果线上出现问题, 需要手动重建SQL时, 很难直接拷贝出来替换参数找到目标SQL. 尤其是在SQL长度很长, 从而被换行成为N行场景下, 重建SQL简直就是灾难:</li>
-<li>另外修改SQL, 也非常不方便, 不直观.</li>
+<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
+<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
 </ol>
-<h2 id="方式1-SQL直接在annotation上"><a href="#方式1-SQL直接在annotation上" class="headerlink" title="方式1: SQL直接在annotation上"></a>方式1: SQL直接在annotation上</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IUserDAO</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"INSERT INTO user(userName,userAge,userAddress) VALUES(#&#123;userName&#125;,"</span>
-            <span class="token operator">+</span> <span class="token string">"#&#123;userAge&#125;,#&#123;userAddress&#125;)"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addNewUser</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="方式2-SQL单独用String定义"><a href="#方式2-SQL单独用String定义" class="headerlink" title="方式2: SQL单独用String定义"></a>方式2: SQL单独用String定义</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IUserDAO</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> addNewUserSql <span class="token operator">=</span> 
-            <span class="token string">"INSERT INTO user(userName,userAge,userAddress) VALUES(#&#123;userName&#125;,"</span>
-            <span class="token operator">+</span> <span class="token string">"#&#123;userAge&#125;,#&#123;userAddress&#125;)"</span><span class="token punctuation">;</span>
-    <span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span>addNewUserSql<span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addNewUser</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="xml-sql的优势"><a href="#xml-sql的优势" class="headerlink" title="xml sql的优势"></a>xml sql的优势</h1><p>由于sql是放在xml里, 因此: </p>
-<ol>
-<li>重建SQL时, 可以直接把SQL拷贝出来, 人肉替换参数即可.</li>
-<li>修改SQL时, 易读性要好很多.</li>
-<li>另外一个优势, <a href="http://www.mybatis.cn/archives/695.html">XML文件的SQL片段的复用极为好用</a>.</li>
-</ol>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
-<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">mapper</span> <span class="token name">PUBLIC</span> <span class="token string">"-//mybatis.org//DTD Mapper 3.0//EN"</span>
-    <span class="token string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span><span class="token punctuation">></span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>edu.xmu.mybatis.somemapper.UserMapper<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>getUserId<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>int<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-        SELECT id
-        FROM `user`
-        WHERE user_name = #&#123;userName&#125;
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<h1 id="xml-sql的配置"><a href="#xml-sql的配置" class="headerlink" title="xml sql的配置"></a>xml sql的配置</h1><h2 id="第一步-mapper-interface定义"><a href="#第一步-mapper-interface定义" class="headerlink" title="第一步: mapper interface定义"></a>第一步: mapper interface定义</h2><ul>
-<li>注意一定要使用 <code>@Repository</code> 注释 <code>UserMapper</code>, 否则该Mapper无法被Spring容器管理</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">edu<span class="token punctuation">.</span>xmu<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>somemapper</span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span></span><span class="token class-name">Param</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span></span><span class="token class-name">Repository</span></span><span class="token punctuation">;</span>
-
-<span class="token comment">/**
- * SQLMap文件参见: &#123;@linkplain UserMapper.xml&#125;
- *
- * @author kunlun.ykl
- */</span>
-<span class="token annotation punctuation">@Repository</span>
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserMapper</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/**
-     * 根据userName获取userId
-     *
-     * @param userName
-     * @return
-     */</span>
-    <span class="token class-name">Integer</span> <span class="token function">getUserId</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Param</span><span class="token punctuation">(</span><span class="token string">"userName"</span><span class="token punctuation">)</span> <span class="token class-name">String</span> userName<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="第二步-mapper-xml文件"><a href="#第二步-mapper-xml文件" class="headerlink" title="第二步: mapper xml文件"></a>第二步: mapper xml文件</h2><ul>
-<li>注意mapper文件一定要放在 <code>src/main/resources/edu/xmu/mybatis/somemapper/</code> 目录下</li>
-<li>且mapper文件名一定要与interface的名称一样, 即本例中 <code>UserMapper.xml</code></li>
-</ul>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
-<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">mapper</span> <span class="token name">PUBLIC</span> <span class="token string">"-//mybatis.org//DTD Mapper 3.0//EN"</span>
-    <span class="token string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span><span class="token punctuation">></span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>edu.xmu.mybatis.somemapper.UserMapper<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>getUserId<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>int<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-        SELECT id
-        FROM `user`
-        WHERE user_name = #&#123;userName&#125;
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
       <tags>
-        <tag>springboot</tag>
-        <tag>mybatis</tag>
+        <tag>net-tools</tag>
       </tags>
   </entry>
   <entry>
@@ -5656,77 +5674,6 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
-    <title>一些有意思的记录-3</title>
-    <url>//2022-03-24-random-snippets/</url>
-    <content><![CDATA[<h1 id="如何查看本机的公网IP"><a href="#如何查看本机的公网IP" class="headerlink" title="如何查看本机的公网IP"></a>如何查看本机的公网IP</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> myip.ipip.net
-<span class="token function">curl</span> cip.cc
-<span class="token function">curl</span> ip.sb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h2><p><a href="https://www.ipip.net/">https://www.ipip.net/</a><br><a href="https://ip.taobao.com/ipSearch">https://ip.taobao.com/ipSearch</a></p>
-<h1 id="sh-c-是啥意思"><a href="#sh-c-是啥意思" class="headerlink" title="sh -c 是啥意思?"></a>sh -c 是啥意思?</h1><p>在Docker中经常看到</p>
-<ol>
-<li>启动命令 <code>sh -c &quot;ls -ltrh&quot;</code> 如下:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071203655.png"></li>
-<li>Dockerfile如下:<br><code>-c</code>: string, 命令从-c后的字符串读取<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071204728.png"></li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>net-tools</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s statefulset的研究与实践</title>
-    <url>//2022-03-27-k8s-stateful-set/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
-<ul>
-<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
-<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
-<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
-</ul>
-<p>这样就保证了Pod销毁重建之后: </p>
-<ul>
-<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
-<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
-</ul>
-<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
-<ul>
-<li>为每个pod创建单独的pvc, 命名规则 ${PvcName}-${StatefulSetName}-${idx}, 并绑定单独的pv, 而不是像deployment为所有pod创建(一个?还是多个?pvc)并绑定同一份pv</li>
-<li>pod销毁重建之后, 由于hostname稳定, 所以还能关联到之前的pv</li>
-</ul>
-<h3 id="其他顺序化的部署特性"><a href="#其他顺序化的部署特性" class="headerlink" title="其他顺序化的部署特性:"></a>其他顺序化的部署特性:</h3><ul>
-<li>Ordered Pod Creation: Pod创建是有序的, 即pod-0先创建, 只有pod-0成功后, pod-1才会创建</li>
-<li>scale-down时, 会按照index倒序删除pod</li>
-<li>滚动升级(Rolling Update)时, 会按照index倒序删除&amp;重建pod</li>
-</ul>
-<h2 id="statefulset的设计原理模型"><a href="#statefulset的设计原理模型" class="headerlink" title="statefulset的设计原理模型"></a>statefulset的设计原理模型</h2><ul>
-<li>拓扑状态: 应用的多个实例之间不是完全对等的关系, 这个应用实例的启动必须按照某些顺序启动. 比如应用的主节点A要先于从节点B启动. 而如果你把A和B两个Pod删除掉, 他们再次被创建出来是也必须严格按照这个顺序才行. 并且, 新创建出来的Pod, 必须和原来的Pod的网络标识一样, 这样原先的访问者才能使用同样的方法, 访问到这个新的Pod.</li>
-<li>存储状态: 应用的多个实例分别绑定了不同的存储数据. 对于这些应用实例来说, Pod A第一次读取到的数据, 和隔了十分钟之后再次读取到的数据, 应该是同一份, 哪怕在此期间Pod A被重新创建过. 一个数据库应用的多个存储实例.</li>
-</ul>
-<h1 id="ZK-on-K8S"><a href="#ZK-on-K8S" class="headerlink" title="ZK on K8S"></a>ZK on K8S</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><p>为啥 <a href="https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/">zookeeper</a> 通过k8s的statefulset创建zk服务, 看yaml文件里,</p>
-<ol>
-<li>没有创建myid文件</li>
-<li>没有在conf里配置 server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT 这种</li>
-</ol>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原因: 因为启动zk的脚本是start-zookeeper, 不是start.sh<br>所以是因为docker镜像里边对zk进行了封装, 对k8s环境变量进行了适配. 具体查看脚本:<br><a href="https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper">start-zookeeper</a></p>
-<h3 id="如何生成myid文件"><a href="#如何生成myid文件" class="headerlink" title="如何生成myid文件?"></a>如何生成myid文件?</h3><ul>
-<li>依赖statefulset的hostname全局有序且保持稳定的特性</li>
-<li>在pod内部执行”hostname”命令, 读取hostname, 参见上边hostname命名规则, 读取到${idx}值, myid&#x3D;${idx}+1</li>
-</ul>
-<h3 id="如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录"><a href="#如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录" class="headerlink" title="如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?"></a>如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?</h3><ul>
-<li>server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT</li>
-<li>$NAME: 从hostname读取到 ${StatefulSetName}</li>
-<li>$DOMAIN: 从 ‘hostname -d’ 命令中读取到domain信息</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>stateful-set</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>容器生态的一些研究与对比</title>
     <url>//2022-03-27-container-ecosystem/</url>
     <content><![CDATA[<h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><table>
@@ -5849,79 +5796,56 @@ ENTRYPOINT <span class="token builtin class-name">echo</span> <span class="token
       </tags>
   </entry>
   <entry>
-    <title>记录一些有趣的产品设计</title>
-    <url>//2022-04-04-good-design/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
-<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
-<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
-</ul>
-<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
-<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
-<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
-</ul>
-<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
-<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
-</li>
-<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
-</li>
-</ul>
-<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
-<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
-</ul>
-<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
+    <title>k8s statefulset的研究与实践</title>
+    <url>//2022-03-27-k8s-stateful-set/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一直很感兴趣, k8s针对statefulset, 是如何支持的? </p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="网络特性"><a href="#网络特性" class="headerlink" title="网络特性"></a>网络特性</h3><p>依赖HeadlessService, 来为每个Pod分配:</p>
 <ul>
-<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
-<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
+<li>一个稳定的, 有序的hostname, hostname命名规则: ${StatefulSetName}-${idx}, ${idx}从0开始</li>
+<li>一条A记录, 从 ${hostname}.default.svc.cluster.local 到podIp的DNS解析</li>
+<li>如果是非HeadlessService, 则会生成一条 ${SvcName}.default.svc.cluster.local 到 clusterIp 的DNS解析记录</li>
 </ul>
-<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
+<p>这样就保证了Pod销毁重建之后: </p>
+<ul>
+<li>虽然podIp变化了, 但hostname能跟之前保持一致</li>
+<li>A记录会自动更新, 这样k8s集群内部其他pod通过 ${hostname}.default.svc.cluster.local 仍然能够访问到该pod</li>
+</ul>
+<h3 id="存储特性"><a href="#存储特性" class="headerlink" title="存储特性:"></a>存储特性:</h3><p>是statefulset的特性:     </p>
+<ul>
+<li>为每个pod创建单独的pvc, 命名规则 ${PvcName}-${StatefulSetName}-${idx}, 并绑定单独的pv, 而不是像deployment为所有pod创建(一个?还是多个?pvc)并绑定同一份pv</li>
+<li>pod销毁重建之后, 由于hostname稳定, 所以还能关联到之前的pv</li>
+</ul>
+<h3 id="其他顺序化的部署特性"><a href="#其他顺序化的部署特性" class="headerlink" title="其他顺序化的部署特性:"></a>其他顺序化的部署特性:</h3><ul>
+<li>Ordered Pod Creation: Pod创建是有序的, 即pod-0先创建, 只有pod-0成功后, pod-1才会创建</li>
+<li>scale-down时, 会按照index倒序删除pod</li>
+<li>滚动升级(Rolling Update)时, 会按照index倒序删除&amp;重建pod</li>
+</ul>
+<h2 id="statefulset的设计原理模型"><a href="#statefulset的设计原理模型" class="headerlink" title="statefulset的设计原理模型"></a>statefulset的设计原理模型</h2><ul>
+<li>拓扑状态: 应用的多个实例之间不是完全对等的关系, 这个应用实例的启动必须按照某些顺序启动. 比如应用的主节点A要先于从节点B启动. 而如果你把A和B两个Pod删除掉, 他们再次被创建出来是也必须严格按照这个顺序才行. 并且, 新创建出来的Pod, 必须和原来的Pod的网络标识一样, 这样原先的访问者才能使用同样的方法, 访问到这个新的Pod.</li>
+<li>存储状态: 应用的多个实例分别绑定了不同的存储数据. 对于这些应用实例来说, Pod A第一次读取到的数据, 和隔了十分钟之后再次读取到的数据, 应该是同一份, 哪怕在此期间Pod A被重新创建过. 一个数据库应用的多个存储实例.</li>
+</ul>
+<h1 id="ZK-on-K8S"><a href="#ZK-on-K8S" class="headerlink" title="ZK on K8S"></a>ZK on K8S</h1><h2 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h2><p>为啥 <a href="https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/">zookeeper</a> 通过k8s的statefulset创建zk服务, 看yaml文件里,</p>
 <ol>
-<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
-<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
+<li>没有创建myid文件</li>
+<li>没有在conf里配置 server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT 这种</li>
 </ol>
-<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
-<ul>
-<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
-</li>
-<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
-</li>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原因: 因为启动zk的脚本是start-zookeeper, 不是start.sh<br>所以是因为docker镜像里边对zk进行了封装, 对k8s环境变量进行了适配. 具体查看脚本:<br><a href="https://github.com/kow3ns/kubernetes-zookeeper/blob/master/docker/scripts/start-zookeeper">start-zookeeper</a></p>
+<h3 id="如何生成myid文件"><a href="#如何生成myid文件" class="headerlink" title="如何生成myid文件?"></a>如何生成myid文件?</h3><ul>
+<li>依赖statefulset的hostname全局有序且保持稳定的特性</li>
+<li>在pod内部执行”hostname”命令, 读取hostname, 参见上边hostname命名规则, 读取到${idx}值, myid&#x3D;${idx}+1</li>
 </ul>
-<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
-<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
-</li>
-<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
-</li>
-</ol>
-<ul>
-<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
-<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
-<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
+<h3 id="如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录"><a href="#如何生成conf文件中的-server-1-x3D-xxxxxx-port1-port2-这种peer的记录" class="headerlink" title="如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?"></a>如何生成conf文件中的 server.1&#x3D;xxxxxx:port1:port2 这种peer的记录?</h3><ul>
+<li>server.$i&#x3D;$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT</li>
+<li>$NAME: 从hostname读取到 ${StatefulSetName}</li>
+<li>$DOMAIN: 从 ‘hostname -d’ 命令中读取到domain信息</li>
 </ul>
-<ol start="3">
-<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
-</ol>
-<ul>
-<li>最佳实践: 一些使用的小技巧.</li>
-<li>new feature: 新功能的介绍.</li>
-<li>case study: 用户案例.</li>
-<li>event: 线下&#x2F;线上的技术活动介绍.</li>
-<li>竞品比对: 例如与Gliffy,StarUML等.</li>
-<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
-</ul>
-<ol start="4">
-<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
-<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
-<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
-</blockquote>
-</li>
-</ol>
-<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>tech-notes</category>
+        <category>container-orchestration</category>
       </categories>
       <tags>
-        <tag>product-design</tag>
-        <tag>design</tag>
+        <tag>kubernetes</tag>
+        <tag>stateful-set</tag>
       </tags>
   </entry>
   <entry>
@@ -6194,6 +6118,82 @@ Target is MySQL <span class="token number">8.0</span>.26. Dump was produced from
         <tag>aws</tag>
         <tag>cloud-computing</tag>
         <tag>vpc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录一些有趣的产品设计</title>
+    <url>//2022-04-04-good-design/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码, 架构, 逻辑, 产品, 设计等, 不应该是枯燥乏味的, 不应该是痛苦复杂的, 而应该是有趣的, 简单的, 应该是geek的, 应该是美的.<br>这里记录下自己的点滴发现, 希望能走出CRUD与纷杂的业务逻辑, 逐渐提高一点审美与品味.<br>甚至觉得在软件产品的世界里，不应该由呆板无味的程序员主导，应该由产品经理，由用研，由UX等负责。<br>用户是知道什么好用，什么不好用的。知道哪些有趣，哪些无趣。<br>Mac字体最开始也是因为Steve Jobs在大学选修了这门课。<br>越来越意识到，软件的设计，<mark>需要的是克制</mark>，减少对用户的打扰，而不是一味增加与堆砌功能，影响体验，后边会附上自己识别到的bad design，引以为戒。</p>
+<h1 id="changelog优雅的格式"><a href="#changelog优雅的格式" class="headerlink" title="changelog优雅的格式"></a>changelog优雅的格式</h1><ul>
+<li><a href="https://gettaurus.org/docs/Changelog2020/#1-15-1sup-30-Oct-2020-sup">taurus</a><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071142374.png"></li>
+</ul>
+<h1 id="引导用户付费阅读"><a href="#引导用户付费阅读" class="headerlink" title="引导用户付费阅读"></a>引导用户付费阅读</h1><ul>
+<li>manning的<a href="https://livebook.manning.com/book/docker-in-practice-second-edition/chapter-4/13">docker-in-practice-second-edition</a>, 不会强制用户点击付费才能看见付费内容, 而是用很巧妙的方法, 对内容进行模糊化</li>
+<li>可以付出不同的价格, 来解锁 代码区域-&gt;小章节-&gt;大章节-&gt;整本书<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143420.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071143350.png"></li>
+</ul>
+<h1 id="输入密码"><a href="#输入密码" class="headerlink" title="输入密码"></a>输入密码</h1><ul>
+<li><p>输入用户名时, 睁开眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144071.png"></p>
+</li>
+<li><p>输入密码时, 闭上眼睛<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071144365.png"></p>
+</li>
+</ul>
+<h1 id="Github不同的页面风格"><a href="#Github不同的页面风格" class="headerlink" title="Github不同的页面风格"></a>Github不同的页面风格</h1><ul>
+<li>可以选择不同的filter, 虽然没啥卵用, 但感觉非常geek, 很有意思<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071145971.png"></li>
+</ul>
+<h1 id="RGB颜色的中文名称"><a href="#RGB颜色的中文名称" class="headerlink" title="RGB颜色的中文名称"></a>RGB颜色的中文名称</h1><p>发现Mac上截图软件 <a href="https://apps.apple.com/us/app/ishot-screenshot-recording-ocr/id1485844094?mt=12">iShot</a> 会识别到截取图中鼠标当前位置的RGB值，然后给出很好的中文<br>中文各种颜色的翻译很有诗意, 例如:   </p>
+<ul>
+<li>蓝色: 蔚蓝, 碧蓝, 天蓝, 鼠尾草蓝, 矢车菊蓝, 灰丁宁蓝, 土耳其蓝, 绿松石色, 灰蓝, 军服蓝, 暗岩蓝, 品蓝, 齐马蓝, 爱丽丝蓝</li>
+<li>紫色: 锦葵紫, 蓝紫, 暗蓝紫, 紫水晶色, 木槿紫, 紫丁香色, 薰衣草紫, 淡紫丁香色, 蓟紫</li>
+</ul>
+<p>个人找到的能对应到的RGB名称映射: <a href="https://www.sojson.com/rgb.html">RGB颜色参考</a> ,遗憾的是:</p>
+<ol>
+<li>只有英文, 没有对应中文的名称, 诗意很难体现出来.  </li>
+<li>英文也不是很贴切, 例如 VioletRed1(#FF3E96), VioletRed2(#EE3A8C), VioletRed3(#CD3278), VioletRed4(#8B2252), 分别对应中文的 “暖粉红”, “山茶红”, “樱桃红”, “褐色”</li>
+</ol>
+<h1 id="Emoji的灵活运用"><a href="#Emoji的灵活运用" class="headerlink" title="Emoji的灵活运用"></a>Emoji的灵活运用</h1><p>灵活运用Emoji, 让信息更加直观友好好玩儿. Life is short, why so serious?</p>
+<ul>
+<li><p>例如 <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a> 的启动console界面:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012118263.png"></p>
+</li>
+<li><p>例如 <a href="https://github.com/jenkinsci/ec2-plugin/releases">EC2-Jenkins的ReleaseNotes</a>:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202211012117440.png"></p>
+</li>
+</ul>
+<h1 id="优秀产品分析"><a href="#优秀产品分析" class="headerlink" title="优秀产品分析"></a>优秀产品分析</h1><h2 id="draw-io"><a href="#draw-io" class="headerlink" title="draw.io"></a><a href="https://www.drawio.com/">draw.io</a></h2><ol>
+<li><p>好用的产品, 界面风格简洁, 审美在线, 体验良好, 入门到进阶, 学习曲线平滑.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152245183.png"></p>
+</li>
+<li><p>清晰美观的<a href="https://drawio-app.com/tutorials/">文档</a></p>
+</li>
+</ol>
+<ul>
+<li>内容完善: 目前自已遇到的几乎所有问题, 都可以在文档上找到答案. 条理清晰, 既不臃肿重复, 也不丢三落四. <mark><font color='red'>永久链接很重要!</font></mark></li>
+<li>内容简洁: Video Tutorials 围绕一个主题, 几乎都是1min以内, 简明扼要.</li>
+<li>审美在线: 风格很统一. 无论是字体, 还是插图.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152244906.png"></li>
+</ul>
+<ol start="3">
+<li>持续更新的<a href="https://drawio-app.com/blog/">有用的技术博客</a>, 而不是无用的, 宣传的, 吹嘘的, 主要分如下几类:</li>
+</ol>
+<ul>
+<li>最佳实践: 一些使用的小技巧.</li>
+<li>new feature: 新功能的介绍.</li>
+<li>case study: 用户案例.</li>
+<li>event: 线下&#x2F;线上的技术活动介绍.</li>
+<li>竞品比对: 例如与Gliffy,StarUML等.</li>
+<li>持久更新: 从2016年4月建立到2023年5月, 几乎保持每月1到2次更新. 长期做对的事情, 这份坚持令人感动. <a href="https://www.youtube.com/@drawioapp/videos">YouTuBe频道</a>内容丰富.</li>
+</ul>
+<ol start="4">
+<li><a href="https://drawio-app.com/pricing/">合理的定价</a>, 普通用户想支持下, 竟然找不到付费入口.</li>
+<li>技术氛围: <a href="https://drawio-app.com/blog/smart-templates-an-exclusive-new-feature-from-draw-io/">Las Vegas Atlassian Team ’23</a>  <blockquote>
+<p>We are excited for users to get their hands on Smart Templates, and we’ll be demoing the feature at our booth next week at Atlassian Team ’23. Will you be in Las Vegas for the event? Be sure to stop by our booth, located near the Expo Hall entrance, to get a first-hand look.</p>
+</blockquote>
+</li>
+</ol>
+<p>总体来说, 感觉draw.io真的很克制, 围绕着核心能力, 精心了打磨功能与体验. 越深入了解, 越令我情不自禁爱上他们的产品, 爱上他们的团队, 爱上Diagramming~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>product-design</tag>
+        <tag>design</tag>
       </tags>
   </entry>
   <entry>
@@ -6561,61 +6561,6 @@ kube-dns                             ClusterIP      <span class="token number">1
       </tags>
   </entry>
   <entry>
-    <title>记录一些自认为不好的产品设计</title>
-    <url>//2022-04-29-bad-design/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一些自己明显感觉退步，不适的设计。引以为戒。</p>
-<h1 id="过多的打扰"><a href="#过多的打扰" class="headerlink" title="过多的打扰"></a>过多的打扰</h1><h2 id="技术文档选中弹框"><a href="#技术文档选中弹框" class="headerlink" title="技术文档选中弹框"></a>技术文档选中弹框</h2><ul>
-<li>阿里云官网技术文档，选中文字之后，会自动弹出“文档反馈”说明，本意是好的，希望得到用户的反馈。但在开发者实际阅读过程中，尤其是大段的技术文档，经常会习惯性地鼠标点选，此时弹出弹框，非常分散注意力。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071159766.png"></li>
-<li>反观海外的云厂商，都非常克制甚至朴素。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071200696.png"></li>
-</ul>
-<h2 id="页面过多堆砌"><a href="#页面过多堆砌" class="headerlink" title="页面过多堆砌"></a>页面过多堆砌</h2><ul>
-<li>阿里云官方技术文档，右上角是一堆营销计划“参与星火赢现金”，“分享助力好礼”；右下角是“销售咨询”，“会员专享”，“文档反馈”。跟牛皮藓一样。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071200169.png"></li>
-<li>反观aws，几乎没有过多打扰。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071201046.png"></li>
-</ul>
-<h1 id="不一的风格"><a href="#不一的风格" class="headerlink" title="不一的风格"></a>不一的风格</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>product-design</tag>
-        <tag>design</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记一次由于remoteCache类型不兼容修改导致的异常问题</title>
-    <url>//2022-04-30-cache-incompatible/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>进行Redis缓存升级改造, 缓存访问层统一进行了修改:<br>修改前代码如下, 按照Java原生序列化方式: </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写缓存, Long类型</span>
-cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span> <span class="token number">123L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 读缓存, Long类型</span>
-<span class="token punctuation">(</span><span class="token class-name">Long</span><span class="token punctuation">)</span>cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>修改后代码如下, 统一按照String类型进行序列化&#x2F;反序列化:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写缓存, 转成String类型</span>
-cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span> <span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 读缓存, 获取String类型</span>
-<span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">)</span>cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>线上发布过程中报出异常, <code>ClassCastException</code>, Long类型无法被cast成String类型.<br>经分析, 由于是集群的环境, 发布过程中, 针对同一个”key”, </p>
-<ul>
-<li>未布机器写入的还是Long类型</li>
-<li>已发布的机器读取该”key”对应的value, 尝试强转成String,<br>反之亦然, 也会有 String类型无法被cast成Long类型的报错.</li>
-</ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在分布式环境下, 对remote cache的修改, 一定要注意兼容性:</p>
-<ul>
-<li>不止新版本旧版本的兼容性</li>
-<li>更要考虑到发布过程中新老机器, 针对同一个key的类型的兼容性.</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>java</tag>
-        <tag>cache</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ubuntu初始化配置</title>
     <url>//2022-04-29-ubuntu-init/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在内网淘了一个 ThinkPad X1 Carbon Gen4 的老古董，<br>默认是无系统的，也不太想安装毫无设计感，相当丑陋的Windows。<br>还好家里有Ubuntu的安装U盘，就直接拿来装上去了。<br>之前整体对Ubuntu的体验还是不错的，无论是从UI与字体设计上，使用流畅度上，软件齐全度上。<br>本身自己惯用Mac，切换到Ubuntu应该也是无缝的。<br>实际配置下来，发现软件齐全度比6年前自己使用时要多太多太多了，很开心。<br>在上边玩儿docker就更方便了，更好地理解并且折腾清楚原理啦。<br>注意，以下都是基于 Ubuntu 20.04.4 LTS 版本(Focal Fossa)说明的。</p>
@@ -6781,6 +6726,27 @@ Shift + Ctrl + PrintScreen # 自由选取<span aria-hidden="true" class="line-nu
       </tags>
   </entry>
   <entry>
+    <title>记录一些自认为不好的产品设计</title>
+    <url>//2022-04-29-bad-design/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一些自己明显感觉退步，不适的设计。引以为戒。</p>
+<h1 id="过多的打扰"><a href="#过多的打扰" class="headerlink" title="过多的打扰"></a>过多的打扰</h1><h2 id="技术文档选中弹框"><a href="#技术文档选中弹框" class="headerlink" title="技术文档选中弹框"></a>技术文档选中弹框</h2><ul>
+<li>阿里云官网技术文档，选中文字之后，会自动弹出“文档反馈”说明，本意是好的，希望得到用户的反馈。但在开发者实际阅读过程中，尤其是大段的技术文档，经常会习惯性地鼠标点选，此时弹出弹框，非常分散注意力。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071159766.png"></li>
+<li>反观海外的云厂商，都非常克制甚至朴素。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071200696.png"></li>
+</ul>
+<h2 id="页面过多堆砌"><a href="#页面过多堆砌" class="headerlink" title="页面过多堆砌"></a>页面过多堆砌</h2><ul>
+<li>阿里云官方技术文档，右上角是一堆营销计划“参与星火赢现金”，“分享助力好礼”；右下角是“销售咨询”，“会员专享”，“文档反馈”。跟牛皮藓一样。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071200169.png"></li>
+<li>反观aws，几乎没有过多打扰。<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071201046.png"></li>
+</ul>
+<h1 id="不一的风格"><a href="#不一的风格" class="headerlink" title="不一的风格"></a>不一的风格</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>product-design</tag>
+        <tag>design</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记一次由于JVM优化导致异常堆栈丢失的问题</title>
     <url>//2022-04-30-java-exception-stack-trace-missing/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>线上某次故障排查, 发现线上有异常, 但无堆栈信息.<br>实际查看打印异常的地方, 确实是会打印出堆栈的. 那么堆栈信息为啥会丢呢? </p>
@@ -6805,6 +6771,40 @@ Shift + Ctrl + PrintScreen # 自由选取<span aria-hidden="true" class="line-nu
         <tag>lessons-learned</tag>
         <tag>java</tag>
         <tag>troubleshooting</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次由于remoteCache类型不兼容修改导致的异常问题</title>
+    <url>//2022-04-30-cache-incompatible/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>进行Redis缓存升级改造, 缓存访问层统一进行了修改:<br>修改前代码如下, 按照Java原生序列化方式: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写缓存, Long类型</span>
+cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span> <span class="token number">123L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 读缓存, Long类型</span>
+<span class="token punctuation">(</span><span class="token class-name">Long</span><span class="token punctuation">)</span>cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>修改后代码如下, 统一按照String类型进行序列化&#x2F;反序列化:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 写缓存, 转成String类型</span>
+cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span> <span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 读缓存, 获取String类型</span>
+<span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">)</span>cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>线上发布过程中报出异常, <code>ClassCastException</code>, Long类型无法被cast成String类型.<br>经分析, 由于是集群的环境, 发布过程中, 针对同一个”key”, </p>
+<ul>
+<li>未布机器写入的还是Long类型</li>
+<li>已发布的机器读取该”key”对应的value, 尝试强转成String,<br>反之亦然, 也会有 String类型无法被cast成Long类型的报错.</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在分布式环境下, 对remote cache的修改, 一定要注意兼容性:</p>
+<ul>
+<li>不止新版本旧版本的兼容性</li>
+<li>更要考虑到发布过程中新老机器, 针对同一个key的类型的兼容性.</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>java</tag>
+        <tag>cache</tag>
       </tags>
   </entry>
   <entry>
@@ -6910,6 +6910,67 @@ Your CPU does not support KVM extensions<span aria-hidden="true" class="line-num
         <tag>ubuntu</tag>
         <tag>system-init</tag>
         <tag>system-config</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一个通用数据巡检框架的设计</title>
+    <url>//2022-05-15-cruise-framework-design/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在实际项目中, 有许多业务场景, 会存在多张表数据不一致或者脏数据残留的问题,<br>需要定期执行一些SQL来进行数据一致性的巡检与订正, 以实现数据的最终一致性.<br>例如下表, 需要定期查询&amp;统计出’deleted’状态的用户数量, 报警, 并清理这些数据.</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- user表</span>
+user_id<span class="token operator">|</span> age<span class="token operator">|</span> <span class="token keyword">status</span><span class="token operator">|</span>
+<span class="token number">1</span><span class="token operator">|</span> <span class="token number">18</span><span class="token operator">|</span> deleted<span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="初步方案"><a href="#初步方案" class="headerlink" title="初步方案:"></a>初步方案:</h1><p>方案1: 可以针对每个需求, 单独写SQL-&gt;DAO-&gt;Service等, 但带来的问题是: </p>
+<ol>
+<li>开发量大, 每次新的需求, 都需要撸一遍, 重复工作量大.</li>
+<li>SQL-&gt;Service整体功能分散, 不便于维护.<br>方案2: 可以基于此, 抽象出一个面向SQL的通用巡检框架, 便于统一接入与维护.</li>
+</ol>
+<h1 id="架构设计思考"><a href="#架构设计思考" class="headerlink" title="架构设计思考"></a>架构设计思考</h1><p>从用户角度, 可以:<br>定时任务框架: </p>
+<ol>
+<li>创建巡检任务, 与输入自定义的SQL绑定</li>
+<li>定义巡检周期</li>
+<li>手动触发运行(便于首次配置之后调试)</li>
+<li>查看运行记录(便于)</li>
+</ol>
+<p>报警与订正框架: </p>
+<ol>
+<li>定义任务结果筛选与报警条件</li>
+<li>定义任务结果执行的订正Action</li>
+</ol>
+<h2 id="第一部分-定时任务框架"><a href="#第一部分-定时任务框架" class="headerlink" title="第一部分: 定时任务框架"></a>第一部分: 定时任务框架</h2><p>核心就是一个面向SQL的分布式定时任务框架, 调研现有的任务框架实现(例如Quartz): </p>
+<ul>
+<li>任务核心: <ul>
+<li>任务描述与定义(即数据源支持哪些? SQL支持哪些?)</li>
+<li>定时任务的调度与执行</li>
+<li>历史任务运行情况<ul>
+<li>耗时</li>
+<li>WorkerIp</li>
+<li>执行状态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>运维后台: <ul>
+<li>手工触发<ul>
+<li>指定</li>
+</ul>
+</li>
+<li>任务</li>
+</ul>
+</li>
+</ul>
+<h2 id="第二部分-数据订正报警框架"><a href="#第二部分-数据订正报警框架" class="headerlink" title="第二部分: 数据订正报警框架"></a>第二部分: 数据订正报警框架</h2><h1 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h1><p>任务分为 “全量巡检” 与 “增量巡检” 两类.<br>全量巡检: 即每次执行SQL, 对报警结果全量输出.<br>增量巡检: 即每次执行SQL, 只输出与上次执行有差异的(新增的)数据报警.</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>best-practices</tag>
+        <tag>software-engineering</tag>
+        <tag>cruiser</tag>
+        <tag>architecture</tag>
       </tags>
   </entry>
   <entry>
@@ -7185,67 +7246,6 @@ RequestId</span> <span class="token operator">:</span> xxx<span aria-hidden="tru
         <tag>java</tag>
         <tag>rpc</tag>
         <tag>exception</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一个通用数据巡检框架的设计</title>
-    <url>//2022-05-15-cruise-framework-design/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在实际项目中, 有许多业务场景, 会存在多张表数据不一致或者脏数据残留的问题,<br>需要定期执行一些SQL来进行数据一致性的巡检与订正, 以实现数据的最终一致性.<br>例如下表, 需要定期查询&amp;统计出’deleted’状态的用户数量, 报警, 并清理这些数据.</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- user表</span>
-user_id<span class="token operator">|</span> age<span class="token operator">|</span> <span class="token keyword">status</span><span class="token operator">|</span>
-<span class="token number">1</span><span class="token operator">|</span> <span class="token number">18</span><span class="token operator">|</span> deleted<span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-<h1 id="初步方案"><a href="#初步方案" class="headerlink" title="初步方案:"></a>初步方案:</h1><p>方案1: 可以针对每个需求, 单独写SQL-&gt;DAO-&gt;Service等, 但带来的问题是: </p>
-<ol>
-<li>开发量大, 每次新的需求, 都需要撸一遍, 重复工作量大.</li>
-<li>SQL-&gt;Service整体功能分散, 不便于维护.<br>方案2: 可以基于此, 抽象出一个面向SQL的通用巡检框架, 便于统一接入与维护.</li>
-</ol>
-<h1 id="架构设计思考"><a href="#架构设计思考" class="headerlink" title="架构设计思考"></a>架构设计思考</h1><p>从用户角度, 可以:<br>定时任务框架: </p>
-<ol>
-<li>创建巡检任务, 与输入自定义的SQL绑定</li>
-<li>定义巡检周期</li>
-<li>手动触发运行(便于首次配置之后调试)</li>
-<li>查看运行记录(便于)</li>
-</ol>
-<p>报警与订正框架: </p>
-<ol>
-<li>定义任务结果筛选与报警条件</li>
-<li>定义任务结果执行的订正Action</li>
-</ol>
-<h2 id="第一部分-定时任务框架"><a href="#第一部分-定时任务框架" class="headerlink" title="第一部分: 定时任务框架"></a>第一部分: 定时任务框架</h2><p>核心就是一个面向SQL的分布式定时任务框架, 调研现有的任务框架实现(例如Quartz): </p>
-<ul>
-<li>任务核心: <ul>
-<li>任务描述与定义(即数据源支持哪些? SQL支持哪些?)</li>
-<li>定时任务的调度与执行</li>
-<li>历史任务运行情况<ul>
-<li>耗时</li>
-<li>WorkerIp</li>
-<li>执行状态</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>运维后台: <ul>
-<li>手工触发<ul>
-<li>指定</li>
-</ul>
-</li>
-<li>任务</li>
-</ul>
-</li>
-</ul>
-<h2 id="第二部分-数据订正报警框架"><a href="#第二部分-数据订正报警框架" class="headerlink" title="第二部分: 数据订正报警框架"></a>第二部分: 数据订正报警框架</h2><h1 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h1><p>任务分为 “全量巡检” 与 “增量巡检” 两类.<br>全量巡检: 即每次执行SQL, 对报警结果全量输出.<br>增量巡检: 即每次执行SQL, 只输出与上次执行有差异的(新增的)数据报警.</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>best-practices</tag>
-        <tag>software-engineering</tag>
-        <tag>cruiser</tag>
-        <tag>architecture</tag>
       </tags>
   </entry>
   <entry>
@@ -7657,26 +7657,6 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
-    <title>Java与Spring中SPI机制的探讨与思考</title>
-    <url>//2022-05-24-java-spring-spi/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中用到了SPI机制, 使用过程也走了一些弯路. 这里记录下来. </p>
-<h2 id="几种SPI方式"><a href="#几种SPI方式" class="headerlink" title="几种SPI方式"></a>几种SPI方式</h2><h2 id="Java中SPI机制"><a href="#Java中SPI机制" class="headerlink" title="Java中SPI机制"></a>Java中SPI机制</h2><h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><ul>
-<li>jdbc驱动, 例如mysql-connector-java.jar中, 就在META-INF&#x2F;services&#x2F;java.sql.Driver</li>
-</ul>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>比较严重的一个问题是, 这些SPI的Bean游离于Spring容器外.<br>SPI中引入的对象(Bean)没有被Spring容器管理起来.<br>从而这些Bean如果依赖到了Spring容器中其他Bean, 就只能手动从Spring容器中拿出来复制, 即手动注入.<br>太麻烦了. </p>
-<h2 id="Service-Loader-Spring-integration"><a href="#Service-Loader-Spring-integration" class="headerlink" title="Service Loader Spring integration"></a>Service Loader Spring integration</h2><h2 id="Spring-Factories-Loader"><a href="#Spring-Factories-Loader" class="headerlink" title="Spring Factories Loader"></a>Spring Factories Loader</h2><h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h2 id="在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥"><a href="#在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥" class="headerlink" title="在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?"></a>在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?</h2><p>个人理解, 最大的优点是编译期与实现类&#x2F;包解耦. </p>
-<h2 id="Spring-Factories-Loader在Starter的应用场景-优势是啥"><a href="#Spring-Factories-Loader在Starter的应用场景-优势是啥" class="headerlink" title="Spring Factories Loader在Starter的应用场景, 优势是啥?"></a>Spring Factories Loader在Starter的应用场景, 优势是啥?</h2><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a href="https://dzone.com/articles/java-service-loader-vs-spring-factories-loader">Java Service Loader vs. Spring Factories Loader</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>spring</tag>
-        <tag>spi</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>资源调度API设计的思考</title>
     <url>//2022-05-23-scheduler-api-design/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录下调度API实际设计与应用场景中, 一些有意义的思考与沉淀.</p>
@@ -7709,6 +7689,26 @@ public synchronized void close() throws SQLException &#123;
         <tag>scheduler-design</tag>
         <tag>api-design</tag>
         <tag>scheduler-api</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java与Spring中SPI机制的探讨与思考</title>
+    <url>//2022-05-24-java-spring-spi/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中用到了SPI机制, 使用过程也走了一些弯路. 这里记录下来. </p>
+<h2 id="几种SPI方式"><a href="#几种SPI方式" class="headerlink" title="几种SPI方式"></a>几种SPI方式</h2><h2 id="Java中SPI机制"><a href="#Java中SPI机制" class="headerlink" title="Java中SPI机制"></a>Java中SPI机制</h2><h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><ul>
+<li>jdbc驱动, 例如mysql-connector-java.jar中, 就在META-INF&#x2F;services&#x2F;java.sql.Driver</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>比较严重的一个问题是, 这些SPI的Bean游离于Spring容器外.<br>SPI中引入的对象(Bean)没有被Spring容器管理起来.<br>从而这些Bean如果依赖到了Spring容器中其他Bean, 就只能手动从Spring容器中拿出来复制, 即手动注入.<br>太麻烦了. </p>
+<h2 id="Service-Loader-Spring-integration"><a href="#Service-Loader-Spring-integration" class="headerlink" title="Service Loader Spring integration"></a>Service Loader Spring integration</h2><h2 id="Spring-Factories-Loader"><a href="#Spring-Factories-Loader" class="headerlink" title="Spring Factories Loader"></a>Spring Factories Loader</h2><h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h2 id="在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥"><a href="#在什么时候需要用到ServiceLoader-x2F-SPI-SPI优点具体是啥" class="headerlink" title="在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?"></a>在什么时候需要用到ServiceLoader&#x2F;SPI? SPI优点具体是啥?</h2><p>个人理解, 最大的优点是编译期与实现类&#x2F;包解耦. </p>
+<h2 id="Spring-Factories-Loader在Starter的应用场景-优势是啥"><a href="#Spring-Factories-Loader在Starter的应用场景-优势是啥" class="headerlink" title="Spring Factories Loader在Starter的应用场景, 优势是啥?"></a>Spring Factories Loader在Starter的应用场景, 优势是啥?</h2><h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><p><a href="https://dzone.com/articles/java-service-loader-vs-spring-factories-loader">Java Service Loader vs. Spring Factories Loader</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>spring</tag>
+        <tag>spi</tag>
       </tags>
   </entry>
   <entry>
@@ -8034,91 +8034,6 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
-    <title>MySQL连接池重要参数配置原理研究</title>
-    <url>//2022-06-05-mysql-conn-params/</url>
-    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
-<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
-<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
-<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
-<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
-<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
-<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
-<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
-<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
-</ul>
-<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
-<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
-</ul>
-<ol>
-<li>即客户端从连接池中获取connection的最大等待时长</li>
-<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
-<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
-    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
-    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
-    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
-    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
-    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
-    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<ul>
-<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
-<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
-</ul>
-<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
-<li>initialSize: 100</li>
-<li>maxActive: 200</li>
-<li>minIdle: 100</li>
-<li>maxWait: 6000</li>
-</ul>
-<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
-<ul>
-<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
-<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
-</ul>
-<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
-<li>initialSize: 未配置</li>
-<li>maxActive: 300</li>
-<li>minIdle: 30</li>
-<li>maxWait: 60000</li>
-</ul>
-<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
-<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
-<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
-<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
-</ol>
-</li>
-<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
-<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
-<li>取决于物理机&#x2F;虚拟机的配置.</li>
-</ol>
-</li>
-<li>什么是MySQL的session? 与connection是啥关系?<ol>
-<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
-<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
-<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
-</ol>
-</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>mysql</tag>
-        <tag>database</tag>
-        <tag>connection-pool</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringBoot Transactional AOP 实现原理研究</title>
     <url>//2022-06-06-spring-tx-annonation/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>书接上回 <a href="https://davyjones2010.github.io/2022-06-03-spring-annotation-on-interface/">SpringBoot基于Interface的Annotation在AOP中如何生效I</a>,<br>里边只是简略地说明了Spring中 @Transactional 只能在jdk proxy场景下生效, 在cglib场景下不生效, 但没有研究具体代码实现.<br>本文详细探究下.</p>
@@ -8248,6 +8163,91 @@ public synchronized void close() throws SQLException &#123;
         <tag>mac</tag>
         <tag>asciinema</tag>
         <tag>svg</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL连接池重要参数配置原理研究</title>
+    <url>//2022-06-05-mysql-conn-params/</url>
+    <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
+<li>initialSize: 初始化时connection数量, 每个connection实际是一条与DB的TCP连接</li>
+<li>maxActive: 最大连接池数量, 对应于maxPoolSize</li>
+<li>minIdle: 最小连接池数量, 对应与minPoolSize</li>
+<li>maxWait: 获取连接等待超时的时间, 具体详解参见: <a href="#maxwait%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3">maxWait参数详解</a></li>
+<li>timeBetweenEvictionRunsMillis: 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</li>
+<li>minEvictableIdleTimeMillis: 配置一个连接在池中最小生存的时间，单位是毫秒</li>
+<li>maxEvictableIdleTimeMillis:  配置一个连接在池中最大生存的时间，单位是毫秒</li>
+<li>maxPoolPreparedStatementPerConnectionSize: PS Cache.暂时不管</li>
+</ul>
+<h2 id="maxWait参数详解"><a href="#maxWait参数详解" class="headerlink" title="maxWait参数详解"></a>maxWait参数详解</h2><ul>
+<li>参数释义: <a href="https://www.jianshu.com/p/1ff2bd62dd45">https://www.jianshu.com/p/1ff2bd62dd45</a></li>
+</ul>
+<ol>
+<li>即客户端从连接池中获取connection的最大等待时长</li>
+<li>如果不配置, 默认为-1, 即客户端会一直等待. 这样显然是不合适的.</li>
+<li>client从连接池中获取connection等待超时, 错误信息如下:<pre class="line-numbers language-none"><code class="language-none">Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 3000, active 4, maxActive 4, creating 0
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1722)
+    at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1402)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5059)
+    at com.alibaba.druid.filter.logging.LogFilter.dataSource_getConnection(LogFilter.java:886)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.FilterAdapter.dataSource_getConnection(FilterAdapter.java:2756)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.filter.stat.StatFilter.dataSource_getConnection(StatFilter.java:680)
+    at com.alibaba.druid.filter.FilterChainImpl.dataSource_connect(FilterChainImpl.java:5055)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1380)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1372)
+    at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
+    at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
+    ... 11 more<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<ul>
+<li>maxWait参数的坑: <a href="https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/">https://tech.youzan.com/shu-ju-ku-lian-jie-chi-pei-zhi/</a></li>
+<li>扩展阅读: Druid锁的公平模式, <a href="https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98">https://github.com/alibaba/druid/wiki/Druid%E9%94%81%E7%9A%84%E5%85%AC%E5%B9%B3%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98</a></li>
+</ul>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="项目1配置样例"><a href="#项目1配置样例" class="headerlink" title="项目1配置样例"></a>项目1配置样例</h2><ul>
+<li>initialSize: 100</li>
+<li>maxActive: 200</li>
+<li>minIdle: 100</li>
+<li>maxWait: 6000</li>
+</ul>
+<p>注意, 这个是单机的连接配置, 考虑到分布式环境:</p>
+<ul>
+<li>初始化情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 100</em>81 &#x3D; 8100</li>
+<li>压力最大情况下, db承受的连接数是 initialSize<em>nodeCount &#x3D; 200</em>81 &#x3D; 16200</li>
+</ul>
+<h2 id="项目2配置项"><a href="#项目2配置项" class="headerlink" title="项目2配置项"></a>项目2配置项</h2><ul>
+<li>initialSize: 未配置</li>
+<li>maxActive: 300</li>
+<li>minIdle: 30</li>
+<li>maxWait: 60000</li>
+</ul>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ol>
+<li>当客户端并发度超过最大连接数时, 会怎样?<ol>
+<li>连接池中连接数, 从min –&gt; max 的增长策略是怎样的?</li>
+<li>当增长到max之后, 请求线程会等待maxWait, 如果还是获取不到, 则抛错.</li>
+</ol>
+</li>
+<li>当MySQL服务端连接数超过机器能承受的最大连接数时, 会怎样?</li>
+<li>MySQL服务端一般能支持的最大连接数是多少?<ol>
+<li>取决于物理机&#x2F;虚拟机的配置.</li>
+</ol>
+</li>
+<li>什么是MySQL的session? 与connection是啥关系?<ol>
+<li><a href="https://www.zhihu.com/question/30325800">https://www.zhihu.com/question/30325800</a></li>
+<li>和网站的一个session差不多吧，只不过session是把key放在cookie里面，数据库连接是把key放在客户端的library的内存里（比如.Net Sql Client)。对MS SQL来说，这个连接的协议叫TDS，底下可以走多种传输层协议，比如tcpip，也可以named pipe。而MySQL就又有自己的协议。</li>
+<li>com.taobao.pamirs.transaction.TBConnection#queryDBSessionID 只有oracle有sessionId.</li>
+</ol>
+</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>mysql</tag>
+        <tag>database</tag>
+        <tag>connection-pool</tag>
       </tags>
   </entry>
   <entry>
@@ -9681,75 +9681,6 @@ Property settings:
       </tags>
   </entry>
   <entry>
-    <title>记一次分布式场景下状态机设计缺陷导致的问题</title>
-    <url>//2022-07-06-state-machine-in-distributed-system/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
-<li><p>为某个对象item建模, 有如下几种状态变迁, 在数据库中state字段记录:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072308671.png"></p>
-</li>
-<li><p>其中processing过程可能会持续时间较久, 10min左右</p>
-</li>
-<li><p>在服务端某个线程响应请求, 该对象处于processing过程中时, 服务器发布重启, 导致item状态一直卡在processing </p>
-</li>
-<li><p>而processing状态, <strong>本身是中间状态, 无法进行任何人肉干预&#x2F;操作</strong>, 从而导致只能临时提交数据订正, 将状态字段修改回”init”, 然后再执行一次process.</p>
-</li>
-</ul>
-<h1 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h1><p>仔细思考了下, 发现设计的时候, 根本原因是对于中间状态没有做好处理, 如背景中介绍的服务重启的处理.<br>而<mark>在分布式场景下, 服务重启是by design需要被接受的.</mark><br>这里思考了下可能的几种处理方式:</p>
-<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><ul>
-<li>如何区分状态机的中间状态与终态? </li>
-<li>一条原则: <mark>终态-&gt;终态之间, 必须是可以人肉有入口触发的(而不是系统自动触发的); 必须是可重入的.</mark></li>
-</ul>
-<h2 id="方案1-状态机设计修改-把processing作为纯粹的中间状态"><a href="#方案1-状态机设计修改-把processing作为纯粹的中间状态" class="headerlink" title="方案1: 状态机设计修改: 把processing作为纯粹的中间状态"></a>方案1: 状态机设计修改: 把processing作为纯粹的中间状态</h2><ol>
-<li><p>将processing从状态机中删除掉, 如下: <br/><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072351350.png"></p>
-</li>
-<li><p>使用 分布式锁&#x2F;db字段锁 来实现排他功能(即item同时只能被一个线程处理, 防止多个线程同时处理一个item导致死锁&#x2F;重复计算等问题).</p>
-<ol>
-<li>在item执行前, 加上锁+锁超时时间(如例子中的10min); 其他线程要执行时, 无法抢到该item的锁. </li>
-<li>item执行完成之后, 状态修改为finished之后, 再释放掉item锁.</li>
-<li>item执行异常中断(例如服务器重启, 线程crash等): 等待锁超时. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
-<li>item执行失败: 线程里catch住异常, 主动释放掉该item锁. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
-</ol>
-</li>
-<li><p>或者使用事务:(不过本例子中不适合, 因为10min太久了, 其他执行耗时较短30s以内的可以使用该方案)  </p>
-<ol>
-<li>item执行前开启事务;</li>
-<li>执行后修改状态为finished, commit事务.</li>
-<li>item执行异常中断(例如服务器重启, 线程crash等): 事务自动回滚. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
-<li>item执行失败: 主动回滚事务. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
-</ol>
-</li>
-</ol>
-<h2 id="方案2-状态机设计修改-把processing作为纯粹的终态"><a href="#方案2-状态机设计修改-把processing作为纯粹的终态" class="headerlink" title="方案2: 状态机设计修改: 把processing作为纯粹的终态"></a>方案2: 状态机设计修改: 把processing作为纯粹的终态</h2><ol>
-<li><p>需要设计从processing-&gt;finished&#x2F;init的人肉触发入口.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072354738.png"></p>
-</li>
-<li><p>如何防止多个线程同时触发该item从processing-&gt;finished&#x2F;init的变迁? 参见方案1中锁&#x2F;事务的方式</p>
-</li>
-</ol>
-<h2 id="方案3-优雅停机"><a href="#方案3-优雅停机" class="headerlink" title="方案3: 优雅停机"></a>方案3: 优雅停机</h2><ol>
-<li>在shutdown-hook里注册事件:<ol>
-<li>将状态改回init. –&gt; required.</li>
-<li>将worker线程interrupt掉. –&gt; optional, 因为即使不interrupt, 进程停止线程也会被回收.</li>
-</ol>
-</li>
-<li>但该方案有很大的缺陷, 如果直接<code>kill -9</code>, 则shutdown-hook根本不会执行.</li>
-</ol>
-<h2 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案"></a>最终方案</h2><p>最终采用了方案2, 因为从状态机中删除掉一个终态, 对现有代码改造量太大了.</p>
-<h1 id="其他思考"><a href="#其他思考" class="headerlink" title="其他思考"></a>其他思考</h1><ol>
-<li>状态机设计的时候, 一定要慎重考虑哪些是终态, 哪些是中间状态. 不是说因为在某个状态持续时间较长(如例子中的processing), 就要作为终态. </li>
-<li>状态机中每个终态之间, 必须考虑可重入性; 必须要保证能人肉触发终态之间的转化. 本文的例子就是反面教材, item卡在processing这个终态, 无法进行程序上的任何操作.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>java</tag>
-        <tag>design</tag>
-        <tag>state-machine</tag>
-        <tag>lock</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux网络之HTTP Proxy原理与实现分析</title>
     <url>//2022-07-10-linux-network-http-proxy/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在使用apache的HttpClient时(获取其他常用的httpclient), 经常会发现初始化时可以配置http proxy. 但有些疑问:</p>
@@ -10169,6 +10100,75 @@ zxid<span class="token operator">++</span><span class="token punctuation">;</spa
         <tag>uuid</tag>
         <tag>snowflake</tag>
         <tag>sid</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次分布式场景下状态机设计缺陷导致的问题</title>
+    <url>//2022-07-06-state-machine-in-distributed-system/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
+<li><p>为某个对象item建模, 有如下几种状态变迁, 在数据库中state字段记录:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072308671.png"></p>
+</li>
+<li><p>其中processing过程可能会持续时间较久, 10min左右</p>
+</li>
+<li><p>在服务端某个线程响应请求, 该对象处于processing过程中时, 服务器发布重启, 导致item状态一直卡在processing </p>
+</li>
+<li><p>而processing状态, <strong>本身是中间状态, 无法进行任何人肉干预&#x2F;操作</strong>, 从而导致只能临时提交数据订正, 将状态字段修改回”init”, 然后再执行一次process.</p>
+</li>
+</ul>
+<h1 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h1><p>仔细思考了下, 发现设计的时候, 根本原因是对于中间状态没有做好处理, 如背景中介绍的服务重启的处理.<br>而<mark>在分布式场景下, 服务重启是by design需要被接受的.</mark><br>这里思考了下可能的几种处理方式:</p>
+<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><ul>
+<li>如何区分状态机的中间状态与终态? </li>
+<li>一条原则: <mark>终态-&gt;终态之间, 必须是可以人肉有入口触发的(而不是系统自动触发的); 必须是可重入的.</mark></li>
+</ul>
+<h2 id="方案1-状态机设计修改-把processing作为纯粹的中间状态"><a href="#方案1-状态机设计修改-把processing作为纯粹的中间状态" class="headerlink" title="方案1: 状态机设计修改: 把processing作为纯粹的中间状态"></a>方案1: 状态机设计修改: 把processing作为纯粹的中间状态</h2><ol>
+<li><p>将processing从状态机中删除掉, 如下: <br/><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072351350.png"></p>
+</li>
+<li><p>使用 分布式锁&#x2F;db字段锁 来实现排他功能(即item同时只能被一个线程处理, 防止多个线程同时处理一个item导致死锁&#x2F;重复计算等问题).</p>
+<ol>
+<li>在item执行前, 加上锁+锁超时时间(如例子中的10min); 其他线程要执行时, 无法抢到该item的锁. </li>
+<li>item执行完成之后, 状态修改为finished之后, 再释放掉item锁.</li>
+<li>item执行异常中断(例如服务器重启, 线程crash等): 等待锁超时. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+<li>item执行失败: 线程里catch住异常, 主动释放掉该item锁. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+</ol>
+</li>
+<li><p>或者使用事务:(不过本例子中不适合, 因为10min太久了, 其他执行耗时较短30s以内的可以使用该方案)  </p>
+<ol>
+<li>item执行前开启事务;</li>
+<li>执行后修改状态为finished, commit事务.</li>
+<li>item执行异常中断(例如服务器重启, 线程crash等): 事务自动回滚. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+<li>item执行失败: 主动回滚事务. 由于仍然是init状态(终态), 因此可以重新人肉触发, 新的线程抢到锁, 重新执行.</li>
+</ol>
+</li>
+</ol>
+<h2 id="方案2-状态机设计修改-把processing作为纯粹的终态"><a href="#方案2-状态机设计修改-把processing作为纯粹的终态" class="headerlink" title="方案2: 状态机设计修改: 把processing作为纯粹的终态"></a>方案2: 状态机设计修改: 把processing作为纯粹的终态</h2><ol>
+<li><p>需要设计从processing-&gt;finished&#x2F;init的人肉触发入口.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202207072354738.png"></p>
+</li>
+<li><p>如何防止多个线程同时触发该item从processing-&gt;finished&#x2F;init的变迁? 参见方案1中锁&#x2F;事务的方式</p>
+</li>
+</ol>
+<h2 id="方案3-优雅停机"><a href="#方案3-优雅停机" class="headerlink" title="方案3: 优雅停机"></a>方案3: 优雅停机</h2><ol>
+<li>在shutdown-hook里注册事件:<ol>
+<li>将状态改回init. –&gt; required.</li>
+<li>将worker线程interrupt掉. –&gt; optional, 因为即使不interrupt, 进程停止线程也会被回收.</li>
+</ol>
+</li>
+<li>但该方案有很大的缺陷, 如果直接<code>kill -9</code>, 则shutdown-hook根本不会执行.</li>
+</ol>
+<h2 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案"></a>最终方案</h2><p>最终采用了方案2, 因为从状态机中删除掉一个终态, 对现有代码改造量太大了.</p>
+<h1 id="其他思考"><a href="#其他思考" class="headerlink" title="其他思考"></a>其他思考</h1><ol>
+<li>状态机设计的时候, 一定要慎重考虑哪些是终态, 哪些是中间状态. 不是说因为在某个状态持续时间较长(如例子中的processing), 就要作为终态. </li>
+<li>状态机中每个终态之间, 必须考虑可重入性; 必须要保证能人肉触发终态之间的转化. 本文的例子就是反面教材, item卡在processing这个终态, 无法进行程序上的任何操作.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>java</tag>
+        <tag>design</tag>
+        <tag>state-machine</tag>
+        <tag>lock</tag>
       </tags>
   </entry>
   <entry>
@@ -10711,6 +10711,148 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
       </tags>
   </entry>
   <entry>
+    <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
+    <url>//2022-08-30-disk-partition/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问: </p>
+<ul>
+<li>为什么磁盘需要进行分区, 不分区直接按照文件夹划分有啥问题? 这个在Windows下尤其有疑问.</li>
+<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下? </li>
+<li>分区与格式化以及文件系统有啥关系与区别? 是一对一的么? 一个分区下只能有一个文件系统么? 一个文件系统下只能有一个分区么?</li>
+</ul>
+<h1 id="为啥需要分区"><a href="#为啥需要分区" class="headerlink" title="为啥需要分区?"></a>为啥需要分区?</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>习惯了使用Linux&#x2F;Mac之后, 完全没有分区的概念了.</p>
+<ul>
+<li>Linux&#x2F;Ubuntu装机步骤:<ul>
+<li>一整块磁盘, 选定文件系统类型, 进行格式化.</li>
+<li>直接在磁盘上安装操作系统, 就可以开始使用了.</li>
+</ul>
+</li>
+<li>Mac甚至无需装机, 开机直接使用.</li>
+</ul>
+<p>实际使用过程中, 不分区有如下优势:</p>
+<ul>
+<li>软件安装: 无需关注需要把软件安装在哪个盘(C盘&#x2F;D盘&#x2F;E盘…), 通常只需要默认路径就好;</li>
+<li>文件下载存储: 无需关注文件要保存在哪个盘, 只需要关注保存在哪个目录即可.</li>
+</ul>
+<blockquote>
+<p>因此完全不用担心到底分几个区, 每个分区大小多少, C盘满了如何扩容之类的问题.</p>
+</blockquote>
+<p>因此, 在攒了台Windows机器之后, 犹豫要不要分多个区. 后来事实教会了我怎么做人.</p>
+<blockquote>
+<p>Win10很无节操地会在C盘预留30GB+的空间, 还要放虚拟内存文件等, 导致可怜的C盘立刻存储报警.</p>
+</blockquote>
+<h2 id="个人实践理解"><a href="#个人实践理解" class="headerlink" title="个人实践理解"></a>个人实践理解</h2><p>个人使用下来, 唯一的理由就是: <strong>分区隔离, 方便无损重装系统.</strong></p>
+<p>Mac&#x2F;Linux上, 几乎无需也没有重装过系统. 但<strong>在Windows下, 重装系统简直是常态</strong>. </p>
+<blockquote>
+<p>垃圾(病毒)软件太多, 连所谓的纯净镜像也根本不纯净.</p>
+</blockquote>
+<ul>
+<li>都想往注册表里偷偷塞东西. 清理注册表, 一不小心就会把系统清理蓝屏.</li>
+<li>或者有病毒, 直接系统崩溃.</li>
+</ul>
+<blockquote>
+<p>解决方案</p>
+</blockquote>
+<ul>
+<li>要么通过PE进入系统, 找到问题点, 进行修复. </li>
+<li>要么直接重装系统. </li>
+<li>找到问题点太麻烦, 所以还是无脑一键重装吧.</li>
+</ul>
+<p>但重装系统, 就需要把分区重新格式化. 想想吧, 辛苦安装的软件, 设定的配置, 保存的文件, 都会随着格式化被完全抹除!<br>所以还是分区吧, 只格式化C盘就好. 软件啊, 文件啊, 配置啊, 都放到其他盘里好了.</p>
+<h2 id="其他专业理由"><a href="#其他专业理由" class="headerlink" title="其他专业理由"></a>其他专业理由</h2><p>参照知乎 <a href="https://www.zhihu.com/question/47538075/answer/107737383">其实windows分区是不是分C盘和D盘就好了？</a> 回答.</p>
+<ul>
+<li>病毒泛滥, 会把系统搞Crash, 需要频繁重装系统.</li>
+<li>早期的FAT16&#x2F;32文件系统支持的单个分区容量有限. FAT32最大文件系统总容量 128GB, 在现在随便一个硬盘就是1TB+, 无法充分利用磁盘空间.</li>
+<li>xp之前的windows系列操作系统本身稳定性堪忧，很容易因为用户操作、软件故障崩溃甚至破坏。尤其是经常折腾的桌面系统。这就导致用户不得不频繁重装系统。</li>
+<li>操作系统权限&amp;软件兼容问题: 现在win10管理员权限小了，某些软件装在C盘会有权限问题，比如notepad++装在C盘，直接运行的话是不能保存自定义配置的</li>
+</ul>
+<blockquote>
+<p>所以在Windows下, 还是老老实实分区吧! 当然在严肃的企业场景, 也推荐按照系统盘与数据盘进行下区分.</p>
+</blockquote>
+<h1 id="为啥需要挂载"><a href="#为啥需要挂载" class="headerlink" title="为啥需要挂载?"></a>为啥需要挂载?</h1><p>尤其是在Linux下, 设备可以从 &#x2F;dev&#x2F;sda[b] 路径下获取, 为啥不能直接操作这些设备? 还需要挂载(mount)下?</p>
+<h2 id="为啥磁盘需要挂载才能使用"><a href="#为啥磁盘需要挂载才能使用" class="headerlink" title="为啥磁盘需要挂载才能使用?"></a>为啥磁盘需要挂载才能使用?</h2><h3 id="为啥不能直接操作-dev-sda-b-等裸设备"><a href="#为啥不能直接操作-dev-sda-b-等裸设备" class="headerlink" title="为啥不能直接操作/dev/sda[b]等裸设备?"></a>为啥不能直接操作<code>/dev/sda[b]</code>等裸设备?</h3><h3 id="挂载具体做了啥"><a href="#挂载具体做了啥" class="headerlink" title="挂载具体做了啥?"></a>挂载具体做了啥?</h3><p>本质上, Windows下也是有挂载这一步的, 本质上挂载就是把分区&#x2F;磁盘格式化之后的文件系统, 挂载到操作系统文件树下, 映射到某个目录,<br>便于操作系统</p>
+<h3 id="Windows下也有挂载么"><a href="#Windows下也有挂载么" class="headerlink" title="Windows下也有挂载么?"></a>Windows下也有挂载么?</h3><p>是的. Windows下</p>
+<h2 id="为啥不能像Windows一样-插入设备直接默认挂载"><a href="#为啥不能像Windows一样-插入设备直接默认挂载" class="headerlink" title="为啥不能像Windows一样, 插入设备直接默认挂载?"></a>为啥不能像Windows一样, 插入设备直接默认挂载?</h2><p>这个搜索了知乎, <a href="https://www.zhihu.com/question/524667726/answer/2437578886">得到的结论</a>是: </p>
+<ol>
+<li><p>Unix-like的操作系统不支持自动mount原因是为了权限控制</p>
+<blockquote>
+<p>POSIX权限的概念出现的很早，Unix、Linux都是支持POSIX权限的。<br>那么对于一个新设备来说，操作系统不是很确定是不是所有用户都对这个设备有访问权限，<br>这种情况下，如果自动mount，那么这个设备的内容就可能会被所有用户看到，<br>这样会有安全的隐患。所以Unix和Linux才要求必须先mount，<br>并且mount命令必须要用root权限，也就是说对于一个未知的设备，<br>必须由root来决定是不是可用的。</p>
+<p>所以，这种设计的原因已经很清晰了，就是为了权限控制。</p>
+</blockquote>
+</li>
+<li><p>Windows不需要这个机制，是因为Windows是从DOS发展过来的，这个过程中一直没有权限控制，</p>
+<blockquote>
+<p>所以Windows也不需要mount</p>
+</blockquote>
+</li>
+<li><p>Linux也可以做到自动挂载, 例如Ubuntu就是自动挂载的</p>
+</li>
+</ol>
+<h1 id="磁盘-amp-文件系统的扩展知识"><a href="#磁盘-amp-文件系统的扩展知识" class="headerlink" title="磁盘&amp;文件系统的扩展知识"></a>磁盘&amp;文件系统的扩展知识</h1><h2 id="磁盘-分区-文件系统-关系"><a href="#磁盘-分区-文件系统-关系" class="headerlink" title="磁盘, 分区, 文件系统 关系"></a>磁盘, 分区, 文件系统 关系</h2><p>如下: </p>
+<pre class="mermaid">erDiagram
+    DiskDevice ||--|{ Partition : contain
+    Partition ||--|| FileSystem : format</pre>
+
+<h3 id="磁盘-x2F-块设备-gt-分区"><a href="#磁盘-x2F-块设备-gt-分区" class="headerlink" title="磁盘&#x2F;块设备 -&gt; 分区"></a>磁盘&#x2F;块设备 -&gt; 分区</h3><p>一个磁盘设备(HDD, SSD, U盘等), 可以划分为多个分区. 分区方式有MBR, GPT两种.<br>那么磁盘分区的元信息写在哪里? </p>
+<ul>
+<li>是存储在文件系统中么? 此时磁盘还没有文件系统, 所以应该不是以文件形式保存, 所以我们也就无法直接在操作系统里找到这个文件并操作.</li>
+<li>是存储在裸设备的固定位置(它在硬盘上的三维地址为（柱面，磁头，扇区）＝（0，0，1）。)</li>
+<li>通过 <code>lsblk</code> 命令查看已经挂载的块设备<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># lsblk</span>
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda    <span class="token number">254</span>:0    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> disk
+`-vda1 <span class="token number">254</span>:1    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> part /etc/hosts<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3 id="分区-gt-文件系统"><a href="#分区-gt-文件系统" class="headerlink" title="分区 -&gt; 文件系统"></a>分区 -&gt; 文件系统</h3><p>一个分区对应一个文件系统. 因此同一个磁盘设备的多个分区, 各个分区都可以格式化成不同的文件系统类型.</p>
+<ul>
+<li>通过 <code>df -h</code> 命令查看分区<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># df -h</span>
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /
+tmpfs            64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev
+shm              64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev/shm
+/dev/vda1        59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /data
+tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /proc/acpi
+tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /sys/firmware<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3 id="文件系统类型描述元数据"><a href="#文件系统类型描述元数据" class="headerlink" title="文件系统类型描述元数据"></a>文件系统类型描述元数据</h3><div class="note warning"><p>TODO: 暂时还没搜索到相关信息.</p>
+</div>
+
+<h3 id="文件系统内部目录-amp-文件元数据"><a href="#文件系统内部目录-amp-文件元数据" class="headerlink" title="文件系统内部目录&amp;文件元数据:"></a>文件系统内部目录&amp;文件元数据:</h3><ul>
+<li>例如ext4, 以inode形式保存. 包括文件大小, 权限信息, gmtCreated, gmtModified, 包含的block数量, 存储在磁盘的位置(柱面) 等</li>
+<li>可以使用 stat 命令查看</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># stat dump.rdb</span>
+  File: dump.rdb
+  Size: <span class="token number">105</span>       	Blocks: <span class="token number">8</span>          IO Block: <span class="token number">4096</span>   regular <span class="token function">file</span>
+Device: fe01h/65025d	Inode: <span class="token number">1055693</span>     Links: <span class="token number">1</span>
+Access: <span class="token punctuation">(</span>0600/-rw-------<span class="token punctuation">)</span>  Uid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>   Gid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>
+Access: <span class="token number">2022</span>-10-12 <span class="token number">16</span>:01:07.043330092 +0000
+Modify: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.880774990 +0000
+Change: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.896774990 +0000
+ Birth: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.869774990 +0000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<div class="note warning"><p>TODO: 分析下stat的具体信息含义, 尤其是 Device 相关的, 是不是操作系统直接就按照这个信息去寻找到文件的柱面范围了?</p>
+</div>
+
+<h3 id="分区名称规范"><a href="#分区名称规范" class="headerlink" title="分区名称规范"></a>分区名称规范</h3><ul>
+<li>在Linux系统中，硬盘分区命名为sda1－sda4或者hda1－hda4</li>
+</ul>
+<div class="note warning"><p>TODO: 自己找个U盘试下划分成多个分区, 每个分区不同的文件系统类型?</p>
+</div>
+
+
+
+
+
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>disk</tag>
+        <tag>os</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>瞎折腾洋垃圾电脑笔记</title>
     <url>//2022-08-13-computer-diy/</url>
     <content><![CDATA[<p>垃圾佬的周末, 没事儿就是瞎折腾, 自从在B站被种草了洋垃圾, 按耐不住心中的冲动, 决定也用洋垃圾组装一台能数框框的电脑, 玩玩儿游戏, 压榨压榨性能.</p>
@@ -10958,148 +11100,6 @@ brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <tags>
         <tag>diy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
-    <url>//2022-08-30-disk-partition/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>经常会有个疑问: </p>
-<ul>
-<li>为什么磁盘需要进行分区, 不分区直接按照文件夹划分有啥问题? 这个在Windows下尤其有疑问.</li>
-<li>为啥需要挂载? 直接插入设备, 为啥不能像Windows下U盘一样直接热插拔? Linux下为啥还需要手动挂载下? </li>
-<li>分区与格式化以及文件系统有啥关系与区别? 是一对一的么? 一个分区下只能有一个文件系统么? 一个文件系统下只能有一个分区么?</li>
-</ul>
-<h1 id="为啥需要分区"><a href="#为啥需要分区" class="headerlink" title="为啥需要分区?"></a>为啥需要分区?</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>习惯了使用Linux&#x2F;Mac之后, 完全没有分区的概念了.</p>
-<ul>
-<li>Linux&#x2F;Ubuntu装机步骤:<ul>
-<li>一整块磁盘, 选定文件系统类型, 进行格式化.</li>
-<li>直接在磁盘上安装操作系统, 就可以开始使用了.</li>
-</ul>
-</li>
-<li>Mac甚至无需装机, 开机直接使用.</li>
-</ul>
-<p>实际使用过程中, 不分区有如下优势:</p>
-<ul>
-<li>软件安装: 无需关注需要把软件安装在哪个盘(C盘&#x2F;D盘&#x2F;E盘…), 通常只需要默认路径就好;</li>
-<li>文件下载存储: 无需关注文件要保存在哪个盘, 只需要关注保存在哪个目录即可.</li>
-</ul>
-<blockquote>
-<p>因此完全不用担心到底分几个区, 每个分区大小多少, C盘满了如何扩容之类的问题.</p>
-</blockquote>
-<p>因此, 在攒了台Windows机器之后, 犹豫要不要分多个区. 后来事实教会了我怎么做人.</p>
-<blockquote>
-<p>Win10很无节操地会在C盘预留30GB+的空间, 还要放虚拟内存文件等, 导致可怜的C盘立刻存储报警.</p>
-</blockquote>
-<h2 id="个人实践理解"><a href="#个人实践理解" class="headerlink" title="个人实践理解"></a>个人实践理解</h2><p>个人使用下来, 唯一的理由就是: <strong>分区隔离, 方便无损重装系统.</strong></p>
-<p>Mac&#x2F;Linux上, 几乎无需也没有重装过系统. 但<strong>在Windows下, 重装系统简直是常态</strong>. </p>
-<blockquote>
-<p>垃圾(病毒)软件太多, 连所谓的纯净镜像也根本不纯净.</p>
-</blockquote>
-<ul>
-<li>都想往注册表里偷偷塞东西. 清理注册表, 一不小心就会把系统清理蓝屏.</li>
-<li>或者有病毒, 直接系统崩溃.</li>
-</ul>
-<blockquote>
-<p>解决方案</p>
-</blockquote>
-<ul>
-<li>要么通过PE进入系统, 找到问题点, 进行修复. </li>
-<li>要么直接重装系统. </li>
-<li>找到问题点太麻烦, 所以还是无脑一键重装吧.</li>
-</ul>
-<p>但重装系统, 就需要把分区重新格式化. 想想吧, 辛苦安装的软件, 设定的配置, 保存的文件, 都会随着格式化被完全抹除!<br>所以还是分区吧, 只格式化C盘就好. 软件啊, 文件啊, 配置啊, 都放到其他盘里好了.</p>
-<h2 id="其他专业理由"><a href="#其他专业理由" class="headerlink" title="其他专业理由"></a>其他专业理由</h2><p>参照知乎 <a href="https://www.zhihu.com/question/47538075/answer/107737383">其实windows分区是不是分C盘和D盘就好了？</a> 回答.</p>
-<ul>
-<li>病毒泛滥, 会把系统搞Crash, 需要频繁重装系统.</li>
-<li>早期的FAT16&#x2F;32文件系统支持的单个分区容量有限. FAT32最大文件系统总容量 128GB, 在现在随便一个硬盘就是1TB+, 无法充分利用磁盘空间.</li>
-<li>xp之前的windows系列操作系统本身稳定性堪忧，很容易因为用户操作、软件故障崩溃甚至破坏。尤其是经常折腾的桌面系统。这就导致用户不得不频繁重装系统。</li>
-<li>操作系统权限&amp;软件兼容问题: 现在win10管理员权限小了，某些软件装在C盘会有权限问题，比如notepad++装在C盘，直接运行的话是不能保存自定义配置的</li>
-</ul>
-<blockquote>
-<p>所以在Windows下, 还是老老实实分区吧! 当然在严肃的企业场景, 也推荐按照系统盘与数据盘进行下区分.</p>
-</blockquote>
-<h1 id="为啥需要挂载"><a href="#为啥需要挂载" class="headerlink" title="为啥需要挂载?"></a>为啥需要挂载?</h1><p>尤其是在Linux下, 设备可以从 &#x2F;dev&#x2F;sda[b] 路径下获取, 为啥不能直接操作这些设备? 还需要挂载(mount)下?</p>
-<h2 id="为啥磁盘需要挂载才能使用"><a href="#为啥磁盘需要挂载才能使用" class="headerlink" title="为啥磁盘需要挂载才能使用?"></a>为啥磁盘需要挂载才能使用?</h2><h3 id="为啥不能直接操作-dev-sda-b-等裸设备"><a href="#为啥不能直接操作-dev-sda-b-等裸设备" class="headerlink" title="为啥不能直接操作/dev/sda[b]等裸设备?"></a>为啥不能直接操作<code>/dev/sda[b]</code>等裸设备?</h3><h3 id="挂载具体做了啥"><a href="#挂载具体做了啥" class="headerlink" title="挂载具体做了啥?"></a>挂载具体做了啥?</h3><p>本质上, Windows下也是有挂载这一步的, 本质上挂载就是把分区&#x2F;磁盘格式化之后的文件系统, 挂载到操作系统文件树下, 映射到某个目录,<br>便于操作系统</p>
-<h3 id="Windows下也有挂载么"><a href="#Windows下也有挂载么" class="headerlink" title="Windows下也有挂载么?"></a>Windows下也有挂载么?</h3><p>是的. Windows下</p>
-<h2 id="为啥不能像Windows一样-插入设备直接默认挂载"><a href="#为啥不能像Windows一样-插入设备直接默认挂载" class="headerlink" title="为啥不能像Windows一样, 插入设备直接默认挂载?"></a>为啥不能像Windows一样, 插入设备直接默认挂载?</h2><p>这个搜索了知乎, <a href="https://www.zhihu.com/question/524667726/answer/2437578886">得到的结论</a>是: </p>
-<ol>
-<li><p>Unix-like的操作系统不支持自动mount原因是为了权限控制</p>
-<blockquote>
-<p>POSIX权限的概念出现的很早，Unix、Linux都是支持POSIX权限的。<br>那么对于一个新设备来说，操作系统不是很确定是不是所有用户都对这个设备有访问权限，<br>这种情况下，如果自动mount，那么这个设备的内容就可能会被所有用户看到，<br>这样会有安全的隐患。所以Unix和Linux才要求必须先mount，<br>并且mount命令必须要用root权限，也就是说对于一个未知的设备，<br>必须由root来决定是不是可用的。</p>
-<p>所以，这种设计的原因已经很清晰了，就是为了权限控制。</p>
-</blockquote>
-</li>
-<li><p>Windows不需要这个机制，是因为Windows是从DOS发展过来的，这个过程中一直没有权限控制，</p>
-<blockquote>
-<p>所以Windows也不需要mount</p>
-</blockquote>
-</li>
-<li><p>Linux也可以做到自动挂载, 例如Ubuntu就是自动挂载的</p>
-</li>
-</ol>
-<h1 id="磁盘-amp-文件系统的扩展知识"><a href="#磁盘-amp-文件系统的扩展知识" class="headerlink" title="磁盘&amp;文件系统的扩展知识"></a>磁盘&amp;文件系统的扩展知识</h1><h2 id="磁盘-分区-文件系统-关系"><a href="#磁盘-分区-文件系统-关系" class="headerlink" title="磁盘, 分区, 文件系统 关系"></a>磁盘, 分区, 文件系统 关系</h2><p>如下: </p>
-<pre class="mermaid">erDiagram
-    DiskDevice ||--|{ Partition : contain
-    Partition ||--|| FileSystem : format</pre>
-
-<h3 id="磁盘-x2F-块设备-gt-分区"><a href="#磁盘-x2F-块设备-gt-分区" class="headerlink" title="磁盘&#x2F;块设备 -&gt; 分区"></a>磁盘&#x2F;块设备 -&gt; 分区</h3><p>一个磁盘设备(HDD, SSD, U盘等), 可以划分为多个分区. 分区方式有MBR, GPT两种.<br>那么磁盘分区的元信息写在哪里? </p>
-<ul>
-<li>是存储在文件系统中么? 此时磁盘还没有文件系统, 所以应该不是以文件形式保存, 所以我们也就无法直接在操作系统里找到这个文件并操作.</li>
-<li>是存储在裸设备的固定位置(它在硬盘上的三维地址为（柱面，磁头，扇区）＝（0，0，1）。)</li>
-<li>通过 <code>lsblk</code> 命令查看已经挂载的块设备<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># lsblk</span>
-NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-vda    <span class="token number">254</span>:0    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> disk
-`-vda1 <span class="token number">254</span>:1    <span class="token number">0</span> <span class="token number">59</span>.6G  <span class="token number">0</span> part /etc/hosts<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h3 id="分区-gt-文件系统"><a href="#分区-gt-文件系统" class="headerlink" title="分区 -&gt; 文件系统"></a>分区 -&gt; 文件系统</h3><p>一个分区对应一个文件系统. 因此同一个磁盘设备的多个分区, 各个分区都可以格式化成不同的文件系统类型.</p>
-<ul>
-<li>通过 <code>df -h</code> 命令查看分区<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># df -h</span>
-Filesystem      Size  Used Avail Use% Mounted on
-overlay          59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /
-tmpfs            64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev
-shm              64M     <span class="token number">0</span>   64M   <span class="token number">0</span>% /dev/shm
-/dev/vda1        59G  <span class="token number">2</span>.7G   53G   <span class="token number">5</span>% /data
-tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /proc/acpi
-tmpfs           <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /sys/firmware<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h3 id="文件系统类型描述元数据"><a href="#文件系统类型描述元数据" class="headerlink" title="文件系统类型描述元数据"></a>文件系统类型描述元数据</h3><div class="note warning"><p>TODO: 暂时还没搜索到相关信息.</p>
-</div>
-
-<h3 id="文件系统内部目录-amp-文件元数据"><a href="#文件系统内部目录-amp-文件元数据" class="headerlink" title="文件系统内部目录&amp;文件元数据:"></a>文件系统内部目录&amp;文件元数据:</h3><ul>
-<li>例如ext4, 以inode形式保存. 包括文件大小, 权限信息, gmtCreated, gmtModified, 包含的block数量, 存储在磁盘的位置(柱面) 等</li>
-<li>可以使用 stat 命令查看</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@662fd3213ce8:/data<span class="token comment"># stat dump.rdb</span>
-  File: dump.rdb
-  Size: <span class="token number">105</span>       	Blocks: <span class="token number">8</span>          IO Block: <span class="token number">4096</span>   regular <span class="token function">file</span>
-Device: fe01h/65025d	Inode: <span class="token number">1055693</span>     Links: <span class="token number">1</span>
-Access: <span class="token punctuation">(</span>0600/-rw-------<span class="token punctuation">)</span>  Uid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>   Gid: <span class="token punctuation">(</span>  <span class="token number">999</span>/   redis<span class="token punctuation">)</span>
-Access: <span class="token number">2022</span>-10-12 <span class="token number">16</span>:01:07.043330092 +0000
-Modify: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.880774990 +0000
-Change: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.896774990 +0000
- Birth: <span class="token number">2022</span>-06-26 <span class="token number">10</span>:16:40.869774990 +0000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<div class="note warning"><p>TODO: 分析下stat的具体信息含义, 尤其是 Device 相关的, 是不是操作系统直接就按照这个信息去寻找到文件的柱面范围了?</p>
-</div>
-
-<h3 id="分区名称规范"><a href="#分区名称规范" class="headerlink" title="分区名称规范"></a>分区名称规范</h3><ul>
-<li>在Linux系统中，硬盘分区命名为sda1－sda4或者hda1－hda4</li>
-</ul>
-<div class="note warning"><p>TODO: 自己找个U盘试下划分成多个分区, 每个分区不同的文件系统类型?</p>
-</div>
-
-
-
-
-
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>disk</tag>
-        <tag>os</tag>
       </tags>
   </entry>
   <entry>
@@ -12639,6 +12639,22 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
       </tags>
   </entry>
   <entry>
+    <title>SQL/MySQL使用过程中的踩坑合集</title>
+    <url>//2023-02-19-mysql-learn-from-failure/</url>
+    <content><![CDATA[<h1 id="left-join"><a href="#left-join" class="headerlink" title="left join"></a>left join</h1><h2 id="key在右表中重复导致结果集重复"><a href="#key在右表中重复导致结果集重复" class="headerlink" title="key在右表中重复导致结果集重复"></a>key在右表中重复导致结果集重复</h2><p>样例参见: <a href="http://sqlfiddle.com/#!9/4f158d1/7">SQL Fiddle</a><br>所以left join之前, <font color='red'>一定要确认右表的key是否会重复</font>.<br>尤其是在写HIVE这种比较重量级的SQL之前, 一定要注意, 否则会导致报表制作出来数据重复, 影响数据质量.</p>
+<h2 id="on中写了左表的"><a href="#on中写了左表的" class="headerlink" title="on中写了左表的"></a>on中写了左表的</h2><div class="note warning"><p>left join 为了保证左表所有行, 因此on里的条件只对右表起作用, 控制左表的条件写到on里也没用</p>
+</div>
+<p>样例参见: <a href="http://sqlfiddle.com/#!9/4f158d1/10">SQL Fiddle</a><br>所以left join的时候, <font color='red'>一定要保证筛选左表的条件要放到where里, 而不要放到on里</font>. </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一本书读懂财报笔记</title>
     <url>//2023-02-24-finance-report-reading-notes/</url>
     <content><![CDATA[
@@ -12653,22 +12669,6 @@ NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
         <tag>books</tag>
         <tag>note</tag>
         <tag>finance</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL/MySQL使用过程中的踩坑合集</title>
-    <url>//2023-02-19-mysql-learn-from-failure/</url>
-    <content><![CDATA[<h1 id="left-join"><a href="#left-join" class="headerlink" title="left join"></a>left join</h1><h2 id="key在右表中重复导致结果集重复"><a href="#key在右表中重复导致结果集重复" class="headerlink" title="key在右表中重复导致结果集重复"></a>key在右表中重复导致结果集重复</h2><p>样例参见: <a href="http://sqlfiddle.com/#!9/4f158d1/7">SQL Fiddle</a><br>所以left join之前, <font color='red'>一定要确认右表的key是否会重复</font>.<br>尤其是在写HIVE这种比较重量级的SQL之前, 一定要注意, 否则会导致报表制作出来数据重复, 影响数据质量.</p>
-<h2 id="on中写了左表的"><a href="#on中写了左表的" class="headerlink" title="on中写了左表的"></a>on中写了左表的</h2><div class="note warning"><p>left join 为了保证左表所有行, 因此on里的条件只对右表起作用, 控制左表的条件写到on里也没用</p>
-</div>
-<p>样例参见: <a href="http://sqlfiddle.com/#!9/4f158d1/10">SQL Fiddle</a><br>所以left join的时候, <font color='red'>一定要保证筛选左表的条件要放到where里, 而不要放到on里</font>. </p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -14043,6 +14043,32 @@ Wants&#x3D;sshd-keygen.service
       </tags>
   </entry>
   <entry>
+    <title>死亡搁浅在冰岛</title>
+    <url>//2023-10-27-death-stranding-in-iceland/</url>
+    <content><![CDATA[<h1 id="20231028-death-stranding-in-iceland"><a href="#20231028-death-stranding-in-iceland" class="headerlink" title="20231028-death-stranding-in-iceland"></a>20231028-death-stranding-in-iceland</h1><p><a href="https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3">https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3</a></p>
+<h1 id="part1-冰岛🇮🇸🌠🌌"><a href="#part1-冰岛🇮🇸🌠🌌" class="headerlink" title="part1: 冰岛🇮🇸🌠🌌"></a>part1: 冰岛🇮🇸🌠🌌</h1><p>无意间B站刷到了 <a href="https://www.bilibili.com/video/BV1rc411o7PJ/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click">冰岛｜现在开始进入死亡搁浅 4K HDR_哔哩哔哩_bilibili</a><br>尤其是在漫天星光下, 飞舞的极光. 星空列车,<br>我看到了明亮的猎户座, 参宿, 三横三纵, 那是我认识的第一个星座.<br>我已经很久没有再次看到过星空了, 再次的重逢, 让我觉得有种久违的.<br>不禁泪流满面. 是被宝宝这两年束缚的委屈.</p>
+<p>让精神在尘世中获得了短暂的升华, 是的, 升华.<br>浮现在脑海里的一个词, Transcendent 萦绕</p>
+<p>想起了海子的诗:</p>
+<blockquote>
+<p>今夜青稞只属于他自己<br>一切都在生长<br>今夜我只有美丽的戈壁空空<br>姐姐，今夜我不关心人类，我只想你</p>
+</blockquote>
+<p>在广阔的旷野中, 在星空下 , 在亘古的静谧中, 我们会开始 思考存在的意义.</p>
+<p>伴随着Low Roar 的 &lt;Don’t Be So Serious&gt; 的浅吟低唱, 想起了第一次艰辛的送货历程, 小心翼翼地过河爬山, 躲过了时间雨, 豁然开朗,<br>大幕徐徐打开.<br>忍不住打开尘封已久的PS, 继续下一段送货历程.<br>期待着下一次遇见星空, 期待着多年以后的冰岛之旅.</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282334661.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282335068.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282316627.png"></p>
+<h1 id="part2-法罗群岛🇫🇴❄🌄"><a href="#part2-法罗群岛🇫🇴❄🌄" class="headerlink" title="part2: 法罗群岛🇫🇴❄🌄"></a>part2: 法罗群岛🇫🇴❄🌄</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282245560.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282311574.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310290018579.png"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>death-stranding</tag>
+        <tag>gaming</tag>
+        <tag>iceland</tag>
+        <tag>culture</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>chatgpt eval cont d</title>
     <url>//2023-10-29-chatgpt-eval-cont-d/</url>
     <content><![CDATA[<h1 id="20231030-chatgpt-eval-cont-d"><a href="#20231030-chatgpt-eval-cont-d" class="headerlink" title="20231030-chatgpt-eval-cont-d"></a>20231030-chatgpt-eval-cont-d</h1><h1 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h1><p>最近频繁地使用chatgpt进行文章的翻译. </p>
@@ -14091,52 +14117,6 @@ Wants&#x3D;sshd-keygen.service
         <tag>architecture</tag>
         <tag>cloud-exit</tag>
         <tag>strategy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>死亡搁浅在冰岛</title>
-    <url>//2023-10-27-death-stranding-in-iceland/</url>
-    <content><![CDATA[<h1 id="20231028-death-stranding-in-iceland"><a href="#20231028-death-stranding-in-iceland" class="headerlink" title="20231028-death-stranding-in-iceland"></a>20231028-death-stranding-in-iceland</h1><p><a href="https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3">https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3</a></p>
-<h1 id="part1-冰岛🇮🇸🌠🌌"><a href="#part1-冰岛🇮🇸🌠🌌" class="headerlink" title="part1: 冰岛🇮🇸🌠🌌"></a>part1: 冰岛🇮🇸🌠🌌</h1><p>无意间B站刷到了 <a href="https://www.bilibili.com/video/BV1rc411o7PJ/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click">冰岛｜现在开始进入死亡搁浅 4K HDR_哔哩哔哩_bilibili</a><br>尤其是在漫天星光下, 飞舞的极光. 星空列车,<br>我看到了明亮的猎户座, 参宿, 三横三纵, 那是我认识的第一个星座.<br>我已经很久没有再次看到过星空了, 再次的重逢, 让我觉得有种久违的.<br>不禁泪流满面. 是被宝宝这两年束缚的委屈.</p>
-<p>让精神在尘世中获得了短暂的升华, 是的, 升华.<br>浮现在脑海里的一个词, Transcendent 萦绕</p>
-<p>想起了海子的诗:</p>
-<blockquote>
-<p>今夜青稞只属于他自己<br>一切都在生长<br>今夜我只有美丽的戈壁空空<br>姐姐，今夜我不关心人类，我只想你</p>
-</blockquote>
-<p>在广阔的旷野中, 在星空下 , 在亘古的静谧中, 我们会开始 思考存在的意义.</p>
-<p>伴随着Low Roar 的 &lt;Don’t Be So Serious&gt; 的浅吟低唱, 想起了第一次艰辛的送货历程, 小心翼翼地过河爬山, 躲过了时间雨, 豁然开朗,<br>大幕徐徐打开.<br>忍不住打开尘封已久的PS, 继续下一段送货历程.<br>期待着下一次遇见星空, 期待着多年以后的冰岛之旅.</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282334661.png"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282335068.png"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282316627.png"></p>
-<h1 id="part2-法罗群岛🇫🇴❄🌄"><a href="#part2-法罗群岛🇫🇴❄🌄" class="headerlink" title="part2: 法罗群岛🇫🇴❄🌄"></a>part2: 法罗群岛🇫🇴❄🌄</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282245560.png"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282311574.png"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310290018579.png"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>death-stranding</tag>
-        <tag>gaming</tag>
-        <tag>iceland</tag>
-        <tag>culture</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>系统统计页面实现</title>
-    <url>//2023-10-31-sys-stat-page/</url>
-    <content><![CDATA[<h1 id="20231101-sys-stat-page"><a href="#20231101-sys-stat-page" class="headerlink" title="20231101-sys-stat-page"></a>20231101-sys-stat-page</h1><p>无意间发现: <a href="https://www.37status.com/">37signals Status</a> 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-01-sys-stat-page/Untitled.png" alt="Untitled"></p>
-<p>另外顺便搜索了下, 发现这个页面还是Atlassian 提供的服务: <a href="https://www.atlassian.com/software/statuspage?utm_campaign=www.37status.com&utm_content=SP-notifications&utm_medium=powered-by&utm_source=inapp">Statuspage | Atlassian</a></p>
-<p>不得不说这种方式真的非常直观美观, 且把故障发生&amp;结束&amp;持续时长都一目了然地给出. </p>
-<p>以此为对比,  <a href="https://status.aliyun.com/?spm=5176.8789780.J_9220772140.26.348c39fbxOAGXq#/">阿里云健康状态</a> 就显得差了很多: </p>
-<ol>
-<li>一是不够清晰美观. </li>
-<li>二是数据准确度存疑. 一直都是状态正常, 让人觉得不可思议…</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>system-monitoring</tag>
-        <tag>statistics</tag>
-        <tag>dashboard</tag>
-        <tag>visualization</tag>
       </tags>
   </entry>
   <entry>
@@ -14248,6 +14228,26 @@ Rework  - Jason Fried
       </tags>
   </entry>
   <entry>
+    <title>系统统计页面实现</title>
+    <url>//2023-10-31-sys-stat-page/</url>
+    <content><![CDATA[<h1 id="20231101-sys-stat-page"><a href="#20231101-sys-stat-page" class="headerlink" title="20231101-sys-stat-page"></a>20231101-sys-stat-page</h1><p>无意间发现: <a href="https://www.37status.com/">37signals Status</a> 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-01-sys-stat-page/Untitled.png" alt="Untitled"></p>
+<p>另外顺便搜索了下, 发现这个页面还是Atlassian 提供的服务: <a href="https://www.atlassian.com/software/statuspage?utm_campaign=www.37status.com&utm_content=SP-notifications&utm_medium=powered-by&utm_source=inapp">Statuspage | Atlassian</a></p>
+<p>不得不说这种方式真的非常直观美观, 且把故障发生&amp;结束&amp;持续时长都一目了然地给出. </p>
+<p>以此为对比,  <a href="https://status.aliyun.com/?spm=5176.8789780.J_9220772140.26.348c39fbxOAGXq#/">阿里云健康状态</a> 就显得差了很多: </p>
+<ol>
+<li>一是不够清晰美观. </li>
+<li>二是数据准确度存疑. 一直都是状态正常, 让人觉得不可思议…</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>system-monitoring</tag>
+        <tag>statistics</tag>
+        <tag>dashboard</tag>
+        <tag>visualization</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Bot 开发中的陷阱</title>
     <url>//2023-11-01-bot-pitfall/</url>
     <content><![CDATA[<h1 id="20231102-bot-pitfall"><a href="#20231102-bot-pitfall" class="headerlink" title="20231102-bot-pitfall"></a>20231102-bot-pitfall</h1><p>想起了之前的一个误区, 很多业务的支持, 都想要通过聊天机器人来让用户实现自运维. </p>
@@ -14266,21 +14266,6 @@ Rework  - Jason Fried
       <tags>
         <tag>lessons-learned</tag>
         <tag>bot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>敏捷用户故事实践</title>
-    <url>//2023-11-05-agile-storys/</url>
-    <content><![CDATA[<h1 id="20231106-agile-storys"><a href="#20231106-agile-storys" class="headerlink" title="20231106-agile-storys"></a>20231106-agile-storys</h1><p><a href="https://world.hey.com/dhh/no-one-wants-to-be-a-code-monkey-151478dd">No one wants to be a code monkey</a> </p>
-<blockquote>
-<p>Software developers and designers aren’t happy doing assembly line work.<br>Calling that work “stories” is the great con of many modern agile processes.<br><strong>A story without a beginning, a middle, or an end is a shitty one.</strong><br>It’s more like just a scene, shot out of sequence.</p>
-</blockquote>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>project-management</tag>
-        <tag>methodology</tag>
-        <tag>agile</tag>
-        <tag>user-stories</tag>
       </tags>
   </entry>
   <entry>
@@ -14346,6 +14331,21 @@ Rework  - Jason Fried
         <tag>aliyun</tag>
         <tag>cloud-computing</tag>
         <tag>conference</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>敏捷用户故事实践</title>
+    <url>//2023-11-05-agile-storys/</url>
+    <content><![CDATA[<h1 id="20231106-agile-storys"><a href="#20231106-agile-storys" class="headerlink" title="20231106-agile-storys"></a>20231106-agile-storys</h1><p><a href="https://world.hey.com/dhh/no-one-wants-to-be-a-code-monkey-151478dd">No one wants to be a code monkey</a> </p>
+<blockquote>
+<p>Software developers and designers aren’t happy doing assembly line work.<br>Calling that work “stories” is the great con of many modern agile processes.<br><strong>A story without a beginning, a middle, or an end is a shitty one.</strong><br>It’s more like just a scene, shot out of sequence.</p>
+</blockquote>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>project-management</tag>
+        <tag>methodology</tag>
+        <tag>agile</tag>
+        <tag>user-stories</tag>
       </tags>
   </entry>
   <entry>
@@ -14601,6 +14601,50 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
+    <title>长期主义思维</title>
+    <url>//2023-11-26-long-term-thinking/</url>
+    <content><![CDATA[<h1 id="20231127-long-term-thinking"><a href="#20231127-long-term-thinking" class="headerlink" title="20231127-long-term-thinking"></a>20231127-long-term-thinking</h1><p>经常说长期思维, 但具体是啥? 我用一些例子来说明: </p>
+<h1 id="backward-compatibility"><a href="#backward-compatibility" class="headerlink" title="backward compatibility"></a>backward compatibility</h1><ul>
+<li><h2 id="permLink-永久链接很重要"><a href="#permLink-永久链接很重要" class="headerlink" title="permLink: 永久链接很重要!"></a>permLink: 永久链接很重要!</h2></li>
+<li>不要qj用户:<ul>
+<li>例如日志登录, 突然不可用. 会极大影响排查效率.</li>
+<li>例如用户信息查询, 突然不可用, 说是迁移到另外一个系统, 需要重新申请权限, 重新配置.</li>
+</ul>
+</li>
+</ul>
+<p>trust means everything!</p>
+<p>如果没人知道你的产品会啥时候突然下线, 那么信任就无从谈起.</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>career</tag>
+        <tag>long-term-thinking</tag>
+        <tag>philosophy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go vs java</title>
+    <url>//2023-12-12-go-vs-java/</url>
+    <content><![CDATA[<h1 id="go-v-s-Java"><a href="#go-v-s-Java" class="headerlink" title="go v.s. Java"></a>go v.s. Java</h1><p>作为准备转型为Gopher的Javaer , 总结下异同点</p>
+<p>协程 vs 线程</p>
+<p>虽然Java 21也已经引入了轻量级线程(用户态线程), 但毕竟还是太过遥远</p>
+<p>包级别 vs 类级别</p>
+<p>对go最不适应的, 就是 全局的变量名, 方法名 竟然都是包级别可见的. 导致很容易冲突(因为记不得同个包下其他文件中命名了相同的变量~). </p>
+<p>本质上, 编译阶段go就是把一个包下的所有文件都组合成一个大文件. </p>
+<p>面向过程 vs 面向对象</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>golang</tag>
+        <tag>comparison</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go 网络 Socket 编程</title>
     <url>//2023-12-12-go-network-socket/</url>
     <content><![CDATA[<h1 id="go-network-socket"><a href="#go-network-socket" class="headerlink" title="go-network-socket"></a>go-network-socket</h1><h1 id="go-proxy"><a href="#go-proxy" class="headerlink" title="go proxy"></a>go proxy</h1><ul>
@@ -14708,50 +14752,6 @@ Example:
       </tags>
   </entry>
   <entry>
-    <title>长期主义思维</title>
-    <url>//2023-11-26-long-term-thinking/</url>
-    <content><![CDATA[<h1 id="20231127-long-term-thinking"><a href="#20231127-long-term-thinking" class="headerlink" title="20231127-long-term-thinking"></a>20231127-long-term-thinking</h1><p>经常说长期思维, 但具体是啥? 我用一些例子来说明: </p>
-<h1 id="backward-compatibility"><a href="#backward-compatibility" class="headerlink" title="backward compatibility"></a>backward compatibility</h1><ul>
-<li><h2 id="permLink-永久链接很重要"><a href="#permLink-永久链接很重要" class="headerlink" title="permLink: 永久链接很重要!"></a>permLink: 永久链接很重要!</h2></li>
-<li>不要qj用户:<ul>
-<li>例如日志登录, 突然不可用. 会极大影响排查效率.</li>
-<li>例如用户信息查询, 突然不可用, 说是迁移到另外一个系统, 需要重新申请权限, 重新配置.</li>
-</ul>
-</li>
-</ul>
-<p>trust means everything!</p>
-<p>如果没人知道你的产品会啥时候突然下线, 那么信任就无从谈起.</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>life</category>
-      </categories>
-      <tags>
-        <tag>career</tag>
-        <tag>long-term-thinking</tag>
-        <tag>philosophy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go vs java</title>
-    <url>//2023-12-12-go-vs-java/</url>
-    <content><![CDATA[<h1 id="go-v-s-Java"><a href="#go-v-s-Java" class="headerlink" title="go v.s. Java"></a>go v.s. Java</h1><p>作为准备转型为Gopher的Javaer , 总结下异同点</p>
-<p>协程 vs 线程</p>
-<p>虽然Java 21也已经引入了轻量级线程(用户态线程), 但毕竟还是太过遥远</p>
-<p>包级别 vs 类级别</p>
-<p>对go最不适应的, 就是 全局的变量名, 方法名 竟然都是包级别可见的. 导致很容易冲突(因为记不得同个包下其他文件中命名了相同的变量~). </p>
-<p>本质上, 编译阶段go就是把一个包下的所有文件都组合成一个大文件. </p>
-<p>面向过程 vs 面向对象</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>backend-development</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>golang</tag>
-        <tag>comparison</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>most important decision i have made</title>
     <url>//2023-12-21-most-important-decision-i-have-made/</url>
     <content><![CDATA[<h1 id="20231222-most-important-decision-i-have-made"><a href="#20231222-most-important-decision-i-have-made" class="headerlink" title="20231222-most-important-decision-i-have-made"></a>20231222-most-important-decision-i-have-made</h1><p>SPOT</p>
@@ -14770,6 +14770,30 @@ Example:
         <tag>career</tag>
         <tag>life-decisions</tag>
         <tag>personal-growth</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Node VPA 使用陷阱</title>
+    <url>//2024-01-04-node-vpa-pitfall/</url>
+    <content><![CDATA[<h1 id="20240105-node-vpa-pitfall"><a href="#20240105-node-vpa-pitfall" class="headerlink" title="20240105-node-vpa-pitfall"></a>20240105-node-vpa-pitfall</h1><p>节点垂直伸缩的概念, 看起来很美好, 都是大家鼓吹的. 但实际实现起来, 落地难度巨大. 本质上来说, 是需要应用层的适配. </p>
+<p>以下是落地不好导致的问题: </p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/i0A2thWt1Ut7deDg-fmaog">K8s 节点 CPU 升级，导致 kubelet 无法启动故障一例</a></li>
+<li>以Netty应用为例, 应用启动时都会getAvailableCpus; 如果直接垂直热伸缩, 会导致该信息不准确, 保不准会.</li>
+</ul>
+<p>真正有落地的: </p>
+<ul>
+<li>aws 2023 re:invent 上的 与数据库深度合作的. 相比应用层做了非常大的改造.</li>
+<li></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>kubernetes</tag>
+        <tag>vpa</tag>
       </tags>
   </entry>
   <entry>
@@ -14825,30 +14849,6 @@ Example:
         <tag>movies</tag>
         <tag>reading</tag>
         <tag>games</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Node VPA 使用陷阱</title>
-    <url>//2024-01-04-node-vpa-pitfall/</url>
-    <content><![CDATA[<h1 id="20240105-node-vpa-pitfall"><a href="#20240105-node-vpa-pitfall" class="headerlink" title="20240105-node-vpa-pitfall"></a>20240105-node-vpa-pitfall</h1><p>节点垂直伸缩的概念, 看起来很美好, 都是大家鼓吹的. 但实际实现起来, 落地难度巨大. 本质上来说, 是需要应用层的适配. </p>
-<p>以下是落地不好导致的问题: </p>
-<ul>
-<li><a href="https://mp.weixin.qq.com/s/i0A2thWt1Ut7deDg-fmaog">K8s 节点 CPU 升级，导致 kubelet 无法启动故障一例</a></li>
-<li>以Netty应用为例, 应用启动时都会getAvailableCpus; 如果直接垂直热伸缩, 会导致该信息不准确, 保不准会.</li>
-</ul>
-<p>真正有落地的: </p>
-<ul>
-<li>aws 2023 re:invent 上的 与数据库深度合作的. 相比应用层做了非常大的改造.</li>
-<li></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>kubernetes</tag>
-        <tag>vpa</tag>
       </tags>
   </entry>
   <entry>
@@ -16016,6 +16016,41 @@ go <span class="token function-name function">func</span><span class="token punc
       </tags>
   </entry>
   <entry>
+    <title>K8s 证书管理与配置</title>
+    <url>//2024-02-27-k8s-cert/</url>
+    <content><![CDATA[<h1 id="k8s-cert"><a href="#k8s-cert" class="headerlink" title="k8s-cert"></a>k8s-cert</h1><ol>
+<li>初始化时, cert先后流程是怎样的? </li>
+<li>cert怎么跟service account关联?</li>
+</ol>
+<h1 id="kubeconfig"><a href="#kubeconfig" class="headerlink" title="kubeconfig"></a>kubeconfig</h1><ul>
+<li>kubeconfig.yaml中各个字段含义详解; 以kube-scheduer的kube-config为例:</li>
+</ul>
+<p>certificate-authority-data: 用于验证apiserver服务端证书的CA证书; 所有需要连接apiserver的角色, 都需要配置该CA证书, 且内容都一样. </p>
+<p>client-certificate-data: </p>
+<p>client-key: </p>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ol>
+<li>生成服务端证书:  certificate-authority-data; </li>
+<li>基于服务端证书, 生成kubelet的客户端证书<ol>
+<li>集群中多个node, 每个node的kubelet客户端证书都一样的么?  —&gt; 实际验证, 每个node的kubelet客户端证书都不一样. </li>
+<li>如果所有node使用一样的证书, 会有啥问题?</li>
+</ol>
+</li>
+<li>kubelet启动时, 配置kubeconfig</li>
+</ol>
+<h1 id="case"><a href="#case" class="headerlink" title="case"></a>case</h1><h2 id="如何为某个client签发证书便于连接k8s集群"><a href="#如何为某个client签发证书便于连接k8s集群" class="headerlink" title="如何为某个client签发证书便于连接k8s集群?"></a>如何为某个client签发证书便于连接k8s集群?</h2><p>例如需要为某个用户签发证书, 只能访问某个namespace, 只能执行create&#x2F;list操作, 不能执行delete. 需要怎么做? </p>
+<h1 id="refs"><a href="#refs" class="headerlink" title="refs"></a>refs</h1><ul>
+<li><a href="https://blog.csdn.net/qq_24433609/article/details/120307483">Kubernetes（k8s）证书机制_k8s证书原理-CSDN博客</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>security</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker、Containerd 与 CRI 深入解析</title>
     <url>//2024-02-20-docker-containerd-cri-deep-dive/</url>
     <content><![CDATA[<h1 id="docker-containerd-cri-deep-dive"><a href="#docker-containerd-cri-deep-dive" class="headerlink" title="docker-containerd-cri-deep-dive"></a>docker-containerd-cri-deep-dive</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-02-21-docker-containerd-cri-deep-dive/Untitled.png" alt="Untitled"></p>
@@ -16612,41 +16647,6 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
       </tags>
   </entry>
   <entry>
-    <title>K8s 证书管理与配置</title>
-    <url>//2024-02-27-k8s-cert/</url>
-    <content><![CDATA[<h1 id="k8s-cert"><a href="#k8s-cert" class="headerlink" title="k8s-cert"></a>k8s-cert</h1><ol>
-<li>初始化时, cert先后流程是怎样的? </li>
-<li>cert怎么跟service account关联?</li>
-</ol>
-<h1 id="kubeconfig"><a href="#kubeconfig" class="headerlink" title="kubeconfig"></a>kubeconfig</h1><ul>
-<li>kubeconfig.yaml中各个字段含义详解; 以kube-scheduer的kube-config为例:</li>
-</ul>
-<p>certificate-authority-data: 用于验证apiserver服务端证书的CA证书; 所有需要连接apiserver的角色, 都需要配置该CA证书, 且内容都一样. </p>
-<p>client-certificate-data: </p>
-<p>client-key: </p>
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ol>
-<li>生成服务端证书:  certificate-authority-data; </li>
-<li>基于服务端证书, 生成kubelet的客户端证书<ol>
-<li>集群中多个node, 每个node的kubelet客户端证书都一样的么?  —&gt; 实际验证, 每个node的kubelet客户端证书都不一样. </li>
-<li>如果所有node使用一样的证书, 会有啥问题?</li>
-</ol>
-</li>
-<li>kubelet启动时, 配置kubeconfig</li>
-</ol>
-<h1 id="case"><a href="#case" class="headerlink" title="case"></a>case</h1><h2 id="如何为某个client签发证书便于连接k8s集群"><a href="#如何为某个client签发证书便于连接k8s集群" class="headerlink" title="如何为某个client签发证书便于连接k8s集群?"></a>如何为某个client签发证书便于连接k8s集群?</h2><p>例如需要为某个用户签发证书, 只能访问某个namespace, 只能执行create&#x2F;list操作, 不能执行delete. 需要怎么做? </p>
-<h1 id="refs"><a href="#refs" class="headerlink" title="refs"></a>refs</h1><ul>
-<li><a href="https://blog.csdn.net/qq_24433609/article/details/120307483">Kubernetes（k8s）证书机制_k8s证书原理-CSDN博客</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>security</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>K8s 基础知识入门</title>
     <url>//2024-03-05-k8s-basis/</url>
     <content><![CDATA[<h1 id="k8s-basis"><a href="#k8s-basis" class="headerlink" title="k8s-basis"></a>k8s-basis</h1><p>这里记录一些基础的, 个人容易遗忘的零散知识点:</p>
@@ -16757,7 +16757,7 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
     <title>K8s 工具集与实用命令</title>
     <url>//2024-03-05-k8s-util/</url>
     <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#x70;&#105;&#x73;&#101;&#114;&#118;&#101;&#114;&#64;&#118;&#x30;&#46;&#50;&#x34;&#x2e;&#49;&#x35;">&#x61;&#x70;&#105;&#x73;&#101;&#114;&#118;&#101;&#114;&#64;&#118;&#x30;&#46;&#50;&#x34;&#x2e;&#49;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#x69;&#x73;&#101;&#114;&#118;&#101;&#x72;&#x40;&#118;&#48;&#46;&#x32;&#x34;&#x2e;&#49;&#x35;">&#x61;&#112;&#x69;&#x73;&#101;&#114;&#118;&#101;&#x72;&#x40;&#118;&#48;&#46;&#x32;&#x34;&#x2e;&#49;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
 </blockquote>
 <p>新建一个协程来启动HTTPServer. </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
@@ -16803,6 +16803,25 @@ time<span class="token punctuation">.</span><span class="token function">Sleep</
         <tag>kubernetes</tag>
         <tag>tools</tag>
         <tag>commands</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DTS 使用陷阱</title>
+    <url>//2024-03-27-dts-pitfall/</url>
+    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
+<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
+<p>可能的几种方案:</p>
+<ol>
+<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
+<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>dts</tag>
       </tags>
   </entry>
   <entry>
@@ -16905,25 +16924,6 @@ StatefulSet<span aria-hidden="true" class="line-numbers-rows"><span></span><span
         <tag>kubernetes</tag>
         <tag>high-availability</tag>
         <tag>pdb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DTS 使用陷阱</title>
-    <url>//2024-03-27-dts-pitfall/</url>
-    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
-<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
-<p>可能的几种方案:</p>
-<ol>
-<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
-<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>dts</tag>
       </tags>
   </entry>
   <entry>
@@ -17264,6 +17264,33 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
       </tags>
   </entry>
   <entry>
+    <title>Linux CFS 调度器</title>
+    <url>//2024-04-28-linux-cfs/</url>
+    <content><![CDATA[<h1 id="linux-cfs"><a href="#linux-cfs" class="headerlink" title="linux-cfs"></a>linux-cfs</h1><h1 id="几个核心问题"><a href="#几个核心问题" class="headerlink" title="几个核心问题"></a>几个核心问题</h1><p>如何实现抢占调度 ? </p>
+<p>NICE值?</p>
+<p>多核情况下如何处理? </p>
+<p>如何与cgroups里的cfs_quota cfs_quota_period 联动? </p>
+<ul>
+<li>传统调度最小粒度是: 进程, 但无法避免 某些用户开了很多进程, 其他用户只开了1个进程, 从而造成的不公平.</li>
+<li>解决方案:  使用task_group结构来管理组调度的组。所有存在的task_group组成一个树型结构（与cgroup的目录结构相对应）这样把用户A放到group1, 用户B放到group2, 可以管理2个</li>
+<li>但怎么管理组内进程的调度?</li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
+<li><a href="https://cloud.tencent.com/developer/article/1116144">Linux 组调度浅析-腾讯云开发者社区-腾讯云</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/75243145">Linux内核浅析-进程调度的算法和数据结构 - 知乎</a></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>scheduling</tag>
+        <tag>cfs</tag>
+        <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>太阳底下无新事</title>
     <url>//2024-05-05-nothing-new-under-the-sun/</url>
     <content><![CDATA[<h1 id="20240506-nothing-new-under-the-sun"><a href="#20240506-nothing-new-under-the-sun" class="headerlink" title="20240506-nothing-new-under-the-sun"></a>20240506-nothing-new-under-the-sun</h1><p><a href="https://techcrunch.com/2024/05/03/nasa-is-expanding-its-wallops-island-facility-to-support-three-times-as-many-launches/?utm_campaign=tc_daily_pm&utm_medium=newsletter&_hsenc=p2ANqtz-_pt71sn4qCkCoiGwCCV0uyZogPkRC8nOveczoxht3PFxUOspVDaWEPhEHlgDAPV-SsURhiDVvoLKHDEVsrVw_9EUC8rA&_hsmi=305558670&utm_source=tc&guccounter=1">NASA is expanding its Wallops Island facility to support three times as many launches | TechCrunch</a></p>
@@ -17291,33 +17318,6 @@ cgroupDriver: systemd<span aria-hidden="true" class="line-numbers-rows"><span></
         <tag>history</tag>
         <tag>philosophy</tag>
         <tag>innovation</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux CFS 调度器</title>
-    <url>//2024-04-28-linux-cfs/</url>
-    <content><![CDATA[<h1 id="linux-cfs"><a href="#linux-cfs" class="headerlink" title="linux-cfs"></a>linux-cfs</h1><h1 id="几个核心问题"><a href="#几个核心问题" class="headerlink" title="几个核心问题"></a>几个核心问题</h1><p>如何实现抢占调度 ? </p>
-<p>NICE值?</p>
-<p>多核情况下如何处理? </p>
-<p>如何与cgroups里的cfs_quota cfs_quota_period 联动? </p>
-<ul>
-<li>传统调度最小粒度是: 进程, 但无法避免 某些用户开了很多进程, 其他用户只开了1个进程, 从而造成的不公平.</li>
-<li>解决方案:  使用task_group结构来管理组调度的组。所有存在的task_group组成一个树型结构（与cgroup的目录结构相对应）这样把用户A放到group1, 用户B放到group2, 可以管理2个</li>
-<li>但怎么管理组内进程的调度?</li>
-</ul>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><ul>
-<li><a href="https://cloud.tencent.com/developer/article/1116144">Linux 组调度浅析-腾讯云开发者社区-腾讯云</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/75243145">Linux内核浅析-进程调度的算法和数据结构 - 知乎</a></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>scheduling</tag>
-        <tag>cfs</tag>
-        <tag>kernel</tag>
       </tags>
   </entry>
   <entry>
@@ -17989,78 +17989,6 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>Mac Setup 初始化配置</title>
-    <url>//2023-11-06-mac-setup/</url>
-    <content><![CDATA[<p>iterm2</p>
-<ol>
-<li>下载使用 <code>HaX0R_GR33N</code> 的主题</li>
-<li>安装 <code>lsd</code> 比 <code>ls</code> 好看太多啦!</li>
-<li>安装 <code>brew install font-hack-nerd-font --cask</code> 不然文件前边会有奇怪的符号</li>
-</ol>
-<p>如下, 确实要美观好多, 可读性也好很多.</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/mac-setup/image.png" alt="image.png"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <tags>
-        <tag>setup</tag>
-        <tag>mac</tag>
-        <tag>macos</tag>
-        <tag>productivity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Minikube 实验笔记</title>
-    <url>//2023-11-06-minikube-playground/</url>
-    <content><![CDATA[<ol>
-<li><p>install docker: <a href="https://www.zhaowenyu.com/docker-doc/ops/docker-install.html">软件获取与安装 · Docker 文档</a></p>
-</li>
-<li><p>install minikube: <a href="https://www.zhaowenyu.com/minikube-doc/ops/minikube.html">minikube安装Kubernetes · minikube</a></p>
-</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.18.1/minikube-linux-amd64 <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x minikube <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">mv</span> minikube /usr/local/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>FXXK!!!</p>
-<h2 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled.png" alt="Untitled"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-1.png" alt="Untitled"></p>
-<h2 id="checksum文件下载失败"><a href="#checksum文件下载失败" class="headerlink" title="checksum文件下载失败"></a>checksum文件下载失败</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-2.png" alt="Untitled"></p>
-<p>修复: </p>
-<p>重新从官方的release中下载最新的binary Lol</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
-<span class="token function">curl</span> -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-<span class="token function">sudo</span> <span class="token function">install</span> minikube-linux-amd64 /usr/local/bin/minikube<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="下载速度太慢啦"><a href="#下载速度太慢啦" class="headerlink" title="下载速度太慢啦!"></a>下载速度太慢啦!</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-3.png" alt="Untitled"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">minikube start --kubernetes-version v1.17.5 <span class="token punctuation">\</span>
---vm-driver<span class="token operator">=</span>none <span class="token punctuation">\</span> 
---cni<span class="token operator">=</span>flannel <span class="token punctuation">\</span>
---image-mirror-country<span class="token operator">=</span>cn <span class="token punctuation">\</span>
---image-repository<span class="token operator">=</span>registry.cn-hangzhou.aliyuncs.com/google_containers <span class="token punctuation">\</span>
---iso-url<span class="token operator">=</span>https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.7.3.iso  <span class="token punctuation">\</span>
---registry-mirror<span class="token operator">=</span>https://hub-mirror.c.163.com
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="conntrack-需要提前安装"><a href="#conntrack-需要提前安装" class="headerlink" title="conntrack 需要提前安装"></a>conntrack 需要提前安装</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-4.png" alt="Untitled"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
-<span class="token function">sudo</span> yum <span class="token function">install</span> -y conntrack<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h2 id="crictl-需要提前安装"><a href="#crictl-需要提前安装" class="headerlink" title="crictl 需要提前安装"></a>crictl 需要提前安装</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-5.png" alt="Untitled"></p>
-<p>参见: 手动把tgz下载下来:</p>
-<p><a href="https://github.com/kubernetes-sigs/cri-tools">https://github.com/kubernetes-sigs/cri-tools</a></p>
-<h2 id="kubectl-下载太慢"><a href="#kubectl-下载太慢" class="headerlink" title="kubectl 下载太慢"></a>kubectl 下载太慢</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-6.png" alt="Untitled"></p>
-<ol>
-<li>根据: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">Install and Set Up kubectl on Linux | Kubernetes</a> 中说明, 直接配置yum源, 使用yum 安装要快很多. </li>
-<li>安装好之后, 直接 kubectl 就可以连接到minikube集群里了. 不需要再使用 <code>minikube kubectl</code>这种命令</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>minikube</tag>
-        <tag>playground</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CPU Specs 常用 CPU 规格参考</title>
     <url>//2023-11-06-cpu-specs/</url>
     <content><![CDATA[<h1 id="Intel-CPU-Suffix"><a href="#Intel-CPU-Suffix" class="headerlink" title="Intel CPU Suffix"></a>Intel CPU Suffix</h1><ul>
@@ -18261,6 +18189,78 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
+    <title>Mac Setup 初始化配置</title>
+    <url>//2023-11-06-mac-setup/</url>
+    <content><![CDATA[<p>iterm2</p>
+<ol>
+<li>下载使用 <code>HaX0R_GR33N</code> 的主题</li>
+<li>安装 <code>lsd</code> 比 <code>ls</code> 好看太多啦!</li>
+<li>安装 <code>brew install font-hack-nerd-font --cask</code> 不然文件前边会有奇怪的符号</li>
+</ol>
+<p>如下, 确实要美观好多, 可读性也好很多.</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/mac-setup/image.png" alt="image.png"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <tags>
+        <tag>setup</tag>
+        <tag>mac</tag>
+        <tag>macos</tag>
+        <tag>productivity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Minikube 实验笔记</title>
+    <url>//2023-11-06-minikube-playground/</url>
+    <content><![CDATA[<ol>
+<li><p>install docker: <a href="https://www.zhaowenyu.com/docker-doc/ops/docker-install.html">软件获取与安装 · Docker 文档</a></p>
+</li>
+<li><p>install minikube: <a href="https://www.zhaowenyu.com/minikube-doc/ops/minikube.html">minikube安装Kubernetes · minikube</a></p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.18.1/minikube-linux-amd64 <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x minikube <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">mv</span> minikube /usr/local/bin/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>FXXK!!!</p>
+<h2 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-1.png" alt="Untitled"></p>
+<h2 id="checksum文件下载失败"><a href="#checksum文件下载失败" class="headerlink" title="checksum文件下载失败"></a>checksum文件下载失败</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-2.png" alt="Untitled"></p>
+<p>修复: </p>
+<p>重新从官方的release中下载最新的binary Lol</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
+<span class="token function">curl</span> -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+<span class="token function">sudo</span> <span class="token function">install</span> minikube-linux-amd64 /usr/local/bin/minikube<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="下载速度太慢啦"><a href="#下载速度太慢啦" class="headerlink" title="下载速度太慢啦!"></a>下载速度太慢啦!</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-3.png" alt="Untitled"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">minikube start --kubernetes-version v1.17.5 <span class="token punctuation">\</span>
+--vm-driver<span class="token operator">=</span>none <span class="token punctuation">\</span> 
+--cni<span class="token operator">=</span>flannel <span class="token punctuation">\</span>
+--image-mirror-country<span class="token operator">=</span>cn <span class="token punctuation">\</span>
+--image-repository<span class="token operator">=</span>registry.cn-hangzhou.aliyuncs.com/google_containers <span class="token punctuation">\</span>
+--iso-url<span class="token operator">=</span>https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.7.3.iso  <span class="token punctuation">\</span>
+--registry-mirror<span class="token operator">=</span>https://hub-mirror.c.163.com
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="conntrack-需要提前安装"><a href="#conntrack-需要提前安装" class="headerlink" title="conntrack 需要提前安装"></a>conntrack 需要提前安装</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-4.png" alt="Untitled"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
+<span class="token function">sudo</span> yum <span class="token function">install</span> -y conntrack<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="crictl-需要提前安装"><a href="#crictl-需要提前安装" class="headerlink" title="crictl 需要提前安装"></a>crictl 需要提前安装</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-5.png" alt="Untitled"></p>
+<p>参见: 手动把tgz下载下来:</p>
+<p><a href="https://github.com/kubernetes-sigs/cri-tools">https://github.com/kubernetes-sigs/cri-tools</a></p>
+<h2 id="kubectl-下载太慢"><a href="#kubectl-下载太慢" class="headerlink" title="kubectl 下载太慢"></a>kubectl 下载太慢</h2><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/minikube-playground/Untitled-6.png" alt="Untitled"></p>
+<ol>
+<li>根据: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">Install and Set Up kubectl on Linux | Kubernetes</a> 中说明, 直接配置yum源, 使用yum 安装要快很多. </li>
+<li>安装好之后, 直接 kubectl 就可以连接到minikube集群里了. 不需要再使用 <code>minikube kubectl</code>这种命令</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>minikube</tag>
+        <tag>playground</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>My Devices - 设备折腾记录</title>
     <url>//2023-11-06-my-devices/</url>
     <content><![CDATA[<h2 id="💻-My-PCs-amp-Devices"><a href="#💻-My-PCs-amp-Devices" class="headerlink" title="💻 My PCs &amp; Devices"></a>💻 My PCs &amp; Devices</h2><h3 id="Surface-Pro-4"><a href="#Surface-Pro-4" class="headerlink" title="Surface Pro 4"></a>Surface Pro 4</h3><p>Battery: 38Wh<br>CPU: Intel Core M3-7Y30 2C4HT<br>kabylake<br>Fans: 0<br>GPU: Intel HD Graphics 515<br>MEM: 0.9GHz~2.2GHz<br>No: 9<br>OS: Windows10<br>OfficialSpec: <a href="https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75">https://support.microsoft.com/en-us/surface/surface-pro-4-specs-and-features-e3a8ac71-4cee-9107-23bc-7bd08d47cf75</a><br>Power: SurfaceConnect<br>Price: 1800<br>ReleaseDate: 2015<br>Review: <a href="https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html">https://www.notebookcheck.net/Microsoft-Surface-Pro-4-Core-m3-Tablet-Review.153843.0.html</a><br>Screen: 12.3’’<br>97% of sRGB<br>Usage: reading<br>Weight: 0.77Kg</p>
@@ -18331,22 +18331,6 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>qemu-img 使用笔记</title>
-    <url>//2023-11-06-qemu-img/</url>
-    <content><![CDATA[<h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png" alt="Untitled"></p>
-<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>virtualization</tag>
-        <tag>qemu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Perf Tools 性能工具速查</title>
     <url>//2023-11-06-perf-tools/</url>
     <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>cpuz</p>
@@ -18369,6 +18353,22 @@ docker volume prune<span aria-hidden="true" class="line-numbers-rows"><span></sp
         <tag>linux</tag>
         <tag>performance</tag>
         <tag>profiling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>qemu-img 使用笔记</title>
+    <url>//2023-11-06-qemu-img/</url>
+    <content><![CDATA[<h1 id="查看img实际大小"><a href="#查看img实际大小" class="headerlink" title="查看img实际大小"></a>查看img实际大小</h1><pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx">qemu<span class="token operator">-</span>img info xxx<span class="token punctuation">.</span>qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/qemu-img/Untitled.png" alt="Untitled"></p>
+<h1 id="shrink-qcow2-img-size"><a href="#shrink-qcow2-img-size" class="headerlink" title="shrink qcow2 img size"></a>shrink qcow2 img size</h1><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>virtualization</tag>
+        <tag>qemu</tag>
       </tags>
   </entry>
   <entry>
