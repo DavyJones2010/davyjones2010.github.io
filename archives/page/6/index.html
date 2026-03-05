@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">238</span>
+        <span class="site-state-item-count">260</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,6 +211,184 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-affinity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-09-08-kube-scheduler-affinity/" class="post-title-link" itemprop="url">kube-scheduler笔记之亲和性调度</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/container-orchestration/" itemprop="url" rel="index"><span itemprop="name">container-orchestration</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><a target="_blank" rel="noopener" href="https://github.com/DavyJones2010/k8s-source-code-analysis/blob/master/core/scheduler/affinity.md">https://github.com/DavyJones2010/k8s-source-code-analysis/blob/master/core/scheduler/affinity.md</a></p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>分为如下几种: </p>
+<ul>
+<li><p>NodeSelector</p>
+</li>
+<li><p>NodeAffinity</p>
+<ul>
+<li>preferredDuringSchedulingIgnoredDuringExecution: 软约束</li>
+<li>requiredDuringSchedulingIgnoredDuringExecution: 硬约束</li>
+</ul>
+</li>
+<li><p>PodAffinity:</p>
+<ul>
+<li>preferredDuringSchedulingIgnoredDuringExecution: 软约束</li>
+<li>requiredDuringSchedulingIgnoredDuringExecution: 硬约束</li>
+</ul>
+</li>
+<li><p>requiredDuringSchedulingIgnoredDuringExecution</p>
+<ul>
+<li><p>与 NodeSelector 或者 LabelSelector 有啥区别? 都是硬约束, 都会导致Node被筛除掉</p>
+<ul>
+<li><p>区别在于: LabelSelector 只能判断 “a.label.equals(b.label)”, 而NodeSelector支持完整的表达式, 例如</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+        <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> kubernetes.io/e2e<span class="token punctuation">-</span>az<span class="token punctuation">-</span>name
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az1
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az2
+      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">preference</span><span class="token punctuation">:</span>
+          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>key
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>“IgnoredDuringExecution”部分意味着，类似于 <code>nodeSelector</code> 的工作原理，如果节点的标签在运行时发生变更，从而不再满足 pod 上的亲和规则，那么 pod 将仍然继续在该节点上运行。也就是onetime的原则, 只会在调度时关注该标签, 后续节点标签变化, 不会重调度.</p>
+</li>
+</ul>
+<h2 id="实现研究"><a href="#实现研究" class="headerlink" title="实现研究"></a>实现研究</h2><h3 id="NodeAffinity"><a href="#NodeAffinity" class="headerlink" title="NodeAffinity"></a>NodeAffinity</h3><p>代码样例</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+        <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> kubernetes.io/e2e<span class="token punctuation">-</span>az<span class="token punctuation">-</span>name
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az1
+            <span class="token punctuation">-</span> e2e<span class="token punctuation">-</span>az2
+      <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">preference</span><span class="token punctuation">:</span>
+          <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>key
+            <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+            <span class="token key atrule">values</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> another<span class="token punctuation">-</span>node<span class="token punctuation">-</span>label<span class="token punctuation">-</span>value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="RequiredDuringSchedulingIgnoredDuringExecution-硬约束"><a href="#RequiredDuringSchedulingIgnoredDuringExecution-硬约束" class="headerlink" title="RequiredDuringSchedulingIgnoredDuringExecution(硬约束)"></a>RequiredDuringSchedulingIgnoredDuringExecution(硬约束)</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-09-08-kube-scheduler-affinity/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-09-08-kube-scheduler-cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -247,7 +425,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -383,7 +561,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -649,7 +827,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -816,7 +994,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -968,7 +1146,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-09-08-physical-psychological/" class="post-title-link" itemprop="url">未命名</a>
+          <a href="/2021-09-08-physical-psychological/" class="post-title-link" itemprop="url">精神训练与身体训练</a>
         </h2>
 
         <div class="post-meta-container">
@@ -986,7 +1164,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
+        </span>
     </span>
 
   
@@ -996,7 +1183,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>375</span>
+      <span>298</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1014,9 +1201,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <hr>
-<p>layout: post<br>title: 精神训练与身体训练<br>tags: [snippets, physical, psychological]<br>category: life</p>
-<p>lang: zh</p>
+          <p>lang: zh</p>
 <blockquote>
 <p>在杨念群的研究里，<br>毛泽东后来的《体育之研究》强调的就是精神训练与身体训练之间的关系，<br>强调的是实践对心灵改造的意义，而不是新文化核心：伦理的突出作用，它具有独特的地域化记忆，<br>这种地域记忆并非自毛泽东始，曾国藩、谭嗣同、杨昌济都在做类似的事情。<br>毛泽东自己都是在1920年亲自实践失败后才打消了湖南自治这个想法，更何况其他人。</p>
 </blockquote>
@@ -1097,7 +1282,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1218,7 +1403,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1337,7 +1522,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1434,7 +1619,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-09-04-ming-dynasty/" class="post-title-link" itemprop="url">未命名</a>
+          <a href="/2021-09-04-ming-dynasty/" class="post-title-link" itemprop="url">明朝那些事儿</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1445,14 +1630,23 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-09-05 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-05T00:00:00+08:00">2021-09-05</time>
+      <time title="创建时间：2021-09-05 02:05:23" itemprop="dateCreated datePublished" datetime="2021-09-05T02:05:23+08:00">2021-09-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/life/" itemprop="url" rel="index"><span itemprop="name">life</span></a>
+        </span>
     </span>
 
   
@@ -1462,7 +1656,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>195</span>
+      <span>97</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1480,9 +1674,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <hr>
-<p>title: 明朝那些事儿<br>subtitle: 明朝那些事儿小笔记<br>date: 2021-09-05 10:05:23 +0800<br>tags: [history, ming-dynasty]<br>category: life</p>
-<h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
+          <h1 id="牛人"><a href="#牛人" class="headerlink" title="牛人"></a>牛人</h1><h2 id="王守仁"><a href="#王守仁" class="headerlink" title="王守仁"></a>王守仁</h2><blockquote>
 <p>身在夜郎家万里，五云天北是神州！</p>
 <p>天地圣贤之道，并非存于万物，也无须存于万物，天人本是一体，何时可分？又何必分？<br>随心而动，随意而行，万法自然，便是圣贤之道。存天理，去人欲？天理即是人欲。</p>
 </blockquote>
@@ -1556,7 +1748,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1664,119 +1856,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-08-31-golang-basic/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
-      <meta itemprop="name" content="Davy Walker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Coders@Work">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021-08-31-golang-basic/" class="post-title-link" itemprop="url">golang入门笔记之基础语法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-01T00:00:00+08:00">2021-09-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>局部变量单纯地给 a 赋值也是不够的，这个值必须被使用, 否则会编译错误<br>全局变量是允许声明但不使用</p>
-<hr>
-<h1 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h1><hr>
-<h1 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h1><p>目标是linux64<br>GOOS&#x3D;linux GOARCH&#x3D;amd64 go build -o app.linux<br>目标是win64<br>GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</p>
-<hr>
-<p>类型的别名&amp;定义<br>&#x2F;&#x2F; 将NewInt定义为int类型<br>type NewInt int<br>&#x2F;&#x2F; 将int取一个别名叫IntAlias<br>type IntAlias &#x3D; int</p>
-<p>– 声明数组<br>intArray :&#x3D; []int{1, 2, 3, 4}</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021-08-31-golang-basic/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-08-31-k8s-architect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1813,7 +1892,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1922,6 +2001,119 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2021-08-31-golang-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208071243153.png">
+      <meta itemprop="name" content="Davy Walker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coders@Work">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021-08-31-golang-basic/" class="post-title-link" itemprop="url">golang入门笔记之基础语法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-01T00:00:00+08:00">2021-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/backend-development/" itemprop="url" rel="index"><span itemprop="name">backend-development</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>局部变量单纯地给 a 赋值也是不够的，这个值必须被使用, 否则会编译错误<br>全局变量是允许声明但不使用</p>
+<hr>
+<h1 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h1><hr>
+<h1 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h1><p>目标是linux64<br>GOOS&#x3D;linux GOARCH&#x3D;amd64 go build -o app.linux<br>目标是win64<br>GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</p>
+<hr>
+<p>类型的别名&amp;定义<br>&#x2F;&#x2F; 将NewInt定义为int类型<br>type NewInt int<br>&#x2F;&#x2F; 将int取一个别名叫IntAlias<br>type IntAlias &#x3D; int</p>
+<p>– 声明数组<br>intArray :&#x3D; []int{1, 2, 3, 4}</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-08-31-golang-basic/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
     <link itemprop="mainEntityOfPage" href="https://davyjones2010.github.io/2020-12-31-booklist-for-2021/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1958,7 +2150,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-05 23:11:16" itemprop="dateModified" datetime="2026-03-05T23:11:16+08:00">2026-03-05</time>
+      <time title="修改时间：2026-03-05 23:14:15" itemprop="dateModified" datetime="2026-03-05T23:14:15+08:00">2026-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2066,14 +2258,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">437k</span>
+    <span title="站点总字数">438k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:37</span>
+    <span title="站点阅读时长">6:38</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
