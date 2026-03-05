@@ -1,7 +1,8 @@
 ---
 layout: post
 title: 记一次黑名单方案设计引发的设计思考
-tags: [learn-from-failure, java, black-list, good-design, bad-design]
+tags: ['lessons-learned', 'java', 'black-list', 'design']
+category: tech-notes
 lang: zh
 ---
 

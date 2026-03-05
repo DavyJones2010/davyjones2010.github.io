@@ -1,7 +1,8 @@
 ---
 title: CentOS 7 systemd 与 SysV init 对比
 date: 2023-10-21 00:00:00
-tags: [linux, centos, systemd, sysv, service-management]
+tags: ['linux', 'centos', 'systemd']
+category: devops
 ---
 
 # 20231021-centos-systemd-sysv

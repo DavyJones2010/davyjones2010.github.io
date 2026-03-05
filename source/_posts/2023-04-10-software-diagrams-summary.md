@@ -1,7 +1,8 @@
 ---
 title: 常用软件工程作图工具汇总
 date: 2023-04-10 22:15:16
-tags: [soft-skills, diagrams, software-engineering, best-practice]
+tags: ['soft-skills', 'diagrams', 'software-engineering', 'best-practices']
+category: tech-notes
 ---
 # Intro
 

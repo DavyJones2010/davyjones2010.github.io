@@ -2,6 +2,7 @@
 layout: post
 title: 记一次Dubbo服务调用异常排查
 tags: [java, dubbo]
+category: backend-development
 ---
 
 # 问题描述

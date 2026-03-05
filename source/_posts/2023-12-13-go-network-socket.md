@@ -1,7 +1,8 @@
 ---
-title: go network socket
+title: 'Go 网络 Socket 编程'
 date: 2023-12-13 00:00:00
-tags: [golang, network, socket, http, proxy]
+tags: ['golang', 'networking', 'sockets', 'concurrency']
+category: backend-development
 ---
 
 # go-network-socket

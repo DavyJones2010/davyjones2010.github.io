@@ -2,7 +2,8 @@
 layout: post
 title: SpringBoot+MyBatis使用XML配置方案
 subtitle: SpringBoot+MyBatis使用XML配置方案
-tags: [springboot, mybatis, xml]
+tags: ['springboot', 'mybatis']
+category: backend-development
 ---
 
 # 背景

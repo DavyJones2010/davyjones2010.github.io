@@ -1,7 +1,8 @@
 ---
-title: docker containerd cri deep dive
+title: 'Docker、Containerd 与 CRI 深入解析'
 date: 2024-02-21 00:00:00
-tags: [docker, containerd, cri, deep-dive]
+tags: ['docker', 'containerd', 'cri', 'container-runtime']
+category: container-orchestration
 ---
 
 # docker-containerd-cri-deep-dive

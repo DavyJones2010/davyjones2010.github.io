@@ -1,7 +1,8 @@
 ---
 layout: post
 title: k8s生态中promethus的架构与原理研究
-tags: [k8s, promethus]
+tags: ['kubernetes', 'prometheus']
+category: container-orchestration
 lang: zh
 ---
 

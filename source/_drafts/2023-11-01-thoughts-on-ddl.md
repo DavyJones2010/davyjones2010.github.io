@@ -1,7 +1,8 @@
 ---
-title: thoughts on ddl
+title: '关于 DDL 的思考'
 date: 2023-11-01 00:00:00
-tags: [thoughts, engineering-culture, deadline]
+tags: ['deadline', 'reflection', 'project-management']
+category: life
 ---
 
 # 20231101-thoughts-on-ddl

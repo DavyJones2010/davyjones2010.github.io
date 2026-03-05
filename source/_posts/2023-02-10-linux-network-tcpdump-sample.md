@@ -1,7 +1,8 @@
 ---
 title: 常用的Linux命令之tcpdump
 date: 2023-02-10 21:04:17
-tags: [code-snippets, linux, network, tcpdump]
+tags: ['code-snippets', 'linux', 'networking', 'tcpdump']
+category: devops
 ---
 
 # 格式

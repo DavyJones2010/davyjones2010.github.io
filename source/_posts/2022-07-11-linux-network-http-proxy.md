@@ -2,7 +2,8 @@
 layout: post
 title: Linux网络之HTTP Proxy原理与实现分析
 subtitle: Linux网络之HTTP Proxy原理与实现分析
-tags: [linux, network, cloud-computing, iaas, http-proxy, proxy]
+tags: ['linux', 'networking', 'cloud-computing', 'http-proxy', 'proxy']
+category: devops
 ---
 
 # 背景

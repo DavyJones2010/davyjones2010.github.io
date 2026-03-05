@@ -2,6 +2,7 @@
 layout: post
 title: 鸟哥的Linux私房菜笔记
 tags: [2021, books, GFS, Google, linux]
+category: devops
 lang: zh
 ---
 

@@ -1,7 +1,8 @@
 ---
-title: cri containerd runc cli
+title: 'CRI、Containerd、runc 与 CLI 工具链'
 date: 2024-01-25 00:00:00
-tags: [k8s, containerd, cri, runc, crictl]
+tags: ['cri', 'containerd', 'runc', 'tools']
+category: container-orchestration
 ---
 
 # cri-containerd-runc-cli

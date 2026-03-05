@@ -2,6 +2,7 @@
 title: 一次心跳导致dubbo调用偶现失败问题排查
 date: 2023-02-09 21:18:02
 tags: [dubbo, java, heartbeat]
+category: backend-development
 ---
 # 背景
 

@@ -2,7 +2,8 @@
 layout: post
 title: NAT之端口映射(PAT)原理总结&实践
 subtitle: NAT之端口映射(PAT)原理总结&实践
-tags: [linux, network, cloud-computing, iaas, nat, pat]
+tags: ['linux', 'networking', 'cloud-computing', 'nat', 'pat']
+category: devops
 ---
 
 # 背景

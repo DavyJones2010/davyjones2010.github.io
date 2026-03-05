@@ -1,7 +1,8 @@
 ---
 layout: post
 title: k8s基础架构笔记
-tags: [k8s, k8s-architect]
+tags: ['kubernetes', 'k8s-architect']
+category: container-orchestration
 lang: zh
 ---
 

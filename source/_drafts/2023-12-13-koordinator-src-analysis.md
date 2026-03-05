@@ -1,7 +1,8 @@
 ---
-title: koordinator src analysis
+title: 'Koordinator 源码分析'
 date: 2023-12-13 00:00:00
-tags: [k8s, koordinator, source-analysis]
+tags: ['koordinator', 'source-code', 'container-scheduling']
+category: tech-notes
 ---
 
 # koordinator-src-analysis

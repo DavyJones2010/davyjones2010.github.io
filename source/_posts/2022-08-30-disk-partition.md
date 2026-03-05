@@ -1,8 +1,9 @@
 ---
 title: 十万个为什么之--为什么磁盘需要分区与挂载?
 date: 2022-08-30 11:41:13
-categories: 十万个为什么
+
 tags: [linux, disk, os]
+category: devops
 ---
 
 # 背景

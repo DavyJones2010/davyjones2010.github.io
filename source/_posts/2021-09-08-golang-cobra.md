@@ -2,6 +2,7 @@
 layout: post
 title: golang入门笔记
 tags: [golang, cobra]
+category: backend-development
 lang: zh
 ---
 # 目标

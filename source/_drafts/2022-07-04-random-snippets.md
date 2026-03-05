@@ -2,6 +2,7 @@
 layout: post
 title: 一些有意思的记录-4
 tags: [soft-skills]
+category: tech-notes
 lang: zh
 ---
 

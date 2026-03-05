@@ -2,7 +2,8 @@
 layout: post
 title: Linux虚拟网络与网络设备
 subtitle: Linux虚拟网络与网络设备
-tags: [linux, network, cloud-computing, iaas, nat, pat]
+tags: ['linux', 'networking', 'cloud-computing', 'nat', 'pat']
+category: devops
 ---
 
 # 背景

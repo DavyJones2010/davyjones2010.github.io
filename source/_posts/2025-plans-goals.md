@@ -2,6 +2,7 @@
 title: 2025 Plans & Goals 年度计划
 date: 2025-01-01 00:00:00
 tags: [plans, goals, annual-review, 2025]
+category: life
 ---
 
 # 技术

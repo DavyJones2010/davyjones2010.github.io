@@ -1,7 +1,8 @@
 ---
 layout: post
 title: 记一次由于remoteCache类型不兼容修改导致的异常问题
-tags: [learn-from-failure, java, cache]
+tags: ['lessons-learned', 'java', 'cache']
+category: backend-development
 lang: zh
 ---
 

@@ -1,8 +1,9 @@
 ---
 title: 深入探究DNS流程与报文
 date: 2022-08-08 22:26:58
-categories: 技术
-tags: [network, linux, dns]
+
+tags: ['networking', 'linux', 'dns']
+category: devops
 ---
 # DNS服务器类型
 ## root nameserver

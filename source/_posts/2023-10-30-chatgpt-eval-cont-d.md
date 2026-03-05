@@ -1,7 +1,8 @@
 ---
 title: chatgpt eval cont d
 date: 2023-10-30 00:00:00
-tags: [thoughts, ai, chatgpt]
+tags: ['chatgpt', 'ai', 'evaluation', 'llm']
+
 ---
 
 # 20231030-chatgpt-eval-cont-d

@@ -1,7 +1,8 @@
 ---
-title: k8s cpumanager cgroupsv1
+title: 'K8s CPU Manager 与 Cgroups v1'
 date: 2024-04-11 00:00:00
-tags: [k8s, cpu-manager, cgroups]
+tags: ['kubernetes', 'cpu-manager', 'cgroups', 'scheduling']
+category: container-orchestration
 ---
 
 # k8s-cpumanager-cgroupsv1

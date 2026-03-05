@@ -1,7 +1,8 @@
 ---
-title: k8s memory manager cgroups
+title: 'K8s Memory Manager 与 Cgroups'
 date: 2024-01-25 00:00:00
-tags: [k8s, memory-manager, cgroups]
+tags: ['kubernetes', 'memory-manager', 'cgroups', 'numa']
+category: container-orchestration
 ---
 
 # k8s-memory-manager-cgroups

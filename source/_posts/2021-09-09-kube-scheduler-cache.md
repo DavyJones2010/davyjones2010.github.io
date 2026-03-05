@@ -1,7 +1,8 @@
 ---
 layout: post
 title: kube-scheduler笔记之SchedulerCache研究
-tags: [k8s, kube-scheduler, scheduler, kube-scheduler-cache]
+tags: ['kubernetes', 'kube-scheduler', 'scheduling', 'kube-scheduler-cache']
+category: container-orchestration
 lang: zh
 ---
 

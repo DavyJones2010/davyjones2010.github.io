@@ -3,6 +3,7 @@ layout: post
 title: 关于分辨率的常识
 cover-img: ["/assets/img/穿越土星环.jpg"]
 tags: [common-sense, resolution]
+category: tech-notes
 lang: zh
 ---
 

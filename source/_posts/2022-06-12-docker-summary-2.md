@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Docker的一些总结II
-tags: [k8s, docker, container]
+tags: ['kubernetes', 'docker', 'containers']
+category: container-orchestration
 lang: zh
 ---
 

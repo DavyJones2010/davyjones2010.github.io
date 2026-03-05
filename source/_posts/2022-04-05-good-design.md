@@ -1,7 +1,8 @@
 ---
 layout: post
 title: 记录一些有趣的产品设计
-tags: [product-design, good-design]
+tags: ['product-design', 'design']
+category: tech-notes
 lang: zh
 ---
 

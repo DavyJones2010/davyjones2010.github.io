@@ -1,7 +1,8 @@
 ---
-title: long term thinking
+title: '长期主义思维'
 date: 2023-11-27 00:00:00
-tags: [thoughts, career, philosophy]
+tags: ['long-term-thinking', 'career', 'philosophy']
+category: life
 ---
 
 # 20231127-long-term-thinking

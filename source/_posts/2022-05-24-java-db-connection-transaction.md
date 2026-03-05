@@ -2,6 +2,7 @@
 layout: post
 title: Java中常用的数据库连接池以及事务框架的原理探究
 tags: [java, spring, spring-jdbc, database, connection, transaction]
+category: backend-development
 ---
 
 # 思考1: Spring里各种事务隔离级别, 本质上是如何实现的?

@@ -1,7 +1,8 @@
 ---
 layout: post
 title: 记一次Java Lambda转List为Map时 Duplicate key异常
-tags: [learn-from-failure, java, lambda]
+tags: ['lessons-learned', 'java', 'lambda']
+category: backend-development
 lang: zh
 ---
 

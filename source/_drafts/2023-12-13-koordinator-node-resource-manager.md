@@ -1,7 +1,8 @@
 ---
-title: koordinator node resource manager
+title: 'Koordinator Node Resource Manager 解析'
 date: 2023-12-13 00:00:00
-tags: [k8s, koordinator, resource-management]
+tags: ['koordinator', 'node-resource-manager', 'resource-management', 'kubernetes']
+category: container-orchestration
 ---
 
 # koordinator-node-resource-manager

@@ -1,6 +1,7 @@
 ---
 title: 大学对我的影响
-tags: [weekend, diary, books]
+tags: ['weekend-summary', 'diary', 'books']
+category: life
 ---
 
 一年一度如火如荼的高考季结束. 蓦然回首, 自己已然高中毕业13年, 大学也毕业9年了.  

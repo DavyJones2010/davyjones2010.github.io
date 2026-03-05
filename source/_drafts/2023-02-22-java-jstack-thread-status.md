@@ -1,7 +1,8 @@
 ---
 title: Java线程状态与jstack线程栈分析实战
 date: 2023-02-22 23:41:37
-tags: [java, jstack, learn-from-failure]
+tags: ['java', 'jstack', 'lessons-learned']
+category: backend-development
 ---
 
 # 背景

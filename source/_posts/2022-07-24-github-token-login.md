@@ -1,7 +1,8 @@
 ---
 layout: post
 title: 从GitHub CLI禁止用户名密码登录引发的思考与总结
-tags: [distributed-system, login, token]
+tags: ['distributed-system', 'authentication']
+category: devops
 lang: zh
 ---
 

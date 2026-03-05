@@ -1,7 +1,8 @@
 ---
 title: 个人书籍管理工作流总结
 date: 2023-05-09 23:37:37
-tags: [soft-skills, books, best-practice]
+tags: ['soft-skills', 'books', 'best-practices']
+category: tech-notes
 ---
 
 # 背景

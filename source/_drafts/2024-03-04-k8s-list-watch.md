@@ -1,7 +1,8 @@
 ---
-title: k8s list watch
+title: 'K8s List-Watch 机制解析'
 date: 2024-03-04 00:00:00
-tags: [k8s, list-watch, informer]
+tags: ['kubernetes', 'list-watch', 'api']
+category: container-orchestration
 ---
 
 # k8s-list-watch

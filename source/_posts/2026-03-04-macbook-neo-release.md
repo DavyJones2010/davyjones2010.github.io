@@ -1,8 +1,7 @@
 ---
 title: 'MacBook Neo 发布：致我们终将逝去的 2015，以及永不过时的偏执'
 date: 2026-03-04 23:05:57
-categories: 
-  - 生活
+
 tags:
   - Apple
   - MacBook Neo

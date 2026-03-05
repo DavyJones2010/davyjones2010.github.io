@@ -1,7 +1,8 @@
 ---
-title: dts pitfall
+title: 'DTS 使用陷阱'
 date: 2024-03-28 00:00:00
-tags: [thoughts, learn-from-failure, distributed-system]
+tags: ['dts', 'lessons-learned']
+category: tech-notes
 ---
 
 # 20240328-dts-pitfall

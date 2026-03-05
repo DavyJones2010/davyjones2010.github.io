@@ -1,7 +1,8 @@
 ---
 title: most important decision i have made
 date: 2023-12-22 00:00:00
-tags: [thoughts, career, life]
+tags: ['career', 'life-decisions', 'reflection', 'personal-growth']
+category: life
 ---
 
 # 20231222-most-important-decision-i-have-made

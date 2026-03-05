@@ -1,8 +1,9 @@
 ---
 layout: post
 title: golang入门笔记之基础语法
-categories: 技术
+
 tags: [golang, golang-lib]
+category: backend-development
 lang: zh
 ---
 

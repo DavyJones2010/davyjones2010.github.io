@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Java与Spring中SPI机制的探讨与思考
-tags: [java, spring, spi, service-loader]
+tags: ['java', 'spring', 'spi']
+category: backend-development
 ---
 
 # 背景

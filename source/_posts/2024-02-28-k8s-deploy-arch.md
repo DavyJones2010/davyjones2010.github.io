@@ -1,7 +1,8 @@
 ---
-title: k8s deploy arch
+title: 'K8s 部署架构设计'
 date: 2024-02-28 00:00:00
-tags: [k8s, deployment, architecture]
+tags: ['kubernetes', 'deployment', 'architecture', 'high-availability']
+category: devops
 ---
 
 # k8s-deploy-arch

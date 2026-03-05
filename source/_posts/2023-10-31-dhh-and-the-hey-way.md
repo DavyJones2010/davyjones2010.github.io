@@ -1,7 +1,8 @@
 ---
 title: DHH 和 Hey Way：一个程序大神的独立思考
 date: 2023-10-31 00:00:00
-tags: [thoughts, cloud-exit, dhh, ruby-on-rails, entrepreneurship]
+tags: ['entrepreneurship', 'cloud-exit']
+category: life
 ---
 
 # 20231031-dhh-and-the-hey-way

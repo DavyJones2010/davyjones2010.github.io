@@ -1,7 +1,8 @@
 ---
 title: jmockit测试框架常用技巧
 date: 2023-02-19 23:38:39
-tags: [java, jmockit, unit-test, ut, test-framework]
+tags: ['java', 'mocking', 'testing']
+category: backend-development
 ---
 
 # @Injectable  与 @Mocked 有啥区别?

@@ -1,7 +1,8 @@
 ---
 layout: post
 title: k8s statefulset的研究与实践
-tags: [k8s, stateful-set]
+tags: ['kubernetes', 'stateful-set']
+category: container-orchestration
 lang: zh
 ---
 

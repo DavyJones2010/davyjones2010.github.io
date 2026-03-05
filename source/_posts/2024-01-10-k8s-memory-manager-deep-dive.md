@@ -1,7 +1,8 @@
 ---
-title: k8s memory manager deep dive
+title: 'K8s Memory Manager 深入解析'
 date: 2024-01-10 00:00:00
-tags: [k8s, memory-manager, deep-dive]
+tags: ['kubernetes', 'memory-manager', 'kubelet', 'resource-management']
+category: container-orchestration
 ---
 
 # k8s-memory-manager-deep-dive

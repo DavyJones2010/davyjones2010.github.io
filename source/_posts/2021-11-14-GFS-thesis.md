@@ -3,6 +3,7 @@ layout: post
 title: GFS论文笔记与思考
 cover-img: ["/_assets/2021-11-14-GFS-thesis/img.png"]
 tags: [2021, books, GFS, Google]
+category: life
 lang: zh
 ---
 笔记:

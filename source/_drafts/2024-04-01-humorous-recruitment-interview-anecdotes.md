@@ -1,7 +1,8 @@
 ---
 title: Humorous Recruitment Interview Anecdotes
 date: 2024-04-01 00:00:00
-tags: [thoughts, career, interview]
+tags: ['recruitment', 'career']
+category: life
 ---
 
 # 20240401-Humorous-Recruitment-Interview-Anecdotes

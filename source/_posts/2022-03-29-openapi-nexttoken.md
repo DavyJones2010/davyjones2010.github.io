@@ -1,7 +1,8 @@
 ---
 layout: post
 title: OpenAPI设计之NextToken
-tags: [learn-from-failure, java, next-token, openapi]
+tags: ['lessons-learned', 'java', 'next-token', 'openapi']
+category: backend-development
 lang: zh
 ---
 

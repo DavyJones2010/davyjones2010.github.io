@@ -3,6 +3,7 @@ layout: post
 title: 关于GPU封装与散热方式的笔记
 cover-img: ["/assets/2021-11-19-gpu-heat-dissipation/img.png"]
 tags: [common-sense, throughput]
+category: tech-notes
 lang: zh
 ---
 

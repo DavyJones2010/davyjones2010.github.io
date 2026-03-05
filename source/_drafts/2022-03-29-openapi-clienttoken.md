@@ -1,7 +1,8 @@
 ---
 layout: post
 title: OpenAPI设计之ClientToken
-tags: [learn-from-failure, java, client-token, openapi]
+tags: ['lessons-learned', 'java', 'authentication', 'openapi']
+category: backend-development
 lang: zh
 ---
 

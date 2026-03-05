@@ -3,7 +3,8 @@ layout: post
 title: 2021年10月第三周
 thumbnail-img: "/assets/img/穿越土星环.jpg"
 cover-img: ["/assets/img/穿越土星环.jpg", "/assets/img/如龙0.jpeg"]
-tags: [weekend, diary, books]
+tags: ['weekend-summary', 'diary', 'books']
+category: life
 lang: zh
 ---
 闲适的周末, 读完了科幻小说: <穿越土星环>, 主要讲的是未来世界的一个富二代在追逐彗星图中, 由于机械故障导致飞船偏离预定巷道, 被遗落在土星环. 

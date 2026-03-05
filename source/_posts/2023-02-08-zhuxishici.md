@@ -1,8 +1,9 @@
 ---
 title: 主席诗词集锦&赏析
 date: 2023-02-08 22:04:28
-categories: 诗词
-tags: [诗词, 主席诗词]
+
+tags: ['诗词', 'poetry']
+category: life
 ---
 # 水调歌头·重上井冈山
 

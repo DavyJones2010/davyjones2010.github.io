@@ -2,6 +2,7 @@
 title: 玩一玩Ventoy
 date: 2023-09-19 23:16:56
 tags: [linux, tech-for-fun, bootloader]
+category: devops
 ---
 
 核心代码: [Ventoy/INSTALL/tool/VentoyWorker.sh at master · ventoy/Ventoy](https://github.com/ventoy/Ventoy/blob/master/INSTALL/tool/VentoyWorker.sh#L314C5-L314C25)

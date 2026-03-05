@@ -1,7 +1,8 @@
 ---
 layout: post
 title: 云计算笔记--aws的DefaultVpc实现调研
-tags: [cloud, iaas, aws, default-vpc, vpc]
+tags: ['cloud-computing', 'aws', 'vpc']
+category: devops
 lang: zh
 ---
 

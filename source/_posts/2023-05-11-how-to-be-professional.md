@@ -1,7 +1,8 @@
 ---
 title: 关于"专业"与"靠谱"的几个案例与思考
 date: 2023-05-11 22:46:18
-tags: [soft-skills, best-practice]
+tags: ['soft-skills', 'best-practices']
+category: tech-notes
 ---
 
 # 背景

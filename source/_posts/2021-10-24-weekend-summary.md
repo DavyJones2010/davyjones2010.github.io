@@ -3,7 +3,8 @@ layout: post
 title: 2021年10月第四周
 thumbnail-img: /assets/img/20211024-金桂.png
 cover-img: ["/assets/img/20211024-金桂.png", "/assets/img/20211024-八角亭迷雾.png", "/assets/img/20211024-沙丘.png"]
-tags: [weekend, diary, books]
+tags: ['weekend-summary', 'diary', 'books']
+category: life
 lang: zh
 ---
 周末, 深秋, 天寒, 江南, 清冷. 因感冒而略微发烧, 咳嗽残病的两天. 在病榻上, 突然想起杜甫在<登高>中所言:

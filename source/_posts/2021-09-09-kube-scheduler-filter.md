@@ -1,7 +1,8 @@
 ---
 layout: post
 title: kube-scheduler笔记之filter
-tags: [k8s, kube-scheduler, scheduler]
+tags: ['kubernetes', 'kube-scheduler', 'scheduling']
+category: container-orchestration
 lang: zh
 ---
 

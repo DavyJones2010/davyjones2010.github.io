@@ -1,7 +1,8 @@
 ---
 title: Minikube 实验笔记
 date: 2023-11-07 00:00:00
-tags: [minikube, kubernetes, k8s, playground]
+tags: ['minikube', 'kubernetes', 'playground']
+category: container-orchestration
 ---
 
 1. install docker: [软件获取与安装 · Docker 文档](https://www.zhaowenyu.com/docker-doc/ops/docker-install.html)

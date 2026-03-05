@@ -1,7 +1,8 @@
 ---
 title: Linux磁盘与分区的常用命令
-categories: Linux常用命令
-tags: [linux, disk, file-system, os]
+
+tags: ['linux', 'disk', 'filesystem', 'os']
+category: devops
 ---
 
 # 磁盘

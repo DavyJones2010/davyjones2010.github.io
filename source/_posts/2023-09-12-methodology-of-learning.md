@@ -1,7 +1,8 @@
 ---
-title: methodology of learning
+title: '学习方法论'
 date: 2023-09-12 00:00:00
-tags: [thoughts, learning, methodology]
+tags: ['learning', 'methodology', 'self-improvement', 'knowledge']
+
 ---
 
 # 20230912-methodology-of-learning

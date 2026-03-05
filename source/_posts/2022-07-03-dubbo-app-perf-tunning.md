@@ -3,6 +3,7 @@ layout: post
 title: 记一次Dubbo应用性能优化
 subtitle: 记一次Dubbo应用性能优化
 tags: [dubbo, java, perf-tunning, redis]
+category: backend-development
 ---
 
 # 背景

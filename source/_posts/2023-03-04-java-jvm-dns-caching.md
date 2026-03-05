@@ -2,6 +2,7 @@
 title: 关于JVM DNS Cache问题的研究
 date: 2023-03-04 10:59:10
 tags: [java, jvm, dns]
+category: backend-development
 ---
 # 背景
 某次jstack发现应用卡在DNS解析上, 发现应用为了做负载均衡, 故意将JVM DNS Cache失效时间设置为了0, 即永不缓存.

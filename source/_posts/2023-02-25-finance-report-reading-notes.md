@@ -1,7 +1,8 @@
 ---
 title: 一本书读懂财报笔记
 date: 2023-02-25 00:00:16
-tags: [note, book-list, finance]
+tags: ['note', 'books', 'finance']
+category: life
 ---
 
 {% markmap 500px 4 %}

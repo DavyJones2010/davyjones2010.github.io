@@ -1,7 +1,8 @@
 ---
 title: 2023 云栖大会观察与思考
 date: 2023-11-03 00:00:00
-tags: [thoughts, cloud-computing, conference, aliyun, public-speaking]
+tags: ['conference', 'cloud-computing', 'aliyun']
+category: devops
 ---
 
 # 20231103-apsara-conference

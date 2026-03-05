@@ -2,7 +2,8 @@
 title: revealjs制作PPT笔记
 date: 2023-03-05 17:28:22
 tags: [tools, ppt, markdown]
-categories: 工程提效工具
+category: devops
+
 ---
 
 # 背景

@@ -1,7 +1,8 @@
 ---
-title: nothing new under the sun
+title: '太阳底下无新事'
 date: 2024-05-06 00:00:00
-tags: [thoughts, philosophy, history]
+tags: ['philosophy', 'history', 'innovation', 'reflection']
+category: life
 ---
 
 # 20240506-nothing-new-under-the-sun

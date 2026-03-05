@@ -3,6 +3,7 @@ layout: post
 title: 计算机常用接口标准与速度的常识
 cover-img: ["2021-11-19-throughput-cover.jpg"]
 tags: [common-sense, throughput]
+category: tech-notes
 lang: zh
 ---
 

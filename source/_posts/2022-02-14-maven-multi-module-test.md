@@ -3,6 +3,7 @@ layout: post
 title: SpringBoot+Maven多模块项目测试最佳实践
 subtitle: SpringBoot+Maven多模块项目测试最佳实践
 tags: [springboot, maven, maven-module, maven test]
+category: backend-development
 ---
 
 # 背景

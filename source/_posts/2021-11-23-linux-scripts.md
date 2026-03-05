@@ -3,6 +3,7 @@ layout: post
 title: 常用的Linux命令
 subtitle: 常用的Linux命令
 tags: [code-snippets, linux]
+category: devops
 ---
 
 # 背景

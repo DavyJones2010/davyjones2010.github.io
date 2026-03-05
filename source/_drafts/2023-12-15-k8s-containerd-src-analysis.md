@@ -1,7 +1,8 @@
 ---
-title: k8s containerd src analysis
+title: 'K8s Containerd 源码分析'
 date: 2023-12-15 00:00:00
-tags: [k8s, containerd, source-analysis]
+tags: ['kubernetes', 'containerd', 'source-code', 'container-runtime']
+category: container-orchestration
 ---
 
 # k8s-containerd-src-analysis

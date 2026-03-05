@@ -1,7 +1,8 @@
 ---
 title: libvirt CPU 选项与超线程关闭原理剖析
 date: 2024-01-08 00:00:00
-tags: [virtualization, libvirt, cpu, hyperthreading, cloud-computing, iaas]
+tags: ['virtualization', 'libvirt', 'cpu', 'hyperthreading', 'cloud-computing']
+category: devops
 ---
 
 # 20240108-libvirt-cpuoptions-htoff

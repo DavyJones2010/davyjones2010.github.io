@@ -2,6 +2,7 @@
 layout: post
 title: RAM的基础概念与实践
 tags: [java, ram]
+category: backend-development
 ---
 
 # 基础

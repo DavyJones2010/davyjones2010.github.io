@@ -1,7 +1,8 @@
 ---
-title: cgroup qemu cfs
+title: 'Cgroup、QEMU 与 CFS 调度'
 date: 2024-01-25 00:00:00
-tags: [thoughts, cgroups, qemu, virtualization]
+tags: ['linux', 'cgroups', 'qemu', 'cfs', 'virtualization']
+category: devops
 ---
 
 # 20240125-cgroup-qemu-cfs

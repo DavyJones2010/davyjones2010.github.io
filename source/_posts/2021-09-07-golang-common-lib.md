@@ -2,6 +2,7 @@
 layout: post
 title: golang入门笔记之常用基础库
 tags: [golang, golang-lib]
+category: backend-development
 lang: zh
 ---
 go-http 是kube-scheduler healthz, metrics的实现基础

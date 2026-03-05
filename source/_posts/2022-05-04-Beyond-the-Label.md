@@ -2,6 +2,7 @@
 layout: post
 title: 深度思考：不断逼近问题的本质 读后感
 tags: [2022, books]
+category: life
 lang: zh
 ---
 

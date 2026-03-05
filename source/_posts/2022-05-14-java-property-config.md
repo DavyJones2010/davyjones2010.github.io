@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Java中配置文件占位符替换的几种模式探讨与分析
-tags: [java, config, properties, best-practice]
+tags: ['java', 'config', 'properties', 'best-practices']
+category: backend-development
 ---
 
 # 背景

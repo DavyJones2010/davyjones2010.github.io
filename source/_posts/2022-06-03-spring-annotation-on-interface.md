@@ -2,6 +2,7 @@
 layout: post
 title: SpringBoot基于Interface的Annotation在AOP中如何生效
 tags: [java, spring, spring-boot, aop, interface]
+category: backend-development
 ---
 
 # 背景

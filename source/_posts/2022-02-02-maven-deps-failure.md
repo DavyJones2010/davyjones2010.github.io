@@ -1,7 +1,8 @@
 ---
 layout: post
 title: 记一次Maven传递依赖失效问题排查
-tags: [learn-from-failure, maven, transitive dependency]
+tags: ['lessons-learned', 'maven', 'dependencies']
+category: tech-notes
 lang: zh
 ---
 
