@@ -2,6 +2,7 @@
 title: My Devices - 设备折腾记录
 date: 2023-11-07 00:00:00
 tags: [devices, hardware, mac, pc, setup]
+category: life
 
 ---
 

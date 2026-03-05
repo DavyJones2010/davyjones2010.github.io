@@ -2,6 +2,7 @@
 title: '敏捷用户故事实践'
 date: 2023-11-06 00:00:00
 tags: ['agile', 'user-stories', 'project-management', 'methodology']
+category: tech-notes
 
 ---
 

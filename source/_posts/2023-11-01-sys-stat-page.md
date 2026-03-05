@@ -2,6 +2,7 @@
 title: '系统统计页面实现'
 date: 2023-11-01 00:00:00
 tags: ['system-monitoring', 'statistics', 'dashboard', 'visualization']
+category: devops
 
 ---
 

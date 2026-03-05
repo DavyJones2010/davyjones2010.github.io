@@ -2,6 +2,7 @@
 layout: post
 title: 异步HttpClient使用Netty作为SocketChannel的Provider
 tags: [httpclient, asynchttpclient, netty]
+category: backend-development
 
 ---
 # 背景

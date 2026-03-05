@@ -2,6 +2,7 @@
 layout: post
 title: 精神训练与身体训练
 tags: [snippets, physical, psychological]
+category: life
 
 lang: zh
 ---

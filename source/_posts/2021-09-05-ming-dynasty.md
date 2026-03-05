@@ -3,6 +3,7 @@ title: 明朝那些事儿
 subtitle: 明朝那些事儿小笔记
 date: 2021-09-05 10:05:23 +0800
 tags: [history, ming-dynasty]
+category: life
 
 ---
 

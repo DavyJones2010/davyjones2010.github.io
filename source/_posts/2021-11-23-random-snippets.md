@@ -2,6 +2,7 @@
 layout: post
 title: 无用的知识又增加了
 tags: [tech-for-fun]
+category: tech-notes
 
 lang: zh
 ---

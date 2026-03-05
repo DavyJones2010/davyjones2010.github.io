@@ -2,6 +2,7 @@
 title: Vocabulary & Sentences 词汇积累
 date: 2023-09-01 00:00:00
 tags: [vocabulary, english, learning]
+category: life
 
 ---
 

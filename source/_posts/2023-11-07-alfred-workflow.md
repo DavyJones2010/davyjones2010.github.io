@@ -2,6 +2,7 @@
 title: Alfred Workflow 使用指南
 date: 2023-11-07 00:00:00
 tags: ['alfred', 'macos', 'productivity']
+category: tech-notes
 
 ---
 

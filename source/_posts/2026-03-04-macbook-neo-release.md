@@ -7,6 +7,7 @@ tags:
   - MacBook Neo
   - MacBook 2015
   - 数码生活
+category: life
 ---
 
 2026 年 03 月 04 日 23:00:00，Apple Newsroom 更新了。

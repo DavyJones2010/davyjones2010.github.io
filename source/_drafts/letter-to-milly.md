@@ -1,6 +1,7 @@
 ---
 title: 给小米粒的第一封信
 tags: ['letter']
+category: life
 
 ---
 

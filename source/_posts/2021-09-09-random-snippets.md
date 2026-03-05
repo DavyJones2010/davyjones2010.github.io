@@ -2,6 +2,7 @@
 layout: post
 title: 诗文摘录
 tags: [poems]
+category: tech-notes
 
 lang: zh
 ---

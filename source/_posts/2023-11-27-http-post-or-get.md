@@ -2,6 +2,7 @@
 title: 'HTTP POST 与 GET 的选择'
 date: 2023-11-27 00:00:00
 tags: ['http', 'post', 'get', 'api-design']
+category: tech-notes
 
 ---
 

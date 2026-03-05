@@ -1,6 +1,7 @@
 ---
 title: 模拟电路笔记
 tags: [computer, analog-circuit]
+category: tech-notes
 
 ---
 

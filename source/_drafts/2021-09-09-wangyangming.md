@@ -2,6 +2,7 @@
 layout: post
 title: 传习录 摘录
 tags: [psychology, wangyangming]
+category: life
 
 lang: zh
 ---

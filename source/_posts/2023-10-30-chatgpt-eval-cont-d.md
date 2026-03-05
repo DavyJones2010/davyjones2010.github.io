@@ -2,6 +2,7 @@
 title: chatgpt eval cont d
 date: 2023-10-30 00:00:00
 tags: ['chatgpt', 'ai', 'evaluation', 'llm']
+category: container-orchestration
 
 ---
 

@@ -3,6 +3,7 @@ title: 瞎折腾洋垃圾电脑笔记
 date: 2022-08-13 21:39:48
 
 tags: [diy]
+category: life
 
 ---
 

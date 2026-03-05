@@ -3,6 +3,7 @@ layout: post
 title: ubuntu初始化配置
 subtitle: 记录个人习惯化的ubuntu初始化配置
 tags: [ubuntu, system-init, system-config]
+category: devops
 
 ---
 

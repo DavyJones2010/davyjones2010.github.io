@@ -2,6 +2,7 @@
 title: CPU Specs 常用 CPU 规格参考
 date: 2023-11-07 00:00:00
 tags: [cpu, hardware, specs, reference]
+category: life
 
 ---
 

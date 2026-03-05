@@ -2,6 +2,7 @@
 title: '学习方法论'
 date: 2023-09-12 00:00:00
 tags: ['learning', 'methodology', 'self-improvement', 'knowledge']
+category: tech-notes
 
 ---
 

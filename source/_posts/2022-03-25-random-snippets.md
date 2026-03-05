@@ -2,6 +2,7 @@
 layout: post
 title: 一些有意思的记录-3
 tags: [net-tools]
+category: devops
 
 lang: zh
 ---

@@ -2,6 +2,7 @@
 layout: post
 title: 由ZK的SID/ZXID与snowflake算法引发的ID生成算法探讨
 tags: [distributed-system, uuid, snowflake, zookeeper, sid]
+category: backend-development
 
 lang: zh
 ---
