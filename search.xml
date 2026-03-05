@@ -33,71 +33,6 @@
       </tags>
   </entry>
   <entry>
-    <title>k8s基础架构笔记</title>
-    <url>//2021-08-31-k8s-architect/</url>
-    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
-<li>APIServer<ul>
-<li>认证</li>
-<li>鉴权</li>
-<li>准入控制<ul>
-<li>Quota</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Scheduler</li>
-<li>Kubelet</li>
-<li>Etcd</li>
-<li>Kube-Controller Manager包括<ul>
-<li>ReplicaSet Controller</li>
-<li>CDR的Controller</li>
-<li>AdmissionController </li>
-<li>等</li>
-</ul>
-</li>
-</ul>
-<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
-<li>Cluster-scoped resources<ul>
-<li>如node</li>
-</ul>
-</li>
-<li>Namespace-scoped resources<ul>
-<li>如pod</li>
-</ul>
-</li>
-</ul>
-<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
-<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
-<li>workloads</li>
-</ul>
-<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
-<li>Node</li>
-<li>Pod</li>
-</ul>
-<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
-<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
-<li>Deployment: 后端用ESS, 区别是什么? </li>
-<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
-<li>StatefulSets: </li>
-<li>Job&amp;CronJob:</li>
-</ul>
-<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
-<li>Operator &#x3D; 资源(CRD) + Controller</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>CDR</li>
-<li>OAM</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>k8s-architect</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>golang入门笔记之基础语法</title>
     <url>//2021-08-31-golang-basic/</url>
     <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>局部变量单纯地给 a 赋值也是不够的，这个值必须被使用, 否则会编译错误<br>全局变量是允许声明但不使用</p>
@@ -169,6 +104,71 @@ request.InstanceChargeType &#x3D; payType<span aria-hidden="true" class="line-nu
       <tags>
         <tag>golang</tag>
         <tag>golang-lib</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记</title>
+    <url>//2021-08-31-k8s-architect/</url>
+    <content><![CDATA[<h2 id="基础应用组件"><a href="#基础应用组件" class="headerlink" title="基础应用组件"></a>基础应用组件</h2><ul>
+<li>APIServer<ul>
+<li>认证</li>
+<li>鉴权</li>
+<li>准入控制<ul>
+<li>Quota</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scheduler</li>
+<li>Kubelet</li>
+<li>Etcd</li>
+<li>Kube-Controller Manager包括<ul>
+<li>ReplicaSet Controller</li>
+<li>CDR的Controller</li>
+<li>AdmissionController </li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+<h2 id="资源分为两类"><a href="#资源分为两类" class="headerlink" title="资源分为两类"></a>资源分为两类</h2><ul>
+<li>Cluster-scoped resources<ul>
+<li>如node</li>
+</ul>
+</li>
+<li>Namespace-scoped resources<ul>
+<li>如pod</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础流程"><a href="#基础流程" class="headerlink" title="基础流程"></a>基础流程</h2><p><img data-src="https://hugo-picture.oss-cn-beijing.aliyuncs.com/what-happens-when-k8s.svg" alt="基础流程"></p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ul>
+<li>workloads</li>
+</ul>
+<h2 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h2><ul>
+<li>Node</li>
+<li>Pod</li>
+</ul>
+<h2 id="Controller控制组件"><a href="#Controller控制组件" class="headerlink" title="Controller控制组件"></a>Controller控制组件</h2><ul>
+<li>ReplicationController(弃用) –&gt; ReplicaSet(类似ESS)</li>
+<li>Deployment: 后端用ESS, 区别是什么? </li>
+<li>DaemonSet: Pod组, 部署在每个Node上. 新加入Node, 会自动新部署Pod. 下线Node, 会自动删除Pod.</li>
+<li>StatefulSets: </li>
+<li>Job&amp;CronJob:</li>
+</ul>
+<h2 id="编排组件"><a href="#编排组件" class="headerlink" title="编排组件"></a>编排组件</h2><ul>
+<li>Operator &#x3D; 资源(CRD) + Controller</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>CDR</li>
+<li>OAM</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>k8s-architect</tag>
       </tags>
   </entry>
   <entry>
@@ -2927,6 +2927,35 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
       </tags>
   </entry>
   <entry>
+    <title>鸟哥的Linux私房菜笔记</title>
+    <url>//2021-11-18-Linux-Basic/</url>
+    <content><![CDATA[<h1 id="Linux-中各种文件类型"><a href="#Linux-中各种文件类型" class="headerlink" title="Linux 中各种文件类型"></a>Linux 中各种文件类型</h1><p>经常在<code>ls -ltrh</code>的时候, 出现的文件类型不太认识&#x2F;熟悉, 这里整理下, 详细参见:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252337411.png"></p>
+<p>典型样例: </p>
+<ul>
+<li><p><code>-</code>: 普通文件</p>
+</li>
+<li><p><code>d</code>: 目录<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252339985.png"></p>
+</li>
+<li><p><code>b</code>: 块设备, 都是在<code>/dev/</code>目录下<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252342096.png"></p>
+</li>
+<li><p><code>c</code>: 字符设备, 典型的例如tty, 如 urandom, random<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252352764.png"></p>
+</li>
+<li><p><code>s</code>: socketfile, 用于进程间socket通信. 详细使用方式参见: <a href="https://askubuntu.com/questions/372725/what-are-socket-files">What are socket files?</a>. 另外还可以了解下vsock, 作为host与guestOS通信的常用方案.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252349265.png"></p>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>books</tag>
+        <tag>2021</tag>
+        <tag>GFS</tag>
+        <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于GPU封装与散热方式的笔记</title>
     <url>//2021-11-18-gpu-heat-dissipation/</url>
     <content><![CDATA[<h1 id="GPU散热方式"><a href="#GPU散热方式" class="headerlink" title="GPU散热方式"></a>GPU散热方式</h1><h2 id="被动散热"><a href="#被动散热" class="headerlink" title="被动散热"></a>被动散热</h2><ul>
@@ -3040,35 +3069,6 @@ machdep.cpu.brand_string: Intel<span class="token punctuation">(</span>R<span cl
       <tags>
         <tag>common-sense</tag>
         <tag>throughput</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>鸟哥的Linux私房菜笔记</title>
-    <url>//2021-11-18-Linux-Basic/</url>
-    <content><![CDATA[<h1 id="Linux-中各种文件类型"><a href="#Linux-中各种文件类型" class="headerlink" title="Linux 中各种文件类型"></a>Linux 中各种文件类型</h1><p>经常在<code>ls -ltrh</code>的时候, 出现的文件类型不太认识&#x2F;熟悉, 这里整理下, 详细参见:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252337411.png"></p>
-<p>典型样例: </p>
-<ul>
-<li><p><code>-</code>: 普通文件</p>
-</li>
-<li><p><code>d</code>: 目录<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252339985.png"></p>
-</li>
-<li><p><code>b</code>: 块设备, 都是在<code>/dev/</code>目录下<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252342096.png"></p>
-</li>
-<li><p><code>c</code>: 字符设备, 典型的例如tty, 如 urandom, random<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252352764.png"></p>
-</li>
-<li><p><code>s</code>: socketfile, 用于进程间socket通信. 详细使用方式参见: <a href="https://askubuntu.com/questions/372725/what-are-socket-files">What are socket files?</a>. 另外还可以了解下vsock, 作为host与guestOS通信的常用方案.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202309252349265.png"></p>
-</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>books</tag>
-        <tag>2021</tag>
-        <tag>GFS</tag>
-        <tag>Google</tag>
       </tags>
   </entry>
   <entry>
@@ -4116,6 +4116,111 @@ clientChannel<span class="token punctuation">.</span><span class="token function
       </tags>
   </entry>
   <entry>
+    <title>2022 年度书单</title>
+    <url>//2021-12-31-booklist-for-2022/</url>
+    <content><![CDATA[<h1 id="BookList"><a href="#BookList" class="headerlink" title="BookList"></a>BookList</h1><hr>
+<h2 id="必读"><a href="#必读" class="headerlink" title="必读"></a>必读</h2><ul>
+<li><a href="https://book.douban.com/subject/25897245/">Netty权威指南</a> -20220315 done</li>
+<li><a href="https://book.douban.com/subject/30244461/">规模：复杂世界的简单法则</a> -20220724 done</li>
+<li>Google 4篇论文复习 GFS MapReduce BigTable Dapper</li>
+<li><a href="https://book.douban.com/subject/26643785/">深度探索嵌入式操作系统：从零开始设计、架构和开发</a></li>
+<li><a href="https://book.douban.com/subject/10750155/">数学之美</a> -done</li>
+<li><a href="https://book.douban.com/subject/33429491/">昆仑</a> -20221228 done</li>
+<li><a href="https://edu.51cto.com/center/course/lesson/index?id=118666">开源虚拟化KVM入门（KVM架构+KVM基本管理）视频课程</a></li>
+<li><a href="https://book.douban.com/subject/25985021/">人类简史</a> -20220215 done</li>
+<li><a href="https://book.douban.com/subject/3998926/">系统分析师考试全程指导</a></li>
+<li><a href="https://baike.baidu.com/item/%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%E5%B8%88%E6%95%99%E7%A8%8B/8182174">系统分析师教程</a></li>
+<li><a href="https://book.douban.com/subject/3229243/">Linux内核完全剖析</a></li>
+<li><a href="https://abseil.io/resources/swe_at_google.2.pdf">Software Engineering at Google</a></li>
+<li><a href="https://yeasy.gitbook.io/docker_practice/underly/arch">Docker从入门到实践</a> -20220328 done</li>
+<li><a href="http://product.dangdang.com/25336322.html">深度思考： 不断逼近问题的本质</a> -20220504 done</li>
+<li><a href="https://book.douban.com/subject/26943161/">未来简史</a></li>
+<li><a href="https://book.douban.com/subject/30259720/">今日简史</a> -20230131 done</li>
+<li><a href="https://book.douban.com/subject/3596861/">从产品到服务:企业向服务经济转型指南</a></li>
+<li><a href="https://book.douban.com/subject/35424872/">深入剖析Kubernetes</a> -20220612 done</li>
+<li><a href="https://book.douban.com/subject/30348776/">筚路蓝缕-世纪工程决策建设记述</a> -20220820 done</li>
+<li><a href="https://book.douban.com/subject/1062991/">北京法源寺</a> -20220717 done</li>
+<li><a href="https://book.douban.com/subject/1322455/">遥远的救世主</a> -20220725 done</li>
+<li><a href="https://book.douban.com/subject/1322455/">天幕红尘</a> -20220806 done</li>
+<li><a href="https://book.douban.com/subject/30155731/">算法之美</a> -20221206 done</li>
+<li><a href="https://book.douban.com/subject/11530329/">30天自制操作系统</a></li>
+<li><a href="https://book.douban.com/subject/27091064/">云原生应用架构实践——从单体到服务化架构演进</a></li>
+<li><a href="https://book.douban.com/subject/27032786/">天局</a> -20220818 done</li>
+<li><a href="https://book.douban.com/subject/1578545/">背叛</a> -20220821 done</li>
+<li><a href="https://book.douban.com/subject/20257955/">丰乳肥臀</a> -20220909 done</li>
+<li><a href="https://book.douban.com/subject/26745030/">陌生女人的来信</a> -20221022 done </li>
+<li><a href="https://book.douban.com/subject/26641288/">1984</a> -20221023 done </li>
+<li><a href="https://book.douban.com/subject/35100567/">乞力马扎罗的雪</a> -20221024 done </li>
+<li><a href="https://book.douban.com/subject/35026475/">山月记</a> </li>
+<li><a href="https://book.douban.com/subject/35669245/">乾隆: 政治, 爱情与性格</a> -20221029 done</li>
+<li><a href="https://book.douban.com/subject/26768309/">查令十字街84号</a> -20221031 done</li>
+<li><a href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a> -20221111 done</li>
+<li><a href="https://book.douban.com/subject/35731316/">文件系统技术内幕</a> <a href="https://www.bilibili.com/video/av889477532/">B站视频</a></li>
+</ul>
+<h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
+<li><a href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
+</ul>
+<h1 id="ReadList"><a href="#ReadList" class="headerlink" title="ReadList"></a>ReadList</h1><hr>
+<ul>
+<li><a href="https://cloud.tencent.com/developer/article/1587433">有赞 Bond 分布式锁</a></li>
+<li><a href="https://www.cl.cam.ac.uk/research/srg/netos/camsas/blog/2016-03-09-scheduler-architectures.html">scheduler-architectures</a></li>
+<li><a href="https://blog.paessler.com/disabling-icmp-and-snmp-wont-increase-security-but-will-impact-network-monitoring">ICMP</a></li>
+<li><a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的Thread Monitor方案</a></li>
+<li><a href="https://www.infoq.cn/article/xkJNoczVDHARLkKjvDOm">深度揭秘阿里云 Serverless Kubernetes</a></li>
+<li><a href="https://manybutfinite.com/post/what-does-an-idle-cpu-do/">site for curious people</a></li>
+<li><a href="https://plantegg.github.io/2021/07/19/CPU%E6%80%A7%E8%83%BD%E5%92%8CCACHE/">CPU性能和CACHE</a></li>
+<li><a href="https://www.realworldtech.com/transistor-count-flawed-metric/">Transistor Count: A Flawed Metric</a></li>
+</ul>
+<h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1><hr>
+<ul>
+<li><a href="https://movie.douban.com/subject/35207856/">人世间</a></li>
+<li><a href="https://movie.douban.com/subject/26766214/">风起陇西</a></li>
+<li><a href="https://movie.douban.com/subject/26889177/">异物志</a></li>
+<li><a href="https://movie.douban.com/subject/2210001/">大明王朝: 1566</a></li>
+<li>Yes, Minister</li>
+<li>Yes, Prime Minister</li>
+<li><a href="https://movie.douban.com/subject/30314848/">瞬息全宇宙</a></li>
+<li><a href="https://movie.douban.com/subject/35436582/?ivk_sa=1024320u">爱，死亡和机器人 第三季</a></li>
+<li><a href="https://movie.douban.com/subject/26564735/">武庚纪</a></li>
+<li><a href="https://movie.douban.com/subject/35231822/">梦华录</a></li>
+<li><a href="https://book.douban.com/subject/35494904/">山海情</a></li>
+<li><a href="https://book.douban.com/subject/34864748/">平凡岁月</a></li>
+<li><a href="https://movie.douban.com/subject/2347485/">天道</a></li>
+<li><a href="https://movie.douban.com/subject/35118256/">赛博朋克：边缘行者</a></li>
+<li><a href="https://movie.douban.com/subject/1424406/">星际牛仔</a></li>
+<li><a href="https://movie.douban.com/subject/30198955/">边缘世界</a></li>
+<li><a href="https://movie.douban.com/subject/30285826/">风骚律师-第五季</a></li>
+<li><a href="https://movie.douban.com/subject/10748120/">真探-第一季</a></li>
+<li><a href="https://movie.douban.com/subject/26637615/">猎魔人-第一季、第二季</a></li>
+<li><a href="https://movie.douban.com/subject/35314632/?_dtcc=1">黑暗荣耀</a></li>
+<li><a href="https://movie.douban.com/subject/35300122/">弥留之国的爱丽丝第二季</a></li>
+<li><a href="https://movie.douban.com/subject/35725021/">一人之下第五季</a></li>
+</ul>
+<h1 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h1><hr>
+<ul>
+<li><a href="https://zh.wikipedia.org/zh-sg/%E7%91%AA%E5%88%A9%E6%AD%90%E8%88%87%E8%B7%AF%E6%98%93%E5%90%89RPG4_%E5%A4%A2%E5%A2%83%E5%86%92%E9%9A%AA">马力欧与路易吉RPG4 梦境冒险</a></li>
+<li><a href="https://www.douban.com/game/25890885/">逆转裁判123</a></li>
+<li><a href="https://www.douban.com/game/26382626/">火影忍者：究极忍者风暴4</a></li>
+<li><a href="https://www.douban.com/game/25931998/">赛博朋克2077</a></li>
+<li><a href="https://www.douban.com/game/27185974/">对马岛之魂</a></li>
+<li><a href="https://www.douban.com/game/10744839/">暴雨</a></li>
+</ul>
+<h1 id="Certificates"><a href="#Certificates" class="headerlink" title="Certificates"></a>Certificates</h1><hr>
+<ul>
+<li><a href="https://ke.qq.com/webcourse/index.html#cid=3200525&term_id=103327984&taid=10932152060401165&vid=5285890803968219215">CCNA</a></li>
+<li>CKA</li>
+<li>IELTS</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>books</tag>
+        <tag>2022</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2021 年度总结</title>
     <url>//2021-12-31-summary-for-2021/</url>
     <content><![CDATA[<p>tags: [‘2021’, ‘annual-review’]<br>category: life</p>
@@ -4220,111 +4325,6 @@ clientChannel<span class="token punctuation">.</span><span class="token function
 <li>更加认真地对待生活, 博客长期认真地维护起来.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title>2022 年度书单</title>
-    <url>//2021-12-31-booklist-for-2022/</url>
-    <content><![CDATA[<h1 id="BookList"><a href="#BookList" class="headerlink" title="BookList"></a>BookList</h1><hr>
-<h2 id="必读"><a href="#必读" class="headerlink" title="必读"></a>必读</h2><ul>
-<li><a href="https://book.douban.com/subject/25897245/">Netty权威指南</a> -20220315 done</li>
-<li><a href="https://book.douban.com/subject/30244461/">规模：复杂世界的简单法则</a> -20220724 done</li>
-<li>Google 4篇论文复习 GFS MapReduce BigTable Dapper</li>
-<li><a href="https://book.douban.com/subject/26643785/">深度探索嵌入式操作系统：从零开始设计、架构和开发</a></li>
-<li><a href="https://book.douban.com/subject/10750155/">数学之美</a> -done</li>
-<li><a href="https://book.douban.com/subject/33429491/">昆仑</a> -20221228 done</li>
-<li><a href="https://edu.51cto.com/center/course/lesson/index?id=118666">开源虚拟化KVM入门（KVM架构+KVM基本管理）视频课程</a></li>
-<li><a href="https://book.douban.com/subject/25985021/">人类简史</a> -20220215 done</li>
-<li><a href="https://book.douban.com/subject/3998926/">系统分析师考试全程指导</a></li>
-<li><a href="https://baike.baidu.com/item/%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%E5%B8%88%E6%95%99%E7%A8%8B/8182174">系统分析师教程</a></li>
-<li><a href="https://book.douban.com/subject/3229243/">Linux内核完全剖析</a></li>
-<li><a href="https://abseil.io/resources/swe_at_google.2.pdf">Software Engineering at Google</a></li>
-<li><a href="https://yeasy.gitbook.io/docker_practice/underly/arch">Docker从入门到实践</a> -20220328 done</li>
-<li><a href="http://product.dangdang.com/25336322.html">深度思考： 不断逼近问题的本质</a> -20220504 done</li>
-<li><a href="https://book.douban.com/subject/26943161/">未来简史</a></li>
-<li><a href="https://book.douban.com/subject/30259720/">今日简史</a> -20230131 done</li>
-<li><a href="https://book.douban.com/subject/3596861/">从产品到服务:企业向服务经济转型指南</a></li>
-<li><a href="https://book.douban.com/subject/35424872/">深入剖析Kubernetes</a> -20220612 done</li>
-<li><a href="https://book.douban.com/subject/30348776/">筚路蓝缕-世纪工程决策建设记述</a> -20220820 done</li>
-<li><a href="https://book.douban.com/subject/1062991/">北京法源寺</a> -20220717 done</li>
-<li><a href="https://book.douban.com/subject/1322455/">遥远的救世主</a> -20220725 done</li>
-<li><a href="https://book.douban.com/subject/1322455/">天幕红尘</a> -20220806 done</li>
-<li><a href="https://book.douban.com/subject/30155731/">算法之美</a> -20221206 done</li>
-<li><a href="https://book.douban.com/subject/11530329/">30天自制操作系统</a></li>
-<li><a href="https://book.douban.com/subject/27091064/">云原生应用架构实践——从单体到服务化架构演进</a></li>
-<li><a href="https://book.douban.com/subject/27032786/">天局</a> -20220818 done</li>
-<li><a href="https://book.douban.com/subject/1578545/">背叛</a> -20220821 done</li>
-<li><a href="https://book.douban.com/subject/20257955/">丰乳肥臀</a> -20220909 done</li>
-<li><a href="https://book.douban.com/subject/26745030/">陌生女人的来信</a> -20221022 done </li>
-<li><a href="https://book.douban.com/subject/26641288/">1984</a> -20221023 done </li>
-<li><a href="https://book.douban.com/subject/35100567/">乞力马扎罗的雪</a> -20221024 done </li>
-<li><a href="https://book.douban.com/subject/35026475/">山月记</a> </li>
-<li><a href="https://book.douban.com/subject/35669245/">乾隆: 政治, 爱情与性格</a> -20221029 done</li>
-<li><a href="https://book.douban.com/subject/26768309/">查令十字街84号</a> -20221031 done</li>
-<li><a href="https://zhuanlan.zhihu.com/p/479978458">The Basic Principles of Computers for Everyone</a> -20221111 done</li>
-<li><a href="https://book.douban.com/subject/35731316/">文件系统技术内幕</a> <a href="https://www.bilibili.com/video/av889477532/">B站视频</a></li>
-</ul>
-<h2 id="选读"><a href="#选读" class="headerlink" title="选读"></a>选读</h2><ul>
-<li><a href="https://book.douban.com/subject/35922722/">深入理解Linux网络： 修炼底层内功，掌握高性能原理</a></li>
-</ul>
-<h1 id="ReadList"><a href="#ReadList" class="headerlink" title="ReadList"></a>ReadList</h1><hr>
-<ul>
-<li><a href="https://cloud.tencent.com/developer/article/1587433">有赞 Bond 分布式锁</a></li>
-<li><a href="https://www.cl.cam.ac.uk/research/srg/netos/camsas/blog/2016-03-09-scheduler-architectures.html">scheduler-architectures</a></li>
-<li><a href="https://blog.paessler.com/disabling-icmp-and-snmp-wont-increase-security-but-will-impact-network-monitoring">ICMP</a></li>
-<li><a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的Thread Monitor方案</a></li>
-<li><a href="https://www.infoq.cn/article/xkJNoczVDHARLkKjvDOm">深度揭秘阿里云 Serverless Kubernetes</a></li>
-<li><a href="https://manybutfinite.com/post/what-does-an-idle-cpu-do/">site for curious people</a></li>
-<li><a href="https://plantegg.github.io/2021/07/19/CPU%E6%80%A7%E8%83%BD%E5%92%8CCACHE/">CPU性能和CACHE</a></li>
-<li><a href="https://www.realworldtech.com/transistor-count-flawed-metric/">Transistor Count: A Flawed Metric</a></li>
-</ul>
-<h1 id="MovieList"><a href="#MovieList" class="headerlink" title="MovieList"></a>MovieList</h1><hr>
-<ul>
-<li><a href="https://movie.douban.com/subject/35207856/">人世间</a></li>
-<li><a href="https://movie.douban.com/subject/26766214/">风起陇西</a></li>
-<li><a href="https://movie.douban.com/subject/26889177/">异物志</a></li>
-<li><a href="https://movie.douban.com/subject/2210001/">大明王朝: 1566</a></li>
-<li>Yes, Minister</li>
-<li>Yes, Prime Minister</li>
-<li><a href="https://movie.douban.com/subject/30314848/">瞬息全宇宙</a></li>
-<li><a href="https://movie.douban.com/subject/35436582/?ivk_sa=1024320u">爱，死亡和机器人 第三季</a></li>
-<li><a href="https://movie.douban.com/subject/26564735/">武庚纪</a></li>
-<li><a href="https://movie.douban.com/subject/35231822/">梦华录</a></li>
-<li><a href="https://book.douban.com/subject/35494904/">山海情</a></li>
-<li><a href="https://book.douban.com/subject/34864748/">平凡岁月</a></li>
-<li><a href="https://movie.douban.com/subject/2347485/">天道</a></li>
-<li><a href="https://movie.douban.com/subject/35118256/">赛博朋克：边缘行者</a></li>
-<li><a href="https://movie.douban.com/subject/1424406/">星际牛仔</a></li>
-<li><a href="https://movie.douban.com/subject/30198955/">边缘世界</a></li>
-<li><a href="https://movie.douban.com/subject/30285826/">风骚律师-第五季</a></li>
-<li><a href="https://movie.douban.com/subject/10748120/">真探-第一季</a></li>
-<li><a href="https://movie.douban.com/subject/26637615/">猎魔人-第一季、第二季</a></li>
-<li><a href="https://movie.douban.com/subject/35314632/?_dtcc=1">黑暗荣耀</a></li>
-<li><a href="https://movie.douban.com/subject/35300122/">弥留之国的爱丽丝第二季</a></li>
-<li><a href="https://movie.douban.com/subject/35725021/">一人之下第五季</a></li>
-</ul>
-<h1 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h1><hr>
-<ul>
-<li><a href="https://zh.wikipedia.org/zh-sg/%E7%91%AA%E5%88%A9%E6%AD%90%E8%88%87%E8%B7%AF%E6%98%93%E5%90%89RPG4_%E5%A4%A2%E5%A2%83%E5%86%92%E9%9A%AA">马力欧与路易吉RPG4 梦境冒险</a></li>
-<li><a href="https://www.douban.com/game/25890885/">逆转裁判123</a></li>
-<li><a href="https://www.douban.com/game/26382626/">火影忍者：究极忍者风暴4</a></li>
-<li><a href="https://www.douban.com/game/25931998/">赛博朋克2077</a></li>
-<li><a href="https://www.douban.com/game/27185974/">对马岛之魂</a></li>
-<li><a href="https://www.douban.com/game/10744839/">暴雨</a></li>
-</ul>
-<h1 id="Certificates"><a href="#Certificates" class="headerlink" title="Certificates"></a>Certificates</h1><hr>
-<ul>
-<li><a href="https://ke.qq.com/webcourse/index.html#cid=3200525&term_id=103327984&taid=10932152060401165&vid=5285890803968219215">CCNA</a></li>
-<li>CKA</li>
-<li>IELTS</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>life</category>
-      </categories>
-      <tags>
-        <tag>books</tag>
-        <tag>2022</tag>
-      </tags>
   </entry>
   <entry>
     <title>Netty权威指南笔记</title>
@@ -6188,37 +6188,6 @@ Cluster IP：虚拟 IP，通过 iptables 规则访问服务<span aria-hidden="tr
       </tags>
   </entry>
   <entry>
-    <title>k8s基础架构笔记--list&amp;watch机制</title>
-    <url>//2022-04-05-k8s-list-watch/</url>
-    <content><![CDATA[<p>本质上:  </p>
-<ul>
-<li>list: 就是一个GET的HTTP操作, 请求到apiserver, 是个短连接. list结束, 连接就关闭.</li>
-<li>watch: 是一个基于<code>Transfer-Encoding: chunked</code>的<a href="https://imququ.com/post/transfer-encoding-header-in-http.html">HTTP长连接</a>, apiserver作为http server, kube-proxy&#x2F;kubelet&#x2F;kube-scheduler等作为http client.</li>
-</ul>
-<p>这样: </p>
-<ul>
-<li>list: 来实现kube-proxy, kubelet, kube-scheduler等角色启动初始化时, 存量数据的一次拉取.</li>
-<li>watch: 来实现后续各种资源的增量更新</li>
-</ul>
-<p>扩展: </p>
-<ul>
-<li>watch: <ul>
-<li>k8s java client中watch机制, 是基于OkHttpClient. &#x2F;&#x2F; TODO: 补上具体实现例子</li>
-<li>watch机制也可以基于websocket来实现</li>
-</ul>
-</li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>kubernetes</tag>
-        <tag>list-watch</tag>
-        <tag>api</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>常用的KubeCtl命令</title>
     <url>//2022-04-05-k8s-kubectl-cmd/</url>
     <content><![CDATA[<h1 id="个人习惯"><a href="#个人习惯" class="headerlink" title="个人习惯"></a>个人习惯</h1><p>在<code>~/.bash_profile</code>里增加alias: </p>
@@ -6336,6 +6305,37 @@ k cluster-info dump<span aria-hidden="true" class="line-numbers-rows"><span></sp
       <tags>
         <tag>tools</tag>
         <tag>code-snippets</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>k8s基础架构笔记--list&amp;watch机制</title>
+    <url>//2022-04-05-k8s-list-watch/</url>
+    <content><![CDATA[<p>本质上:  </p>
+<ul>
+<li>list: 就是一个GET的HTTP操作, 请求到apiserver, 是个短连接. list结束, 连接就关闭.</li>
+<li>watch: 是一个基于<code>Transfer-Encoding: chunked</code>的<a href="https://imququ.com/post/transfer-encoding-header-in-http.html">HTTP长连接</a>, apiserver作为http server, kube-proxy&#x2F;kubelet&#x2F;kube-scheduler等作为http client.</li>
+</ul>
+<p>这样: </p>
+<ul>
+<li>list: 来实现kube-proxy, kubelet, kube-scheduler等角色启动初始化时, 存量数据的一次拉取.</li>
+<li>watch: 来实现后续各种资源的增量更新</li>
+</ul>
+<p>扩展: </p>
+<ul>
+<li>watch: <ul>
+<li>k8s java client中watch机制, 是基于OkHttpClient. &#x2F;&#x2F; TODO: 补上具体实现例子</li>
+<li>watch机制也可以基于websocket来实现</li>
+</ul>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>list-watch</tag>
+        <tag>api</tag>
       </tags>
   </entry>
   <entry>
@@ -7650,6 +7650,84 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
+    <title>记一次黑名单方案设计引发的设计思考</title>
+    <url>//2022-05-31-blacklist-or-attribute/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>接到需求: 某些ECS规格族天然不具备宕机迁移的能力, 例如某些软件License与硬件ID绑定, 或者加密信息与硬件绑定, 宕机迁移会导致License失效或者加密信息无法解密.<br>而在正常宕机迁移流程里默认所有规格族都会无差别执行.<br>因此需要代码改造下, 识别这些规格族, 然后跳过执行流程. </p>
+<h1 id="解决方案1-黑名单模式"><a href="#解决方案1-黑名单模式" class="headerlink" title="解决方案1: 黑名单模式"></a>解决方案1: 黑名单模式</h1><p>即在配置项里维护一个黑名单List, 伪代码如下: </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">blackList <span class="token operator">=</span> <span class="token function">getFromConf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>flavorFamily in blackList<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">down_migration_execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>优点: 开发起来简便, 灵活. 也是第一反应想到的方案.</li>
+<li>缺点: 使用该方案, 后续发现问题很多: <ul>
+<li>代码容易踩坑: <ul>
+<li>如果配置项是用数据库字段存储, 那么一定要注意字段的类型&amp;size, 如果太小会导致后续如果名单扩容, 字段溢出, 从而无法实现效果.</li>
+</ul>
+</li>
+<li>运维成本过高: <ul>
+<li>因为黑名单与实例规格族本身属性是分散开来的. </li>
+<li>如果后续新增规格族, 需要有个地方来通知产品的同学, <code>规格族需要有是否宕机迁移这个属性</code>, 然后需要他们跑到另外一个地方去维护下这个黑名单. </li>
+<li>尤其是在不同类别的规格族由不同产品同学负责且人员流动性大时, 没办法通知到每位同学. </li>
+<li>但一旦遗漏, 可能会导致线上问题.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="解决方案2-属性模式"><a href="#解决方案2-属性模式" class="headerlink" title="解决方案2: 属性模式"></a>解决方案2: 属性模式</h1><p>即</p>
+<ol>
+<li>是否宕机迁移作为一个天然属性&#x2F;字段, 添加在规格族&#x2F;规格表上.</li>
+<li>该属性作为必填属性, 在新规格族上线时, 对应产品在填写其他属性时(例如cpu&#x2F;mem配比等), 该属性也需要一并填写.</li>
+</ol>
+<p>伪代码如下:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">flavorDef <span class="token operator">=</span> <span class="token function">getFlavorDef</span><span class="token punctuation">(</span>flavor<span class="token punctuation">)</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>flavorDef<span class="token punctuation">.</span>canDownMigration<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">down_migration_execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>优点: <ul>
+<li>后续运维成本极低, 新规格族&#x2F;规格上线时, 该字段与其他属性类似, 作为一个必填选项, 让产品同学统一维护.</li>
+<li>代码整体也更面向对象一些, 即更加高内聚, 低耦合.</li>
+</ul>
+</li>
+<li>缺点: <ul>
+<li>前期改造量&amp;风险较大: <ul>
+<li>表里需要增加字段, 尤其是针对大表且访问频发的表, 有可能锁表, 导致线上问题.</li>
+<li>如果有存量大量的规格族数据, 需要进行一波批量订正.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="适用场景探讨"><a href="#适用场景探讨" class="headerlink" title="适用场景探讨"></a>适用场景探讨</h1><p>总的来说, </p>
+<ul>
+<li>黑白名单只适合作为一个短期内临时的方案&#x2F;开关, 且在不久之后, 黑白名单需要全部清空.<ul>
+<li>例如上述例子中, 某些规格需要 <font color='red'>临时</font> 禁止宕机迁移, 但一周之后, 这些规格需要重新enable. </li>
+<li>这个时候临时使用黑白名单机制凑合下还行.</li>
+</ul>
+</li>
+<li>而属性方案, 就更适合作为一个常态化的机制.<ul>
+<li>例如上述例子中, 某些规格需要的<code>是否禁止宕机迁移</code>是天然的一个属性, 规格一旦设定为 <code>禁止宕机迁移</code> 就不会再修改了.</li>
+</ul>
+</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>更加推荐使用”属性模式”, 这也是一次之前自己错误设计的反思, 也吃到了很大的苦果.<br><strong>后续在使用”黑&#x2F;白名单”作为方案前, 一定要再想下是否是临时方案, 如果不是, 那么尽量能作为实体上的一个属性来维护.</strong><br>虽然属性方案, 前期改造量可能较大, 但长期来看, 优点是远远大于缺点的.</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>java</tag>
+        <tag>design</tag>
+        <tag>black-list</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot基于Interface的Annotation在AOP中如何生效</title>
     <url>//2022-06-02-spring-annotation-on-interface/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>SpringBoot项目代码里, 新增了一个 <code>@Perf</code> 的annotation, 希望增加该annotation的方法, 能自动打印出方法的执行耗时.<br>实际代码结构中, 使用了FilterChain模式, 会有多个Filter(例如10+个)实现同一个接口.<br>因此想着把 <code>@Perf</code> 打在接口层面, 希望所有实现类都能继承该annotation, 从而不用在每个子类的Filter方法里重复打上annotation.<br>但发现实际没有生效.</p>
@@ -7876,84 +7954,6 @@ public synchronized void close() throws SQLException &#123;
       </tags>
   </entry>
   <entry>
-    <title>记一次黑名单方案设计引发的设计思考</title>
-    <url>//2022-05-31-blacklist-or-attribute/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>接到需求: 某些ECS规格族天然不具备宕机迁移的能力, 例如某些软件License与硬件ID绑定, 或者加密信息与硬件绑定, 宕机迁移会导致License失效或者加密信息无法解密.<br>而在正常宕机迁移流程里默认所有规格族都会无差别执行.<br>因此需要代码改造下, 识别这些规格族, 然后跳过执行流程. </p>
-<h1 id="解决方案1-黑名单模式"><a href="#解决方案1-黑名单模式" class="headerlink" title="解决方案1: 黑名单模式"></a>解决方案1: 黑名单模式</h1><p>即在配置项里维护一个黑名单List, 伪代码如下: </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">blackList <span class="token operator">=</span> <span class="token function">getFromConf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span>flavorFamily in blackList<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token function">down_migration_execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ul>
-<li>优点: 开发起来简便, 灵活. 也是第一反应想到的方案.</li>
-<li>缺点: 使用该方案, 后续发现问题很多: <ul>
-<li>代码容易踩坑: <ul>
-<li>如果配置项是用数据库字段存储, 那么一定要注意字段的类型&amp;size, 如果太小会导致后续如果名单扩容, 字段溢出, 从而无法实现效果.</li>
-</ul>
-</li>
-<li>运维成本过高: <ul>
-<li>因为黑名单与实例规格族本身属性是分散开来的. </li>
-<li>如果后续新增规格族, 需要有个地方来通知产品的同学, <code>规格族需要有是否宕机迁移这个属性</code>, 然后需要他们跑到另外一个地方去维护下这个黑名单. </li>
-<li>尤其是在不同类别的规格族由不同产品同学负责且人员流动性大时, 没办法通知到每位同学. </li>
-<li>但一旦遗漏, 可能会导致线上问题.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="解决方案2-属性模式"><a href="#解决方案2-属性模式" class="headerlink" title="解决方案2: 属性模式"></a>解决方案2: 属性模式</h1><p>即</p>
-<ol>
-<li>是否宕机迁移作为一个天然属性&#x2F;字段, 添加在规格族&#x2F;规格表上.</li>
-<li>该属性作为必填属性, 在新规格族上线时, 对应产品在填写其他属性时(例如cpu&#x2F;mem配比等), 该属性也需要一并填写.</li>
-</ol>
-<p>伪代码如下:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">flavorDef <span class="token operator">=</span> <span class="token function">getFlavorDef</span><span class="token punctuation">(</span>flavor<span class="token punctuation">)</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>flavorDef<span class="token punctuation">.</span>canDownMigration<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token function">down_migration_execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>优点: <ul>
-<li>后续运维成本极低, 新规格族&#x2F;规格上线时, 该字段与其他属性类似, 作为一个必填选项, 让产品同学统一维护.</li>
-<li>代码整体也更面向对象一些, 即更加高内聚, 低耦合.</li>
-</ul>
-</li>
-<li>缺点: <ul>
-<li>前期改造量&amp;风险较大: <ul>
-<li>表里需要增加字段, 尤其是针对大表且访问频发的表, 有可能锁表, 导致线上问题.</li>
-<li>如果有存量大量的规格族数据, 需要进行一波批量订正.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="适用场景探讨"><a href="#适用场景探讨" class="headerlink" title="适用场景探讨"></a>适用场景探讨</h1><p>总的来说, </p>
-<ul>
-<li>黑白名单只适合作为一个短期内临时的方案&#x2F;开关, 且在不久之后, 黑白名单需要全部清空.<ul>
-<li>例如上述例子中, 某些规格需要 <font color='red'>临时</font> 禁止宕机迁移, 但一周之后, 这些规格需要重新enable. </li>
-<li>这个时候临时使用黑白名单机制凑合下还行.</li>
-</ul>
-</li>
-<li>而属性方案, 就更适合作为一个常态化的机制.<ul>
-<li>例如上述例子中, 某些规格需要的<code>是否禁止宕机迁移</code>是天然的一个属性, 规格一旦设定为 <code>禁止宕机迁移</code> 就不会再修改了.</li>
-</ul>
-</li>
-</ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>更加推荐使用”属性模式”, 这也是一次之前自己错误设计的反思, 也吃到了很大的苦果.<br><strong>后续在使用”黑&#x2F;白名单”作为方案前, 一定要再想下是否是临时方案, 如果不是, 那么尽量能作为实体上的一个属性来维护.</strong><br>虽然属性方案, 前期改造量可能较大, 但长期来看, 优点是远远大于缺点的.</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>java</tag>
-        <tag>design</tag>
-        <tag>black-list</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL连接池重要参数配置原理研究</title>
     <url>//2022-06-05-mysql-conn-params/</url>
     <content><![CDATA[<h1 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h1><ul>
@@ -8036,37 +8036,6 @@ public synchronized void close() throws SQLException &#123;
         <tag>mysql</tag>
         <tag>database</tag>
         <tag>connection-pool</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>asciinema使用笔记</title>
-    <url>//2022-06-10-asciinema/</url>
-    <content><![CDATA[<h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><ul>
-<li><a href="https://github.com/asciinema/asciinema">asciinema</a></li>
-<li><a href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> nodejs
-<span class="token function">npm</span> <span class="token function">install</span> -g svg-term-cli<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-<h1 id="生成录屏文件-cast"><a href="#生成录屏文件-cast" class="headerlink" title="生成录屏文件.cast"></a>生成录屏文件.cast</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema rec a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><code>Ctrl + D 结束录屏</code></p>
-<h1 id="本地播放录屏文件"><a href="#本地播放录屏文件" class="headerlink" title="本地播放录屏文件"></a>本地播放录屏文件</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema play a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="cast文件转成-svg文件"><a href="#cast文件转成-svg文件" class="headerlink" title=".cast文件转成.svg文件"></a>.cast文件转成.svg文件</h1><p>需要先安装 <a href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> a.cast <span class="token operator">|</span> svg-term --out a.svg --term iterm2 --profile mymatrix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p><a href="https://asciinema.org/docs/config">$HOME&#x2F;.config&#x2F;asciinema&#x2F;config</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>tools</tag>
-        <tag>mac</tag>
-        <tag>asciinema</tag>
-        <tag>svg</tag>
       </tags>
   </entry>
   <entry>
@@ -8168,6 +8137,37 @@ public synchronized void close() throws SQLException &#123;
         <tag>aop</tag>
         <tag>interface</tag>
         <tag>spring-tx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>asciinema使用笔记</title>
+    <url>//2022-06-10-asciinema/</url>
+    <content><![CDATA[<h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><ul>
+<li><a href="https://github.com/asciinema/asciinema">asciinema</a></li>
+<li><a href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> nodejs
+<span class="token function">npm</span> <span class="token function">install</span> -g svg-term-cli<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+<h1 id="生成录屏文件-cast"><a href="#生成录屏文件-cast" class="headerlink" title="生成录屏文件.cast"></a>生成录屏文件.cast</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema rec a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>Ctrl + D 结束录屏</code></p>
+<h1 id="本地播放录屏文件"><a href="#本地播放录屏文件" class="headerlink" title="本地播放录屏文件"></a>本地播放录屏文件</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciinema play a.cast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="cast文件转成-svg文件"><a href="#cast文件转成-svg文件" class="headerlink" title=".cast文件转成.svg文件"></a>.cast文件转成.svg文件</h1><p>需要先安装 <a href="https://github.com/marionebl/svg-term-cli">svg-term-cli</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> a.cast <span class="token operator">|</span> svg-term --out a.svg --term iterm2 --profile mymatrix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p><a href="https://asciinema.org/docs/config">$HOME&#x2F;.config&#x2F;asciinema&#x2F;config</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+        <tag>mac</tag>
+        <tag>asciinema</tag>
+        <tag>svg</tag>
       </tags>
   </entry>
   <entry>
@@ -10550,6 +10550,90 @@ google.com      MX preference <span class="token operator">=</span> <span class=
       </tags>
   </entry>
   <entry>
+    <title>常用的Nginx命令与配置</title>
+    <url>//2022-08-09-nginx-scripts/</url>
+    <content><![CDATA[<h1 id="MAC环境"><a href="#MAC环境" class="headerlink" title="MAC环境"></a>MAC环境</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/var/www
+/usr/local/Cellar/nginx/1.21.3/html<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="配置文件路径"><a href="#配置文件路径" class="headerlink" title="配置文件路径"></a>配置文件路径</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/etc/nginx
+/usr/local/etc/nginx/nginx.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="禁止通过IP访问"><a href="#禁止通过IP访问" class="headerlink" title="禁止通过IP访问"></a>禁止通过IP访问</h3><ul>
+<li>绑定了hosts<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">127.0</span>.0.1 example.org www.example.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>只允许通过<code>localhost:8080</code>或者<code>example.org:8080</code>或者<code>www.example.org:8080</code>访问, </li>
+<li>禁止通过<code>127.0.0.1:8080</code>访问, 返回502错误.<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server <span class="token punctuation">&#123;</span>
+    listen  <span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token builtin class-name">return</span> <span class="token number">502</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+server <span class="token punctuation">&#123;</span>
+    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
+    server_name  localhost example.org www.example.org<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092149192.png"></p>
+<h3 id="单Host多域名-不同域名访问不同服务"><a href="#单Host多域名-不同域名访问不同服务" class="headerlink" title="单Host多域名, 不同域名访问不同服务"></a>单Host多域名, 不同域名访问不同服务</h3><ul>
+<li>绑定了hosts<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">127.0</span>.0.1 example.org www.example.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>通过<code>localhost:8080</code>访问, 则访问到 <code>$NGINX_HOME/html/</code> 目录</li>
+<li>通过<code>example.org:8080</code>或者<code>www.example.org:8080</code>访问, 则访问到 <code>$NGINX_HOME/html2/</code> 目录</li>
+<li>禁止通过<code>127.0.0.1:8080</code>访问, 返回502错误.<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server <span class="token punctuation">&#123;</span>
+    listen  <span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token builtin class-name">return</span> <span class="token number">502</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+server <span class="token punctuation">&#123;</span>
+    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
+    server_name  example.org www.example.org<span class="token punctuation">;</span>
+    location / <span class="token punctuation">&#123;</span>
+        root html2<span class="token punctuation">;</span>
+        index index.html index.htm<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    error_page   <span class="token number">500</span> <span class="token number">502</span> <span class="token number">503</span> <span class="token number">504</span>  /50x.html<span class="token punctuation">;</span>
+    location <span class="token operator">=</span> /50x.html <span class="token punctuation">&#123;</span>
+        root   html2<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+server <span class="token punctuation">&#123;</span>
+    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
+    server_name  localhost<span class="token punctuation">;</span>
+    location / <span class="token punctuation">&#123;</span>
+        root   html<span class="token punctuation">;</span>
+        index  index.html index.htm<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    error_page   <span class="token number">500</span> <span class="token number">502</span> <span class="token number">503</span> <span class="token number">504</span>  /50x.html<span class="token punctuation">;</span>
+    location <span class="token operator">=</span> /50x.html <span class="token punctuation">&#123;</span>
+        root   html<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092152127.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092152948.png"></li>
+</ul>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>NGINX_HOME:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/Cellar/nginx/1.21.3
+location / <span class="token punctuation">&#123;</span>
+root   html<span class="token punctuation">;</span>
+index  index.html index.htm<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上边的html就是 NGINX_HOME&#x2F;html&#x2F;</p>
+<h2 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew services start nginx
+brew services restart nginx
+brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Nginx是如何知道本次请求-请求的是IP还是域名-如果是域名的话-多个域名如何区分"><a href="#Nginx是如何知道本次请求-请求的是IP还是域名-如果是域名的话-多个域名如何区分" class="headerlink" title="Nginx是如何知道本次请求, 请求的是IP还是域名? 如果是域名的话, 多个域名如何区分?"></a>Nginx是如何知道本次请求, 请求的是IP还是域名? 如果是域名的话, 多个域名如何区分?</h3><ul>
+<li>如下图, 本质上还是Nginx解析HTTP协议, 根据请求行里的<code>RequestURL</code>来进行判断.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092154665.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092154173.png"></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>mac</tag>
+        <tag>networking</tag>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>瞎折腾洋垃圾电脑笔记</title>
     <url>//2022-08-13-computer-diy/</url>
     <content><![CDATA[<p>tags: [diy]<br>category: life</p>
@@ -10796,90 +10880,6 @@ google.com      MX preference <span class="token operator">=</span> <span class=
 <li><a href="https://www.expreview.com/62077.html">散热风扇的2针、3针、4针都有什么区别？</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-  </entry>
-  <entry>
-    <title>常用的Nginx命令与配置</title>
-    <url>//2022-08-09-nginx-scripts/</url>
-    <content><![CDATA[<h1 id="MAC环境"><a href="#MAC环境" class="headerlink" title="MAC环境"></a>MAC环境</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/var/www
-/usr/local/Cellar/nginx/1.21.3/html<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="配置文件路径"><a href="#配置文件路径" class="headerlink" title="配置文件路径"></a>配置文件路径</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/etc/nginx
-/usr/local/etc/nginx/nginx.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h3 id="禁止通过IP访问"><a href="#禁止通过IP访问" class="headerlink" title="禁止通过IP访问"></a>禁止通过IP访问</h3><ul>
-<li>绑定了hosts<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">127.0</span>.0.1 example.org www.example.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>只允许通过<code>localhost:8080</code>或者<code>example.org:8080</code>或者<code>www.example.org:8080</code>访问, </li>
-<li>禁止通过<code>127.0.0.1:8080</code>访问, 返回502错误.<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server <span class="token punctuation">&#123;</span>
-    listen  <span class="token number">8080</span><span class="token punctuation">;</span>
-    <span class="token builtin class-name">return</span> <span class="token number">502</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-server <span class="token punctuation">&#123;</span>
-    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
-    server_name  localhost example.org www.example.org<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092149192.png"></p>
-<h3 id="单Host多域名-不同域名访问不同服务"><a href="#单Host多域名-不同域名访问不同服务" class="headerlink" title="单Host多域名, 不同域名访问不同服务"></a>单Host多域名, 不同域名访问不同服务</h3><ul>
-<li>绑定了hosts<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">127.0</span>.0.1 example.org www.example.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>通过<code>localhost:8080</code>访问, 则访问到 <code>$NGINX_HOME/html/</code> 目录</li>
-<li>通过<code>example.org:8080</code>或者<code>www.example.org:8080</code>访问, 则访问到 <code>$NGINX_HOME/html2/</code> 目录</li>
-<li>禁止通过<code>127.0.0.1:8080</code>访问, 返回502错误.<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server <span class="token punctuation">&#123;</span>
-    listen  <span class="token number">8080</span><span class="token punctuation">;</span>
-    <span class="token builtin class-name">return</span> <span class="token number">502</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-server <span class="token punctuation">&#123;</span>
-    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
-    server_name  example.org www.example.org<span class="token punctuation">;</span>
-    location / <span class="token punctuation">&#123;</span>
-        root html2<span class="token punctuation">;</span>
-        index index.html index.htm<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    error_page   <span class="token number">500</span> <span class="token number">502</span> <span class="token number">503</span> <span class="token number">504</span>  /50x.html<span class="token punctuation">;</span>
-    location <span class="token operator">=</span> /50x.html <span class="token punctuation">&#123;</span>
-        root   html2<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-server <span class="token punctuation">&#123;</span>
-    listen       <span class="token number">8080</span><span class="token punctuation">;</span>
-    server_name  localhost<span class="token punctuation">;</span>
-    location / <span class="token punctuation">&#123;</span>
-        root   html<span class="token punctuation">;</span>
-        index  index.html index.htm<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    error_page   <span class="token number">500</span> <span class="token number">502</span> <span class="token number">503</span> <span class="token number">504</span>  /50x.html<span class="token punctuation">;</span>
-    location <span class="token operator">=</span> /50x.html <span class="token punctuation">&#123;</span>
-        root   html<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092152127.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092152948.png"></li>
-</ul>
-<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>NGINX_HOME:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/Cellar/nginx/1.21.3
-location / <span class="token punctuation">&#123;</span>
-root   html<span class="token punctuation">;</span>
-index  index.html index.htm<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>上边的html就是 NGINX_HOME&#x2F;html&#x2F;</p>
-<h2 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew services start nginx
-brew services restart nginx
-brew services stop nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Nginx是如何知道本次请求-请求的是IP还是域名-如果是域名的话-多个域名如何区分"><a href="#Nginx是如何知道本次请求-请求的是IP还是域名-如果是域名的话-多个域名如何区分" class="headerlink" title="Nginx是如何知道本次请求, 请求的是IP还是域名? 如果是域名的话, 多个域名如何区分?"></a>Nginx是如何知道本次请求, 请求的是IP还是域名? 如果是域名的话, 多个域名如何区分?</h3><ul>
-<li>如下图, 本质上还是Nginx解析HTTP协议, 根据请求行里的<code>RequestURL</code>来进行判断.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092154665.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202208092154173.png"></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>mac</tag>
-        <tag>networking</tag>
-        <tag>nginx</tag>
-      </tags>
   </entry>
   <entry>
     <title>十万个为什么之--为什么磁盘需要分区与挂载?</title>
@@ -13722,6 +13722,100 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
       </tags>
   </entry>
   <entry>
+    <title>draw.io使用技巧总结</title>
+    <url>//2023-05-15-drawio-tips/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自从上次发奋要好好学习做图, 做PPT, 数据可视化之后. 近两个月对draw.io进行了深度的使用.<br>学习到了很多技巧, 使用起来更加得心应手, 也逐渐开始享受画图的过程, 做到了<code>Happy diagramming!~</code><br>这里把使用的一些心得总结下来, 防止以后遗忘.</p>
+<div class="note info"><p>draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.</p>
+</div>
+
+<h1 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h1><ul>
+<li><a href="https://www.drawio.com/doc/faq/shapes-delete-connections">删除 Shapes+Connections</a>: <code>ctrl/cmd + Delete</code></li>
+<li>选择所有Edges: <code>cmd+shift+e</code></li>
+<li>选择所有Shapes&#x2F;Vertices: <code>cmd+shift+i</code></li>
+<li>Group: <code>cmd+g</code>; Ungroup: <code>cmd+shift+u</code></li>
+<li>Bring to Front: <code>ctrl+shift+f</code>; Send to Back: <code>ctrl+shfit+b</code></li>
+<li>CopySize: <code>option+shift+x</code>  pasteSize: <code>option+shift+v</code></li>
+<li>Duplicate: <code>cmd+enter</code> or <code>cmd+d</code> –&gt; 比 cmd+c ++ cmd+v 好用多啦!</li>
+<li>Reset view: <code>enter</code>  –&gt; 之前画布拖动太多, 导致图形丢失了. 还得拖动bar来找, 很麻烦, 用这个简直提效神器!</li>
+<li>Lock Shape: <code>cmd+l</code> –&gt; 在多个图形overlap, 需要勾选其中某些的时候, 可以先把不希望选到的图形lock住</li>
+<li>AutoReset Size: <code>cmd+shift+y</code> –&gt; 会把shape的size自动设置为刚好包下里边的Text</li>
+</ul>
+<h1 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h1><h2 id="LineJump"><a href="#LineJump" class="headerlink" title="LineJump"></a>LineJump</h2><div class="note info"><p>线段交叉时, 用<code>linejump</code>, 清晰易读</p>
+</div>
+
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152320352.png"></p>
+<h2 id="WayPoint"><a href="#WayPoint" class="headerlink" title="WayPoint"></a>WayPoint</h2><div class="note info"><p>箭头分叉时, 用<code>waypoint</code></p>
+</div>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152325340.png"></p>
+<h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h2><div class="note info"><p>多个Shape组合时, 用<code>container</code></p>
+</div>
+
+
+<h2 id="Floating-amp-Fixed-connectors"><a href="#Floating-amp-Fixed-connectors" class="headerlink" title="Floating &amp; Fixed connectors"></a>Floating &amp; Fixed connectors</h2><p>参见: <a href="https://www.drawio.com/blog/connectors">Floating &amp; Fixed connectors</a><br><a href="https://www.youtube.com/watch?v=xM04I-WVXlE&amp;ab_channel=draw.io">https://www.youtube.com/watch?v=xM04I-WVXlE&amp;ab_channel=draw.io</a></p>
+<ul>
+<li>Floating connectors: 连接线前后用<code>o</code>标记, 默认的都是Floating connectors.</li>
+<li>Fixed connectors: 连接线前后用<code>x</code>标记</li>
+</ul>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305162239974.png"></p>
+<h2 id="调整单个对象的大小"><a href="#调整单个对象的大小" class="headerlink" title="调整单个对象的大小"></a>调整单个对象的大小</h2><div class="note warning"><p>调整大小时, 保持中心不动, 是非常重要的, 防止结构被破坏. </p>
+</div>
+
+<ul>
+<li><p>Hold <code>CMD</code>, 然后拖动对象大小, 可以保持对象<strong>中心不动</strong>.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305182305893.gif"></p>
+</li>
+<li><p>Hode <code>CMD+Shift</code>, 然后拖动对象大小, 可以保持对象中心不动, 且对象比例等比缩放. –&gt; 非常好用!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305182306535.gif"></p>
+</li>
+<li><p>Copy&amp;Paste Size, 快捷键 copySize: <code>option+shift+x</code>; pasteSize: <code>option+shift+v</code><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190001415.png"></p>
+</li>
+</ul>
+<h2 id="同时选择多个对象"><a href="#同时选择多个对象" class="headerlink" title="同时选择多个对象"></a>同时选择多个对象</h2><ul>
+<li><p>按住 <code>Option</code> 然后拖选, 只要触碰到的, 都会被选到(不用把整个对象都包含进去) –&gt; 解救人类!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190008608.gif"></p>
+</li>
+<li><p>但貌似有的时候行为不一致, 按下<code>Option</code>然后拖选的行为是防止点选到外部的容器&#x2F;Shape</p>
+</li>
+</ul>
+<h2 id="同时调整多个对象的大小"><a href="#同时调整多个对象的大小" class="headerlink" title="同时调整多个对象的大小"></a>同时调整多个对象的大小</h2><ol>
+<li><p>使用分组<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305172248220.gif"></p>
+</li>
+<li><p>多选, Arrange里调整<br><a href="https://webapps.stackexchange.com/questions/52230/scaling-a-group-of-shapes-in-diagramly">Scaling a group of shapes in Diagramly</a></p>
+</li>
+<li><p>使用容器<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305172256303.gif"></p>
+</li>
+</ol>
+<div class="note warning"><p>善用 <strong>分组</strong> 与 <strong>容器</strong></p>
+</div>
+
+<h2 id="移动对象"><a href="#移动对象" class="headerlink" title="移动对象"></a>移动对象</h2><ul>
+<li>按住 <code>Shift+CMD</code> 移动, 把对象限制在水平&amp;垂直方向移动(强约束)</li>
+<li>按住 <code>Shift</code> 移动, 可以将对象尽量在水平&#x2F;垂直方向移动(弱约束, 粘性)</li>
+<li>防止移动的对象被放入到container里: 拖动对象, 然后按住option<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162219643.gif"></li>
+</ul>
+<h2 id="旋转Shape里的Text"><a href="#旋转Shape里的Text" class="headerlink" title="旋转Shape里的Text"></a>旋转Shape里的Text</h2><ul>
+<li>经常会遇到子图形覆盖掉Parent的Text, 导致可读性很差. 此时可以旋转Parent的 Text 位置到左侧&#x2F;右侧, 如下样例:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162232737.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162231340.gif"></li>
+</ul>
+<h2 id="先决定布局-再决定风格"><a href="#先决定布局-再决定风格" class="headerlink" title="先决定布局, 再决定风格"></a>先决定布局, 再决定风格</h2><p>先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.</p>
+<h1 id="风格"><a href="#风格" class="headerlink" title="风格"></a>风格</h1><h2 id="泳道图"><a href="#泳道图" class="headerlink" title="泳道图"></a>泳道图</h2><p>最好每个泳道设定背景色(LaneColor), 然后里边的各个Task背景白色, 能突出重点, 美观. 对比下: </p>
+<ul>
+<li><p>未设定Lane Color<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190018059.png"></p>
+</li>
+<li><p>设定了Lane Color<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190017534.png"></p>
+</li>
+</ul>
+<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><div class="note info"><p>draw.io<a href="https://drawio-app.com/blog/">官网文档</a>清晰易懂, 是个真正的好产品!</p>
+</div>
+
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>soft-skills</tag>
+        <tag>best-practices</tag>
+        <tag>software-engineering</tag>
+        <tag>diagrams</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>K8s containerd 等研究</title>
     <url>//2023-05-24-k8s-container-components/</url>
     <content><![CDATA[<p>容器运行时: 运行和管理容器进程、镜像的工具</p>
@@ -13822,151 +13916,6 @@ KindleOasis2: davyjones2010_0311@kindle.cn<span aria-hidden="true" class="line-n
       </tags>
   </entry>
   <entry>
-    <title>draw.io使用技巧总结</title>
-    <url>//2023-05-15-drawio-tips/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自从上次发奋要好好学习做图, 做PPT, 数据可视化之后. 近两个月对draw.io进行了深度的使用.<br>学习到了很多技巧, 使用起来更加得心应手, 也逐渐开始享受画图的过程, 做到了<code>Happy diagramming!~</code><br>这里把使用的一些心得总结下来, 防止以后遗忘.</p>
-<div class="note info"><p>draw.io博大精深, 本文只列出当前自己常用的, 后续逐步完善.</p>
-</div>
-
-<h1 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h1><ul>
-<li><a href="https://www.drawio.com/doc/faq/shapes-delete-connections">删除 Shapes+Connections</a>: <code>ctrl/cmd + Delete</code></li>
-<li>选择所有Edges: <code>cmd+shift+e</code></li>
-<li>选择所有Shapes&#x2F;Vertices: <code>cmd+shift+i</code></li>
-<li>Group: <code>cmd+g</code>; Ungroup: <code>cmd+shift+u</code></li>
-<li>Bring to Front: <code>ctrl+shift+f</code>; Send to Back: <code>ctrl+shfit+b</code></li>
-<li>CopySize: <code>option+shift+x</code>  pasteSize: <code>option+shift+v</code></li>
-<li>Duplicate: <code>cmd+enter</code> or <code>cmd+d</code> –&gt; 比 cmd+c ++ cmd+v 好用多啦!</li>
-<li>Reset view: <code>enter</code>  –&gt; 之前画布拖动太多, 导致图形丢失了. 还得拖动bar来找, 很麻烦, 用这个简直提效神器!</li>
-<li>Lock Shape: <code>cmd+l</code> –&gt; 在多个图形overlap, 需要勾选其中某些的时候, 可以先把不希望选到的图形lock住</li>
-<li>AutoReset Size: <code>cmd+shift+y</code> –&gt; 会把shape的size自动设置为刚好包下里边的Text</li>
-</ul>
-<h1 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h1><h2 id="LineJump"><a href="#LineJump" class="headerlink" title="LineJump"></a>LineJump</h2><div class="note info"><p>线段交叉时, 用<code>linejump</code>, 清晰易读</p>
-</div>
-
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152320352.png"></p>
-<h2 id="WayPoint"><a href="#WayPoint" class="headerlink" title="WayPoint"></a>WayPoint</h2><div class="note info"><p>箭头分叉时, 用<code>waypoint</code></p>
-</div>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305152325340.png"></p>
-<h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h2><div class="note info"><p>多个Shape组合时, 用<code>container</code></p>
-</div>
-
-
-<h2 id="Floating-amp-Fixed-connectors"><a href="#Floating-amp-Fixed-connectors" class="headerlink" title="Floating &amp; Fixed connectors"></a>Floating &amp; Fixed connectors</h2><p>参见: <a href="https://www.drawio.com/blog/connectors">Floating &amp; Fixed connectors</a><br><a href="https://www.youtube.com/watch?v=xM04I-WVXlE&amp;ab_channel=draw.io">https://www.youtube.com/watch?v=xM04I-WVXlE&amp;ab_channel=draw.io</a></p>
-<ul>
-<li>Floating connectors: 连接线前后用<code>o</code>标记, 默认的都是Floating connectors.</li>
-<li>Fixed connectors: 连接线前后用<code>x</code>标记</li>
-</ul>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305162239974.png"></p>
-<h2 id="调整单个对象的大小"><a href="#调整单个对象的大小" class="headerlink" title="调整单个对象的大小"></a>调整单个对象的大小</h2><div class="note warning"><p>调整大小时, 保持中心不动, 是非常重要的, 防止结构被破坏. </p>
-</div>
-
-<ul>
-<li><p>Hold <code>CMD</code>, 然后拖动对象大小, 可以保持对象<strong>中心不动</strong>.<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305182305893.gif"></p>
-</li>
-<li><p>Hode <code>CMD+Shift</code>, 然后拖动对象大小, 可以保持对象中心不动, 且对象比例等比缩放. –&gt; 非常好用!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305182306535.gif"></p>
-</li>
-<li><p>Copy&amp;Paste Size, 快捷键 copySize: <code>option+shift+x</code>; pasteSize: <code>option+shift+v</code><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190001415.png"></p>
-</li>
-</ul>
-<h2 id="同时选择多个对象"><a href="#同时选择多个对象" class="headerlink" title="同时选择多个对象"></a>同时选择多个对象</h2><ul>
-<li><p>按住 <code>Option</code> 然后拖选, 只要触碰到的, 都会被选到(不用把整个对象都包含进去) –&gt; 解救人类!<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190008608.gif"></p>
-</li>
-<li><p>但貌似有的时候行为不一致, 按下<code>Option</code>然后拖选的行为是防止点选到外部的容器&#x2F;Shape</p>
-</li>
-</ul>
-<h2 id="同时调整多个对象的大小"><a href="#同时调整多个对象的大小" class="headerlink" title="同时调整多个对象的大小"></a>同时调整多个对象的大小</h2><ol>
-<li><p>使用分组<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305172248220.gif"></p>
-</li>
-<li><p>多选, Arrange里调整<br><a href="https://webapps.stackexchange.com/questions/52230/scaling-a-group-of-shapes-in-diagramly">Scaling a group of shapes in Diagramly</a></p>
-</li>
-<li><p>使用容器<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305172256303.gif"></p>
-</li>
-</ol>
-<div class="note warning"><p>善用 <strong>分组</strong> 与 <strong>容器</strong></p>
-</div>
-
-<h2 id="移动对象"><a href="#移动对象" class="headerlink" title="移动对象"></a>移动对象</h2><ul>
-<li>按住 <code>Shift+CMD</code> 移动, 把对象限制在水平&amp;垂直方向移动(强约束)</li>
-<li>按住 <code>Shift</code> 移动, 可以将对象尽量在水平&#x2F;垂直方向移动(弱约束, 粘性)</li>
-<li>防止移动的对象被放入到container里: 拖动对象, 然后按住option<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162219643.gif"></li>
-</ul>
-<h2 id="旋转Shape里的Text"><a href="#旋转Shape里的Text" class="headerlink" title="旋转Shape里的Text"></a>旋转Shape里的Text</h2><ul>
-<li>经常会遇到子图形覆盖掉Parent的Text, 导致可读性很差. 此时可以旋转Parent的 Text 位置到左侧&#x2F;右侧, 如下样例:<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162232737.png"><br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202308162231340.gif"></li>
-</ul>
-<h2 id="先决定布局-再决定风格"><a href="#先决定布局-再决定风格" class="headerlink" title="先决定布局, 再决定风格"></a>先决定布局, 再决定风格</h2><p>先把布局决定好, 之后统一调整风格(颜色, 大小, 样式)会容易一些.</p>
-<h1 id="风格"><a href="#风格" class="headerlink" title="风格"></a>风格</h1><h2 id="泳道图"><a href="#泳道图" class="headerlink" title="泳道图"></a>泳道图</h2><p>最好每个泳道设定背景色(LaneColor), 然后里边的各个Task背景白色, 能突出重点, 美观. 对比下: </p>
-<ul>
-<li><p>未设定Lane Color<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190018059.png"></p>
-</li>
-<li><p>设定了Lane Color<br><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202305190017534.png"></p>
-</li>
-</ul>
-<h1 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h1><div class="note info"><p>draw.io<a href="https://drawio-app.com/blog/">官网文档</a>清晰易懂, 是个真正的好产品!</p>
-</div>
-
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>soft-skills</tag>
-        <tag>best-practices</tag>
-        <tag>software-engineering</tag>
-        <tag>diagrams</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>死亡搁浅在冰岛</title>
-    <url>//2023-10-27-death-stranding-in-iceland/</url>
-    <content><![CDATA[<h1 id="20231028-death-stranding-in-iceland"><a href="#20231028-death-stranding-in-iceland" class="headerlink" title="20231028-death-stranding-in-iceland"></a>20231028-death-stranding-in-iceland</h1><p><a href="https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3">https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3</a></p>
-<h1 id="part1-冰岛🇮🇸🌠🌌"><a href="#part1-冰岛🇮🇸🌠🌌" class="headerlink" title="part1: 冰岛🇮🇸🌠🌌"></a>part1: 冰岛🇮🇸🌠🌌</h1><p>无意间B站刷到了 <a href="https://www.bilibili.com/video/BV1rc411o7PJ/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click">冰岛｜现在开始进入死亡搁浅 4K HDR_哔哩哔哩_bilibili</a><br>尤其是在漫天星光下, 飞舞的极光. 星空列车,<br>我看到了明亮的猎户座, 参宿, 三横三纵, 那是我认识的第一个星座.<br>我已经很久没有再次看到过星空了, 再次的重逢, 让我觉得有种久违的.<br>不禁泪流满面. 是被宝宝这两年束缚的委屈.</p>
-<p>让精神在尘世中获得了短暂的升华, 是的, 升华.<br>浮现在脑海里的一个词, Transcendent 萦绕</p>
-<p>想起了海子的诗:</p>
-<blockquote>
-<p>今夜青稞只属于他自己<br>一切都在生长<br>今夜我只有美丽的戈壁空空<br>姐姐，今夜我不关心人类，我只想你</p>
-</blockquote>
-<p>在广阔的旷野中, 在星空下 , 在亘古的静谧中, 我们会开始 思考存在的意义.</p>
-<p>伴随着Low Roar 的 &lt;Don’t Be So Serious&gt; 的浅吟低唱, 想起了第一次艰辛的送货历程, 小心翼翼地过河爬山, 躲过了时间雨, 豁然开朗,<br>大幕徐徐打开.<br>忍不住打开尘封已久的PS, 继续下一段送货历程.<br>期待着下一次遇见星空, 期待着多年以后的冰岛之旅.</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282334661.png"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282335068.png"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282316627.png"></p>
-<h1 id="part2-法罗群岛🇫🇴❄🌄"><a href="#part2-法罗群岛🇫🇴❄🌄" class="headerlink" title="part2: 法罗群岛🇫🇴❄🌄"></a>part2: 法罗群岛🇫🇴❄🌄</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282245560.png"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282311574.png"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310290018579.png"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>life</category>
-      </categories>
-      <tags>
-        <tag>death-stranding</tag>
-        <tag>gaming</tag>
-        <tag>iceland</tag>
-        <tag>culture</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>chatgpt eval cont d</title>
-    <url>//2023-10-29-chatgpt-eval-cont-d/</url>
-    <content><![CDATA[<h1 id="20231030-chatgpt-eval-cont-d"><a href="#20231030-chatgpt-eval-cont-d" class="headerlink" title="20231030-chatgpt-eval-cont-d"></a>20231030-chatgpt-eval-cont-d</h1><h1 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h1><p>最近频繁地使用chatgpt进行文章的翻译. </p>
-<p>在翻译这个特定的场景下, 惊讶于chatgpt的语义识别度与准确度, 基本可以完美地进行翻译, 对俚语等进行解释. </p>
-<p>如下: </p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled.png" alt="Untitled"></p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled-1.png" alt="Untitled"></p>
-<p>现在是时候摘下对ChatGPT的偏见墨镜了. 虽然之前在ground truth上多次欺骗与伤害了我.</p>
-<h1 id="shell-script"><a href="#shell-script" class="headerlink" title="shell script"></a>shell script</h1><p>对于Shell脚本编写, 简直是神器!!!</p>
-<p>持续更新</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>chatgpt</tag>
-        <tag>ai</tag>
-        <tag>evaluation</tag>
-        <tag>llm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CentOS 7 systemd 与 SysV init 对比</title>
     <url>//2023-10-20-centos-systemd-sysv/</url>
     <content><![CDATA[<h1 id="20231021-centos-systemd-sysv"><a href="#20231021-centos-systemd-sysv" class="headerlink" title="20231021-centos-systemd-sysv"></a>20231021-centos-systemd-sysv</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>centos7之后, 所有的service都推荐使用systemd&#x2F;systemctl来管理.</p>
@@ -14024,6 +13973,57 @@ Wants&#x3D;sshd-keygen.service
       </tags>
   </entry>
   <entry>
+    <title>死亡搁浅在冰岛</title>
+    <url>//2023-10-27-death-stranding-in-iceland/</url>
+    <content><![CDATA[<h1 id="20231028-death-stranding-in-iceland"><a href="#20231028-death-stranding-in-iceland" class="headerlink" title="20231028-death-stranding-in-iceland"></a>20231028-death-stranding-in-iceland</h1><p><a href="https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3">https://open.spotify.com/track/27VxXIWKxPbcyinlY3SYc3</a></p>
+<h1 id="part1-冰岛🇮🇸🌠🌌"><a href="#part1-冰岛🇮🇸🌠🌌" class="headerlink" title="part1: 冰岛🇮🇸🌠🌌"></a>part1: 冰岛🇮🇸🌠🌌</h1><p>无意间B站刷到了 <a href="https://www.bilibili.com/video/BV1rc411o7PJ/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click">冰岛｜现在开始进入死亡搁浅 4K HDR_哔哩哔哩_bilibili</a><br>尤其是在漫天星光下, 飞舞的极光. 星空列车,<br>我看到了明亮的猎户座, 参宿, 三横三纵, 那是我认识的第一个星座.<br>我已经很久没有再次看到过星空了, 再次的重逢, 让我觉得有种久违的.<br>不禁泪流满面. 是被宝宝这两年束缚的委屈.</p>
+<p>让精神在尘世中获得了短暂的升华, 是的, 升华.<br>浮现在脑海里的一个词, Transcendent 萦绕</p>
+<p>想起了海子的诗:</p>
+<blockquote>
+<p>今夜青稞只属于他自己<br>一切都在生长<br>今夜我只有美丽的戈壁空空<br>姐姐，今夜我不关心人类，我只想你</p>
+</blockquote>
+<p>在广阔的旷野中, 在星空下 , 在亘古的静谧中, 我们会开始 思考存在的意义.</p>
+<p>伴随着Low Roar 的 &lt;Don’t Be So Serious&gt; 的浅吟低唱, 想起了第一次艰辛的送货历程, 小心翼翼地过河爬山, 躲过了时间雨, 豁然开朗,<br>大幕徐徐打开.<br>忍不住打开尘封已久的PS, 继续下一段送货历程.<br>期待着下一次遇见星空, 期待着多年以后的冰岛之旅.</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282334661.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282335068.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282316627.png"></p>
+<h1 id="part2-法罗群岛🇫🇴❄🌄"><a href="#part2-法罗群岛🇫🇴❄🌄" class="headerlink" title="part2: 法罗群岛🇫🇴❄🌄"></a>part2: 法罗群岛🇫🇴❄🌄</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282245560.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310282311574.png"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/img/202310290018579.png"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>death-stranding</tag>
+        <tag>gaming</tag>
+        <tag>iceland</tag>
+        <tag>culture</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>chatgpt eval cont d</title>
+    <url>//2023-10-29-chatgpt-eval-cont-d/</url>
+    <content><![CDATA[<h1 id="20231030-chatgpt-eval-cont-d"><a href="#20231030-chatgpt-eval-cont-d" class="headerlink" title="20231030-chatgpt-eval-cont-d"></a>20231030-chatgpt-eval-cont-d</h1><h1 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h1><p>最近频繁地使用chatgpt进行文章的翻译. </p>
+<p>在翻译这个特定的场景下, 惊讶于chatgpt的语义识别度与准确度, 基本可以完美地进行翻译, 对俚语等进行解释. </p>
+<p>如下: </p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled.png" alt="Untitled"></p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-10-30-chatgpt-eval-cont-d/Untitled-1.png" alt="Untitled"></p>
+<p>现在是时候摘下对ChatGPT的偏见墨镜了. 虽然之前在ground truth上多次欺骗与伤害了我.</p>
+<h1 id="shell-script"><a href="#shell-script" class="headerlink" title="shell script"></a>shell script</h1><p>对于Shell脚本编写, 简直是神器!!!</p>
+<p>持续更新</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>chatgpt</tag>
+        <tag>ai</tag>
+        <tag>evaluation</tag>
+        <tag>llm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>上云还是下云？对 Cloud Exit 趋势的思考</title>
     <url>//2023-10-29-cloudon-or-cloudexit/</url>
     <content><![CDATA[<h1 id="20231030-CloudOn-or-CloudExit"><a href="#20231030-CloudOn-or-CloudExit" class="headerlink" title="20231030-CloudOn-or-CloudExit?"></a>20231030-CloudOn-or-CloudExit?</h1><p>作为云计算从业者, 始终也是上云的坚定. 也不知道是因为屁股决定态度, 还是”因为相信所以看见”.</p>
@@ -14053,29 +14053,6 @@ Wants&#x3D;sshd-keygen.service
         <tag>architecture</tag>
         <tag>cloud-exit</tag>
         <tag>strategy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>系统统计页面实现</title>
-    <url>//2023-10-31-sys-stat-page/</url>
-    <content><![CDATA[<h1 id="20231101-sys-stat-page"><a href="#20231101-sys-stat-page" class="headerlink" title="20231101-sys-stat-page"></a>20231101-sys-stat-page</h1><p>无意间发现: <a href="https://www.37status.com/">37signals Status</a> 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:</p>
-<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-01-sys-stat-page/Untitled.png" alt="Untitled"></p>
-<p>另外顺便搜索了下, 发现这个页面还是Atlassian 提供的服务: <a href="https://www.atlassian.com/software/statuspage?utm_campaign=www.37status.com&utm_content=SP-notifications&utm_medium=powered-by&utm_source=inapp">Statuspage | Atlassian</a></p>
-<p>不得不说这种方式真的非常直观美观, 且把故障发生&amp;结束&amp;持续时长都一目了然地给出. </p>
-<p>以此为对比,  <a href="https://status.aliyun.com/?spm=5176.8789780.J_9220772140.26.348c39fbxOAGXq#/">阿里云健康状态</a> 就显得差了很多: </p>
-<ol>
-<li>一是不够清晰美观. </li>
-<li>二是数据准确度存疑. 一直都是状态正常, 让人觉得不可思议…</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>system-monitoring</tag>
-        <tag>statistics</tag>
-        <tag>dashboard</tag>
-        <tag>visualization</tag>
       </tags>
   </entry>
   <entry>
@@ -14184,6 +14161,29 @@ Rework  - Jason Fried
       <tags>
         <tag>cloud-exit</tag>
         <tag>entrepreneurship</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>系统统计页面实现</title>
+    <url>//2023-10-31-sys-stat-page/</url>
+    <content><![CDATA[<h1 id="20231101-sys-stat-page"><a href="#20231101-sys-stat-page" class="headerlink" title="20231101-sys-stat-page"></a>20231101-sys-stat-page</h1><p>无意间发现: <a href="https://www.37status.com/">37signals Status</a> 页面非常有趣, 把所有服务的状态都非常清晰地列出来, 如下图:</p>
+<p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2023-11-01-sys-stat-page/Untitled.png" alt="Untitled"></p>
+<p>另外顺便搜索了下, 发现这个页面还是Atlassian 提供的服务: <a href="https://www.atlassian.com/software/statuspage?utm_campaign=www.37status.com&utm_content=SP-notifications&utm_medium=powered-by&utm_source=inapp">Statuspage | Atlassian</a></p>
+<p>不得不说这种方式真的非常直观美观, 且把故障发生&amp;结束&amp;持续时长都一目了然地给出. </p>
+<p>以此为对比,  <a href="https://status.aliyun.com/?spm=5176.8789780.J_9220772140.26.348c39fbxOAGXq#/">阿里云健康状态</a> 就显得差了很多: </p>
+<ol>
+<li>一是不够清晰美观. </li>
+<li>二是数据准确度存疑. 一直都是状态正常, 让人觉得不可思议…</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>system-monitoring</tag>
+        <tag>statistics</tag>
+        <tag>dashboard</tag>
+        <tag>visualization</tag>
       </tags>
   </entry>
   <entry>
@@ -14445,6 +14445,45 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
+    <title>瘦客户端使用陷阱</title>
+    <url>//2023-11-06-thin-client-pitfall/</url>
+    <content><![CDATA[<h1 id="20231107-thin-client-pitfall"><a href="#20231107-thin-client-pitfall" class="headerlink" title="20231107-thin-client-pitfall"></a>20231107-thin-client-pitfall</h1><p>发现在开发很多问题排查&amp;提效工具时, 服务端同学仍然陷入定势思维. 强调服务端优先, 瘦客户端. 从而导致整体实现过为臃肿, 开发&amp;改造周期长, 性能不太好等问题. </p>
+<p>但个人思考, 要跳出定势思维与舒适区, 定义好服务端&amp;客户端的边界. 把很多功能放到 前端 或者 与Alfred整合, 可以很好地解决上边的问题. </p>
+<p>插件&amp;工具 经常会处于鄙视链底端, 大家都想要做平台, 把饼画得大大的. </p>
+<p>但实际上好的插件&amp;工具, . 例如, 支付宝是不是个工具? 微信其实本质也是个工具. 为啥会觉得做工具Low呢?  </p>
+<p>举几个例子: </p>
+<ol>
+<li>Tracing 系统, 关键词过滤</li>
+</ol>
+<p>N多个上下游系统, 通过traceId(UUID)把请求关联. 建设了一个Tracing系统. 具体实现是: </p>
+<p>想要输入某个traceId之后, 会把traceId拼接成SLS SQL, 请求服务端→请求SLS获取结果.</p>
+<p>如果想要基于traceId再添加其他关键词进行进一步筛选: </p>
+<ul>
+<li>目前实现: 输入其他关键词后, 继续拼接SLS SQL, 请求服务端→请求SLS获取结果. 太耗时了, 很容易把使用者的耐心消耗掉. 尤其是在需要频繁修改附加关键词的时候.</li>
+<li>个人建议: 把关键词筛选直接放在前端, 前端有很多很好用的搜索框架. 例如 <a href="https://www.fusejs.io/">Fuse.js | Fuse.js</a> <a href="https://github.com/mattyork/fuzzy">https://github.com/mattyork/fuzzy</a> 等</li>
+</ul>
+<ol>
+<li>多账号登录Chrome插件</li>
+<li>Alfred插件</li>
+</ol>
+<hr>
+<p>个人也愈发不满Java的笨重, 上来就是一套JVM+Spring, 还得编译打包. 要开发个web应用就更重了, 还得引入servelet容器. </p>
+<p>运行时内存overhead也不小. </p>
+<p>虽然SpringBoot让开发相对简单了. </p>
+<p>但总体来说还是过于臃肿.印象中Java就是一个严肃古板的老学究. </p>
+<p>尤其是跟Go&#x2F;Python比对. 所以多尝试写写Go&#x2F;Python吧.</p>
+<p>Small is beautiful, small is powerful~</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>backend-development</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>architecture</tag>
+        <tag>thin-client</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>无状态服务多可用区多规格部署陷阱</title>
     <url>//2023-11-07-stateless-multi-zone-multi-flavor-pitfall/</url>
     <content><![CDATA[<h1 id="20231108-stateless-multi-zone-multi-flavor-pitfall"><a href="#20231108-stateless-multi-zone-multi-flavor-pitfall" class="headerlink" title="20231108-stateless-multi-zone-multi-flavor-pitfall"></a>20231108-stateless-multi-zone-multi-flavor-pitfall</h1><h1 id="multi-zone-pitfall"><a href="#multi-zone-pitfall" class="headerlink" title="multi-zone pitfall"></a>multi-zone pitfall</h1><p>作为云计算厂商, 我们最喜欢的用户是能够在一个地域开启多个可用区. </p>
@@ -14488,6 +14527,28 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
       </tags>
   </entry>
   <entry>
+    <title>HTTP POST 与 GET 的选择</title>
+    <url>//2023-11-26-http-post-or-get/</url>
+    <content><![CDATA[<h1 id="20231127-http-post-or-get"><a href="#20231127-http-post-or-get" class="headerlink" title="20231127-http-post-or-get"></a>20231127-http-post-or-get</h1><p>之前记得网上有过讨论, 有公司让所有请求都用POST. </p>
+<p>结合最近自己的感悟, 说下. </p>
+<p>如果是内部系统, 那就尽量用GET吧. 关键参数都放在URL里. 不管是普通风格还是RESTFUL风格. </p>
+<p>优点是: </p>
+<ul>
+<li>便于使用Alfred等工具, 一键进入. 提效明显: 例如查询用户信息, url?uid&#x3D;xxx, 这样. 而如果是POST,</li>
+<li></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>api-design</tag>
+        <tag>http</tag>
+        <tag>post</tag>
+        <tag>get</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>长期主义思维</title>
     <url>//2023-11-26-long-term-thinking/</url>
     <content><![CDATA[<h1 id="20231127-long-term-thinking"><a href="#20231127-long-term-thinking" class="headerlink" title="20231127-long-term-thinking"></a>20231127-long-term-thinking</h1><p>经常说长期思维, 但具体是啥? 我用一些例子来说明: </p>
@@ -14509,28 +14570,6 @@ translate <span class="token string">"<span class="token variable">$1</span>"</s
         <tag>career</tag>
         <tag>long-term-thinking</tag>
         <tag>philosophy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTTP POST 与 GET 的选择</title>
-    <url>//2023-11-26-http-post-or-get/</url>
-    <content><![CDATA[<h1 id="20231127-http-post-or-get"><a href="#20231127-http-post-or-get" class="headerlink" title="20231127-http-post-or-get"></a>20231127-http-post-or-get</h1><p>之前记得网上有过讨论, 有公司让所有请求都用POST. </p>
-<p>结合最近自己的感悟, 说下. </p>
-<p>如果是内部系统, 那就尽量用GET吧. 关键参数都放在URL里. 不管是普通风格还是RESTFUL风格. </p>
-<p>优点是: </p>
-<ul>
-<li>便于使用Alfred等工具, 一键进入. 提效明显: 例如查询用户信息, url?uid&#x3D;xxx, 这样. 而如果是POST,</li>
-<li></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>api-design</tag>
-        <tag>http</tag>
-        <tag>post</tag>
-        <tag>get</tag>
       </tags>
   </entry>
   <entry>
@@ -14682,6 +14721,30 @@ Example:
       </tags>
   </entry>
   <entry>
+    <title>Node VPA 使用陷阱</title>
+    <url>//2024-01-04-node-vpa-pitfall/</url>
+    <content><![CDATA[<h1 id="20240105-node-vpa-pitfall"><a href="#20240105-node-vpa-pitfall" class="headerlink" title="20240105-node-vpa-pitfall"></a>20240105-node-vpa-pitfall</h1><p>节点垂直伸缩的概念, 看起来很美好, 都是大家鼓吹的. 但实际实现起来, 落地难度巨大. 本质上来说, 是需要应用层的适配. </p>
+<p>以下是落地不好导致的问题: </p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/i0A2thWt1Ut7deDg-fmaog">K8s 节点 CPU 升级，导致 kubelet 无法启动故障一例</a></li>
+<li>以Netty应用为例, 应用启动时都会getAvailableCpus; 如果直接垂直热伸缩, 会导致该信息不准确, 保不准会.</li>
+</ul>
+<p>真正有落地的: </p>
+<ul>
+<li>aws 2023 re:invent 上的 与数据库深度合作的. 相比应用层做了非常大的改造.</li>
+<li></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>kubernetes</tag>
+        <tag>vpa</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2024 Annual Reading &amp; Gaming List</title>
     <url>//2023-12-31-2024-annual-list/</url>
     <content><![CDATA[<h2 id="📚-BookList-2024"><a href="#📚-BookList-2024" class="headerlink" title="📚 BookList 2024"></a>📚 BookList 2024</h2><ul>
@@ -14734,30 +14797,6 @@ Example:
         <tag>movies</tag>
         <tag>games</tag>
         <tag>annual-review</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Node VPA 使用陷阱</title>
-    <url>//2024-01-04-node-vpa-pitfall/</url>
-    <content><![CDATA[<h1 id="20240105-node-vpa-pitfall"><a href="#20240105-node-vpa-pitfall" class="headerlink" title="20240105-node-vpa-pitfall"></a>20240105-node-vpa-pitfall</h1><p>节点垂直伸缩的概念, 看起来很美好, 都是大家鼓吹的. 但实际实现起来, 落地难度巨大. 本质上来说, 是需要应用层的适配. </p>
-<p>以下是落地不好导致的问题: </p>
-<ul>
-<li><a href="https://mp.weixin.qq.com/s/i0A2thWt1Ut7deDg-fmaog">K8s 节点 CPU 升级，导致 kubelet 无法启动故障一例</a></li>
-<li>以Netty应用为例, 应用启动时都会getAvailableCpus; 如果直接垂直热伸缩, 会导致该信息不准确, 保不准会.</li>
-</ul>
-<p>真正有落地的: </p>
-<ul>
-<li>aws 2023 re:invent 上的 与数据库深度合作的. 相比应用层做了非常大的改造.</li>
-<li></li>
-</ul>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>kubernetes</tag>
-        <tag>vpa</tag>
       </tags>
   </entry>
   <entry>
@@ -15439,6 +15478,105 @@ $ <span class="token function">rm</span> -r <span class="token variable">$ROOTFS
       </tags>
   </entry>
   <entry>
+    <title>CRI、Containerd、runc 与 CLI 工具链</title>
+    <url>//2024-01-24-cri-containerd-runc-cli/</url>
+    <content><![CDATA[<h1 id="cri-containerd-runc-cli"><a href="#cri-containerd-runc-cli" class="headerlink" title="cri-containerd-runc-cli"></a>cri-containerd-runc-cli</h1><h1 id="crictl"><a href="#crictl" class="headerlink" title="crictl"></a>crictl</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>配置endpoint为containerd</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">runtime<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
+image<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
+timeout<span class="token punctuation">:</span> <span class="token number">10</span>
+debug<span class="token punctuation">:</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>否则会去默认找 docker.sock, 从而报错: </p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+WARN<span class="token punctuation">[</span><span class="token number">0000</span><span class="token punctuation">]</span> runtime connect using <span class="token keyword">default</span> endpoints<span class="token punctuation">:</span> <span class="token punctuation">[</span>unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.</span>
+E0125 <span class="token number">15</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">09.340202</span>   <span class="token number">38890</span> remote_runtime<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">277</span><span class="token punctuation">]</span> <span class="token string">"ListPodSandbox with filter from runtime service failed"</span> err<span class="token operator">=</span><span class="token string">"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory\""</span> filter<span class="token operator">=</span><span class="token string">"&amp;PodSandboxFilter&#123;Id:,State:nil,LabelSelector:map[string]string&#123;&#125;,&#125;"</span>
+FATA<span class="token punctuation">[</span><span class="token number">0000</span><span class="token punctuation">]</span> listing pod sandboxes<span class="token punctuation">:</span> rpc <span class="token builtin">error</span><span class="token punctuation">:</span> code <span class="token operator">=</span> Unavailable desc <span class="token operator">=</span> connection <span class="token builtin">error</span><span class="token punctuation">:</span> desc <span class="token operator">=</span> <span class="token string">"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"># 查看所有pods<span class="token operator">/</span>sandbox
+$sudo crictl pods
+POD ID              CREATED             STATE               NAME                       NAMESPACE           ATTEMPT             RUNTIME
+b0a9d72288491       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be03              qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
+ebb390f699f40       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be02              qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
+2493312953f99       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be                qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
+
+# pod<span class="token operator">/</span>sandbox操作
+# 按照podconfig新建pod
+$sudo crictl runp <span class="token punctuation">[</span>POD_CONFIG_JSON<span class="token punctuation">]</span>
+
+# 查看pod详情
+$sudo crictl inspectp b0a9d72288491
+
+# container操作
+# 在pod里新建container
+$sudo crictl create $<span class="token punctuation">&#123;</span>SANDBOX_ID<span class="token punctuation">&#125;</span> container<span class="token punctuation">.</span>json sandbox<span class="token punctuation">.</span>json
+
+# 启动container
+$sudo crictl start $<span class="token punctuation">&#123;</span>CONTAINER_ID<span class="token punctuation">&#125;</span>
+
+# 列出container
+$sudo crictl ps
+
+# 
+#sudo crictl inspect $<span class="token punctuation">&#123;</span>CONTAINER_ID<span class="token punctuation">&#125;</span>
+
+# 拉取镜像
+$sudo crictl pull nginx
+
+# 列出所有镜像
+$sudo crictl images
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="ctr"><a href="#ctr" class="headerlink" title="ctr"></a>ctr</h1><p><a href="https://labs.iximiuz.com/courses/containerd-cli/ctr/image-management#what-is-ctr">How to work with container images using ctr</a></p>
+<ul>
+<li>ctr 命令没法查看到sandbox的信息 —&gt; 因为 sandbox 的概念是 —&gt; 但实际containerd版本升级之后(ctr也要相应升级), 是有sandbox命令的!</li>
+<li>ctr 查看容器&#x2F;镜像等, 需要指定namespace, k8s默认的namespace为 <a href="http://k8s.io/"><code>k8s.io</code></a></li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+# namespaces
+$sudo ctr namespaces list
+
+# sandbox <span class="token operator">--</span><span class="token operator">></span> 要保证ctr的版本
+sudo ctr <span class="token operator">-</span>n k8s<span class="token punctuation">.</span>io sandboxes ls
+
+# container
+$sudo ctr <span class="token operator">-</span>n k8s<span class="token punctuation">.</span>io c list
+$sudo ctr <span class="token operator">-</span>n k8s<span class="token punctuation">.</span>io containers list
+
+# image
+$sudo ctr <span class="token operator">-</span>n k8s<span class="token punctuation">.</span>io  images list
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="runc"><a href="#runc" class="headerlink" title="runc"></a>runc</h1><ul>
+<li>Refs: [Implementing Container Runtime Shim: runc](<a href="https://iximiuz.com/en/posts/implementing-container-runtime-shim/#:~:text=A%20container%20runtime%20shim%20is%20a%20lightweight%20daemon%20launching%20runc,manager%20happen%20through%20the%20shim.">https://iximiuz.com/en/posts/implementing-container-runtime-shim/#:~:text&#x3D;A container runtime shim is a lightweight daemon launching runc,manager happen through the shim.)</a>)</li>
+<li>发现使用containerd创建的pod&#x2F;容器, 虽然底层使用了runc, 但使用runc命令是看不到的!</li>
+<li>runc 命令执行这个过程不涉及网络请求或复杂的数据处理，它仅仅是文件系统操作和数据格式化的过程。<code>runc</code> 会直接读取本地文件系统上的数据，将其格式化之后输出到标准输出。因此，<code>runc list</code> 命令的执行相对简单，且响应速度快。</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+# Create a <span class="token keyword">default</span> bundle <span class="token punctuation">(</span>i<span class="token punctuation">.</span>e<span class="token punctuation">.</span> container<span class="token punctuation">)</span> config<span class="token punctuation">.</span>
+$ runc spec
+
+# Run the container with ID cont1<span class="token punctuation">.</span>
+$ sudo runc run cont1
+
+$ sudo runc create mycontainerid
+$ sudo runc start mycontainerid
+
+$ sudo runc list
+
+# now <span class="token builtin">delete</span> the container
+$ sudo runc <span class="token builtin">delete</span> mycontainerid
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>container-orchestration</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+        <tag>containerd</tag>
+        <tag>cri</tag>
+        <tag>runc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go 语言基础</title>
     <url>//2024-01-30-go-basics/</url>
     <content><![CDATA[<h1 id="go-basics"><a href="#go-basics" class="headerlink" title="go-basics"></a>go-basics</h1><aside>
@@ -15748,105 +15886,6 @@ go <span class="token function-name function">func</span><span class="token punc
         <tag>golang</tag>
         <tag>programming</tag>
         <tag>fundamentals</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CRI、Containerd、runc 与 CLI 工具链</title>
-    <url>//2024-01-24-cri-containerd-runc-cli/</url>
-    <content><![CDATA[<h1 id="cri-containerd-runc-cli"><a href="#cri-containerd-runc-cli" class="headerlink" title="cri-containerd-runc-cli"></a>cri-containerd-runc-cli</h1><h1 id="crictl"><a href="#crictl" class="headerlink" title="crictl"></a>crictl</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>配置endpoint为containerd</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">runtime<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
-image<span class="token operator">-</span>endpoint<span class="token punctuation">:</span> unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//run/containerd/containerd.sock</span>
-timeout<span class="token punctuation">:</span> <span class="token number">10</span>
-debug<span class="token punctuation">:</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>否则会去默认找 docker.sock, 从而报错: </p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">
-WARN<span class="token punctuation">[</span><span class="token number">0000</span><span class="token punctuation">]</span> runtime connect using <span class="token keyword">default</span> endpoints<span class="token punctuation">:</span> <span class="token punctuation">[</span>unix<span class="token punctuation">:</span><span class="token operator">/</span><span class="token comment">//var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.</span>
-E0125 <span class="token number">15</span><span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">:</span><span class="token number">09.340202</span>   <span class="token number">38890</span> remote_runtime<span class="token punctuation">.</span><span class="token keyword">go</span><span class="token punctuation">:</span><span class="token number">277</span><span class="token punctuation">]</span> <span class="token string">"ListPodSandbox with filter from runtime service failed"</span> err<span class="token operator">=</span><span class="token string">"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory\""</span> filter<span class="token operator">=</span><span class="token string">"&amp;PodSandboxFilter&#123;Id:,State:nil,LabelSelector:map[string]string&#123;&#125;,&#125;"</span>
-FATA<span class="token punctuation">[</span><span class="token number">0000</span><span class="token punctuation">]</span> listing pod sandboxes<span class="token punctuation">:</span> rpc <span class="token builtin">error</span><span class="token punctuation">:</span> code <span class="token operator">=</span> Unavailable desc <span class="token operator">=</span> connection <span class="token builtin">error</span><span class="token punctuation">:</span> desc <span class="token operator">=</span> <span class="token string">"transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"># 查看所有pods<span class="token operator">/</span>sandbox
-$sudo crictl pods
-POD ID              CREATED             STATE               NAME                       NAMESPACE           ATTEMPT             RUNTIME
-b0a9d72288491       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be03              qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-ebb390f699f40       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be02              qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-2493312953f99       <span class="token number">18</span> hours ago        Ready               qos<span class="token operator">-</span>demo<span class="token operator">-</span>be                qos<span class="token operator">-</span>example         <span class="token number">0</span>                   <span class="token punctuation">(</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-
-# pod<span class="token operator">/</span>sandbox操作
-# 按照podconfig新建pod
-$sudo crictl runp <span class="token punctuation">[</span>POD_CONFIG_JSON<span class="token punctuation">]</span>
-
-# 查看pod详情
-$sudo crictl inspectp b0a9d72288491
-
-# container操作
-# 在pod里新建container
-$sudo crictl create $<span class="token punctuation">&#123;</span>SANDBOX_ID<span class="token punctuation">&#125;</span> container<span class="token punctuation">.</span>json sandbox<span class="token punctuation">.</span>json
-
-# 启动container
-$sudo crictl start $<span class="token punctuation">&#123;</span>CONTAINER_ID<span class="token punctuation">&#125;</span>
-
-# 列出container
-$sudo crictl ps
-
-# 
-#sudo crictl inspect $<span class="token punctuation">&#123;</span>CONTAINER_ID<span class="token punctuation">&#125;</span>
-
-# 拉取镜像
-$sudo crictl pull nginx
-
-# 列出所有镜像
-$sudo crictl images
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="ctr"><a href="#ctr" class="headerlink" title="ctr"></a>ctr</h1><p><a href="https://labs.iximiuz.com/courses/containerd-cli/ctr/image-management#what-is-ctr">How to work with container images using ctr</a></p>
-<ul>
-<li>ctr 命令没法查看到sandbox的信息 —&gt; 因为 sandbox 的概念是 —&gt; 但实际containerd版本升级之后(ctr也要相应升级), 是有sandbox命令的!</li>
-<li>ctr 查看容器&#x2F;镜像等, 需要指定namespace, k8s默认的namespace为 <a href="http://k8s.io/"><code>k8s.io</code></a></li>
-</ul>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">
-# namespaces
-$sudo ctr namespaces list
-
-# sandbox <span class="token operator">--</span><span class="token operator">></span> 要保证ctr的版本
-sudo ctr <span class="token operator">-</span>n k8s<span class="token punctuation">.</span>io sandboxes ls
-
-# container
-$sudo ctr <span class="token operator">-</span>n k8s<span class="token punctuation">.</span>io c list
-$sudo ctr <span class="token operator">-</span>n k8s<span class="token punctuation">.</span>io containers list
-
-# image
-$sudo ctr <span class="token operator">-</span>n k8s<span class="token punctuation">.</span>io  images list
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="runc"><a href="#runc" class="headerlink" title="runc"></a>runc</h1><ul>
-<li>Refs: [Implementing Container Runtime Shim: runc](<a href="https://iximiuz.com/en/posts/implementing-container-runtime-shim/#:~:text=A%20container%20runtime%20shim%20is%20a%20lightweight%20daemon%20launching%20runc,manager%20happen%20through%20the%20shim.">https://iximiuz.com/en/posts/implementing-container-runtime-shim/#:~:text&#x3D;A container runtime shim is a lightweight daemon launching runc,manager happen through the shim.)</a>)</li>
-<li>发现使用containerd创建的pod&#x2F;容器, 虽然底层使用了runc, 但使用runc命令是看不到的!</li>
-<li>runc 命令执行这个过程不涉及网络请求或复杂的数据处理，它仅仅是文件系统操作和数据格式化的过程。<code>runc</code> 会直接读取本地文件系统上的数据，将其格式化之后输出到标准输出。因此，<code>runc list</code> 命令的执行相对简单，且响应速度快。</li>
-</ul>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">
-# Create a <span class="token keyword">default</span> bundle <span class="token punctuation">(</span>i<span class="token punctuation">.</span>e<span class="token punctuation">.</span> container<span class="token punctuation">)</span> config<span class="token punctuation">.</span>
-$ runc spec
-
-# Run the container with ID cont1<span class="token punctuation">.</span>
-$ sudo runc run cont1
-
-$ sudo runc create mycontainerid
-$ sudo runc start mycontainerid
-
-$ sudo runc list
-
-# now <span class="token builtin">delete</span> the container
-$ sudo runc <span class="token builtin">delete</span> mycontainerid
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>container-orchestration</category>
-      </categories>
-      <tags>
-        <tag>tools</tag>
-        <tag>containerd</tag>
-        <tag>cri</tag>
-        <tag>runc</tag>
       </tags>
   </entry>
   <entry>
@@ -16590,25 +16629,6 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
       </tags>
   </entry>
   <entry>
-    <title>DTS 使用陷阱</title>
-    <url>//2024-03-27-dts-pitfall/</url>
-    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
-<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
-<p>可能的几种方案:</p>
-<ol>
-<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
-<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
-</ol>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>tech-notes</category>
-      </categories>
-      <tags>
-        <tag>lessons-learned</tag>
-        <tag>dts</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s kube scheduler</title>
     <url>//2024-03-05-k8s-kube-scheduler/</url>
     <content><![CDATA[<h1 id="k8s-kube-scheduler"><a href="#k8s-kube-scheduler" class="headerlink" title="k8s-kube-scheduler"></a>k8s-kube-scheduler</h1><h1 id="代码结构梳理"><a href="#代码结构梳理" class="headerlink" title="代码结构梳理"></a>代码结构梳理</h1><p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-kube-scheduler/Untitled.png" alt="Untitled"></p>
@@ -16685,7 +16705,7 @@ Kubernetes中的某些类型的Pod（例如kube<span class="token operator">-</s
     <title>K8s 工具集与实用命令</title>
     <url>//2024-03-05-k8s-util/</url>
     <content><![CDATA[<h1 id="k8s-util"><a href="#k8s-util" class="headerlink" title="k8s-util"></a>k8s-util</h1><h1 id="k8s常用包"><a href="#k8s常用包" class="headerlink" title="k8s常用包"></a>k8s常用包</h1><h2 id="apiserver-RunServer"><a href="#apiserver-RunServer" class="headerlink" title="apiserver#RunServer"></a>apiserver#RunServer</h2><blockquote>
-<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#x69;&#115;&#x65;&#114;&#x76;&#101;&#114;&#64;&#118;&#x30;&#46;&#x32;&#x34;&#x2e;&#49;&#53;">&#x61;&#112;&#x69;&#115;&#x65;&#114;&#x76;&#101;&#114;&#64;&#118;&#x30;&#46;&#x32;&#x34;&#x2e;&#49;&#53;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
+<p>&#x2F;Users&#x2F;davywalker&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;k8s.io&#x2F;<a href="mailto:&#x61;&#112;&#105;&#x73;&#x65;&#114;&#118;&#x65;&#114;&#x40;&#118;&#48;&#x2e;&#x32;&#52;&#46;&#x31;&#x35;">&#x61;&#112;&#105;&#x73;&#x65;&#114;&#118;&#x65;&#114;&#x40;&#118;&#48;&#x2e;&#x32;&#52;&#46;&#x31;&#x35;</a>&#x2F;pkg&#x2F;server&#x2F;secure_serving.go:220<code>RunServer</code></p>
 </blockquote>
 <p>新建一个协程来启动HTTPServer. </p>
 <p><img data-src="https://davywalker-bucket.oss-cn-shanghai.aliyuncs.com/source/assets/2024-03-06-k8s-util/Untitled.png" alt="Untitled"></p>
@@ -16833,6 +16853,25 @@ StatefulSet<span aria-hidden="true" class="line-numbers-rows"><span></span><span
         <tag>kubernetes</tag>
         <tag>high-availability</tag>
         <tag>pdb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DTS 使用陷阱</title>
+    <url>//2024-03-27-dts-pitfall/</url>
+    <content><![CDATA[<h1 id="20240328-dts-pitfall"><a href="#20240328-dts-pitfall" class="headerlink" title="20240328-dts-pitfall"></a>20240328-dts-pitfall</h1><p>分布式任务执行时, 发现由于机器重启, 导致任务中断, 从而导致数据只产出了一半等问题. </p>
+<p>我们在写任务时, 尤其是耗时比较久的任务时, 一定要想好怎么来规避这种情况. </p>
+<p>可能的几种方案:</p>
+<ol>
+<li>同步阻塞, 在worker线程执行, 执行完成. 缺点是: 任务如果耗时很久, 导致dts的worker线程池满, 从而影响其他定时任务. </li>
+<li>gracefulshutdown: 设定个hook, 当需要下线时, 必须等待任务执行完成才可以. 缺点是, 在极端情况下, 机器宕机等, 会无法cover.</li>
+</ol>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>tech-notes</category>
+      </categories>
+      <tags>
+        <tag>lessons-learned</tag>
+        <tag>dts</tag>
       </tags>
   </entry>
   <entry>
